@@ -7,7 +7,8 @@ public class OnlineSystem {
     private Account account;
 
     public OnlineSystem(System system, Account account) {
-
+        this.system=system;
+        this.account=account;
     }
 
     public System getSystem() {

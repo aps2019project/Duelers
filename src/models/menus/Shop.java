@@ -9,7 +9,9 @@ public class Shop extends Menu {
     private static final Shop SHOP = new Shop();
     private ArrayList<Card> cards;
 
-    private Shop() {}
+    private Shop() {
+        //read from File
+    }
 
     public static Shop getInstance() {
         return SHOP;
