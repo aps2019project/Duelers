@@ -1,0 +1,22 @@
+{
+  "name": "Simurgh",
+  "description": "a melee HERO with 4 AP, 50 HP, have a STUN BUFF spell for all enemy troops for 1 turn",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "si_stun",
+      "type": "BUFF",
+      "definiteType": "STUN_BUFF",
+      "targetBase": "ALL_CELLS",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "SPECIAL_POWER",
+      "reusePeriod": 8,
+      "mannaPoint": 5,
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 9000,
+  "attackType": "MELEE"
+}

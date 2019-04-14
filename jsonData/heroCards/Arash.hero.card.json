@@ -1,0 +1,23 @@
+{
+  "name": "Arash",
+  "description": "a ranged HERO with 2 AP, 30 HP, have a 4-unit ROW-attack spell",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "ar_row_attack",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "CARD_ROW",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "SPECIAL_POWER",
+      "numberOfChange": 4,
+      "reusePeriod": 2,
+      "mannaPoint": 2
+    }
+  ],
+  "defaultAp": 2,
+  "defaultHp": 30,
+  "price": 10000,
+  "attackType": "RANGED",
+  "range": 6
+}

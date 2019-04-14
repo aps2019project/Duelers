@@ -10,5 +10,6 @@ public enum AvailabilityType {
     EVERY_X_TIME,
     CONTINUOUS,
     ON_DEFEND,
-    PASSIVE_CONTINUOUS
+    PASSIVE_CONTINUOUS,
+    SPECIAL_POWER
 }

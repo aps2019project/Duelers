@@ -1,0 +1,22 @@
+{
+  "name": "White Demon",
+  "description": "a melee HERO with 4 AP, 50 HP, have a POWER BUFF spell on itself",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "wd_power",
+      "type": "BUFF",
+      "definiteType": "POWER_AP_BUFF",
+      "targetBase": "CARD_ITSELF",
+      "availabilityType": "SPECIAL_POWER",
+      "numberOfChange": 4,
+      "reusePeriod": 2,
+      "mannaPoint": 1,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}

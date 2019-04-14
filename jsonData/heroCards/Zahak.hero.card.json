@@ -1,0 +1,21 @@
+{
+  "name": "Zahak",
+  "description": "a melee HERO with 2 AP, 50 HP, have a POISON BUFF spell for 3 turns",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "zh_poison",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 1,
+      "timeOfEffect": 3
+    }
+  ],
+  "defaultAp": 2,
+  "defaultHp": 50,
+  "price": 10000,
+  "attackType": "MELEE"
+}

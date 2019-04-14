@@ -1,0 +1,21 @@
+{
+  "name": "Esfandiar",
+  "description": "a hybrid HERO with 3 AP, 35 HP, with 3 CONTINUOUS HOLY BUFF for itself",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "es_holy",
+      "type": "BUFF",
+      "definiteType": "HOLY_BUFF",
+      "targetBase": "CARD_ITSELF",
+      "availabilityType": "PASSIVE_CONTINUOUS",
+      "numberOfChange": -3,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 3,
+  "defaultHp": 35,
+  "price": 12000,
+  "attackType": "HYBRID",
+  "range": 3
+}

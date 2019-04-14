@@ -1,0 +1,23 @@
+{
+  "name": "Kaveh",
+  "description": "a melee HERO with 4 AP, 50 HP, have a HOLY CELL EFFECT spell for 3 turns",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "kv_holy",
+      "type": "CELL_EFFECT",
+      "definiteType": "HOLY_CELL_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "CELL",
+      "availabilityType": "SPECIAL_POWER",
+      "numberOfChange": -1,
+      "reusePeriod": 3,
+      "mannaPoint": 1,
+      "timeOfEffect": 3
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}
