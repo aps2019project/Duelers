@@ -11,10 +11,6 @@
       "targetType": "MY_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 6,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2147483647
     },
     {
@@ -25,16 +21,9 @@
       "targetType": "MY_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 8,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2147483647
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 2,
-  "price": 1600,
-  "range": 0
+  "price": 1600
 }

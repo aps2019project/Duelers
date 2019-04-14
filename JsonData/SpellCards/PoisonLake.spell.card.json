@@ -4,23 +4,15 @@
   "type": "SPELL",
   "spells": [
     {
-      "spellId": "poisonLake",
+      "spellId": "poison_lake",
       "type": "CELL_EFFECT",
       "definiteType": "POISON_CELL_EFFECT",
       "targetBase": "SELECTED_3X3",
       "targetType": "CELL",
       "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 1
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 5,
-  "price": 900,
-  "range": 0
+  "price": 900
 }

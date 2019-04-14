@@ -1,13 +1,11 @@
 {
   "name": "Turanian Archer",
-  "description": "a ranged MINION with 4 AP, 3 HP, costs 500 MP",
+  "description": "a ranged MINION with 4 AP, 3 HP",
   "type": "MINION",
-  "spells": [],
   "defaultAp": 4,
   "defaultHp": 3,
   "mannaPoint": 1,
   "price": 500,
   "attackType": "RANGED",
-  "range": 5,
-  "hasCombo": false
+  "range": 5
 }

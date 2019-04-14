@@ -4,23 +4,15 @@
   "type": "SPELL",
   "spells": [
     {
-      "spellId": "allAttack",
+      "spellId": "all_attack",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
       "targetBase": "ALL_CELLS",
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
-      "numberOfChange": 6,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "numberOfChange": 6
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 4,
-  "price": 1500,
-  "range": 0
+  "price": 1500
 }

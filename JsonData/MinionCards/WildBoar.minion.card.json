@@ -1,0 +1,19 @@
+{
+  "name": "Wild Boar",
+  "description": "a melee MINION with 14 AP, 10 HP, costs 500, and does not DISARM on DEFEND",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "wb_no_disarm",
+      "type": "CARD_EFFECT",
+      "definiteType": "NO_DISARM",
+      "targetBase": "CARD_ITSELF",
+      "availabilityType": "ON_DEFEND"
+    }
+  ],
+  "defaultAp": 14,
+  "defaultHp": 10,
+  "mannaPoint": 6,
+  "price": 500,
+  "attackType": "MELEE"
+}

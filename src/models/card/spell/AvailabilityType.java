@@ -5,8 +5,11 @@ public enum AvailabilityType {
     PASSIVE,
     ON_ATTACK,
     COMBO,
-    ON_DEFEAT,
+    ON_DEATH,
     ON_SPAWN,
     EVERY_X_TIME,
-    CONTINUOUS
+    CONTINUOUS,
+    ON_TURN,
+    ON_DEFEND,
+    PASSIVE_CONTINUOUS
 }

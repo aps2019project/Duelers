@@ -1,1 +1,10 @@
-{"name":"Hog Rider Demon","description":"a melee MINION with 8 AP, 16 HP, costs 300 MP","type":"MINION","spells":[],"defaultAp":8,"defaultHp":16,"mannaPoint":6,"price":300,"attackType":"MELEE","range":0,"hasCombo":false}
+{
+  "name": "Hog Rider Demon",
+  "description": "a melee MINION with 8 AP, 16 HP",
+  "type": "MINION",
+  "defaultAp": 8,
+  "defaultHp": 16,
+  "mannaPoint": 6,
+  "price": 300,
+  "attackType": "MELEE"
+}

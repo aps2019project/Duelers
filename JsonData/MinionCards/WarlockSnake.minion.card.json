@@ -11,10 +11,6 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_SPAWN",
       "numberOfChange": 1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2147483647
     }
   ],
@@ -23,6 +19,5 @@
   "mannaPoint": 8,
   "price": 500,
   "attackType": "RANGED",
-  "range": 5,
-  "hasCombo": false
+  "range": 5
 }

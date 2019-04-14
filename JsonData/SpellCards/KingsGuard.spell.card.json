@@ -9,18 +9,9 @@
       "definiteType": "KILL_A_MINION",
       "targetBase": "RANDOM_AROUND_MY_HERO",
       "targetType": "ENEMY_MINION",
-      "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "availabilityType": "ON_PUT"
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 9,
-  "price": 1750,
-  "range": 0
+  "price": 1750
 }

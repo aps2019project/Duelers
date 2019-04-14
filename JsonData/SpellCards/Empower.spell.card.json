@@ -10,17 +10,9 @@
       "targetBase": "SELECTED_CELL",
       "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
-      "numberOfChange": 2,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "numberOfChange": 2
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 1,
-  "price": 250,
-  "range": 0
+  "price": 250
 }

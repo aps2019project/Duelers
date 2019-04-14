@@ -11,10 +11,6 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
       "numberOfChange": 6,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 1
     }
   ],
@@ -22,7 +18,5 @@
   "defaultHp": 6,
   "mannaPoint": 3,
   "price": 400,
-  "attackType": "MELEE",
-  "range": -1,
-  "hasCombo": false
+  "attackType": "MELEE"
 }

@@ -1,0 +1,21 @@
+{
+  "name": "Bahman",
+  "description": "a melee MINION with 9 AP, 16 HP, and ON_SPAWN decreases HP of a random enemy MINION 16 units",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "b_random_hit",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "RANDOM",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_SPAWN",
+      "numberOfChange": 16
+    }
+  ],
+  "defaultAp": 9,
+  "defaultHp": 16,
+  "mannaPoint": 8,
+  "price": 450,
+  "attackType": "MELEE"
+}

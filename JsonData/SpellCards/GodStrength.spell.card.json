@@ -4,24 +4,15 @@
   "type": "SPELL",
   "spells": [
     {
-      "spellId": "godStrength",
+      "spellId": "god_strength",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
       "targetBase": "ALL_CELLS",
       "targetType": "MY_HERO",
       "availabilityType": "ON_PUT",
-      "range": 0,
-      "numberOfChange": 4,
-      "reusePeriod": -1,
-      "mannaPoint": -1,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "numberOfChange": 4
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 2,
-  "price": 450,
-  "range": 0
+  "price": 450
 }

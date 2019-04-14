@@ -4,37 +4,22 @@
   "type": "SPELL",
   "spells": [
     {
-      "spellId": "areaDispel_enemy",
+      "spellId": "ad_enemy",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
       "targetBase": "SELECTED_2X2",
       "targetType": "ENEMY_TROOPS",
-      "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "availabilityType": "ON_PUT"
     },
     {
-      "spellId": "areaDispel_own",
+      "spellId": "ad_own",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
       "targetBase": "SELECTED_2X2",
       "targetType": "MY_TROOPS",
-      "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "availabilityType": "ON_PUT"
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 2,
-  "price": 1500,
-  "range": 0
+  "price": 1500
 }

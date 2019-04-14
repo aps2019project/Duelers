@@ -85,31 +85,32 @@ public class CardMaker {
             System.out.println(
                     "spell definite type:\n" +
                             "(" +
-                            "0.HOLY_BUFF,\n" +
-                            "1.POWER_AP_BUFF,\n" +
-                            "2.POWER_HP_BUFF,\n" +
-                            "3.POISON_BUFF,\n" +
-                            "4.WEAKNESS_AP_BUFF,\n" +
-                            "5.WEAKNESS_HP_BUFF,\n" +
-                            "6.STUN_BUFF,\n" +
-                            "7.DISARM_BUFF,\n" +
-                            "8.POISON_CELL_EFFECT,\n" +
-                            "9.FIERY_CELL_EFFECT,\n" +
-                            "10.HOLY_CELL_EFFECT,\n" +
-                            "11.REMOVE_POSITIVE_BUFF_CARD_EFFECT,\n" +
-                            "12.REMOVE_NEGATIVE_BUFF_CARD_EFFECT,\n" +
-                            "13.INCREASE_AP_CARD_EFFECT,\n" +
-                            "14.INCREASE_HP_CARD_EFFECT,\n" +
-                            "15.DECREASE_AP_CARD_EFFECT,\n" +
-                            "16.DECREASE_HP_CARD_EFFECT,\n" +
-                            "17.SACRIFICE_CARD_EFFECT,\n" +
-                            "18.NO_DISARM,\n" +
-                            "19.NO_POISON,\n" +
-                            "20.NO_BAD_EFFECT,\n" +
-                            "21.NO_ATTACK_FROM_WEAKENERS,\n" +
-                            "22.ADD_MANNA,\n" +
+                            "0.HOLY_BUFF\n" +
+                            "1.POWER_AP_BUFF\n" +
+                            "2.POWER_HP_BUFF\n" +
+                            "3.POISON_BUFF\n" +
+                            "4.WEAKNESS_AP_BUFF\n" +
+                            "5.WEAKNESS_HP_BUFF\n" +
+                            "6.STUN_BUFF\n" +
+                            "7.DISARM_BUFF\n" +
+                            "8.POISON_CELL_EFFECT\n" +
+                            "9.FIERY_CELL_EFFECT\n" +
+                            "10.HOLY_CELL_EFFECT\n" +
+                            "11.REMOVE_POSITIVE_BUFF_CARD_EFFECT\n" +
+                            "12.REMOVE_NEGATIVE_BUFF_CARD_EFFECT\n" +
+                            "13.INCREASE_AP_CARD_EFFECT\n" +
+                            "14.INCREASE_HP_CARD_EFFECT\n" +
+                            "15.DECREASE_AP_CARD_EFFECT\n" +
+                            "16.DECREASE_HP_CARD_EFFECT\n" +
+                            "17.SACRIFICE_CARD_EFFECT\n" +
+                            "18.NO_DISARM\n" +
+                            "19.NO_POISON\n" +
+                            "20.NO_BAD_EFFECT\n" +
+                            "21.NO_ATTACK_FROM_WEAKER_ONES\n" +
+                            "22.ADD_MANNA\n" +
                             "23.ADD_ATTACK_RANGE\n" +
-                            "24.DISABLE_HOLY_BUFF_ON_ATTACK" +
+                            "24.KILL_A_MINION\n" +
+                            "25.DISABLE_HOLY_BUFF_ON_ATTACK" +
                             ")"
             );
             DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
@@ -117,15 +118,17 @@ public class CardMaker {
             System.out.println(
                     "spell target base:\n" +
                             "(" +
-                            "0.SELECTED_CELL,\n" +
-                            "1.ALL_CELLS,\n" +
-                            "2.SELECTED_2X2,\n" +
-                            "3.SELECTED_3X3,\n" +
-                            "4.CARD_RANGE_2,\n" +
-                            "5.RANDOM,\n" +
-                            "6.CARD_3X3,\n" +
-                            "7.CARD_ROW,\n" +
-                            "8.HERO_3X3" +
+                            "0.SELECTED_CELL\n" +
+                            "1.ALL_CELLS\n" +
+                            "2.SELECTED_2X2\n" +
+                            "3.SELECTED_3X3\n" +
+                            "4.CARD_RANGE_2\n" +
+                            "5.RANDOM\n" +
+                            "6.CARD_3X3\n" +
+                            "7.CARD_ROW\n" +
+                            "8.HERO_3X3\n" +
+                            "9.RANDOM_AROUND_MY_HERO\n" +
+                            "10.CARD_ITSELF" +
                             ")"
             );
             TargetBase targetBase = TargetBase.values()[Integer.parseInt(scanner.nextLine())];
@@ -133,15 +136,15 @@ public class CardMaker {
             System.out.println(
                     "spell target type:\n" +
                             "(" +
-                            "0.CELL,\n" +
-                            "1.MY_TROOPS,\n" +
-                            "2.ENEMY_TROOPS,\n" +
-                            "3.ALL_TROOPS,\n" +
-                            "4.MY_HERO,\n" +
-                            "5.ENEMY_HERO,\n" +
-                            "6.MY_MINION,\n" +
-                            "7.ENEMY_MINION,\n" +
-                            "8.RANGED_HYBRID_HERO,\n" +
+                            "0.CELL\n" +
+                            "1.MY_TROOPS\n" +
+                            "2.ENEMY_TROOPS\n" +
+                            "3.ALL_TROOPS\n" +
+                            "4.MY_HERO\n" +
+                            "5.ENEMY_HERO\n" +
+                            "6.MY_MINION\n" +
+                            "7.ENEMY_MINION\n" +
+                            "8.RANGED_HYBRID_HERO\n" +
                             "9.RANGED_HYBRID_TROOP" +
                             ")"
             );
@@ -150,14 +153,17 @@ public class CardMaker {
             System.out.println(
                     "spell availabilityType:\n" +
                             "(" +
-                            "0.ON_PUT,\n" +
-                            "1.PASSIVE,\n" +
-                            "2.ON_ATTACK,\n" +
-                            "3.COMBO,\n" +
-                            "4.ON_DEFEAT,\n" +
-                            "5.ON_SPAWN,\n" +
+                            "0.ON_PUT\n" +
+                            "1.PASSIVE\n" +
+                            "2.ON_ATTACK\n" +
+                            "3.COMBO\n" +
+                            "4.ON_DEATH\n" +
+                            "5.ON_SPAWN\n" +
                             "6.EVERY_X_TIME\n" +
-                            "7.CONTINUOUS" +
+                            "7.CONTINUOUS\n" +
+                            "8.ON_TURN\n" +
+                            "9.ON_DEFEND\n" +
+                            "10.PASSIVE_CONTINUOUS" +
                             ")"
             );
             AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];

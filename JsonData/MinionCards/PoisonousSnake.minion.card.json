@@ -1,6 +1,6 @@
 {
   "name": "Poisonous Snake",
-  "description": "a ranged MINION with 6 AP, 5 HP, costs 300 MP, have an ON_ATTACK POISON BUFF",
+  "description": "a ranged MINION with 6 AP, 5 HP, have an ON_ATTACK POISON BUFF",
   "type": "MINION",
   "spells": [
     {
@@ -10,11 +10,7 @@
       "targetBase": "SELECTED_CELL",
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_ATTACK",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
+      "numberOfChange": 1,
       "timeOfEffect": 3
     }
   ],
@@ -23,6 +19,5 @@
   "mannaPoint": 4,
   "price": 300,
   "attackType": "RANGED",
-  "range": 4,
-  "hasCombo": false
+  "range": 4
 }

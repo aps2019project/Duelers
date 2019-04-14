@@ -11,10 +11,6 @@
       "targetType": "MY_MINION",
       "availabilityType": "CONTINUOUS",
       "numberOfChange": 2,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2147483647
     },
     {
@@ -25,10 +21,6 @@
       "targetType": "MY_MINION",
       "availabilityType": "CONTINUOUS",
       "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2147483647
     }
   ],
@@ -37,6 +29,5 @@
   "mannaPoint": 6,
   "price": 550,
   "attackType": "RANGED",
-  "range": 5,
-  "hasCombo": false
+  "range": 5
 }

@@ -9,13 +9,7 @@
       "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
       "targetBase": "SELECTED_CELL",
       "targetType": "ENEMY_TROOPS",
-      "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "availabilityType": "ON_PUT"
     },
     {
       "spellId": "dispel_own",
@@ -23,18 +17,8 @@
       "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
       "targetBase": "SELECTED_CELL",
       "targetType": "MY_TROOPS",
-      "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
-      "timeOfEffect": 0
+      "availabilityType": "ON_PUT"
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
-  "mannaPoint": 0,
-  "price": 2100,
-  "range": 0
+  "price": 2100
 }

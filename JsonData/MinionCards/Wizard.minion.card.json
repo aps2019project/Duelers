@@ -11,10 +11,6 @@
       "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
       "numberOfChange": 2,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 1
     },
     {
@@ -25,10 +21,6 @@
       "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
       "numberOfChange": 1,
-      "reusePeriod": -1,
-      "mannaPoint": 0,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 1
     }
   ],
@@ -37,6 +29,5 @@
   "mannaPoint": 4,
   "price": 550,
   "attackType": "RANGED",
-  "range": 3,
-  "hasCombo": false
+  "range": 3
 }

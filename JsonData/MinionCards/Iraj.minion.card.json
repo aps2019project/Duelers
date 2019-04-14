@@ -1,0 +1,11 @@
+{
+  "name": "Iraj",
+  "description": "a ranged MINION with 20 AP, 6 HP",
+  "type": "MINION",
+  "defaultAp": 20,
+  "defaultHp": 6,
+  "mannaPoint": 4,
+  "price": 500,
+  "attackType": "RANGED",
+  "range": 3
+}

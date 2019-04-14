@@ -4,23 +4,15 @@
   "type": "SPELL",
   "spells": [
     {
-      "spellId": "hellFire",
+      "spellId": "hellfire",
       "type": "CELL_EFFECT",
       "definiteType": "FIERY_CELL_EFFECT",
       "targetBase": "SELECTED_2X2",
       "targetType": "CELL",
       "availabilityType": "ON_PUT",
-      "numberOfChange": -1,
-      "reusePeriod": -1,
-      "mannaPoint": -1,
-      "lastTurnUsed": 0,
-      "numberOfUses": 0,
       "timeOfEffect": 2
     }
   ],
-  "defaultAp": 0,
-  "defaultHp": 0,
   "mannaPoint": 3,
-  "price": 600,
-  "range": 0
+  "price": 600
 }
