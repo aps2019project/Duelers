@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Message.Message;
+import models.message.Message;
 import models.account.Account;
 import models.card.Deck;
 import models.game.Game;
