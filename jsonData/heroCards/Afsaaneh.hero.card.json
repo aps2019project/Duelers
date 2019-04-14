@@ -1,0 +1,22 @@
+{
+  "name": "Afsaaneh",
+  "description": "a ranged HERO with 3 AP, 40 HP, have a DISPEL spell",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "af_dispel",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "SPECIAL_POWER",
+      "reusePeriod": 2,
+      "mannaPoint": 1
+    }
+  ],
+  "defaultAp": 3,
+  "defaultHp": 40,
+  "price": 11000,
+  "attackType": "RANGED",
+  "range": 3
+}

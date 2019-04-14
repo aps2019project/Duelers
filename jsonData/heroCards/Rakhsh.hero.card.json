@@ -1,0 +1,22 @@
+{
+  "name": "Rakhsh",
+  "description": "a melee HERO with 4 AP, 50 HP, have a STUN BUFF spell for 1 turn",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "rk_stun",
+      "type": "BUFF",
+      "definiteType": "STUN_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "SPECIAL_POWER",
+      "reusePeriod": 2,
+      "mannaPoint": 1,
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}

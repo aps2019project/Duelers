@@ -1,0 +1,21 @@
+{
+  "name": "SevenHeaded Dragon",
+  "description": "a melee HERO with 4 AP, 50 HP, have a DISARM BUFF spell",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "sd_disarm",
+      "type": "BUFF",
+      "definiteType": "DISARM_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "SPECIAL_POWER",
+      "reusePeriod": 1,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}
