@@ -1,0 +1,40 @@
+{
+  "name": "Dispel",
+  "description": "This card, destroys positive BUFFs of an enemy troop or negative BUFFs of an own troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "dispel_enemy",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 0
+    },
+    {
+      "spellId": "dispel_own",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 0
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 0,
+  "price": 2100,
+  "range": 0
+}

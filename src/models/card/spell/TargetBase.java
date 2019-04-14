@@ -9,5 +9,6 @@ public enum TargetBase {
 	RANDOM,
 	CARD_3X3,
 	CARD_ROW,
-	HERO_3X3
+	HERO_3X3,
+	RANDOM_AROUND_MY_HERO
 }

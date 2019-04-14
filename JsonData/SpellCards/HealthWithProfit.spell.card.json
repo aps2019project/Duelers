@@ -1,0 +1,40 @@
+{
+  "name": "Health With Profit",
+  "description": "it gives a WEAKNESS BUFF with 6 units HP decrement and two HOLY BUFFs for 3 turns to an own troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "weakness_6_units",
+      "type": "BUFF",
+      "definiteType": "WEAKNESS_HP_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 6,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 3
+    },
+    {
+      "spellId": "holy_buff",
+      "type": "BUFF",
+      "definiteType": "HOLY_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -2,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 3
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 0,
+  "price": 2250,
+  "range": 0
+}

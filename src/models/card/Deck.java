@@ -3,26 +3,30 @@ package models.card;
 import java.util.ArrayList;
 
 public class Deck {
+
     private String deckName;
     private Card hero;
     private Card item;
     private ArrayList<Card> others;
+
 
     public Deck(String name) {
 
     }
 
     public String getName() {
-        return deckName;
+        return this.deckName;
     }
 
     public Card getHero() {
         return this.hero;
     }
 
+
     public void setHero(Card hero) {
         this.hero = hero;
     }
+
 
     public void removeHero(Card hero) {
 
@@ -32,9 +36,11 @@ public class Deck {
         return this.others;
     }
 
+
     public void addCard(Card item) {
 
     }
+
 
     public void removeCard(Card item) {
 
@@ -48,7 +54,9 @@ public class Deck {
         return this.item;
     }
 
+
     public void setItem(Card item) {
         this.item = item;
     }
+
 }

@@ -1,0 +1,26 @@
+{
+  "name": "All Disarm",
+  "description": "All of enemy troops will be disarmed for one turn",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "allDisarm",
+      "type": "BUFF",
+      "definiteType": "DISARM_BUFF",
+      "targetBase": "ALL_CELLS",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 9,
+  "price": 2000,
+  "range": 0
+}

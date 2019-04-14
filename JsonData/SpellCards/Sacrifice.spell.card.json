@@ -1,0 +1,40 @@
+{
+    "name": "Sacrifice",
+    "description": "It gives an own MINION a WEAKNESS BUFF with 6 units HP decrement and a POWER BUFF with 8 units AP increment",
+    "type": "SPELL",
+    "spells": [
+        {
+            "spellId": "weakness",
+            "type": "BUFF",
+            "definiteType": "WEAKNESS_HP_BUFF",
+            "targetBase": "SELECTED_CELL",
+            "targetType": "MY_MINION",
+            "availabilityType": "ON_PUT",
+            "numberOfChange": 6,
+            "reusePeriod": -1,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0,
+            "numberOfUses": 0,
+            "timeOfEffect": 2147483647
+        },
+        {
+            "spellId": "power_buff",
+            "type": "BUFF",
+            "definiteType": "POWER_AP_BUFF",
+            "targetBase": "SELECTED_CELL",
+            "targetType": "MY_MINION",
+            "availabilityType": "ON_PUT",
+            "numberOfChange": 8,
+            "reusePeriod": -1,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0,
+            "numberOfUses": 0,
+            "timeOfEffect": 2147483647
+        }
+    ],
+    "defaultAp": 0,
+    "defaultHp": 0,
+    "mannaPoint": 2,
+    "price": 1600,
+    "range": 0
+}

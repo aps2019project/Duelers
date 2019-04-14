@@ -1,0 +1,27 @@
+{
+    "name": "Persian Swordsman",
+    "description": "a melee MINION with 4 AP and 6 HP, costs 400 MP, have an ON_ATTACK STUN BUFF",
+    "type": "MINION",
+    "spells": [
+        {
+            "spellId": "on_attack_stun",
+            "type": "BUFF",
+            "definiteType": "STUN_BUFF",
+            "targetBase": "SELECTED_CELL",
+            "targetType": "ENEMY_TROOPS",
+            "availabilityType": "ON_ATTACK",
+            "numberOfChange": -1,
+            "reusePeriod": -1,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0,
+            "numberOfUses": 0,
+            "timeOfEffect": 1
+        }
+    ],
+    "defaultAp": 4,
+    "defaultHp": 6,
+    "mannaPoint": 2,
+    "price": 400,
+    "attackType": "MELEE",
+    "range": 0
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Empower",
+  "description": "2 units are added to AP of an own troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "empower",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_AP_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 2,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 0
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 1,
+  "price": 250,
+  "range": 0
+}

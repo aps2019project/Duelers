@@ -1,0 +1,26 @@
+{
+    "name": "Kings Guard",
+    "description": "Kills a random enemy MINION around own HERO",
+    "type": "SPELL",
+    "spells": [
+        {
+            "spellId": "kings_guard",
+            "type": "CARD_EFFECT",
+            "definiteType": "KILL_A_MINION",
+            "targetBase": "RANDOM_AROUND_MY_HERO",
+            "targetType": "ENEMY_MINION",
+            "availabilityType": "ON_PUT",
+            "numberOfChange": -1,
+            "reusePeriod": -1,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0,
+            "numberOfUses": 0,
+            "timeOfEffect": 0
+        }
+    ],
+    "defaultAp": 0,
+    "defaultHp": 0,
+    "mannaPoint": 9,
+    "price": 1750,
+    "range": 0
+}

@@ -1,0 +1,26 @@
+{
+  "name": "All Poison",
+  "description": "All of enemy troops will be poisoned for 4 turns",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "allPoison",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "ALL_CELLS",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 4
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 8,
+  "price": 1500,
+  "range": 0
+}

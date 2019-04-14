@@ -1,0 +1,26 @@
+{
+  "name": "Lighting Bolt",
+  "description": "8 units hit enemy HERO",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "lightingBolt",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_HERO",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 8,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 0
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 2,
+  "price": 1250,
+  "range": 0
+}

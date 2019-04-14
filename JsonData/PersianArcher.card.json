@@ -1,0 +1,12 @@
+{
+    "name": "Persian Archer",
+    "description": "a ranged MINION with 4 AP and 6 HP, costs 300 MP",
+    "type": "MINION",
+    "spells": [],
+    "defaultAp": 4,
+    "defaultHp": 6,
+    "mannaPoint": 2,
+    "price": 300,
+    "attackType": "RANGED",
+    "range": 7
+}
