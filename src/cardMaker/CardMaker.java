@@ -161,9 +161,8 @@ public class CardMaker {
                             "5.ON_SPAWN\n" +
                             "6.EVERY_X_TIME\n" +
                             "7.CONTINUOUS\n" +
-                            "8.ON_TURN\n" +
-                            "9.ON_DEFEND\n" +
-                            "10.PASSIVE_CONTINUOUS" +
+                            "8.ON_DEFEND\n" +
+                            "9.PASSIVE_CONTINUOUS" +
                             ")"
             );
             AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];

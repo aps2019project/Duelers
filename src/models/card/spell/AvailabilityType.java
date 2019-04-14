@@ -9,7 +9,6 @@ public enum AvailabilityType {
     ON_SPAWN,
     EVERY_X_TIME,
     CONTINUOUS,
-    ON_TURN,
     ON_DEFEND,
     PASSIVE_CONTINUOUS
 }

@@ -1,6 +1,6 @@
 {
   "name": "Elf",
-  "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a ON_TURN CONTINUOUS AP POWER BUFF for all own minions",
+  "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a PASSIVE CONTINUOUS AP POWER BUFF for all own minions",
   "type": "MINION",
   "spells": [
     {
@@ -9,7 +9,7 @@
       "definiteType": "POWER_AP_BUFF",
       "targetBase": "ALL_CELLS",
       "targetType": "MY_MINION",
-      "availabilityType": "ON_TURN",
+      "availabilityType": "PASSIVE",
       "numberOfChange": 1,
       "reusePeriod": -1,
       "timeOfEffect": 2147483647
