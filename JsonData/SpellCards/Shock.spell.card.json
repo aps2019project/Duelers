@@ -1,1 +1,26 @@
-{"name":"Shock","description":"Makes an enemy troop STUN","type":"SPELL","spells":[{"spellId":"stun","type":"BUFF","definiteType":"STUN_BUFF","targetBase":"SELECTED_CELL","targetType":"ENEMY_TROOPS","availabilityType":"ON_PUT","numberOfChange":-1,"reusePeriod":-1,"mannaPoint":0,"lastTurnUsed":0,"numberOfUses":0,"timeOfEffect":2}],"defaultAp":0,"defaultHp":0,"mannaPoint":1,"price":1200,"range":0}
+{
+  "name": "Shock",
+  "description": "Makes an enemy troop STUN",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "stun",
+      "type": "BUFF",
+      "definiteType": "STUN_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 2
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 1,
+  "price": 1200,
+  "range": 0
+}

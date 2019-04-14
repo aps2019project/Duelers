@@ -1,0 +1,28 @@
+{
+  "name": "Wolf",
+  "description": "a melee MINION with 1 AP, 6 HP, costs 400, have an ON_ATTACK POISON BUFF with 6 units HP decrement for 1 turn",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "w_poison",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 6,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 1,
+  "defaultHp": 6,
+  "mannaPoint": 3,
+  "price": 400,
+  "attackType": "MELEE",
+  "range": -1,
+  "hasCombo": false
+}

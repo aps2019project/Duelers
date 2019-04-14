@@ -1,0 +1,42 @@
+{
+  "name": "Great Wizard",
+  "description": "a ranged MINION with 6 AP, 6 HP, costs 550, have some PASSIVE CONTINUOUS AP POWER and HOLY BUFF",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "gw_power",
+      "type": "BUFF",
+      "definiteType": "POWER_AP_BUFF",
+      "targetBase": "CARD_3X3",
+      "targetType": "MY_MINION",
+      "availabilityType": "CONTINUOUS",
+      "numberOfChange": 2,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 2147483647
+    },
+    {
+      "spellId": "gw_holy",
+      "type": "BUFF",
+      "definiteType": "HOLY_BUFF",
+      "targetBase": "CARD_3X3",
+      "targetType": "MY_MINION",
+      "availabilityType": "CONTINUOUS",
+      "numberOfChange": -1,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 6,
+  "defaultHp": 6,
+  "mannaPoint": 6,
+  "price": 550,
+  "attackType": "RANGED",
+  "range": 5,
+  "hasCombo": false
+}

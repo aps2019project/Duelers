@@ -156,7 +156,8 @@ public class CardMaker {
                             "3.COMBO,\n" +
                             "4.ON_DEFEAT,\n" +
                             "5.ON_SPAWN,\n" +
-                            "6.EVERY_X_TIME" +
+                            "6.EVERY_X_TIME\n" +
+                            "7.CONTINUOUS" +
                             ")"
             );
             AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];
@@ -184,7 +185,7 @@ public class CardMaker {
         String json = new Gson().toJson(card);
 
         try {
-            FileWriter writer = new FileWriter(new File("output/", card.getName().replaceAll(" ","") + ".card.json"));
+            FileWriter writer = new FileWriter(new File("JsonData/MinionCards/", card.getName().replaceAll(" ","") + ".minion.card.json"));
             writer.write(json);
             writer.close();
         } catch (IOException e) {

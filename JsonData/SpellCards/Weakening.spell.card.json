@@ -1,26 +1,26 @@
 {
-    "name": "Weakening",
-    "description": "It gives an enemy MINION a WEAKNESS BUFF with 4 units AP decrement",
-    "type": "SPELL",
-    "spells": [
-        {
-            "spellId": "weakness_buff",
-            "type": "BUFF",
-            "definiteType": "WEAKNESS_AP_BUFF",
-            "targetBase": "SELECTED_CELL",
-            "targetType": "ENEMY_MINION",
-            "availabilityType": "ON_PUT",
-            "numberOfChange": 4,
-            "reusePeriod": -1,
-            "mannaPoint": 0,
-            "lastTurnUsed": 0,
-            "numberOfUses": 0,
-            "timeOfEffect": 2147483647
-        }
-    ],
-    "defaultAp": 0,
-    "defaultHp": 0,
-    "mannaPoint": 1,
-    "price": 1000,
-    "range": 0
+  "name": "Weakening",
+  "description": "It gives an enemy MINION a WEAKNESS BUFF with 4 units AP decrement",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "weakness_buff",
+      "type": "BUFF",
+      "definiteType": "WEAKNESS_AP_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 4,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 1,
+  "price": 1000,
+  "range": 0
 }

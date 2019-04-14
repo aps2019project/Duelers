@@ -1,26 +1,26 @@
 {
-    "name": "All Attack",
-    "description": "6 units hit all enemy troops",
-    "type": "SPELL",
-    "spells": [
-        {
-            "spellId": "allAttack",
-            "type": "CARD_EFFECT",
-            "definiteType": "DECREASE_HP_CARD_EFFECT",
-            "targetBase": "ALL_CELLS",
-            "targetType": "ENEMY_TROOPS",
-            "availabilityType": "ON_PUT",
-            "numberOfChange": 6,
-            "reusePeriod": -1,
-            "mannaPoint": 0,
-            "lastTurnUsed": 0,
-            "numberOfUses": 0,
-            "timeOfEffect": 0
-        }
-    ],
-    "defaultAp": 0,
-    "defaultHp": 0,
-    "mannaPoint": 4,
-    "price": 1500,
-    "range": 0
+  "name": "All Attack",
+  "description": "6 units hit all enemy troops",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "allAttack",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "ALL_CELLS",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 6,
+      "reusePeriod": -1,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0,
+      "numberOfUses": 0,
+      "timeOfEffect": 0
+    }
+  ],
+  "defaultAp": 0,
+  "defaultHp": 0,
+  "mannaPoint": 4,
+  "price": 1500,
+  "range": 0
 }

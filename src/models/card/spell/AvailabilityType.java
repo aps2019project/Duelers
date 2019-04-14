@@ -7,5 +7,6 @@ public enum AvailabilityType {
     COMBO,
     ON_DEFEAT,
     ON_SPAWN,
-    EVERY_X_TIME
+    EVERY_X_TIME,
+    CONTINUOUS
 }
