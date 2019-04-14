@@ -21,23 +21,25 @@ public abstract class Message {
     private String cardId1,cardId2;
     private int changeValue;
     private Position position;
+    private String userName,passWord;
 
-    private Message(){
-
+    private Message(String sender, String receiver){
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     public Message(String sender, String receiver, Game game) {
         this.sender = sender;
         this.receiver = receiver;
         this.game = game;
-        messageType=MessageType.GAME;
+        messageType=MessageType.GAME_COPY;
     }
 
     public Message(String sender, String receiver, Card[] shopCards) {
         this.sender = sender;
         this.receiver = receiver;
         this.shopCards = shopCards;
-        messageType=MessageType.SHOP;
+        messageType=MessageType.SHOP_COPY;
     }
 
     public Message(String sender, String receiver, Account account) {
@@ -50,28 +52,36 @@ public abstract class Message {
         this.sender = sender;
         this.receiver = receiver;
         this.customDecks = customDecks;
-        messageType=MessageType.CUSTOMDECKS;
+        messageType=MessageType.CUSTOMDECKS_COPY;
     }
 
     public Message(String sender, String receiver, Account[] leaderBoard) {
         this.sender = sender;
         this.receiver = receiver;
         this.leaderBoard = leaderBoard;
-        messageType=MessageType.LEADERBOARD;
+        messageType=MessageType.LEADERBOARD_COPY;
     }
 
     public Message(String sender, String receiver, Story[] stories) {
         this.sender = sender;
         this.receiver = receiver;
         this.stories = stories;
-        messageType=MessageType.STORIES;
+        messageType=MessageType.STORIES_COPY;
     }
 
     public Message(String sender, String receiver, Position[] positions) {
         this.sender = sender;
         this.receiver = receiver;
         this.positions = positions;
-        messageType=MessageType.POSITIONS;
+        messageType=MessageType.POSITIONS_COPY;
+    }
+
+    public Message(String sender, String receiver, String userName, String passWord) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.userName = userName;
+        this.passWord = passWord;
+        messageType=MessageType.LOG_IN;
     }
 
     //....................
