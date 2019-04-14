@@ -1,0 +1,20 @@
+{
+  "name": "Predator Lion",
+  "description": "a melee MINION with 8 AP, 1 HP, have a ON_ATTACK HOLY BUFF DISABLING",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "pl_holy_disabling",
+      "type": "CARD_EFFECT",
+      "definiteType": "DISABLE_HOLY_BUFF_ON_ATTACK",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_ATTACK"
+    }
+  ],
+  "defaultAp": 8,
+  "defaultHp": 1,
+  "mannaPoint": 2,
+  "price": 600,
+  "attackType": "MELEE"
+}

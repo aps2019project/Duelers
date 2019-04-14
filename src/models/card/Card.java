@@ -1,5 +1,6 @@
 package models.card;
 
+
 import models.card.spell.Spell;
 
 public class Card {
@@ -11,11 +12,23 @@ public class Card {
     private int defaultAp;
     private int defaultHp;
     private int mannaPoint;
+    private int price;
     private AttackType attackType;
     private int range;
+    private boolean hasCombo;
 
-    public Card(Card referenceCard) {
-
+    public Card(String name, String description, CardType type, Spell[] spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.spells = spells;
+        this.defaultAp = defaultAp;
+        this.defaultHp = defaultHp;
+        this.mannaPoint = mannaPoint;
+        this.price = price;
+        this.attackType = attackType;
+        this.range = range;
+        this.hasCombo = hasCombo;
     }
 
     public String getName() {
@@ -56,5 +69,13 @@ public class Card {
 
     public int getRange() {
         return this.range;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean hasCombo() {
+        return hasCombo;
     }
 }

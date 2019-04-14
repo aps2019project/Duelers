@@ -1,0 +1,22 @@
+{
+  "name": "Granny Cold",
+  "description": "a ranged MINION with 4 AP, 3 HP, have an ON_SPAWN STUN BUFF for 3*3 square around it",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "gc_stun",
+      "type": "BUFF",
+      "definiteType": "STUN_BUFF",
+      "targetBase": "CARD_3X3",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_SPAWN",
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 3,
+  "mannaPoint": 3,
+  "price": 500,
+  "attackType": "RANGED",
+  "range": 5
+}

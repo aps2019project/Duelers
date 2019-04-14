@@ -1,0 +1,18 @@
+{
+  "name": "All Attack",
+  "description": "6 units hit all enemy troops",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "all_attack",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "ALL_CELLS",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 6
+    }
+  ],
+  "mannaPoint": 4,
+  "price": 1500
+}

@@ -1,0 +1,18 @@
+{
+  "name": "God Strength",
+  "description": "4 units are added to AP of own HERO",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "god_strength",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "targetBase": "ALL_CELLS",
+      "targetType": "MY_HERO",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 4
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 450
+}

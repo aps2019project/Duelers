@@ -1,0 +1,18 @@
+{
+  "name": "Shock",
+  "description": "Makes an enemy troop STUN",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "stun",
+      "type": "BUFF",
+      "definiteType": "STUN_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "timeOfEffect": 2
+    }
+  ],
+  "mannaPoint": 1,
+  "price": 1200
+}

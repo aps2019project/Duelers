@@ -1,0 +1,20 @@
+{
+  "name": "TwoHeaded Giant",
+  "description": "a melee MINION with 4 AP, 10 HP, have a ON_ATTACK spell that removes all positive effects",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "tg_dispel",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_ATTACK"
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 10,
+  "mannaPoint": 4,
+  "price": 550,
+  "attackType": "MELEE"
+}

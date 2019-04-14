@@ -1,0 +1,22 @@
+{
+  "name": "Panther",
+  "description": "a melee MINION with 2 AP, 6 HP, have a ON_ATTACK POISON BUFF with 8 units HP decrement for 1 turn",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "p_poison",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 8,
+      "timeOfEffect": 1
+    }
+  ],
+  "defaultAp": 2,
+  "defaultHp": 6,
+  "mannaPoint": 4,
+  "price": 400,
+  "attackType": "MELEE"
+}

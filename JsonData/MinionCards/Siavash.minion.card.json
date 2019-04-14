@@ -1,0 +1,20 @@
+{
+  "name": "Siavash",
+  "description": "a melee MINION with 5 AP, 8 HP, have an ON_DEATH spell that hits enemy HERO 6 units",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "si_hero_hit",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetType": "ENEMY_HERO",
+      "availabilityType": "ON_DEATH",
+      "numberOfChange": 6
+    }
+  ],
+  "defaultAp": 5,
+  "defaultHp": 8,
+  "mannaPoint": 4,
+  "price": 350,
+  "attackType": "MELEE"
+}

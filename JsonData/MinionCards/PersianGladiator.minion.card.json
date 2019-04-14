@@ -1,0 +1,11 @@
+{
+  "name": "Persian Gladiator",
+  "description": "a melee MINION with 4 AP, 12 HP, can attack combo",
+  "type": "MINION",
+  "defaultAp": 4,
+  "defaultHp": 12,
+  "mannaPoint": 7,
+  "price": 800,
+  "attackType": "MELEE",
+  "hasCombo": true
+}

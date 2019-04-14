@@ -1,0 +1,24 @@
+{
+  "name": "Elf",
+  "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a PASSIVE CONTINUOUS AP POWER BUFF for all own minions",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "e_power_buff",
+      "type": "BUFF",
+      "definiteType": "POWER_AP_BUFF",
+      "targetBase": "ALL_CELLS",
+      "targetType": "MY_MINION",
+      "availabilityType": "PASSIVE",
+      "numberOfChange": 1,
+      "reusePeriod": -1,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 10,
+  "mannaPoint": 5,
+  "price": 500,
+  "attackType": "RANGED",
+  "range": 4
+}

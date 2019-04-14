@@ -1,0 +1,31 @@
+{
+  "name": "Turanian Spy",
+  "description": "a melee MINION with 6 AP, 6 HP, have ON_ATTACK DISARM SPELL",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "ts_disarm",
+      "type": "BUFF",
+      "definiteType": "DISARM_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_ATTACK",
+      "timeOfEffect": 1
+    },
+    {
+      "spellId": "ts_poison",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 1,
+      "timeOfEffect": 4
+    }
+  ],
+  "defaultAp": 6,
+  "defaultHp": 6,
+  "mannaPoint": 4,
+  "price": 700,
+  "attackType": "MELEE"
+}

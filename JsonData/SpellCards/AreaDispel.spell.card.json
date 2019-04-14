@@ -1,0 +1,25 @@
+{
+  "name": "Area Dispel",
+  "description": "This card, destroys positive BUFFs of enemy troops and negative BUFFs of own troops in a 2*2 square",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "ad_enemy",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_2X2",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT"
+    },
+    {
+      "spellId": "ad_own",
+      "type": "CARD_EFFECT",
+      "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
+      "targetBase": "SELECTED_2X2",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT"
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 1500
+}

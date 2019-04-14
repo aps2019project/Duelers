@@ -1,0 +1,10 @@
+{
+  "name": "Turanian Swampy",
+  "description": "a melee MINION with 10 AP, 3 HP",
+  "type": "MINION",
+  "defaultAp": 10,
+  "defaultHp": 3,
+  "mannaPoint": 2,
+  "price": 450,
+  "attackType": "MELEE"
+}

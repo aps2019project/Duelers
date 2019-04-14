@@ -1,6 +1,8 @@
 package models.card.spell;
 
 public enum TargetType {
+	CELL,
+	MY_TROOPS,
 	ENEMY_TROOPS,
 	ALL_TROOPS,
 	MY_HERO,

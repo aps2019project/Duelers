@@ -4,7 +4,6 @@ import models.card.Card;
 import models.map.Cell;
 
 public class Troop {
-
     private Card card;
     private int currentAp;
     private int currentHp;
@@ -13,7 +12,6 @@ public class Troop {
     private boolean canAttack;
     private boolean isDisarm;
     private boolean hasFlag;
-
 
     public Troop(Card card, Cell cell) {
 
@@ -34,7 +32,6 @@ public class Troop {
     public Cell getCell() {
         return this.cell;
     }
-
 
     public void moveTo(Cell cell) {
 

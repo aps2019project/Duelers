@@ -1,0 +1,17 @@
+{
+  "name": "Total Disarm",
+  "description": "Make an enemy troop DISARM till the end of the game",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "totalDisarm",
+      "type": "BUFF",
+      "definiteType": "DISARM_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "price": 1000
+}

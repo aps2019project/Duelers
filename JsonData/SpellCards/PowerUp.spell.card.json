@@ -1,0 +1,19 @@
+{
+  "name": "Power Up",
+  "description": "applies a POWER BUFF with 6 units AP increment for an own troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "pu_AP_buff",
+      "type": "BUFF",
+      "definiteType": "POWER_AP_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 6,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 2500
+}

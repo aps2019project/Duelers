@@ -1,0 +1,18 @@
+{
+  "name": "Fireball",
+  "description": "4 units hit an enemy troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "fireball",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 4
+    }
+  ],
+  "mannaPoint": 1,
+  "price": 400
+}

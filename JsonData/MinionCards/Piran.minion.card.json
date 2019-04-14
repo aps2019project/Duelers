@@ -1,0 +1,19 @@
+{
+  "name": "Piran",
+  "description": "a melee MINION with 12 AP, 20 HP, costs 400, and does not POISON on DEFEND",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "p_no_poison",
+      "type": "CARD_EFFECT",
+      "definiteType": "NO_POISON",
+      "targetBase": "CARD_ITSELF",
+      "availabilityType": "ON_DEFEND"
+    }
+  ],
+  "defaultAp": 12,
+  "defaultHp": 20,
+  "mannaPoint": 8,
+  "price": 400,
+  "attackType": "MELEE"
+}

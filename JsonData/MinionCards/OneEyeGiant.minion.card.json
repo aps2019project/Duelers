@@ -1,0 +1,22 @@
+{
+  "name": "One Eye Giant",
+  "description": "a hybrid MINION with 11 AP, 12 HP, have an ON_DEATH HP decreasing to 3*3 square around itself 2 units HP decrement",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "og_on_death",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "targetBase": "CARD_3X3",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_DEATH",
+      "numberOfChange": 2
+    }
+  ],
+  "defaultAp": 11,
+  "defaultHp": 12,
+  "mannaPoint": 7,
+  "price": 500,
+  "attackType": "HYBRID",
+  "range": 3
+}

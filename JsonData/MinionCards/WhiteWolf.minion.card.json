@@ -1,0 +1,32 @@
+{
+  "name": "White Wolf",
+  "description": "a melee MINION with 2 AP, 8 HP, costs 400, have some ON_ATTACK POISON_BUFFs",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "ww_poison_1",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 2,
+      "timeOfEffect": 1
+    },
+    {
+      "spellId": "ww_poison_2",
+      "type": "BUFF",
+      "definiteType": "POISON_BUFF",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_ATTACK",
+      "numberOfChange": 4,
+      "timeOfEffect": 2
+    }
+  ],
+  "defaultAp": 2,
+  "defaultHp": 8,
+  "mannaPoint": 5,
+  "price": 400,
+  "attackType": "MELEE"
+}

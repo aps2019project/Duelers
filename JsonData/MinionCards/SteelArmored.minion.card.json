@@ -1,0 +1,22 @@
+{
+  "name": "Steel Armored",
+  "description": "a melee MINION with 1 AP, 1 HP, have 12 PASSIVE CONTINUOUS HOLY BUFFs",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "sa_holy",
+      "type": "BUFF",
+      "definiteType": "HOLY_BUFF",
+      "targetBase": "CARD_ITSELF",
+      "targetType": "MY_MINION",
+      "availabilityType": "PASSIVE_CONTINUOUS",
+      "numberOfChange": -12,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 1,
+  "defaultHp": 1,
+  "mannaPoint": 3,
+  "price": 650,
+  "attackType": "MELEE"
+}

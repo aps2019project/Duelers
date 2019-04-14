@@ -1,0 +1,11 @@
+{
+  "name": "Turanian Prince",
+  "description": "a melee MINION with 10 AP, 6 HP, can attack combo",
+  "type": "MINION",
+  "defaultAp": 10,
+  "defaultHp": 6,
+  "mannaPoint": 6,
+  "price": 800,
+  "attackType": "MELEE",
+  "hasCombo": true
+}

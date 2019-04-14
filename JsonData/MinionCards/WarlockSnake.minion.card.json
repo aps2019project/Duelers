@@ -1,0 +1,23 @@
+{
+  "name": "Warlock Snake",
+  "description": "a ranged MINION with 7 AP, 14 HP, costs 500, have an inverse HOLY BUFF SPELL",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "ws_inverse_holy_buff",
+      "type": "BUFF",
+      "definiteType": "HOLY_BUFF",
+      "targetBase": "CARD_RANGE_2",
+      "targetType": "ENEMY_MINION",
+      "availabilityType": "ON_SPAWN",
+      "numberOfChange": 1,
+      "timeOfEffect": 2147483647
+    }
+  ],
+  "defaultAp": 7,
+  "defaultHp": 14,
+  "mannaPoint": 8,
+  "price": 500,
+  "attackType": "RANGED",
+  "range": 5
+}

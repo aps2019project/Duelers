@@ -1,0 +1,10 @@
+{
+  "name": "Persian Horseman",
+  "description": "a melee MINION with 6 AP, 10 HP",
+  "type": "MINION",
+  "defaultAp": 6,
+  "defaultHp": 10,
+  "mannaPoint": 4,
+  "price": 200,
+  "attackType": "MELEE"
+}

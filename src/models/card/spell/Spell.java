@@ -6,14 +6,30 @@ public class Spell {
     private DefiniteType definiteType;
     private TargetBase targetBase;
     private TargetType targetType;
-    private int range;
+    private AvailabilityType availabilityType;
     private int numberOfChange;
     private int reusePeriod;
     private int mannaPoint;
     private int lastTurnUsed;
     private int numberOfUses;
-    private AvailabilityType availabilityType;
     private int timeOfEffect;
+
+    public Spell(String spellId, SpellType type, DefiniteType definiteType, TargetBase targetBase, TargetType targetType, AvailabilityType availabilityType, int numberOfChange, int reusePeriod, int mannaPoint, int timeOfEffect) {
+        this.spellId = spellId;
+        this.type = type;
+        this.definiteType = definiteType;
+        this.targetBase = targetBase;
+        this.targetType = targetType;
+        this.availabilityType = availabilityType;
+        this.numberOfChange = numberOfChange;
+        this.reusePeriod = reusePeriod;
+        this.mannaPoint = mannaPoint;
+        if (timeOfEffect == -1) {
+            this.timeOfEffect = Integer.MAX_VALUE;
+            return;
+        }
+        this.timeOfEffect = timeOfEffect;
+    }
 
     public Spell(String spellId, Spell referenceSpell) {
 
@@ -33,10 +49,6 @@ public class Spell {
 
     public TargetBase getTargetBase() {
         return this.targetBase;
-    }
-
-    public int getRange() {
-        return this.range;
     }
 
     public int getNumberOfChange() {
