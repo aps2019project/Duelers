@@ -7,7 +7,7 @@ public class BattleMenu extends Menu {
 
     }
 
-    private static BattleMenu getInstance() {
+    public static BattleMenu getInstance() {
         return BATTLE_MENU;
     }
 

@@ -15,14 +15,18 @@ import java.util.ArrayList;
 public class Server {
     private String serverName;
     private ArrayList<Account> accounts;
-    private ArrayList<OnlineSystem> onlineSystems;
+    private ArrayList<onlineClient> onlineClients;
     private ArrayList<Game> onlineGames;
     private ArrayList<Deck> customDecks;
     private ArrayList<Account> leaderBoard;
     private ArrayList<Message> sendingMessages;
     private ArrayList<Message> receivingMessages;
     private ArrayList<Story> stories;
-
+    
+    public String getServerName() {
+        return serverName;
+    }
+    
     public Server(String serverName) {
         //read Accounts,customDeck,stories;
         this.serverName=serverName;
@@ -32,12 +36,12 @@ public class Server {
         sendingMessages.add(message);
     }
 
-    public void addToReceivings(Message message) {
+    public void addToReceivingMessages(Message message) {
         receivingMessages.add(message);
     }
 
     public void receiveMessages() {
-
+    
     }
 
     public void sendMessages() {
@@ -49,27 +53,27 @@ public class Server {
         //...
     }
 
-    public void sendGameCopy(System system, Game game) {
+    public void sendGameCopy(Client client, Game game) {
 
     }
 
-    public void sendShopCopy(System system) {
+    public void sendShopCopy(Client client) {
 
     }
 
-    public void sendAccountCopy(System system, Account account) {
+    public void sendAccountCopy(Client client, Account account) {
 
     }
 
-    public void sendStoriesCopy(System system) {
+    public void sendStoriesCopy(Client client) {
 
     }
 
-    public void sendCustomDecksCopy(System system) {
+    public void sendCustomDecksCopy(Client client) {
 
     }
 
-    public void sendLeaderBoardCopy(System system) {
+    public void sendLeaderBoardCopy(Client client) {
 
     }
 
