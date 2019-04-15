@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Organizer {
     View view = View.getInstance();
     private Scanner input;
-    private ArrayList<Client> clients;
+    private ArrayList<Client> clients = new ArrayList<>();
     private Server server;
     private Client thisClient;
     public void main() {
@@ -18,18 +18,21 @@ public class Organizer {
             Request request = new Request();
             request.getNewCommand();
             try {
-                request.isValid(thisClient);
+                request.handleRequset(thisClient,server);
             }catch (InputException e){
-                break;
+                view.printError(e);
             }
         }while (true);
     }
+    
     public String request(String sender, String text) {
         return "";
     }
     
     public void preProcess() {
+        server = new Server("server");
         clients.add(new Client(java.lang.System.getProperty("user.name"), AccountMenu.getInstance()));
         thisClient = clients.get(0);
     }
+    
 }

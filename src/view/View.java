@@ -15,9 +15,15 @@ public class View {
     private static View VIEW;
 
     public static View getInstance() {
+        if (VIEW == null) {
+            VIEW = new View();
+        }
         return VIEW;
     }
-
+    
+    public void printError(Exception e){
+        System.out.println(e.getMessage());
+    }
 
     public void printError(ErrorType error) {
 

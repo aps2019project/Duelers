@@ -7,7 +7,7 @@ public class MainMenu extends Menu {
 
     }
 
-    private static MainMenu getInstance()
+    public static MainMenu getInstance()
     {
         if (MAIN_MENU == null) {
              MAIN_MENU = new MainMenu();

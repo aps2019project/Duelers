@@ -9,8 +9,8 @@ import java.util.HashMap;
 public class Map {
 
     private Cell[][] cells;
-    private ArrayList<Troop> playerOneTroops;
-    private ArrayList<Troop> playerTwoTroops;
+    private ArrayList<Troop> playerOneTroops = new ArrayList<>();
+    private ArrayList<Troop> playerTwoTroops = new ArrayList<>();
     private int numberOfFlags;
 
     public Map(HashMap<Cell, Card> items, int numberOfFlags) {

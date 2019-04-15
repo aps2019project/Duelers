@@ -22,7 +22,11 @@ public class Server {
     private ArrayList<Message> sendingMessages;
     private ArrayList<Message> receivingMessages;
     private ArrayList<Story> stories;
-
+    
+    public String getServerName() {
+        return serverName;
+    }
+    
     public Server(String serverName) {
         //read Accounts,customDeck,stories;
         this.serverName=serverName;
@@ -32,12 +36,12 @@ public class Server {
         sendingMessages.add(message);
     }
 
-    public void addToReceivings(Message message) {
+    public void addToReceivingMessages(Message message) {
         receivingMessages.add(message);
     }
 
     public void receiveMessages() {
-
+    
     }
 
     public void sendMessages() {

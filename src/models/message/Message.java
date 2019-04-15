@@ -136,6 +136,12 @@ public class Message {
         message.messageType=MessageType.TROOP_HP;
         return message;
     }
-
+    
+    public static Message register(String sender,String receiver,String userName , String passWord){
+        Message message = new Message(sender , receiver);
+        message.userName = userName;
+        message.passWord = passWord;
+        return  message;
+    }
 
 }
