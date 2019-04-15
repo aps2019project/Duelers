@@ -271,6 +271,14 @@ public class Message {
         return message;
     }
 
+    public static Message register(String sender,String receiver,String userName,String passWord){
+        Message message=new Message(sender,receiver);
+        message.userName=userName;
+        message.passWord=passWord;
+        message.messageType=MessageType.REGISTER;
+        return message;
+    }
+
     public static Message logIn(String sender,String receiver,String userName,String passWord){
         Message message=new Message(sender,receiver);
         message.userName=userName;
