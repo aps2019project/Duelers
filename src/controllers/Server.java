@@ -13,6 +13,7 @@ import models.map.Map;
 import java.util.ArrayList;
 
 public class Server {
+    private String serverName;
     private ArrayList<Account> accounts;
     private ArrayList<OnlineSystem> onlineSystems;
     private ArrayList<Game> onlineGames;
@@ -22,8 +23,9 @@ public class Server {
     private ArrayList<Message> receivingMessages;
     private ArrayList<Story> stories;
 
-    public void StartServer() {
+    public Server(String serverName) {
         //read Accounts,customDeck,stories;
+        this.serverName=serverName;
     }
 
     public void addToSendings(Message message) {

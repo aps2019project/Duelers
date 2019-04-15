@@ -7,10 +7,13 @@ import models.game.Game;
 import models.game.Story;
 import models.map.Position;
 
-public abstract class Message {
+public class Message {
+    //TODO:Have ServerMessage & SystemMessage
+
     private MessageType messageType;
     private String sender;
     private String receiver;
+
     private Game game;
     private Card[] shopCards;
     private Account account;
@@ -18,79 +21,121 @@ public abstract class Message {
     private Account[] leaderBoard;
     private Story[] stories;
     private Position[] positions;
-    private String cardId1,cardId2;
-    private int changeValue;
+    private String exceptionString;
+    private String[] cardIds;
+    private String spellId;
+    private int turnNum;
+    private String cardName;
+    private int newValue;
     private Position position;
     private String userName,passWord;
+    private String deckName;
 
     private Message(String sender, String receiver){
         this.sender = sender;
         this.receiver = receiver;
     }
 
-    public Message(String sender, String receiver, Game game) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.game = game;
-        messageType=MessageType.GAME_COPY;
+    public static Message gameCopyMessage(String sender,String receiver,Game game){
+        Message message=new Message(sender,receiver);
+        message.game=game;
+        message.messageType=MessageType.GAME_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Card[] shopCards) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.shopCards = shopCards;
-        messageType=MessageType.SHOP_COPY;
+    public static Message shopCopyMessage(String sender,String receiver,Card[] shopCards){
+        Message message=new Message(sender,receiver);
+        message.shopCards=shopCards;
+        message.messageType=MessageType.SHOP_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Account account) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.account = account;
+    public static Message accountCopyMessage(String sender,String receiver,Account account){
+        Message message=new Message(sender,receiver);
+        message.account=account;
+        message.messageType=MessageType.ACCOUNT_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Deck[] customDecks) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.customDecks = customDecks;
-        messageType=MessageType.CUSTOMDECKS_COPY;
+    public static Message customDecksCopyMessage(String sender,String receiver,Deck[] customDecks){
+        Message message=new Message(sender,receiver);
+        message.customDecks=customDecks;
+        message.messageType=MessageType.CUSTOMDECKS_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Account[] leaderBoard) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.leaderBoard = leaderBoard;
-        messageType=MessageType.LEADERBOARD_COPY;
+    public static Message leaderBoardCopyMessage(String sender,String receiver,Account[] leaderBoard){
+        Message message=new Message(sender,receiver);
+        message.leaderBoard=leaderBoard;
+        message.messageType=MessageType.LEADERBOARD_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Story[] stories) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.stories = stories;
-        messageType=MessageType.STORIES_COPY;
+    public static Message storiesCopyMessage(String sender,String receiver,Story[] stories){
+        Message message=new Message(sender,receiver);
+        message.stories=stories;
+        message.messageType=MessageType.STORIES_COPY;
+        return message;
     }
 
-    public Message(String sender, String receiver, Position[] positions) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.positions = positions;
-        messageType=MessageType.POSITIONS_COPY;
+    public static Message troopChangePosition(String sender,String receiver,String cardId,Position position){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.position=position;
+        message.messageType=MessageType.MOVE_TROOP;
+        return message;
     }
 
-    public Message(String sender, String receiver, String userName, String passWord) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.userName = userName;
-        this.passWord = passWord;
-        messageType=MessageType.LOG_IN;
+    public static Message toHand(String sender,String receiver,String cardId){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.TO_HAND;
+        return message;
     }
 
-    //....................
-
-    public String getSender() {
-        return sender;
+    public static Message toNext(String sender,String receiver,String cardId){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.TO_NEXT;
+        return message;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public static Message toGraveYard(String sender,String receiver,String cardId){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.TO_GRAVEYARD;
+        return message;
     }
+
+    public static Message toCollecteds(String sender,String receiver,String cardId){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.TO_COLLECTEDS;
+        return message;
+    }
+
+    public static Message changeAP(String sender,String receiver,String cardId,int newValue){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.newValue=newValue;
+        message.messageType=MessageType.TROOP_AP;
+        return message;
+    }
+
+    public static Message changeHP(String sender,String receiver,String cardId,int newValue){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.newValue=newValue;
+        message.messageType=MessageType.TROOP_HP;
+        return message;
+    }
+
+
 }
