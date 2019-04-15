@@ -1,14 +1,18 @@
 package models.menus;
 
-import controllers.System;
+import controllers.Client;
 
 public class AccountMenu extends Menu {
-    private static final AccountMenu ACCOUNT_MENU = new AccountMenu();
+    private static AccountMenu ACCOUNT_MENU;
 
     private AccountMenu() {
     }
 
-    public static AccountMenu getInstance() {
+    public static AccountMenu getInstance()
+    {
+        if (ACCOUNT_MENU == null) {
+             ACCOUNT_MENU = new AccountMenu();
+        }
         return ACCOUNT_MENU;
     }
 
@@ -16,7 +20,7 @@ public class AccountMenu extends Menu {
 
     }
 
-    public void login(String userName, String password, System system) {
+    public void login(String userName, String password, Client client) {
 
     }
 

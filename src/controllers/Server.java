@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Server {
     private String serverName;
     private ArrayList<Account> accounts;
-    private ArrayList<OnlineSystem> onlineSystems;
+    private ArrayList<onlineClient> onlineClients;
     private ArrayList<Game> onlineGames;
     private ArrayList<Deck> customDecks;
     private ArrayList<Account> leaderBoard;
@@ -49,27 +49,27 @@ public class Server {
         //...
     }
 
-    public void sendGameCopy(System system, Game game) {
+    public void sendGameCopy(Client client, Game game) {
 
     }
 
-    public void sendShopCopy(System system) {
+    public void sendShopCopy(Client client) {
 
     }
 
-    public void sendAccountCopy(System system, Account account) {
+    public void sendAccountCopy(Client client, Account account) {
 
     }
 
-    public void sendStoriesCopy(System system) {
+    public void sendStoriesCopy(Client client) {
 
     }
 
-    public void sendCustomDecksCopy(System system) {
+    public void sendCustomDecksCopy(Client client) {
 
     }
 
-    public void sendLeaderBoardCopy(System system) {
+    public void sendLeaderBoardCopy(Client client) {
 
     }
 

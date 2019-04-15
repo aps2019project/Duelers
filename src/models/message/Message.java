@@ -8,7 +8,7 @@ import models.game.Story;
 import models.map.Position;
 
 public class Message {
-    //TODO:Have ServerMessage & SystemMessage
+    //TODO:Have ServerMessage & clientMessage
 
     private MessageType messageType;
     private String sender;

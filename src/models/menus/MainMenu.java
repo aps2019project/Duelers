@@ -1,13 +1,17 @@
 package models.menus;
 
 public class MainMenu extends Menu {
-    private static final MainMenu MAIN_MENU = new MainMenu();
+    private static MainMenu MAIN_MENU;
 
     private MainMenu() {
 
     }
 
-    private static MainMenu getInstance() {
+    private static MainMenu getInstance()
+    {
+        if (MAIN_MENU == null) {
+             MAIN_MENU = new MainMenu();
+        }
         return MAIN_MENU;
     }
 
