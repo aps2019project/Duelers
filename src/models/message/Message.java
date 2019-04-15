@@ -78,6 +78,13 @@ public class Message {
         return message;
     }
 
+    public static Message positionsCopyMessage(String sender,String receiver,Position[] positions){
+        Message message=new Message(sender,receiver);
+        message.positions=positions;
+        message.messageType=MessageType.POSITIONS_COPY;
+        return message;
+    }
+
     public static Message troopChangePosition(String sender,String receiver,String cardId,Position position){
         Message message=new Message(sender,receiver);
         message.cardIds=new String[1];
@@ -119,6 +126,15 @@ public class Message {
         return message;
     }
 
+    public static Message toMap(String sender,String receiver,String cardId,Position position){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.position=position;
+        message.messageType=MessageType.TO_MAP;
+        return message;
+    }
+
     public static Message changeAP(String sender,String receiver,String cardId,int newValue){
         Message message=new Message(sender,receiver);
         message.cardIds=new String[1];
@@ -137,5 +153,135 @@ public class Message {
         return message;
     }
 
+    public static Message changeHP(String sender,String receiver,String exceptionString){
+        Message message=new Message(sender,receiver);
+        message.exceptionString=exceptionString;
+        message.messageType=MessageType.SEND_EXCEPTION;
+        return message;
+    }
 
+    public static Message getShop(String sender,String receiver){
+        Message message=new Message(sender,receiver);
+        message.messageType=MessageType.GET_SHOP;
+        return message;
+    }
+
+    public static Message getLeaderBoard(String sender,String receiver){
+        Message message=new Message(sender,receiver);
+        message.messageType=MessageType.GET_LEADERBOARD;
+        return message;
+    }
+
+    public static Message saveAccount(String sender,String receiver){
+        Message message=new Message(sender,receiver);
+        message.messageType=MessageType.SAVE_CHANGES;
+        return message;
+    }
+
+    public static Message createDeck(String sender,String receiver,String deckName){
+        Message message=new Message(sender,receiver);
+        message.deckName=deckName;
+        message.messageType=MessageType.CREATE_DECK;
+        return message;
+    }
+
+    public static Message removeDeck(String sender,String receiver,String deckName){
+        Message message=new Message(sender,receiver);
+        message.deckName=deckName;
+        message.messageType=MessageType.REMOVE_DECK;
+        return message;
+    }
+
+    public static Message addCardToDeck(String sender,String receiver,String deckName,String cardId){
+        Message message=new Message(sender,receiver);
+        message.deckName=deckName;
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.ADD_TO_DECK;
+        return message;
+    }
+
+    public static Message removeCardFromDeck(String sender,String receiver,String deckName,String cardId){
+        Message message=new Message(sender,receiver);
+        message.deckName=deckName;
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.messageType=MessageType.REMOVE_FROM_DECK;
+        return message;
+    }
+
+    public static Message selectDeck(String sender,String receiver,String deckName){
+        Message message=new Message(sender,receiver);
+        message.deckName=deckName;
+        message.messageType=MessageType.SELECT_DECK;
+        return message;
+    }
+
+    public static Message buyCard(String sender,String receiver,String cardName){
+        Message message=new Message(sender,receiver);
+        message.cardName=cardName;
+        message.messageType=MessageType.BUY_CARD;
+        return message;
+    }
+
+    public static Message sellCard(String sender,String receiver,String cardName){
+        Message message=new Message(sender,receiver);
+        message.cardName=cardName;
+        message.messageType=MessageType.SELL_CARD;
+        return message;
+    }
+
+    public static Message endTurn(String sender,String receiver){
+        Message message=new Message(sender,receiver);
+        message.messageType=MessageType.END_TURN;
+        return message;
+    }
+
+    public static Message insert(String sender,String receiver,String cardId,Position position){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.position=position;
+        message.messageType=MessageType.INSERT;
+        return message;
+    }
+
+    public static Message attack(String sender,String receiver,String myCardId,String opponentCardId){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[2];
+        message.cardIds[0]=myCardId;
+        message.cardIds[1]=opponentCardId;
+        message.messageType=MessageType.ATTACK;
+        return message;
+    }
+
+    public static Message comboAttack(String sender,String receiver,String... opponentAndMyCardIds){
+        Message message=new Message(sender,receiver);
+        message.cardIds=opponentAndMyCardIds;
+        message.messageType=MessageType.COMBO;
+        return message;
+    }
+
+    public static Message useSpell(String sender,String receiver,String cardId,Position position){
+        Message message=new Message(sender,receiver);
+        message.cardIds=new String[1];
+        message.cardIds[0]=cardId;
+        message.position=position;
+        message.messageType=MessageType.USE_SPELL;
+        return message;
+    }
+
+    public static Message logIn(String sender,String receiver,String userName,String passWord){
+        Message message=new Message(sender,receiver);
+        message.userName=userName;
+        message.passWord=passWord;
+        message.messageType=MessageType.LOG_IN;
+        return message;
+    }
+
+    public static Message logOut(String sender,String receiver){
+        Message message=new Message(sender,receiver);
+        message.messageType=MessageType.LOG_OUT;
+        return message;
+    }
 }
