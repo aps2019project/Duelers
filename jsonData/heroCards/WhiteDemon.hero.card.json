@@ -10,9 +10,9 @@
       "targetBase": "CARD_ITSELF",
       "availabilityType": "SPECIAL_POWER",
       "numberOfChange": 4,
-      "reusePeriod": 2,
+      "coolDown": 2,
       "mannaPoint": 1,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "defaultAp": 4,

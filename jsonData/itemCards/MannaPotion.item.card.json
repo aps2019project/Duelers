@@ -1,0 +1,15 @@
+{
+  "name": "Manna Potion",
+  "description": "a collectible ITEM that have a ADD MANNA buff for 1 turn",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "mp_add",
+      "type": "BUFF",
+      "definiteType": "ADD_MANNA",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 3,
+      "duration": 1
+    }
+  ]
+}

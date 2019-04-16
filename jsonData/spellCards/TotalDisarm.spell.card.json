@@ -10,7 +10,7 @@
       "targetBase": "SELECTED_CELL",
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "price": 1000

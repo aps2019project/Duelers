@@ -1,0 +1,26 @@
+{
+  "name": "Terror Hood",
+  "description": "a usable ITEM that gives all troops an ON_ATTACK WEAKNESS BUFF with 2 AP decrement",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "th_add_spell",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetBase": "ALL_CELLS",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "PASSIVE",
+      "carryingSpell": {
+        "spellId": "th_weakness",
+        "type": "BUFF",
+        "definiteType": "WEAKNESS_AP_BUFF",
+        "targetBase": "RANDOM",
+        "targetType": "ENEMY_TROOPS",
+        "availabilityType": "ON_ATTACK",
+        "numberOfChange": 2,
+        "duration": 1
+      }
+    }
+  ],
+  "price": 5000
+}

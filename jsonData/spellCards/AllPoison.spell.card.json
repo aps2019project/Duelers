@@ -11,7 +11,7 @@
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
       "numberOfChange": 1,
-      "timeOfEffect": 4
+      "duration": 4
     }
   ],
   "mannaPoint": 8,

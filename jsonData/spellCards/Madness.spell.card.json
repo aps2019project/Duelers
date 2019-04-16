@@ -11,7 +11,7 @@
       "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
       "numberOfChange": 4,
-      "timeOfEffect": 3
+      "duration": 3
     },
     {
       "spellId": "md_disarm_buff",
@@ -20,7 +20,7 @@
       "targetBase": "SELECTED_CELL",
       "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
-      "timeOfEffect": 3
+      "duration": 3
     }
   ],
   "price": 650

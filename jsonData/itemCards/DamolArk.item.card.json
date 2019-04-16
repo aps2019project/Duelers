@@ -1,0 +1,24 @@
+{
+  "name": "Damol Ark",
+  "description": "a usable ITEM that if own HERO is RANGED or HYBRID a DISARM spell will be added to HERO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "da_add_disarm",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetType": "MY_RANGED_HYBRID_HERO",
+      "availabilityType": "ON_START",
+      "carryingSpell": {
+        "spellId": "da_disarm",
+        "type": "BUFF",
+        "definiteType": "DISARM_BUFF",
+        "targetBase": "SELECTED_CELL",
+        "targetType": "ENEMY_TROOPS",
+        "availabilityType": "ON_ATTACK",
+        "duration": 1
+      }
+    }
+  ],
+  "price": 30000
+}

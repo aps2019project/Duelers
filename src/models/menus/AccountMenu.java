@@ -28,7 +28,7 @@ public class AccountMenu extends Menu {
     }
     
     public void login(Client client, Server server, String userName, String password) throws InputException{
-        client.addToSendingMessages(Message.login(client.getClientName(),server.getServerName(),userName,password));
+        client.addToSendingMessages(Message.logIn(client.getClientName(),server.getServerName(),userName,password));
         client.sendMessages(server);
         if (!client.isUserNameIsValid()) {
             throw new InputException("invalid UserName");

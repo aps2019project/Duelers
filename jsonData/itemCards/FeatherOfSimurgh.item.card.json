@@ -1,0 +1,17 @@
+{
+  "name": "Feather Of Simurgh",
+  "description": "a usable ITEM that if enemy HERO is RANGED or HYBRID decreases 2 units AP of it",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "fs_decrease_ap",
+      "type": "CARD_EFFECT",
+      "definiteType": "DECREASE_AP_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "RANGED_HYBRID_TROOP",
+      "availabilityType": "ON_START",
+      "numberOfChange": 2
+    }
+  ],
+  "price": 3500
+}

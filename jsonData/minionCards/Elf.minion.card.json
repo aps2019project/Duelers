@@ -11,8 +11,7 @@
       "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
       "numberOfChange": 1,
-      "reusePeriod": -1,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "defaultAp": 4,

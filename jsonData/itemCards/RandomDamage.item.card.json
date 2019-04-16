@@ -1,0 +1,16 @@
+{
+  "name": "Random Damage",
+  "description": "a collectible ITEM that increases HP of a random Troop 2 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "rd_increase_hp",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "targetBase": "RANDOM",
+      "targetType": "ALL_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 2
+    }
+  ]
+}

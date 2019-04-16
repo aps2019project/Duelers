@@ -1,0 +1,16 @@
+{
+  "name": "Blades Of Agility",
+  "description": "a collectible ITEM that increases AP of a random troop 6 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "ba_increase_ap",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "targetBase": "RANDOM",
+      "targetType": "ALL_TROOPS",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 6
+    }
+  ]
+}

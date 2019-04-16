@@ -11,7 +11,7 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 4,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "mannaPoint": 1,
