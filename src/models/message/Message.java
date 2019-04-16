@@ -141,6 +141,15 @@ public class Message {
         Message message = new Message(sender , receiver);
         message.userName = userName;
         message.passWord = passWord;
+        message.messageType=MessageType.CREATE_ACCOUNT;
+        return  message;
+    }
+    
+    public static Message login(String sender,String receiver,String userName , String passWord){
+        Message message = new Message(sender , receiver);
+        message.userName = userName;
+        message.passWord = passWord;
+        message.messageType = MessageType.LOGIN;
         return  message;
     }
 

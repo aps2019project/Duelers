@@ -21,14 +21,23 @@ public class Client {
 	private Menu currentMenu;
 	private Card selected;
 	private ArrayList<Position> positions = new ArrayList<>();
-	private boolean isValid;
+	private boolean userNameIsValid;
+	private boolean passwordIsValid;
 	
-	public boolean isValid() {
-		return isValid;
+	public boolean isPasswordIsValid() {
+		return passwordIsValid;
 	}
 	
-	public void setValid(boolean valid) {
-		isValid = valid;
+	public void setPasswordIsValid(boolean passwordIsValid) {
+		this.passwordIsValid = passwordIsValid;
+	}
+	
+	public boolean isUserNameIsValid() {
+		return userNameIsValid;
+	}
+	
+	public void setUserNameIsValid(boolean userNameIsValid) {
+		this.userNameIsValid = userNameIsValid;
 	}
 	
 	public String getClientName() {

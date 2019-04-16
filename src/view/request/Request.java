@@ -43,18 +43,25 @@ public class Request {
 	}
 	
 	private void accountMenuHandleRequest(Client client,Server server) throws InputException {
+		AccountMenu accountMenu = AccountMenu.getInstance();
 		if (RequestType.CREATE_ACCOUNT.setMatcher(command).find()){
 			String userName = RequestType.CREATE_ACCOUNT.getMatcher().group(1);
 			this.getNewCommand();
-			createAccount(client,server,userName,command);
+			accountMenu.register(client,server,userName,command);
+		}else if(RequestType.LOGIN.setMatcher(command).find()){
+			String userName = RequestType.LOGIN.getMatcher().group(1);
+			this.getNewCommand();
+			accountMenu.login(client,server,userName,command);
+		}else if (RequestType.SHOW_LEADER_BOARD.setMatcher(command).find()){
+			accountMenu.showLeaderBoard(client,server);
+		}else if (RequestType.SAVE.setMatcher(command).find()){
+			accountMenu.save(client,server);
+		}else if (RequestType.LOGOUT.setMatcher(command).find()){
+			accountMenu.logout(client,server);
+		}else if (RequestType.HELP.setMatcher(command).find()){
+			accountMenu.help(client,server);
 		}
-	}
-	
-	private void createAccount(Client client,Server server,String userName,String password) throws InputException{
-		client.addToSendingMessages(Message.register(client.getClientName(),server.getServerName(),userName,password));
-		client.sendMessages(server);
-		if (!client.isValid()) {
-			throw new InputException("hello");
-		}
+		else
+			throw new InputException("invalid command");
 	}
 }

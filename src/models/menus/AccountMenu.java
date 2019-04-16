@@ -1,6 +1,9 @@
 package models.menus;
 
 import controllers.Client;
+import controllers.Server;
+import models.message.Message;
+import view.request.InputException;
 
 public class AccountMenu extends Menu {
     private static AccountMenu ACCOUNT_MENU;
@@ -16,27 +19,40 @@ public class AccountMenu extends Menu {
         return ACCOUNT_MENU;
     }
 
-    public void register(String userName, String password) {
-
+    public void register(Client client,Server server,String userName,String password) throws InputException{
+        client.addToSendingMessages(Message.register(client.getClientName(),server.getServerName(),userName,password));
+        client.sendMessages(server);
+        if (!client.isUserNameIsValid()) {
+            throw new InputException("invalid UserName");
+        }
     }
-
-    public void login(String userName, String password, Client client) {
-
+    
+    public void login(Client client, Server server, String userName, String password) throws InputException{
+        client.addToSendingMessages(Message.login(client.getClientName(),server.getServerName(),userName,password));
+        client.sendMessages(server);
+        if (!client.isUserNameIsValid()) {
+            throw new InputException("invalid UserName");
+        }
+        if (!client.isPasswordIsValid()){
+            throw new InputException("password is invalid");
+        }
     }
 
     public void updateLeaderBoard() {
 
     }
 
-    public void showLeaderBoard() {
-
+    public void showLeaderBoard(Client client,Server server) {
+    
     }
 
-    public void save() {
+    public void save(Client client,Server server) {
 
     }
-
-    public void logout() {
+    public void help(Client client,Server server){
+    
+    }
+    public void logout(Client client,Server server) {
 
     }
 }
