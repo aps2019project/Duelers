@@ -10,7 +10,7 @@
       "targetBase": "ALL_CELLS",
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
-      "timeOfEffect": 1
+      "duration": 1
     }
   ],
   "mannaPoint": 9,

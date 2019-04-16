@@ -11,7 +11,7 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
       "numberOfChange": 8,
-      "timeOfEffect": 1
+      "duration": 1
     }
   ],
   "defaultAp": 2,

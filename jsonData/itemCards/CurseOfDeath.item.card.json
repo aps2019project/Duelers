@@ -1,0 +1,24 @@
+{
+  "name": "Curse Of Death",
+  "description": "a collectible ITEM that gives a random MINION an ON_DEATH spell that hits a random troop 8 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "cd_add_random",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetBase": "RANDOM",
+      "targetType": "ALL_MINION",
+      "availabilityType": "ON_PUT",
+      "carryingSpell": {
+        "spellId": "cd_on_death",
+        "type": "CARD_EFFECT",
+        "definiteType": "DECREASE_HP_CARD_EFFECT",
+        "targetBase": "RANDOM_AROUND_ITSELF",
+        "targetType": "ENEMY_TROOPS",
+        "availabilityType": "ON_DEATH",
+        "numberOfChange": 8
+      }
+    }
+  ]
+}

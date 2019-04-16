@@ -1,0 +1,16 @@
+{
+  "name": "Panacea",
+  "description": "a collectible ITEM that increases HP of a random Troop 6 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "pn_add_hp",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_HP_CARD_EFFECT",
+      "targetBase": "RANDOM",
+      "targetType": "MY_TROOPS",
+      "availabilityType": "PASSIVE",
+      "numberOfChange": 6
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Twin Horn",
+  "description": "a collectible ITEM that increases AP of a random RANGED or HYBRID troop 2 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "th_increase_ap",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "targetBase": "RANDOM",
+      "targetType": "RANGED_HYBRID_TROOP",
+      "availabilityType": "PASSIVE",
+      "numberOfChange": 2
+    }
+  ]
+}

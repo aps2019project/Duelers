@@ -11,9 +11,9 @@
       "targetType": "CELL",
       "availabilityType": "SPECIAL_POWER",
       "numberOfChange": -1,
-      "reusePeriod": 3,
+      "coolDown": 3,
       "mannaPoint": 1,
-      "timeOfEffect": 3
+      "duration": 3
     }
   ],
   "defaultAp": 4,

@@ -1,10 +1,14 @@
 package models.game;
 
 import models.card.Card;
+import models.card.spell.Spell;
 import models.map.Cell;
+
+import java.util.ArrayList;
 
 public class Troop {
     private Card card;
+    private ArrayList<Spell> excessiveSpells;
     private int currentAp;
     private int currentHp;
     private Cell cell;

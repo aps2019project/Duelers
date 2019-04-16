@@ -10,7 +10,7 @@
       "targetBase": "CARD_ITSELF",
       "availabilityType": "PASSIVE_CONTINUOUS",
       "numberOfChange": -3,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "defaultAp": 3,

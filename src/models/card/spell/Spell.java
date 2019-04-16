@@ -8,13 +8,14 @@ public class Spell {
     private TargetType targetType;
     private AvailabilityType availabilityType;
     private int numberOfChange;
-    private int reusePeriod;
+    private int coolDown;
     private int mannaPoint;
     private int lastTurnUsed;
     private int numberOfUses;
-    private int timeOfEffect;
+    private int duration;
+    private Spell carryingSpell;
 
-    public Spell(String spellId, SpellType type, DefiniteType definiteType, TargetBase targetBase, TargetType targetType, AvailabilityType availabilityType, int numberOfChange, int reusePeriod, int mannaPoint, int timeOfEffect) {
+    public Spell(String spellId, SpellType type, DefiniteType definiteType, TargetBase targetBase, TargetType targetType, AvailabilityType availabilityType, int numberOfChange, int coolDown, int mannaPoint, int duration, Spell carryingSpell) {
         this.spellId = spellId;
         this.type = type;
         this.definiteType = definiteType;
@@ -22,13 +23,14 @@ public class Spell {
         this.targetType = targetType;
         this.availabilityType = availabilityType;
         this.numberOfChange = numberOfChange;
-        this.reusePeriod = reusePeriod;
+        this.coolDown = coolDown;
         this.mannaPoint = mannaPoint;
-        if (timeOfEffect == -1) {
-            this.timeOfEffect = Integer.MAX_VALUE;
+        if (duration == -1) {
+            this.duration = Integer.MAX_VALUE;
             return;
         }
-        this.timeOfEffect = timeOfEffect;
+        this.duration = duration;
+        this.carryingSpell = carryingSpell;
     }
 
     public Spell(String spellId, Spell referenceSpell) {
@@ -55,8 +57,8 @@ public class Spell {
         return this.numberOfChange;
     }
 
-    public int getReusePeriod() {
-        return this.reusePeriod;
+    public int getcoolDown() {
+        return this.coolDown;
     }
 
     public int getMannaPoint() {

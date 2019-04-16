@@ -11,7 +11,7 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
       "numberOfChange": 2,
-      "timeOfEffect": 1
+      "duration": 1
     },
     {
       "spellId": "ww_poison_2",
@@ -21,7 +21,7 @@
       "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
       "numberOfChange": 4,
-      "timeOfEffect": 2
+      "duration": 2
     }
   ],
   "defaultAp": 2,

@@ -1,6 +1,5 @@
 package models.card;
 
-
 import models.card.spell.Spell;
 
 public class Card {

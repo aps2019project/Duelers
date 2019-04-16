@@ -10,9 +10,9 @@
       "targetBase": "ALL_CELLS",
       "targetType": "ENEMY_TROOPS",
       "availabilityType": "SPECIAL_POWER",
-      "reusePeriod": 8,
+      "coolDown": 8,
       "mannaPoint": 5,
-      "timeOfEffect": 1
+      "duration": 1
     }
   ],
   "defaultAp": 4,

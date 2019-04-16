@@ -11,7 +11,7 @@
       "targetType": "MY_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 6,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     },
     {
       "spellId": "power_buff",
@@ -21,7 +21,7 @@
       "targetType": "MY_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 8,
-      "timeOfEffect": 2147483647
+      "duration": 2147483647
     }
   ],
   "mannaPoint": 2,

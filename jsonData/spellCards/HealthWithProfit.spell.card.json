@@ -11,7 +11,7 @@
       "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
       "numberOfChange": 6,
-      "timeOfEffect": 3
+      "duration": 3
     },
     {
       "spellId": "hp_holy_buff",
@@ -21,7 +21,7 @@
       "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
       "numberOfChange": -2,
-      "timeOfEffect": 3
+      "duration": 3
     }
   ],
   "price": 2250
