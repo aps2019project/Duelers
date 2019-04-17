@@ -30,7 +30,7 @@ public class Organizer {
     }
     
     public void preProcess() {
-        server = new Server("server");
+        Server.getInstance();
         clients.add(new Client(java.lang.System.getProperty("user.name"), AccountMenu.getInstance()));
         thisClient = clients.get(0);
     }

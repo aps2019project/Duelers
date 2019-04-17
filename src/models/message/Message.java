@@ -45,10 +45,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeShopCopyMessage(String sender, String receiver, Card[] shopCards, int messageId) {
+    public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Card[] shopCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.shopCards = shopCards;
-        message.messageType = MessageType.SHOP_COPY;
+        message.messageType = MessageType.ORIGINALCARDS_COPY;
         return message;
     }
 
@@ -169,9 +169,9 @@ public class Message {
         return message;
     }
 
-    public static Message makeGetShopMessage(String sender, String receiver, int messageId) {
+    public static Message makeGetOriginalCardsMessage(String sender, String receiver, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.GET_SHOP;
+        message.messageType = MessageType.GET_ORIGINALCARDS;
         return message;
     }
 

@@ -2,11 +2,11 @@ package controllers;
 
 import models.account.Account;
 
-public class onlineClient {
+public class OnlineClient {
     private Client client;
     private Account account;
 
-    public onlineClient(Client client, Account account) {
+    public OnlineClient(Client client, Account account) {
         this.client = client;
         this.account=account;
     }

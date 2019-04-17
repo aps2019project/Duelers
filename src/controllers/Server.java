@@ -1,5 +1,6 @@
 package controllers;
 
+import models.card.Card;
 import models.message.Message;
 import models.account.Account;
 import models.card.Deck;
@@ -13,9 +14,11 @@ import models.map.Map;
 import java.util.ArrayList;
 
 public class Server {
+	private static Server server;
 	private String serverName;
 	private ArrayList<Account> accounts = new ArrayList<>();
-	private ArrayList<onlineClient> onlineClients = new ArrayList<>();
+	private ArrayList<Card> originalCards=new ArrayList<>();
+	private ArrayList<OnlineClient> onlineClients = new ArrayList<>();
 	private ArrayList<Game> onlineGames = new ArrayList<>();
 	private ArrayList<Deck> customDecks = new ArrayList<>();
 	private ArrayList<Account> leaderBoard = new ArrayList<>();
@@ -27,9 +30,29 @@ public class Server {
 		return serverName;
 	}
 	
-	public Server(String serverName) {
-		//read Accounts,customDeck,stories;
+	private Server(String serverName) {
+		readAccounts();
+		readCustomDecks();
+		readStories();
 		this.serverName = serverName;
+	}
+
+	private void readAccounts(){
+		//file
+	}
+
+	private void readCustomDecks(){
+		//file
+	}
+
+	private void readStories(){
+		//file
+	}
+
+	public static Server getInstance(){
+		if(server==null)
+			server=new Server("Server");
+		return server;
 	}
 	
 	public void addToSendingMessages(Message message) {
@@ -41,43 +64,21 @@ public class Server {
 	}
 	
 	public void receiveMessages() {
-	
+		for(Message message:receivingMessages){
+
+		}
+		receivingMessages.clear();
 	}
 	
 	public void sendMessages() {
-	
+		for(Message message:sendingMessages){
+
+		}
+		sendingMessages.clear();
 	}
 	
 	public void newGame(GameType gameType, Player playerOne, Player playerTwo, Map map) {
 		onlineGames.add(new Game(gameType, playerOne, playerTwo, map));
 		//...
-	}
-	
-	public void sendGameCopy(Client client, Game game) {
-	
-	}
-	
-	public void sendShopCopy(Client client) {
-	
-	}
-	
-	public void sendAccountCopy(Client client, Account account) {
-	
-	}
-	
-	public void sendStoriesCopy(Client client) {
-	
-	}
-	
-	public void sendCustomDecksCopy(Client client) {
-	
-	}
-	
-	public void sendLeaderBoardCopy(Client client) {
-	
-	}
-	
-	public void sendPositionList(Cell[] cells) {
-	
 	}
 }

@@ -21,7 +21,7 @@ public class AccountMenu extends Menu {
     }
 
     public void register(Client client,Server server,String userName,String password) throws InputException{
-        client.addToSendingMessages(Message.register(client.getClientName(),server.getServerName(),userName,password));
+        client.addToSendingMessages(Message.makeRegisterMessage(client.getClientName(),server.getServerName(),userName,password,0));
         client.sendMessages(server);
         if (!client.isUserNameIsValid()) {
             throw new InputException("invalid UserName");
@@ -29,7 +29,7 @@ public class AccountMenu extends Menu {
     }
     
     public void login(Client client, Server server, String userName, String password) throws InputException{
-        client.addToSendingMessages(Message.logIn(client.getClientName(),server.getServerName(),userName,password));
+        client.addToSendingMessages(Message.makeLogInMessage(client.getClientName(),server.getServerName(),userName,password,0));
         client.sendMessages(server);
         if (!client.isUserNameIsValid()) {
             throw new InputException("invalid UserName");
@@ -40,7 +40,7 @@ public class AccountMenu extends Menu {
     }
 
     public void updateLeaderBoard(Client client,Server server) {
-		client.addToSendingMessages(Message.getLeaderBoard(client.getClientName(),server.getServerName()));
+		client.addToSendingMessages(Message.makeGetLeaderBoardMessage(client.getClientName(),server.getServerName(),0));
 		client.sendMessages(server);
     }
 
