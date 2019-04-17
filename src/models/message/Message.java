@@ -162,6 +162,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeEndTurnMessage(String sender, String receiver, int turnNum, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.turnNum = turnNum;
+        message.messageType = MessageType.END_TURN;
+        return message;
+    }
+
     public static Message makeGetShopMessage(String sender, String receiver, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.GET_SHOP;
@@ -264,10 +271,11 @@ public class Message {
         return message;
     }
 
-    public static Message makeUseSpellMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+    public static Message makeUseSpellMessage(String sender, String receiver, String cardId, String spellId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
+        message.spellId = spellId;
         message.position = position;
         message.messageType = MessageType.USE_SPELL;
         return message;
