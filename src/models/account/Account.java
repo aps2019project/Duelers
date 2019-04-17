@@ -13,7 +13,12 @@ public class Account {
     private Deck mainDeck;
     private ArrayList<MatchHistory> matchHistories;
     private int money;
-
+    private int wins;
+    
+    public int getWins() {
+        return wins;
+    }
+    
     public String getUserName() {
         return this.userName;
     }

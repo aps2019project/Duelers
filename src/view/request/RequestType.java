@@ -9,7 +9,7 @@ public enum RequestType {
     SHOW_LEADER_BOARD("^show leaderboard$"),
     SAVE("^save$"),
     LOGOUT("^logout$"),
-    HELP("^help$"),
+    HELP("" + "^help$"),
     START_GAME("^start game (\\w+) (\\w+) (\\w+)$"),
     SELECT_USER("^select user (\\w+)$"),
     START_MULTIPLAYER_GMAE("^start multiplayer game (\\w+)"),
@@ -25,7 +25,12 @@ public enum RequestType {
     SELECT_MAIN_DECK("^select deck (\\w+)$"),
     SHOW_ALL_DECKS("^show all decks$"),
     SHOW_DECK("^show deck (\\w+)"),
-    
+    //battle menu
+    SINGLE_PLAYER("^Single Player$"),
+    MULTI_PLAYER("^Multi Player$"),
+    //single player menu
+    STORY("^story$"),
+    CUSTOM_GAME("^Custom game$"),
     //shop:
     
     ;

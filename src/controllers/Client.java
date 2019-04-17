@@ -17,6 +17,11 @@ public class Client {
 	private ArrayList<Message> receivingMessages = new ArrayList<>();
 	private Game game;
 	private ArrayList<Deck> customDecks = new ArrayList<>();
+	
+	public ArrayList<Account> getLeaderBoard() {
+		return leaderBoard;
+	}
+	
 	private ArrayList<Account> leaderBoard = new ArrayList<>();
 	private Menu currentMenu;
 	private Card selected;

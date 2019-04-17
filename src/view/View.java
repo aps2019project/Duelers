@@ -1,5 +1,6 @@
 package view;
 
+import controllers.Client;
 import models.account.Account;
 import models.account.MatchHistory;
 import models.card.Card;
@@ -57,8 +58,12 @@ public class View {
 
     }
 
-    public void printLeaderBoard() {
-
+    public void printLeaderBoard(Client client) {
+        int counter=1;
+        for (Account account:client.getLeaderBoard()){
+            System.out.println(counter+"- UserName : "+account.getUserName()+" - Wins : "+account.getWins());
+            counter++;
+        }
     }
 
 

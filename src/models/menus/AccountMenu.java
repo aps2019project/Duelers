@@ -3,6 +3,7 @@ package models.menus;
 import controllers.Client;
 import controllers.Server;
 import models.message.Message;
+import view.View;
 import view.request.InputException;
 
 public class AccountMenu extends Menu {
@@ -38,12 +39,14 @@ public class AccountMenu extends Menu {
         }
     }
 
-    public void updateLeaderBoard() {
-
+    public void updateLeaderBoard(Client client,Server server) {
+		client.addToSendingMessages(Message.getLeaderBoard(client.getClientName(),server.getServerName()));
+		client.sendMessages(server);
     }
 
     public void showLeaderBoard(Client client,Server server) {
-    
+    	updateLeaderBoard(client,server);
+	    View.getInstance().printLeaderBoard(client);
     }
 
     public void save(Client client,Server server) {
