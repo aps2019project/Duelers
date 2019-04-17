@@ -8,11 +8,11 @@ import models.game.Story;
 import models.map.Position;
 
 public class Message {
-    //TODO:Have ServerMessage & SystemMessage
-
     private MessageType messageType;
+    //serverName || clientName
     private String sender;
     private String receiver;
+    private int messageId;
 
     private Game game;
     private Card[] shopCards;
@@ -28,269 +28,354 @@ public class Message {
     private String cardName;
     private int newValue;
     private Position position;
-    private String userName,passWord;
+    private String userName, passWord;
     private String deckName;
 
-    private Message(String sender, String receiver){
+
+    private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
         this.receiver = receiver;
+        this.messageId = messageId;
     }
 
-    public static Message gameCopyMessage(String sender,String receiver,Game game){
-        Message message=new Message(sender,receiver);
-        message.game=game;
-        message.messageType=MessageType.GAME_COPY;
+    public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.game = game;
+        message.messageType = MessageType.GAME_COPY;
         return message;
     }
 
-    public static Message shopCopyMessage(String sender,String receiver,Card[] shopCards){
-        Message message=new Message(sender,receiver);
-        message.shopCards=shopCards;
-        message.messageType=MessageType.SHOP_COPY;
+    public static Message makeShopCopyMessage(String sender, String receiver, Card[] shopCards, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.shopCards = shopCards;
+        message.messageType = MessageType.SHOP_COPY;
         return message;
     }
 
-    public static Message accountCopyMessage(String sender,String receiver,Account account){
-        Message message=new Message(sender,receiver);
-        message.account=account;
-        message.messageType=MessageType.ACCOUNT_COPY;
+    public static Message makeAccountCopyMessage(String sender, String receiver, Account account, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.account = account;
+        message.messageType = MessageType.ACCOUNT_COPY;
         return message;
     }
 
-    public static Message customDecksCopyMessage(String sender,String receiver,Deck[] customDecks){
-        Message message=new Message(sender,receiver);
-        message.customDecks=customDecks;
-        message.messageType=MessageType.CUSTOMDECKS_COPY;
+    public static Message makeCustomDecksCopyMessage(String sender, String receiver, Deck[] customDecks, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.customDecks = customDecks;
+        message.messageType = MessageType.CUSTOMDECKS_COPY;
         return message;
     }
 
-    public static Message leaderBoardCopyMessage(String sender,String receiver,Account[] leaderBoard){
-        Message message=new Message(sender,receiver);
-        message.leaderBoard=leaderBoard;
-        message.messageType=MessageType.LEADERBOARD_COPY;
+    public static Message makeLeaderBoardCopyMessage(String sender, String receiver, Account[] leaderBoard, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.leaderBoard = leaderBoard;
+        message.messageType = MessageType.LEADERBOARD_COPY;
         return message;
     }
 
-    public static Message storiesCopyMessage(String sender,String receiver,Story[] stories){
-        Message message=new Message(sender,receiver);
-        message.stories=stories;
-        message.messageType=MessageType.STORIES_COPY;
+    public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.stories = stories;
+        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
-    public static Message positionsCopyMessage(String sender,String receiver,Position[] positions){
-        Message message=new Message(sender,receiver);
-        message.positions=positions;
-        message.messageType=MessageType.POSITIONS_COPY;
+    public static Message makePositionsCopyMessage(String sender, String receiver, Position[] positions, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.positions = positions;
+        message.messageType = MessageType.POSITIONS_COPY;
         return message;
     }
 
-    public static Message troopChangePosition(String sender,String receiver,String cardId,Position position){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.position=position;
-        message.messageType=MessageType.MOVE_TROOP;
+    public static Message makeTroopPositionMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.position = position;
+        message.messageType = MessageType.MOVE_TROOP;
         return message;
     }
 
-    public static Message toHand(String sender,String receiver,String cardId){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.TO_HAND;
+    public static Message makeToHandMessage(String sender, String receiver, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.TO_HAND;
         return message;
     }
 
-    public static Message toNext(String sender,String receiver,String cardId){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.TO_NEXT;
+    public static Message makeToNextMessage(String sender, String receiver, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.TO_NEXT;
         return message;
     }
 
-    public static Message toGraveYard(String sender,String receiver,String cardId){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.TO_GRAVEYARD;
+    public static Message makeToGraveYardMessage(String sender, String receiver, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.TO_GRAVEYARD;
         return message;
     }
 
-    public static Message toCollecteds(String sender,String receiver,String cardId){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.TO_COLLECTEDS;
+    public static Message makeToCollectedsMessage(String sender, String receiver, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.TO_COLLECTEDS;
         return message;
     }
 
-    public static Message toMap(String sender,String receiver,String cardId,Position position){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.position=position;
-        message.messageType=MessageType.TO_MAP;
+    public static Message makeToMapMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.position = position;
+        message.messageType = MessageType.TO_MAP;
         return message;
     }
 
-    public static Message changeAP(String sender,String receiver,String cardId,int newValue){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.newValue=newValue;
-        message.messageType=MessageType.TROOP_AP;
+    public static Message makeChangeAPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.newValue = newValue;
+        message.messageType = MessageType.TROOP_AP;
         return message;
     }
 
-    public static Message changeHP(String sender,String receiver,String cardId,int newValue){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.newValue=newValue;
-        message.messageType=MessageType.TROOP_HP;
+    public static Message makeChangeHPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.newValue = newValue;
+        message.messageType = MessageType.TROOP_HP;
         return message;
     }
 
-    public static Message changeHP(String sender,String receiver,String exceptionString){
-        Message message=new Message(sender,receiver);
-        message.exceptionString=exceptionString;
-        message.messageType=MessageType.SEND_EXCEPTION;
+    public static Message makeExceptionMessage(String sender, String receiver, String exceptionString, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.exceptionString = exceptionString;
+        message.messageType = MessageType.SEND_EXCEPTION;
         return message;
     }
 
-    public static Message getShop(String sender,String receiver){
-        Message message=new Message(sender,receiver);
-        message.messageType=MessageType.GET_SHOP;
+    public static Message makeGetShopMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.GET_SHOP;
         return message;
     }
 
-    public static Message getLeaderBoard(String sender,String receiver){
-        Message message=new Message(sender,receiver);
-        message.messageType=MessageType.GET_LEADERBOARD;
+    public static Message makeGetLeaderBoardMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.GET_LEADERBOARD;
         return message;
     }
 
-    public static Message saveAccount(String sender,String receiver){
-        Message message=new Message(sender,receiver);
-        message.messageType=MessageType.SAVE_CHANGES;
+    public static Message makeSaveAccountMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.SAVE_CHANGES;
         return message;
     }
 
-    public static Message createDeck(String sender,String receiver,String deckName){
-        Message message=new Message(sender,receiver);
-        message.deckName=deckName;
-        message.messageType=MessageType.CREATE_DECK;
+    public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = deckName;
+        message.messageType = MessageType.CREATE_DECK;
         return message;
     }
 
-    public static Message removeDeck(String sender,String receiver,String deckName){
-        Message message=new Message(sender,receiver);
-        message.deckName=deckName;
-        message.messageType=MessageType.REMOVE_DECK;
+    public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = deckName;
+        message.messageType = MessageType.REMOVE_DECK;
         return message;
     }
 
-    public static Message addCardToDeck(String sender,String receiver,String deckName,String cardId){
-        Message message=new Message(sender,receiver);
-        message.deckName=deckName;
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.ADD_TO_DECK;
+    public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = deckName;
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.ADD_TO_DECK;
         return message;
     }
 
-    public static Message removeCardFromDeck(String sender,String receiver,String deckName,String cardId){
-        Message message=new Message(sender,receiver);
-        message.deckName=deckName;
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.messageType=MessageType.REMOVE_FROM_DECK;
+    public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = deckName;
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.messageType = MessageType.REMOVE_FROM_DECK;
         return message;
     }
 
-    public static Message selectDeck(String sender,String receiver,String deckName){
-        Message message=new Message(sender,receiver);
-        message.deckName=deckName;
-        message.messageType=MessageType.SELECT_DECK;
+    public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = deckName;
+        message.messageType = MessageType.SELECT_DECK;
         return message;
     }
 
-    public static Message buyCard(String sender,String receiver,String cardName){
-        Message message=new Message(sender,receiver);
-        message.cardName=cardName;
-        message.messageType=MessageType.BUY_CARD;
+    public static Message makeBuyCardMessage(String sender, String receiver, String cardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardName = cardName;
+        message.messageType = MessageType.BUY_CARD;
         return message;
     }
 
-    public static Message sellCard(String sender,String receiver,String cardName){
-        Message message=new Message(sender,receiver);
-        message.cardName=cardName;
-        message.messageType=MessageType.SELL_CARD;
+    public static Message makeSellCardMessage(String sender, String receiver, String cardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardName = cardName;
+        message.messageType = MessageType.SELL_CARD;
         return message;
     }
 
-    public static Message endTurn(String sender,String receiver){
-        Message message=new Message(sender,receiver);
-        message.messageType=MessageType.END_TURN;
+    public static Message makeEndTurnMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.END_TURN;
         return message;
     }
 
-    public static Message insert(String sender,String receiver,String cardId,Position position){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.position=position;
-        message.messageType=MessageType.INSERT;
+    public static Message makeInsertMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.position = position;
+        message.messageType = MessageType.INSERT;
         return message;
     }
 
-    public static Message attack(String sender,String receiver,String myCardId,String opponentCardId){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[2];
-        message.cardIds[0]=myCardId;
-        message.cardIds[1]=opponentCardId;
-        message.messageType=MessageType.ATTACK;
+    public static Message makeAttackMessage(String sender, String receiver, String myCardId, String opponentCardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[2];
+        message.cardIds[0] = myCardId;
+        message.cardIds[1] = opponentCardId;
+        message.messageType = MessageType.ATTACK;
         return message;
     }
 
-    public static Message comboAttack(String sender,String receiver,String... opponentAndMyCardIds){
-        Message message=new Message(sender,receiver);
-        message.cardIds=opponentAndMyCardIds;
-        message.messageType=MessageType.COMBO;
+    public static Message makeComboAttackMessage(String sender, String receiver, int messageId, String... opponentAndMyCardIds) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = opponentAndMyCardIds;
+        message.messageType = MessageType.COMBO;
         return message;
     }
 
-    public static Message useSpell(String sender,String receiver,String cardId,Position position){
-        Message message=new Message(sender,receiver);
-        message.cardIds=new String[1];
-        message.cardIds[0]=cardId;
-        message.position=position;
-        message.messageType=MessageType.USE_SPELL;
+    public static Message makeUseSpellMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardIds = new String[1];
+        message.cardIds[0] = cardId;
+        message.position = position;
+        message.messageType = MessageType.USE_SPELL;
         return message;
     }
 
-    public static Message register(String sender,String receiver,String userName,String passWord){
-        Message message=new Message(sender,receiver);
-        message.userName=userName;
-        message.passWord=passWord;
-        message.messageType=MessageType.REGISTER;
+    public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.userName = userName;
+        message.passWord = passWord;
+        message.messageType = MessageType.REGISTER;
         return message;
     }
 
-    public static Message logIn(String sender,String receiver,String userName,String passWord){
-        Message message=new Message(sender,receiver);
-        message.userName=userName;
-        message.passWord=passWord;
-        message.messageType=MessageType.LOG_IN;
+    public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.userName = userName;
+        message.passWord = passWord;
+        message.messageType = MessageType.LOG_IN;
         return message;
     }
 
-    public static Message logOut(String sender,String receiver){
-        Message message=new Message(sender,receiver);
-        message.messageType=MessageType.LOG_OUT;
+    public static Message makeLogOutMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.LOG_OUT;
         return message;
     }
 
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Card[] getShopCards() {
+        return shopCards;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public Deck[] getCustomDecks() {
+        return customDecks;
+    }
+
+    public Account[] getLeaderBoard() {
+        return leaderBoard;
+    }
+
+    public Story[] getStories() {
+        return stories;
+    }
+
+    public Position[] getPositions() {
+        return positions;
+    }
+
+    public String getExceptionString() {
+        return exceptionString;
+    }
+
+    public String[] getCardIds() {
+        return cardIds;
+    }
+
+    public String getSpellId() {
+        return spellId;
+    }
+
+    public int getTurnNum() {
+        return turnNum;
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public int getNewValue() {
+        return newValue;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
 }
