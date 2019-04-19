@@ -1,9 +1,8 @@
-import controllers.Organizer;
-import view.request.InputException;
+import controller.Controller;
 
 public class Main {
 	public static void main(String[] args) {
-		Organizer organizer = new Organizer();
+		Controller organizer = new Controller();
 		organizer.preProcess();
 		organizer.main();
 	}

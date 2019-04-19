@@ -1,7 +1,7 @@
 package cardMaker;
 
 import com.google.gson.Gson;
-import models.card.Card;
+import server.models.card.Card;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

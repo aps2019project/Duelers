@@ -1,6 +1,6 @@
 package AI;
 
-import models.game.Game;
+import server.models.game.Game;
 
 public class AI {
 

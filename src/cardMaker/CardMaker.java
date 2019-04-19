@@ -1,8 +1,8 @@
 package cardMaker;
 
 import com.google.gson.Gson;
-import models.card.*;
-import models.card.spell.*;
+import server.models.card.*;
+import server.models.card.spell.*;
 
 import java.io.File;
 import java.io.FileWriter;
