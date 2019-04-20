@@ -1,7 +1,5 @@
 package client;
 
-import com.google.gson.Gson;
-import server.Server;
 import client.models.account.Account;
 import client.models.card.Card;
 import client.models.card.Deck;
@@ -9,6 +7,8 @@ import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.Menu;
 import client.models.message.Message;
+import com.google.gson.Gson;
+import server.Server;
 
 import java.util.ArrayList;
 
@@ -24,13 +24,18 @@ public class Client {
     private Menu currentMenu;
     private Card selected;
     private ArrayList<Position> positions = new ArrayList<>();
-    private boolean userNameIsValid;
-    private boolean passwordIsValid;
+    private boolean userNameIsValid = true;
+    private boolean passwordIsValid = true;
 
     public Client(String clientName, Menu currentMenu, Server server) {
         this.clientName = clientName;
         this.currentMenu = currentMenu;
         this.server = server;
+    }
+
+    public void updateLeaderBoard(String serverName) {
+        this.addToSendingMessages(Message.makeGetLeaderBoardMessage(clientName, serverName, 0));
+        this.sendMessages();
     }
 
     public boolean isPasswordValid() {
@@ -39,6 +44,10 @@ public class Client {
 
     public ArrayList<Account> getLeaderBoard() {
         return leaderBoard;
+    }
+
+    public void setLeaderBoard(ArrayList<Account> leaderBoard) {
+        this.leaderBoard = leaderBoard;
     }
 
     public void setPasswordIsValid(boolean passwordIsValid) {
@@ -59,6 +68,10 @@ public class Client {
 
     public Menu getCurrentMenu() {
         return currentMenu;
+    }
+
+    public void setCurrentMenu(Menu currentMenu) {
+        this.currentMenu = currentMenu;
     }
 
     public void addToSendingMessages(Message message) {
@@ -95,14 +108,6 @@ public class Client {
 
     public void setCustomDecks(ArrayList<Deck> customDecks) {
         this.customDecks = customDecks;
-    }
-
-    public void setLeaderBoard(ArrayList<Account> leaderBoard) {
-        this.leaderBoard = leaderBoard;
-    }
-
-    public void setCurrentMenu(Menu currentMenu) {
-        this.currentMenu = currentMenu;
     }
 
     public void setSelected(Card selected) {

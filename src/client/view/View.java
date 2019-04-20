@@ -7,6 +7,9 @@ import client.models.card.Card;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
+import client.models.menus.AccountMenu;
+import client.models.menus.BattleMenu;
+import client.models.menus.MainMenu;
 
 import java.util.ArrayList;
 
@@ -21,12 +24,15 @@ public class View {
         return VIEW;
     }
 
+    public void printBattleMenuHelp(){
+        System.out.println(BattleMenu.getInstance().getHelp());
+    }
     public void printError(Exception e) {
         System.out.println(e.getMessage());
     }
 
     public void printAccountHelp() {
-
+        System.out.println(AccountMenu.getInstance().getAccountMenuHelp());
     }
 
     public void printMainMenu() {
@@ -34,7 +40,7 @@ public class View {
     }
 
     public void printMainMenuHelp() {
-
+        System.out.println(MainMenu.getInstance().getHelp());
     }
 
     public void printCollectionHelp() {
