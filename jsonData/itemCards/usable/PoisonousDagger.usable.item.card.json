@@ -5,9 +5,11 @@
   "spells": [
     {
       "spellId": "pd_add_spell",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
-      "targetType": "ALL_MY_TROOP_CARDS",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -28,8 +30,12 @@
       },
       "carryingSpell": {
         "spellId": "pd_poison",
-        "type": "BUFF",
-        "definiteType": "POISON_BUFF",
+        "action": {
+          "hpChange": -1,
+          "poison": true,
+          "durable": true,
+          "duration": 1
+        },
         "availabilityType": {
           "onAttack": true
         },
@@ -51,9 +57,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "numberOfChange": 1,
-        "duration": 1
+        }
       }
     }
   ],

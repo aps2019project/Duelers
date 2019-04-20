@@ -5,13 +5,13 @@
   "spells": [
     {
       "spellId": "kw_increase_mp",
-      "type": "BUFF",
-      "definiteType": "ADD_MANNA",
+      "action": {
+        "mpChange": 1,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "onStart": true
-      },
-      "numberOfChange": 1,
-      "duration": 2147483647
+      }
     }
   ],
   "price": 9000

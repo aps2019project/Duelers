@@ -5,9 +5,11 @@
   "spells": [
     {
       "spellId": "sh_add_spell",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
-      "targetType": "MY_HERO",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -27,10 +29,10 @@
       },
       "carryingSpell": {
         "spellId": "sh_disarm",
-        "type": "BUFF",
-        "definiteType": "DISARM_BUFF",
-        "targetBase": "SELECTED_CELL",
-        "targetType": "ENEMY_TROOPS",
+        "action": {
+          "makeDisarm": true,
+          "duration": 1
+        },
         "availabilityType": {
           "onAttack": true
         },
@@ -51,8 +53,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "duration": 1
+        }
       }
     }
   ],

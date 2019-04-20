@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "ss_holy_12",
-      "type": "BUFF",
-      "definiteType": "HOLY_BUFF",
+      "action": {
+        "enemyHitChanges": -12,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -22,9 +24,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": -12,
-      "duration": 2147483647
+      }
     }
   ],
   "price": 4000

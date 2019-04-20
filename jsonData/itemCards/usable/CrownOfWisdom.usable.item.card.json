@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "cw_manna_increment",
-      "type": "BUFF",
-      "definiteType": "ADD_MANNA",
+      "action": {
+        "mpChange": 1,
+        "durable": true,
+        "duration": 3
+      },
       "availabilityType": {
         "onStart": true
       },

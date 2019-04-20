@@ -21,6 +21,7 @@ public class Troop {
     private boolean dontGiveBadEffect;
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
+    private int enemyHitChanges;
     private Card flag;
 
     public Troop(Card card, Cell cell) {

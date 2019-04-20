@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "da_add_disarm",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -25,8 +28,10 @@
       },
       "carryingSpell": {
         "spellId": "da_disarm",
-        "type": "BUFF",
-        "definiteType": "DISARM_BUFF",
+        "action": {
+          "makeDisarm": true,
+          "duration": 1
+        },
         "availabilityType": {
           "onAttack": true
         },
@@ -47,8 +52,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "duration": 1
+        }
       }
     }
   ],

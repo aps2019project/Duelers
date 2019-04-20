@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "bp_add_spell",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -26,8 +29,10 @@
       },
       "carryingSpell": {
         "spellId": "bp_holy",
-        "type": "BUFF",
-        "definiteType": "HOLY_BUFF",
+        "action": {
+          "enemyHitChanges": -1,
+          "duration": 2
+        },
         "availabilityType": {
           "onPut": true
         },
@@ -48,9 +53,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "numberOfChange": -1,
-        "duration": 2
+        }
       }
     }
   ],

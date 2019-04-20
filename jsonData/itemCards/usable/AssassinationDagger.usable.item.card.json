@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "ad_add_spell",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -26,8 +29,11 @@
       },
       "carryingSpell": {
         "spellId": "ad_damage",
-        "type": "CARD_EFFECT",
-        "definiteType": "DECREASE_HP_CARD_EFFECT",
+        "action": {
+          "hpChange": -1,
+          "durable": true,
+          "duration": 1
+        },
         "availabilityType": {
           "onPut": true
         },
@@ -47,8 +53,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "numberOfChange": 1
+        }
       }
     }
   ],

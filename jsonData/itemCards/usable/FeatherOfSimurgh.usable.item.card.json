@@ -5,9 +5,11 @@
   "spells": [
     {
       "spellId": "fs_decrease_ap",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_AP_CARD_EFFECT",
-      "targetType": "OPP_RANGED_HYBRID_HERO",
+      "action": {
+        "apChange": -2,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onStart": true
       },
@@ -23,8 +25,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2
+      }
     }
   ],
   "price": 3500
