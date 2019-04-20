@@ -1,18 +1,16 @@
 package server;
 
 import client.Client;
-import client.models.message.Message;
+import org.jetbrains.annotations.NotNull;
+import server.models.message.Message;
 import com.google.gson.Gson;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
 import server.models.game.GameType;
-import server.models.game.Player;
 import server.models.game.Story;
-import server.models.map.Map;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,7 +40,7 @@ public class Server {
         return server;
     }
 
-    public void addClient(Client client) {
+    public void addClient(@NotNull Client client) {
         if (getClient(client.getClientName()) == null)
             onlineClients.put(client, null);
         else
@@ -107,6 +105,15 @@ public class Server {
                 case SELECT_DECK:
 
                     break;
+                case NEW_GAME:
+                    if(message.getOpponentUserName()!=null){
+                        Account account1=onlineClients.get(client);
+                        Account account2=getAccount(message.getUserName());
+                        if(account1!=null && account2!=null){
+                            newGame(account1,account2,message.getGameType());
+                        }
+                    }
+                    break;
                 case INSERT:
 
                     break;
@@ -146,19 +153,39 @@ public class Server {
         sendingMessages.clear();
     }
 
+    private Account getAccount(String userName){
+        for(Account account:accounts){
+            if(account.getUserName().equals(userName)){
+                return account;
+            }
+        }
+        System.out.println("account not found");
+        return null;
+    }
+
+    private Client getClient(Account account) {
+        for (java.util.Map.Entry<Client, Account> map : onlineClients.entrySet()) {
+            if (map.getValue()==account) {
+                return map.getKey();
+            }
+        }
+        System.out.println("account not loged in");
+        return null;
+    }
+
     private Client getClient(String clientName) {
         for (java.util.Map.Entry<Client, Account> map : onlineClients.entrySet()) {
             if (map.getKey().getClientName().equals(clientName)) {
                 return map.getKey();
             }
         }
-        System.out.println("Client Null");
+        System.out.println("Client not found");
         return null;
     }
 
-    public void newGame(GameType gameType, Player playerOne, Player playerTwo, Map map) {
-        onlineGames.add(new Game(gameType, playerOne, playerTwo, map));
-        //...
+
+    public void newGame(@NotNull Account account1,@NotNull Account account2,GameType gameType) {
+
     }
 
     private void readAccounts() {
