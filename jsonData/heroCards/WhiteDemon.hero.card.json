@@ -7,8 +7,23 @@
       "spellId": "wd_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "CARD_ITSELF",
       "availabilityType": "SPECIAL_POWER",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      },
       "numberOfChange": 4,
       "coolDown": 2,
       "mannaPoint": 1,

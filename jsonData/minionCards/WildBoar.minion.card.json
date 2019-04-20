@@ -7,8 +7,23 @@
       "spellId": "wb_no_disarm",
       "type": "CARD_EFFECT",
       "definiteType": "NO_DISARM",
-      "targetBase": "CARD_ITSELF",
-      "availabilityType": "ON_DEFEND"
+      "availabilityType": "ON_DEFEND",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      }
     }
   ],
   "defaultAp": 14,

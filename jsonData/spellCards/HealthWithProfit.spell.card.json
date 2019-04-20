@@ -7,9 +7,25 @@
       "spellId": "hp_weakness_6_units",
       "type": "BUFF",
       "definiteType": "WEAKNESS_HP_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 6,
       "duration": 3
     },
@@ -17,9 +33,25 @@
       "spellId": "hp_holy_buff",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": -2,
       "duration": 3
     }

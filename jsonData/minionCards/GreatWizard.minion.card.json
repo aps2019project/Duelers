@@ -7,9 +7,25 @@
       "spellId": "gw_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "CARD_3X3",
-      "targetType": "MY_MINION",
       "availabilityType": "CONTINUOUS",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2,
       "duration": 2147483647
     },
@@ -17,9 +33,25 @@
       "spellId": "gw_holy",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "targetBase": "CARD_3X3",
-      "targetType": "MY_MINION",
       "availabilityType": "CONTINUOUS",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": -1,
       "duration": 2147483647
     }

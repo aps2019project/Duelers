@@ -4,8 +4,7 @@ public class Spell {
     private String spellId;
     private SpellType type;
     private DefiniteType definiteType;
-    private TargetBase targetBase;
-    private TargetType targetType;
+    private Target target;
     private AvailabilityType availabilityType;
     private int numberOfChange;
     private int coolDown;
@@ -14,6 +13,27 @@ public class Spell {
     private int numberOfUses;
     private int duration;
     private Spell carryingSpell;
+
+    public Spell(String spellId, SpellType type, DefiniteType definiteType, Target target, AvailabilityType availabilityType, int numberOfChange, int coolDown, int mannaPoint, int duration, Spell carryingSpell) {
+        this.spellId = spellId;
+        this.type = type;
+        this.definiteType = definiteType;
+        this.target = target;
+        this.availabilityType = availabilityType;
+        this.numberOfChange = numberOfChange;
+        this.coolDown = coolDown;
+        this.mannaPoint = mannaPoint;
+        if (duration == -1) {
+            this.duration = Integer.MAX_VALUE;
+            return;
+        }
+        this.duration = duration;
+        this.carryingSpell = carryingSpell;
+    }
+
+    public Spell(String spellId, Spell referenceSpell) {
+
+    }
 
     public String getSpellId() {
         return this.spellId;
@@ -27,8 +47,20 @@ public class Spell {
         return this.definiteType;
     }
 
-    public TargetBase getTargetBase() {
-        return this.targetBase;
+    public Target getTarget() {
+        return target;
+    }
+
+    public AvailabilityType getAvailabilityType() {
+        return availabilityType;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Spell getCarryingSpell() {
+        return carryingSpell;
     }
 
     public int getNumberOfChange() {
@@ -53,5 +85,9 @@ public class Spell {
 
     public int getNumberOfUses() {
         return this.numberOfUses;
+    }
+
+    public void addNumberOfUses() {
+
     }
 }

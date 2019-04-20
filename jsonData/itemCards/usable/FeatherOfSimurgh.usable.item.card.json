@@ -9,6 +9,19 @@
       "definiteType": "DECREASE_AP_CARD_EFFECT",
       "targetType": "OPP_RANGED_HYBRID_HERO",
       "availabilityType": "ON_START",
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2
     }
   ],

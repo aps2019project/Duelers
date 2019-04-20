@@ -7,9 +7,25 @@
       "spellId": "all_attack",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "targetBase": "ALL_CELLS",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 6
     }
   ],

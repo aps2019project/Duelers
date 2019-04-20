@@ -7,9 +7,25 @@
       "spellId": "w_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "CARD_3X3",
-      "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2,
       "duration": 1
     },
@@ -17,9 +33,25 @@
       "spellId": "w_weakness",
       "type": "BUFF",
       "definiteType": "WEAKNESS_HP_BUFF",
-      "targetBase": "CARD_3X3",
-      "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 1,
       "duration": 1
     }

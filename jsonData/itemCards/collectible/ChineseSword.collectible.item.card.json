@@ -7,9 +7,23 @@
       "spellId": "cs_ap_increment",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_MELEE_TROOP",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      },
       "numberOfChange": 5
     }
   ]

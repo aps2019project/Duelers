@@ -1,8 +1,11 @@
 package cardMaker;
 
 import com.google.gson.Gson;
-import server.models.card.*;
+import server.models.card.AttackType;
+import server.models.card.Card;
+import server.models.card.CardType;
 import server.models.card.spell.*;
+import server.models.map.Position;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -122,44 +125,7 @@ public class CardMaker {
         );
         DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
 
-        System.out.println(
-                "spell target base:\n" +
-                        "(" +
-                        "0.SELECTED_CELL\n" +
-                        "1.ALL_CELLS\n" +
-                        "2.SELECTED_2X2\n" +
-                        "3.SELECTED_3X3\n" +
-                        "4.CARD_RANGE_2\n" +
-                        "5.RANDOM\n" +
-                        "6.CARD_3X3\n" +
-                        "7.CARD_ROW\n" +
-                        "8.HERO_3X3\n" +
-                        "9.RANDOM_AROUND_MY_HERO\n" +
-                        "10.RANDOM_AROUND_ITSELF\n" +
-                        "11.CARD_ITSELF" +
-                        ")"
-        );
-        TargetBase targetBase = TargetBase.values()[Integer.parseInt(scanner.nextLine())];
-
-        System.out.println(
-                "spell target type:\n" +
-                        "(" +
-                        "0.CELL\n" +
-                        "1.MY_TROOPS\n" +
-                        "2.ENEMY_TROOPS\n" +
-                        "3.ALL_TROOPS\n" +
-                        "4.MY_HERO\n" +
-                        "5.ENEMY_HERO\n" +
-                        "6.ALL_MINION" +
-                        "7.MY_MINION\n" +
-                        "8.ENEMY_MINION\n" +
-                        "9.MY_RANGED_HYBRID_HERO\n" +
-                        "10.OPP_RANGED_HYBRID_HERO\n" +
-                        "11.RANGED_HYBRID_TROOP\n" +
-                        "12.ALL_MY_TROOP_CARDS" +
-                        ")"
-        );
-        TargetType targetType = TargetType.values()[Integer.parseInt(scanner.nextLine())];
+        Target target = makeNewTarget();
 
         System.out.println(
                 "spell availabilityType:\n" +
@@ -200,14 +166,69 @@ public class CardMaker {
             carryingSpell = makeNewSpell();
         }
 
-        return new Spell(id, spellType, definiteType, targetBase, targetType, availabilityType, numberOfChange, coolDown, mannaPoint, duration, carryingSpell);
+        return new Spell(id, spellType, definiteType, target, availabilityType, numberOfChange, coolDown, mannaPoint, duration, carryingSpell);
+    }
+
+    private static Target makeNewTarget() {
+        System.out.println("is related to card owner position?");
+        boolean isRelatedToCardOwnerPosition = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for around own hero?");
+        boolean isForAroundOwnHero = parseBoolean(scanner.nextLine());
+
+        System.out.println("dimensions??");
+        Position dimensions = new Position(
+                Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine())
+        );
+
+        System.out.println("is random?");
+        boolean isRandom = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for own?");
+        boolean own = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for enemy?");
+        boolean enemy = parseBoolean(scanner.nextLine());
+
+        Owner owner = new Owner(own, enemy);
+
+        System.out.println("is for cell?");
+        boolean cell = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for hero?");
+        boolean hero = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for minion?");
+        boolean minion = parseBoolean(scanner.nextLine());
+
+        TargetCardType cardType = new TargetCardType(cell, hero, minion);
+
+        System.out.println("is for melee?");
+        boolean melee = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for ranged?");
+        boolean ranged = parseBoolean(scanner.nextLine());
+
+        System.out.println("is for hybrid?");
+        boolean hybrid = parseBoolean(scanner.nextLine());
+
+        CardAttackType attackType = new CardAttackType(melee, ranged, hybrid);
+
+        System.out.println("is for deck cards?");
+        boolean isForDeckCards = parseBoolean(scanner.nextLine());
+
+        return new Target(isRelatedToCardOwnerPosition, isForAroundOwnHero, dimensions, isRandom, owner, cardType, attackType, isForDeckCards);
+    }
+
+    private static boolean parseBoolean(String num) {
+        return Integer.parseInt(num) != 0;
     }
 
     private static void writeAJsonFile(Card card) {
         String json = new Gson().toJson(card);
 
         try {
-            FileWriter writer = new FileWriter(new File("jsonData/itemCards/", card.getName().replaceAll(" ","") + ".item.card.json"));
+            FileWriter writer = new FileWriter(new File("jsonData/itemCards/", card.getName().replaceAll(" ", "") + ".item.card.json"));
             writer.write(json);
             writer.close();
         } catch (IOException e) {

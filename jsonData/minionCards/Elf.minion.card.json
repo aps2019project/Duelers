@@ -7,9 +7,24 @@
       "spellId": "e_power_buff",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "ALL_CELLS",
-      "targetType": "MY_MINION",
       "availabilityType": "PASSIVE",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 1,
       "duration": 2147483647
     }

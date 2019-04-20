@@ -7,15 +7,43 @@
       "spellId": "da_add_disarm",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "targetType": "MY_RANGED_HYBRID_HERO",
       "availabilityType": "ON_START",
+      "target": {
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "ranged": true,
+          "hybrid": true
+        },
+        "isForDeckCards": true
+      },
       "carryingSpell": {
         "spellId": "da_disarm",
         "type": "BUFF",
         "definiteType": "DISARM_BUFF",
-        "targetBase": "SELECTED_CELL",
-        "targetType": "ENEMY_TROOPS",
         "availabilityType": "ON_ATTACK",
+        "target": {
+          "dimensions": {
+            "row": 1,
+            "column": 1
+          },
+          "owner": {
+            "enemy": true
+          },
+          "cardType": {
+            "hero": true,
+            "minion": true
+          },
+          "attackType": {
+            "melee": true,
+            "ranged": true,
+            "hybrid": true
+          }
+        },
         "duration": 1
       }
     }

@@ -7,9 +7,25 @@
       "spellId": "all_poison",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "targetBase": "ALL_CELLS",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 1,
       "duration": 4
     }

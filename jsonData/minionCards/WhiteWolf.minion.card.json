@@ -7,9 +7,24 @@
       "spellId": "ww_poison_1",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2,
       "duration": 1
     },
@@ -17,9 +32,24 @@
       "spellId": "ww_poison_2",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_ATTACK",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 4,
       "duration": 2
     }

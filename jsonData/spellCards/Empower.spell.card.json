@@ -7,9 +7,25 @@
       "spellId": "empower",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_AP_CARD_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2
     }
   ],

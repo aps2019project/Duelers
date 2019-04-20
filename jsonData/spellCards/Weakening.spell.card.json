@@ -7,9 +7,24 @@
       "spellId": "weakness_buff",
       "type": "BUFF",
       "definiteType": "WEAKNESS_AP_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 4,
       "duration": 2147483647
     }

@@ -7,15 +7,46 @@
       "spellId": "se_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "targetType": "ALL_MY_TROOP_CARDS",
       "availabilityType": "ON_START",
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "carryingSpell": {
         "spellId": "se_power_buff",
         "type": "BUFF",
         "definiteType": "POWER_AP_BUFF",
-        "targetBase": "RANDOM",
-        "targetType": "MY_TROOPS",
         "availabilityType": "ON_DEATH",
+        "target": {
+          "isRandom": true,
+          "dimensions": {
+            "row": 10,
+            "column": 18
+          },
+          "owner": {
+            "own": true
+          },
+          "cardType": {
+            "hero": true,
+            "minion": true
+          },
+          "attackType": {
+            "melee": true,
+            "ranged": true,
+            "hybrid": true
+          }
+        },
         "numberOfChange": 1,
         "duration": 2147483647
       }

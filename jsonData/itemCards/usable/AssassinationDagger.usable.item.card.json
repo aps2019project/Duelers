@@ -7,15 +7,43 @@
       "spellId": "ad_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "targetType": "ALL_MY_TROOP_CARDS",
       "availabilityType": "ON_START",
+      "target": {
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        },
+        "isForDeckCards": true
+      },
       "carryingSpell": {
         "spellId": "ad_damage",
         "type": "CARD_EFFECT",
         "definiteType": "DECREASE_HP_CARD_EFFECT",
-        "targetBase": "ALL_CELLS",
-        "targetType": "ENEMY_HERO",
         "availabilityType": "ON_PUT",
+        "target": {
+          "dimensions": {
+            "row": 10,
+            "column": 18
+          },
+          "owner": {
+            "enemy": true
+          },
+          "cardType": {
+            "hero": true
+          },
+          "attackType": {
+            "melee": true,
+            "ranged": true,
+            "hybrid": true
+          }
+        },
         "numberOfChange": 1
       }
     }

@@ -7,9 +7,25 @@
       "spellId": "b_random_hit",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "isRandom": true,
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 16
     }
   ],

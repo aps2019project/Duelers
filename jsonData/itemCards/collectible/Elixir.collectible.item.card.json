@@ -7,18 +7,52 @@
       "spellId": "ex_hp_increment",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_HP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "ALL_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 3
     },
     {
       "spellId": "ex_ap_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "RANDOM",
-      "targetType": "ALL_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 3,
       "duration": 2147483647
     }

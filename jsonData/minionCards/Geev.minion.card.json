@@ -7,8 +7,23 @@
       "spellId": "g_no_negative",
       "type": "CARD_EFFECT",
       "definiteType": "NO_BAD_EFFECT",
-      "targetBase": "CARD_ITSELF",
-      "availabilityType": "ON_DEFEND"
+      "availabilityType": "ON_DEFEND",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "ranged": true
+        }
+      }
     }
   ],
   "defaultAp": 7,

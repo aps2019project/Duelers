@@ -7,9 +7,25 @@
       "spellId": "zh_poison",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_ATTACK",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 1,
       "duration": 3
     }

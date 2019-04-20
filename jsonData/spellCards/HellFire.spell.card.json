@@ -7,9 +7,16 @@
       "spellId": "hellfire",
       "type": "CELL_EFFECT",
       "definiteType": "FIERY_CELL_EFFECT",
-      "targetBase": "SELECTED_2X2",
-      "targetType": "CELL",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 2,
+          "column": 2
+        },
+        "cardType": {
+          "cell": true
+        }
+      },
       "duration": 2
     }
   ],

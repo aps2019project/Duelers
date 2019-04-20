@@ -9,13 +9,45 @@
       "definiteType": "ADD_SPELL",
       "targetType": "ALL_MY_TROOP_CARDS",
       "availabilityType": "ON_START",
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "carryingSpell": {
         "spellId": "pd_poison",
         "type": "BUFF",
         "definiteType": "POISON_BUFF",
-        "targetBase": "RANDOM",
-        "targetType": "ENEMY_TROOPS",
         "availabilityType": "ON_ATTACK",
+        "target": {
+          "isRandom": true,
+          "dimensions": {
+            "row": 10,
+            "column": 18
+          },
+          "owner": {
+            "enemy": true
+          },
+          "cardType": {
+            "hero": true,
+            "minion": true
+          },
+          "attackType": {
+            "melee": true,
+            "ranged": true,
+            "hybrid": true
+          }
+        },
         "numberOfChange": 1,
         "duration": 1
       }

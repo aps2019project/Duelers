@@ -7,9 +7,25 @@
       "spellId": "ws_inverse_holy_buff",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "targetBase": "CARD_RANGE_2",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 1,
       "duration": 2147483647
     }

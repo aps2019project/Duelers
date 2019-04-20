@@ -7,9 +7,25 @@
       "spellId": "tg_dispel",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_TROOPS",
-      "availabilityType": "ON_ATTACK"
+      "availabilityType": "ON_ATTACK",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
     }
   ],
   "defaultAp": 4,

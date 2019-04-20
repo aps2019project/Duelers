@@ -7,9 +7,25 @@
       "spellId": "sd_disarm",
       "type": "BUFF",
       "definiteType": "DISARM_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "SPECIAL_POWER",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "coolDown": 1,
       "duration": 2147483647
     }

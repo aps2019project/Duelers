@@ -7,9 +7,23 @@
       "spellId": "e_power_buff",
       "type": "BUFF",
       "definiteType": "POWER_HP_BUFF",
-      "targetBase": "CARD_ITSELF",
-      "targetType": "MY_TROOPS",
       "availabilityType": "PASSIVE",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "ranged": true
+        }
+      },
       "numberOfChange": 10,
       "duration": 2147483647
     }

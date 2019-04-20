@@ -7,9 +7,26 @@
       "spellId": "ar_row_attack",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "targetBase": "CARD_ROW",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "SPECIAL_POWER",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 4,
       "coolDown": 2,
       "mannaPoint": 2

@@ -7,9 +7,25 @@
       "spellId": "og_on_death",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "targetBase": "CARD_3X3",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_DEATH",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2
     }
   ],

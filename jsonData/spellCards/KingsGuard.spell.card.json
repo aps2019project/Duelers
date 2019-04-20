@@ -7,9 +7,26 @@
       "spellId": "kings_guard",
       "type": "CARD_EFFECT",
       "definiteType": "KILL_A_MINION",
-      "targetBase": "RANDOM_AROUND_MY_HERO",
-      "targetType": "ENEMY_MINION",
-      "availabilityType": "ON_PUT"
+      "availabilityType": "ON_PUT",
+      "target": {
+        "isForAroundOwnHero": true,
+        "isRandom": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
     }
   ],
   "mannaPoint": 9,

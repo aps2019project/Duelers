@@ -7,9 +7,25 @@
       "spellId": "si_stun",
       "type": "BUFF",
       "definiteType": "STUN_BUFF",
-      "targetBase": "ALL_CELLS",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "SPECIAL_POWER",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "coolDown": 8,
       "mannaPoint": 5,
       "duration": 1

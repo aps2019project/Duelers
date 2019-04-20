@@ -7,17 +7,49 @@
       "spellId": "ad_enemy",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
-      "targetBase": "SELECTED_2X2",
-      "targetType": "ENEMY_TROOPS",
-      "availabilityType": "ON_PUT"
+      "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 2,
+          "column": 2
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
     },
     {
       "spellId": "ad_own",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
-      "targetBase": "SELECTED_2X2",
-      "targetType": "MY_TROOPS",
-      "availabilityType": "ON_PUT"
+      "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 2,
+          "column": 2
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
     }
   ],
   "mannaPoint": 2,

@@ -7,9 +7,25 @@
       "spellId": "all_disarm",
       "type": "BUFF",
       "definiteType": "DISARM_BUFF",
-      "targetBase": "ALL_CELLS",
-      "targetType": "ENEMY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "duration": 1
     }
   ],

@@ -7,9 +7,25 @@
       "spellId": "gc_stun",
       "type": "BUFF",
       "definiteType": "STUN_BUFF",
-      "targetBase": "CARD_3X3",
-      "targetType": "ENEMY_MINION",
       "availabilityType": "ON_PUT",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 3,
+          "column": 3
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "duration": 1
     }
   ],

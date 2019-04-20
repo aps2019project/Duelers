@@ -7,9 +7,25 @@
       "spellId": "md_power_AP_buff",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 4,
       "duration": 3
     },
@@ -17,9 +33,25 @@
       "spellId": "md_disarm_buff",
       "type": "BUFF",
       "definiteType": "DISARM_BUFF",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "MY_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "duration": 3
     }
   ],

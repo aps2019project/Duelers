@@ -7,9 +7,27 @@
       "spellId": "pn_add_hp",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_HP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "ALL_TROOPS",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 6
     }
   ]

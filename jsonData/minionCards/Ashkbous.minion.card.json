@@ -7,8 +7,23 @@
       "spellId": "a_weaker",
       "type": "CARD_EFFECT",
       "definiteType": "NO_ATTACK_FROM_WEAKENERS",
-      "targetBase": "CARD_ITSELF",
-      "availabilityType": "ON_DEFEND"
+      "availabilityType": "ON_DEFEND",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      }
     }
   ],
   "defaultAp": 8,

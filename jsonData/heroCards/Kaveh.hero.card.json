@@ -7,9 +7,16 @@
       "spellId": "kv_holy",
       "type": "CELL_EFFECT",
       "definiteType": "HOLY_CELL_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "CELL",
       "availabilityType": "SPECIAL_POWER",
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "cardType": {
+          "cell": true
+        }
+      },
       "numberOfChange": -1,
       "coolDown": 3,
       "mannaPoint": 1,

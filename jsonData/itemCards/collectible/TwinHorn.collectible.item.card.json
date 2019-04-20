@@ -7,9 +7,26 @@
       "spellId": "th_increase_ap",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "RANGED_HYBRID_TROOP",
       "availabilityType": "ON_PUT",
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 2
     }
   ]

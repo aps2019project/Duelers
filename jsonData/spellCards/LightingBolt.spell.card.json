@@ -7,9 +7,26 @@
       "spellId": "lighting_bolt",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "ENEMY_HERO",
       "availabilityType": "ON_PUT",
+      "target": {
+        "isRandom": true,
+        "dimensions": {
+          "row": 10,
+          "column": 10
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": false
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
       "numberOfChange": 8
     }
   ],

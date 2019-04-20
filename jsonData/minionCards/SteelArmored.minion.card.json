@@ -7,9 +7,23 @@
       "spellId": "sa_holy",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "targetBase": "CARD_ITSELF",
-      "targetType": "MY_MINION",
       "availabilityType": "PASSIVE_CONTINUOUS",
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      },
       "numberOfChange": -12,
       "duration": 2147483647
     }
