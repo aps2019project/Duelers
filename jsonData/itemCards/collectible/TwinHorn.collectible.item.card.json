@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "th_increase_ap",
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "action": {
+        "apChange": 2,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -28,8 +31,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2
+      }
     }
   ]
 }

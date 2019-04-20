@@ -5,10 +5,11 @@
   "spells": [
     {
       "spellId": "ba_increase_ap",
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_AP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "ALL_TROOPS",
+      "action": {
+        "apChange": 6,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -31,8 +32,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 6
+      }
     }
   ]
 }

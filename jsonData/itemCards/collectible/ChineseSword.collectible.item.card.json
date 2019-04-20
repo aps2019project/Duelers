@@ -5,6 +5,11 @@
   "spells": [
     {
       "spellId": "cs_ap_increment",
+      "action": {
+        "apChange": 5,
+        "durable": true,
+        "duration": 1
+      },
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
       "availabilityType": {
@@ -25,8 +30,7 @@
         "attackType": {
           "melee": true
         }
-      },
-      "numberOfChange": 5
+      }
     }
   ]
 }

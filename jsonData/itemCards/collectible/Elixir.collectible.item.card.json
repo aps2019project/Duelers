@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "ex_hp_increment",
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": 3,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -28,13 +31,14 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 3
+      }
     },
     {
       "spellId": "ex_ap_power",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 3,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -56,9 +60,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 3,
-      "duration": 2147483647
+      }
     }
   ]
 }

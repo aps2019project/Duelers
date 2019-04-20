@@ -5,10 +5,13 @@
   "spells": [
     {
       "spellId": "rd_increase_hp",
+      "action": {
+        "apChange": 2,
+        "durable": true,
+        "duration": 1
+      },
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
-      "targetBase": "RANDOM",
-      "targetType": "ALL_TROOPS",
       "availabilityType": {
         "onPut": true
       },
@@ -31,8 +34,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2
+      }
     }
   ]
 }

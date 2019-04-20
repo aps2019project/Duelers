@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "cd_add_random",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_SPELL",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -31,8 +34,11 @@
       },
       "carryingSpell": {
         "spellId": "cd_on_death",
-        "type": "CARD_EFFECT",
-        "definiteType": "DECREASE_HP_CARD_EFFECT",
+        "action": {
+          "hpChange": -8,
+          "durable": true,
+          "duration": 1
+        },
         "availabilityType": {
           "onDeath": true
         },
@@ -55,8 +61,7 @@
             "ranged": true,
             "hybrid": true
           }
-        },
-        "numberOfChange": 8
+        }
       }
     }
   ]

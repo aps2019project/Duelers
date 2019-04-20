@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "pn_add_hp",
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": 6,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -29,8 +32,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 6
+      }
     }
   ]
 }

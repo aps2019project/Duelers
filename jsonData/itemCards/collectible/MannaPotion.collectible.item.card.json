@@ -5,12 +5,15 @@
   "spells": [
     {
       "spellId": "mp_add",
-      "type": "BUFF",
-      "definiteType": "ADD_MANNA",
+      "action": {
+        "mpChange": 3,
+        "durable": true,
+        "duration": 1,
+        "delay": 1
+      },
       "availabilityType": {
         "onPut": true
       },
-      "numberOfChange": 3,
       "duration": 1
     }
   ]
