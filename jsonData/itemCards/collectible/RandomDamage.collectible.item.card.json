@@ -9,7 +9,9 @@
       "definiteType": "INCREASE_AP_CARD_EFFECT",
       "targetBase": "RANDOM",
       "targetType": "ALL_TROOPS",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

@@ -7,7 +7,9 @@
       "spellId": "si_stun",
       "type": "BUFF",
       "definiteType": "STUN_BUFF",
-      "availabilityType": "SPECIAL_POWER",
+      "availabilityType": {
+        "specialPower": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

@@ -7,7 +7,9 @@
       "spellId": "ap_AP_2_units_buff",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

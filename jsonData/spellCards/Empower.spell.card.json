@@ -7,7 +7,9 @@
       "spellId": "empower",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_AP_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 1,

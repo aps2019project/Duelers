@@ -7,7 +7,9 @@
       "spellId": "og_on_death",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "availabilityType": "ON_DEATH",
+      "availabilityType": {
+        "onDeath": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

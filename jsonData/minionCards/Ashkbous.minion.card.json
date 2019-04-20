@@ -7,7 +7,9 @@
       "spellId": "a_weaker",
       "type": "CARD_EFFECT",
       "definiteType": "NO_ATTACK_FROM_WEAKENERS",
-      "availabilityType": "ON_DEFEND",
+      "availabilityType": {
+        "onDefend": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

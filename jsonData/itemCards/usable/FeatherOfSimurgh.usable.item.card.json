@@ -8,7 +8,9 @@
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_AP_CARD_EFFECT",
       "targetType": "OPP_RANGED_HYBRID_HERO",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "isForDeckCards": true,
         "owner": {

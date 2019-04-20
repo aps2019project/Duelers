@@ -10,4 +10,16 @@ public class CardAttackType {
         this.ranged = ranged;
         this.hybrid = hybrid;
     }
+
+    public boolean isMelee() {
+        return melee;
+    }
+
+    public boolean isRanged() {
+        return ranged;
+    }
+
+    public boolean isHybrid() {
+        return hybrid;
+    }
 }

@@ -7,7 +7,9 @@
       "spellId": "cd_add_random",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 10,
@@ -31,7 +33,9 @@
         "spellId": "cd_on_death",
         "type": "CARD_EFFECT",
         "definiteType": "DECREASE_HP_CARD_EFFECT",
-        "availabilityType": "ON_DEATH",
+        "availabilityType": {
+          "onDeath": true
+        },
         "target": {
           "isRelatedToCardOwnerPosition": true,
           "dimensions": {

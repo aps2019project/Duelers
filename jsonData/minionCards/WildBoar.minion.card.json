@@ -7,7 +7,9 @@
       "spellId": "wb_no_disarm",
       "type": "CARD_EFFECT",
       "definiteType": "NO_DISARM",
-      "availabilityType": "ON_DEFEND",
+      "availabilityType": {
+        "onDefend": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

@@ -2,12 +2,14 @@ package client.models.card;
 
 import client.models.card.spell.Spell;
 
+import java.util.ArrayList;
+
 public class Card {
     private String name;
     private String description;
     private String cardId;
     private CardType type;
-    private Spell[] spells;
+    private ArrayList<Spell> spells;
     private int defaultAp;
     private int defaultHp;
     private int mannaPoint;
@@ -32,7 +34,7 @@ public class Card {
         return this.type;
     }
 
-    public Spell[] getSpells() {
+    public ArrayList<Spell> getSpells() {
         return this.spells;
     }
 

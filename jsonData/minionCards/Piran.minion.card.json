@@ -7,7 +7,9 @@
       "spellId": "p_no_poison",
       "type": "CARD_EFFECT",
       "definiteType": "NO_POISON",
-      "availabilityType": "ON_DEFEND",
+      "availabilityType": {
+        "onDefend": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

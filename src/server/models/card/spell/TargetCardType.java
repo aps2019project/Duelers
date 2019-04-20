@@ -10,4 +10,16 @@ public class TargetCardType {
         this.hero = hero;
         this.minion = minion;
     }
+
+    public boolean isCell() {
+        return cell;
+    }
+
+    public boolean isHero() {
+        return hero;
+    }
+
+    public boolean isMinion() {
+        return minion;
+    }
 }

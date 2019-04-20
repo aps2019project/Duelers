@@ -7,7 +7,9 @@
       "spellId": "all_disarm",
       "type": "BUFF",
       "definiteType": "DISARM_BUFF",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

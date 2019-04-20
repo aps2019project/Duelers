@@ -7,7 +7,9 @@
       "spellId": "e_power_buff",
       "type": "BUFF",
       "definiteType": "POWER_HP_BUFF",
-      "availabilityType": "PASSIVE",
+      "availabilityType": {
+        "passive": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

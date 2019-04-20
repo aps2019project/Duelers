@@ -6,7 +6,10 @@
     {
       "spellId": "es_holy",
       "type": "BUFF",
-      "availabilityType": "PASSIVE_CONTINUOUS",
+      "availabilityType": {
+        "passive": true,
+        "continuous": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

@@ -7,7 +7,9 @@
       "spellId": "ad_enemy",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 2,
@@ -31,7 +33,9 @@
       "spellId": "ad_own",
       "type": "CARD_EFFECT",
       "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 2,

@@ -7,7 +7,9 @@
       "spellId": "th_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "isForDeckCards": true,
         "owner": {
@@ -27,7 +29,9 @@
         "spellId": "th_weakness",
         "type": "BUFF",
         "definiteType": "WEAKNESS_AP_BUFF",
-        "availabilityType": "ON_ATTACK",
+        "availabilityType": {
+          "onAttack": true
+        },
         "target": {
           "isRandom": true,
           "dimensions": {

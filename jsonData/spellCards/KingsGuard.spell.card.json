@@ -7,7 +7,10 @@
       "spellId": "kings_guard",
       "type": "CARD_EFFECT",
       "definiteType": "KILL_A_MINION",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
+      "killsTarget": true,
       "target": {
         "isForAroundOwnHero": true,
         "isRandom": true,

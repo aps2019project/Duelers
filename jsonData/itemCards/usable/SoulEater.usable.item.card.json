@@ -7,7 +7,9 @@
       "spellId": "se_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "isForDeckCards": true,
         "owner": {
@@ -27,7 +29,9 @@
         "spellId": "se_power_buff",
         "type": "BUFF",
         "definiteType": "POWER_AP_BUFF",
-        "availabilityType": "ON_DEATH",
+        "availabilityType": {
+          "onDeath": true
+        },
         "target": {
           "isRandom": true,
           "dimensions": {

@@ -7,7 +7,9 @@
       "spellId": "hellfire",
       "type": "CELL_EFFECT",
       "definiteType": "FIERY_CELL_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 2,

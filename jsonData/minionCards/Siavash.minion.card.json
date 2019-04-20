@@ -7,7 +7,9 @@
       "spellId": "si_hero_hit",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "availabilityType": "ON_DEATH",
+      "availabilityType": {
+        "onDeath": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

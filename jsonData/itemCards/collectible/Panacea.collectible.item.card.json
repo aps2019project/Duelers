@@ -7,7 +7,9 @@
       "spellId": "pn_add_hp",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_HP_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 10,

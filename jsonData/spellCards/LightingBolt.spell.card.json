@@ -7,7 +7,9 @@
       "spellId": "lighting_bolt",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "isRandom": true,
         "dimensions": {

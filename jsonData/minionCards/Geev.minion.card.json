@@ -7,7 +7,9 @@
       "spellId": "g_no_negative",
       "type": "CARD_EFFECT",
       "definiteType": "NO_BAD_EFFECT",
-      "availabilityType": "ON_DEFEND",
+      "availabilityType": {
+        "onDefend": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

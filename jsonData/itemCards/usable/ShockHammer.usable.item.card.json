@@ -8,7 +8,9 @@
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
       "targetType": "MY_HERO",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "isForDeckCards": true,
         "owner": {
@@ -29,7 +31,9 @@
         "definiteType": "DISARM_BUFF",
         "targetBase": "SELECTED_CELL",
         "targetType": "ENEMY_TROOPS",
-        "availabilityType": "ON_ATTACK",
+        "availabilityType": {
+          "onAttack": true
+        },
         "target": {
           "dimensions": {
             "row": 1,

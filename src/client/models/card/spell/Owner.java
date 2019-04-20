@@ -8,4 +8,12 @@ public class Owner {
         this.own = own;
         this.enemy = enemy;
     }
+
+    public boolean isOwn() {
+        return own;
+    }
+
+    public boolean isEnemy() {
+        return enemy;
+    }
 }

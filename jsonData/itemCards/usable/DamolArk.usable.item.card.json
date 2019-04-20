@@ -7,7 +7,9 @@
       "spellId": "da_add_disarm",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "owner": {
           "own": true
@@ -25,7 +27,9 @@
         "spellId": "da_disarm",
         "type": "BUFF",
         "definiteType": "DISARM_BUFF",
-        "availabilityType": "ON_ATTACK",
+        "availabilityType": {
+          "onAttack": true
+        },
         "target": {
           "dimensions": {
             "row": 1,

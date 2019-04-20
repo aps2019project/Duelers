@@ -7,7 +7,9 @@
       "spellId": "mp_add",
       "type": "BUFF",
       "definiteType": "ADD_MANNA",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "numberOfChange": 3,
       "duration": 1
     }

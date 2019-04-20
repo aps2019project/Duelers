@@ -7,7 +7,9 @@
       "spellId": "ws_inverse_holy_buff",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

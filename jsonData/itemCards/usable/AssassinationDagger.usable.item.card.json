@@ -7,7 +7,9 @@
       "spellId": "ad_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "owner": {
           "own": true
@@ -26,7 +28,9 @@
         "spellId": "ad_damage",
         "type": "CARD_EFFECT",
         "definiteType": "DECREASE_HP_CARD_EFFECT",
-        "availabilityType": "ON_PUT",
+        "availabilityType": {
+          "onPut": true
+        },
         "target": {
           "dimensions": {
             "row": 10,

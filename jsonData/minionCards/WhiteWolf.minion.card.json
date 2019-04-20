@@ -7,7 +7,9 @@
       "spellId": "ww_poison_1",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "availabilityType": "ON_ATTACK",
+      "availabilityType": {
+        "onAttack": true
+      },
       "target": {
         "dimensions": {
           "row": 1,
@@ -32,7 +34,9 @@
       "spellId": "ww_poison_2",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "availabilityType": "ON_ATTACK",
+      "availabilityType": {
+        "onAttack": true
+      },
       "target": {
         "dimensions": {
           "row": 1,

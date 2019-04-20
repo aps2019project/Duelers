@@ -7,7 +7,9 @@
       "spellId": "ar_row_attack",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
-      "availabilityType": "SPECIAL_POWER",
+      "availabilityType": {
+        "specialPower": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

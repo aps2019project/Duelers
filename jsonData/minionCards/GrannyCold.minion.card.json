@@ -7,7 +7,9 @@
       "spellId": "gc_stun",
       "type": "BUFF",
       "definiteType": "STUN_BUFF",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

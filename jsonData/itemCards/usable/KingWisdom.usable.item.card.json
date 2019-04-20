@@ -7,7 +7,9 @@
       "spellId": "kw_increase_mp",
       "type": "BUFF",
       "definiteType": "ADD_MANNA",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "numberOfChange": 1,
       "duration": 2147483647
     }

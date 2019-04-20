@@ -2,12 +2,14 @@ package server.models.card;
 
 import server.models.card.spell.Spell;
 
+import java.util.ArrayList;
+
 public class Card {
     private String name;
     private String description;
     private String cardId;
     private CardType type;
-    private Spell[] spells;
+    private ArrayList<Spell> spells;
     private int defaultAp;
     private int defaultHp;
     private int mannaPoint;
@@ -16,7 +18,7 @@ public class Card {
     private int range;
     private boolean hasCombo;
 
-    public Card(String name, String description, CardType type, Spell[] spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+    public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;
         this.type = type;
@@ -46,7 +48,7 @@ public class Card {
         return this.type;
     }
 
-    public Spell[] getSpells() {
+    public ArrayList<Spell> getSpells() {
         return this.spells;
     }
 

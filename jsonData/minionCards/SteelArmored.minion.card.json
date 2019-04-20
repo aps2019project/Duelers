@@ -7,7 +7,10 @@
       "spellId": "sa_holy",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "availabilityType": "PASSIVE_CONTINUOUS",
+      "availabilityType": {
+        "passive": true,
+        "continuous": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

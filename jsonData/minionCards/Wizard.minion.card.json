@@ -7,7 +7,9 @@
       "spellId": "w_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "availabilityType": "PASSIVE",
+      "availabilityType": {
+        "passive": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {
@@ -33,7 +35,9 @@
       "spellId": "w_weakness",
       "type": "BUFF",
       "definiteType": "WEAKNESS_HP_BUFF",
-      "availabilityType": "PASSIVE",
+      "availabilityType": {
+        "passive": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

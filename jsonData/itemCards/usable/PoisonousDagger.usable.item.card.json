@@ -8,7 +8,9 @@
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
       "targetType": "ALL_MY_TROOP_CARDS",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "isForDeckCards": true,
         "owner": {
@@ -28,7 +30,9 @@
         "spellId": "pd_poison",
         "type": "BUFF",
         "definiteType": "POISON_BUFF",
-        "availabilityType": "ON_ATTACK",
+        "availabilityType": {
+          "onAttack": true
+        },
         "target": {
           "isRandom": true,
           "dimensions": {

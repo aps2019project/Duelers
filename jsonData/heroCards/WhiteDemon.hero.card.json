@@ -7,7 +7,9 @@
       "spellId": "wd_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "availabilityType": "SPECIAL_POWER",
+      "availabilityType": {
+        "specialPower": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

@@ -7,7 +7,9 @@
       "spellId": "cs_ap_increment",
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_AP_CARD_EFFECT",
-      "availabilityType": "ON_PUT",
+      "availabilityType": {
+        "onPut": true
+      },
       "target": {
         "dimensions": {
           "row": 1,

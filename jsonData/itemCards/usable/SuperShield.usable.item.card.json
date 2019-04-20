@@ -7,7 +7,9 @@
       "spellId": "ss_holy_12",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "availabilityType": "ON_START",
+      "availabilityType": {
+        "onStart": true
+      },
       "target": {
         "owner": {
           "own": true

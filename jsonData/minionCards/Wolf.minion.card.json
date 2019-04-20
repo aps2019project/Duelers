@@ -7,7 +7,9 @@
       "spellId": "w_poison",
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
-      "availabilityType": "ON_ATTACK",
+      "availabilityType": {
+        "onAttack": true
+      },
       "target": {
         "dimensions": {
           "row": 1,

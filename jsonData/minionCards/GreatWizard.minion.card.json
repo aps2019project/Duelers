@@ -7,7 +7,9 @@
       "spellId": "gw_power",
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
-      "availabilityType": "CONTINUOUS",
+      "availabilityType": {
+        "continuous": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {
@@ -33,7 +35,9 @@
       "spellId": "gw_holy",
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
-      "availabilityType": "CONTINUOUS",
+      "availabilityType": {
+        "continuous": true
+      },
       "target": {
         "isRelatedToCardOwnerPosition": true,
         "dimensions": {

@@ -7,7 +7,9 @@
       "spellId": "kv_holy",
       "type": "CELL_EFFECT",
       "definiteType": "HOLY_CELL_EFFECT",
-      "availabilityType": "SPECIAL_POWER",
+      "availabilityType": {
+        "specialPower": true
+      },
       "target": {
         "dimensions": {
           "row": 1,
