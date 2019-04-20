@@ -23,7 +23,7 @@ public class AccountMenu extends Menu {
                 "\"login [userName]\"\n" +
                 "\"show leaderboard\"\n" +
                 "\"save\"\n" +
-                "\"logout\"\n";
+                "\"logout\"";
 
     }
 
@@ -53,13 +53,9 @@ public class AccountMenu extends Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    private void updateLeaderBoard(Client client, String serverName) {
-        client.addToSendingMessages(Message.makeGetLeaderBoardMessage(client.getClientName(), serverName, 0));
-        client.sendMessages();
-    }
 
     public void showLeaderBoard(Client client, String serverName) {
-        updateLeaderBoard(client, serverName);
+        client.updateLeaderBoard( serverName);
         View.getInstance().printLeaderBoard(client);
     }
 

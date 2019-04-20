@@ -10,21 +10,17 @@ public class Request {
     private String command;
     private RequestType requestType = null;
 
-    public RequestType getRequestType() {
-        return requestType;
-    }
-
     public void getNewCommand() {
         this.command = scanner.nextLine();
     }
 
-    public void handleRequest(Client client, String serverName) throws InputException {
+    public void handleRequest(Client client, String serverName) throws InputException,Exit {
         if (client.getCurrentMenu().equals(AccountMenu.getInstance())) {
             accountMenuHandleRequest(client, serverName);
         } else if (client.getCurrentMenu().equals(BattleMenu.getInstance())) {
             battleRequestHandleRequest(client, serverName);
         } else if (client.getCurrentMenu().equals(CollectionMenu.getInstance())) {
-
+            collectionMenuHandleRequest(client,serverName);
         } else if (client.getCurrentMenu().equals(CustomGameMenu.getInstance())) {
 
         } else if (client.getCurrentMenu().equals(MainMenu.getInstance())) {
@@ -36,13 +32,25 @@ public class Request {
         } else if (client.getCurrentMenu().equals(SinglePlayerMenu.getInstance())) {
 
         }
-        return false;
     }
 
-    private void mainMenuHandleRequest(Client client, String serverName) {
+    private void collectionMenuHandleRequest(Client client, String serverName) {
+        //TODO
+    }
+
+    private void mainMenuHandleRequest(Client client, String serverName) throws Exit {
         MainMenu mainMenu = MainMenu.getInstance();
         if (RequestType.ENTER_MENU.setMatcher(command).find()){
             mainMenu.moveToMenu(client,RequestType.ENTER_MENU.getMatcher().group(1));
+        }if (RequestType.HELP.setMatcher(command).find()){
+            mainMenu.showHelp();
+        }if (RequestType.EXIT.setMatcher(command).find())
+            throw new Exit();
+        if (RequestType.SAVE.setMatcher(command).find()){
+            mainMenu.save();
+        }
+        if (RequestType.LOGOUT.setMatcher(command).find()){
+            mainMenu.logout();
         }
     }
 
@@ -52,6 +60,10 @@ public class Request {
             battleMenu.moveToSinglePlayerMenu(client);
         } else if (RequestType.MULTI_PLAYER.setMatcher(command).find()) {
             battleMenu.moveToMultiPlayerMenu(client, serverName);
+        }else if (RequestType.HELP.setMatcher(command).find()){
+            battleMenu.showHelp();
+        }else if (RequestType.EXIT.setMatcher(command).find()){
+            battleMenu.backToMain(client);
         }
     }
 

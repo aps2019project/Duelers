@@ -2,10 +2,11 @@ package controller;
 
 import client.Client;
 import client.models.menus.AccountMenu;
-import server.Server;
 import client.view.View;
+import client.view.request.Exit;
 import client.view.request.InputException;
 import client.view.request.Request;
+import server.Server;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,10 @@ public class Controller {
             request.getNewCommand();
             try {
                 request.handleRequest(thisClient, server.getServerName());
-            } catch (InputException e) {
+            }catch (InputException e){
                 view.printError(e);
+            }catch (Exit e){
+                break;
             }
         } while (true);
     }

@@ -1,12 +1,12 @@
 package client.models.menus;
 
 import client.Client;
+import client.view.View;
 
 public class MainMenu extends Menu {
     private static MainMenu MAIN_MENU;
 
     private MainMenu() {
-
     }
 
     public static MainMenu getInstance() {
@@ -16,6 +16,15 @@ public class MainMenu extends Menu {
         return MAIN_MENU;
     }
 
+    public String getHelp() {
+        return "\"Enter Collection\"\n" +
+                "\"Enter Battle\"\n" +
+                "\"Enter Shop\"\n" +
+                "\"logout\"\n" +
+                "\"save\"\n" +
+                "\"exit\"";
+    }
+
     public void moveToMenu(Client client, String menuName) {
         if (menuName.equals("Collection"))
             client.setCurrentMenu(CollectionMenu.getInstance());
@@ -23,5 +32,17 @@ public class MainMenu extends Menu {
             client.setCurrentMenu(Shop.getInstance());
         if (menuName.equals("Battle"))
             client.setCurrentMenu(BattleMenu.getInstance());
+    }
+
+    public void showHelp() {
+        View.getInstance().printMainMenuHelp();
+    }
+
+    public void save() {
+        //TODO
+    }
+
+    public void logout() {
+        //TODO
     }
 }
