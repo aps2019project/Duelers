@@ -9,6 +9,7 @@ import client.models.game.Player;
 import client.models.map.Cell;
 import client.models.menus.AccountMenu;
 import client.models.menus.BattleMenu;
+import client.models.menus.CollectionMenu;
 import client.models.menus.MainMenu;
 
 import java.util.ArrayList;
@@ -151,5 +152,9 @@ public class View {
 
     public void printTurnActionHelp(Player player) {
 
+    }
+
+    public void printCollectionMenuHelp() {
+        System.out.println(CollectionMenu.getInstance().getHelp());
     }
 }

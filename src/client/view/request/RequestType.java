@@ -18,6 +18,7 @@ public enum RequestType {
     START_GAME("^start game (\\w+) (\\w+) (\\w+)$"),
     SELECT_USER("^select user (\\w+)$"),
     START_MULTIPLAYER_GMAE("^start multiplayer game (\\w+)"),
+    //collection
     SHOW("^show$"),
     CREATE_DECK("^create deck (\\w+)$"),
     DELETE_DECK("^delete deck (\\w+)$"),

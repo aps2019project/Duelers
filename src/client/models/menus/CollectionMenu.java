@@ -1,8 +1,8 @@
 package client.models.menus;
 
+import client.Client;
 import client.models.account.Collection;
-import client.models.card.Card;
-import client.models.card.Deck;
+import client.view.View;
 
 public class CollectionMenu extends Menu {
     private static CollectionMenu collectionMenu;
@@ -18,6 +18,14 @@ public class CollectionMenu extends Menu {
         return collectionMenu;
     }
 
+    public void showAllDecks(){
+
+    }
+
+    public void showDeck(String deckName){
+
+    }
+
     public void setCollection(Collection collection) {
         this.collection = collection;
     }
@@ -26,11 +34,11 @@ public class CollectionMenu extends Menu {
 
     }
 
-    public void addCardToDeck(Deck deck, Card card) {
+    public void addCardToDeck(String deckName, String cardID) {
 
     }
 
-    public void removeCardFromDeck(Deck deck, Card card) {
+    public void removeCardFromDeck(String deckName, String cardID) {
 
     }
 
@@ -42,11 +50,37 @@ public class CollectionMenu extends Menu {
 
     }
 
-    public boolean validateDeck(String deckName) {
-        return false;
+    public void validateDeck(String deckName) {
+
     }
 
     public void selectDeck(String DeckName) {
 
+    }
+
+    public void backToMain(Client client) {
+        client.setCurrentMenu(MainMenu.getInstance());
+    }
+
+    public void showHelp() {
+        View.getInstance().printCollectionMenuHelp();
+    }
+
+    public void showItemsAndCards(){
+
+    }
+
+    public String getHelp() {
+        return "\"show\" : show cards and items\n" +
+                "\"create deck [deck name]\"\n" +
+                "\"delete deck [deck name]\"\n" +
+                "\"search [card name | item name]\"\n" +
+                "\"add [card id | hero id] to deck [deck name]\"\n" +
+                "\"remove [card id | hero id] from deck [deck name]\"\n" +
+                "\"validate deck [deck name]\"\n" +
+                "\"select deck [deck name]\"\n" +
+                "\"show all decks\"\n" +
+                "\"show deck [deck name]\"\n" +
+                "\"exit\"";
     }
 }
