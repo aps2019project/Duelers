@@ -5,7 +5,7 @@ import client.models.card.Card;
 import client.models.card.Deck;
 
 public class CollectionMenu extends Menu {
-    private static final CollectionMenu COLLECTION_MENU = new CollectionMenu();
+    private static CollectionMenu collectionMenu;
     private Collection collection;
 
     private CollectionMenu() {
@@ -13,7 +13,9 @@ public class CollectionMenu extends Menu {
     }
 
     public static CollectionMenu getInstance() {
-        return COLLECTION_MENU;
+        if (collectionMenu == null)
+            collectionMenu = new CollectionMenu();
+        return collectionMenu;
     }
 
     public void setCollection(Collection collection) {

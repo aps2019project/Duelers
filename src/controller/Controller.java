@@ -8,13 +8,11 @@ import client.view.request.InputException;
 import client.view.request.Request;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Controller {
     private View view = View.getInstance();
-    private Scanner input;
     private ArrayList<Client> clients = new ArrayList<>();
-    private Server server;
+    private Server server = Server.getInstance();
     private Client thisClient;
 
     public void main() {
@@ -22,7 +20,7 @@ public class Controller {
             Request request = new Request();
             request.getNewCommand();
             try {
-                request.handleRequset(thisClient, server.getServerName());
+                request.handleRequest(thisClient, server.getServerName());
             } catch (InputException e) {
                 view.printError(e);
             }

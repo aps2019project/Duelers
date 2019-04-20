@@ -4,17 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum RequestType {
+    //Account menu:
     CREATE_ACCOUNT("^create account (\\w+)$"),
     LOGIN("^login (\\w+)$"),
     SHOW_LEADER_BOARD("^show leaderboard$"),
+    HELP("" + "^help$"),
+    //Main menu:
+    ENTER_MENU("^Enter (\\w+)$"),
     SAVE("^save$"),
     LOGOUT("^logout$"),
-    HELP("" + "^help$"),
+    EXIT("^exit$"),
+
     START_GAME("^start game (\\w+) (\\w+) (\\w+)$"),
     SELECT_USER("^select user (\\w+)$"),
     START_MULTIPLAYER_GMAE("^start multiplayer game (\\w+)"),
-    ENTER_MENU("^Enter (\\w+)$"),
-    EXIT("^exit$"),
     SHOW("^show$"),
     CREATE_DECK("^create deck (\\w+)$"),
     DELETE_DECK("^delete deck (\\w+)$"),

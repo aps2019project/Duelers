@@ -7,6 +7,7 @@ import client.models.card.Card;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
+import client.models.menus.AccountMenu;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class View {
     }
 
     public void printAccountHelp() {
-
+        System.out.println(AccountMenu.getInstance().getAccountMenuHelp());
     }
 
     public void printMainMenu() {

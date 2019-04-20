@@ -18,16 +18,31 @@ public class AccountMenu extends Menu {
         return ACCOUNT_MENU;
     }
 
+    public String getAccountMenuHelp() {
+        return  "\"create account [userName]\"\n" +
+                "\"login [userName]\"\n" +
+                "\"show leaderboard\"\n" +
+                "\"save\"\n" +
+                "\"logout\"\n";
+
+    }
+
     public void register(Client client, String serverName, String userName, String password) throws InputException {
-        client.addToSendingMessages(Message.makeRegisterMessage(client.getClientName(), serverName, userName, password, 0));
+        client.addToSendingMessages(
+                Message.makeRegisterMessage(
+                        client.getClientName(), serverName, userName, password, 0)
+        );
         client.sendMessages();
         if (!client.isUserNameValid()) {
             throw new InputException("invalid UserName");
         }
+        client.setCurrentMenu(MainMenu.getInstance());
     }
 
     public void login(Client client, String serverName, String userName, String password) throws InputException {
-        client.addToSendingMessages(Message.makeLogInMessage(client.getClientName(), serverName, userName, password, 0));
+        client.addToSendingMessages(
+                Message.makeLogInMessage(client.getClientName(), serverName, userName, password, 0)
+        );
         client.sendMessages();
         if (!client.isUserNameValid()) {
             throw new InputException("invalid UserName");
@@ -35,6 +50,7 @@ public class AccountMenu extends Menu {
         if (!client.isPasswordValid()) {
             throw new InputException("password is invalid");
         }
+        client.setCurrentMenu(MainMenu.getInstance());
     }
 
     private void updateLeaderBoard(Client client, String serverName) {
@@ -47,15 +63,9 @@ public class AccountMenu extends Menu {
         View.getInstance().printLeaderBoard(client);
     }
 
-    public void save(Client client, String serverName) {
 
+    public void help() {
+        View.getInstance().printAccountHelp();
     }
 
-    public void help(Client client, String serverName) {
-
-    }
-
-    public void logout(Client client, String serverName) {
-
-    }
 }

@@ -6,7 +6,7 @@ import client.models.card.Card;
 import java.util.ArrayList;
 
 public class Shop extends Menu {
-    private static final Shop SHOP = new Shop();
+    private static  Shop SHOP ;
     private ArrayList<Card> cards;
 
     private Shop() {
@@ -14,6 +14,9 @@ public class Shop extends Menu {
     }
 
     public static Shop getInstance() {
+        if (SHOP == null) {
+            SHOP = new Shop();
+        }
         return SHOP;
     }
 
