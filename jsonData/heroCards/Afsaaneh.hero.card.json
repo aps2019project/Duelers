@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "af_dispel",
-      "type": "CARD_EFFECT",
-      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "action": {
+        "removeBuffs": 1,
+        "duration": 1
+      },
       "availabilityType": {
         "specialPower": true
       },

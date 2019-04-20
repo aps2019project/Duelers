@@ -5,8 +5,12 @@
   "spells": [
     {
       "spellId": "ar_row_attack",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -4,
+        "durable": true,
+        "duration": 1,
+        "delay": 0
+      },
       "availabilityType": {
         "specialPower": true
       },
@@ -29,7 +33,6 @@
           "hybrid": true
         }
       },
-      "numberOfChange": 4,
       "coolDown": 2,
       "mannaPoint": 2
     }

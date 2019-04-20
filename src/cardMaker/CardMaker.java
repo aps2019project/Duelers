@@ -71,7 +71,7 @@ public class CardMaker {
         //System.out.println("has combo??");
         boolean hasCombo = false;//Boolean.parseBoolean(scanner.nextLine());
 
-        return new Card(name, description, cardType, spells, defaultAp, defaultHp, mannaPoint, price, attackType, range, hasCombo);
+        return null;//new Card(name, description, cardType, spells, defaultAp, defaultHp, mannaPoint, price, attackType, range, hasCombo);
     }
 
     private static void makeSpells(Spell[] spells) {
@@ -89,7 +89,7 @@ public class CardMaker {
                 "(0.CELL_EFFECT, " +
                 "1.BUFF, " +
                 "2.CARD_EFFECT)");
-        SpellType spellType = SpellType.values()[Integer.parseInt(scanner.nextLine())];
+        //SpellType spellType = SpellType.values()[Integer.parseInt(scanner.nextLine())];
 
         System.out.println(
                 "spell definite type:\n" +
@@ -123,7 +123,7 @@ public class CardMaker {
                         "26.ADD_SPELL" +
                         ")"
         );
-        DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
+        //DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
 
         Target target = makeNewTarget();
 
@@ -143,7 +143,7 @@ public class CardMaker {
                         "10.ON_START" +
                         ")"
         );
-        AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];
+        //AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];
 
         System.out.println("spell numberOfChange: ");
         int numberOfChange = Integer.parseInt(scanner.nextLine());
@@ -155,18 +155,18 @@ public class CardMaker {
         int mannaPoint = 0;//Integer.parseInt(scanner.nextLine());
 
         int duration = 0;
-        if (spellType == SpellType.BUFF || spellType == SpellType.CELL_EFFECT) {
+        /*if (spellType == SpellType.BUFF || spellType == SpellType.CELL_EFFECT) {
             System.out.println("buff duration: ");
             duration = Integer.parseInt(scanner.nextLine());
-        }
+        }*/
 
         Spell carryingSpell = null;
-        if (definiteType == DefiniteType.ADD_SPELL) {
+        /*if (definiteType == DefiniteType.ADD_SPELL) {
             System.out.println("carrying spell:");
             carryingSpell = makeNewSpell();
-        }
+        }*/
 
-        return new Spell(id, spellType, definiteType, target, availabilityType, numberOfChange, coolDown, mannaPoint, duration, carryingSpell);
+        return null;//new Spell(id, spellType, definiteType, target, availabilityType, numberOfChange, coolDown, mannaPoint, duration, carryingSpell);
     }
 
     private static Target makeNewTarget() {

@@ -5,6 +5,10 @@
   "spells": [
     {
       "spellId": "kv_holy",
+      "action": {
+        "enemyHitChanges": -1,
+        "duration": 3
+      },
       "type": "CELL_EFFECT",
       "definiteType": "HOLY_CELL_EFFECT",
       "availabilityType": {
@@ -19,10 +23,8 @@
           "cell": true
         }
       },
-      "numberOfChange": -1,
       "coolDown": 3,
-      "mannaPoint": 1,
-      "duration": 3
+      "mannaPoint": 1
     }
   ],
   "defaultAp": 4,

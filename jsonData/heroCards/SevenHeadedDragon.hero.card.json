@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "sd_disarm",
-      "type": "BUFF",
-      "definiteType": "DISARM_BUFF",
+      "action": {
+        "makeDisarm": true,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "specialPower": true
       },
@@ -28,8 +30,7 @@
           "hybrid": true
         }
       },
-      "coolDown": 1,
-      "duration": 2147483647
+      "coolDown": 1
     }
   ],
   "defaultAp": 4,

@@ -5,7 +5,10 @@
   "spells": [
     {
       "spellId": "es_holy",
-      "type": "BUFF",
+      "action": {
+        "enemyHitChanges": -3,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "passive": true,
         "continuous": true
@@ -25,9 +28,7 @@
         "attackType": {
           "hybrid": true
         }
-      },
-      "numberOfChange": -3,
-      "duration": 2147483647
+      }
     }
   ],
   "defaultAp": 3,

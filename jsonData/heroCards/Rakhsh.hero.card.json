@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "rk_stun",
-      "type": "BUFF",
-      "definiteType": "STUN_BUFF",
+      "action": {
+        "makeStun": true,
+        "duration": 1
+      },
       "availabilityType": {
         "specialPower": true
       },
@@ -29,8 +31,7 @@
         }
       },
       "coolDown": 2,
-      "mannaPoint": 1,
-      "duration": 1
+      "mannaPoint": 1
     }
   ],
   "defaultAp": 4,
