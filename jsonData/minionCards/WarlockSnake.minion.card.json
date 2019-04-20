@@ -9,7 +9,7 @@
       "definiteType": "HOLY_BUFF",
       "targetBase": "CARD_RANGE_2",
       "targetType": "ENEMY_MINION",
-      "availabilityType": "ON_SPAWN",
+      "availabilityType": "ON_PUT",
       "numberOfChange": 1,
       "duration": 2147483647
     }

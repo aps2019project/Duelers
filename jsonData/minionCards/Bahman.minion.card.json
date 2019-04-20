@@ -9,7 +9,7 @@
       "definiteType": "DECREASE_HP_CARD_EFFECT",
       "targetBase": "RANDOM",
       "targetType": "ENEMY_MINION",
-      "availabilityType": "ON_SPAWN",
+      "availabilityType": "ON_PUT",
       "numberOfChange": 16
     }
   ],

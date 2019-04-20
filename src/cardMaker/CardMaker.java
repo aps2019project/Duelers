@@ -116,7 +116,8 @@ public class CardMaker {
                         "22.ADD_MANNA\n" +
                         "23.ADD_ATTACK_RANGE\n" +
                         "24.KILL_A_MINION\n" +
-                        "25.DISABLE_HOLY_BUFF_ON_ATTACK" +
+                        "25.DISABLE_HOLY_BUFF_ON_ATTACK\n" +
+                        "26.ADD_SPELL" +
                         ")"
         );
         DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
@@ -134,7 +135,8 @@ public class CardMaker {
                         "7.CARD_ROW\n" +
                         "8.HERO_3X3\n" +
                         "9.RANDOM_AROUND_MY_HERO\n" +
-                        "10.CARD_ITSELF" +
+                        "10.RANDOM_AROUND_ITSELF\n" +
+                        "11.CARD_ITSELF" +
                         ")"
         );
         TargetBase targetBase = TargetBase.values()[Integer.parseInt(scanner.nextLine())];
@@ -148,10 +150,13 @@ public class CardMaker {
                         "3.ALL_TROOPS\n" +
                         "4.MY_HERO\n" +
                         "5.ENEMY_HERO\n" +
-                        "6.MY_MINION\n" +
-                        "7.ENEMY_MINION\n" +
-                        "8.RANGED_HYBRID_HERO\n" +
-                        "9.RANGED_HYBRID_TROOP" +
+                        "6.ALL_MINION" +
+                        "7.MY_MINION\n" +
+                        "8.ENEMY_MINION\n" +
+                        "9.MY_RANGED_HYBRID_HERO\n" +
+                        "10.OPP_RANGED_HYBRID_HERO\n" +
+                        "11.RANGED_HYBRID_TROOP\n" +
+                        "12.ALL_MY_TROOP_CARDS" +
                         ")"
         );
         TargetType targetType = TargetType.values()[Integer.parseInt(scanner.nextLine())];
@@ -164,12 +169,12 @@ public class CardMaker {
                         "2.ON_ATTACK\n" +
                         "3.COMBO\n" +
                         "4.ON_DEATH\n" +
-                        "5.ON_SPAWN\n" +
-                        "6.EVERY_X_TIME\n" +
-                        "7.CONTINUOUS\n" +
-                        "8.ON_DEFEND\n" +
-                        "9.PASSIVE_CONTINUOUS\n" +
-                        "10.SPECIAL_POWER" +
+                        "5.EVERY_X_TIME\n" +
+                        "6.CONTINUOUS\n" +
+                        "7.ON_DEFEND\n" +
+                        "8.PASSIVE_CONTINUOUS\n" +
+                        "9.SPECIAL_POWER\n" +
+                        "10.ON_START" +
                         ")"
         );
         AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];

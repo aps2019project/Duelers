@@ -7,8 +7,7 @@
       "spellId": "fs_decrease_ap",
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_AP_CARD_EFFECT",
-      "targetBase": "SELECTED_CELL",
-      "targetType": "RANGED_HYBRID_TROOP",
+      "targetType": "OPP_RANGED_HYBRID_HERO",
       "availabilityType": "ON_START",
       "numberOfChange": 2
     }

@@ -1,0 +1,16 @@
+{
+  "name": "Chinese Sword",
+  "description": "TODO",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "cs_ap_increment",
+      "type": "CARD_EFFECT",
+      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "targetBase": "SELECTED_CELL",
+      "targetType": "MY_MELEE_TROOP",
+      "availabilityType": "ON_PUT",
+      "numberOfChange": 5
+    }
+  ]
+}

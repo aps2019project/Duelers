@@ -8,7 +8,7 @@
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_HP_CARD_EFFECT",
       "targetBase": "RANDOM",
-      "targetType": "MY_MINION",
+      "targetType": "ALL_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 3
     },
@@ -17,7 +17,7 @@
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
       "targetBase": "RANDOM",
-      "targetType": "MY_MINION",
+      "targetType": "ALL_MINION",
       "availabilityType": "ON_PUT",
       "numberOfChange": 3,
       "duration": 2147483647

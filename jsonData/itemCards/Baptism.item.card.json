@@ -1,0 +1,25 @@
+{
+  "name": "Baptism",
+  "description": "TODO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "bp_add_spell",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetType": "ALL_MY_MINION_CARDS",
+      "availabilityType": "ON_START",
+      "carryingSpell": {
+        "spellId": "bp_holy",
+        "type": "BUFF",
+        "definiteType": "HOLY_BUFF",
+        "targetBase": "SELECTED_CELL",
+        "targetType": "MY_MINION",
+        "availabilityType": "ON_PUT",
+        "numberOfChange": -1,
+        "duration": 2
+      }
+    }
+  ],
+  "price": 20000
+}

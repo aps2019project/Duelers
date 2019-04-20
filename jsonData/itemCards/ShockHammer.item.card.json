@@ -1,0 +1,24 @@
+{
+  "name": "Shock Hammer",
+  "description": "TODO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "sh_add_spell",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetType": "MY_HERO",
+      "availabilityType": "ON_START",
+      "carryingSpell": {
+        "spellId": "sh_disarm",
+        "type": "BUFF",
+        "definiteType": "DISARM_BUFF",
+        "targetBase": "SELECTED_CELL",
+        "targetType": "ENEMY_TROOPS",
+        "availabilityType": "ON_ATTACK",
+        "duration": 1
+      }
+    }
+  ],
+  "price": 15000
+}

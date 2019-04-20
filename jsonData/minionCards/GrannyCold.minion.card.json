@@ -9,7 +9,7 @@
       "definiteType": "STUN_BUFF",
       "targetBase": "CARD_3X3",
       "targetType": "ENEMY_MINION",
-      "availabilityType": "ON_SPAWN",
+      "availabilityType": "ON_PUT",
       "duration": 1
     }
   ],

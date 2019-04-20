@@ -6,7 +6,6 @@ public enum AvailabilityType {
     ON_ATTACK,
     COMBO,
     ON_DEATH,
-    ON_SPAWN,
     EVERY_X_TIME,
     CONTINUOUS,
     ON_DEFEND,

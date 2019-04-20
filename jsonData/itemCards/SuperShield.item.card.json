@@ -8,7 +8,7 @@
       "type": "BUFF",
       "definiteType": "HOLY_BUFF",
       "targetType": "MY_HERO",
-      "availabilityType": "PASSIVE",
+      "availabilityType": "ON_START",
       "numberOfChange": -12,
       "duration": 2147483647
     }

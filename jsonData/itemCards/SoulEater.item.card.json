@@ -1,0 +1,25 @@
+{
+  "name": "Soul Eater",
+  "description": "TODO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "se_add_spell",
+      "type": "CARD_EFFECT",
+      "definiteType": "ADD_SPELL",
+      "targetType": "ALL_MY_TROOP_CARDS",
+      "availabilityType": "ON_START",
+      "carryingSpell": {
+        "spellId": "se_power_buff",
+        "type": "BUFF",
+        "definiteType": "POWER_AP_BUFF",
+        "targetBase": "RANDOM",
+        "targetType": "MY_TROOPS",
+        "availabilityType": "ON_DEATH",
+        "numberOfChange": 1,
+        "duration": 2147483647
+      }
+    }
+  ],
+  "price": 25000
+}

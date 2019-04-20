@@ -8,8 +8,8 @@
       "type": "CARD_EFFECT",
       "definiteType": "INCREASE_HP_CARD_EFFECT",
       "targetBase": "RANDOM",
-      "targetType": "MY_TROOPS",
-      "availabilityType": "PASSIVE",
+      "targetType": "ALL_TROOPS",
+      "availabilityType": "ON_PUT",
       "numberOfChange": 6
     }
   ]

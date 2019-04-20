@@ -9,7 +9,7 @@
       "definiteType": "INCREASE_AP_CARD_EFFECT",
       "targetBase": "RANDOM",
       "targetType": "RANGED_HYBRID_TROOP",
-      "availabilityType": "PASSIVE",
+      "availabilityType": "ON_PUT",
       "numberOfChange": 2
     }
   ]

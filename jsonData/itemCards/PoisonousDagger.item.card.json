@@ -1,25 +1,25 @@
 {
-  "name": "Terror Hood",
-  "description": "a usable ITEM that gives all troops an ON_ATTACK WEAKNESS BUFF with 2 AP decrement",
+  "name": "Poisonous Dagger",
+  "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [
     {
-      "spellId": "th_add_spell",
+      "spellId": "pd_add_spell",
       "type": "CARD_EFFECT",
       "definiteType": "ADD_SPELL",
       "targetType": "ALL_MY_TROOP_CARDS",
       "availabilityType": "ON_START",
       "carryingSpell": {
-        "spellId": "th_weakness",
+        "spellId": "pd_poison",
         "type": "BUFF",
-        "definiteType": "WEAKNESS_AP_BUFF",
+        "definiteType": "POISON_BUFF",
         "targetBase": "RANDOM",
         "targetType": "ENEMY_TROOPS",
         "availabilityType": "ON_ATTACK",
-        "numberOfChange": 2,
+        "numberOfChange": 1,
         "duration": 1
       }
     }
   ],
-  "price": 5000
+  "price": 7000
 }

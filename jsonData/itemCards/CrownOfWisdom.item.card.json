@@ -7,7 +7,7 @@
       "spellId": "cw_manna_increment",
       "type": "BUFF",
       "definiteType": "ADD_MANNA",
-      "availabilityType": "PASSIVE",
+      "availabilityType": "ON_START",
       "numberOfChange": 1,
       "duration": 3
     }
