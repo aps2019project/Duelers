@@ -3,7 +3,7 @@ package controller;
 import client.Client;
 import client.models.menus.AccountMenu;
 import client.view.View;
-import client.view.request.Exit;
+import client.view.request.ExitCommand;
 import client.view.request.InputException;
 import client.view.request.Request;
 import server.Server;
@@ -24,7 +24,7 @@ public class Controller {
                 request.handleRequest(thisClient, server.getServerName());
             }catch (InputException e){
                 view.printError(e);
-            }catch (Exit e){
+            }catch (ExitCommand e){
                 break;
             }
         } while (true);

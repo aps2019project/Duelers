@@ -16,6 +16,7 @@ public class Account {
     private int wins;
     
     public int getWins() {
+
         return wins;
     }
     
