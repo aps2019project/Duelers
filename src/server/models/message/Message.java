@@ -5,6 +5,7 @@ import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
+import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.map.Position;
 
@@ -34,6 +35,8 @@ public class Message {
     private Position position;
     private String userName, passWord;
     private String deckName;
+    private String opponentUserName;
+    private GameType gameType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -209,6 +212,14 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
         message.messageType = MessageType.REMOVE_DECK;
+        return message;
+    }
+
+    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver,GameType gameType, String opponentAccount, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.opponentUserName =opponentAccount;
+        message.gameType=gameType;
+        message.messageType = MessageType.NEW_GAME;
         return message;
     }
 
@@ -396,5 +407,13 @@ public class Message {
 
     public String getDeckName() {
         return deckName;
+    }
+
+    public String getOpponentUserName() {
+        return opponentUserName;
+    }
+
+    public GameType getGameType() {
+        return gameType;
     }
 }

@@ -4,6 +4,7 @@ import client.models.account.Account;
 import client.models.card.Card;
 import client.models.card.Deck;
 import client.models.game.Game;
+import client.models.game.GameType;
 import client.models.game.Story;
 import client.models.map.Position;
 import com.google.gson.Gson;
@@ -34,6 +35,8 @@ public class Message {
     private Position position;
     private String userName, passWord;
     private String deckName;
+    private String opponentUserName;
+    private GameType gameType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -289,6 +292,14 @@ public class Message {
         message.spellId = spellId;
         message.position = position;
         message.messageType = MessageType.USE_SPELL;
+        return message;
+    }
+
+    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver,GameType gameType, String opponentAccount, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.opponentUserName =opponentAccount;
+        message.gameType=gameType;
+        message.messageType = MessageType.NEW_GAME;
         return message;
     }
 
