@@ -26,11 +26,11 @@ public class MainMenu extends Menu {
     }
 
     public void moveToMenu(Client client, String menuName) {
-        if (menuName.equals("Collection"))
+        if (menuName.equals("collection"))
             client.setCurrentMenu(CollectionMenu.getInstance());
-        if (menuName.equals("Shop"))
+        if (menuName.equals("shop"))
             client.setCurrentMenu(Shop.getInstance());
-        if (menuName.equals("Battle"))
+        if (menuName.equals("battle"))
             client.setCurrentMenu(BattleMenu.getInstance());
     }
 

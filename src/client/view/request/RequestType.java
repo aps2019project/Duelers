@@ -10,14 +10,15 @@ public enum RequestType {
     SHOW_LEADER_BOARD("^show leaderboard$"),
     HELP("" + "^help$"),
     //Main menu:
-    ENTER_MENU("^Enter (\\w+)$"),
+    ENTER_MENU("^enter (\\w+)$"),
     SAVE("^save$"),
     LOGOUT("^logout$"),
     EXIT("^exit$"),
 
-    START_GAME("^start game (\\w+) (\\w+) (\\w+)$"),
+
+    START_GAME("^start game (\\w+) (\\w+) (\\d+)$"),
+    START_MULTIPLAYER_GAME("^start multiplayer game (\\w+) (\\d+)$"),
     SELECT_USER("^select user (\\w+)$"),
-    START_MULTIPLAYER_GMAE("^start multiplayer game (\\w+)"),
     //collection
     SHOW("^show$"),
     CREATE_DECK("^create deck (\\w+)$"),
@@ -30,11 +31,11 @@ public enum RequestType {
     SHOW_ALL_DECKS("^show all decks$"),
     SHOW_DECK("^show deck (\\w+)"),
     //battle menu
-    SINGLE_PLAYER("^Single Player$"),
-    MULTI_PLAYER("^Multi Player$"),
+    SINGLE_PLAYER("^single player$"),
+    MULTI_PLAYER("^multi player$"),
     //single player menu
     STORY("^story$"),
-    CUSTOM_GAME("^Custom game$"),
+    CUSTOM_GAME("^custom game$"),
     //shop:
     
     ;

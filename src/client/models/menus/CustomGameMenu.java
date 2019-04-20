@@ -11,7 +11,7 @@ public class CustomGameMenu extends Menu {
         return CUSTOM_GAME_MENU;
     }
 
-    public void startGame(String gameDetails) {
+    public void startGame(String deckName,String mode,int numberOfFlags) {
 
     }
 }

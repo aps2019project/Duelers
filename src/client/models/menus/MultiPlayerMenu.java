@@ -17,7 +17,7 @@ public class MultiPlayerMenu extends Menu {
 
     }
 
-    public void startGame(String gameDetails) {
+    public void startGame(String mode,int numberOfFlags) {
 
     }
 }

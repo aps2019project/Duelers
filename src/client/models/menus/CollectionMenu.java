@@ -9,7 +9,6 @@ public class CollectionMenu extends Menu {
     private Collection collection;
 
     private CollectionMenu() {
-
     }
 
     public static CollectionMenu getInstance() {
@@ -70,6 +69,9 @@ public class CollectionMenu extends Menu {
 
     }
 
+    public void search(String cardID){
+
+    }
     public String getHelp() {
         return "\"show\" : show cards and items\n" +
                 "\"create deck [deck name]\"\n" +
@@ -79,6 +81,7 @@ public class CollectionMenu extends Menu {
                 "\"remove [card id | hero id] from deck [deck name]\"\n" +
                 "\"validate deck [deck name]\"\n" +
                 "\"select deck [deck name]\"\n" +
+                "\"save\"\n" +
                 "\"show all decks\"\n" +
                 "\"show deck [deck name]\"\n" +
                 "\"exit\"";
