@@ -11,7 +11,7 @@
         "duration": 1
       },
       "availabilityType": {
-        "onDefend": true
+        "onPut": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
