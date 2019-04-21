@@ -1,7 +1,5 @@
 package client.models.card;
 
-import client.view.request.InputException;
-
 import java.util.ArrayList;
 
 public class Deck {

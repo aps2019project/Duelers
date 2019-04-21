@@ -9,7 +9,6 @@ public class Deck {
     private Card item;
     private ArrayList<Card> others;
 
-
     public Deck(String name) {
 
     }
@@ -54,12 +53,16 @@ public class Deck {
         return this.item;
     }
 
-
     public void setItem(Card item) {
         this.item = item;
     }
 
     public boolean areSame(String deckName) {
         return this.deckName.equals(deckName);
+    }
+
+    public boolean isValid() {
+        if (hero == null) return false;
+        return others.size() == 20;
     }
 }
