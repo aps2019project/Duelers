@@ -1,5 +1,7 @@
 package client.models.card;
 
+import client.view.request.InputException;
+
 import java.util.ArrayList;
 
 public class Deck {
@@ -30,5 +32,10 @@ public class Deck {
 
     public boolean areSame(String deckName) {
         return this.deckName.equals(deckName);
+    }
+
+    public boolean isValid() {
+        if (hero == null) return false;
+        return others.size() == 20;
     }
 }

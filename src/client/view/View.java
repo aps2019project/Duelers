@@ -99,7 +99,11 @@ public class View {
     }
 
     public void showDeckValidationMessage(boolean isValid) {
-
+        if (isValid) {
+            System.out.println("Deck is valid");
+        } else {
+            System.out.println("Deck is not valid");
+        }
     }
 
     public void showSuccessfulBuyMessage() {

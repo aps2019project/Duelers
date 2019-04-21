@@ -85,8 +85,10 @@ public class CollectionMenu implements Menu {
         }
     }
 
-    public void validateDeck(String deckName) {
-
+    public void validateDeck(String deckName, Client client) throws InputException {
+        View.getInstance().showDeckValidationMessage(
+                client.getAccount().getDeck(deckName).isValid()
+        );
     }
 
     public void selectDeck(String DeckName) {
