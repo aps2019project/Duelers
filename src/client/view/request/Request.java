@@ -154,7 +154,10 @@ public class Request {
             );
 
         } else if (RequestType.DELETE_DECK.setMatcher(command).find()) {
-            collectionMenu.removeDeck(RequestType.DELETE_DECK.getMatcher().group(1));
+            collectionMenu.removeDeck(
+                    RequestType.DELETE_DECK.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.ADD_TO_DECK.setMatcher(command).find()) {
             Matcher matcher = RequestType.ADD_TO_DECK.getMatcher();
@@ -165,7 +168,10 @@ public class Request {
 
         } else if (RequestType.REMOVE_FROM_DECK.setMatcher(command).find()) {
             Matcher matcher = RequestType.ADD_TO_DECK.getMatcher();
-            collectionMenu.removeCardFromDeck(matcher.group(2), matcher.group(1));
+            collectionMenu.removeCardFromDeck(
+                    matcher.group(2), matcher.group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.VALIDATE_DECK.setMatcher(command).find()) {
             collectionMenu.validateDeck(RequestType.VALIDATE_DECK.getMatcher().group(1));
@@ -182,7 +188,7 @@ public class Request {
             );
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
-            collectionMenu.save();
+            collectionMenu.save(client, serverName);
         } else {
             throw new InputException("invalid command");
         }

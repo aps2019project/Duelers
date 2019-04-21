@@ -54,16 +54,35 @@ public class CollectionMenu implements Menu {
         }
     }
 
-    public void removeCardFromDeck(String deckName, String cardID) {
+    public void removeCardFromDeck(String deckName, String cardID, Client client, String serverName) throws InputException {
+        client.addToSendingMessages(
+                Message.makeRemoveCardFromDeckMessage(
+                        client.getClientName(), serverName, deckName, cardID, 0
+                )
+        );
+        client.sendMessages();
 
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
-    public void save() {
-
+    public void save(Client client, String serverName) {
+        client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(),serverName,0));
+        client.sendMessages();
     }
 
-    public void removeDeck(String deckName) {
+    public void removeDeck(String deckName, Client client, String serverName) throws InputException {
+        client.addToSendingMessages(
+                Message.makeRemoveDeckMessage(
+                        client.getClientName(), serverName, deckName, 0
+                )
+        );
+        client.sendMessages();
 
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
     public void validateDeck(String deckName) {
