@@ -9,7 +9,7 @@ import client.view.View;
 import java.util.ArrayList;
 
 public class Shop implements Menu {
-    private static  Shop SHOP ;
+    private static Shop SHOP;
     private ArrayList<Card> cards;
 
     private Shop() {
@@ -23,7 +23,7 @@ public class Shop implements Menu {
     }
 
     @Override
-    public void exit(Client client){
+    public void exit(Client client) {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
@@ -31,25 +31,22 @@ public class Shop implements Menu {
         return cards;
     }
 
-    public void showCollection(Client client, String serverName){
+    public void showCollection(Client client, String serverName) {
         client.addToSendingMessages(
-            Message.makeShowShopMessage(
-                    client.getClientName(), serverName, 0
-            )
+                Message.makeShowShopMessage(
+                        client.getClientName(), serverName, 0
+                )
         );
         client.sendMessages();
     }
 
-    public void buy(Client client,String cardName){
-
-    }
-
-    public void buy(Account account, Card card) {
-
-    }
-
-    public void sell(Account account, Card card) {
-
+    public void buy(Client client, String serverName, String cardName) {
+        client.addToSendingMessages(
+                Message.makeBuyCardMessage(
+                        client.getClientName(), serverName, cardName, 0
+                )
+        );
+        client.sendMessages();
     }
 
     public void sell(Client client, String cardName) {
@@ -74,11 +71,11 @@ public class Shop implements Menu {
         client.sendMessages();
     }
 
-    public void showMarketCardsAndItems(Client client){
+    public void showMarketCardsAndItems(Client client) {
 
     }
 
-    public void showHelp(){
+    public void showHelp() {
         String help = "\"show collection\"\n" +
                 "\"search [item name | card name]\"\n" +
                 "\"search collection [item name | card name]\"\n" +
