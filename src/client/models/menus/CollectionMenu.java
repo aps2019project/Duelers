@@ -62,18 +62,7 @@ public class CollectionMenu extends Menu {
     }
 
     public void showHelp() {
-        View.getInstance().printCollectionMenuHelp();
-    }
-
-    public void showItemsAndCards(){
-
-    }
-
-    public void search(String cardID){
-
-    }
-    public String getHelp() {
-        return "\"show\" : show cards and items\n" +
+        String help = "\"show\" : show cards and items\n" +
                 "\"create deck [deck name]\"\n" +
                 "\"delete deck [deck name]\"\n" +
                 "\"search [card name | item name]\"\n" +
@@ -85,5 +74,15 @@ public class CollectionMenu extends Menu {
                 "\"show all decks\"\n" +
                 "\"show deck [deck name]\"\n" +
                 "\"exit\"";
+        View.getInstance().printHelp(help);
     }
+
+    public void showItemsAndCards(){
+
+    }
+
+    public void search(String cardID){
+
+    }
+
 }

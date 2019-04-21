@@ -18,14 +18,6 @@ public class AccountMenu extends Menu {
         return ACCOUNT_MENU;
     }
 
-    public String getAccountMenuHelp() {
-        return  "\"create account [userName]\"\n" +
-                "\"login [userName]\"\n" +
-                "\"show leaderboard\"\n" +
-                "\"save\"\n" +
-                "\"logout\"";
-
-    }
 
     public void register(Client client, String serverName, String userName, String password) throws InputException {
         client.addToSendingMessages(
@@ -60,8 +52,13 @@ public class AccountMenu extends Menu {
     }
 
 
-    public void help() {
-        View.getInstance().printAccountHelp();
+    public void showHelp() {
+        String help = "\"create account [userName]\"\n" +
+                "\"login [userName]\"\n" +
+                "\"show leaderboard\"\n" +
+                "\"save\"\n" +
+                "\"logout\"";
+        View.getInstance().printHelp(help);
     }
 
 }

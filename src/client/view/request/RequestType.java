@@ -8,7 +8,7 @@ public enum RequestType {
     CREATE_ACCOUNT("^create account (\\w+)$"),
     LOGIN("^login (\\w+)$"),
     SHOW_LEADER_BOARD("^show leaderboard$"),
-    HELP("" + "^help$"),
+    HELP("" + "^showHelp$"),
     //Main menu:
     ENTER_MENU("^enter (\\w+)$"),
     SAVE("^save$"),
@@ -37,7 +37,10 @@ public enum RequestType {
     STORY("^story$"),
     CUSTOM_GAME("^custom game$"),
     //shop:
-    
+    SHOW_COLLECTION("^show collection$"),
+    SEARCH_COLLECTION("^search collection$"),
+    BUY("^buy (\\w+)$"),
+    SELL("sell (\\w+)$"),
     ;
     private Pattern pattern;
     private Matcher matcher;

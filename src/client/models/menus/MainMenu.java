@@ -16,14 +16,7 @@ public class MainMenu extends Menu {
         return MAIN_MENU;
     }
 
-    public String getHelp() {
-        return "\"Enter Collection\"\n" +
-                "\"Enter Battle\"\n" +
-                "\"Enter Shop\"\n" +
-                "\"logout\"\n" +
-                "\"save\"\n" +
-                "\"exit\"";
-    }
+
 
     public void moveToMenu(Client client, String menuName) {
         if (menuName.equals("collection"))
@@ -35,7 +28,13 @@ public class MainMenu extends Menu {
     }
 
     public void showHelp() {
-        View.getInstance().printMainMenuHelp();
+        String help ="\"Enter Collection\"\n" +
+                "\"Enter Battle\"\n" +
+                "\"Enter Shop\"\n" +
+                "\"logout\"\n" +
+                "\"save\"\n" +
+                "\"exit\"";
+        View.getInstance().printHelp(help);
     }
 
     public void save() {

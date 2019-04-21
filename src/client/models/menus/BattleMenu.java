@@ -27,13 +27,12 @@ public class BattleMenu extends Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public String getHelp() {
-        return "\"Single Player\"\n" +
-                "\"Multi Player\"\n" +
-                "\"exit\"";
-    }
+
 
     public void showHelp() {
-        View.getInstance().printBattleMenuHelp();
+        String help = "\"Single Player\"\n" +
+                "\"Multi Player\"\n" +
+                "\"exit\"";
+        View.getInstance().printHelp(help);
     }
 }
