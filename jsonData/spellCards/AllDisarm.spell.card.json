@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "all_disarm",
-      "type": "BUFF",
-      "definiteType": "DISARM_BUFF",
+      "action": {
+        "makeDisarm": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,8 +29,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "duration": 1
+      }
     }
   ],
   "mannaPoint": 9,

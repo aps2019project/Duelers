@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "dispel_enemy",
-      "type": "CARD_EFFECT",
-      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "action": {
+        "durable": true,
+        "removeBuffs": 1,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -31,8 +34,11 @@
     },
     {
       "spellId": "dispel_own",
-      "type": "CARD_EFFECT",
-      "definiteType": "REMOVE_NEGATIVE_BUFF_CARD_EFFECT",
+      "action": {
+        "durable": true,
+        "removeBuffs": -1,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },

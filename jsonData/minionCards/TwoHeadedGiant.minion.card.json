@@ -6,9 +6,9 @@
     {
       "spellId": "tg_dispel",
       "action": {
-        "removeBuffs": 1,
         "durable": true,
-        "delay": 0
+        "removeBuffs": 1,
+        "duration": 1
       },
       "availabilityType": {
         "onAttack": true

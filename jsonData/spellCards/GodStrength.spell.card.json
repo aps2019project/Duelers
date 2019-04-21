@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "god_strength",
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_AP_CARD_EFFECT",
+      "action": {
+        "apChange": 4,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -26,8 +29,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 4
+      }
     }
   ],
   "mannaPoint": 2,

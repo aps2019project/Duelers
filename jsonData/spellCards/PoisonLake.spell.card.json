@@ -5,8 +5,12 @@
   "spells": [
     {
       "spellId": "poison_lake",
-      "type": "CELL_EFFECT",
-      "definiteType": "POISON_CELL_EFFECT",
+      "action": {
+        "hpChange": -1,
+        "poison": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -18,8 +22,7 @@
         "cardType": {
           "cell": true
         }
-      },
-      "duration": 1
+      }
     }
   ],
   "mannaPoint": 5,

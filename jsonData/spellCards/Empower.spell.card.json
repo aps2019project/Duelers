@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "empower",
-      "type": "CARD_EFFECT",
-      "definiteType": "ADD_AP_CARD_EFFECT",
+      "action": {
+        "apChange": 2,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,8 +30,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2
+      }
     }
   ],
   "mannaPoint": 1,

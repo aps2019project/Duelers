@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "lighting_bolt",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -8,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -28,8 +31,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 8
+      }
     }
   ],
   "mannaPoint": 2,

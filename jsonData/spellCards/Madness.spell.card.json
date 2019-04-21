@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "md_power_AP_buff",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 4,
+        "duration": 3
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,14 +29,14 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 4,
-      "duration": 3
+      }
     },
     {
       "spellId": "md_disarm_buff",
-      "type": "BUFF",
-      "definiteType": "DISARM_BUFF",
+      "action": {
+        "makeDisarm": true,
+        "duration": 3
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -55,8 +57,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "duration": 3
+      }
     }
   ],
   "price": 650

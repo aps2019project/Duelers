@@ -6,8 +6,8 @@
     {
       "spellId": "af_dispel",
       "action": {
-        "removeBuffs": 1,
         "durable": true,
+        "removeBuffs": 1,
         "duration": 1
       },
       "availabilityType": {

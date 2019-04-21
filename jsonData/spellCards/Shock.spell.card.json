@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "stun",
-      "type": "BUFF",
-      "definiteType": "STUN_BUFF",
+      "action": {
+        "makeStun": true,
+        "duration": 2
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,8 +29,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "duration": 2
+      }
     }
   ],
   "mannaPoint": 1,

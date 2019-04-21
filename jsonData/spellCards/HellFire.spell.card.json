@@ -5,8 +5,12 @@
   "spells": [
     {
       "spellId": "hellfire",
-      "type": "CELL_EFFECT",
-      "definiteType": "FIERY_CELL_EFFECT",
+      "action": {
+        "hpChange": -2,
+        "actionAtTheEndOfTurn": true,
+        "durable": true,
+        "duration": 2
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -18,8 +22,7 @@
         "cardType": {
           "cell": true
         }
-      },
-      "duration": 2
+      }
     }
   ],
   "mannaPoint": 3,

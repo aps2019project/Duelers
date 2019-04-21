@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "all_attack",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -6,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,8 +30,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 6
+      }
     }
   ],
   "mannaPoint": 4,

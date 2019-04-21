@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "ap_AP_2_units_buff",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 2,
+        "duration": 2147483647
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,9 +29,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2,
-      "duration": 2147483647
+      }
     }
   ],
   "mannaPoint": 4,

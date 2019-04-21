@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "fireball",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -4,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
@@ -27,8 +30,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 4
+      }
     }
   ],
   "mannaPoint": 1,

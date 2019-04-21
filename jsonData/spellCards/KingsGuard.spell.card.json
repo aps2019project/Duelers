@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "kings_guard",
-      "type": "CARD_EFFECT",
-      "definiteType": "KILL_A_MINION",
+      "action": {
+        "killsTarget": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onPut": true
       },
