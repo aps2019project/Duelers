@@ -48,6 +48,12 @@ public class Shop implements Menu {
     }
 
     public void searchCard(String cardName, Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeShopSearchMessage(
+                        client.getClientName(), serverName, cardName, 0
+                )
+        );
+        client.sendMessages();
     }
 
     public void searchCollection(String cardName, Client client, String serverName) {
