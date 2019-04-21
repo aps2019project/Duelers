@@ -126,7 +126,17 @@ public class Request {
     private void customGameMenuHandleRequest(Client client, String serverName) throws InputException {
         if (RequestType.START_GAME.setMatcher(command).find()) {
             Matcher matcher = RequestType.START_GAME.getMatcher();
-            CustomGameMenu.getInstance().startGame(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)));
+            if (matcher.group(3) == null) {
+                CustomGameMenu.getInstance().startGame(
+                        matcher.group(1), Integer.parseInt(matcher.group(2)), 0,
+                        client, serverName
+                );
+            } else {
+                CustomGameMenu.getInstance().startGame(
+                        matcher.group(1), Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)),
+                        client, serverName
+                );
+            }
 
         } else {
             throw new InputException("invalid command");

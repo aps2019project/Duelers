@@ -31,6 +31,7 @@ public class Message {
     private String[] cardIds;
     private String spellId;
     private int turnNum;
+    private int numberOfFlags;
     private String cardName;
     private int newValue;
     private Position position;
@@ -301,10 +302,20 @@ public class Message {
         return message;
     }
 
-    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver,GameType gameType, String opponentAccount, int messageId) {
+    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentAccount, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.opponentUserName =opponentAccount;
-        message.gameType=gameType;
+        message.opponentUserName = opponentAccount;
+        message.numberOfFlags = numberOfFlags;
+        message.gameType = gameType;
+        message.messageType = MessageType.NEW_GAME;
+        return message;
+    }
+
+    public static Message makeNewCustomGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String customDeck, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.deckName = customDeck;
+        message.numberOfFlags = numberOfFlags;
+        message.gameType = gameType;
         message.messageType = MessageType.NEW_GAME;
         return message;
     }
@@ -400,6 +411,18 @@ public class Message {
 
     public int getTurnNum() {
         return turnNum;
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
+    }
+
+    public String getOpponentUserName() {
+        return opponentUserName;
+    }
+
+    public GameType getGameType() {
+        return gameType;
     }
 
     public String getCardName() {
