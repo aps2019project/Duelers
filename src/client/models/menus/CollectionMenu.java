@@ -6,7 +6,6 @@ import client.view.View;
 
 public class CollectionMenu implements Menu {
     private static CollectionMenu collectionMenu;
-    private Collection collection;
 
     private CollectionMenu() {
     }
@@ -17,16 +16,12 @@ public class CollectionMenu implements Menu {
         return collectionMenu;
     }
 
-    public void showAllDecks(){
+    public void showAllDecks(Client client){
 
     }
 
     public void showDeck(String deckName){
 
-    }
-
-    public void setCollection(Collection collection) {
-        this.collection = collection;
     }
 
     public void newDeck(String deckName) {

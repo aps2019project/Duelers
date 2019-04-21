@@ -44,12 +44,16 @@ public class MainMenu implements Menu {
         View.getInstance().showHelp(help);
     }
 
-    public void save() {
-        //TODO
+    public void save(Client client, String serverName) {
+        client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(),serverName,0));
+        client.sendMessages();
     }
 
-    public void logout() {
-        //TODO
+    public void logout(Client client, String serverName) {
+        client.addToSendingMessages(Message.makeLogOutMessage(client.getClientName(), serverName, 0));
+        client.sendMessages();
+        client.setCurrentMenu(AccountMenu.getInstance());
+        client.setAccount(null);
     }
 
     @Override

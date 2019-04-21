@@ -168,7 +168,7 @@ public class Request {
             collectionMenu.selectDeck(RequestType.SELECT_MAIN_DECK.getMatcher().group(2));
 
         } else if (RequestType.SHOW_ALL_DECKS.setMatcher(command).find()) {
-            collectionMenu.showAllDecks();
+            collectionMenu.showAllDecks(client);
 
         } else if (RequestType.SHOW_DECK.setMatcher(command).find()) {
             collectionMenu.showDeck(RequestType.SHOW_DECK.getMatcher().group(1));
@@ -191,10 +191,10 @@ public class Request {
             throw new ExitCommand();
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
-            mainMenu.save();
+            mainMenu.save(client, serverName);
 
         } else if (RequestType.LOGOUT.setMatcher(command).find()) {
-            mainMenu.logout();
+            mainMenu.logout(client, serverName);
 
         } else {
             throw new InputException("invalid command");
