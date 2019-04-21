@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "ts_disarm",
-      "type": "BUFF",
-      "definiteType": "DISARM_BUFF",
+      "action": {
+        "makeDisarm": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onAttack": true
       },
@@ -27,13 +29,16 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "duration": 1
+      }
     },
     {
       "spellId": "ts_poison",
-      "type": "BUFF",
-      "definiteType": "POISON_BUFF",
+      "action": {
+        "hpChange": -1,
+        "poison": true,
+        "durable": true,
+        "duration": 4
+      },
       "availabilityType": {
         "onAttack": true
       },
@@ -54,9 +59,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 1,
-      "duration": 4
+      }
     }
   ],
   "defaultAp": 6,

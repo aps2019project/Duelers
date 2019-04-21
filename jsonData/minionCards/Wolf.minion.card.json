@@ -5,6 +5,13 @@
   "spells": [
     {
       "spellId": "w_poison",
+      "action": {
+        "hpChange": -6,
+        "poison": true,
+        "durable": true,
+        "duration": 1,
+        "delay": 1
+      },
       "type": "BUFF",
       "definiteType": "POISON_BUFF",
       "availabilityType": {
@@ -26,9 +33,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 6,
-      "duration": 1
+      }
     }
   ],
   "defaultAp": 1,

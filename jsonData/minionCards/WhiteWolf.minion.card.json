@@ -5,8 +5,13 @@
   "spells": [
     {
       "spellId": "ww_poison_1",
-      "type": "BUFF",
-      "definiteType": "POISON_BUFF",
+      "action": {
+        "hpChange": -6,
+        "poison": true,
+        "durable": true,
+        "duration": 1,
+        "delay": 1
+      },
       "availabilityType": {
         "onAttack": true
       },
@@ -26,14 +31,17 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2,
-      "duration": 1
+      }
     },
     {
       "spellId": "ww_poison_2",
-      "type": "BUFF",
-      "definiteType": "POISON_BUFF",
+      "action": {
+        "hpChange": -4,
+        "poison": true,
+        "durable": true,
+        "duration": 1,
+        "delay": 2
+      },
       "availabilityType": {
         "onAttack": true
       },
@@ -53,9 +61,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 4,
-      "duration": 2
+      }
     }
   ],
   "defaultAp": 2,

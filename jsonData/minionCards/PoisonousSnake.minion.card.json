@@ -5,8 +5,12 @@
   "spells": [
     {
       "spellId": "ps_poison_buff",
-      "type": "BUFF",
-      "definiteType": "POISON_BUFF",
+      "action": {
+        "hpChange": -1,
+        "poison": true,
+        "durable": true,
+        "duration": 3
+      },
       "availabilityType": {
         "onAttack": true
       },
@@ -27,9 +31,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 1,
-      "duration": 3
+      }
     }
   ],
   "defaultAp": 6,

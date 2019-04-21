@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "og_on_death",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -2,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDeath": true
       },
@@ -27,8 +30,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2
+      }
     }
   ],
   "defaultAp": 11,

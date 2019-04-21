@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "on_attack_stun",
-      "type": "BUFF",
-      "definiteType": "STUN_BUFF",
+      "action": {
+        "makeStun": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onAttack": true
       },

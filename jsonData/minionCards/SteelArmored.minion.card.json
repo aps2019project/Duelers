@@ -5,10 +5,11 @@
   "spells": [
     {
       "spellId": "sa_holy",
-      "type": "BUFF",
-      "definiteType": "HOLY_BUFF",
+      "action": {
+        "enemyHitChanges": -12,
+        "duration": 1
+      },
       "availabilityType": {
-        "passive": true,
         "continuous": true
       },
       "target": {
@@ -26,9 +27,7 @@
         "attackType": {
           "melee": true
         }
-      },
-      "numberOfChange": -12,
-      "duration": 2147483647
+      }
     }
   ],
   "defaultAp": 1,

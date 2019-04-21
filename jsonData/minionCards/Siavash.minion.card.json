@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "si_hero_hit",
-      "type": "CARD_EFFECT",
-      "definiteType": "DECREASE_HP_CARD_EFFECT",
+      "action": {
+        "hpChange": -6,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDeath": true
       },
@@ -26,8 +29,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 6
+      }
     }
   ],
   "defaultAp": 5,

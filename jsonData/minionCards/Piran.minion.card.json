@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "p_no_poison",
-      "type": "CARD_EFFECT",
-      "definiteType": "NO_POISON",
+      "action": {
+        "noPoison": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDefend": true
       },

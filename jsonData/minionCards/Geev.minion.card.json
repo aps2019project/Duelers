@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "g_no_negative",
-      "type": "CARD_EFFECT",
-      "definiteType": "NO_BAD_EFFECT",
+      "action": {
+        "noBadEffect": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDefend": true
       },

@@ -5,6 +5,10 @@
   "spells": [
     {
       "spellId": "gc_stun",
+      "action": {
+        "makeStun": true,
+        "duration": 1
+      },
       "type": "BUFF",
       "definiteType": "STUN_BUFF",
       "availabilityType": {
@@ -27,8 +31,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "duration": 1
+      }
     }
   ],
   "defaultAp": 4,

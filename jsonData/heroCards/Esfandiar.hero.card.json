@@ -7,10 +7,9 @@
       "spellId": "es_holy",
       "action": {
         "enemyHitChanges": -3,
-        "duration": 2147483647
+        "duration": 1
       },
       "availabilityType": {
-        "passive": true,
         "continuous": true
       },
       "target": {

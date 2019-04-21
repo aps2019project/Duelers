@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "tg_dispel",
-      "type": "CARD_EFFECT",
-      "definiteType": "REMOVE_POSITIVE_BUFF_CARD_EFFECT",
+      "action": {
+        "removeBuffs": 1,
+        "durable": true,
+        "delay": 0
+      },
       "availabilityType": {
         "onAttack": true
       },

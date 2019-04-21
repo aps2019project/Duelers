@@ -5,6 +5,11 @@
   "spells": [
     {
       "spellId": "b_random_hit",
+      "action": {
+        "hpChange": -16,
+        "durable": true,
+        "duration": 1
+      },
       "type": "CARD_EFFECT",
       "definiteType": "DECREASE_HP_CARD_EFFECT",
       "availabilityType": {
@@ -27,8 +32,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 16
+      }
     }
   ],
   "defaultAp": 9,

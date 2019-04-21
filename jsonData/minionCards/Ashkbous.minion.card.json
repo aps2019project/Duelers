@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "a_weaker",
-      "type": "CARD_EFFECT",
-      "definiteType": "NO_ATTACK_FROM_WEAKENERS",
+      "action": {
+        "noAttackFromWeakerOnes": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDefend": true
       },

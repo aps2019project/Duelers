@@ -5,10 +5,12 @@
   "spells": [
     {
       "spellId": "e_power_buff",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 1,
+        "duration": 1
+      },
       "availabilityType": {
-        "passive": true
+        "continuous": true
       },
       "target": {
         "dimensions": {
@@ -26,9 +28,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 1,
-      "duration": 2147483647
+      }
     }
   ],
   "defaultAp": 4,

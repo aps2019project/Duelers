@@ -5,10 +5,12 @@
   "spells": [
     {
       "spellId": "e_power_buff",
-      "type": "BUFF",
-      "definiteType": "POWER_HP_BUFF",
+      "action": {
+        "apChange": 10,
+        "duration": 1
+      },
       "availabilityType": {
-        "passive": true
+        "continuous": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
@@ -25,9 +27,7 @@
         "attackType": {
           "ranged": true
         }
-      },
-      "numberOfChange": 10,
-      "duration": 2147483647
+      }
     }
   ],
   "defaultAp": 2,

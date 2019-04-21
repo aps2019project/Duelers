@@ -5,8 +5,10 @@
   "spells": [
     {
       "spellId": "gw_power",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 2,
+        "duration": 1
+      },
       "availabilityType": {
         "continuous": true
       },
@@ -27,14 +29,14 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2,
-      "duration": 2147483647
+      }
     },
     {
       "spellId": "gw_holy",
-      "type": "BUFF",
-      "definiteType": "HOLY_BUFF",
+      "action": {
+        "enemyHitChanges": -1,
+        "duration": 1
+      },
       "availabilityType": {
         "continuous": true
       },
@@ -55,9 +57,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": -1,
-      "duration": 2147483647
+      }
     }
   ],
   "defaultAp": 6,

@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "pl_holy_disabling",
-      "type": "CARD_EFFECT",
-      "definiteType": "DISABLE_HOLY_BUFF_ON_ATTACK",
+      "action": {
+        "disableHolyBuff": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onAttack": true
       },

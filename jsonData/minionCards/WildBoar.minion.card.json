@@ -5,8 +5,11 @@
   "spells": [
     {
       "spellId": "wb_no_disarm",
-      "type": "CARD_EFFECT",
-      "definiteType": "NO_DISARM",
+      "action": {
+        "noDisarm": true,
+        "durable": true,
+        "duration": 1
+      },
       "availabilityType": {
         "onDefend": true
       },

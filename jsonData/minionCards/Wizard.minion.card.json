@@ -8,7 +8,7 @@
       "type": "BUFF",
       "definiteType": "POWER_AP_BUFF",
       "availabilityType": {
-        "passive": true
+        "continuous": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
@@ -36,7 +36,7 @@
       "type": "BUFF",
       "definiteType": "WEAKNESS_HP_BUFF",
       "availabilityType": {
-        "passive": true
+        "continuous": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
