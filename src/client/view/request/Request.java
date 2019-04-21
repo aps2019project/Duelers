@@ -100,7 +100,7 @@ public class Request {
             );
 
         } else if (RequestType.SHOW.setMatcher(command).find()) {
-            shop.showMarketCardsAndItems(client);
+            shop.showMarketCardsAndItems(client, serverName);
 
         } else if (RequestType.HELP.setMatcher(command).find()) {
             shop.showHelp();

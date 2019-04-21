@@ -33,8 +33,8 @@ public class Shop implements Menu {
 
     public void showCollection(Client client, String serverName) {
         client.addToSendingMessages(
-                Message.makeShowShopMessage(
-                        client.getClientName(), serverName, 0
+                Message.makeShowCollectionMessage(
+                        client.getClientName(), serverName, client.getAccount().getUserName(), 0
                 )
         );
         client.sendMessages();
@@ -76,8 +76,13 @@ public class Shop implements Menu {
         client.sendMessages();
     }
 
-    public void showMarketCardsAndItems(Client client) {
-
+    public void showMarketCardsAndItems(Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeShowShopMessage(
+                        client.getClientName(), serverName, 0
+                )
+        );
+        client.sendMessages();
     }
 
     public void showHelp() {
