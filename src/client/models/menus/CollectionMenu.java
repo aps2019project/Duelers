@@ -41,8 +41,17 @@ public class CollectionMenu implements Menu {
         }
     }
 
-    public void addCardToDeck(String deckName, String cardID) {
+    public void addCardToDeck(String deckName, String cardID, Client client, String serverName) throws InputException {
+        client.addToSendingMessages(
+                Message.makeAddCardToDeckMessage(
+                        client.getClientName(), serverName, deckName, cardID, 0
+                )
+        );
+        client.sendMessages();
 
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
     public void removeCardFromDeck(String deckName, String cardID) {

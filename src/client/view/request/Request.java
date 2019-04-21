@@ -158,7 +158,10 @@ public class Request {
 
         } else if (RequestType.ADD_TO_DECK.setMatcher(command).find()) {
             Matcher matcher = RequestType.ADD_TO_DECK.getMatcher();
-            collectionMenu.addCardToDeck(matcher.group(2), matcher.group(1));
+            collectionMenu.addCardToDeck(
+                    matcher.group(2), matcher.group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.REMOVE_FROM_DECK.setMatcher(command).find()) {
             Matcher matcher = RequestType.ADD_TO_DECK.getMatcher();
