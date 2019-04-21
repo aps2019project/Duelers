@@ -13,25 +13,29 @@ import server.models.game.Story;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
     private static Server server;
     private String serverName;
-    private ArrayList<Account> accounts = new ArrayList<>();
+    private HashMap<Account, String> accounts = new HashMap<>();//Account -> ClientName
+    private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
+    private ArrayList<Client> onlineClients=new ArrayList<>();
     private ArrayList<Card> originalCards = new ArrayList<>();
-    private HashMap<Client, Account> onlineClients = new HashMap<>();
-    private ArrayList<Game> onlineGames = new ArrayList<>();
     private ArrayList<Deck> customDecks = new ArrayList<>();
-    private ArrayList<Account> leaderBoard = new ArrayList<>();
+    private ArrayList<Story> stories = new ArrayList<>();
+    private Account[] leaderBoard;
+    private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
-    private ArrayList<Story> stories = new ArrayList<>();
 
     private Server(String serverName) {
         readAccounts();
+        readOriginalCards();
         readCustomDecks();
         readStories();
         this.serverName = serverName;
+        System.out.println("Server was created.");
     }
 
     public static Server getInstance() {
@@ -40,18 +44,20 @@ public class Server {
         return server;
     }
 
-    public void addClient(@NotNull Client client) {
-        if (getClient(client.getClientName()) == null)
-            onlineClients.put(client, null);
-        else
-            System.out.println("client was duplicate!");
+    public void addClient(Client client) {
+        if (client == null || client.getClientName() == null) {
+            System.out.println("Error addClient NULL");
+            return;
+        }
+        if(clients.containsKey(client.getClientName())){
+            System.out.println("Error addClient duplicate");
+            return;
+        }
+        onlineClients.add(client);
+        clients.put(client.getClientName(),null);
     }
 
-    public String getServerName() {
-        return serverName;
-    }
-
-    public void addToSendingMessages(Message message) {
+    private void addToSendingMessages(Message message) {
         sendingMessages.add(message);
     }
 
@@ -61,8 +67,8 @@ public class Server {
 
     public void receiveMessages() {
         for (Message message : receivingMessages) {
-            Client client = getClient(message.getSender());
-            if (client == null) {
+            if (!message.getReceiver().equals(serverName)) {
+                System.out.println("Error receive message");
                 continue;
             }
             switch (message.getMessageType()) {
@@ -106,13 +112,7 @@ public class Server {
 
                     break;
                 case NEW_GAME:
-                    if(message.getOpponentUserName()!=null){
-                        Account account1=onlineClients.get(client);
-                        Account account2=getAccount(message.getUserName());
-                        if(account1!=null && account2!=null){
-                            newGame(account1,account2,message.getGameType());
-                        }
-                    }
+
                     break;
                 case INSERT:
 
@@ -145,50 +145,44 @@ public class Server {
     public void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
-            if(client!=null){
-                client.addToReceivingMessages(new Gson().toJson(message));
-                client.receiveMessages();
+            if (client == null || !message.getSender().equals(serverName)) {
+                System.out.println("Error sending messages");
             }
+            client.addToReceivingMessages(new Gson().toJson(message));
         }
         sendingMessages.clear();
     }
 
-    private Account getAccount(String userName){
-        for(Account account:accounts){
-            if(account.getUserName().equals(userName)){
-                return account;
-            }
-        }
-        System.out.println("account not found");
-        return null;
-    }
-
-    private Client getClient(Account account) {
-        for (java.util.Map.Entry<Client, Account> map : onlineClients.entrySet()) {
-            if (map.getValue()==account) {
+    private Account getAccount(String userName) {
+        for (Map.Entry<Account, String> map : accounts.entrySet()) {
+            if (map.getKey().getUserName().equals(userName)) {
                 return map.getKey();
             }
         }
-        System.out.println("account not loged in");
         return null;
     }
 
     private Client getClient(String clientName) {
-        for (java.util.Map.Entry<Client, Account> map : onlineClients.entrySet()) {
-            if (map.getKey().getClientName().equals(clientName)) {
-                return map.getKey();
-            }
+        for(Client client:onlineClients){
+            if(client.getClientName().equals(clientName))
+                return client;
         }
-        System.out.println("Client not found");
         return null;
     }
 
+    private void register(Message message) {
 
-    public void newGame(@NotNull Account account1,@NotNull Account account2,GameType gameType) {
+    }
+
+    public void newGame(@NotNull Account account1, @NotNull Account account2, GameType gameType) {
 
     }
 
     private void readAccounts() {
+        //file
+    }
+
+    private void readOriginalCards() {
         //file
     }
 
