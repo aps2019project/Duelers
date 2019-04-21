@@ -73,7 +73,7 @@ public class Request {
             shop.exit(client);
 
         } else if (RequestType.SHOW_COLLECTION.setMatcher(command).find()) {
-            shop.showCollection();
+            shop.showCollection(client, serverName);
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             shop.searchCard(

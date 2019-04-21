@@ -340,6 +340,12 @@ public class Message {
         return message;
     }
 
+    public static Message makeShowShopMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.SHOW_SHOP;
+        return message;
+    }
+
     public MessageType getMessageType() {
         return messageType;
     }

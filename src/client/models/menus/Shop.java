@@ -31,8 +31,13 @@ public class Shop implements Menu {
         return cards;
     }
 
-    public void showCollection(){
-
+    public void showCollection(Client client, String serverName){
+        client.addToSendingMessages(
+            Message.makeShowShopMessage(
+                    client.getClientName(), serverName, 0
+            )
+        );
+        client.sendMessages();
     }
 
     public void buy(Client client,String cardName){
@@ -44,6 +49,10 @@ public class Shop implements Menu {
     }
 
     public void sell(Account account, Card card) {
+
+    }
+
+    public void sell(Client client, String cardName) {
 
     }
 
@@ -63,10 +72,6 @@ public class Shop implements Menu {
                 )
         );
         client.sendMessages();
-    }
-
-    public void sell(Client client, String cardName) {
-
     }
 
     public void showMarketCardsAndItems(Client client){
