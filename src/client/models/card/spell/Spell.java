@@ -1,7 +1,5 @@
 package client.models.card.spell;
 
-import server.models.card.spell.SpellAction;
-
 public class Spell {
     private String spellId;
     private SpellAction action;

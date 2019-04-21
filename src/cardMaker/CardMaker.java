@@ -10,6 +10,7 @@ import server.models.map.Position;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CardMaker {
@@ -50,123 +51,152 @@ public class CardMaker {
         }
 
         System.out.println("number Of spells:");
-        Spell[] spells = new Spell[Integer.parseInt(scanner.nextLine())];
-        makeSpells(spells);
+        ArrayList<Spell> spells = makeSpells(Integer.parseInt(scanner.nextLine()));
 
-        //System.out.println("defaultAp:");
-        int defaultAp = 0;//Integer.parseInt(scanner.nextLine());
+        System.out.println("defaultAp:");
+        int defaultAp = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("defaultHp:");
-        int defaultHp = 0;//Integer.parseInt(scanner.nextLine());
+        System.out.println("defaultHp:");
+        int defaultHp = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("mannaPoint:");
-        int mannaPoint = 0;//Integer.parseInt(scanner.nextLine());
+        System.out.println("mannaPoint:");
+        int mannaPoint = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("range:");
-        int range = 0;//Integer.parseInt(scanner.nextLine());
+        System.out.println("range:");
+        int range = Integer.parseInt(scanner.nextLine());
 
         System.out.println("price:");
         int price = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("has combo??");
-        boolean hasCombo = false;//Boolean.parseBoolean(scanner.nextLine());
+        System.out.println("has combo??");
+        boolean hasCombo = parseBoolean(scanner.nextLine());
 
-        return null;//new Card(name, description, cardType, spells, defaultAp, defaultHp, mannaPoint, price, attackType, range, hasCombo);
+        return new Card(name, description, cardType, spells, defaultAp, defaultHp, mannaPoint, price, attackType, range, hasCombo);
     }
 
-    private static void makeSpells(Spell[] spells) {
-        for (int i = 0; i < spells.length; i++) {
-
-            spells[i] = makeNewSpell();
+    private static ArrayList<Spell> makeSpells(int number) {
+        ArrayList<Spell> spells = new ArrayList<>();
+        for (int i = 0; i < number; i++) {
+            spells.add(makeNewSpell());
         }
+        return spells;
     }
 
     private static Spell makeNewSpell() {
         System.out.println("spell id:");
         String id = scanner.nextLine();
 
-        System.out.println("spell type: " +
-                "(0.CELL_EFFECT, " +
-                "1.BUFF, " +
-                "2.CARD_EFFECT)");
-        //SpellType spellType = SpellType.values()[Integer.parseInt(scanner.nextLine())];
+        System.out.println("Spell action:");
+        SpellAction spellAction = makeNewSpellAction();
 
-        System.out.println(
-                "spell definite type:\n" +
-                        "(" +
-                        "0.HOLY_BUFF\n" +
-                        "1.POWER_AP_BUFF\n" +
-                        "2.POWER_HP_BUFF\n" +
-                        "3.POISON_BUFF\n" +
-                        "4.WEAKNESS_AP_BUFF\n" +
-                        "5.WEAKNESS_HP_BUFF\n" +
-                        "6.STUN_BUFF\n" +
-                        "7.DISARM_BUFF\n" +
-                        "8.POISON_CELL_EFFECT\n" +
-                        "9.FIERY_CELL_EFFECT\n" +
-                        "10.HOLY_CELL_EFFECT\n" +
-                        "11.REMOVE_POSITIVE_BUFF_CARD_EFFECT\n" +
-                        "12.REMOVE_NEGATIVE_BUFF_CARD_EFFECT\n" +
-                        "13.INCREASE_AP_CARD_EFFECT\n" +
-                        "14.INCREASE_HP_CARD_EFFECT\n" +
-                        "15.DECREASE_AP_CARD_EFFECT\n" +
-                        "16.DECREASE_HP_CARD_EFFECT\n" +
-                        "17.SACRIFICE_CARD_EFFECT\n" +
-                        "18.NO_DISARM\n" +
-                        "19.NO_POISON\n" +
-                        "20.NO_BAD_EFFECT\n" +
-                        "21.NO_ATTACK_FROM_WEAKER_ONES\n" +
-                        "22.ADD_MANNA\n" +
-                        "23.ADD_ATTACK_RANGE\n" +
-                        "24.KILL_A_MINION\n" +
-                        "25.DISABLE_HOLY_BUFF_ON_ATTACK\n" +
-                        "26.ADD_SPELL" +
-                        ")"
-        );
-        //DefiniteType definiteType = DefiniteType.values()[Integer.parseInt(scanner.nextLine())];
-
+        System.out.println("Target:");
         Target target = makeNewTarget();
 
-        System.out.println(
-                "spell availabilityType:\n" +
-                        "(" +
-                        "0.ON_PUT\n" +
-                        "1.PASSIVE\n" +
-                        "2.ON_ATTACK\n" +
-                        "3.COMBO\n" +
-                        "4.ON_DEATH\n" +
-                        "5.EVERY_X_TIME\n" +
-                        "6.CONTINUOUS\n" +
-                        "7.ON_DEFEND\n" +
-                        "8.PASSIVE_CONTINUOUS\n" +
-                        "9.SPECIAL_POWER\n" +
-                        "10.ON_START" +
-                        ")"
-        );
-        //AvailabilityType availabilityType = AvailabilityType.values()[Integer.parseInt(scanner.nextLine())];
+        System.out.println("Availability:");
+        AvailabilityType availabilityType = makeNewAvailabilityType();
 
-        System.out.println("spell numberOfChange: ");
-        int numberOfChange = Integer.parseInt(scanner.nextLine());
+        System.out.println("coolDown:");
+        int coolDown = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("spell coolDown: ");
-        int coolDown = 0;//Integer.parseInt(scanner.nextLine());
+        System.out.println("mannaPoint:");
+        int mannaPoint = Integer.parseInt(scanner.nextLine());
 
-        //System.out.println("spell mannaPoint: ");
-        int mannaPoint = 0;//Integer.parseInt(scanner.nextLine());
+        return new Spell(id, spellAction, target, availabilityType, coolDown, mannaPoint);
+    }
 
-        int duration = 0;
-        /*if (spellType == SpellType.BUFF || spellType == SpellType.CELL_EFFECT) {
-            System.out.println("buff duration: ");
-            duration = Integer.parseInt(scanner.nextLine());
-        }*/
+    private static AvailabilityType makeNewAvailabilityType() {
+        System.out.println("onPut?");
+        boolean onPut = parseBoolean(scanner.nextLine());
+
+        System.out.println("onAttack?");
+        boolean onAttack = parseBoolean(scanner.nextLine());
+
+        System.out.println("onDeath?");
+        boolean onDeath = parseBoolean(scanner.nextLine());
+
+        System.out.println("continuous?");
+        boolean continuous = parseBoolean(scanner.nextLine());
+
+        System.out.println("specialPower?");
+        boolean specialPower = parseBoolean(scanner.nextLine());
+
+        System.out.println("onStart?");
+        boolean onStart = parseBoolean(scanner.nextLine());
+
+        return new AvailabilityType(onPut, onAttack, onDeath, continuous, specialPower, onStart);
+    }
+
+    private static SpellAction makeNewSpellAction() {
+        System.out.println("enemyHitChanges:");
+        int enemyHitChanges = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("apChange:");
+        int apChange = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("hpChange:");
+        int hpChange = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("mpChange:");
+        int mpChange = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("poison?");
+        boolean poison = parseBoolean(scanner.nextLine());
+
+        System.out.println("makeStun?");
+        boolean makeStun = parseBoolean(scanner.nextLine());
+
+        System.out.println("makeDisarm?");
+        boolean makeDisarm = parseBoolean(scanner.nextLine());
+
+        System.out.println("actionAtTheEndOfTurn?");
+        boolean actionAtTheEndOfTurn = parseBoolean(scanner.nextLine());
+
+        System.out.println("noDisarm?");
+        boolean noDisarm = parseBoolean(scanner.nextLine());
+
+        System.out.println("noPoison?");
+        boolean noPoison = parseBoolean(scanner.nextLine());
+
+        System.out.println("noStun?");
+        boolean noStun = parseBoolean(scanner.nextLine());
+
+        System.out.println("noBadEffect?");
+        boolean noBadEffect = parseBoolean(scanner.nextLine());
+
+        System.out.println("noAttackFromWeakerOnes?");
+        boolean noAttackFromWeakerOnes = parseBoolean(scanner.nextLine());
+
+        System.out.println("disableHolyBuff?");
+        boolean disableHolyBuff = parseBoolean(scanner.nextLine());
+
+        System.out.println("addSpell?");
+        boolean addSpell = parseBoolean(scanner.nextLine());
+
+        System.out.println("killsTarget?");
+        boolean killsTarget = parseBoolean(scanner.nextLine());
+
+        System.out.println("isForGladiator?");
+        boolean isForGladiator = parseBoolean(scanner.nextLine());
+
+        System.out.println("durable?");
+        boolean durable = parseBoolean(scanner.nextLine());
+
+        System.out.println("removeBuffs:");
+        int removeBuffs = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("duration:");
+        int duration = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("delay:");
+        int delay = Integer.parseInt(scanner.nextLine());
 
         Spell carryingSpell = null;
-        /*if (definiteType == DefiniteType.ADD_SPELL) {
-            System.out.println("carrying spell:");
+        if (addSpell) {
+            System.out.println("carryingSpell:");
             carryingSpell = makeNewSpell();
-        }*/
+        }
 
-        return null;//new Spell(id, spellType, definiteType, target, availabilityType, numberOfChange, coolDown, mannaPoint, duration, carryingSpell);
+        return new SpellAction(enemyHitChanges, apChange, hpChange, mpChange, poison, makeStun, makeDisarm, actionAtTheEndOfTurn, noDisarm, noPoison, noStun, noBadEffect, noAttackFromWeakerOnes, disableHolyBuff, addSpell, killsTarget, isForGladiator, durable, removeBuffs, duration, delay, carryingSpell);
     }
 
     private static Target makeNewTarget() {
@@ -228,7 +258,7 @@ public class CardMaker {
         String json = new Gson().toJson(card);
 
         try {
-            FileWriter writer = new FileWriter(new File("jsonData/itemCards/", card.getName().replaceAll(" ", "") + ".item.card.json"));
+            FileWriter writer = new FileWriter(new File("jsonData/minionCards/", card.getName().replaceAll(" ", "") + ".minion.card.json"));
             writer.write(json);
             writer.close();
         } catch (IOException e) {

@@ -6,6 +6,7 @@ import client.models.map.Cell;
 import client.models.map.Map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game {
     private GameType gameType;
@@ -16,6 +17,7 @@ public class Game {
     private Map map;
     private int turnNumber;
     private int lastTurnChangingTime;
+    private HashMap<String, Integer> attacksOfGladiators;
 
     public Player getPlayerOne() {
         return this.playerOne;
@@ -63,5 +65,19 @@ public class Game {
 
     public boolean canInsert(Card card, Cell cell) {
         return false;
+    }
+
+    private int addAttackFromGladiator(Troop gladiator, Troop underAttack) {
+        String key = gladiator.getCard().getCardId() + "->" + underAttack.getCard().getCardId();
+
+        if (attacksOfGladiators.containsKey(key)) {
+            int newCount = attacksOfGladiators.get(key);
+            attacksOfGladiators.replace(key, newCount + 1);
+            return newCount;
+
+        } else {
+            attacksOfGladiators.put(key, 1);
+            return 0;
+        }
     }
 }

@@ -1,8 +1,5 @@
 package client.models.card.spell;
 
-
-import server.models.card.spell.Spell;
-
 public class SpellAction {
     private int enemyHitChanges;
     private int apChange;
@@ -20,13 +17,14 @@ public class SpellAction {
     private boolean disableHolyBuff;
     private boolean addSpell;
     private boolean killsTarget;
+    private boolean isForGladiator;
     private boolean durable;
     private int removeBuffs; // -1 for negative buffs and +1 for positive ones
     private int duration;
     private int delay;
     private Spell carryingSpell;
 
-    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun, boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison, boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff, boolean addSpell, boolean killsTarget, boolean durable, int removeBuffs, int duration, int delay, Spell carryingSpell) {
+    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun, boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison, boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff, boolean addSpell, boolean killsTarget, boolean isForGladiator, boolean durable, int removeBuffs, int duration, int delay, Spell carryingSpell) {
         this.enemyHitChanges = enemyHitChanges;
         this.apChange = apChange;
         this.hpChange = hpChange;
@@ -43,6 +41,7 @@ public class SpellAction {
         this.disableHolyBuff = disableHolyBuff;
         this.addSpell = addSpell;
         this.killsTarget = killsTarget;
+        this.isForGladiator = isForGladiator;
         this.durable = durable;
         this.removeBuffs = removeBuffs;
         this.delay = delay;
@@ -116,6 +115,10 @@ public class SpellAction {
 
     public boolean isKillsTarget() {
         return killsTarget;
+    }
+
+    public boolean isForGladiator() {
+        return isForGladiator;
     }
 
     public boolean isDurable() {
