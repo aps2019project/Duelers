@@ -2,6 +2,7 @@ package client.view.request;
 
 import client.Client;
 import client.models.menus.*;
+import client.view.View;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -183,17 +184,18 @@ public class Request {
         MainMenu mainMenu = MainMenu.getInstance();
         if (RequestType.ENTER_MENU.setMatcher(command).find()) {
             mainMenu.moveToMenu(client, serverName, RequestType.ENTER_MENU.getMatcher().group(1));
-        }
-        if (RequestType.HELP.setMatcher(command).find()) {
+        } else if (RequestType.HELP.setMatcher(command).find()) {
             mainMenu.showHelp();
-        }
-        if (RequestType.EXIT.setMatcher(command).find())
+
+        } else if (RequestType.EXIT.setMatcher(command).find()) {
             throw new ExitCommand();
-        if (RequestType.SAVE.setMatcher(command).find()) {
+
+        } else if (RequestType.SAVE.setMatcher(command).find()) {
             mainMenu.save();
-        }
-        if (RequestType.LOGOUT.setMatcher(command).find()) {
+
+        } else if (RequestType.LOGOUT.setMatcher(command).find()) {
             mainMenu.logout();
+
         } else {
             throw new InputException("invalid command");
         }
@@ -224,12 +226,14 @@ public class Request {
         if (RequestType.CREATE_ACCOUNT.setMatcher(command).find()) {
             String userName = RequestType.CREATE_ACCOUNT.getMatcher().group(1);
 
+            View.getInstance().showGetPasswordMessage();
             this.getNewCommand();
             accountMenu.register(client, serverName, userName, command);
 
         } else if (RequestType.LOGIN.setMatcher(command).find()) {
             String userName = RequestType.LOGIN.getMatcher().group(1);
 
+            View.getInstance().showGetPasswordMessage();
             this.getNewCommand();
             accountMenu.login(client, serverName, userName, command);
 

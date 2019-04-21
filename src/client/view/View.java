@@ -76,7 +76,7 @@ public class View {
     }
 
     public void showGetPasswordMessage() {
-
+        System.out.print("Password: ");
     }
 
     public void showCardsList(ArrayList<Card> cards) {
