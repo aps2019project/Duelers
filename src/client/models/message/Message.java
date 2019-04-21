@@ -326,31 +326,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeCollectionSearchMessage(String sender, String receiver, String cardName, String userName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.COLLECTION_SEARCH;
-        message.cardName = cardName;
-        message.userName = userName;
-        return message;
-    }
-
     public static Message makeShopSearchMessage(String sender, String receiver, String cardName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.SHOP_SEARCH;
         message.cardName = cardName;
-        return message;
-    }
-
-    public static Message makeGetCollectionMessage(String sender, String receiver, String userName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.GET_COLLECTION;
-        message.userName = userName;
-        return message;
-    }
-
-    public static Message makeShowShopMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.SHOW_SHOP;
         return message;
     }
 

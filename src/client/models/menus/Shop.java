@@ -1,7 +1,6 @@
 package client.models.menus;
 
 import client.Client;
-import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.message.Message;
 import client.view.View;
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 public class Shop implements Menu {
     private static Shop SHOP;
     private ArrayList<Card> shop;
-    private Collection collection;
-    private ArrayList<Card> resultCards;
     private Card resultCard;
 
     private Shop() {
@@ -35,14 +32,8 @@ public class Shop implements Menu {
         return shop;
     }
 
-    public void showCollection(Client client, String serverName) {
-        client.addToSendingMessages(
-                Message.makeGetCollectionMessage(
-                        client.getClientName(), serverName, client.getAccount().getUserName(), 0
-                )
-        );
-        client.sendMessages();
-        View.getInstance().showCollection(collection);
+    public void showCollection(Client client) {
+        View.getInstance().showCollection(client.getAccount().getCollection());
     }
 
     public void buy(String cardName, Client client, String serverName) throws InputException {
@@ -87,17 +78,9 @@ public class Shop implements Menu {
         View.getInstance().showCardId(resultCard);
     }
 
-    public void searchInCollection(String cardName, Client client, String serverName) throws InputException {
-        client.addToSendingMessages(
-                Message.makeCollectionSearchMessage(
-                        client.getClientName(), serverName, cardName, client.getAccount().getUserName(), 0
-                )
-        );
-        client.sendMessages();
+    public void searchInCollection(String cardName, Client client) throws InputException {
+        ArrayList<Card> resultCards = client.getAccount().getCollection().searchCollection(cardName);
 
-        if (!client.getValidation()) {
-            throw new InputException(client.getErrorMessage());
-        }
         View.getInstance().showCardIds(resultCards);
     }
 

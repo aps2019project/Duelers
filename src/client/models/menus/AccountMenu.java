@@ -18,7 +18,6 @@ public class AccountMenu implements Menu {
         return ACCOUNT_MENU;
     }
 
-
     public void register(Client client, String serverName, String userName, String password) throws InputException {
         client.addToSendingMessages(
                 Message.makeRegisterMessage(
@@ -42,12 +41,10 @@ public class AccountMenu implements Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-
     public void showLeaderBoard(Client client, String serverName) {
-        client.updateLeaderBoard( serverName);
+        client.updateLeaderBoard(serverName);
         View.getInstance().showLeaderBoard(client);
     }
-
 
     public void showHelp() {
         String help = "\"create account [userName]\"\n" +

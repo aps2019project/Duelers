@@ -18,6 +18,17 @@ public class Card {
     private int range;
     private boolean hasCombo;
 
+    public boolean areSame(String cardName) {
+        return this.name.equals(cardName);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!this.getClass().getName().equals(obj.getClass().getName())) return false;
+        Card card = (Card) obj;
+        return this.cardId.equals(card.cardId);
+    }
+
     public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;

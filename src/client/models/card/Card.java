@@ -18,6 +18,17 @@ public class Card {
     private int range;
     private boolean hasCombo;
 
+    public boolean areSame(String cardName) {
+        return this.name.equals(cardName);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!this.getClass().getName().equals(obj.getClass().getName())) return false;
+        Card card = (Card) obj;
+        return this.cardId.equals(card.cardId);
+    }
+
     public String getName() {
         return this.name;
     }

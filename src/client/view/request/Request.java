@@ -74,7 +74,7 @@ public class Request {
             shop.exit(client);
 
         } else if (RequestType.SHOW_COLLECTION.setMatcher(command).find()) {
-            shop.showCollection(client, serverName);
+            shop.showCollection(client);
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             shop.searchInShop(
@@ -85,7 +85,7 @@ public class Request {
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
             shop.searchInCollection(
                     RequestType.SEARCH_COLLECTION.getMatcher().group(1),
-                    client, serverName
+                    client
             );
 
         } else if (RequestType.BUY.setMatcher(command).find()) {
