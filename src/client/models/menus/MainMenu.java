@@ -1,6 +1,7 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.message.Message;
 import client.view.View;
 
 public class MainMenu extends Menu {
@@ -17,18 +18,24 @@ public class MainMenu extends Menu {
     }
 
 
-
-    public void moveToMenu(Client client, String menuName) {
-        if (menuName.equals("collection"))
+    public void moveToMenu(Client client, String serverName, String menuName) {
+        if (menuName.equals("collection")) {
             client.setCurrentMenu(CollectionMenu.getInstance());
-        if (menuName.equals("shop"))
+        }
+        if (menuName.equals("shop")) {
+            client.addToSendingMessages(
+                    Message.makeGetOriginalCardsMessage(client.getClientName(), serverName, 0)
+            );
+            client.sendMessages();
             client.setCurrentMenu(Shop.getInstance());
-        if (menuName.equals("battle"))
+        }
+        if (menuName.equals("battle")) {
             client.setCurrentMenu(BattleMenu.getInstance());
+        }
     }
 
     public void showHelp() {
-        String help ="\"Enter Collection\"\n" +
+        String help = "\"Enter Collection\"\n" +
                 "\"Enter Battle\"\n" +
                 "\"Enter Shop\"\n" +
                 "\"logout\"\n" +

@@ -12,7 +12,6 @@ public class Shop extends Menu {
     private ArrayList<Card> cards;
 
     private Shop() {
-        //read from File
     }
 
     public static Shop getInstance() {
@@ -29,21 +28,14 @@ public class Shop extends Menu {
         return cards;
     }
 
-    public void addCard(Card card) {
-
-    }
-
     public void showCollection(){
-
-    }
-
-    public void removeCard(Card card) {
 
     }
 
     public void buy(Client client,String cardName){
 
     }
+
     public void buy(Account account, Card card) {
 
     }
