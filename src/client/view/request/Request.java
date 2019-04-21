@@ -174,10 +174,15 @@ public class Request {
             );
 
         } else if (RequestType.VALIDATE_DECK.setMatcher(command).find()) {
-            collectionMenu.validateDeck(RequestType.VALIDATE_DECK.getMatcher().group(1));
+            collectionMenu.validateDeck(
+                    RequestType.VALIDATE_DECK.getMatcher().group(1), client
+            );
 
         } else if (RequestType.SELECT_MAIN_DECK.setMatcher(command).find()) {
-            collectionMenu.selectDeck(RequestType.SELECT_MAIN_DECK.getMatcher().group(2));
+            collectionMenu.selectDeck(
+                    RequestType.SELECT_MAIN_DECK.getMatcher().group(2),
+                    client, serverName
+            );
 
         } else if (RequestType.SHOW_ALL_DECKS.setMatcher(command).find()) {
             collectionMenu.showAllDecks(client);

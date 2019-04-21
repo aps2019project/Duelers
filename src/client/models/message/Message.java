@@ -238,9 +238,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, int messageId) {
+    public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
+        message.userName = userName;
         message.messageType = MessageType.SELECT_DECK;
         return message;
     }

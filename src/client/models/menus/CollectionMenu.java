@@ -91,8 +91,17 @@ public class CollectionMenu implements Menu {
         );
     }
 
-    public void selectDeck(String DeckName) {
+    public void selectDeck(String deckName, Client client, String serverName) throws InputException {
+        client.addToSendingMessages(
+                Message.makeSelectDeckMessage(
+                        client.getClientName(), serverName, deckName, client.getAccount().getUserName(), 0
+                )
+        );
+        client.sendMessages();
 
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
     @Override
