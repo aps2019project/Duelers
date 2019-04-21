@@ -40,7 +40,7 @@ public class Shop implements Menu {
         client.sendMessages();
     }
 
-    public void buy(Client client, String serverName, String cardName) {
+    public void buy(String cardName, Client client, String serverName) {
         client.addToSendingMessages(
                 Message.makeBuyCardMessage(
                         client.getClientName(), serverName, cardName, 0
@@ -49,8 +49,13 @@ public class Shop implements Menu {
         client.sendMessages();
     }
 
-    public void sell(Client client, String cardName) {
-
+    public void sell(String cardId, Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeSellCardMessage(
+                        client.getClientName(), serverName, cardId, 0
+                )
+        );
+        client.sendMessages();
     }
 
     public void searchCard(String cardName, Client client, String serverName) {

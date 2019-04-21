@@ -88,10 +88,16 @@ public class Request {
             );
 
         } else if (RequestType.BUY.setMatcher(command).find()) {
-            shop.buy(client, RequestType.BUY.getMatcher().group(1));
+            shop.buy(
+                    RequestType.BUY.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.SELL.setMatcher(command).find()) {
-            shop.sell(client, RequestType.SELL.getMatcher().group(1));
+            shop.sell(
+                    RequestType.SELL.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.SHOW.setMatcher(command).find()) {
             shop.showMarketCardsAndItems(client);

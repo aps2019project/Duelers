@@ -27,6 +27,7 @@ public class Message {
     private Story[] stories;
     private Position[] positions;
     private String exceptionString;
+    private String cardId;
     private String[] cardIds;
     private String spellId;
     private int turnNum;
@@ -247,9 +248,9 @@ public class Message {
         return message;
     }
 
-    public static Message makeSellCardMessage(String sender, String receiver, String cardName, int messageId) {
+    public static Message makeSellCardMessage(String sender, String receiver, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardName = cardName;
+        message.cardId = cardId;
         message.messageType = MessageType.SELL_CARD;
         return message;
     }
@@ -392,6 +393,10 @@ public class Message {
 
     public String getExceptionString() {
         return exceptionString;
+    }
+
+    public String getCardId() {
+        return cardId;
     }
 
     public String[] getCardIds() {
