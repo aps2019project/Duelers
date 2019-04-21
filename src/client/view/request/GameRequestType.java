@@ -16,8 +16,17 @@ public enum GameRequestType {
     SHOW_HAND("^show hand$"),
     INSERT_CARD("^inset (\\w+) in \\((\\d+), (\\d+)\\)$"),
     END_TURN("^end turn$"),
-
-    ;
+    SHOW_COLLECTABLES("^show collectible$"),
+    SELECT_ITEM("^select (\\W+)"),
+    SHOW_INFO_OF_ITEM("^show info$"),
+    USE_ITEM("^use \\((\\d+), (\\d+)\\)$"),
+    SHOW_NEXT_CARD("^show next card$"),
+    ENTER_GRAVE_YARD("^enter graveyard"),
+    SHOW_INFO_OF_CARD_INGRAVEYARD("^show info (\\w+)$"),
+    SHOW_CRADS_IN_GRAVE_YARD("^show cards$"),
+    HELP("^help$"),
+    EXIT("^exit$"),
+    SHOW_MENU_HELP("^show menu");
     private Pattern pattern;
     private Matcher matcher;
 

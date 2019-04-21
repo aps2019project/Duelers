@@ -8,14 +8,12 @@ public enum RequestType {
     CREATE_ACCOUNT("^create account (\\w+)$"),
     LOGIN("^login (\\w+)$"),
     SHOW_LEADER_BOARD("^show leaderboard$"),
-    HELP("" + "^showHelp$"),
+    HELP("" + "^help$"),
     //Main menu:
     ENTER_MENU("^enter (\\w+)$"),
     SAVE("^save$"),
     LOGOUT("^logout$"),
     EXIT("^exit$"),
-
-
     START_GAME("^start game (\\w+) (\\w+) (\\d+)$"),
     START_MULTIPLAYER_GAME("^start multiplayer game (\\w+) (\\d+)$"),
     SELECT_USER("^select user (\\w+)$"),
