@@ -202,32 +202,36 @@ public class Message {
         return message;
     }
 
-    public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, int messageId) {
+    public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
+        message.userName = userName;
         message.messageType = MessageType.CREATE_DECK;
         return message;
     }
 
-    public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, int messageId) {
+    public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
+        message.userName = userName;
         message.messageType = MessageType.REMOVE_DECK;
         return message;
     }
 
-    public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+    public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
+        message.userName = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.ADD_TO_DECK;
         return message;
     }
 
-    public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+    public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
+        message.userName = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.REMOVE_FROM_DECK;
