@@ -1,11 +1,13 @@
 package client.models.menus;
 
 import client.Client;
-import client.models.account.Collection;
+import client.models.card.Card;
 import client.models.card.Deck;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
+
+import java.util.ArrayList;
 
 public class CollectionMenu implements Menu {
     private static CollectionMenu collectionMenu;
@@ -125,12 +127,14 @@ public class CollectionMenu implements Menu {
         View.getInstance().showHelp(help);
     }
 
-    public void showItemsAndCards() {
-
+    public void showItemsAndCards(Client client) {
+        View.getInstance().showCollection(client.getAccount().getCollection());
     }
 
-    public void search(String cardID) {
+    public void search(String cardName, Client client) throws InputException {
+        ArrayList<Card> resultCards = client.getAccount().getCollection().searchCollection(cardName);
 
+        View.getInstance().showCardIds(resultCards);
     }
 
 }

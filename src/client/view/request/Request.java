@@ -139,13 +139,15 @@ public class Request {
             collectionMenu.exit(client);
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
-            collectionMenu.search(RequestType.SEARCH.getMatcher().group(1));
+            collectionMenu.search(
+                    RequestType.SEARCH.getMatcher().group(1), client
+            );
 
         } else if (RequestType.HELP.setMatcher(command).find()) {
             collectionMenu.showHelp();
 
         } else if (RequestType.SHOW.setMatcher(command).find()) {
-            collectionMenu.showItemsAndCards();
+            collectionMenu.showItemsAndCards(client);
 
         } else if (RequestType.CREATE_DECK.setMatcher(command).find()) {
             collectionMenu.newDeck(
