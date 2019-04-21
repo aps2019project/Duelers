@@ -36,7 +36,7 @@ public enum RequestType {
     CUSTOM_GAME("^custom game$"),
     //shop:
     SHOW_COLLECTION("^show collection$"),
-    SEARCH_COLLECTION("^search collection$"),
+    SEARCH_COLLECTION("^search collection (\\w+)$"),
     BUY("^buy (\\w+)$"),
     SELL("sell (\\w+)$"),
     ;

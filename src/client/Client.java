@@ -32,6 +32,10 @@ public class Client {
         this.server = server;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
     public void updateLeaderBoard(String serverName) {
         this.addToSendingMessages(Message.makeGetLeaderBoardMessage(clientName, serverName, 0));
         this.sendMessages();

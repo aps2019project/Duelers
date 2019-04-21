@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.account.Account;
 import client.models.card.Card;
+import client.models.message.Message;
 import client.view.View;
 
 import java.util.ArrayList;
@@ -47,8 +48,13 @@ public class Shop extends Menu {
     public void searchCard(String cardName) {
     }
 
-    public void searchCollection(String collectionName) {
-
+    public void searchCollection(String cardName, Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeCollectionSearchMessage(
+                        client.getClientName(), serverName, cardName, client.getAccount().getUserName(), 0
+                )
+        );
+        client.sendMessages();
     }
 
     public void sell(Client client, String cardName) {

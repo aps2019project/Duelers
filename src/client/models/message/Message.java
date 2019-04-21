@@ -325,6 +325,14 @@ public class Message {
         return message;
     }
 
+    public static Message makeCollectionSearchMessage(String sender, String receiver, String cardName, String userName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.COLLECTION_SEARCH;
+        message.cardName = cardName;
+        message.userName = userName;
+        return message;
+    }
+
     public MessageType getMessageType() {
         return messageType;
     }

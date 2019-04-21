@@ -79,7 +79,10 @@ public class Request {
             shop.searchCard(RequestType.SEARCH.getMatcher().group(1));
 
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
-            shop.searchCollection(RequestType.SEARCH.getMatcher().group(1));
+            shop.searchCollection(
+                    RequestType.SEARCH_COLLECTION.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.BUY.setMatcher(command).find()) {
             shop.buy(client, RequestType.BUY.getMatcher().group(1));
