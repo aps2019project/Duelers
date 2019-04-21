@@ -25,8 +25,8 @@ public class AccountMenu extends Menu {
                         client.getClientName(), serverName, userName, password, 0)
         );
         client.sendMessages();
-        if (!client.isUserNameValid()) {
-            throw new InputException("invalid UserName");
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
         }
         client.setCurrentMenu(MainMenu.getInstance());
     }
@@ -36,11 +36,8 @@ public class AccountMenu extends Menu {
                 Message.makeLogInMessage(client.getClientName(), serverName, userName, password, 0)
         );
         client.sendMessages();
-        if (!client.isUserNameValid()) {
-            throw new InputException("invalid UserName");
-        }
-        if (!client.isPasswordValid()) {
-            throw new InputException("password is invalid");
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
         }
         client.setCurrentMenu(MainMenu.getInstance());
     }
@@ -55,9 +52,7 @@ public class AccountMenu extends Menu {
     public void showHelp() {
         String help = "\"create account [userName]\"\n" +
                 "\"login [userName]\"\n" +
-                "\"show leaderboard\"\n" +
-                "\"save\"\n" +
-                "\"logout\"";
+                "\"show leaderboard\"\n";
         View.getInstance().printHelp(help);
     }
 

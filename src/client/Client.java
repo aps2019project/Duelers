@@ -24,9 +24,8 @@ public class Client {
     private Menu currentMenu;
     private Card selected;
     private ArrayList<Position> positions = new ArrayList<>();
-    private boolean userNameIsValid = true;
-    private boolean passwordIsValid = true;
-
+    private boolean validation = true;
+    private String errorMessage;
     public Client(String clientName, Menu currentMenu, Server server) {
         this.clientName = clientName;
         this.currentMenu = currentMenu;
@@ -38,9 +37,6 @@ public class Client {
         this.sendMessages();
     }
 
-    public boolean isPasswordValid() {
-        return passwordIsValid;
-    }
 
     public ArrayList<Account> getLeaderBoard() {
         return leaderBoard;
@@ -50,16 +46,20 @@ public class Client {
         this.leaderBoard = leaderBoard;
     }
 
-    public void setPasswordIsValid(boolean passwordIsValid) {
-        this.passwordIsValid = passwordIsValid;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public boolean isUserNameValid() {
-        return userNameIsValid;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public void setUserNameIsValid(boolean userNameIsValid) {
-        this.userNameIsValid = userNameIsValid;
+    public boolean getValidation() {
+        return validation;
+    }
+
+    public void setValidation(boolean validation) {
+        this.validation = validation;
     }
 
     public String getClientName() {
