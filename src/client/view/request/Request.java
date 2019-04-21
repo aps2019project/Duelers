@@ -148,7 +148,10 @@ public class Request {
             collectionMenu.showItemsAndCards();
 
         } else if (RequestType.CREATE_DECK.setMatcher(command).find()) {
-            collectionMenu.newDeck(RequestType.CREATE_DECK.getMatcher().group(1));
+            collectionMenu.newDeck(
+                    RequestType.CREATE_DECK.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.DELETE_DECK.setMatcher(command).find()) {
             collectionMenu.removeDeck(RequestType.DELETE_DECK.getMatcher().group(1));
