@@ -1,16 +1,20 @@
 package client.models.menus;
 
 import client.Client;
-import client.models.account.Account;
+import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.message.Message;
 import client.view.View;
+import client.view.request.InputException;
 
 import java.util.ArrayList;
 
 public class Shop implements Menu {
     private static Shop SHOP;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> shop;
+    private Collection collection;
+    private ArrayList<Card> resultCards;
+    private Card resultCard;
 
     private Shop() {
     }
@@ -27,62 +31,78 @@ public class Shop implements Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public ArrayList<Card> getCards() {
-        return cards;
+    public ArrayList<Card> getShopCards() {
+        return shop;
     }
 
     public void showCollection(Client client, String serverName) {
         client.addToSendingMessages(
-                Message.makeShowCollectionMessage(
+                Message.makeGetCollectionMessage(
                         client.getClientName(), serverName, client.getAccount().getUserName(), 0
                 )
         );
         client.sendMessages();
+        View.getInstance().showCollection(collection);
     }
 
-    public void buy(String cardName, Client client, String serverName) {
+    public void buy(String cardName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeBuyCardMessage(
                         client.getClientName(), serverName, cardName, 0
                 )
         );
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+        View.getInstance().showSuccessfulBuyMessage();
     }
 
-    public void sell(String cardId, Client client, String serverName) {
+    public void sell(String cardId, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeSellCardMessage(
                         client.getClientName(), serverName, cardId, 0
                 )
         );
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+        View.getInstance().showSuccessfulSellMessage();
     }
 
-    public void searchCard(String cardName, Client client, String serverName) {
+    public void searchInShop(String cardName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeShopSearchMessage(
                         client.getClientName(), serverName, cardName, 0
                 )
         );
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+        View.getInstance().showCardId(resultCard);
     }
 
-    public void searchCollection(String cardName, Client client, String serverName) {
+    public void searchInCollection(String cardName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeCollectionSearchMessage(
                         client.getClientName(), serverName, cardName, client.getAccount().getUserName(), 0
                 )
         );
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+        View.getInstance().showCardIds(resultCards);
     }
 
-    public void showMarketCardsAndItems(Client client, String serverName) {
-        client.addToSendingMessages(
-                Message.makeShowShopMessage(
-                        client.getClientName(), serverName, 0
-                )
-        );
-        client.sendMessages();
+    public void showMarketCardsAndItems() {
+        View.getInstance().showCardsList(shop);
     }
 
     public void showHelp() {
@@ -93,6 +113,6 @@ public class Shop implements Menu {
                 "\"sell [item name | card name]\"\n" +
                 "\"show\"\n" +
                 "\"exit\"";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 }

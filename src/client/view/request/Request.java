@@ -67,7 +67,7 @@ public class Request {
         }
     }
 
-    private void shopHandleRequest(Client client, String serverName) {
+    private void shopHandleRequest(Client client, String serverName) throws InputException {
         Shop shop = Shop.getInstance();
         if (RequestType.EXIT.setMatcher(command).find()) {
             shop.exit(client);
@@ -76,13 +76,13 @@ public class Request {
             shop.showCollection(client, serverName);
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
-            shop.searchCard(
+            shop.searchInShop(
                     RequestType.SEARCH.getMatcher().group(1),
                     client, serverName
             );
 
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
-            shop.searchCollection(
+            shop.searchInCollection(
                     RequestType.SEARCH_COLLECTION.getMatcher().group(1),
                     client, serverName
             );
@@ -100,7 +100,7 @@ public class Request {
             );
 
         } else if (RequestType.SHOW.setMatcher(command).find()) {
-            shop.showMarketCardsAndItems(client, serverName);
+            shop.showMarketCardsAndItems();
 
         } else if (RequestType.HELP.setMatcher(command).find()) {
             shop.showHelp();

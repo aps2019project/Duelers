@@ -23,7 +23,7 @@ public class Controller {
             try {
                 request.handleRequest(thisClient, server.getServerName());
             }catch (InputException e){
-                view.printError(e);
+                view.showError(e);
             }catch (ExitCommand e){
                 break;
             }

@@ -41,7 +41,7 @@ public class MainMenu implements Menu {
                 "\"logout\"\n" +
                 "\"save\"\n" +
                 "\"exit\"";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 
     public void save() {

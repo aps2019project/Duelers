@@ -19,7 +19,7 @@ public class BattleMenu implements Menu {
 
     public void moveToMultiPlayerMenu(Client client, String serverName) {
         client.updateLeaderBoard(serverName);
-        View.getInstance().printUsersList(client);
+        View.getInstance().showUsersList(client);
         client.setCurrentMenu(MultiPlayerMenu.getInstance());
     }
 
@@ -32,6 +32,6 @@ public class BattleMenu implements Menu {
         String help = "\"Single Player\"\n" +
                 "\"Multi Player\"\n" +
                 "\"exit\"";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 }

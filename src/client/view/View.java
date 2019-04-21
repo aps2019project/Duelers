@@ -2,11 +2,13 @@ package client.view;
 
 import client.Client;
 import client.models.account.Account;
+import client.models.account.Collection;
 import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
+import client.models.menus.Shop;
 
 import java.util.ArrayList;
 
@@ -21,33 +23,33 @@ public class View {
         return VIEW;
     }
 
-    public void printError(Exception e) {
+    public void showError(Exception e) {
         System.out.println(e.getMessage());
     }
 
 
 
-    public void printMainMenu() {
+    public void showMainMenu() {
 
     }
-    public void printShopMenuHelp(){
+    public void showShopMenuHelp(){
 
     }
 
-    public void printHelp(String help) {
+    public void showHelp(String help) {
         System.out.println(help);
     }
 
 
-    public void printGameMenu() {
+    public void showGameMenu() {
 
     }
 
-    public void printStoryMenu() {
+    public void showStoryMenu() {
 
     }
 
-    public void printLeaderBoard(Client client) {
+    public void showLeaderBoard(Client client) {
         int counter = 1;
         for (Account account : client.getLeaderBoard()) {
             System.out.println(counter + "- UserName : " + account.getUserName() + " - Wins : " + account.getWins());
@@ -55,90 +57,95 @@ public class View {
         }
     }
 
-    public void printDecksList(Account account) {
+    public void showDecksList(Account account) {
 
     }
 
-    public void printGameModesList() {
+    public void showGameModesList() {
 
     }
 
-    public void printUsersList(Client client) {
+    public void showUsersList(Client client) {
         for (Account account : client.getLeaderBoard()) {
             System.out.println("UserName" + account.getUserName());
         }
     }
 
-    public void printGameResults(Game game) {
+    public void showGameResults(Game game) {
 
     }
 
-    public void printGetPasswordMessage() {
+    public void showGetPasswordMessage() {
 
     }
 
-    public void PrintCardsList(ArrayList<Card> cards) {
+    public void showCardsList(ArrayList<Card> cards) {
 
     }
 
-    public void printCardInfo(Card card) {
+    public void showCardInfo(Card card) {
 
     }
 
-    public void printCardID(Card card) {
+    public void showCardId(Card card) {
 
     }
 
-    public void printDeckValidationMessage(boolean isValid) {
+    public void showDeckValidationMessage(boolean isValid) {
 
     }
 
-    public void printSuccessfulBuyMessage() {
+    public void showSuccessfulBuyMessage() {
 
     }
 
-    public void printSuccessfulSellMessage() {
+    public void showSuccessfulSellMessage() {
 
     }
 
-    public void printShopList() {
+    public void showGameInfo(MatchHistory game) {
 
     }
 
-    public void printGameInfo(MatchHistory game) {
+    public void showInMapMinions(Player player) {
 
     }
 
-    public void printInMapMinions(Player player) {
+    public void showInMapCardInfo(Card card) {
 
     }
 
-    public void printInMapCardInfo(Card card) {
+    public void showMoveCardMessage(Card card, Cell targetCell) {
 
     }
 
-    public void printMoveCardMessage(Card card, Cell targetCell) {
+    public void showHand(Player player) {
 
     }
 
-    public void printHand(Player player) {
+    public void showCardInsertionMessage(Card card, Cell targetCell) {
 
     }
 
-    public void printCardInsertionMessage(Card card, Cell targetCell) {
+    public void showCollectedItems(Player player) {
 
     }
 
-    public void printCollectedItems(Player player) {
+    public void showGraveYardList(Player player) {
 
     }
 
-    public void printGraveYardList(Player player) {
+    public void showTurnActionHelp(Player player) {
 
     }
 
-    public void printTurnActionHelp(Player player) {
-
+    public void showCollection(Collection collection) {
+        
     }
 
+    public void showCardIds(ArrayList<Card> cards) {
+        for (Card card : cards) {
+            showCardId(card);
+        }
+    }
 }

@@ -31,6 +31,6 @@ public class SinglePlayerMenu implements Menu {
         String help = "\"story\"\n" +
                 "\"custom game\"\n" +
                 "\"exit\"";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 }

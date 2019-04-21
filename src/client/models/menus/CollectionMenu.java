@@ -75,7 +75,7 @@ public class CollectionMenu implements Menu {
                 "\"show all decks\"\n" +
                 "\"show deck [deck name]\"\n" +
                 "\"exit\"";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 
     public void showItemsAndCards(){

@@ -45,7 +45,7 @@ public class AccountMenu implements Menu {
 
     public void showLeaderBoard(Client client, String serverName) {
         client.updateLeaderBoard( serverName);
-        View.getInstance().printLeaderBoard(client);
+        View.getInstance().showLeaderBoard(client);
     }
 
 
@@ -53,7 +53,7 @@ public class AccountMenu implements Menu {
         String help = "\"create account [userName]\"\n" +
                 "\"login [userName]\"\n" +
                 "\"show leaderboard\"\n";
-        View.getInstance().printHelp(help);
+        View.getInstance().showHelp(help);
     }
 
     @Override
