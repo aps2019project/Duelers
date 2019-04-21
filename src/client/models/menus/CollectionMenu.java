@@ -2,7 +2,9 @@ package client.models.menus;
 
 import client.Client;
 import client.models.account.Collection;
+import client.models.card.Deck;
 import client.view.View;
+import client.view.request.InputException;
 
 public class CollectionMenu implements Menu {
     private static CollectionMenu collectionMenu;
@@ -17,11 +19,12 @@ public class CollectionMenu implements Menu {
     }
 
     public void showAllDecks(Client client){
-
+        View.getInstance().showDecksList(client.getAccount().getDecks());
     }
 
-    public void showDeck(String deckName){
-
+    public void showDeck(String deckName, Client client) throws InputException {
+        Deck deck = client.getAccount().getDeck(deckName);
+        View.getInstance().showDeck(deck);
     }
 
     public void newDeck(String deckName) {

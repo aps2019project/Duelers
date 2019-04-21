@@ -59,4 +59,7 @@ public class Deck {
         this.item = item;
     }
 
+    public boolean areSame(String deckName) {
+        return this.deckName.equals(deckName);
+    }
 }

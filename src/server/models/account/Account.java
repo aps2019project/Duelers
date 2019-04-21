@@ -14,11 +14,15 @@ public class Account {
     private ArrayList<MatchHistory> matchHistories;
     private int money;
     private int wins;
-    
+
+    public Account(String userName) {
+
+    }
+
     public int getWins() {
         return wins;
     }
-    
+
     public String getUserName() {
         return this.userName;
     }
@@ -51,7 +55,12 @@ public class Account {
 
     }
 
-    public Account(String userName) {
-
+    public Deck getDeck(String deckName) {
+        for (Deck deck : decks) {
+            if (deck.areSame(deckName)) {
+                return deck;
+            }
+        }
+        return null;
     }
 }

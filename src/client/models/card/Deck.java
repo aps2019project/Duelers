@@ -27,4 +27,8 @@ public class Deck {
     public Card getItem() {
         return this.item;
     }
+
+    public boolean areSame(String deckName) {
+        return this.deckName.equals(deckName);
+    }
 }

@@ -171,7 +171,9 @@ public class Request {
             collectionMenu.showAllDecks(client);
 
         } else if (RequestType.SHOW_DECK.setMatcher(command).find()) {
-            collectionMenu.showDeck(RequestType.SHOW_DECK.getMatcher().group(1));
+            collectionMenu.showDeck(
+                    RequestType.SHOW_DECK.getMatcher().group(1), client
+            );
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
             collectionMenu.save();

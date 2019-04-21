@@ -5,6 +5,7 @@ import client.models.account.Account;
 import client.models.account.Collection;
 import client.models.account.MatchHistory;
 import client.models.card.Card;
+import client.models.card.Deck;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
@@ -57,7 +58,13 @@ public class View {
         }
     }
 
-    public void showDecksList(Account account) {
+    public void showDecksList(ArrayList<Deck> decks) {
+        for (Deck deck : decks) {
+            showDeck(deck);
+        }
+    }
+
+    public void showDeck(Deck deck) {
 
     }
 

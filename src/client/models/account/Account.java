@@ -1,6 +1,7 @@
 package client.models.account;
 
 import client.models.card.Deck;
+import client.view.request.InputException;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,6 @@ public class Account {
     private int wins;
     
     public int getWins() {
-
         return wins;
     }
     
@@ -42,5 +42,14 @@ public class Account {
 
     public int getMoney() {
         return this.money;
+    }
+
+    public Deck getDeck(String deckName) throws InputException {
+        for (Deck deck : decks) {
+            if (deck.areSame(deckName)) {
+                return deck;
+            }
+        }
+        throw new InputException("Such deck not found");
     }
 }
