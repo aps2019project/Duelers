@@ -112,11 +112,17 @@ public class Request {
         MultiPlayerMenu multiPlayerMenu = MultiPlayerMenu.getInstance();
 
         if (RequestType.SELECT_USER.setMatcher(command).find()) {
-            multiPlayerMenu.selectUser(RequestType.SELECT_USER.getMatcher().group(1));
+            multiPlayerMenu.selectUser(
+                    RequestType.SELECT_USER.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.START_MULTIPLAYER_GAME.setMatcher(command).find()) {
             Matcher matcher = RequestType.START_MULTIPLAYER_GAME.getMatcher();
-            multiPlayerMenu.startGame(matcher.group(1), Integer.parseInt(matcher.group(2)));
+            multiPlayerMenu.startGame(
+                    Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)),
+                    client, serverName
+            );
 
         } else {
             throw new InputException("invalid command");
@@ -219,7 +225,7 @@ public class Request {
             mainMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            throw new ExitCommand();
+            mainMenu.exit();
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
             mainMenu.save(client, serverName);

@@ -15,7 +15,7 @@ public enum RequestType {
     LOGOUT("^logout$"),
     EXIT("^exit$"),
     START_GAME("^start game (\\w+) ([123])\\s?(\\d+)?$"),
-    START_MULTIPLAYER_GAME("^start multiplayer game (\\w+) (\\d+)$"),
+    START_MULTIPLAYER_GAME("^start multiplayer game ([123])\\s?(\\d+)?$"),
     SELECT_USER("^select user (\\w+)$"),
     //collection
     SHOW("^show$"),

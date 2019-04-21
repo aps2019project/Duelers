@@ -83,7 +83,7 @@ public class Server {
                 case GET_LEADERBOARD:
 
                     break;
-                case GET_ORIGINALCARDS:
+                case GET_ORIGINAL_CARDS:
 
                     break;
                 case BUY_CARD:
@@ -146,6 +146,7 @@ public class Server {
             Client client = getClient(message.getReceiver());
             if (client == null || !message.getSender().equals(serverName)) {
                 System.out.println("Error sending messages");
+                continue;
             }
             client.addToReceivingMessages(new Gson().toJson(message));
         }

@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.message.Message;
 import client.view.View;
+import client.view.request.ExitCommand;
 
 public class MainMenu implements Menu {
     private static MainMenu MAIN_MENU;
@@ -58,6 +59,9 @@ public class MainMenu implements Menu {
 
     @Override
     public void exit(Client client) {
+    }
 
+    public void exit() throws ExitCommand {
+        throw new ExitCommand();
     }
 }
