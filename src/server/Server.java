@@ -1,7 +1,6 @@
 package server;
 
 import client.Client;
-import org.jetbrains.annotations.NotNull;
 import server.models.message.Message;
 import com.google.gson.Gson;
 import server.models.account.Account;
@@ -20,7 +19,7 @@ public class Server {
     private String serverName;
     private HashMap<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
-    private ArrayList<Client> onlineClients=new ArrayList<>();
+    private ArrayList<Client> onlineClients = new ArrayList<>();
     private ArrayList<Card> originalCards = new ArrayList<>();
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
@@ -35,7 +34,7 @@ public class Server {
         readCustomDecks();
         readStories();
         this.serverName = serverName;
-        System.out.println("Server was created.");
+        System.out.println("--Server was created.");
     }
 
     public static Server getInstance() {
@@ -49,12 +48,12 @@ public class Server {
             System.out.println("Error addClient NULL");
             return;
         }
-        if(clients.containsKey(client.getClientName())){
+        if (clients.containsKey(client.getClientName())) {
             System.out.println("Error addClient duplicate");
             return;
         }
         onlineClients.add(client);
-        clients.put(client.getClientName(),null);
+        clients.put(client.getClientName(), null);
     }
 
     private void addToSendingMessages(Message message) {
@@ -163,8 +162,8 @@ public class Server {
     }
 
     private Client getClient(String clientName) {
-        for(Client client:onlineClients){
-            if(client.getClientName().equals(clientName))
+        for (Client client : onlineClients) {
+            if (client.getClientName().equals(clientName))
                 return client;
         }
         return null;
@@ -174,7 +173,7 @@ public class Server {
 
     }
 
-    public void newGame(@NotNull Account account1, @NotNull Account account2, GameType gameType) {
+    public void newGame(Account account1, Account account2, GameType gameType) {
 
     }
 
@@ -196,5 +195,9 @@ public class Server {
 
     private void logIn(Client client, String userName, String passWord) {
 
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 }
