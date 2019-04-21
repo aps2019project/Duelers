@@ -1,6 +1,8 @@
 package client.models.menus;
 
-public class gameCommands {
+import client.Client;
+
+public class gameCommands implements Menu {
     private static gameCommands ourInstance = new gameCommands();
 
     private gameCommands() {
@@ -8,5 +10,10 @@ public class gameCommands {
 
     public static gameCommands getInstance() {
         return ourInstance;
+    }
+
+    @Override
+    public void exit(Client client) {
+
     }
 }

@@ -60,7 +60,7 @@ public class Request {
             singlePlayerMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            singlePlayerMenu.returnToMainMenu(client);
+            singlePlayerMenu.exit(client);
 
         } else {
             throw new InputException("invalid command");
@@ -70,13 +70,16 @@ public class Request {
     private void shopHandleRequest(Client client, String serverName) {
         Shop shop = Shop.getInstance();
         if (RequestType.EXIT.setMatcher(command).find()) {
-            shop.returnToMain(client);
+            shop.exit(client);
 
         } else if (RequestType.SHOW_COLLECTION.setMatcher(command).find()) {
             shop.showCollection();
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
-            shop.searchCard(RequestType.SEARCH.getMatcher().group(1));
+            shop.searchCard(
+                    RequestType.SEARCH.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
             shop.searchCollection(
@@ -126,7 +129,7 @@ public class Request {
     private void collectionMenuHandleRequest(Client client, String serverName) throws InputException {
         CollectionMenu collectionMenu = CollectionMenu.getInstance();
         if (RequestType.EXIT.setMatcher(command).find()) {
-            collectionMenu.backToMain(client);
+            collectionMenu.exit(client);
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             collectionMenu.search(RequestType.SEARCH.getMatcher().group(1));
@@ -203,7 +206,7 @@ public class Request {
             battleMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            battleMenu.backToMain(client);
+            battleMenu.exit(client);
 
         } else {
             throw new InputException("invalid command");

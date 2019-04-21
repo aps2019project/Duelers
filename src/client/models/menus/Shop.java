@@ -8,7 +8,7 @@ import client.view.View;
 
 import java.util.ArrayList;
 
-public class Shop extends Menu {
+public class Shop implements Menu {
     private static  Shop SHOP ;
     private ArrayList<Card> cards;
 
@@ -22,9 +22,11 @@ public class Shop extends Menu {
         return SHOP;
     }
 
-    public void returnToMain(Client client){
+    @Override
+    public void exit(Client client){
         client.setCurrentMenu(MainMenu.getInstance());
     }
+
     public ArrayList<Card> getCards() {
         return cards;
     }
@@ -45,7 +47,7 @@ public class Shop extends Menu {
 
     }
 
-    public void searchCard(String cardName) {
+    public void searchCard(String cardName, Client client, String serverName) {
     }
 
     public void searchCollection(String cardName, Client client, String serverName) {

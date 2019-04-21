@@ -1,6 +1,8 @@
 package client.models.menus;
 
-public class CustomGameMenu extends Menu {
+import client.Client;
+
+public class CustomGameMenu implements Menu {
     private static final CustomGameMenu CUSTOM_GAME_MENU = new CustomGameMenu();
 
     private CustomGameMenu() {
@@ -12,6 +14,11 @@ public class CustomGameMenu extends Menu {
     }
 
     public void startGame(String deckName,String mode,int numberOfFlags) {
+
+    }
+
+    @Override
+    public void exit(Client client) {
 
     }
 }

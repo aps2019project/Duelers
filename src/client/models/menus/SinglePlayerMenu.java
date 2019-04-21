@@ -3,7 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.view.View;
 
-public class SinglePlayerMenu extends Menu {
+public class SinglePlayerMenu implements Menu {
     private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
 
     private SinglePlayerMenu() {
@@ -22,7 +22,8 @@ public class SinglePlayerMenu extends Menu {
 
     }
 
-    public void returnToMainMenu(Client client){
+    @Override
+    public void exit(Client client){
 
     }
 

@@ -1,8 +1,9 @@
 package client.models.menus;
 
+import client.Client;
 import client.models.account.Account;
 
-public class MultiPlayerMenu extends Menu {
+public class MultiPlayerMenu implements Menu {
     private static final MultiPlayerMenu MULTI_PLAYER_MENU = new MultiPlayerMenu();
     private Account secondAccount;
     private MultiPlayerMenu() {
@@ -18,6 +19,11 @@ public class MultiPlayerMenu extends Menu {
     }
 
     public void startGame(String mode,int numberOfFlags) {
+
+    }
+
+    @Override
+    public void exit(Client client) {
 
     }
 }

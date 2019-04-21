@@ -1,6 +1,8 @@
 package client.models.menus;
 
-public class StoryMenu extends Menu {
+import client.Client;
+
+public class StoryMenu implements Menu {
     private static StoryMenu ourInstance = new StoryMenu();
 
     private StoryMenu() {
@@ -10,4 +12,8 @@ public class StoryMenu extends Menu {
         return ourInstance;
     }
 
+    @Override
+    public void exit(Client client) {
+
+    }
 }

@@ -3,7 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.view.View;
 
-public class BattleMenu extends Menu {
+public class BattleMenu implements Menu {
     private static final BattleMenu BATTLE_MENU = new BattleMenu();
 
     private BattleMenu() {
@@ -23,11 +23,10 @@ public class BattleMenu extends Menu {
         client.setCurrentMenu(MultiPlayerMenu.getInstance());
     }
 
-    public void backToMain(Client client){
+    @Override
+    public void exit(Client client){
         client.setCurrentMenu(MainMenu.getInstance());
     }
-
-
 
     public void showHelp() {
         String help = "\"Single Player\"\n" +

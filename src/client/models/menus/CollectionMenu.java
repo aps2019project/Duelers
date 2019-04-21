@@ -4,7 +4,7 @@ import client.Client;
 import client.models.account.Collection;
 import client.view.View;
 
-public class CollectionMenu extends Menu {
+public class CollectionMenu implements Menu {
     private static CollectionMenu collectionMenu;
     private Collection collection;
 
@@ -57,7 +57,8 @@ public class CollectionMenu extends Menu {
 
     }
 
-    public void backToMain(Client client) {
+    @Override
+    public void exit(Client client) {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 

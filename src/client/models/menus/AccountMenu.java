@@ -5,7 +5,7 @@ import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
 
-public class AccountMenu extends Menu {
+public class AccountMenu implements Menu {
     private static AccountMenu ACCOUNT_MENU;
 
     private AccountMenu() {
@@ -56,4 +56,7 @@ public class AccountMenu extends Menu {
         View.getInstance().printHelp(help);
     }
 
+    @Override
+    public void exit(Client client) {
+    }
 }

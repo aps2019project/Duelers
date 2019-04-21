@@ -4,7 +4,7 @@ import client.Client;
 import client.models.message.Message;
 import client.view.View;
 
-public class MainMenu extends Menu {
+public class MainMenu implements Menu {
     private static MainMenu MAIN_MENU;
 
     private MainMenu() {
@@ -50,5 +50,10 @@ public class MainMenu extends Menu {
 
     public void logout() {
         //TODO
+    }
+
+    @Override
+    public void exit(Client client) {
+
     }
 }
