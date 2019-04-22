@@ -28,6 +28,7 @@ public class BattleMenu implements Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
+    @Override
     public void showHelp() {
         String help = "\"Single Player\"\n" +
                 "\"Multi Player\"\n" +

@@ -34,6 +34,7 @@ public class Message {
     private int numberOfFlags;
     private String cardName;
     private int newValue;
+    private int stage;
     private Position position;
     private String userName, passWord;
     private String deckName;
@@ -320,6 +321,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeNewStoryGameMessage(String sender, String receiver, int stage, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.stage = stage;
+        message.messageType = MessageType.NEW_GAME;
+        return message;
+    }
+
     public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.userName = userName;
@@ -438,6 +446,10 @@ public class Message {
 
     public int getNewValue() {
         return newValue;
+    }
+
+    public int getStage() {
+        return stage;
     }
 
     public Position getPosition() {

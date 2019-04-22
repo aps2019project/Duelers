@@ -4,6 +4,7 @@ import client.Client;
 import client.models.account.Account;
 import client.models.game.GameType;
 import client.models.message.Message;
+import client.view.View;
 import client.view.request.InputException;
 
 public class MultiPlayerMenu implements Menu {
@@ -56,5 +57,12 @@ public class MultiPlayerMenu implements Menu {
     @Override
     public void exit(Client client) {
         client.setCurrentMenu(BattleMenu.getInstance());
+    }
+
+    @Override
+    public void showHelp() {
+        String help = "\"select user [username]\"\n" +
+                "\"start multiplayer game [mode] [number of flags(if needed)]\"";
+        View.getInstance().showHelp(help);
     }
 }

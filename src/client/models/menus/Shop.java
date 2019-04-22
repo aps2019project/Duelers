@@ -88,6 +88,7 @@ public class Shop implements Menu {
         View.getInstance().showCardsList(shop);
     }
 
+    @Override
     public void showHelp() {
         String help = "\"show collection\"\n" +
                 "\"search [item name | card name]\"\n" +

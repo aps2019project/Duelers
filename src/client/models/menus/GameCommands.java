@@ -16,4 +16,9 @@ public class GameCommands implements Menu {
     public void exit(Client client) {
 
     }
+
+    @Override
+    public void showHelp() {
+
+    }
 }

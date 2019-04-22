@@ -26,6 +26,7 @@ public class SinglePlayerMenu implements Menu {
         client.setCurrentMenu(BattleMenu.getInstance());
     }
 
+    @Override
     public void showHelp(){
         String help = "\"story\"\n" +
                 "\"custom game\"\n" +

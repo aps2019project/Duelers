@@ -35,6 +35,7 @@ public class MainMenu implements Menu {
         }
     }
 
+    @Override
     public void showHelp() {
         String help = "\"Enter Collection\"\n" +
                 "\"Enter Battle\"\n" +
