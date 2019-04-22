@@ -83,7 +83,7 @@ public class Client {
     }
 
     public void addToReceivingMessages(String messageJson) {
-        receivingMessages.add(Message.convertStringToMessage(messageJson));
+        receivingMessages.add(Message.convertJsonToMessage(messageJson));
     }
 
     public void receiveMessages() {
@@ -95,8 +95,7 @@ public class Client {
 
     public void sendMessages() {
         for (Message message : sendingMessages) {
-            String json = new Gson().toJson(message);
-            server.addToReceivingMessages(json);
+            server.addToReceivingMessages(message.toJson());
         }
         sendingMessages.clear();
         server.receiveMessages();

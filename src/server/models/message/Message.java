@@ -46,11 +46,8 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public static Message convertStringToMessage(String messageJson) {
-        return new Gson().fromJson(
-                new BufferedReader(new StringReader(messageJson)),
-                Message.class
-        );
+    public static Message convertJsonToMessage(String messageJson) {
+        return new Gson().fromJson(messageJson, Message.class);
     }
 
     public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
@@ -324,6 +321,10 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.LOG_OUT;
         return message;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
     public MessageType getMessageType() {

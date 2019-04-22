@@ -2,7 +2,6 @@ package server;
 
 import client.Client;
 import server.models.message.Message;
-import com.google.gson.Gson;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
@@ -61,7 +60,7 @@ public class Server {
     }
 
     public void addToReceivingMessages(String messageJson) {
-        receivingMessages.add(Message.convertStringToMessage(messageJson));
+        receivingMessages.add(Message.convertJsonToMessage(messageJson));
     }
 
     public void receiveMessages() {
@@ -148,7 +147,7 @@ public class Server {
                 System.out.println("Error sending messages");
                 continue;
             }
-            client.addToReceivingMessages(new Gson().toJson(message));
+            client.addToReceivingMessages(message.toJson());
         }
         sendingMessages.clear();
     }
