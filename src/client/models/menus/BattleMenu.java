@@ -30,7 +30,8 @@ public class BattleMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "\"Single Player\"\n" +
+        String help = "Battle:\n" +
+                "\"Single Player\"\n" +
                 "\"Multi Player\"\n" +
                 "\"exit\"";
         View.getInstance().showHelp(help);

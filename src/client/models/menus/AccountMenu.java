@@ -49,9 +49,10 @@ public class AccountMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "\"create account [userName]\"\n" +
+        String help = "Account Menu:\n" +
+                "\"create account [userName]\"\n" +
                 "\"login [userName]\"\n" +
-                "\"show leaderboard\"\n";
+                "\"show leaderboard\"";
         View.getInstance().showHelp(help);
     }
 

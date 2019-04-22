@@ -61,7 +61,8 @@ public class MultiPlayerMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "\"select user [username]\"\n" +
+        String help = "MultiPlayer Menu:\n" +
+                "\"select user [username]\"\n" +
                 "\"start multiplayer game [mode] [number of flags(if needed)]\"";
         View.getInstance().showHelp(help);
     }

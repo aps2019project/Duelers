@@ -36,7 +36,8 @@ public class CustomGameMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "\"start multiplayer game [mode] [number of flags(if needed)]\"";
+        String help = "Custom Game:\n" +
+                "\"start multiplayer game [mode] [number of flags(if needed)]\"";
         View.getInstance().showHelp(help);
     }
 

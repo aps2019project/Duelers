@@ -33,7 +33,6 @@ public class Server {
         readCustomDecks();
         readStories();
         this.serverName = serverName;
-        System.out.println("--Server was created.");
     }
 
     public static Server getInstance() {

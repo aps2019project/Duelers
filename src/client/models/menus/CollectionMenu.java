@@ -113,7 +113,8 @@ public class CollectionMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "\"show\" : show cards and items\n" +
+        String help = "Collection:\n" +
+                "\"show\" : show cards and items\n" +
                 "\"create deck [deck name]\"\n" +
                 "\"delete deck [deck name]\"\n" +
                 "\"search [card name | item name]\"\n" +

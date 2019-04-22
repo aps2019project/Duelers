@@ -32,7 +32,7 @@ public class Controller {
 
     public void preProcess() {
         clients.add(
-                new Client(java.lang.System.getProperty("user.name"), AccountMenu.getInstance(), Server.getInstance())
+                new Client(java.lang.System.getProperty("user.name"), Server.getInstance())
         );
         thisClient = clients.get(0);
     }

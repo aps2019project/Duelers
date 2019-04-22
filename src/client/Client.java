@@ -5,6 +5,7 @@ import client.models.card.Card;
 import client.models.card.Deck;
 import client.models.game.Game;
 import client.models.map.Position;
+import client.models.menus.AccountMenu;
 import client.models.menus.Menu;
 import client.models.message.Message;
 import com.google.gson.Gson;
@@ -26,9 +27,9 @@ public class Client {
     private ArrayList<Position> positions = new ArrayList<>();
     private boolean validation = true;
     private String errorMessage;
-    public Client(String clientName, Menu currentMenu, Server server) {
+    public Client(String clientName, Server server) {
         this.clientName = clientName;
-        this.currentMenu = currentMenu;
+        setCurrentMenu(AccountMenu.getInstance());
         this.server = server;
     }
 

@@ -28,7 +28,8 @@ public class SinglePlayerMenu implements Menu {
 
     @Override
     public void showHelp(){
-        String help = "\"story\"\n" +
+        String help = "Single Palyer:\n" +
+                "\"story\"\n" +
                 "\"custom game\"\n" +
                 "\"exit\"";
         View.getInstance().showHelp(help);

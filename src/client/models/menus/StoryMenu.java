@@ -31,7 +31,8 @@ public class StoryMenu implements Menu {
 
     @Override
     public void showHelp() {
-        String help = "1. first stage\n" +
+        String help = "Story:\n" +
+                "1. first stage\n" +
                 "2. second stage\n" +
                 "3. third stage\n" +
                 "\"start game #number\"";
