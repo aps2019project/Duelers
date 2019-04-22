@@ -8,17 +8,45 @@
       "action": {
         "addSpell": true,
         "durable": true,
-        "duration": 1
-      },
-      "availabilityType": {
-        "onPut": true
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "cd_on_death",
+          "action": {
+            "hpChange": -8,
+            "durable": true,
+            "duration": 1
+          },
+          "target": {
+            "isRelatedToCardOwnerPosition": true,
+            "isRandom": true,
+            "dimensions": {
+              "row": 3,
+              "column": 3
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onDeath": true
+          }
+        }
       },
       "target": {
+        "isRandom": true,
         "dimensions": {
           "row": 10,
           "column": 18
         },
-        "isRandom": true,
         "owner": {
           "own": true,
           "enemy": true
@@ -32,36 +60,8 @@
           "hybrid": true
         }
       },
-      "carryingSpell": {
-        "spellId": "cd_on_death",
-        "action": {
-          "hpChange": -8,
-          "durable": true,
-          "duration": 1
-        },
-        "availabilityType": {
-          "onDeath": true
-        },
-        "target": {
-          "isRelatedToCardOwnerPosition": true,
-          "dimensions": {
-            "row": 3,
-            "column": 3
-          },
-          "isRandom": true,
-          "owner": {
-            "enemy": true
-          },
-          "cardType": {
-            "hero": true,
-            "minion": true
-          },
-          "attackType": {
-            "melee": true,
-            "ranged": true,
-            "hybrid": true
-          }
-        }
+      "availabilityType": {
+        "onPut": true
       }
     }
   ]

@@ -8,10 +8,36 @@
       "action": {
         "addSpell": true,
         "durable": true,
-        "duration": 1
-      },
-      "availabilityType": {
-        "onStart": true
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "se_power_buff",
+          "action": {
+            "apChange": 1,
+            "duration": 2147483647
+          },
+          "target": {
+            "isRandom": true,
+            "dimensions": {
+              "row": 10,
+              "column": 18
+            },
+            "owner": {
+              "own": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onDeath": true
+          }
+        }
       },
       "target": {
         "isForDeckCards": true,
@@ -28,34 +54,8 @@
           "hybrid": true
         }
       },
-      "carryingSpell": {
-        "spellId": "se_power_buff",
-        "action": {
-          "apChange": 1,
-          "duration": 2147483647
-        },
-        "availabilityType": {
-          "onDeath": true
-        },
-        "target": {
-          "isRandom": true,
-          "dimensions": {
-            "row": 10,
-            "column": 18
-          },
-          "owner": {
-            "own": true
-          },
-          "cardType": {
-            "hero": true,
-            "minion": true
-          },
-          "attackType": {
-            "melee": true,
-            "ranged": true,
-            "hybrid": true
-          }
-        }
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],

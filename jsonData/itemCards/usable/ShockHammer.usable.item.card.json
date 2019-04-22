@@ -8,10 +8,35 @@
       "action": {
         "addSpell": true,
         "durable": true,
-        "duration": 1
-      },
-      "availabilityType": {
-        "onStart": true
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "sh_disarm",
+          "action": {
+            "makeDisarm": true,
+            "duration": 1
+          },
+          "target": {
+            "dimensions": {
+              "row": 1,
+              "column": 1
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onAttack": true
+          }
+        }
       },
       "target": {
         "isForDeckCards": true,
@@ -27,33 +52,8 @@
           "hybrid": true
         }
       },
-      "carryingSpell": {
-        "spellId": "sh_disarm",
-        "action": {
-          "makeDisarm": true,
-          "duration": 1
-        },
-        "availabilityType": {
-          "onAttack": true
-        },
-        "target": {
-          "dimensions": {
-            "row": 1,
-            "column": 1
-          },
-          "owner": {
-            "enemy": true
-          },
-          "cardType": {
-            "hero": true,
-            "minion": true
-          },
-          "attackType": {
-            "melee": true,
-            "ranged": true,
-            "hybrid": true
-          }
-        }
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],

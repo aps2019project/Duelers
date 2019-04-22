@@ -10,9 +10,6 @@
         "durable": true,
         "duration": 1
       },
-      "availabilityType": {
-        "onStart": true
-      },
       "target": {
         "isForDeckCards": true,
         "owner": {
@@ -25,6 +22,9 @@
           "ranged": true,
           "hybrid": true
         }
+      },
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],

@@ -8,12 +8,38 @@
       "action": {
         "addSpell": true,
         "durable": true,
-        "duration": 1
-      },
-      "availabilityType": {
-        "onStart": true
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "ad_damage",
+          "action": {
+            "hpChange": -1,
+            "durable": true,
+            "duration": 1
+          },
+          "target": {
+            "dimensions": {
+              "row": 10,
+              "column": 18
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onPut": true
+          }
+        }
       },
       "target": {
+        "isForDeckCards": true,
         "owner": {
           "own": true
         },
@@ -24,36 +50,10 @@
           "melee": true,
           "ranged": true,
           "hybrid": true
-        },
-        "isForDeckCards": true
-      },
-      "carryingSpell": {
-        "spellId": "ad_damage",
-        "action": {
-          "hpChange": -1,
-          "durable": true,
-          "duration": 1
-        },
-        "availabilityType": {
-          "onPut": true
-        },
-        "target": {
-          "dimensions": {
-            "row": 10,
-            "column": 18
-          },
-          "owner": {
-            "enemy": true
-          },
-          "cardType": {
-            "hero": true
-          },
-          "attackType": {
-            "melee": true,
-            "ranged": true,
-            "hybrid": true
-          }
         }
+      },
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],
