@@ -33,6 +33,7 @@ public enum RequestType {
     MULTI_PLAYER("^multi player$"),
     //single player menu
     STORY("^story$"),
+    START_GAME_IN_STORY_MENU("^start game (\\d)$"),
     CUSTOM_GAME("^custom game$"),
     //shop:
     SHOW_COLLECTION("^show collection$"),

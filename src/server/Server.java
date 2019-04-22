@@ -130,6 +130,8 @@ public class Server {
                 case MOVE_TROOP:
 
                     break;
+
+
                 default:
                     addToSendingMessages(Message.makeExceptionMessage
                             (serverName, message.getSender(), "messageType", message.getMessageId()));

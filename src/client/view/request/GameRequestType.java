@@ -26,7 +26,8 @@ public enum GameRequestType {
     SHOW_CRADS_IN_GRAVE_YARD("^show cards$"),
     HELP("^help$"),
     EXIT("^exit$"),
-    SHOW_MENU_HELP("^show menu");
+    SHOW_MENU_HELP("^show menu"),
+    END_GAME("^end game$");
     private Pattern pattern;
     private Matcher matcher;
 

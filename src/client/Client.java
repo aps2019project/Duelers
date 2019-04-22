@@ -76,6 +76,7 @@ public class Client {
 
     public void setCurrentMenu(Menu currentMenu) {
         this.currentMenu = currentMenu;
+        currentMenu.showHelp();
     }
 
     public void addToSendingMessages(Message message) {

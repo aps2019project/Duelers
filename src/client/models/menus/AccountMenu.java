@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.message.Message;
 import client.view.View;
+import client.view.request.ExitCommand;
 import client.view.request.InputException;
 
 public class AccountMenu implements Menu {
@@ -52,6 +53,11 @@ public class AccountMenu implements Menu {
                 "\"login [userName]\"\n" +
                 "\"show leaderboard\"\n";
         View.getInstance().showHelp(help);
+    }
+
+    public void exit() throws ExitCommand {
+        throw new ExitCommand();
+
     }
 
     @Override
