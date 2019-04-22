@@ -7,7 +7,6 @@ public class SinglePlayerMenu implements Menu {
     private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
 
     private SinglePlayerMenu() {
-
     }
 
     public static SinglePlayerMenu getInstance() {
@@ -15,16 +14,16 @@ public class SinglePlayerMenu implements Menu {
     }
 
     public void moveToStoryMenu(Client client) {
-
+        client.setCurrentMenu(StoryMenu.getInstance());
     }
 
     public void moveToCustomGameMenu(Client client){
-
+        client.setCurrentMenu(CustomGameMenu.getInstance());
     }
 
     @Override
     public void exit(Client client){
-
+        client.setCurrentMenu(BattleMenu.getInstance());
     }
 
     public void showHelp(){
