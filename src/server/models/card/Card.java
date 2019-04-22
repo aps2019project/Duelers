@@ -90,4 +90,8 @@ public class Card {
     public boolean hasCombo() {
         return hasCombo;
     }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
 }

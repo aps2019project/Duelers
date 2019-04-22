@@ -1,0 +1,820 @@
+{
+  "deck": {
+    "deckName": "Second Stage",
+    "hero": {
+      "name": "Zahak",
+      "description": "a melee HERO with 2 AP, 50 HP, have a POISON BUFF spell for 3 turns",
+      "cardId": "SecondStage_Zahak_1",
+      "type": "HERO",
+      "spells": [
+        {
+          "spellId": "zh_poison",
+          "action": {
+            "hpChange": -1,
+            "poison": true,
+            "durable": true,
+            "duration": 3
+          },
+          "target": {
+            "dimensions": {
+              "row": 1,
+              "column": 1
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onAttack": true
+          }
+        }
+      ],
+      "defaultAp": 2,
+      "defaultHp": 50,
+      "price": 10000,
+      "attackType": "MELEE"
+    },
+    "item": {
+      "name": "Soul Eater",
+      "description": "TODO",
+      "cardId": "SecondStage_SoulEater_1",
+      "type": "USABLE_ITEM",
+      "spells": [
+        {
+          "spellId": "se_add_spell",
+          "action": {
+            "addSpell": true,
+            "durable": true,
+            "duration": 1,
+            "carryingSpell": {
+              "spellId": "se_power_buff",
+              "action": {
+                "apChange": 1,
+                "duration": 2147483647
+              },
+              "target": {
+                "isRandom": true,
+                "dimensions": {
+                  "row": 10,
+                  "column": 18
+                },
+                "owner": {
+                  "own": true
+                },
+                "cardType": {
+                  "hero": true,
+                  "minion": true
+                },
+                "attackType": {
+                  "melee": true,
+                  "ranged": true,
+                  "hybrid": true
+                }
+              },
+              "availabilityType": {
+                "onDeath": true
+              }
+            }
+          },
+          "target": {
+            "isForDeckCards": true,
+            "owner": {
+              "own": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onStart": true
+          }
+        }
+      ],
+      "price": 25000
+    },
+    "others": [
+      {
+        "name": "Area Dispel",
+        "description": "This card, destroys positive BUFFs of enemy troops and negative BUFFs of own troops in a 2*2 square",
+        "cardId": "SecondStage_AreaDispel_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "ad_enemy",
+            "action": {
+              "durable": true,
+              "removeBuffs": 1,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 2,
+                "column": 2
+              },
+              "owner": {
+                "enemy": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          },
+          {
+            "spellId": "ad_own",
+            "action": {
+              "durable": true,
+              "removeBuffs": -1,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 2,
+                "column": 2
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "mannaPoint": 2,
+        "price": 1500
+      },
+      {
+        "name": "Empower",
+        "description": "2 units are added to AP of an own troop",
+        "cardId": "SecondStage_Empower_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "empower",
+            "action": {
+              "apChange": 2,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "mannaPoint": 1,
+        "price": 250
+      },
+      {
+        "name": "God Strength",
+        "description": "4 units are added to AP of own HERO",
+        "cardId": "SecondStage_GodStrength_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "god_strength",
+            "action": {
+              "apChange": 4,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 10,
+                "column": 18
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "mannaPoint": 2,
+        "price": 450
+      },
+      {
+        "name": "Madness",
+        "description": "For three turns, it increases AP of a troop 4 units, but disarms it",
+        "cardId": "SecondStage_Madness_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "md_power_AP_buff",
+            "action": {
+              "apChange": 4,
+              "duration": 3
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          },
+          {
+            "spellId": "md_disarm_buff",
+            "action": {
+              "makeDisarm": true,
+              "duration": 3
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "price": 650
+      },
+      {
+        "name": "Poison Lake",
+        "description": "It creates POISON CELL EFFECT for one turn in a 3*3 square",
+        "cardId": "SecondStage_PoisonLake_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "poison_lake",
+            "action": {
+              "hpChange": -1,
+              "poison": true,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 3,
+                "column": 3
+              },
+              "cardType": {
+                "cell": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "mannaPoint": 5,
+        "price": 900
+      },
+      {
+        "name": "Health With Profit",
+        "description": "it gives a WEAKNESS BUFF with 6 units HP decrement and two HOLY BUFFs for 3 turns to an own troop",
+        "cardId": "SecondStage_HealthWithProfit_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "hp_weakness_6_units",
+            "action": {
+              "hpChange": -6,
+              "duration": 3
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          },
+          {
+            "spellId": "hp_holy_buff",
+            "action": {
+              "enemyHitChanges": -2,
+              "duration": 3
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "price": 2250
+      },
+      {
+        "name": "Kings Guard",
+        "description": "Kills a random enemy MINION around own HERO",
+        "cardId": "SecondStage_KingsGuard_1",
+        "type": "SPELL",
+        "spells": [
+          {
+            "spellId": "kings_guard",
+            "action": {
+              "killsTarget": true,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "isForAroundOwnHero": true,
+              "isRandom": true,
+              "dimensions": {
+                "row": 3,
+                "column": 3
+              },
+              "owner": {
+                "enemy": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "mannaPoint": 9,
+        "price": 1750
+      },
+      {
+        "name": "Persian Swordsman",
+        "description": "a melee MINION with 4 AP and 6 HP, have an ON_ATTACK STUN BUFF",
+        "cardId": "SecondStage_PersianSwordsman_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "on_attack_stun",
+            "action": {
+              "makeStun": true,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "enemy": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onAttack": true
+            }
+          }
+        ],
+        "defaultAp": 4,
+        "defaultHp": 6,
+        "mannaPoint": 2,
+        "price": 400,
+        "attackType": "MELEE"
+      },
+      {
+        "name": "Persian SpearMan",
+        "description": "a hybrid MINION with 3 AP, 5 HP",
+        "cardId": "SecondStage_PersianSpearMan_1",
+        "type": "MINION",
+        "defaultAp": 3,
+        "defaultHp": 5,
+        "mannaPoint": 1,
+        "price": 500,
+        "attackType": "HYBRID",
+        "range": 3
+      },
+      {
+        "name": "Persian Gladiator",
+        "description": "TODO",
+        "cardId": "SecondStage_PersianGladiator_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "pg_gladiator_attack",
+            "action": {
+              "hpChange": -5,
+              "isForGladiator": true,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "enemy": true
+              },
+              "cardType": {
+                "hero": true,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onAttack": true
+            }
+          }
+        ],
+        "defaultAp": 6,
+        "defaultHp": 24,
+        "mannaPoint": 9,
+        "price": 600,
+        "attackType": "MELEE"
+      },
+      {
+        "name": "Turanian StonyHook",
+        "description": "a ranged MINION with 2 AP, 4 HP",
+        "cardId": "SecondStage_TuranianStonyHook_1",
+        "type": "MINION",
+        "defaultAp": 2,
+        "defaultHp": 4,
+        "mannaPoint": 1,
+        "price": 600,
+        "attackType": "RANGED",
+        "range": 7
+      },
+      {
+        "name": "Turanian Prince",
+        "description": "a melee MINION with 10 AP, 6 HP, can attack combo",
+        "cardId": "SecondStage_TuranianPrince_1",
+        "type": "MINION",
+        "defaultAp": 10,
+        "defaultHp": 6,
+        "mannaPoint": 6,
+        "price": 800,
+        "attackType": "MELEE",
+        "hasCombo": true
+      },
+      {
+        "name": "Eagle",
+        "description": "a ranged MINION with 2 AP, 0 HP, have a PASSIVE POWER BUFF with 10 units HP increment",
+        "cardId": "SecondStage_Eagle_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "e_power_buff",
+            "action": {
+              "apChange": 10,
+              "duration": 1
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": true,
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "ranged": true
+              }
+            },
+            "availabilityType": {
+              "continuous": true
+            }
+          }
+        ],
+        "defaultAp": 2,
+        "mannaPoint": 2,
+        "price": 200,
+        "attackType": "RANGED",
+        "range": 3
+      },
+      {
+        "name": "Eagle",
+        "description": "a ranged MINION with 2 AP, 0 HP, have a PASSIVE POWER BUFF with 10 units HP increment",
+        "cardId": "SecondStage_Eagle_2",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "e_power_buff",
+            "action": {
+              "apChange": 10,
+              "duration": 1
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": true,
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "ranged": true
+              }
+            },
+            "availabilityType": {
+              "continuous": true
+            }
+          }
+        ],
+        "defaultAp": 2,
+        "mannaPoint": 2,
+        "price": 200,
+        "attackType": "RANGED",
+        "range": 3
+      },
+      {
+        "name": "Fire Thrower Dragon",
+        "description": "a ranged MINION with 5 AP, 9 HP",
+        "cardId": "SecondStage_FireThrowerDragon_1",
+        "type": "MINION",
+        "defaultAp": 5,
+        "defaultHp": 9,
+        "mannaPoint": 5,
+        "price": 250,
+        "attackType": "RANGED",
+        "range": 4
+      },
+      {
+        "name": "Panther",
+        "description": "a melee MINION with 2 AP, 6 HP, have a ON_ATTACK POISON BUFF with 8 units HP decrement for 1 turn",
+        "cardId": "SecondStage_Panther_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "p_poison",
+            "action": {
+              "hpChange": -8,
+              "poison": true,
+              "durable": true,
+              "duration": 1,
+              "delay": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "enemy": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onAttack": true
+            }
+          }
+        ],
+        "defaultAp": 2,
+        "defaultHp": 6,
+        "mannaPoint": 4,
+        "price": 400,
+        "attackType": "MELEE"
+      },
+      {
+        "name": "Elf",
+        "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a PASSIVE CONTINUOUS AP POWER BUFF for all own minions",
+        "cardId": "SecondStage_Elf_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "e_power_buff",
+            "action": {
+              "apChange": 1,
+              "duration": 1
+            },
+            "target": {
+              "dimensions": {
+                "row": 10,
+                "column": 18
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "continuous": true
+            }
+          }
+        ],
+        "defaultAp": 4,
+        "defaultHp": 10,
+        "mannaPoint": 5,
+        "price": 500,
+        "attackType": "RANGED",
+        "range": 4
+      },
+      {
+        "name": "Geev",
+        "description": "a ranged MINION with 7 AP, 5 HP, costs 450, and does not see any negative effect",
+        "cardId": "SecondStage_Geev_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "g_no_negative",
+            "action": {
+              "noBadEffect": true,
+              "durable": true,
+              "duration": 1
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": true,
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true
+              },
+              "cardType": {
+                "minion": true
+              },
+              "attackType": {
+                "ranged": true
+              }
+            },
+            "availabilityType": {
+              "onPut": true
+            }
+          }
+        ],
+        "defaultAp": 7,
+        "defaultHp": 5,
+        "mannaPoint": 4,
+        "price": 450,
+        "attackType": "RANGED",
+        "range": 5
+      },
+      {
+        "name": "Iraj",
+        "description": "a ranged MINION with 20 AP, 6 HP",
+        "cardId": "SecondStage_Iraj_1",
+        "type": "MINION",
+        "defaultAp": 20,
+        "defaultHp": 6,
+        "mannaPoint": 4,
+        "price": 500,
+        "attackType": "RANGED",
+        "range": 3
+      },
+      {
+        "name": "Giant King",
+        "description": "a melee MINION with 4 AP, 10 HP, can attack combo",
+        "cardId": "SecondStage_GiantKing_1",
+        "type": "MINION",
+        "defaultAp": 4,
+        "defaultHp": 10,
+        "mannaPoint": 5,
+        "price": 600,
+        "attackType": "MELEE",
+        "hasCombo": true
+      }
+    ]
+  },
+  "gameType": "A_FLAG",
+  "reward": 1000
+}
