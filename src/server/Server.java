@@ -2,7 +2,6 @@ package server;
 
 import client.Client;
 import server.models.message.Message;
-import com.google.gson.Gson;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
@@ -19,12 +18,12 @@ public class Server {
     private String serverName;
     private HashMap<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
+    private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Client> onlineClients = new ArrayList<>();
     private ArrayList<Card> originalCards = new ArrayList<>();
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
     private Account[] leaderBoard;
-    private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
 
@@ -34,7 +33,7 @@ public class Server {
         readCustomDecks();
         readStories();
         this.serverName = serverName;
-        System.out.println("\u001B[31m" + "--Server was created." + "\u001B[0m");
+        serverPrint("Server Was Created!");
     }
 
     public static Server getInstance() {
@@ -45,13 +44,13 @@ public class Server {
 
     public void addClient(Client client) {
         if (client == null || client.getClientName() == null) {
-            System.out.println("\u001B[31m" + "client null" + "\u001B[0m");
+            serverPrint("Invalid Client Was Not Added.");
         } else if (clients.containsKey(client.getClientName())) {
-            System.out.println("\u001B[31m" + "duplicate client " + client.getClientName() + "\u001B[0m");
+            serverPrint("Client Name Was Duplicate.");
         } else {
             onlineClients.add(client);
             clients.put(client.getClientName(), null);
-            System.out.println("\u001B[31m" + "client " + client.getClientName() + " was added" + "\u001B[0m");
+            serverPrint("Client:"+client.getClientName()+" Was Addad!");
         }
     }
 
@@ -66,7 +65,7 @@ public class Server {
     public void receiveMessages() {
         for (Message message : receivingMessages) {
             if (!message.getReceiver().equals(serverName)) {
-                System.out.println("Error receive message");
+                serverPrint("Message's Receiver Was Not This Server.");
                 continue;
             }
             switch (message.getMessageType()) {
@@ -143,8 +142,8 @@ public class Server {
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
-            if (client == null || !message.getSender().equals(serverName)) {
-                System.out.println("\u001B[31m" + "error sending message" + "\u001B[0m");
+            if (client == null) {
+                serverPrint("Message's Client Was Not Found.");
                 continue;
             }
             client.addToReceivingMessages(message.toJson());
@@ -154,7 +153,7 @@ public class Server {
 
     private Account getAccount(String userName) {
         if (userName == null) {
-            System.out.println("\u001B[31m" + "null" + "\u001B[0m");
+            serverPrint("Invalid UserName In getAccount.");
             return null;
         }
         for (Map.Entry<Account, String> map : accounts.entrySet()) {
@@ -176,11 +175,58 @@ public class Server {
     private void register(Message message) {
         if (getAccount(message.getUserName()) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "unvalid userName", message.getMessageId()));
-            sendMessages();
-        } else {
-            //Account account = new Account()
+                    serverName, message.getSender(), "invalid userName", message.getMessageId()));
+        } else if(message.getPassWord()==null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "invalid passWord", message.getMessageId()));
+        }else{
+            Account account=new Account(message.getUserName(),message.getPassWord());
+            accounts.put(account,null);
+            onlineGames.put(account,null);
+            saveAccount(account);
         }
+    }
+
+    private void logIn(Message message){
+        Account account=getAccount(message.getUserName());
+        Client client=getClient(message.getSender());
+        if(client==null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "client was not added", message.getMessageId()));
+        }else if(account==null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "username not found", message.getMessageId()));
+        }else if(!account.getPassWord().equals(message.getPassWord())){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "incorrect password", message.getMessageId()));
+        }else if(accounts.get(account)!=null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "online account", message.getMessageId()));
+        }else if(clients.get(message.getSender())!=null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "client was logged in", message.getMessageId()));
+        }else{
+            accounts.replace(account,null,message.getSender());
+            clients.replace(message.getSender(),null,account);
+            addToSendingMessages(Message.makeAccountCopyMessage(
+                    serverName,message.getSender(),account,message.getMessageId()));
+        }
+    }
+
+    private void logOut(Message message){
+        Client client=getClient(message.getSender());
+        Account account=clients.get(message.getSender());
+        if(client==null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "client was not added", message.getMessageId()));
+        }else if(account==null){
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "client was not logged in", message.getMessageId()));
+        }else{
+            accounts.replace(account,message.getSender(),null);
+            clients.replace(message.getSender(),account,null);
+        }
+
     }
 
     public void newGame(Account account1, Account account2, GameType gameType) {
@@ -203,11 +249,19 @@ public class Server {
         //file
     }
 
+    private void saveAccount(Account account){
+        //file
+    }
+
     private void logIn(Client client, String userName, String passWord) {
 
     }
 
     public String getServerName() {
         return serverName;
+    }
+
+    private void serverPrint(String string){
+        System.out.println("\u001B[31m" + string.trim() + "\u001B[0m");
     }
 }

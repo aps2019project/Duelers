@@ -15,8 +15,9 @@ public class Account {
     private int money;
     private int wins;
 
-    public Account(String userName) {
-
+    public Account(String userName, String passWord) {
+        this.userName = userName;
+        this.passWord = passWord;
     }
 
     public int getWins() {
@@ -62,5 +63,9 @@ public class Account {
             }
         }
         return null;
+    }
+
+    public String getPassWord() {
+        return passWord;
     }
 }
