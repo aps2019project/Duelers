@@ -15,7 +15,7 @@ public enum RequestType {
     LOGOUT("^logout$"),
     EXIT("^exit$"),
     START_GAME("^start game (\\w+) ([123])\\s?(\\d+)?$"),
-    START_MULTIPLAYER_GAME("^start multiplayer game (\\w+) (\\d+)$"),
+    START_MULTIPLAYER_GAME("^start multiplayer game ([123])\\s?(\\d+)?$"),
     SELECT_USER("^select user (\\w+)$"),
     //collection
     SHOW("^show$"),
@@ -33,6 +33,7 @@ public enum RequestType {
     MULTI_PLAYER("^multi player$"),
     //single player menu
     STORY("^story$"),
+    START_GAME_IN_STORY_MENU("^start game (\\d)$"),
     CUSTOM_GAME("^custom game$"),
     //shop:
     SHOW_COLLECTION("^show collection$"),

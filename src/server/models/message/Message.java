@@ -46,11 +46,8 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public static Message convertStringToMessage(String messageJson) {
-        return new Gson().fromJson(
-                new BufferedReader(new StringReader(messageJson)),
-                Message.class
-        );
+    public static Message convertJsonToMessage(String messageJson) {
+        return new Gson().fromJson(messageJson, Message.class);
     }
 
     public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
@@ -63,7 +60,7 @@ public class Message {
     public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Card[] shopCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.shopCards = shopCards;
-        message.messageType = MessageType.ORIGINALCARDS_COPY;
+        message.messageType = MessageType.ORIGINAL_CARDS_COPY;
         return message;
     }
 
@@ -77,7 +74,7 @@ public class Message {
     public static Message makeCustomDecksCopyMessage(String sender, String receiver, Deck[] customDecks, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.customDecks = customDecks;
-        message.messageType = MessageType.CUSTOMDECKS_COPY;
+        message.messageType = MessageType.CUSTOM_DECKS_COPY;
         return message;
     }
 
@@ -139,7 +136,7 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
-        message.messageType = MessageType.TO_COLLECTEDS;
+        message.messageType = MessageType.TO_COLLECTED_CARDS;
         return message;
     }
 
@@ -186,7 +183,7 @@ public class Message {
 
     public static Message makeGetOriginalCardsMessage(String sender, String receiver, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.GET_ORIGINALCARDS;
+        message.messageType = MessageType.GET_ORIGINAL_CARDS;
         return message;
     }
 
@@ -324,6 +321,10 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.LOG_OUT;
         return message;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
     public MessageType getMessageType() {

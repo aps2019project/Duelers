@@ -1,20 +1,19 @@
-package cardMaker;
+package jsonMaker;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import server.models.card.AttackType;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.spell.*;
 import server.models.map.Position;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CardMaker {
-    static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         while (true) {
@@ -255,10 +254,11 @@ public class CardMaker {
     }
 
     private static void writeAJsonFile(Card card) {
-        String json = new Gson().toJson(card);
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(card);
+        System.out.println(json);
 
         try {
-            FileWriter writer = new FileWriter(new File("jsonData/minionCards/", card.getName().replaceAll(" ", "") + ".minion.card.json"));
+            FileWriter writer = new FileWriter("address/" + card.getName() + ".format.json");
             writer.write(json);
             writer.close();
         } catch (IOException e) {

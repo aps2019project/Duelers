@@ -38,18 +38,32 @@ public class Request {
             shopHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().equals(SinglePlayerMenu.getInstance())) {
-            singlePlayerMenuHandleRequest(client, serverName);
+            singlePlayerMenuHandleRequest(client);
 
         } else if (client.getCurrentMenu().equals(StoryMenu.getInstance())) {
             storyMenuHandleRequest(client, serverName);
         }
     }
 
-    private void storyMenuHandleRequest(Client client, String serverName) {
+    private void storyMenuHandleRequest(Client client, String serverName) throws InputException {
+        StoryMenu storyMenu = StoryMenu.getInstance();
+        if (RequestType.START_GAME_IN_STORY_MENU.setMatcher(command).find()) {
+            int stage = Integer.parseInt(RequestType.START_GAME_IN_STORY_MENU.getMatcher().group(1));
+            storyMenu.startGame(stage, client, serverName);
+
+        } else if (RequestType.EXIT.setMatcher(command).find()) {
+            storyMenu.exit(client);
+
+        } else if (RequestType.HELP.setMatcher(command).find()) {
+            storyMenu.showHelp();
+
+        } else {
+            throw new InputException("invalid command");
+        }
 
     }
 
-    private void singlePlayerMenuHandleRequest(Client client, String serverName) throws InputException {
+    private void singlePlayerMenuHandleRequest(Client client) throws InputException {
         SinglePlayerMenu singlePlayerMenu = SinglePlayerMenu.getInstance();
         if (RequestType.STORY.setMatcher(command).find()) {
             singlePlayerMenu.moveToStoryMenu(client);
@@ -112,11 +126,23 @@ public class Request {
         MultiPlayerMenu multiPlayerMenu = MultiPlayerMenu.getInstance();
 
         if (RequestType.SELECT_USER.setMatcher(command).find()) {
-            multiPlayerMenu.selectUser(RequestType.SELECT_USER.getMatcher().group(1));
+            multiPlayerMenu.selectUser(
+                    RequestType.SELECT_USER.getMatcher().group(1),
+                    client, serverName
+            );
 
         } else if (RequestType.START_MULTIPLAYER_GAME.setMatcher(command).find()) {
             Matcher matcher = RequestType.START_MULTIPLAYER_GAME.getMatcher();
-            multiPlayerMenu.startGame(matcher.group(1), Integer.parseInt(matcher.group(2)));
+            multiPlayerMenu.startGame(
+                    Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)),
+                    client, serverName
+            );
+
+        } else if (RequestType.EXIT.setMatcher(command).find()) {
+            multiPlayerMenu.exit(client);
+
+        } else if (RequestType.HELP.setMatcher(command).find()) {
+            multiPlayerMenu.showHelp();
 
         } else {
             throw new InputException("invalid command");
@@ -124,21 +150,28 @@ public class Request {
     }
 
     private void customGameMenuHandleRequest(Client client, String serverName) throws InputException {
+        CustomGameMenu customGameMenu = CustomGameMenu.getInstance();
         if (RequestType.START_GAME.setMatcher(command).find()) {
             Matcher matcher = RequestType.START_GAME.getMatcher();
             if (matcher.group(3) == null) {
-                CustomGameMenu.getInstance().startGame(
+                customGameMenu.startGame(
                         matcher.group(1), Integer.parseInt(matcher.group(2)), 0,
                         client, serverName
                 );
             } else {
-                CustomGameMenu.getInstance().startGame(
+                customGameMenu.startGame(
                         matcher.group(1), Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)),
                         client, serverName
                 );
             }
 
-        } else {
+        }else if (RequestType.HELP.setMatcher(command).find()){
+            customGameMenu.showHelp();
+
+        }else if (RequestType.EXIT.setMatcher(command).find()){
+            customGameMenu.showHelp();
+
+        }else {
             throw new InputException("invalid command");
         }
     }
@@ -219,7 +252,7 @@ public class Request {
             mainMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            throw new ExitCommand();
+            mainMenu.exit();
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
             mainMenu.save(client, serverName);
@@ -252,7 +285,7 @@ public class Request {
         }
     }
 
-    private void accountMenuHandleRequest(Client client, String serverName) throws InputException {
+    private void accountMenuHandleRequest(Client client, String serverName) throws InputException, ExitCommand {
         AccountMenu accountMenu = AccountMenu.getInstance();
         if (RequestType.CREATE_ACCOUNT.setMatcher(command).find()) {
             String userName = RequestType.CREATE_ACCOUNT.getMatcher().group(1);
@@ -274,7 +307,9 @@ public class Request {
         } else if (RequestType.HELP.setMatcher(command).find()) {
             accountMenu.showHelp();
 
-        } else {
+        }else if (RequestType.EXIT.setMatcher(command).find()){
+            accountMenu.exit();
+        }else {
             throw new InputException("invalid command");
         }
     }

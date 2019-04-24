@@ -9,9 +9,6 @@
         "enemyHitChanges": -12,
         "duration": 2147483647
       },
-      "availabilityType": {
-        "onStart": true
-      },
       "target": {
         "owner": {
           "own": true
@@ -24,6 +21,9 @@
           "ranged": true,
           "hybrid": true
         }
+      },
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],

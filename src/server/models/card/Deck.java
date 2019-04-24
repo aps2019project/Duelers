@@ -9,6 +9,13 @@ public class Deck {
     private Card item;
     private ArrayList<Card> others;
 
+    public Deck(String deckName, Card hero, Card item, ArrayList<Card> others) {
+        this.deckName = deckName;
+        this.hero = hero;
+        this.item = item;
+        this.others = others;
+    }
+
     public Deck(String name) {
 
     }

@@ -1,14 +1,27 @@
 package client.models.game;
 
 import client.models.card.Deck;
-import client.models.map.Map;
 
 public class Story {
-    private Map map;
     private Deck deck;
     private GameType gameType;
+    private int reward;
 
-    public Story(Map map, Deck deck, GameType gameType) {
+    public Story(Deck deck, GameType gameType, int reward) {
+        this.deck = deck;
+        this.gameType = gameType;
+        this.reward = reward;
+    }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public int getReward() {
+        return reward;
     }
 }

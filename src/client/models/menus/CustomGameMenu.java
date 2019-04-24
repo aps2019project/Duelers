@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.game.GameType;
 import client.models.message.Message;
+import client.view.View;
 import client.view.request.InputException;
 
 public class CustomGameMenu implements Menu {
@@ -32,4 +33,13 @@ public class CustomGameMenu implements Menu {
     public void exit(Client client) {
         client.setCurrentMenu(SinglePlayerMenu.getInstance());
     }
+
+    @Override
+    public void showHelp() {
+        String help = "Custom Game:\n" +
+                "\"start multiplayer game [mode] [number of flags(if needed)]\"";
+        View.getInstance().showHelp(help);
+    }
+
+
 }

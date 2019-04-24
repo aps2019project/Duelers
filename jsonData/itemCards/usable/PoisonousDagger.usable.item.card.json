@@ -8,10 +8,38 @@
       "action": {
         "addSpell": true,
         "durable": true,
-        "duration": 1
-      },
-      "availabilityType": {
-        "onStart": true
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "pd_poison",
+          "action": {
+            "hpChange": -1,
+            "poison": true,
+            "durable": true,
+            "duration": 1
+          },
+          "target": {
+            "isRandom": true,
+            "dimensions": {
+              "row": 10,
+              "column": 18
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onAttack": true
+          }
+        }
       },
       "target": {
         "isForDeckCards": true,
@@ -28,36 +56,8 @@
           "hybrid": true
         }
       },
-      "carryingSpell": {
-        "spellId": "pd_poison",
-        "action": {
-          "hpChange": -1,
-          "poison": true,
-          "durable": true,
-          "duration": 1
-        },
-        "availabilityType": {
-          "onAttack": true
-        },
-        "target": {
-          "isRandom": true,
-          "dimensions": {
-            "row": 10,
-            "column": 18
-          },
-          "owner": {
-            "enemy": true
-          },
-          "cardType": {
-            "hero": true,
-            "minion": true
-          },
-          "attackType": {
-            "melee": true,
-            "ranged": true,
-            "hybrid": true
-          }
-        }
+      "availabilityType": {
+        "onStart": true
       }
     }
   ],

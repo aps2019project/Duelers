@@ -22,9 +22,9 @@ public class Controller {
             request.getNewCommand();
             try {
                 request.handleRequest(thisClient, server.getServerName());
-            }catch (InputException e){
+            } catch (InputException e) {
                 view.showError(e);
-            }catch (ExitCommand e){
+            } catch (ExitCommand e) {
                 break;
             }
         } while (true);
@@ -32,7 +32,7 @@ public class Controller {
 
     public void preProcess() {
         clients.add(
-                new Client(java.lang.System.getProperty("user.name"), AccountMenu.getInstance(), Server.getInstance())
+                new Client(java.lang.System.getProperty("user.name"), Server.getInstance())
         );
         thisClient = clients.get(0);
     }

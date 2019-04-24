@@ -60,7 +60,7 @@ public class Server {
     }
 
     public void addToReceivingMessages(String messageJson) {
-        receivingMessages.add(Message.convertStringToMessage(messageJson));
+        receivingMessages.add(Message.convertJsonToMessage(messageJson));
     }
 
     public void receiveMessages() {
@@ -82,7 +82,7 @@ public class Server {
                 case GET_LEADERBOARD:
 
                     break;
-                case GET_ORIGINALCARDS:
+                case GET_ORIGINAL_CARDS:
 
                     break;
                 case BUY_CARD:
@@ -147,7 +147,7 @@ public class Server {
                 System.out.println("\u001B[31m" + "error sending message" + "\u001B[0m");
                 continue;
             }
-            client.addToReceivingMessages(new Gson().toJson(message));
+            client.addToReceivingMessages(message.toJson());
         }
         sendingMessages.clear();
     }
