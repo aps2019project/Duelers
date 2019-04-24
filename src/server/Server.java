@@ -50,7 +50,7 @@ public class Server {
         } else {
             onlineClients.add(client);
             clients.put(client.getClientName(), null);
-            serverPrint("Client:"+client.getClientName()+" Was Addad!");
+            serverPrint("Client:" + client.getClientName() + " Was Addad!");
         }
     }
 
@@ -176,56 +176,95 @@ public class Server {
         if (getAccount(message.getUserName()) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid userName", message.getMessageId()));
-        } else if(message.getPassWord()==null){
+        } else if (message.getPassWord() == null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid passWord", message.getMessageId()));
-        }else{
-            Account account=new Account(message.getUserName(),message.getPassWord());
-            accounts.put(account,null);
-            onlineGames.put(account,null);
+        } else {
+            Account account = new Account(message.getUserName(), message.getPassWord());
+            accounts.put(account, null);
+            onlineGames.put(account, null);
             saveAccount(account);
         }
     }
 
-    private void logIn(Message message){
-        Account account=getAccount(message.getUserName());
-        Client client=getClient(message.getSender());
-        if(client==null){
+    private void logIn(Message message) {
+        Account account = getAccount(message.getUserName());
+        Client client = getClient(message.getSender());
+        if (client == null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "client was not added", message.getMessageId()));
-        }else if(account==null){
+        } else if (account == null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "username not found", message.getMessageId()));
-        }else if(!account.getPassWord().equals(message.getPassWord())){
+        } else if (!account.getPassWord().equals(message.getPassWord())) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "incorrect password", message.getMessageId()));
-        }else if(accounts.get(account)!=null){
+        } else if (accounts.get(account) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "online account", message.getMessageId()));
-        }else if(clients.get(message.getSender())!=null){
+        } else if (clients.get(message.getSender()) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "client was logged in", message.getMessageId()));
-        }else{
-            accounts.replace(account,null,message.getSender());
-            clients.replace(message.getSender(),null,account);
+        } else {
+            accounts.replace(account, message.getSender());
+            clients.replace(message.getSender(), account);
             addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName,message.getSender(),account,message.getMessageId()));
+                    serverName, message.getSender(), account, message.getMessageId()));
         }
     }
 
-    private void logOut(Message message){
-        Client client=getClient(message.getSender());
-        Account account=clients.get(message.getSender());
-        if(client==null){
+    private boolean preCheckMessage(Message message) {
+        if (!clients.containsKey(message.getSender())) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "client was not added", message.getMessageId()));
-        }else if(account==null){
+            return false;
+        } else if (clients.get(message.getSender()) == null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "client was not logged in", message.getMessageId()));
-        }else{
-            accounts.replace(account,message.getSender(),null);
-            clients.replace(message.getSender(),account,null);
+            return false;
+        } else {
+            return true;
         }
+    }
+
+    private void logOut(Message message) {
+        if (preCheckMessage(message)) {
+            accounts.replace(clients.get(message.getSender()), null);
+            clients.replace(message.getSender(), null);
+        }
+    }
+
+    private void createDeck(Message message) {
+        /*if(preCheckMessage(message)){
+
+        }*/
+    }
+
+    private void removeDeck(Message message) {
+
+    }
+
+    private void addToDeck(Message message) {
+
+    }
+
+    private void removeFromDeck(Message message) {
+
+    }
+
+    private void selectDeck(Message message) {
+
+    }
+
+    private void buyCard(Message message) {
+
+    }
+
+    private void sellCard(Message message) {
+
+    }
+
+    private void saveChanges(Message message) {
 
     }
 
@@ -249,19 +288,15 @@ public class Server {
         //file
     }
 
-    private void saveAccount(Account account){
+    private void saveAccount(Account account) {
         //file
-    }
-
-    private void logIn(Client client, String userName, String passWord) {
-
     }
 
     public String getServerName() {
         return serverName;
     }
 
-    private void serverPrint(String string){
+    private void serverPrint(String string) {
         System.out.println("\u001B[31m" + string.trim() + "\u001B[0m");
     }
 }
