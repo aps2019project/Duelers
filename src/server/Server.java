@@ -235,9 +235,15 @@ public class Server {
     }
 
     private void createDeck(Message message) {
-        /*if(preCheckMessage(message)){
-
-        }*/
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if(account.getDeck(message.getDeckName())==null){
+                account.getDecks().add(new Deck(message.getDeckName()));
+            }else{
+                addToSendingMessages(Message.makeExceptionMessage(
+                        serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
+            }
+        }
     }
 
     private void removeDeck(Message message) {

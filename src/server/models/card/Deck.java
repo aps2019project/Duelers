@@ -16,8 +16,8 @@ public class Deck {
         this.others = others;
     }
 
-    public Deck(String name) {
-
+    public Deck(String deckName) {
+        this.deckName=deckName;
     }
 
     public String getName() {
