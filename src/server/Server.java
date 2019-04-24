@@ -34,7 +34,7 @@ public class Server {
         readCustomDecks();
         readStories();
         this.serverName = serverName;
-        System.out.println("--Server was created.");
+        System.out.println("\u001B[31m" + "--Server was created." + "\u001B[0m");
     }
 
     public static Server getInstance() {
@@ -45,15 +45,14 @@ public class Server {
 
     public void addClient(Client client) {
         if (client == null || client.getClientName() == null) {
-            System.out.println("Error addClient NULL");
-            return;
+            System.out.println("\u001B[31m" + "client null" + "\u001B[0m");
+        } else if (clients.containsKey(client.getClientName())) {
+            System.out.println("\u001B[31m" + "duplicate client " + client.getClientName() + "\u001B[0m");
+        } else {
+            onlineClients.add(client);
+            clients.put(client.getClientName(), null);
+            System.out.println("\u001B[31m" + "client " + client.getClientName() + " was added" + "\u001B[0m");
         }
-        if (clients.containsKey(client.getClientName())) {
-            System.out.println("Error addClient duplicate");
-            return;
-        }
-        onlineClients.add(client);
-        clients.put(client.getClientName(), null);
     }
 
     private void addToSendingMessages(Message message) {
@@ -141,11 +140,12 @@ public class Server {
         receivingMessages.clear();
     }
 
-    public void sendMessages() {
+    private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
             if (client == null || !message.getSender().equals(serverName)) {
-                System.out.println("Error sending messages");
+                System.out.println("\u001B[31m" + "error sending message" + "\u001B[0m");
+                continue;
             }
             client.addToReceivingMessages(new Gson().toJson(message));
         }
@@ -153,6 +153,10 @@ public class Server {
     }
 
     private Account getAccount(String userName) {
+        if (userName == null) {
+            System.out.println("\u001B[31m" + "null" + "\u001B[0m");
+            return null;
+        }
         for (Map.Entry<Account, String> map : accounts.entrySet()) {
             if (map.getKey().getUserName().equals(userName)) {
                 return map.getKey();
@@ -170,7 +174,13 @@ public class Server {
     }
 
     private void register(Message message) {
-
+        if (getAccount(message.getUserName()) != null) {
+            addToSendingMessages(Message.makeExceptionMessage(
+                    serverName, message.getSender(), "unvalid userName", message.getMessageId()));
+            sendMessages();
+        } else {
+            //Account account = new Account()
+        }
     }
 
     public void newGame(Account account1, Account account2, GameType gameType) {
