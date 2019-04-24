@@ -137,6 +137,7 @@ public class Server {
             }
         }
         receivingMessages.clear();
+        sendMessages();
     }
 
     private void sendMessages() {
@@ -271,7 +272,9 @@ public class Server {
     }
 
     private void saveChanges(Message message) {
-
+        if(preCheckMessage(message)){
+            saveAccount(clients.get(message.getSender()));
+        }
     }
 
     public void newGame(Account account1, Account account2, GameType gameType) {
