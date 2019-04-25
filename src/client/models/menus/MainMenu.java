@@ -4,6 +4,7 @@ import client.Client;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.ExitCommand;
+import client.view.request.InputException;
 
 public class MainMenu implements Menu {
     private static MainMenu MAIN_MENU;
@@ -19,7 +20,7 @@ public class MainMenu implements Menu {
     }
 
 
-    public void moveToMenu(Client client, String serverName, String menuName) {
+    public void moveToMenu(Client client, String serverName, String menuName) throws InputException {
         if (menuName.equals("collection")) {
             client.setCurrentMenu(CollectionMenu.getInstance());
         }
@@ -47,12 +48,12 @@ public class MainMenu implements Menu {
         View.getInstance().showHelp(help);
     }
 
-    public void save(Client client, String serverName) {
+    public void save(Client client, String serverName) throws InputException {
         client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(),serverName,0));
         client.sendMessages();
     }
 
-    public void logout(Client client, String serverName) {
+    public void logout(Client client, String serverName) throws InputException {
         client.addToSendingMessages(Message.makeLogOutMessage(client.getClientName(), serverName, 0));
         client.sendMessages();
         client.setCurrentMenu(AccountMenu.getInstance());

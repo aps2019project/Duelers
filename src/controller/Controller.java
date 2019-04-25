@@ -35,5 +35,6 @@ public class Controller {
                 new Client(java.lang.System.getProperty("user.name"), Server.getInstance())
         );
         thisClient = clients.get(0);
+        server.addClient(thisClient);
     }
 }

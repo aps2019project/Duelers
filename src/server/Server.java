@@ -1,13 +1,13 @@
 package server;
 
 import client.Client;
-import server.models.message.Message;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
 import server.models.game.GameType;
 import server.models.game.Story;
+import server.models.message.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,13 +70,13 @@ public class Server {
             }
             switch (message.getMessageType()) {
                 case REGISTER:
-
+                    register(message);
                     break;
                 case LOG_IN:
-
+                    logIn(message);
                     break;
                 case LOG_OUT:
-
+                    logOut(message);
                     break;
                 case GET_LEADERBOARD:
 
@@ -148,7 +148,9 @@ public class Server {
                 continue;
             }
             client.addToReceivingMessages(message.toJson());
+
         }
+
         sendingMessages.clear();
     }
 
@@ -177,7 +179,7 @@ public class Server {
         if (getAccount(message.getUserName()) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid userName", message.getMessageId()));
-        } else if (message.getPassWord() == null) {
+        } else if (message.getPassWord() == null || message.getPassWord().length()<4) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid passWord", message.getMessageId()));
         } else {
@@ -185,7 +187,10 @@ public class Server {
             accounts.put(account, null);
             onlineGames.put(account, null);
             saveAccount(account);
+            serverPrint(message.getUserName()+" Is Created!");
+            logIn(message);
         }
+
     }
 
     private void logIn(Message message) {
@@ -211,6 +216,7 @@ public class Server {
             clients.replace(message.getSender(), account);
             addToSendingMessages(Message.makeAccountCopyMessage(
                     serverName, message.getSender(), account, message.getMessageId()));
+            serverPrint(message.getSender()+" Is Logged In");
         }
     }
 
@@ -232,15 +238,16 @@ public class Server {
         if (preCheckMessage(message)) {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
+            serverPrint(message.getSender()+" Is Logged Out.");
         }
     }
 
     private void createDeck(Message message) {
         if (preCheckMessage(message)) {
             Account account = clients.get(message.getSender());
-            if(account.getDeck(message.getDeckName())==null){
+            if (account.getDeck(message.getDeckName()) == null) {
                 account.getDecks().add(new Deck(message.getDeckName()));
-            }else{
+            } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
             }
@@ -272,7 +279,7 @@ public class Server {
     }
 
     private void saveChanges(Message message) {
-        if(preCheckMessage(message)){
+        if (preCheckMessage(message)) {
             saveAccount(clients.get(message.getSender()));
         }
     }

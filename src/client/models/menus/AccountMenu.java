@@ -25,6 +25,7 @@ public class AccountMenu implements Menu {
                         client.getClientName(), serverName, userName, password, 0)
         );
         client.sendMessages();
+
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
@@ -42,7 +43,7 @@ public class AccountMenu implements Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public void showLeaderBoard(Client client, String serverName) {
+    public void showLeaderBoard(Client client, String serverName) throws InputException {
         client.updateLeaderBoard(serverName);
         View.getInstance().showLeaderBoard(client);
     }

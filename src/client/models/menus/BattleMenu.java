@@ -2,6 +2,7 @@ package client.models.menus;
 
 import client.Client;
 import client.view.View;
+import client.view.request.InputException;
 
 public class BattleMenu implements Menu {
     private static final BattleMenu BATTLE_MENU = new BattleMenu();
@@ -17,7 +18,7 @@ public class BattleMenu implements Menu {
         client.setCurrentMenu(SinglePlayerMenu.getInstance());
     }
 
-    public void moveToMultiPlayerMenu(Client client, String serverName) {
+    public void moveToMultiPlayerMenu(Client client, String serverName) throws InputException {
         client.updateLeaderBoard(serverName);
         View.getInstance().showUsersList(client);
         client.setCurrentMenu(MultiPlayerMenu.getInstance());

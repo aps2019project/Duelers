@@ -69,7 +69,7 @@ public class CollectionMenu implements Menu {
         }
     }
 
-    public void save(Client client, String serverName) {
+    public void save(Client client, String serverName) throws InputException {
         client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(), serverName, 0));
         client.sendMessages();
     }
