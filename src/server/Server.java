@@ -8,7 +8,6 @@ import server.models.account.Collection;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
-import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
@@ -20,16 +19,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-    private static final String accountsPath = "jsonData/accounts";
-    private static final String[] cardPaths = {
+    private static final String ACCOUNTS_PATH = "jsonData/accounts";
+    private static final String[] CARDS_PATHS = {
             "jsonData/heroCards",
             "jsonData/minionCards",
             "jsonData/spellCards",
             "jsonData/itemCards/collectible",
             "jsonData/itemCards/usable"
     };
-    private static final String flagPath = "jsonData/itemCards/flag/Flag.item.card.json";
-    private static final String storiesPath = "jsonData/stories";
+    private static final String FLAG_PATH = "jsonData/itemCards/flag/Flag.item.card.json";
+    private static final String STORIES_PATH = "jsonData/stories";
 
     private static Server server;
     private String serverName;
@@ -204,9 +203,9 @@ public class Server {
 
     private void register(Message message) {
         if (getAccount(message.getUserName()) != null) {
-            sendException("Invalid UserName!", message.getSender(), message.getMessageId());
+            sendException("Invalid Username!", message.getSender(), message.getMessageId());
         } else if (message.getPassWord() == null || message.getPassWord().length() < 4) {
-            sendException("Invalid PassWord!", message.getSender(), message.getMessageId());
+            sendException("Invalid Password!", message.getSender(), message.getMessageId());
         } else {
             Account account = new Account(message.getUserName(), message.getPassWord());
             accounts.put(account, null);
@@ -215,7 +214,6 @@ public class Server {
             serverPrint(message.getUserName() + " Is Created!");
             logIn(message);
         }
-
     }
 
     private void logIn(Message message) {
@@ -225,9 +223,9 @@ public class Server {
             serverPrint("Client Wasn't Added!");
             sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
         } else if (account == null) {
-            sendException("UserName Not Found!", message.getSender(), message.getMessageId());
+            sendException("Username Not Found!", message.getSender(), message.getMessageId());
         } else if (!account.getPassword().equals(message.getPassWord())) {
-            sendException("Incorrect PassWord!", message.getSender(), message.getMessageId());
+            sendException("Incorrect Password!", message.getSender(), message.getMessageId());
         } else if (accounts.get(account) != null) {
             sendException("Online Account!", message.getSender(), message.getMessageId());
         } else if (clients.get(message.getSender()) != null) {
@@ -303,7 +301,7 @@ public class Server {
     }
 
     private void sendLeaderBoard(Message message) {
-        if (accounts.size()==0) {
+        if (accounts.size() == 0) {
             addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
             sendMessages();
         }
@@ -353,11 +351,15 @@ public class Server {
     }
 
     private void sudo(Message message) {
-
+        if (message.getSudoCommand().contains("accounts")) {
+            for (Map.Entry<Account, String> account : accounts.entrySet()) {
+                serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
+            }
+        }
     }
 
     private void readAccounts() {
-        File[] files = new File(accountsPath).listFiles();
+        File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
                 Account account = loadFile(file, Account.class);
@@ -370,7 +372,7 @@ public class Server {
     }
 
     private void readOriginalCards() {
-        for (String path : cardPaths) {
+        for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
             if (files != null) {
                 for (File file : files) {
@@ -381,7 +383,7 @@ public class Server {
                 }
             }
         }
-        originalFlag = loadFile(new File(flagPath), Card.class);
+        originalFlag = loadFile(new File(FLAG_PATH), Card.class);
         serverPrint("Original Cards loaded");
     }
 
@@ -390,7 +392,7 @@ public class Server {
     }
 
     private void readStories() {
-        File[] files = new File(storiesPath).listFiles();
+        File[] files = new File(STORIES_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
                 Story story = loadFile(file, Story.class);
@@ -427,7 +429,7 @@ public class Server {
         return serverName;
     }
 
-    private void serverPrint(String string) {
+    public void serverPrint(String string) {
         System.out.println("\u001B[31m" + string.trim() + "\u001B[0m");
     }
 }

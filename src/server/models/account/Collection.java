@@ -1,79 +1,67 @@
 package server.models.account;
 
+import server.Server;
 import server.models.card.Card;
 
 import java.util.ArrayList;
 
 public class Collection {
-
     private ArrayList<Card> heroes = new ArrayList<>();
     private ArrayList<Card> minions = new ArrayList<>();
     private ArrayList<Card> spells = new ArrayList<>();
     private ArrayList<Card> items = new ArrayList<>();
 
-    public ArrayList<Card> getHeroes() {
-        return this.heroes;
-    }
 
     public void addCard(Card card) {
+        if (card == null) {
+            Server.getInstance().serverPrint("Null Card.");
+            return;
+        }
+        if (hasCard(card)) {
+            Server.getInstance().serverPrint("Add Card Error.");
+            return;
+        }
         switch (card.getType()) {
             case HERO:
-                addHero(card);
+                heroes.add(card);
                 break;
             case MINION:
-                addMinion(card);
+                minions.add(card);
                 break;
             case SPELL:
-                addSpell(card);
+                spells.add(card);
                 break;
             case USABLE_ITEM:
             case COLLECTIBLE_ITEM:
-                addItem(card);
+                items.add(card);
                 break;
         }
     }
 
-    public void addHero(Card hero) {
-        heroes.add(hero);
+    public boolean hasCard(Card card) {
+        return heroes.contains(card) || minions.contains(card) || spells.contains(card) || items.contains(card);
     }
 
-    public void removeHero(Card hero) {
+    public void removeCard(Card card) {
+        heroes.remove(card);
+        minions.remove(card);
+        spells.remove(card);
+        items.remove(card);
+    }
 
+    public ArrayList<Card> getHeroes() {
+        return heroes;
     }
 
     public ArrayList<Card> getMinions() {
-        return this.minions;
-    }
-
-    public void addMinion(Card minion) {
-        minions.add(minion);
-    }
-
-    public void removeMinion(Card minion) {
-
+        return minions;
     }
 
     public ArrayList<Card> getSpells() {
-        return this.spells;
-    }
-
-    public void addSpell(Card spell) {
-        spells.add(spell);
-    }
-
-    public void removeSpell(Card spell) {
-
+        return spells;
     }
 
     public ArrayList<Card> getItems() {
-        return this.items;
-    }
-
-    public void addItem(Card item) {
-        items.add(item);
-    }
-
-    public void removeItem(Card item) {
-
+        return items;
     }
 }
