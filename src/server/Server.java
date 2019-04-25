@@ -144,17 +144,6 @@ public class Server {
         sendMessages();
     }
 
-    private void sendLeaderBoard(Message message) {
-        leaderBoard = new Account[clients.size()];
-        int counter = 0;
-        for (Account account : clients.values()) {
-            leaderBoard[counter] = account;
-            counter++;
-        }
-        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
-        sendMessages();
-    }
-
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
@@ -298,7 +287,14 @@ public class Server {
     }
 
     private void sendLeaderBoard(Message message) {
-
+        leaderBoard = new Account[clients.size()];
+        int counter = 0;
+        for (Account account : clients.values()) {
+            leaderBoard[counter] = account;
+            counter++;
+        }
+        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
+        sendMessages();
     }
 
     private void insertCard(Message message) {
