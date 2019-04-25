@@ -9,8 +9,10 @@ import server.models.game.Game;
 import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.message.Message;
+import server.models.sorter.LeaderBoardSorter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -143,12 +145,17 @@ public class Server {
     }
 
     private void sendLeaderBoard(Message message) {
-        leaderBoard = new Account[clients.size()];
+        if (accounts.size()==0) {
+            addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
+            sendMessages();
+        }
+        leaderBoard = new Account[accounts.size()];
         int counter = 0;
-        for (Account account : clients.values()) {
+        for (Account account : accounts.keySet()) {
             leaderBoard[counter] = account;
             counter++;
         }
+        Arrays.sort(leaderBoard, new LeaderBoardSorter());
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
         sendMessages();
     }
