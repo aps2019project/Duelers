@@ -47,7 +47,7 @@ public class Server {
     }
 
     public void addClient(Client client) {
-        if (client == null || client.getClientName() == null) {
+        if (client == null || client.getClientName().length() < 2) {
             serverPrint("Invalid Client Was Not Added.");
         } else if (clients.containsKey(client.getClientName())) {
             serverPrint("Client Name Was Duplicate.");
@@ -86,57 +86,59 @@ public class Server {
                     sendLeaderBoard(message);
                     break;
                 case GET_ORIGINAL_CARDS:
-
+                    sendOriginalCards(message);
                     break;
                 case BUY_CARD:
-
+                    buyCard(message);
                     break;
                 case SELL_CARD:
-
+                    sellCard(message);
                     break;
                 case SAVE_CHANGES:
-
+                    saveChanges(message);
                     break;
                 case CREATE_DECK:
-
+                    createDeck(message);
                     break;
                 case REMOVE_DECK:
-
+                    removeDeck(message);
                     break;
                 case ADD_TO_DECK:
-
+                    addToDeck(message);
                     break;
                 case REMOVE_FROM_DECK:
-
+                    removeFromDeck(message);
                     break;
                 case SELECT_DECK:
-
+                    selectDeck(message);
                     break;
                 case NEW_GAME:
-
+                    newGame(message);
                     break;
                 case INSERT:
-
+                    insertCard(message);
                     break;
                 case ATTACK:
-
+                    attack(message);
                     break;
                 case END_TURN:
-
+                    endTurn(message);
                     break;
                 case COMBO:
-
+                    combo(message);
                     break;
                 case USE_SPELL:
-
+                    useSpell(message);
                     break;
                 case MOVE_TROOP:
-
+                    moveTroop(message);
+                    break;
+                case SUDO:
+                    sudo(message);
                     break;
                 default:
-                    addToSendingMessages(Message.makeExceptionMessage
-                            (serverName, message.getSender(), "messageType", message.getMessageId()));
-                    sendMessages();
+                    sendException("Invalid Message Type!", message.getSender(), message.getMessageId());
+                    serverPrint("Invalid Message Type!");
                     break;
             }
         }
@@ -168,15 +170,13 @@ public class Server {
                 continue;
             }
             client.addToReceivingMessages(message.toJson());
-
         }
-
         sendingMessages.clear();
     }
 
     private Account getAccount(String userName) {
         if (userName == null) {
-            serverPrint("Invalid UserName In getAccount.");
+            serverPrint("Null UserName In getAccount.");
             return null;
         }
         for (Map.Entry<Account, String> map : accounts.entrySet()) {
@@ -188,6 +188,10 @@ public class Server {
     }
 
     private Client getClient(String clientName) {
+        if (clientName == null) {
+            serverPrint("Null ClientName In getClient.");
+            return null;
+        }
         for (Client client : onlineClients) {
             if (client.getClientName().equals(clientName))
                 return client;
@@ -195,13 +199,16 @@ public class Server {
         return null;
     }
 
+    private void sendException(String exceptionString, String receiver, int messageId) {
+        addToSendingMessages(Message.makeExceptionMessage(
+                serverName, receiver, exceptionString, messageId));
+    }
+
     private void register(Message message) {
         if (getAccount(message.getUserName()) != null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "invalid userName", message.getMessageId()));
+            sendException("Invalid UserName!", message.getSender(), message.getMessageId());
         } else if (message.getPassWord() == null || message.getPassWord().length() < 4) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "invalid passWord", message.getMessageId()));
+            sendException("Invalid PassWord!", message.getSender(), message.getMessageId());
         } else {
             Account account = new Account(message.getUserName(), message.getPassWord());
             accounts.put(account, null);
@@ -242,12 +249,11 @@ public class Server {
 
     private boolean preCheckMessage(Message message) {
         if (!clients.containsKey(message.getSender())) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "client was not added", message.getMessageId()));
+            serverPrint("Client Wasn't Added!");
+            sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
             return false;
         } else if (clients.get(message.getSender()) == null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "client was not logged in", message.getMessageId()));
+            sendException("Client Was Not LoggedIn", message.getSender(), message.getMessageId());
             return false;
         } else {
             return true;
@@ -298,13 +304,56 @@ public class Server {
 
     }
 
+    private void sendOriginalCards(Message message) {
+
+    }
+
+    private void sendLeaderBoard(Message message) {
+        leaderBoard = new Account[clients.size()];
+        int counter = 0;
+        for (Account account : clients.values()) {
+            leaderBoard[counter] = account;
+            counter++;
+        }
+        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
+        sendMessages();
+    }
+
+    private void insertCard(Message message) {
+
+    }
+
+    private void attack(Message message) {
+
+    }
+
+    private void combo(Message message) {
+
+    }
+
+    private void useSpell(Message message) {
+
+    }
+
+    private void moveTroop(Message message) {
+
+    }
+
+    private void endTurn(Message message) {
+
+    }
+
     private void saveChanges(Message message) {
         if (preCheckMessage(message)) {
             saveAccount(clients.get(message.getSender()));
         }
     }
 
-    public void newGame(Account account1, Account account2, GameType gameType) {
+    private void newGame(Message message) {
+
+    }
+
+    private void sudo(Message message) {
 
     }
 
