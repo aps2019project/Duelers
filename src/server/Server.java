@@ -1,6 +1,8 @@
 package server;
 
 import client.Client;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.card.Card;
@@ -10,18 +12,30 @@ import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.message.Message;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
+    private static final String accountsPath = "jsonData/accounts";
+    private static final String[] cardPaths = {
+            "jsonData/heroCards",
+            "jsonData/minionCards",
+            "jsonData/spellCards",
+            "jsonData/itemCards/collectible",
+            "jsonData/itemCards/usable"
+    };
+    private static final String flagPath = "jsonData/itemCards/flag/Flag.item.card.json";
+    private static final String storiesPath = "jsonData/stories";
+
     private static Server server;
     private String serverName;
     private HashMap<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Client> onlineClients = new ArrayList<>();
-    private Collection originalCards;
+    private Collection originalCards = new Collection();
     private Card originalFlag;
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
@@ -162,7 +176,7 @@ public class Server {
             return null;
         }
         for (Map.Entry<Account, String> map : accounts.entrySet()) {
-            if (map.getKey().getUserName().equals(userName)) {
+            if (map.getKey().getUsername().equals(userName)) {
                 return map.getKey();
             }
         }
@@ -204,7 +218,7 @@ public class Server {
         } else if (account == null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "username not found", message.getMessageId()));
-        } else if (!account.getPassWord().equals(message.getPassWord())) {
+        } else if (!account.getPassword().equals(message.getPassWord())) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "incorrect password", message.getMessageId()));
         } else if (accounts.get(account) != null) {
@@ -291,11 +305,32 @@ public class Server {
     }
 
     private void readAccounts() {
-        //file
+        File[] files = new File(accountsPath).listFiles();
+        if (files != null) {
+            for (File file : files) {
+                Account account = loadFile(file, Account.class);
+                if (account == null) continue;
+
+                accounts.put(account, null);
+            }
+        }
+        serverPrint("Accounts loaded");
     }
 
     private void readOriginalCards() {
-        //file
+        for (String path : cardPaths) {
+            File[] files = new File(path).listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    Card card = loadFile(file, Card.class);
+                    if (card == null) continue;
+
+                    originalCards.addCard(card);
+                }
+            }
+        }
+        originalFlag = loadFile(new File(flagPath), Card.class);
+        serverPrint("Original Cards loaded");
     }
 
     private void readCustomDecks() {
@@ -303,11 +338,37 @@ public class Server {
     }
 
     private void readStories() {
-        //file
+        File[] files = new File(storiesPath).listFiles();
+        if (files != null) {
+            for (File file : files) {
+                Story story = loadFile(file, Story.class);
+                if (story == null) continue;
+
+                stories.add(story);
+            }
+        }
+        serverPrint("Stories loaded");
+    }
+
+    private <T> T loadFile(File file, Class<T> classOfT) {
+        try {
+            return new Gson().fromJson(new BufferedReader(new FileReader(file)), classOfT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void saveAccount(Account account) {
-        //file
+        String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(account);
+
+        try {
+            FileWriter writer = new FileWriter("jsonData/accounts/" + account.getUsername() + ".account.json");
+            writer.write(accountJson);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getServerName() {

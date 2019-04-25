@@ -6,17 +6,35 @@ import java.util.ArrayList;
 
 public class Collection {
 
-    private ArrayList<Card> heroes;
-    private ArrayList<Card> minions;
-    private ArrayList<Card> spells;
-    private ArrayList<Card> items;
+    private ArrayList<Card> heroes = new ArrayList<>();
+    private ArrayList<Card> minions = new ArrayList<>();
+    private ArrayList<Card> spells = new ArrayList<>();
+    private ArrayList<Card> items = new ArrayList<>();
 
     public ArrayList<Card> getHeroes() {
         return this.heroes;
     }
 
-    public void addHero(Card hero) {
+    public void addCard(Card card) {
+        switch (card.getType()) {
+            case HERO:
+                addHero(card);
+                break;
+            case MINION:
+                addMinion(card);
+                break;
+            case SPELL:
+                addSpell(card);
+                break;
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                addItem(card);
+                break;
+        }
+    }
 
+    public void addHero(Card hero) {
+        heroes.add(hero);
     }
 
     public void removeHero(Card hero) {
@@ -28,7 +46,7 @@ public class Collection {
     }
 
     public void addMinion(Card minion) {
-
+        minions.add(minion);
     }
 
     public void removeMinion(Card minion) {
@@ -40,7 +58,7 @@ public class Collection {
     }
 
     public void addSpell(Card spell) {
-
+        spells.add(spell);
     }
 
     public void removeSpell(Card spell) {
@@ -52,7 +70,7 @@ public class Collection {
     }
 
     public void addItem(Card item) {
-
+        items.add(item);
     }
 
     public void removeItem(Card item) {

@@ -33,7 +33,7 @@ public class CollectionMenu extends Menu {
     public void newDeck(String deckName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeCreateDeckMessage(
-                        client.getClientName(), serverName, deckName, client.getAccount().getUserName(), 0
+                        client.getClientName(), serverName, deckName, client.getAccount().getUsername(), 0
                 )
         );
         client.sendMessages();
@@ -46,7 +46,7 @@ public class CollectionMenu extends Menu {
     public void addCardToDeck(String deckName, String cardID, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeAddCardToDeckMessage(
-                        client.getClientName(), serverName, deckName, cardID, client.getAccount().getUserName(), 0
+                        client.getClientName(), serverName, deckName, cardID, client.getAccount().getUsername(), 0
                 )
         );
         client.sendMessages();
@@ -59,7 +59,7 @@ public class CollectionMenu extends Menu {
     public void removeCardFromDeck(String deckName, String cardID, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeRemoveCardFromDeckMessage(
-                        client.getClientName(), serverName, deckName, cardID, client.getAccount().getUserName(), 0
+                        client.getClientName(), serverName, deckName, cardID, client.getAccount().getUsername(), 0
                 )
         );
         client.sendMessages();
@@ -77,7 +77,7 @@ public class CollectionMenu extends Menu {
     public void removeDeck(String deckName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeRemoveDeckMessage(
-                        client.getClientName(), serverName, deckName, client.getAccount().getUserName(), 0
+                        client.getClientName(), serverName, deckName, client.getAccount().getUsername(), 0
                 )
         );
         client.sendMessages();
@@ -96,7 +96,7 @@ public class CollectionMenu extends Menu {
     public void selectDeck(String deckName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeSelectDeckMessage(
-                        client.getClientName(), serverName, deckName, client.getAccount().getUserName(), 0
+                        client.getClientName(), serverName, deckName, client.getAccount().getUsername(), 0
                 )
         );
         client.sendMessages();

@@ -43,7 +43,7 @@ public class MultiPlayerMenu extends Menu {
         client.addToSendingMessages(
                 Message.makeNewMultiPlayerGameMessage(
                         client.getClientName(), serverName, GameType.values()[mode - 1],
-                        numberOfFlags, secondAccount.getUserName(), 0
+                        numberOfFlags, secondAccount.getUsername(), 0
                 )
         );
         client.sendMessages();

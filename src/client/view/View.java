@@ -9,7 +9,6 @@ import client.models.card.Deck;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
-import client.models.menus.Shop;
 
 import java.util.ArrayList;
 
@@ -53,7 +52,7 @@ public class View {
     public void showLeaderBoard(Client client) {
         int counter = 1;
         for (Account account : client.getLeaderBoard()) {
-            System.out.println(counter + "- UserName : " + account.getUserName() + " - Wins : " + account.getWins());
+            System.out.println(counter + "- UserName : " + account.getUsername() + " - Wins : " + account.getWins());
             counter++;
         }
     }
@@ -74,7 +73,7 @@ public class View {
 
     public void showUsersList(Client client) {
         for (Account account : client.getLeaderBoard()) {
-            System.out.println("UserName" + account.getUserName());
+            System.out.println("UserName" + account.getUsername());
         }
     }
 

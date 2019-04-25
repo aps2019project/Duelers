@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Account {
 
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private Collection collection;
     private ArrayList<Deck> decks;
     private Deck mainDeck;
@@ -20,8 +20,8 @@ public class Account {
         return wins;
     }
     
-    public String getUserName() {
-        return this.userName;
+    public String getUsername() {
+        return this.username;
     }
 
     public Collection getCollection() {

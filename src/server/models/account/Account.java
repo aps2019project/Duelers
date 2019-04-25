@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Account {
 
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private Collection collection;
     private ArrayList<Deck> decks;
     private Deck mainDeck;
@@ -15,17 +15,17 @@ public class Account {
     private int money;
     private int wins;
 
-    public Account(String userName, String passWord) {
-        this.userName = userName;
-        this.passWord = passWord;
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public int getWins() {
         return wins;
     }
 
-    public String getUserName() {
-        return this.userName;
+    public String getUsername() {
+        return this.username;
     }
 
     public Collection getCollection() {
@@ -65,7 +65,7 @@ public class Account {
         return null;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 }
