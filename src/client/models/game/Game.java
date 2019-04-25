@@ -66,18 +66,4 @@ public class Game {
     public boolean canInsert(Card card, Cell cell) {
         return false;
     }
-
-    private int addAttackFromGladiator(Troop gladiator, Troop underAttack) {
-        String key = gladiator.getCard().getCardId() + "->" + underAttack.getCard().getCardId();
-
-        if (attacksOfGladiators.containsKey(key)) {
-            int newCount = attacksOfGladiators.get(key);
-            attacksOfGladiators.replace(key, newCount + 1);
-            return newCount;
-
-        } else {
-            attacksOfGladiators.put(key, 1);
-            return 0;
-        }
-    }
 }
