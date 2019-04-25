@@ -9,7 +9,7 @@ import client.view.request.InputException;
 
 import java.util.ArrayList;
 
-public class CollectionMenu implements Menu {
+public class CollectionMenu extends Menu {
     private static CollectionMenu collectionMenu;
 
     private CollectionMenu() {
@@ -69,7 +69,7 @@ public class CollectionMenu implements Menu {
         }
     }
 
-    public void save(Client client, String serverName) throws InputException {
+    public void save(Client client, String serverName) {
         client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(), serverName, 0));
         client.sendMessages();
     }

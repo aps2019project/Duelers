@@ -17,7 +17,10 @@ public class Request {
 
     public void handleRequest(Client client, String serverName) throws InputException, ExitCommand {
 
-        if (client.getCurrentMenu().equals(AccountMenu.getInstance())) {
+        if (RequestType.SUDO.setMatcher(command).find()) {
+            client.getCurrentMenu().sendSudoCommand(client, serverName, command);
+
+        } else if (client.getCurrentMenu().equals(AccountMenu.getInstance())) {
             accountMenuHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().equals(BattleMenu.getInstance())) {
@@ -166,13 +169,13 @@ public class Request {
                 );
             }
 
-        }else if (RequestType.HELP.setMatcher(command).find()){
+        } else if (RequestType.HELP.setMatcher(command).find()) {
             customGameMenu.showHelp();
 
-        }else if (RequestType.EXIT.setMatcher(command).find()){
+        } else if (RequestType.EXIT.setMatcher(command).find()) {
             customGameMenu.showHelp();
 
-        }else {
+        } else {
             throw new InputException("invalid command");
         }
     }
@@ -308,9 +311,9 @@ public class Request {
         } else if (RequestType.HELP.setMatcher(command).find()) {
             accountMenu.showHelp();
 
-        }else if (RequestType.EXIT.setMatcher(command).find()){
+        } else if (RequestType.EXIT.setMatcher(command).find()) {
             accountMenu.exit();
-        }else {
+        } else {
             throw new InputException("invalid command");
         }
     }

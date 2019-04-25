@@ -8,7 +8,7 @@ import client.view.request.InputException;
 
 import java.util.ArrayList;
 
-public class Shop implements Menu {
+public class Shop extends Menu {
     private static Shop SHOP;
     private ArrayList<Card> shop;
     private Card resultCard;

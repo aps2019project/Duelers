@@ -6,7 +6,7 @@ import client.view.View;
 import client.view.request.ExitCommand;
 import client.view.request.InputException;
 
-public class AccountMenu implements Menu {
+public class AccountMenu extends Menu {
     private static AccountMenu ACCOUNT_MENU;
 
     private AccountMenu() {
@@ -43,7 +43,7 @@ public class AccountMenu implements Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public void showLeaderBoard(Client client, String serverName) throws InputException {
+    public void showLeaderBoard(Client client, String serverName) {
         client.updateLeaderBoard(serverName);
         View.getInstance().showLeaderBoard(client);
     }

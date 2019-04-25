@@ -7,7 +7,7 @@ import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
 
-public class MultiPlayerMenu implements Menu {
+public class MultiPlayerMenu extends Menu {
     private static final MultiPlayerMenu MULTI_PLAYER_MENU = new MultiPlayerMenu();
     private Account secondAccount;
 
@@ -46,6 +46,7 @@ public class MultiPlayerMenu implements Menu {
                         numberOfFlags, secondAccount.getUserName(), 0
                 )
         );
+        client.sendMessages();
 
         if (client.getValidation()) {
             throw new InputException(client.getErrorMessage());

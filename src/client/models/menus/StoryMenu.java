@@ -5,7 +5,7 @@ import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
 
-public class StoryMenu implements Menu {
+public class StoryMenu extends Menu {
     private static StoryMenu ourInstance = new StoryMenu();
 
     private StoryMenu() {

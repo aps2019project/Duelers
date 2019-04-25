@@ -6,7 +6,7 @@ import client.view.View;
 import client.view.request.ExitCommand;
 import client.view.request.InputException;
 
-public class MainMenu implements Menu {
+public class MainMenu extends Menu {
     private static MainMenu MAIN_MENU;
 
     private MainMenu() {
@@ -19,11 +19,7 @@ public class MainMenu implements Menu {
         return MAIN_MENU;
     }
 
-    public void sendSudoCommand(){
-
-    }
-
-    public void moveToMenu(Client client, String serverName, String menuName) throws InputException {
+    public void moveToMenu(Client client, String serverName, String menuName) {
         if (menuName.equals("collection")) {
             client.setCurrentMenu(CollectionMenu.getInstance());
         }
@@ -51,12 +47,12 @@ public class MainMenu implements Menu {
         View.getInstance().showHelp(help);
     }
 
-    public void save(Client client, String serverName) throws InputException {
+    public void save(Client client, String serverName) {
         client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(),serverName,0));
         client.sendMessages();
     }
 
-    public void logout(Client client, String serverName) throws InputException {
+    public void logout(Client client, String serverName) {
         client.addToSendingMessages(Message.makeLogOutMessage(client.getClientName(), serverName, 0));
         client.sendMessages();
         client.setCurrentMenu(AccountMenu.getInstance());

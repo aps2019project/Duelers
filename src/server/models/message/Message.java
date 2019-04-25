@@ -38,7 +38,7 @@ public class Message {
     private String deckName;
     private String opponentUserName;
     private GameType gameType;
-
+    private String sudoCommand;
 
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
@@ -421,5 +421,9 @@ public class Message {
 
     public GameType getGameType() {
         return gameType;
+    }
+
+    public String getSudoCommand() {
+        return sudoCommand;
     }
 }

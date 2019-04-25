@@ -6,7 +6,7 @@ import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
 
-public class CustomGameMenu implements Menu {
+public class CustomGameMenu extends Menu {
     private static final CustomGameMenu CUSTOM_GAME_MENU = new CustomGameMenu();
 
     private CustomGameMenu() {

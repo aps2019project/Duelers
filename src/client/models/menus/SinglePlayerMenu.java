@@ -3,7 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.view.View;
 
-public class SinglePlayerMenu implements Menu {
+public class SinglePlayerMenu extends Menu {
     private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
 
     private SinglePlayerMenu() {

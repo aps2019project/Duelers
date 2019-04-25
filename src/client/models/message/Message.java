@@ -40,7 +40,7 @@ public class Message {
     private String deckName;
     private String opponentUserName;
     private GameType gameType;
-
+    private String sudoCommand;
 
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
@@ -361,6 +361,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeSudoMessage(String sender, String receiver, String sudoCommand, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.SUDO;
+        message.sudoCommand = sudoCommand;
+        return message;
+    }
+
     public String toJson() {
         return new Gson().toJson(this);
     }
@@ -467,5 +474,9 @@ public class Message {
 
     public String getDeckName() {
         return deckName;
+    }
+
+    public String getSudoCommand() {
+        return sudoCommand;
     }
 }

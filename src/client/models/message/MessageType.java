@@ -37,5 +37,6 @@ public enum MessageType {
     REGISTER,
     NEW_GAME,
     SELECT_USER,
-    SHOP_SEARCH
+    SHOP_SEARCH,
+    SUDO
 }

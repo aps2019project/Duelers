@@ -2,7 +2,7 @@ package client.models.menus;
 
 import client.Client;
 
-public class GameCommands implements Menu {
+public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
 
     private GameCommands() {
