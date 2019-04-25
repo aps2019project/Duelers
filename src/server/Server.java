@@ -79,7 +79,7 @@ public class Server {
                     logOut(message);
                     break;
                 case GET_LEADERBOARD:
-
+                    sendLeaderBoard(message);
                     break;
                 case GET_ORIGINAL_CARDS:
 
@@ -140,6 +140,17 @@ public class Server {
         sendMessages();
     }
 
+    private void sendLeaderBoard(Message message) {
+        leaderBoard = new Account[clients.size()];
+        int counter = 0;
+        for (Account account : clients.values()) {
+            leaderBoard[counter] = account;
+            counter++;
+        }
+        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
+        sendMessages();
+    }
+
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
@@ -179,7 +190,7 @@ public class Server {
         if (getAccount(message.getUserName()) != null) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid userName", message.getMessageId()));
-        } else if (message.getPassWord() == null || message.getPassWord().length()<4) {
+        } else if (message.getPassWord() == null || message.getPassWord().length() < 4) {
             addToSendingMessages(Message.makeExceptionMessage(
                     serverName, message.getSender(), "invalid passWord", message.getMessageId()));
         } else {
@@ -187,7 +198,7 @@ public class Server {
             accounts.put(account, null);
             onlineGames.put(account, null);
             saveAccount(account);
-            serverPrint(message.getUserName()+" Is Created!");
+            serverPrint(message.getUserName() + " Is Created!");
             logIn(message);
         }
 
@@ -216,7 +227,7 @@ public class Server {
             clients.replace(message.getSender(), account);
             addToSendingMessages(Message.makeAccountCopyMessage(
                     serverName, message.getSender(), account, message.getMessageId()));
-            serverPrint(message.getSender()+" Is Logged In");
+            serverPrint(message.getSender() + " Is Logged In");
         }
     }
 
@@ -238,7 +249,7 @@ public class Server {
         if (preCheckMessage(message)) {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
-            serverPrint(message.getSender()+" Is Logged Out.");
+            serverPrint(message.getSender() + " Is Logged Out.");
         }
     }
 
