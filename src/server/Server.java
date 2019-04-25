@@ -160,22 +160,6 @@ public class Server {
         sendMessages();
     }
 
-    private void sendLeaderBoard(Message message) {
-        if (accounts.size()==0) {
-            addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
-            sendMessages();
-        }
-        leaderBoard = new Account[accounts.size()];
-        int counter = 0;
-        for (Account account : accounts.keySet()) {
-            leaderBoard[counter] = account;
-            counter++;
-        }
-        Arrays.sort(leaderBoard, new LeaderBoardSorter());
-        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
-        sendMessages();
-    }
-
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
@@ -238,20 +222,16 @@ public class Server {
         Account account = getAccount(message.getUserName());
         Client client = getClient(message.getSender());
         if (client == null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "client was not added", message.getMessageId()));
+            serverPrint("Client Wasn't Added!");
+            sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
         } else if (account == null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "username not found", message.getMessageId()));
+            sendException("UserName Not Found!", message.getSender(), message.getMessageId());
         } else if (!account.getPassword().equals(message.getPassWord())) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "incorrect password", message.getMessageId()));
+            sendException("Incorrect PassWord!", message.getSender(), message.getMessageId());
         } else if (accounts.get(account) != null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "online account", message.getMessageId()));
+            sendException("Online Account!", message.getSender(), message.getMessageId());
         } else if (clients.get(message.getSender()) != null) {
-            addToSendingMessages(Message.makeExceptionMessage(
-                    serverName, message.getSender(), "client was logged in", message.getMessageId()));
+            sendException("Client Was Logged In!", message.getSender(), message.getMessageId());
         } else {
             accounts.replace(account, message.getSender());
             clients.replace(message.getSender(), account);
@@ -320,6 +300,22 @@ public class Server {
 
     private void sendOriginalCards(Message message) {
 
+    }
+
+    private void sendLeaderBoard(Message message) {
+        if (accounts.size()==0) {
+            addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
+            sendMessages();
+        }
+        leaderBoard = new Account[accounts.size()];
+        int counter = 0;
+        for (Account account : accounts.keySet()) {
+            leaderBoard[counter] = account;
+            counter++;
+        }
+        Arrays.sort(leaderBoard, new LeaderBoardSorter());
+        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
+        sendMessages();
     }
 
     private void insertCard(Message message) {
