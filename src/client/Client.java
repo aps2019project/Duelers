@@ -1,15 +1,14 @@
 package client;
 
 import client.models.account.Account;
+import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.card.Deck;
 import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.AccountMenu;
 import client.models.menus.Menu;
-import client.models.menus.Shop;
 import client.models.message.Message;
-import client.view.request.InputException;
 import server.Server;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class Client {
     private ArrayList<Position> positions = new ArrayList<>();
     private boolean validation = true;
     private String errorMessage;
-    private Card[] originalCards;
+    private Collection originalCards = new Collection();
 
     public Client(String clientName, Server server) {
         this.clientName = clientName;
