@@ -16,6 +16,7 @@ public class Request {
     }
 
     public void handleRequest(Client client, String serverName) throws InputException, ExitCommand {
+
         if (client.getCurrentMenu().equals(AccountMenu.getInstance())) {
             accountMenuHandleRequest(client, serverName);
 

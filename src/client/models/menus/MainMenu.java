@@ -19,6 +19,9 @@ public class MainMenu implements Menu {
         return MAIN_MENU;
     }
 
+    public void sendSudoCommand(){
+
+    }
 
     public void moveToMenu(Client client, String serverName, String menuName) throws InputException {
         if (menuName.equals("collection")) {

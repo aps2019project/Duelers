@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum RequestType {
+    SUDO("^sudo \\w+$"),
     //Account menu:
     CREATE_ACCOUNT("^create account (\\w+)$"),
     LOGIN("^login (\\w+)$"),
@@ -44,6 +45,10 @@ public enum RequestType {
     private Pattern pattern;
     private Matcher matcher;
 
+    RequestType(String pattern) {
+        this.pattern = Pattern.compile(pattern);
+    }
+
     public Matcher setMatcher(String command) {
         this.matcher = pattern.matcher(command);
         return matcher;
@@ -51,10 +56,5 @@ public enum RequestType {
 
     public Matcher getMatcher() {
         return matcher;
-    }
-
-
-    RequestType(String pattern) {
-        this.pattern = Pattern.compile(pattern);
     }
 }
