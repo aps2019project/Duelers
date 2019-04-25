@@ -2,6 +2,7 @@ package server;
 
 import client.Client;
 import server.models.account.Account;
+import server.models.account.Collection;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
@@ -20,7 +21,8 @@ public class Server {
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Client> onlineClients = new ArrayList<>();
-    private ArrayList<Card> originalCards = new ArrayList<>();
+    private Collection originalCards;
+    private Card originalFlag;
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
     private Account[] leaderBoard;
@@ -50,7 +52,7 @@ public class Server {
         } else {
             onlineClients.add(client);
             clients.put(client.getClientName(), null);
-            serverPrint("Client:" + client.getClientName() + " Was Addad!");
+            serverPrint("Client:" + client.getClientName() + " Was Added!");
         }
     }
 

@@ -4,7 +4,6 @@ import client.Client;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.ExitCommand;
-import client.view.request.InputException;
 
 public class MainMenu extends Menu {
     private static MainMenu MAIN_MENU;
@@ -48,7 +47,7 @@ public class MainMenu extends Menu {
     }
 
     public void save(Client client, String serverName) {
-        client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(),serverName,0));
+        client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(), serverName, 0));
         client.sendMessages();
     }
 
