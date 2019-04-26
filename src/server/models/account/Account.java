@@ -35,6 +35,13 @@ public class Account {
         this.wins = account.getWins();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().getName().equals(Account.class.getName())) return false;
+        Account account = (Account) obj;
+        return this.username.equals(account.username);
+    }
+
     public int getWins() {
         return wins;
     }

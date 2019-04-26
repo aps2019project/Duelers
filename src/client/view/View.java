@@ -27,8 +27,6 @@ public class View {
         System.out.println(e.getMessage());
     }
 
-
-
     public void showMainMenu() {
 
     }
@@ -72,8 +70,10 @@ public class View {
     }
 
     public void showUsersList(Client client) {
+        System.out.println("users list:");
         for (Account account : client.getLeaderBoard()) {
-            System.out.println("UserName" + account.getUsername());
+            if (account.equals(client.getAccount())) continue;
+            System.out.println("-" + account.getUsername());
         }
     }
 
