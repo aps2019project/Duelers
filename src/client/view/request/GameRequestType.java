@@ -11,7 +11,7 @@ public enum GameRequestType {
     SELECT_CARD("^select (\\w+)$"),
     MOVE("^move to |(\\d+)| |(\\d+)|$"),
     ATTACK("^attack (\\w+)$"),
-    ATTACK_COMBO("^attack combo (\\w+)( +(\\w+))+"),
+    ATTACK_COMBO("^attack combo (\\w+)(.+)"),
     USE_SPECIAL_POWER("^use special power \\((\\d+), (\\d+)\\)"),
     SHOW_HAND("^show hand$"),
     INSERT_CARD("^inset (\\w+) in \\((\\d+), (\\d+)\\)$"),
@@ -26,7 +26,7 @@ public enum GameRequestType {
     SHOW_CRADS_IN_GRAVE_YARD("^show cards$"),
     HELP("^help$"),
     EXIT("^exit$"),
-    SHOW_MENU_HELP("^show menu"),
+    SHOW_MENU_HELP("^show menu$"),
     END_GAME("^end game$");
     private Pattern pattern;
     private Matcher matcher;
@@ -35,9 +35,9 @@ public enum GameRequestType {
         this.pattern = Pattern.compile(pattern);
     }
 
-    public Matcher setMatcher(String command) {
+    public boolean maches(String command) {
         this.matcher = pattern.matcher(command);
-        return matcher;
+        return matcher.find();
     }
 
     public Matcher getMatcher() {
