@@ -13,7 +13,6 @@ import client.models.game.Player;
 import client.models.map.Cell;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class View {
 
@@ -30,25 +29,8 @@ public class View {
         System.out.println(e.getMessage());
     }
 
-    public void showMainMenu() {
-
-    }
-
-    public void showShopMenuHelp() {
-
-    }
-
     public void showHelp(String help) {
         System.out.println(help);
-    }
-
-
-    public void showGameMenu() {
-
-    }
-
-    public void showStoryMenu() {
-
     }
 
     public void showLeaderBoard(Client client) {
@@ -80,21 +62,12 @@ public class View {
         showOtherCards(deck.getOthers());
     }
 
-
-    public void showGameModesList() {
-
-    }
-
     public void showUsersList(Client client) {
         System.out.println("users list:");
         for (AccountInfo account : client.getLeaderBoard()) {
             if (client.getAccount().equals(account)) continue;
             System.out.println("-" + account.getUsername());
         }
-    }
-
-    public void showGameResults(Game game) {
-
     }
 
     public void showGetPasswordMessage() {
