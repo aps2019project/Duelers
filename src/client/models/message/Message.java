@@ -158,6 +158,12 @@ public class Message {
         return message;
     }
 
+    public static Message makeGetStoriesInfoMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.GET_STORIES;
+        return message;
+    }
+
     public static Message makeGetLeaderBoardMessage(String sender, String receiver, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.GET_LEADERBOARD;

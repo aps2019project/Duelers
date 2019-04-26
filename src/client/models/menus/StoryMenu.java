@@ -4,15 +4,30 @@ import client.Client;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
+import client.models.card.DeckInfo;
 
 public class StoryMenu extends Menu {
-    private static StoryMenu ourInstance = new StoryMenu();
+    private static StoryMenu STORY_MENU;
+    private DeckInfo[] stories;
 
-    private StoryMenu() {
+    private StoryMenu(Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeGetStoriesInfoMessage(
+                        client.getClientName(), serverName, 0
+                )
+        );
+        client.sendMessages();
+    }
+
+    public static StoryMenu getInstance(Client client, String serverName) {
+        if (STORY_MENU == null) {
+            STORY_MENU = new StoryMenu(client, serverName);
+        }
+        return STORY_MENU;
     }
 
     public static StoryMenu getInstance() {
-        return ourInstance;
+        return STORY_MENU;
     }
 
     public void startGame(int stage, Client client, String serverName) throws InputException {
@@ -27,6 +42,14 @@ public class StoryMenu extends Menu {
         }
 
         client.setCurrentMenu(GameCommands.getInstance());
+    }
+
+    public DeckInfo[] getStories() {
+        return stories;
+    }
+
+    public void setStories(DeckInfo[] stories) {
+        this.stories = stories;
     }
 
     @Override
