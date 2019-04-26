@@ -1,9 +1,10 @@
 package client;
 
 import client.models.account.Account;
+import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.card.Card;
-import client.models.card.Deck;
+import client.models.card.DeckInfo;
 import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.AccountMenu;
@@ -20,8 +21,8 @@ public class Client {
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
     private Game game;
-    private Deck[] customDecks;
-    private Account[] leaderBoard;
+    private DeckInfo[] customDecks;
+    private AccountInfo[] leaderBoard;
     private Menu currentMenu;
     private Card selected;
     private ArrayList<Position> positions = new ArrayList<>();
@@ -48,11 +49,11 @@ public class Client {
         this.sendMessages();
     }
 
-    public Account[] getLeaderBoard() {
+    public AccountInfo[] getLeaderBoard() {
         return leaderBoard;
     }
 
-    public void setLeaderBoard(Account[] leaderBoard) {
+    public void setLeaderBoard(AccountInfo[] leaderBoard) {
         this.leaderBoard = leaderBoard;
     }
 
@@ -101,7 +102,7 @@ public class Client {
                     validation = false;
                     errorMessage = message.getExceptionString();
                 case ACCOUNT_COPY:
-                    account = message.getAccount();
+                    account = new Account(message.getAccount());
                 case GAME_COPY:
                     game = message.getGame();
                     break;
@@ -138,7 +139,7 @@ public class Client {
         this.game = game;
     }
 
-    public void setCustomDecks(Deck[] customDecks) {
+    public void setCustomDecks(DeckInfo[] customDecks) {
         this.customDecks = customDecks;
     }
 

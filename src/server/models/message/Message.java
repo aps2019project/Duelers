@@ -2,8 +2,11 @@ package server.models.message;
 
 import com.google.gson.Gson;
 import server.models.account.Account;
+import server.models.account.AccountInfo;
 import server.models.account.Collection;
+import server.models.account.TempAccount;
 import server.models.card.Deck;
+import server.models.card.spell.DeckInfo;
 import server.models.game.Game;
 import server.models.game.GameType;
 import server.models.game.Story;
@@ -18,18 +21,20 @@ public class Message {
 
     private Game game;
     private Collection shopCards;
-    private Account account;
-    private Deck[] customDecks;
-    private Account[] leaderBoard;
-    private Story[] stories;
+    private TempAccount account;
+    private DeckInfo[] customDecks;
+    private AccountInfo[] leaderBoard;
+    private DeckInfo[] stories;
     private Position[] positions;
     private String exceptionString;
     private String cardId;
     private String[] cardIds;
     private String spellId;
     private int turnNum;
+    private int numberOfFlags;
     private String cardName;
     private int newValue;
+    private int stage;
     private Position position;
     private String userName, passWord;
     private String deckName;
@@ -63,29 +68,37 @@ public class Message {
 
     public static Message makeAccountCopyMessage(String sender, String receiver, Account account, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.account = account;
+        message.account = new TempAccount(account);
         message.messageType = MessageType.ACCOUNT_COPY;
         return message;
     }
 
     public static Message makeCustomDecksCopyMessage(String sender, String receiver, Deck[] customDecks, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.customDecks = customDecks;
+        message.customDecks = new DeckInfo[customDecks.length];
+        for (int i = 0; i < customDecks.length; i++) {
+            message.customDecks[i] = new DeckInfo(customDecks[i]);
+        }
         message.messageType = MessageType.CUSTOM_DECKS_COPY;
         return message;
     }
 
     public static Message makeLeaderBoardCopyMessage(String sender, String receiver, Account[] leaderBoard, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.leaderBoard = leaderBoard;
+        message.leaderBoard = new AccountInfo[leaderBoard.length];
+        for (int i = 0; i < leaderBoard.length; i++) {
+            message.leaderBoard[i] = new AccountInfo(leaderBoard[i]);
+        }
         message.messageType = MessageType.LEADERBOARD_COPY;
         return message;
     }
 
     public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.stories = stories;
-        message.messageType = MessageType.STORIES_COPY;
+        message.stories = new DeckInfo[stories.length];
+        for (int i = 0; i < stories.length; i++) {
+            message.stories[i] = new DeckInfo(stories[i]);
+        }        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
@@ -348,20 +361,28 @@ public class Message {
         return shopCards;
     }
 
-    public Account getAccount() {
+    public TempAccount getAccount() {
         return account;
     }
 
-    public Deck[] getCustomDecks() {
-        return customDecks;
-    }
-
-    public Account[] getLeaderBoard() {
+    public AccountInfo[] getLeaderBoard() {
         return leaderBoard;
     }
 
-    public Story[] getStories() {
+    public DeckInfo[] getCustomDecks() {
+        return customDecks;
+    }
+
+    public DeckInfo[] getStories() {
         return stories;
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
+    }
+
+    public int getStage() {
+        return stage;
     }
 
     public Position[] getPositions() {

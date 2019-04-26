@@ -1,13 +1,17 @@
 package client.models.message;
 
 import client.models.account.Account;
+import client.models.account.AccountInfo;
 import client.models.account.Collection;
-import client.models.card.Deck;
+import client.models.card.DeckInfo;
+import client.models.card.TempDeck;
 import client.models.game.Game;
 import client.models.game.GameType;
 import client.models.game.Story;
 import client.models.map.Position;
 import com.google.gson.Gson;
+import client.models.account.TempAccount;
+import client.models.game.TempStory;
 
 public class Message {
     private MessageType messageType;
@@ -18,10 +22,10 @@ public class Message {
 
     private Game game;
     private Collection shopCards;
-    private Account account;
-    private Deck[] customDecks;
-    private Account[] leaderBoard;
-    private Story[] stories;
+    private TempAccount account;
+    private DeckInfo[] customDecks;
+    private AccountInfo[] leaderBoard;
+    private DeckInfo[] stories;
     private Position[] positions;
     private String exceptionString;
     private String cardId;
@@ -56,38 +60,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection shopCards, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.shopCards = shopCards;
-        message.messageType = MessageType.ORIGINAL_CARDS_COPY;
-        return message;
-    }
-
-    public static Message makeAccountCopyMessage(String sender, String receiver, Account account, int messageId) {
+    public static Message makeAccountCopyMessage(String sender, String receiver, TempAccount account, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.account = account;
         message.messageType = MessageType.ACCOUNT_COPY;
-        return message;
-    }
-
-    public static Message makeCustomDecksCopyMessage(String sender, String receiver, Deck[] customDecks, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.customDecks = customDecks;
-        message.messageType = MessageType.CUSTOM_DECKS_COPY;
-        return message;
-    }
-
-    public static Message makeLeaderBoardCopyMessage(String sender, String receiver, Account[] leaderBoard, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.leaderBoard = leaderBoard;
-        message.messageType = MessageType.LEADERBOARD_COPY;
-        return message;
-    }
-
-    public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.stories = stories;
-        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
@@ -393,19 +369,19 @@ public class Message {
         return shopCards;
     }
 
-    public Account getAccount() {
+    public TempAccount getAccount() {
         return account;
     }
 
-    public Deck[] getCustomDecks() {
+    public DeckInfo[] getCustomDecks() {
         return customDecks;
     }
 
-    public Account[] getLeaderBoard() {
+    public AccountInfo[] getLeaderBoard() {
         return leaderBoard;
     }
 
-    public Story[] getStories() {
+    public DeckInfo[] getStories() {
         return stories;
     }
 
