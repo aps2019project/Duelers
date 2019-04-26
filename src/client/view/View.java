@@ -160,6 +160,10 @@ public class View {
     private void showMinions(Collection collection) {
         System.out.println("Minions:\n");
         ArrayList<Card> minions = collection.getMinions();
+        if (minions.size() == 0) {
+            System.out.println("there's no minions in collection\n");
+            return;
+        }
         for (int i = 0; i < minions.size(); i++) {
             Card minion = minions.get(i);
             showMinion(i + 1, minion);
@@ -169,6 +173,10 @@ public class View {
     private void showSpells(Collection collection) {
         System.out.println("Spells:\n");
         ArrayList<Card> spells = collection.getSpells();
+        if (spells.size() == 0) {
+            System.out.println("there's no spells in collection\n");
+            return;
+        }
         for (int i = 0; i < spells.size(); i++) {
             Card spell = spells.get(i);
             showSpell(i + 1, spell);
@@ -178,6 +186,10 @@ public class View {
     private void showItems(Collection collection) {
         System.out.println("Items:\n");
         ArrayList<Card> items = collection.getItems();
+        if (items.size() == 0) {
+            System.out.println("there's no items in collection\n");
+            return;
+        }
         for (int i = 0; i < items.size(); i++) {
             Card item = items.get(i);
             showItem(i + 1, item);
@@ -187,6 +199,10 @@ public class View {
     private void showHeroes(Collection collection) {
         System.out.println("Heroes:\n");
         ArrayList<Card> heroes = collection.getHeroes();
+        if (heroes.size() == 0) {
+            System.out.println("there's no heroes in collection\n");
+            return;
+        }
         for (int i = 0; i < heroes.size(); i++) {
             Card hero = heroes.get(i);
             showHero(i + 1, hero);
@@ -194,42 +210,42 @@ public class View {
     }
 
     private void showMinion(int index, Card minion) {
-        System.out.println(index +
-                " - Name: " + minion.getName() +
+        System.out.printf("%2d", index);
+        System.out.println(" - Name: " + minion.getName() +
                 " - Class: " + minion.getAttackType() +
                 " - AP: " + minion.getDefaultAp() +
                 " - HP: " + minion.getDefaultHp() +
                 " - MP: " + minion.getMannaPoint() +
-                " - Description: " + minion.getDescription() +
-                " - price: " + minion.getPrice()
+                "\n   - Description: " + minion.getDescription() +
+                " - price: " + minion.getPrice() + "\n"
         );
     }
 
     private void showSpell(int index, Card spell) {
-        System.out.println(index +
-                " - Name: " + spell.getName() +
+        System.out.printf("%2d", index);
+        System.out.println(" - Name: " + spell.getName() +
                 " - MP: " + spell.getMannaPoint() +
-                " - Description: " + spell.getDescription() +
-                " - price: " + spell.getPrice()
+                "\n   - Description: " + spell.getDescription() +
+                " - price: " + spell.getPrice() + "\n"
         );
     }
 
     private void showItem(int index, Card item) {
-        System.out.println(index +
-                " - Name: " + item.getName() +
-                " - Description: " + item.getDescription() +
-                " - price: " + item.getPrice()
+        System.out.printf("%2d", index);
+        System.out.println(" - Name: " + item.getName() +
+                "\n   - Description: " + item.getDescription() +
+                " - price: " + item.getPrice() + "\n"
         );
     }
 
     private void showHero(int index, Card hero) {
-        System.out.println(index +
-                " - Name: " + hero.getName() +
+        System.out.printf("%2d", index);
+        System.out.println(" - Name: " + hero.getName() +
                 " - AP: " + hero.getDefaultAp() +
                 " - HP: " + hero.getDefaultHp() +
                 " - Class: " + hero.getAttackType() +
-                " - Description: " + hero.getDescription() +
-                " - Price: " + hero.getPrice()
+                "\n   - Description: " + hero.getDescription() +
+                " - Price: " + hero.getPrice() + "\n"
         );
     }
 
