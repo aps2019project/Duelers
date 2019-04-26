@@ -11,13 +11,56 @@ public class Collection {
     private ArrayList<Card> spells = new ArrayList<>();
     private ArrayList<Card> items = new ArrayList<>();
 
+    public boolean hasCard(String cardId) {
+        return hasCard(cardId, heroes) || hasCard(cardId, minions) || hasCard(cardId, spells) || hasCard(cardId, items);
+    }
 
-    public void addCard(Card card) {
+    private boolean hasCard(String cardId, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getCardId().equals(cardId))
+                return true;
+        }
+        return false;
+    }
+
+    public Card getCard(String cardId){
+        if(hasCard(cardId,heroes))
+            return getCard(cardId,heroes);
+        if(hasCard(cardId,minions))
+            return getCard(cardId,minions);
+        if(hasCard(cardId,spells))
+            return getCard(cardId,spells);
+        if(hasCard(cardId,items))
+            return getCard(cardId,items);
+        return null;
+    }
+
+    private Card getCard(String cardId,ArrayList<Card> cards){
+        for(Card card:cards){
+            if(card.getCardId().equals(cardId))
+                return card;
+        }
+        return null;
+    }
+
+    public void addCard(String cardName, Collection originalCollection, String username) {//for account collections
+        if(!originalCollection.hasCard(cardName)){
+            Server.getInstance().serverPrint("Invalid CardName!");
+            return;
+        }
+        int number = 1;
+        String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
+        while (hasCard(cardId + number))
+            number++;
+        Card newCard=new Card(originalCollection.getCard(cardId),username,number);
+    }
+
+    public void addCard(Card card) {//for shop
         if (card == null) {
             Server.getInstance().serverPrint("Null Card.");
             return;
         }
-        if (hasCard(card)) {
+        if (hasCard(card.getCardId())) {
             Server.getInstance().serverPrint("Add Card Error.");
             return;
         }
@@ -35,11 +78,10 @@ public class Collection {
             case COLLECTIBLE_ITEM:
                 items.add(card);
                 break;
+            case FLAG:
+                Server.getInstance().serverPrint("Error");
+                break;
         }
-    }
-
-    public boolean hasCard(Card card) {
-        return heroes.contains(card) || minions.contains(card) || spells.contains(card) || items.contains(card);
     }
 
     public void removeCard(Card card) {
@@ -63,26 +105,5 @@ public class Collection {
 
     public ArrayList<Card> getItems() {
         return items;
-    }
-
-    public Card findHero(String heroId) {
-        return findCardInList(heroId, heroes);
-    }
-
-    public Card findItem(String itemId) {
-        return findCardInList(itemId, items);
-    }
-
-    public Card findOthers(String cardId) {
-        Card card = findCardInList(cardId, minions);
-        if (card != null) return card;
-        return findCardInList(cardId, spells);
-    }
-
-    private Card findCardInList(String cardId, ArrayList<Card> minions) {
-        for (Card card : minions) {
-            if (card.getCardId().equals(cardId)) return card;
-        }
-        return null;
     }
 }

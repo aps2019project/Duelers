@@ -22,7 +22,7 @@ public class TempAccount {
         for (Deck deck : account.getDecks()) {
             this.decks.add(new TempDeck(deck));
         }
-        this.mainDeckName = account.getMainDeck().getName();
+        this.mainDeckName = account.getMainDeck().getDeckName();
         this.money = account.getMoney();
         this.wins = account.getWins();
     }

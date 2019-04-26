@@ -1,5 +1,6 @@
 package server.models.card;
 
+import server.Server;
 import server.models.account.Collection;
 
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ public class Deck {
 
     public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
-        this.hero = collection.findHero(tempDeck.getHeroId());
-        this.item = collection.findItem(tempDeck.getItemId());
+        this.hero = collection.getCard(tempDeck.getHeroId());
+        this.item = collection.getCard(tempDeck.getItemId());
         for (String cardId : tempDeck.getOthersIds()) {
-            others.add(collection.findOthers(cardId));
+            others.add(collection.getCard(cardId));
         }
     }
 
@@ -30,31 +31,16 @@ public class Deck {
         this.deckName=deckName;
     }
 
-    public String getName() {
-        return this.deckName;
+    public void addCard(Card card) {
+        switch (card.getType()){
+            case HERO:
+                hero=card;
+                break;
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                //item=
+        }
     }
-
-    public Card getHero() {
-        return this.hero;
-    }
-
-    public void setHero(Card hero) {
-        this.hero = hero;
-    }
-
-    public void removeHero(Card hero) {
-
-    }
-
-    public ArrayList<Card> getOthers() {
-        return this.others;
-    }
-
-
-    public void addCard(Card item) {
-
-    }
-
 
     public void removeCard(Card item) {
 
@@ -108,5 +94,17 @@ public class Deck {
             if (card.areSame(name)) number++;
         }
         return number;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public Card getHero() {
+        return hero;
+    }
+
+    public ArrayList<Card> getOthers() {
+        return others;
     }
 }
