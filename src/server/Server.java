@@ -3,6 +3,7 @@ package server;
 import client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import server.models.RequestType;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
@@ -369,7 +370,8 @@ public class Server {
     }
 
     private void sudo(Message message) {
-        if (message.getSudoCommand().contains("accounts")) {
+        String command =message.getSudoCommand();
+        if (RequestType.SHOW_ACCOUNTS.maches(command)) {
             for (Map.Entry<Account, String> account : accounts.entrySet()) {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
             }
