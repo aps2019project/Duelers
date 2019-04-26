@@ -38,10 +38,6 @@ public class Shop extends Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public Collection getOriginalCards() {
-        return originalCards;
-    }
-
     public void showCollection(Client client) {
         View.getInstance().showCollection(client.getAccount().getCollection());
     }

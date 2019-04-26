@@ -120,11 +120,11 @@ public class View {
     }
 
     public void showSuccessfulBuyMessage() {
-
+        System.out.println("Buy successfully done");
     }
 
     public void showSuccessfulSellMessage() {
-
+        System.out.println("Sell successfully done");
     }
 
     public void showGameInfo(MatchHistory game) {
