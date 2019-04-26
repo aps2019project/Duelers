@@ -272,8 +272,8 @@ public class Server {
     private void createDeck(Message message) {
         if (preCheckMessage(message)) {
             Account account = clients.get(message.getSender());
-            if (account.getDeck(message.getDeckName()) == null) {
-                account.getDecks().add(new Deck(message.getDeckName()));
+            if (!account.hasDeck(message.getDeckName())) {
+                account.addDeck(message.getDeckName());
             } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
@@ -282,27 +282,82 @@ public class Server {
     }
 
     private void removeDeck(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (account.hasDeck(message.getDeckName())) {
+                account.deleteDeck(message.getDeckName());
+            } else {
+                addToSendingMessages(Message.makeExceptionMessage(
+                        serverName, message.getSender(), "deck was not found.", message.getMessageId()));
+            }
+        }
     }
 
     private void addToDeck(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (!account.hasDeck(message.getDeckName())) {
+                sendException("deck was not found.", message.getSender(), message.getMessageId());
+                return;
+            } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+                sendException("deck had this card.", message.getSender(), message.getMessageId());
+                return;
+            } else {
+                account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
+            }
+        }
     }
 
     private void removeFromDeck(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (!account.hasDeck(message.getDeckName())) {
+                sendException("deck was not found.", message.getSender(), message.getMessageId());
+                return;
+            } else if (!account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+                sendException("deck didn't have this card.", message.getSender(), message.getMessageId());
+                return;
+            } else {
+                account.removeCardFromDeck(message.getCardIds()[0], message.getDeckName());
+            }
+        }
     }
 
     private void selectDeck(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (!account.hasDeck(message.getDeckName())) {
+                sendException("deck was not found", message.getSender(), message.getMessageId());
+            } else if (account.getMainDeck().getDeckName().equals(message.getDeckName())) {
+                sendException("deck was already the main deck.", message.getSender(), message.getMessageId());
+            } else {
+                account.selectDeck(message.getDeckName());
+            }
+        }
     }
 
     private void buyCard(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (!originalCards.hasCard(message.getCardName())) {
+                sendException("invalid card name", message.getSender(), message.getMessageId());
+            } else if (account.getMoney() < originalCards.getCard(message.getCardName()).getPrice()) {
+                sendException("account's money isn't enough.", message.getSender(), message.getMessageId());
+            } else {
+                account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
+            }
+        }
     }
 
     private void sellCard(Message message) {
-
+        if (preCheckMessage(message)) {
+            Account account = clients.get(message.getSender());
+            if (!account.getCollection().hasCard(message.getCardName())) {
+                sendException("invalid card name", message.getSender(), message.getMessageId());
+            } else {
+                account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
+            }
+        }
     }
 
     private void sendStories(Message message) {
