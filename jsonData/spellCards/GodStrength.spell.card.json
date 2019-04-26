@@ -1,5 +1,6 @@
 {
   "name": "God Strength",
+  "cardId": "GodStrength",
   "description": "4 units are added to AP of own HERO",
   "type": "SPELL",
   "spells": [

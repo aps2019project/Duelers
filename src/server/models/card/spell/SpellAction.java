@@ -25,6 +25,32 @@ public class SpellAction {
     private int delay;
     private Spell carryingSpell;
 
+    public SpellAction(SpellAction action) {
+        this.enemyHitChanges = action.enemyHitChanges;
+        this.apChange = action.apChange;
+        this.hpChange = action.hpChange;
+        this.mpChange = action.mpChange;
+        this.poison = action.poison;
+        this.makeStun = action.makeStun;
+        this.makeDisarm = action.makeDisarm;
+        this.actionAtTheEndOfTurn = action.actionAtTheEndOfTurn;
+        this.noDisarm = action.noDisarm;
+        this.noPoison = action.noPoison;
+        this.noStun = action.noStun;
+        this.noBadEffect = action.noBadEffect;
+        this.noAttackFromWeakerOnes = action.noAttackFromWeakerOnes;
+        this.disableHolyBuff = action.disableHolyBuff;
+        this.addSpell = action.addSpell;
+        this.killsTarget = action.killsTarget;
+        this.isForGladiator = action.isForGladiator;
+        this.durable = action.durable;
+        this.removeBuffs = action.removeBuffs;
+        this.delay = action.delay;
+        if (action.carryingSpell != null)
+            this.carryingSpell = new Spell(action.carryingSpell);
+        this.duration = action.duration;
+    }
+
     public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun, boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison, boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff, boolean addSpell, boolean killsTarget, boolean isForGladiator, boolean durable, int removeBuffs, int duration, int delay, Spell carryingSpell) {
         this.enemyHitChanges = enemyHitChanges;
         this.apChange = apChange;

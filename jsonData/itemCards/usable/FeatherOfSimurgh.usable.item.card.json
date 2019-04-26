@@ -1,5 +1,6 @@
 {
   "name": "Feather Of Simurgh",
+  "cardId": "FeatherOfSimurgh",
   "description": "a usable ITEM that if enemy HERO is RANGED or HYBRID decreases 2 units AP of it",
   "type": "USABLE_ITEM",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "Chinese Sword",
+  "cardId": "ChineseSword",
   "description": "TODO",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

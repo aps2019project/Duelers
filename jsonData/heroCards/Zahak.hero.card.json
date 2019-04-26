@@ -1,5 +1,6 @@
 {
   "name": "Zahak",
+  "cardId": "Zahak",
   "description": "a melee HERO with 2 AP, 50 HP, have a POISON BUFF spell for 3 turns",
   "type": "HERO",
   "spells": [

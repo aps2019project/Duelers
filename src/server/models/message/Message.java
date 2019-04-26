@@ -2,15 +2,12 @@ package server.models.message;
 
 import com.google.gson.Gson;
 import server.models.account.Account;
-import server.models.card.Card;
+import server.models.account.Collection;
 import server.models.card.Deck;
 import server.models.game.Game;
 import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.map.Position;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
 
 public class Message {
     private MessageType messageType;
@@ -20,7 +17,7 @@ public class Message {
     private int messageId;
 
     private Game game;
-    private Card[] shopCards;
+    private Collection shopCards;
     private Account account;
     private Deck[] customDecks;
     private Account[] leaderBoard;
@@ -57,7 +54,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Card[] shopCards, int messageId) {
+    public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection shopCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.shopCards = shopCards;
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
@@ -347,7 +344,7 @@ public class Message {
         return game;
     }
 
-    public Card[] getShopCards() {
+    public Collection getShopCards() {
         return shopCards;
     }
 

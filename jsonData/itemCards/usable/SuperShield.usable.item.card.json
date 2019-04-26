@@ -1,5 +1,6 @@
 {
   "name": "Super Shield",
+  "cardId": "SuperShield",
   "description": "a usable ITEM that gives HERO 12 HOLY BUFFs",
   "type": "USABLE_ITEM",
   "spells": [

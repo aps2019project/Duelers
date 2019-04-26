@@ -1,5 +1,6 @@
 {
   "name": "Poison Lake",
+  "cardId": "PoisonLake",
   "description": "It creates POISON CELL EFFECT for one turn in a 3*3 square",
   "type": "SPELL",
   "spells": [

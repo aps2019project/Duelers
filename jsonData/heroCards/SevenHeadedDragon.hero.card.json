@@ -1,5 +1,6 @@
 {
   "name": "SevenHeaded Dragon",
+  "cardId": "SevenHeadedDragon",
   "description": "a melee HERO with 4 AP, 50 HP, have a DISARM BUFF spell",
   "type": "HERO",
   "spells": [

@@ -1,9 +1,6 @@
 package server.models.card.spell;
 
-import com.google.gson.Gson;
 import server.models.map.Position;
-
-import java.util.Scanner;
 
 public class Target {
     private boolean isRelatedToCardOwnerPosition;
@@ -14,6 +11,25 @@ public class Target {
     private Owner owner;
     private TargetCardType cardType;
     private CardAttackType attackType;
+
+    public Target(Target referenceTarget) {
+        this.isRelatedToCardOwnerPosition = referenceTarget.isRelatedToCardOwnerPosition;
+        this.isForAroundOwnHero = referenceTarget.isForAroundOwnHero;
+        if (referenceTarget.dimensions != null)
+            this.dimensions = new Position(referenceTarget.dimensions);
+
+        this.isRandom = referenceTarget.isRandom;
+        if (referenceTarget.owner != null)
+            this.owner = new Owner(referenceTarget.owner);
+
+        if (referenceTarget.cardType != null)
+            this.cardType = new TargetCardType(referenceTarget.cardType);
+
+        if (referenceTarget.attackType != null)
+            this.attackType = new CardAttackType(referenceTarget.attackType);
+
+        this.isForDeckCards = referenceTarget.isForDeckCards;
+    }
 
     public Target(boolean isRelatedToCardOwnerPosition, boolean isForAroundOwnHero, Position dimensions, boolean isRandom, Owner owner, TargetCardType cardType, CardAttackType attackType, boolean isForDeckCards) {
         this.isRelatedToCardOwnerPosition = isRelatedToCardOwnerPosition;
@@ -26,13 +42,35 @@ public class Target {
         this.isForDeckCards = isForDeckCards;
     }
 
+    public boolean isRelatedToCardOwnerPosition() {
+        return isRelatedToCardOwnerPosition;
+    }
 
+    public boolean isForAroundOwnHero() {
+        return isForAroundOwnHero;
+    }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public boolean isRandom() {
+        return isRandom;
+    }
 
-        while (true) {
+    public boolean isForDeckCards() {
+        return isForDeckCards;
+    }
 
-        }
+    public Position getDimensions() {
+        return dimensions;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public TargetCardType getCardType() {
+        return cardType;
+    }
+
+    public CardAttackType getAttackType() {
+        return attackType;
     }
 }

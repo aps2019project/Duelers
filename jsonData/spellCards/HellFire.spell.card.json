@@ -1,5 +1,6 @@
 {
   "name": "HellFire",
+  "cardId": "HellFire",
   "description": "It creates FIERY CELL EFFECT for two turns in a 2*2 square",
   "type": "SPELL",
   "spells": [

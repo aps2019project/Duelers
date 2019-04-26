@@ -5,6 +5,12 @@ public class CardAttackType {
     private boolean ranged;
     private boolean hybrid;
 
+    public CardAttackType(CardAttackType attackType) {
+        this.melee = attackType.melee;
+        this.ranged = attackType.ranged;
+        this.hybrid = attackType.hybrid;
+    }
+
     public CardAttackType(boolean melee, boolean ranged, boolean hybrid) {
         this.melee = melee;
         this.ranged = ranged;

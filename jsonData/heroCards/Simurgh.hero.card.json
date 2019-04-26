@@ -1,5 +1,6 @@
 {
   "name": "Simurgh",
+  "cardId": "Simurgh",
   "description": "a melee HERO with 4 AP, 50 HP, have a STUN BUFF spell for all enemy troops for 1 turn",
   "type": "HERO",
   "spells": [

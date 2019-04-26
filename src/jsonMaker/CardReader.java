@@ -5,22 +5,41 @@ import com.google.gson.GsonBuilder;
 import server.models.card.Card;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CardReader {
 
     public static void main(String[] args) {
-        String directory = "jsonData/itemCards/usable";
+        String directory = "jsonData/spellCards";
         File dir = new File(directory);
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
-                String name = file.getName();
                 try {
-                    BufferedReader bufferedReader = new BufferedReader(new FileReader(directory + "/" + name));
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                    Pattern pattern = Pattern.compile("\"name\": \"(.+)\"");
 
-                    Card loadedCard = new Gson().fromJson(bufferedReader, Card.class);
+                    String content = "";
 
-                    writeAJsonFile(loadedCard, directory + "/" + name);
+                    String line = bufferedReader.readLine();
+
+                    while (line != null) {
+                        content = content + line + System.lineSeparator();
+                        line = bufferedReader.readLine();
+                    }
+                    Matcher matcher = pattern.matcher(content);
+                    if (matcher.find() && !content.contains("cardId")) {
+                        String name = matcher.group(1);
+                        content = content.replace("\"name\": \"" + name + "\"", "\"name\": \"" + name + "\"," + System.lineSeparator() + "  \"cardId\": \"" + name.replaceAll(" ", "") + "\"");
+                        System.out.println(content);
+                        write(directory + "/" + file.getName(), content);
+                    }
+
+
+                    //Card loadedCard = new Gson().fromJson(bufferedReader, Card.class);
+
+                    //writeAJsonFile(loadedCard, directory + "/" + file.getName());
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -33,6 +52,10 @@ public class CardReader {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(card);
         System.out.println(json);
 
+        write(address, json);
+    }
+
+    private static void write(String address, String json) {
         try {
             FileWriter writer = new FileWriter(address);
             writer.write(json);

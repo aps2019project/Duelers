@@ -1,5 +1,6 @@
 {
   "name": "Persian Swordsman",
+  "cardId": "PersianSwordsman",
   "description": "a melee MINION with 4 AP and 6 HP, have an ON_ATTACK STUN BUFF",
   "type": "MINION",
   "spells": [

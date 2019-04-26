@@ -1,5 +1,6 @@
 {
   "name": "Great Wizard",
+  "cardId": "GreatWizard",
   "description": "a ranged MINION with 6 AP, 6 HP, costs 550, have some PASSIVE CONTINUOUS AP POWER and HOLY BUFF",
   "type": "MINION",
   "spells": [

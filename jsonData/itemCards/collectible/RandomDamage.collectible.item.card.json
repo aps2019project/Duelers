@@ -1,5 +1,6 @@
 {
   "name": "Random Damage",
+  "cardId": "RandomDamage",
   "description": "a collectible ITEM that increases HP of a random Troop 2 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

@@ -7,8 +7,7 @@ import server.models.map.Map;
 
 import java.util.ArrayList;
 
-public class Game {
-
+public abstract class Game {
     private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
@@ -82,9 +81,7 @@ public class Game {
 
     }
 
-    public void finishCheck() {
-
-    }
+    public abstract void finishCheck();
 
     public Troop[] getAttackableTroops() {
         return new Troop[]{};

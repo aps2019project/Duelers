@@ -1,5 +1,6 @@
 {
   "name": "Blades Of Agility",
+  "cardId": "BladesOfAgility",
   "description": "a collectible ITEM that increases AP of a random troop 6 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

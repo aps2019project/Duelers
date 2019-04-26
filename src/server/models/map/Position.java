@@ -9,6 +9,11 @@ public class Position {
 		this.column = cell.getColumn();
 	}
 
+	public Position(Position position) {
+		this.row = position.row;
+		this.column = position.column;
+	}
+
 	public Position(int row, int column) {
 		this.row = row;
 		this.column = column;

@@ -18,8 +18,17 @@ public class Spell {
         this.mannaPoint = mannaPoint;
     }
 
-    public Spell(String spellId, Spell referenceSpell) {
-
+    public Spell(Spell referenceSpell) {
+        this.spellId = referenceSpell.spellId;
+        if (referenceSpell.action != null)
+            this.action = new SpellAction(referenceSpell.action);
+        if (referenceSpell.target != null)
+            this.target = new Target(referenceSpell.target);
+        if (referenceSpell.availabilityType != null)
+            this.availabilityType = new AvailabilityType(referenceSpell.availabilityType);
+        this.coolDown = referenceSpell.coolDown;
+        this.mannaPoint = referenceSpell.mannaPoint;
+        this.lastTurnUsed = referenceSpell.lastTurnUsed;
     }
 
     public String getSpellId() {

@@ -1,5 +1,6 @@
 {
   "name": "Esfandiar",
+  "cardId": "Esfandiar",
   "description": "a hybrid HERO with 3 AP, 35 HP, with 3 CONTINUOUS HOLY BUFF for itself",
   "type": "HERO",
   "spells": [

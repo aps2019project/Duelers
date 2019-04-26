@@ -1,5 +1,6 @@
 {
   "name": "Panther",
+  "cardId": "Panther",
   "description": "a melee MINION with 2 AP, 6 HP, have a ON_ATTACK POISON BUFF with 8 units HP decrement for 1 turn",
   "type": "MINION",
   "spells": [

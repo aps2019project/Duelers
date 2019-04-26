@@ -1,5 +1,6 @@
 {
   "name": "Manna Potion",
+  "cardId": "MannaPotion",
   "description": "a collectible ITEM that have a ADD MANNA buff for 1 turn",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

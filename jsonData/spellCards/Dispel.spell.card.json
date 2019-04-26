@@ -1,5 +1,6 @@
 {
   "name": "Dispel",
+  "cardId": "Dispel",
   "description": "This card, destroys positive BUFFs of an enemy troop or negative BUFFs of an own troop",
   "type": "SPELL",
   "spells": [

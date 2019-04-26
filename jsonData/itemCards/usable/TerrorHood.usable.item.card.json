@@ -1,5 +1,6 @@
 {
   "name": "Terror Hood",
+  "cardId": "TerrorHood",
   "description": "a usable ITEM that gives all troops an ON_ATTACK WEAKNESS BUFF with 2 AP decrement",
   "type": "USABLE_ITEM",
   "spells": [

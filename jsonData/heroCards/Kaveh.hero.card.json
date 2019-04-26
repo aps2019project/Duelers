@@ -1,5 +1,6 @@
 {
   "name": "Kaveh",
+  "cardId": "Kaveh",
   "description": "a melee HERO with 4 AP, 50 HP, have a HOLY CELL EFFECT spell for 3 turns",
   "type": "HERO",
   "spells": [
