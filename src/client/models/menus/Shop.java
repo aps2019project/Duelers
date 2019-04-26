@@ -12,20 +12,19 @@ import java.util.ArrayList;
 public class Shop extends Menu {
     private static Shop SHOP;
     private Collection originalCards = new Collection();
-    private Card resultCard;
 
-    private Shop(Client client, String serverName) {
-        client.addToSendingMessages(
-                Message.makeGetOriginalCardsMessage(
-                        client.getClientName(), serverName, 0
-                )
-        );
-        client.sendMessages();
+    private Shop() {
     }
 
     public static Shop getInstance(Client client, String serverName) {
         if (SHOP == null) {
-            SHOP = new Shop(client, serverName);
+            SHOP = new Shop();
+            client.addToSendingMessages(
+                    Message.makeGetOriginalCardsMessage(
+                            client.getClientName(), serverName, 0
+                    )
+            );
+            client.sendMessages();
         }
         return SHOP;
     }
@@ -37,10 +36,6 @@ public class Shop extends Menu {
     @Override
     public void exit(Client client) {
         client.setCurrentMenu(MainMenu.getInstance());
-    }
-
-    public Collection getOriginalCards() {
-        return originalCards;
     }
 
     public void showCollection(Client client) {
@@ -75,17 +70,9 @@ public class Shop extends Menu {
         View.getInstance().showSuccessfulSellMessage();
     }
 
-    public void searchInShop(String cardName, Client client, String serverName) throws InputException {
-        client.addToSendingMessages(
-                Message.makeShopSearchMessage(
-                        client.getClientName(), serverName, cardName, 0
-                )
-        );
-        client.sendMessages();
+    public void searchInShop(String cardName) throws InputException {
+        Card resultCard = originalCards.searchCollection(cardName).get(0);
 
-        if (!client.getValidation()) {
-            throw new InputException(client.getErrorMessage());
-        }
         View.getInstance().showCardId(resultCard);
     }
 
@@ -96,7 +83,7 @@ public class Shop extends Menu {
     }
 
     public void showMarketCardsAndItems() {
-        View.getInstance().showShop(originalCards);
+        View.getInstance().showCollection(originalCards);
     }
 
     public void setOriginalCards(Collection originalCards) {

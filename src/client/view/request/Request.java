@@ -52,68 +52,104 @@ public class Request {
         }
     }
 
-    private void gameCommandsHandleRequest(Client client, String serverName) {
+    private void gameCommandsHandleRequest(Client client, String serverName) throws InputException {
         GameCommands gameCommands = GameCommands.getInstance();
-        if (GameRequestType.GAME_INFO.maches(command)) {
+        if (GameRequestType.GAME_INFO.matches(command)) {
             gameCommands.showGameInfo();
 
-        } else if (GameRequestType.SHOW_MY_MINIONS.maches(command)) {
+        } else if (GameRequestType.SHOW_MY_MINIONS.matches(command)) {
             gameCommands.showMyMinions();
 
-        } else if (GameRequestType.SHOW_OPP_MINIONS.maches(command)) {
+        } else if (GameRequestType.SHOW_OPP_MINIONS.matches(command)) {
             gameCommands.showOppMinions();
 
-        } else if (GameRequestType.SHOW_CARD_INFO.maches(command)) {
+        } else if (GameRequestType.SHOW_CARD_INFO.matches(command)) {
             String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
             gameCommands.showCardInfo(cardId);
 
-        } else if (GameRequestType.SELECT_CARD.maches(command)) {
+        } else if (GameRequestType.SELECT_CARD.matches(command)) {
             String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
             gameCommands.selectCard(cardId);
 
-        } else if (GameRequestType.MOVE.maches(command)) {
+        } else if (GameRequestType.MOVE.matches(command)) {
             Matcher matcher = GameRequestType.MOVE.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
             gameCommands.move(row, column);
 
-        } else if (GameRequestType.ATTACK.maches(command)) {
+        } else if (GameRequestType.ATTACK.matches(command)) {
             String cardId = GameRequestType.ATTACK.getMatcher().group(1);
             gameCommands.attack(cardId);
 
-        } else if (GameRequestType.ATTACK_COMBO.maches(command)) {
+        } else if (GameRequestType.ATTACK_COMBO.matches(command)) {
             Matcher matcher = GameRequestType.ATTACK_COMBO.getMatcher();
             String oppCardId = matcher.group(1);
             String[] cardIds = matcher.group(2).split(" ");
             gameCommands.attackCombo(oppCardId, cardIds);
 
-        } else if (GameRequestType.USE_SPECIAL_POWER.maches(command)) {
+        } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
             Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
             gameCommands.useSpecialPower(row, column);
 
-        } else if (GameRequestType.SHOW_HAND.maches(command)) {
+        } else if (GameRequestType.SHOW_HAND.matches(command)) {
             gameCommands.showHand();
 
-        } else if (GameRequestType.INSERT_CARD.maches(command)) {
+        } else if (GameRequestType.INSERT_CARD.matches(command)) {
             Matcher matcher = GameRequestType.INSERT_CARD.getMatcher();
             String cardId = matcher.group(1);
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
             gameCommands.insertCard(cardId, row, column);
 
-        } else if (GameRequestType.END_TURN.maches(command)){
+        } else if (GameRequestType.END_TURN.matches(command)) {
             gameCommands.endTurn();
 
-        }else if (GameRequestType.SHOW_COLLECTABLES.maches(command)){
+        } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
             gameCommands.show‫‪Collectables‬‬();
 
-        }else if (GameRequestType.SELECT_ITEM.maches(command)){
+        } else if (GameRequestType.SELECT_ITEM.matches(command)) {
             String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
             gameCommands.selectItem(itemID);
 
-        }
+        } else if (gameCommands.isItemSelected() && GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
+            gameCommands.showSelectedItemInfo();
+
+        } else if (gameCommands.isItemSelected() && GameRequestType.USE_ITEM.matches(command)) {
+            Matcher matcher = GameRequestType.USE_ITEM.getMatcher();
+            int row = Integer.parseInt(matcher.group(1));
+            int column = Integer.parseInt(matcher.group(2));
+            gameCommands.useItem(row, column);
+
+        } else if (GameRequestType.SHOW_NEXT_CARD.matches(command)) {
+            gameCommands.showNextCard();
+
+        } else if (GameRequestType.ENTER_GRAVE_YARD.matches(command)) {
+            gameCommands.enterGraveYard();
+
+        } else if (gameCommands.isInGraveYard() && GameRequestType.SHOW_INFO_OF_CARD_INGRAVEYARD.matches(command)) {
+            Matcher matcher = GameRequestType.SHOW_CRADS_IN_GRAVE_YARD.getMatcher();
+            String cardId = matcher.group(1);
+            gameCommands.showCardInfoInGraveYard(cardId);
+
+        } else if (gameCommands.isInGraveYard() && GameRequestType.SHOW_CRADS_IN_GRAVE_YARD.matches(command)) {
+            gameCommands.showCardsInGraveYard();
+
+        } else if (gameCommands.isInGraveYard() && GameRequestType.EXIT.matches(command)) {
+            gameCommands.exitFromGraveYard();
+
+        } else if (GameRequestType.HELP.matches(command)) {
+            gameCommands.showGameActions();
+
+        } else if (GameRequestType.END_GAME.matches(command)) {
+            gameCommands.endGame();
+
+        } else if (GameRequestType.SHOW_MENU_HELP.matches(command)) {
+            gameCommands.showHelp();
+
+        }else
+            throw new InputException("invalid command");
 
     }
 
@@ -164,8 +200,7 @@ public class Request {
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             shop.searchInShop(
-                    RequestType.SEARCH.getMatcher().group(1),
-                    client, serverName
+                    RequestType.SEARCH.getMatcher().group(1)
             );
 
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
@@ -241,7 +276,7 @@ public class Request {
             customGameMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            customGameMenu.showHelp();
+            customGameMenu.exit(client);
 
         } else {
             throw new InputException("invalid command");

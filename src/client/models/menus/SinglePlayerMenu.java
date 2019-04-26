@@ -18,6 +18,7 @@ public class SinglePlayerMenu extends Menu {
     }
 
     public void moveToCustomGameMenu(Client client){
+        CustomGameMenu.getInstance().setHelp(client);
         client.setCurrentMenu(CustomGameMenu.getInstance());
     }
 

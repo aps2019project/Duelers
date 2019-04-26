@@ -101,8 +101,10 @@ public class Client {
                 case SEND_EXCEPTION:
                     validation = false;
                     errorMessage = message.getExceptionString();
+                    break;
                 case ACCOUNT_COPY:
                     account = new Account(message.getAccount());
+                    break;
                 case GAME_COPY:
                     game = message.getGame();
                     break;

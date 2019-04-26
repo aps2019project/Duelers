@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum RequestType {
-    SUDO("^sudo \\w+$"),
+    SUDO("^sudo .+$"),
     //Account menu:
     CREATE_ACCOUNT("^create account (\\w+)$"),
     LOGIN("^login (\\w+)$"),

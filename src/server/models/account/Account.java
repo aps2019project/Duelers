@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Account {
     private String username;
     private String password;
-    private Collection collection;
+    private Collection collection = new Collection();
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
     private ArrayList<MatchHistory> matchHistories = new ArrayList<>();

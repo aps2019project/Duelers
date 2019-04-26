@@ -44,11 +44,11 @@ public class Account {
         Account account = (Account) obj;
         return this.username.equals(account.username);
     }
-    
+
     public int getWins() {
         return wins;
     }
-    
+
     public String getUsername() {
         return this.username;
     }
@@ -80,5 +80,9 @@ public class Account {
             }
         }
         throw new InputException("Such deck not found");
+    }
+
+    public boolean isMainDeck(Deck deck) {
+        return this.mainDeck.equals(deck);
     }
 }

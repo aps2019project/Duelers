@@ -322,13 +322,6 @@ public class Message {
         return message;
     }
 
-    public static Message makeShopSearchMessage(String sender, String receiver, String cardName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.SHOP_SEARCH;
-        message.cardName = cardName;
-        return message;
-    }
-
     public static Message makeSelectUserMessage(String sender, String receiver, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.SELECT_USER;
