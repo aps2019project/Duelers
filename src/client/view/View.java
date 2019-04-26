@@ -1,16 +1,19 @@
 package client.view;
 
 import client.Client;
+import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.account.MatchHistory;
 import client.models.card.Card;
+import client.models.card.CardType;
 import client.models.card.Deck;
 import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class View {
 
@@ -56,15 +59,27 @@ public class View {
         }
     }
 
-    public void showDecksList(ArrayList<Deck> decks) {
-        for (Deck deck : decks) {
+    public void showDecksList(Account account) {
+        int counter = 1;
+        System.out.printf("%2d - ", counter++);
+        showDeck(account.getMainDeck());
+        for (Deck deck : account.getDecks()) {
+            if (account.isMainDeck(deck)) continue;
+            System.out.printf("%2d - ", counter++);
             showDeck(deck);
         }
     }
 
     public void showDeck(Deck deck) {
-
+        if (deck == null) return;
+        System.out.println(deck.getName() + ":\n");
+        System.out.println("Hero:");
+        showHero(1, deck.getHero());
+        System.out.println("Item:");
+        showItem(1, deck.getItem());
+        showOtherCards(deck.getOthers());
     }
+
 
     public void showGameModesList() {
 
@@ -151,15 +166,14 @@ public class View {
     }
 
     public void showCollection(Collection collection) {
-        showHeroes(collection);
-        showItems(collection);
-        showSpells(collection);
-        showMinions(collection);
+        showHeroes(collection.getHeroes());
+        showItems(collection.getItems());
+        showSpells(collection.getSpells());
+        showMinions(collection.getMinions());
     }
 
-    private void showMinions(Collection collection) {
+    private void showMinions(ArrayList<Card> minions) {
         System.out.println("Minions:\n");
-        ArrayList<Card> minions = collection.getMinions();
         if (minions.size() == 0) {
             System.out.println("there's no minions in collection\n");
             return;
@@ -170,9 +184,8 @@ public class View {
         }
     }
 
-    private void showSpells(Collection collection) {
+    private void showSpells(ArrayList<Card> spells) {
         System.out.println("Spells:\n");
-        ArrayList<Card> spells = collection.getSpells();
         if (spells.size() == 0) {
             System.out.println("there's no spells in collection\n");
             return;
@@ -183,9 +196,8 @@ public class View {
         }
     }
 
-    private void showItems(Collection collection) {
+    private void showItems(ArrayList<Card> items) {
         System.out.println("Items:\n");
-        ArrayList<Card> items = collection.getItems();
         if (items.size() == 0) {
             System.out.println("there's no items in collection\n");
             return;
@@ -196,9 +208,8 @@ public class View {
         }
     }
 
-    private void showHeroes(Collection collection) {
+    private void showHeroes(ArrayList<Card> heroes) {
         System.out.println("Heroes:\n");
-        ArrayList<Card> heroes = collection.getHeroes();
         if (heroes.size() == 0) {
             System.out.println("there's no heroes in collection\n");
             return;
@@ -206,6 +217,22 @@ public class View {
         for (int i = 0; i < heroes.size(); i++) {
             Card hero = heroes.get(i);
             showHero(i + 1, hero);
+        }
+    }
+
+    private void showOtherCards(ArrayList<Card> others) {
+        System.out.println("Cards:\n");
+        if (others.size() == 0) {
+            System.out.println("there's no other cards in collection\n");
+            return;
+        }
+        for (int i = 0; i < others.size(); i++) {
+            Card card = others.get(i);
+            if (card.getType() == CardType.MINION) {
+                showMinion(i + 1, card);
+            } else {
+                showSpell(i + 1, card);
+            }
         }
     }
 

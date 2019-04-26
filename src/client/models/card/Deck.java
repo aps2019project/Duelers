@@ -19,6 +19,13 @@ public class Deck {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().getName().equals(Deck.class.getName())) return false;
+        Deck deck = (Deck) obj;
+        return deck.getName().equals(deckName);
+    }
+
     public String getName() {
         return this.deckName;
     }
