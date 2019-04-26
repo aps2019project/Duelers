@@ -22,7 +22,7 @@ public class CollectionMenu extends Menu {
     }
 
     public void showAllDecks(Client client) {
-        View.getInstance().showDecksList(client.getAccount().getDecks());
+        View.getInstance().showDecksList(client.getAccount());
     }
 
     public void showDeck(String deckName, Client client) throws InputException {
@@ -138,5 +138,4 @@ public class CollectionMenu extends Menu {
 
         View.getInstance().showCardIds(resultCards);
     }
-
 }
