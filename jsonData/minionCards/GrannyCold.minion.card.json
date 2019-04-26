@@ -1,5 +1,6 @@
 {
   "name": "Granny Cold",
+  "cardId": "GrannyCold",
   "description": "a ranged MINION with 4 AP, 3 HP, have an ON_SPAWN STUN BUFF for 3*3 square around it",
   "type": "MINION",
   "spells": [

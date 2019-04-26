@@ -25,8 +25,10 @@ public class Account {
         this.username = account.getUsername();
         this.password = account.getPassword();
         this.collection = account.getCollection();
-        for (TempDeck deck : account.getDecks()) {
-            this.decks.add(new Deck(deck, collection));
+        if (account.getDecks() != null) {
+            for (TempDeck deck : account.getDecks()) {
+                this.decks.add(new Deck(deck, collection));
+            }
         }
         this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();

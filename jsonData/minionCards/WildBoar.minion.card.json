@@ -1,5 +1,6 @@
 {
   "name": "Wild Boar",
+  "cardId": "WildBoar",
   "description": "a melee MINION with 14 AP, 10 HP, costs 500, and does not DISARM on DEFEND",
   "type": "MINION",
   "spells": [

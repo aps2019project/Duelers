@@ -1,5 +1,6 @@
 {
   "name": "Arjang The Demon",
+  "cardId": "ArjangTheDemon",
   "description": "a melee MINION with 6 AP, 6 HP, can attack combo",
   "type": "MINION",
   "defaultAp": 6,

@@ -18,7 +18,7 @@ public class CardReader {
             for (File file : files) {
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-                    Pattern pattern = Pattern.compile("\"name\": \"(\\w+)\"");
+                    Pattern pattern = Pattern.compile("\"name\": \"(.+)\"");
 
                     String content = "";
 
@@ -29,15 +29,13 @@ public class CardReader {
                         line = bufferedReader.readLine();
                     }
                     Matcher matcher = pattern.matcher(content);
-                    if (matcher.find()) {
+                    if (matcher.find() && !content.contains("cardId")) {
                         String name = matcher.group(1);
-                        content = content.replace("  \"cardId\": \"" + name + "\",\n", "");
-                        content = content.replace("\"name\": \"" + name + "\",", "\"name\": \"" + name + "\"," + System.lineSeparator() + "  \"cardId\": \"" + name + "\"");
+                        content = content.replace("\"name\": \"" + name + "\"", "\"name\": \"" + name + "\"," + System.lineSeparator() + "  \"cardId\": \"" + name.replaceAll(" ", "") + "\"");
                         System.out.println(content);
+                        write(directory + "/" + file.getName(), content);
                     }
 
-
-//                    write(directory + "/" + file.getName(), content);
 
                     //Card loadedCard = new Gson().fromJson(bufferedReader, Card.class);
 

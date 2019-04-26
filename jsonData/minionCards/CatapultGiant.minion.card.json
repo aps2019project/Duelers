@@ -1,5 +1,6 @@
 {
   "name": "Catapult Giant",
+  "cardId": "CatapultGiant",
   "description": "a ranged MINION with 12 AP, 12 HP",
   "type": "MINION",
   "defaultAp": 12,

@@ -1,5 +1,6 @@
 {
   "name": "Persian General",
+  "cardId": "PersianGeneral",
   "description": "a melee MINION with 4 AP, 12 HP, can attack combo",
   "type": "MINION",
   "defaultAp": 4,

@@ -5,10 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import server.models.account.Account;
 import server.models.account.Collection;
+import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.game.Game;
 import server.models.game.Story;
+import server.models.game.TempStory;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
 
@@ -363,10 +365,10 @@ public class Server {
         File[] files = new File(accountsPath).listFiles();
         if (files != null) {
             for (File file : files) {
-                Account account = loadFile(file, Account.class);
+                TempAccount account = loadFile(file, TempAccount.class);
                 if (account == null) continue;
 
-                accounts.put(account, null);
+                accounts.put(new Account(account), null);
             }
         }
         serverPrint("Accounts loaded");
@@ -396,10 +398,10 @@ public class Server {
         File[] files = new File(storiesPath).listFiles();
         if (files != null) {
             for (File file : files) {
-                Story story = loadFile(file, Story.class);
+                TempStory story = loadFile(file, TempStory.class);
                 if (story == null) continue;
 
-                stories.add(story);
+                stories.add(new Story(story, originalCards));
             }
         }
         serverPrint("Stories loaded");
@@ -415,7 +417,7 @@ public class Server {
     }
 
     private void saveAccount(Account account) {
-        String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(account);
+        String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(new TempAccount(account));
 
         try {
             FileWriter writer = new FileWriter("jsonData/accounts/" + account.getUsername() + ".account.json");

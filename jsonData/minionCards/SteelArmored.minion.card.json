@@ -1,5 +1,6 @@
 {
   "name": "Steel Armored",
+  "cardId": "SteelArmored",
   "description": "a melee MINION with 1 AP, 1 HP, have 12 PASSIVE CONTINUOUS HOLY BUFFs",
   "type": "MINION",
   "spells": [

@@ -1,7 +1,6 @@
 package server.models.card;
 
 import server.models.account.Collection;
-import server.models.game.TempStory;
 
 import java.util.ArrayList;
 
@@ -39,11 +38,9 @@ public class Deck {
         return this.hero;
     }
 
-
     public void setHero(Card hero) {
         this.hero = hero;
     }
-
 
     public void removeHero(Card hero) {
 
@@ -82,5 +79,34 @@ public class Deck {
     public boolean isValid() {
         if (hero == null) return false;
         return others.size() == 20;
+    }
+
+    public void copyCards() {
+        this.hero = new Card(hero);
+        this.hero.setCardId(makeId(hero, 1));
+        this.item = new Card(item);
+        this.item.setCardId(makeId(item, 1));
+        ArrayList<Card> oldOthers = this.others;
+        this.others = new ArrayList<>();
+        for (Card other : oldOthers) {
+            Card card = new Card(other);
+            card.setCardId(makeId(card, numberOf(card.getName()) + 1));
+            others.add(card);
+        }
+    }
+
+    private String makeId(Card card, int number) {
+        return deckName.replaceAll(" ", "") + "_" +
+                card.getName().replaceAll(" ", "") + "_" +
+                number;
+    }
+
+    private int numberOf(String name) {
+        if (hero.areSame(name) || item.areSame(name)) return 0;
+        int number = 0;
+        for (Card card : others) {
+            if (card.areSame(name)) number++;
+        }
+        return number;
     }
 }

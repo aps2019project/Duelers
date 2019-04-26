@@ -1,5 +1,6 @@
 {
   "name": "Warlock Snake",
+  "cardId": "WarlockSnake",
   "description": "a ranged MINION with 7 AP, 14 HP, costs 500, have an inverse HOLY BUFF SPELL",
   "type": "MINION",
   "spells": [

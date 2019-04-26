@@ -1,5 +1,6 @@
 {
   "name": "Hog Rider Demon",
+  "cardId": "HogRiderDemon",
   "description": "a melee MINION with 8 AP, 16 HP",
   "type": "MINION",
   "defaultAp": 8,

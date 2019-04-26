@@ -1,5 +1,6 @@
 {
   "name": "TwoHeaded Giant",
+  "cardId": "TwoHeadedGiant",
   "description": "a melee MINION with 4 AP, 10 HP, have a ON_ATTACK spell that removes all positive effects",
   "type": "MINION",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "Lighting Bolt",
+  "cardId": "LightingBolt",
   "description": "8 units hit enemy HERO",
   "type": "SPELL",
   "spells": [

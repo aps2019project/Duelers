@@ -1,5 +1,6 @@
 {
   "name": "Shock Hammer",
+  "cardId": "ShockHammer",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "Poisonous Dagger",
+  "cardId": "PoisonousDagger",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

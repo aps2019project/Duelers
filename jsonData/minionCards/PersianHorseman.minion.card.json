@@ -1,5 +1,6 @@
 {
   "name": "Persian Horseman",
+  "cardId": "PersianHorseman",
   "description": "a melee MINION with 6 AP, 10 HP",
   "type": "MINION",
   "defaultAp": 6,

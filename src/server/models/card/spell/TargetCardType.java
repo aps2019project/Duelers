@@ -5,6 +5,12 @@ public class TargetCardType {
     private boolean hero;
     private boolean minion;
 
+    public TargetCardType(TargetCardType targetCardType) {
+        this.cell = targetCardType.cell;
+        this.hero = targetCardType.hero;
+        this.minion = targetCardType.minion;
+    }
+
     public TargetCardType(boolean cell, boolean hero, boolean minion) {
         this.cell = cell;
         this.hero = hero;

@@ -1,5 +1,6 @@
 {
   "name": "Area Dispel",
+  "cardId": "AreaDispel",
   "description": "This card, destroys positive BUFFs of enemy troops and negative BUFFs of own troops in a 2*2 square",
   "type": "SPELL",
   "spells": [

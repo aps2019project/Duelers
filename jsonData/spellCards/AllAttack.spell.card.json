@@ -1,5 +1,6 @@
 {
   "name": "All Attack",
+  "cardId": "AllAttack",
   "description": "6 units hit all enemy troops",
   "type": "SPELL",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "Turanian StonyHook",
+  "cardId": "TuranianStonyHook",
   "description": "a ranged MINION with 2 AP, 4 HP",
   "type": "MINION",
   "defaultAp": 2,

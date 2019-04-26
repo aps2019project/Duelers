@@ -1,5 +1,6 @@
 {
   "name": "Persian SpearMan",
+  "cardId": "PersianSpearMan",
   "description": "a hybrid MINION with 3 AP, 5 HP",
   "type": "MINION",
   "defaultAp": 3,

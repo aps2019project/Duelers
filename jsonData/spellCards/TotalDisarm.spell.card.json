@@ -1,5 +1,6 @@
 {
   "name": "Total Disarm",
+  "cardId": "TotalDisarm",
   "description": "Make an enemy troop DISARM till the end of the game",
   "type": "SPELL",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "King Wisdom",
+  "cardId": "KingWisdom",
   "description": "a usable ITEM that increases manna point 1 unit every turn",
   "type": "USABLE_ITEM",
   "spells": [
