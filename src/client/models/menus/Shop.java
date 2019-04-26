@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Shop extends Menu {
     private static Shop SHOP;
     private Collection originalCards = new Collection();
-    private Card resultCard;
 
     private Shop() {
     }
@@ -75,17 +74,9 @@ public class Shop extends Menu {
         View.getInstance().showSuccessfulSellMessage();
     }
 
-    public void searchInShop(String cardName, Client client, String serverName) throws InputException {
-        client.addToSendingMessages(
-                Message.makeShopSearchMessage(
-                        client.getClientName(), serverName, cardName, 0
-                )
-        );
-        client.sendMessages();
+    public void searchInShop(String cardName) throws InputException {
+        Card resultCard = originalCards.searchCollection(cardName).get(0);
 
-        if (!client.getValidation()) {
-            throw new InputException(client.getErrorMessage());
-        }
         View.getInstance().showCardId(resultCard);
     }
 

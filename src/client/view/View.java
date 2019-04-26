@@ -101,16 +101,14 @@ public class View {
         System.out.print("Password: ");
     }
 
-    public void showCardsList(ArrayList<Card> cards) {
-
-    }
-
-    public void showCardInfo(Card card) {
-
+    public void showCardIds(ArrayList<Card> cards) {
+        for (Card card : cards) {
+            showCardId(card);
+        }
     }
 
     public void showCardId(Card card) {
-
+        System.out.println(card.getCardId());
     }
 
     public void showDeckValidationMessage(boolean isValid) {
@@ -174,10 +172,7 @@ public class View {
 
     private void showMinions(ArrayList<Card> minions) {
         System.out.println("Minions:\n");
-        if (minions.size() == 0) {
-            System.out.println("there's no minions in collection\n");
-            return;
-        }
+        if (minions.size() == 0) return;
         for (int i = 0; i < minions.size(); i++) {
             Card minion = minions.get(i);
             showMinion(i + 1, minion);
@@ -186,10 +181,7 @@ public class View {
 
     private void showSpells(ArrayList<Card> spells) {
         System.out.println("Spells:\n");
-        if (spells.size() == 0) {
-            System.out.println("there's no spells in collection\n");
-            return;
-        }
+        if (spells.size() == 0) return;
         for (int i = 0; i < spells.size(); i++) {
             Card spell = spells.get(i);
             showSpell(i + 1, spell);
@@ -198,10 +190,7 @@ public class View {
 
     private void showItems(ArrayList<Card> items) {
         System.out.println("Items:\n");
-        if (items.size() == 0) {
-            System.out.println("there's no items in collection\n");
-            return;
-        }
+        if (items.size() == 0) return;
         for (int i = 0; i < items.size(); i++) {
             Card item = items.get(i);
             showItem(i + 1, item);
@@ -210,10 +199,7 @@ public class View {
 
     private void showHeroes(ArrayList<Card> heroes) {
         System.out.println("Heroes:\n");
-        if (heroes.size() == 0) {
-            System.out.println("there's no heroes in collection\n");
-            return;
-        }
+        if (heroes.size() == 0) return;
         for (int i = 0; i < heroes.size(); i++) {
             Card hero = heroes.get(i);
             showHero(i + 1, hero);
@@ -222,10 +208,7 @@ public class View {
 
     private void showOtherCards(ArrayList<Card> others) {
         System.out.println("Cards:\n");
-        if (others.size() == 0) {
-            System.out.println("there's no other cards in collection\n");
-            return;
-        }
+        if (others.size() == 0) return;
         for (int i = 0; i < others.size(); i++) {
             Card card = others.get(i);
             if (card.getType() == CardType.MINION) {
@@ -274,11 +257,5 @@ public class View {
                 "\n   - Description: " + hero.getDescription() +
                 " - Price: " + hero.getPrice() + "\n"
         );
-    }
-
-    public void showCardIds(ArrayList<Card> cards) {
-        for (Card card : cards) {
-            showCardId(card);
-        }
     }
 }
