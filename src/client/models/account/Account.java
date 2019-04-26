@@ -36,6 +36,10 @@ public class Account {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj.getClass().getName().equals(AccountInfo.class.getName())) {
+            AccountInfo accountInfo = (AccountInfo) obj;
+            if (this.username.equals(accountInfo.getUsername())) return true;
+        }
         if (!obj.getClass().getName().equals(Account.class.getName())) return false;
         Account account = (Account) obj;
         return this.username.equals(account.username);

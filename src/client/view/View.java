@@ -1,7 +1,7 @@
 package client.view;
 
 import client.Client;
-import client.models.account.Account;
+import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.account.MatchHistory;
 import client.models.card.Card;
@@ -49,7 +49,7 @@ public class View {
 
     public void showLeaderBoard(Client client) {
         int counter = 1;
-        for (Account account : client.getLeaderBoard()) {
+        for (AccountInfo account : client.getLeaderBoard()) {
             System.out.println(counter + "- UserName : " + account.getUsername() + " - Wins : " + account.getWins());
             counter++;
         }
@@ -71,8 +71,8 @@ public class View {
 
     public void showUsersList(Client client) {
         System.out.println("users list:");
-        for (Account account : client.getLeaderBoard()) {
-            if (account.equals(client.getAccount())) continue;
+        for (AccountInfo account : client.getLeaderBoard()) {
+            if (client.getAccount().equals(account)) continue;
             System.out.println("-" + account.getUsername());
         }
     }

@@ -420,7 +420,7 @@ public class Server {
         String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(new TempAccount(account));
 
         try {
-            FileWriter writer = new FileWriter(accountsPath + account.getUsername() + ".account.json");
+            FileWriter writer = new FileWriter(accountsPath + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
             writer.close();
         } catch (IOException e) {
