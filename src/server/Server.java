@@ -54,7 +54,6 @@ public class Server {
     private Server(String serverName) {
         readAccounts();
         readOriginalCards();
-        readCustomDecks();
         readStories();
         this.serverName = serverName;
         serverPrint("Server Was Created!");
@@ -460,10 +459,6 @@ public class Server {
         }
         originalFlag = loadFile(new File(FLAG_PATH), Card.class);
         serverPrint("Original Cards loaded");
-    }
-
-    private void readCustomDecks() {
-        //file
     }
 
     private void readStories() {

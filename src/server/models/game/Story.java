@@ -16,7 +16,7 @@ public class Story {
 
     public Story(TempStory story, Collection originalCards) {
         this.deck = new Deck(story.getDeck(), originalCards);
-        //deck.copyCards();
+        deck.copyCards();
         this.gameType = story.getGameType();
         this.reward = story.getReward();
     }

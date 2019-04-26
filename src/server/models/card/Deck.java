@@ -91,7 +91,7 @@ public class Deck {
         return others.size() == 20;
     }
 
-    /*public void copyCards() {
+    public void copyCards() {
         this.hero = new Card(hero);
         this.hero.setCardId(makeId(hero, 1));
         this.item = new Card(item);
@@ -103,7 +103,22 @@ public class Deck {
             card.setCardId(makeId(card, numberOf(card.getName()) + 1));
             others.add(card);
         }
-    }*/
+    }
+
+    private String makeId(Card card, int number) {
+        return deckName.replaceAll(" ", "") + "_" +
+                card.getName().replaceAll(" ", "") + "_" +
+                number;
+    }
+
+    private int numberOf(String name) {
+        if (hero.areSame(name) || item.areSame(name)) return 0;
+        int number = 0;
+        for (Card card : others) {
+            if (card.areSame(name)) number++;
+        }
+        return number;
+    }
 
     public String getDeckName() {
         return deckName;
