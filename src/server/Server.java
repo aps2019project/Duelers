@@ -274,6 +274,8 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 account.addDeck(message.getDeckName());
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
@@ -286,6 +288,8 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (account.hasDeck(message.getDeckName())) {
                 account.deleteDeck(message.getDeckName());
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck was not found.", message.getMessageId()));
@@ -304,6 +308,8 @@ public class Server {
                 return;
             } else {
                 account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             }
         }
     }
@@ -319,6 +325,8 @@ public class Server {
                 return;
             } else {
                 account.removeCardFromDeck(message.getCardIds()[0], message.getDeckName());
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             }
         }
     }
@@ -332,6 +340,8 @@ public class Server {
                 sendException("deck was already the main deck.", message.getSender(), message.getMessageId());
             } else {
                 account.selectDeck(message.getDeckName());
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             }
         }
     }
@@ -345,6 +355,8 @@ public class Server {
                 sendException("account's money isn't enough.", message.getSender(), message.getMessageId());
             } else {
                 account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             }
         }
     }
@@ -356,6 +368,8 @@ public class Server {
                 sendException("invalid card name", message.getSender(), message.getMessageId());
             } else {
                 account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, message.getSender(), account, message.getMessageId()));
             }
         }
     }
@@ -424,12 +438,18 @@ public class Server {
     }
 
     private void sudo(Message message) {
-        String command =message.getSudoCommand();
-        if (RequestType.SHOW_ACCOUNTS.matches(command)) {
+        String command = message.getSudoCommand().toLowerCase();
+        /*if (RequestType.SHOW_ACCOUNTS.matches(command)) {
+            for (Map.Entry<Account, String> account : accounts.entrySet()) {
+                serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
+            }
+        }*/
+        if (command.contains("account")) {
             for (Map.Entry<Account, String> account : accounts.entrySet()) {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
             }
         }
+
     }
 
     private void readAccounts() {

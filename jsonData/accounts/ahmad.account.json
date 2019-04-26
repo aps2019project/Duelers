@@ -3,12 +3,241 @@
   "password": "123456",
   "collection": {
     "heroes": [],
-    "minions": [],
+    "minions": [
+      {
+        "name": "Piran",
+        "description": "a melee MINION with 12 AP, 20 HP, costs 400, and does not POISON on DEFEND",
+        "cardId": "ahmad_Piran_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "p_no_poison",
+            "action": {
+              "enemyHitChanges": 0,
+              "apChange": 0,
+              "hpChange": 0,
+              "mpChange": 0,
+              "poison": false,
+              "makeStun": false,
+              "makeDisarm": false,
+              "actionAtTheEndOfTurn": false,
+              "noDisarm": false,
+              "noPoison": true,
+              "noStun": false,
+              "noBadEffect": false,
+              "noAttackFromWeakerOnes": false,
+              "disableHolyBuff": false,
+              "addSpell": false,
+              "killsTarget": false,
+              "isForGladiator": false,
+              "durable": true,
+              "removeBuffs": 0,
+              "duration": 1,
+              "delay": 0
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": true,
+              "isForAroundOwnHero": false,
+              "isRandom": false,
+              "isForDeckCards": false,
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": true,
+                "enemy": false
+              },
+              "cardType": {
+                "cell": false,
+                "hero": false,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": false,
+                "hybrid": false
+              }
+            },
+            "availabilityType": {
+              "onPut": true,
+              "onAttack": false,
+              "onDeath": false,
+              "continuous": false,
+              "specialPower": false,
+              "onStart": false
+            },
+            "coolDown": 0,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0
+          }
+        ],
+        "defaultAp": 12,
+        "defaultHp": 20,
+        "mannaPoint": 8,
+        "price": 400,
+        "attackType": "MELEE",
+        "range": 0,
+        "hasCombo": false
+      },
+      {
+        "name": "Panther",
+        "description": "a melee MINION with 2 AP, 6 HP, have a ON_ATTACK POISON BUFF with 8 units HP decrement for 1 turn",
+        "cardId": "ahmad_Panther_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "p_poison",
+            "action": {
+              "enemyHitChanges": 0,
+              "apChange": 0,
+              "hpChange": -8,
+              "mpChange": 0,
+              "poison": true,
+              "makeStun": false,
+              "makeDisarm": false,
+              "actionAtTheEndOfTurn": false,
+              "noDisarm": false,
+              "noPoison": false,
+              "noStun": false,
+              "noBadEffect": false,
+              "noAttackFromWeakerOnes": false,
+              "disableHolyBuff": false,
+              "addSpell": false,
+              "killsTarget": false,
+              "isForGladiator": false,
+              "durable": true,
+              "removeBuffs": 0,
+              "duration": 1,
+              "delay": 1
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": false,
+              "isForAroundOwnHero": false,
+              "isRandom": false,
+              "isForDeckCards": false,
+              "dimensions": {
+                "row": 1,
+                "column": 1
+              },
+              "owner": {
+                "own": false,
+                "enemy": true
+              },
+              "cardType": {
+                "cell": false,
+                "hero": false,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": false,
+              "onAttack": true,
+              "onDeath": false,
+              "continuous": false,
+              "specialPower": false,
+              "onStart": false
+            },
+            "coolDown": 0,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0
+          }
+        ],
+        "defaultAp": 2,
+        "defaultHp": 6,
+        "mannaPoint": 4,
+        "price": 400,
+        "attackType": "MELEE",
+        "range": 0,
+        "hasCombo": false
+      },
+      {
+        "name": "Elf",
+        "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a PASSIVE CONTINUOUS AP POWER BUFF for all own minions",
+        "cardId": "ahmad_Elf_1",
+        "type": "MINION",
+        "spells": [
+          {
+            "spellId": "e_power_buff",
+            "action": {
+              "enemyHitChanges": 0,
+              "apChange": 1,
+              "hpChange": 0,
+              "mpChange": 0,
+              "poison": false,
+              "makeStun": false,
+              "makeDisarm": false,
+              "actionAtTheEndOfTurn": false,
+              "noDisarm": false,
+              "noPoison": false,
+              "noStun": false,
+              "noBadEffect": false,
+              "noAttackFromWeakerOnes": false,
+              "disableHolyBuff": false,
+              "addSpell": false,
+              "killsTarget": false,
+              "isForGladiator": false,
+              "durable": false,
+              "removeBuffs": 0,
+              "duration": 1,
+              "delay": 0
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": false,
+              "isForAroundOwnHero": false,
+              "isRandom": false,
+              "isForDeckCards": false,
+              "dimensions": {
+                "row": 10,
+                "column": 18
+              },
+              "owner": {
+                "own": true,
+                "enemy": false
+              },
+              "cardType": {
+                "cell": false,
+                "hero": false,
+                "minion": true
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": false,
+              "onAttack": false,
+              "onDeath": false,
+              "continuous": true,
+              "specialPower": false,
+              "onStart": false
+            },
+            "coolDown": 0,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0
+          }
+        ],
+        "defaultAp": 4,
+        "defaultHp": 10,
+        "mannaPoint": 5,
+        "price": 500,
+        "attackType": "RANGED",
+        "range": 4,
+        "hasCombo": false
+      }
+    ],
     "spells": [],
     "items": []
   },
   "decks": [],
   "matchHistories": [],
-  "money": 15000,
+  "money": 13700,
   "wins": 0
 }

@@ -1,5 +1,6 @@
 package server.models.account;
 
+import org.jetbrains.annotations.NotNull;
 import server.Server;
 import server.models.card.Deck;
 import server.models.card.TempDeck;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class Account {
     private String username;
     private String password;
-    private Collection collection = new Collection();
+    private Collection collection;
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
     private ArrayList<MatchHistory> matchHistories = new ArrayList<>();
@@ -24,7 +25,7 @@ public class Account {
         this.wins = 0;
     }
 
-    public Account(TempAccount account) {
+    public Account(@NotNull TempAccount account) {
         this.username = account.getUsername();
         this.password = account.getPassword();
         this.collection = account.getCollection();

@@ -52,7 +52,8 @@ public class Collection {
         String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
         while (hasCard(cardId + number))
             number++;
-        Card newCard = new Card(originalCards.getCard(cardId), username, number);
+        Card newCard = new Card(originalCards.getCard(cardName), username, number);
+        addCard(newCard);
     }
 
     public void addCard(Card card) {//for shop
