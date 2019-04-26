@@ -1,6 +1,7 @@
 package server.models.card;
 
 import server.models.account.Collection;
+import server.models.game.TempStory;
 
 import java.util.ArrayList;
 

@@ -1,5 +1,6 @@
 {
   "name": "Shock",
+  "cardId": "Shock",
   "description": "Makes an enemy troop STUN",
   "type": "SPELL",
   "spells": [

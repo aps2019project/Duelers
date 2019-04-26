@@ -1,5 +1,6 @@
 {
   "name": "Weakening",
+  "cardId": "Weakening",
   "description": "It gives an enemy MINION a WEAKNESS BUFF with 4 units AP decrement",
   "type": "SPELL",
   "spells": [

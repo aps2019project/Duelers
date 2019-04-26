@@ -1,5 +1,6 @@
 {
   "name": "Fireball",
+  "cardId": "Fireball",
   "description": "4 units hit an enemy troop",
   "type": "SPELL",
   "spells": [

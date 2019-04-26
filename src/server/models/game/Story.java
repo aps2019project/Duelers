@@ -1,5 +1,6 @@
 package server.models.game;
 
+import server.models.account.Collection;
 import server.models.card.Deck;
 
 public class Story {
@@ -11,6 +12,12 @@ public class Story {
         this.deck = deck;
         this.gameType = gameType;
         this.reward = reward;
+    }
+
+    public Story(TempStory story, Collection originalCards) {
+        this.deck = new Deck(story.getDeck(), originalCards);
+        this.gameType = story.getGameType();
+        this.reward = story.getReward();
     }
 
     public Deck getDeck() {

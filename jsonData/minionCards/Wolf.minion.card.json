@@ -1,5 +1,6 @@
 {
   "name": "Wolf",
+  "cardId": "Wolf",
   "description": "a melee MINION with 1 AP, 6 HP, costs 400, have an ON_ATTACK POISON BUFF with 6 units HP decrement for 1 turn",
   "type": "MINION",
   "spells": [

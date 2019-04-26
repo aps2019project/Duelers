@@ -1,5 +1,6 @@
 {
   "name": "Rustam",
+  "cardId": "Rustam",
   "description": "a hybrid HERO with 7 AP, 55 HP",
   "type": "HERO",
   "defaultAp": 7,

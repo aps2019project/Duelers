@@ -1,5 +1,6 @@
 {
   "name": "Siavash",
+  "cardId": "Siavash",
   "description": "a melee MINION with 5 AP, 8 HP, have an ON_DEATH spell that hits enemy HERO 6 units",
   "type": "MINION",
   "spells": [

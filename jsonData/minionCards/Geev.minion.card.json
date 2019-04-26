@@ -1,5 +1,6 @@
 {
   "name": "Geev",
+  "cardId": "Geev",
   "description": "a ranged MINION with 7 AP, 5 HP, costs 450, and does not see any negative effect",
   "type": "MINION",
   "spells": [

@@ -1,5 +1,6 @@
 {
   "name": "Bahman",
+  "cardId": "Bahman",
   "description": "a melee MINION with 9 AP, 16 HP, and ON_SPAWN decreases HP of a random enemy MINION 16 units",
   "type": "MINION",
   "spells": [

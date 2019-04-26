@@ -86,8 +86,8 @@ public class Collection {
     }
 
     public Card findOthers(String cardId) {
-        Card card1 = findCardInList(cardId, minions);
-        if (card1 != null) return card1;
+        Card card = findCardInList(cardId, minions);
+        if (card != null) return card;
         return findCardInList(cardId, spells);
     }
 

@@ -1,5 +1,6 @@
 {
   "name": "Ashkbous",
+  "cardId": "Ashkbous",
   "description": "a melee MINION with 8 AP, 14 HP, and does not hit from weaker minions",
   "type": "MINION",
   "spells": [

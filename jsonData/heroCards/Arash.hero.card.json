@@ -1,5 +1,6 @@
 {
   "name": "Arash",
+  "cardId": "Arash",
   "description": "a ranged HERO with 2 AP, 30 HP, have a 4-unit ROW-attack spell",
   "type": "HERO",
   "spells": [

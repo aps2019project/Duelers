@@ -1,5 +1,6 @@
 {
   "name": "Madness",
+  "cardId": "Madness",
   "description": "For three turns, it increases AP of a troop 4 units, but disarms it",
   "type": "SPELL",
   "spells": [
