@@ -200,8 +200,7 @@ public class Request {
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             shop.searchInShop(
-                    RequestType.SEARCH.getMatcher().group(1),
-                    client, serverName
+                    RequestType.SEARCH.getMatcher().group(1)
             );
 
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
