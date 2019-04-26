@@ -276,7 +276,7 @@ public class Request {
             customGameMenu.showHelp();
 
         } else if (RequestType.EXIT.setMatcher(command).find()) {
-            customGameMenu.showHelp();
+            customGameMenu.exit(client);
 
         } else {
             throw new InputException("invalid command");

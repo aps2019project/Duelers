@@ -54,12 +54,12 @@ public class StoryMenu extends Menu {
                 "\n1. " + stories[0].getDeckName() + " - Hero name: " + stories[0].getHeroName() + " - Game mode: " + stories[0].getType() +
                 "\n2. " + stories[1].getDeckName() + " - Hero name: " + stories[1].getHeroName() + " - Game mode: " + stories[1].getType() +
                 "\n3. " + stories[2].getDeckName() + " - Hero name: " + stories[2].getHeroName() + " - Game mode: " + stories[2].getType() +
-                "\n\"start game #number\"";
+                "\n\"start game #number\"\n\"exit\"";
         View.getInstance().showHelp(help);
     }
 
     @Override
     public void exit(Client client) {
-
+        client.setCurrentMenu(SinglePlayerMenu.getInstance());
     }
 }

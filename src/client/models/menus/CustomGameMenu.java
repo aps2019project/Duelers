@@ -5,9 +5,11 @@ import client.models.game.GameType;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
+import client.models.card.Deck;
 
 public class CustomGameMenu extends Menu {
     private static final CustomGameMenu CUSTOM_GAME_MENU = new CustomGameMenu();
+    private String help;
 
     private CustomGameMenu() {
     }
@@ -36,14 +38,23 @@ public class CustomGameMenu extends Menu {
 
     @Override
     public void showHelp() {
-        String help = "Custom Game:\n" +
-                "game modes:\n" +
-                "1. kill hero\n" +
-                "2. one flag\n" +
-                "3. multi flag\n" +
-                "\"start game [deck name] [mode(number)] [number of flags(if needed)]\"";
         View.getInstance().showHelp(help);
     }
 
-
+    public void setHelp(Client client) {
+        StringBuilder help = new StringBuilder(
+                "Custom Game:\n" +
+                        "valid decks:\n"
+        );
+        for (Deck deck : client.getAccount().getDecks()) {
+            if (deck.isValid()) {
+                help.append(deck.getName()).append(" - Hero name: ")
+                        .append(deck.getHero().getName()).append("\n");
+            }
+        }
+        help.append("game modes:\n").append("1. kill hero\n").append("2. one flag\n").append("3. multi flag\n")
+                .append("\"start game [deck name] [mode(number)] [number of flags(if needed)]\"\n")
+                .append("\"exit\"");
+        this.help = help.toString();
+    }
 }
