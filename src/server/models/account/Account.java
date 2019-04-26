@@ -5,7 +5,6 @@ import server.models.card.Deck;
 import java.util.ArrayList;
 
 public class Account {
-
     private String username;
     private String password;
     private Collection collection;
@@ -18,6 +17,7 @@ public class Account {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+        this.money = 15000;
     }
 
     public int getWins() {
