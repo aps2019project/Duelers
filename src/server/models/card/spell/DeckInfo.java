@@ -10,13 +10,13 @@ public class DeckInfo {
     private GameType type;
 
     public DeckInfo(Story story) {
-        this.deckName = story.getDeck().getName();
+        this.deckName = story.getDeck().getDeckName();
         this.HeroName = story.getDeck().getHero().getName();
         this.type = story.getGameType();
     }
 
     public DeckInfo(Deck deck) {
-        this.deckName = deck.getName();
+        this.deckName = deck.getDeckName();
         this.HeroName = deck.getHero().getName();
     }
 
