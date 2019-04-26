@@ -107,6 +107,9 @@ public class Server {
                 case GET_ORIGINAL_CARDS:
                     sendOriginalCards(message);
                     break;
+                case GET_STORIES:
+                    sendStories(message);
+                    break;
                 case BUY_CARD:
                     buyCard(message);
                     break;
@@ -302,10 +305,17 @@ public class Server {
 
     }
 
+    private void sendStories(Message message) {
+        if (preCheckMessage(message)) {
+            addToSendingMessages(Message.makeStoriesCopyMessage
+                    (serverName, message.getSender(), stories.toArray(Story[]::new), message.getMessageId()));
+        }
+    }
+
     private void sendOriginalCards(Message message) {
-        if(preCheckMessage(message)){
+        if (preCheckMessage(message)) {
             addToSendingMessages(Message.makeOriginalCardsCopyMessage(
-                    serverName,message.getSender(),originalCards,message.getMessageId()));
+                    serverName, message.getSender(), originalCards, message.getMessageId()));
         }
     }
 
