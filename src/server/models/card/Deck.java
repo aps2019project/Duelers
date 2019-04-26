@@ -28,38 +28,44 @@ public class Deck {
     }
 
     public Deck(String deckName) {
-        this.deckName=deckName;
+        this.deckName = deckName;
     }
 
-    public void addCard(Card card) {
-        switch (card.getType()){
-            case HERO:
-                hero=card;
-                break;
-            case USABLE_ITEM:
-            case COLLECTIBLE_ITEM:
-                //item=
+    public void addCard(String cardId, Collection collection) {
+        if (collection.hasCard(cardId)) {
+            addCard(collection.getCard(cardId));
+        } else {
+            Server.getInstance().serverPrint("Error!");
         }
     }
 
-    public void removeCard(Card item) {
-
+    private void addCard(Card card) {
+        if (card == null)
+            Server.getInstance().serverPrint("Error!");
+        switch (card.getType()) {
+            case HERO:
+                hero = card;
+                break;
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                item = card;
+                break;
+            case FLAG:
+                Server.getInstance().serverPrint("Error!");
+                break;
+            case MINION:
+            case SPELL:
+                others.add(card);
+                break;
+        }
     }
 
-    public int getPopulation() {
-        return 0;
-    }
-
-    public Card getItem() {
-        return this.item;
-    }
-
-    public void setItem(Card item) {
-        this.item = item;
-    }
-
-    public boolean areSame(String deckName) {
-        return this.deckName.equals(deckName);
+    public void removeCard(Card card) {
+        if (hero == card)
+            hero = null;
+        if (item == card)
+            item = null;
+        others.remove(card);
     }
 
     public boolean isValid() {
@@ -106,5 +112,9 @@ public class Deck {
 
     public ArrayList<Card> getOthers() {
         return others;
+    }
+
+    public Card getItem() {
+        return item;
     }
 }

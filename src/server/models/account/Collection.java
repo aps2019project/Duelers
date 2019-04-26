@@ -43,8 +43,8 @@ public class Collection {
         return null;
     }
 
-    public void addCard(String cardName, Collection originalCollection, String username) {//for account collections
-        if(!originalCollection.hasCard(cardName)){
+    public void addCard(String cardName, Collection originalCards, String username) {//for account collections
+        if(!originalCards.hasCard(cardName)){
             Server.getInstance().serverPrint("Invalid CardName!");
             return;
         }
@@ -52,7 +52,7 @@ public class Collection {
         String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
         while (hasCard(cardId + number))
             number++;
-        Card newCard=new Card(originalCollection.getCard(cardId),username,number);
+        Card newCard=new Card(originalCards.getCard(cardId),username,number);
     }
 
     public void addCard(Card card) {//for shop

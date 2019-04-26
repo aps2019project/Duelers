@@ -303,7 +303,10 @@ public class Server {
     }
 
     private void sendOriginalCards(Message message) {
-
+        if(preCheckMessage(message)){
+            addToSendingMessages(Message.makeOriginalCardsCopyMessage(
+                    serverName,message.getSender(),originalCards,message.getMessageId()));
+        }
     }
 
     private void sendLeaderBoard(Message message) {
@@ -319,7 +322,6 @@ public class Server {
         }
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
-        sendMessages();
     }
 
     private void insertCard(Message message) {
