@@ -2,13 +2,14 @@ package client;
 
 import client.models.account.Account;
 import client.models.account.AccountInfo;
-import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.card.DeckInfo;
 import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.AccountMenu;
 import client.models.menus.Menu;
+import client.models.menus.Shop;
+import client.models.menus.StoryMenu;
 import client.models.message.Message;
 import server.Server;
 
@@ -25,10 +26,9 @@ public class Client {
     private AccountInfo[] leaderBoard;
     private Menu currentMenu;
     private Card selected;
-    private ArrayList<Position> positions = new ArrayList<>();
+    private Position[] positions;
     private boolean validation = true;
     private String errorMessage;
-    private Collection originalCards = new Collection();
 
     public Client(String clientName, Server server) {
         this.clientName = clientName;
@@ -107,7 +107,7 @@ public class Client {
                     game = message.getGame();
                     break;
                 case ORIGINAL_CARDS_COPY:
-                    originalCards = message.getShopCards();
+                    Shop.getInstance().setOriginalCards(message.getShopCards());
                     break;
                 case CUSTOM_DECKS_COPY:
                     customDecks = message.getCustomDecks();
@@ -116,10 +116,10 @@ public class Client {
                     leaderBoard = message.getLeaderBoard();
                     break;
                 case STORIES_COPY:
-
+                    StoryMenu.getInstance().setStories(message.getStories());
                     break;
                 case POSITIONS_COPY:
-
+                    positions = message.getPositions();
                     break;
             }
         }
@@ -147,7 +147,7 @@ public class Client {
         this.selected = selected;
     }
 
-    public void setPositions(ArrayList<Position> positions) {
+    public void setPositions(Position[] positions) {
         this.positions = positions;
     }
 }

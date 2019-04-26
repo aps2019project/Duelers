@@ -13,8 +13,8 @@ public class SinglePlayerMenu extends Menu {
         return SINGLE_PLAYER_MENU;
     }
 
-    public void moveToStoryMenu(Client client) {
-        client.setCurrentMenu(StoryMenu.getInstance());
+    public void moveToStoryMenu(Client client, String serverName) {
+        client.setCurrentMenu(StoryMenu.getInstance(client, serverName));
     }
 
     public void moveToCustomGameMenu(Client client){

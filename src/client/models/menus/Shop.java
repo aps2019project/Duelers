@@ -1,6 +1,7 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.message.Message;
 import client.view.View;
@@ -10,16 +11,26 @@ import java.util.ArrayList;
 
 public class Shop extends Menu {
     private static Shop SHOP;
-    private ArrayList<Card> shop;
+    private Collection originalCards = new Collection();
     private Card resultCard;
 
-    private Shop() {
+    private Shop(Client client, String serverName) {
+        client.addToSendingMessages(
+                Message.makeGetOriginalCardsMessage(
+                        client.getClientName(), serverName, 0
+                )
+        );
+        client.sendMessages();
+    }
+
+    public static Shop getInstance(Client client, String serverName) {
+        if (SHOP == null) {
+            SHOP = new Shop(client, serverName);
+        }
+        return SHOP;
     }
 
     public static Shop getInstance() {
-        if (SHOP == null) {
-            SHOP = new Shop();
-        }
         return SHOP;
     }
 
@@ -28,8 +39,8 @@ public class Shop extends Menu {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 
-    public ArrayList<Card> getShopCards() {
-        return shop;
+    public Collection getOriginalCards() {
+        return originalCards;
     }
 
     public void showCollection(Client client) {
@@ -85,7 +96,11 @@ public class Shop extends Menu {
     }
 
     public void showMarketCardsAndItems() {
-        View.getInstance().showCardsList(shop);
+        View.getInstance().showShop(originalCards);
+    }
+
+    public void setOriginalCards(Collection originalCards) {
+        this.originalCards = originalCards;
     }
 
     @Override
