@@ -1,12 +1,23 @@
 package client.models.card;
 
+import client.models.account.Collection;
+
 import java.util.ArrayList;
 
 public class Deck {
     private String deckName;
     private Card hero;
     private Card item;
-    private ArrayList<Card> others;
+    private ArrayList<Card> others = new ArrayList<>();
+
+    public Deck(TempDeck tempDeck, Collection collection) {
+        this.deckName = tempDeck.getDeckName();
+        this.hero = collection.findHero(tempDeck.getHeroId());
+        this.item = collection.findItem(tempDeck.getItemId());
+        for (String cardId : tempDeck.getOthersIds()) {
+            others.add(collection.findOthers(cardId));
+        }
+    }
 
     public String getName() {
         return this.deckName;

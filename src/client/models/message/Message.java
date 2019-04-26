@@ -1,13 +1,13 @@
 package client.models.message;
 
-import client.models.account.Account;
+import client.models.account.AccountInfo;
 import client.models.account.Collection;
-import client.models.card.Deck;
+import client.models.card.DeckInfo;
 import client.models.game.Game;
 import client.models.game.GameType;
-import client.models.game.Story;
 import client.models.map.Position;
 import com.google.gson.Gson;
+import client.models.account.TempAccount;
 
 public class Message {
     private MessageType messageType;
@@ -18,10 +18,10 @@ public class Message {
 
     private Game game;
     private Collection shopCards;
-    private Account account;
-    private Deck[] customDecks;
-    private Account[] leaderBoard;
-    private Story[] stories;
+    private TempAccount account;
+    private DeckInfo[] customDecks;
+    private AccountInfo[] leaderBoard;
+    private DeckInfo[] stories;
     private Position[] positions;
     private String exceptionString;
     private String cardId;
@@ -33,7 +33,7 @@ public class Message {
     private int newValue;
     private int stage;
     private Position position;
-    private String userName, passWord;
+    private String username, password;
     private String deckName;
     private String opponentUserName;
     private GameType gameType;
@@ -56,38 +56,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection shopCards, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.shopCards = shopCards;
-        message.messageType = MessageType.ORIGINAL_CARDS_COPY;
-        return message;
-    }
-
-    public static Message makeAccountCopyMessage(String sender, String receiver, Account account, int messageId) {
+    public static Message makeAccountCopyMessage(String sender, String receiver, TempAccount account, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.account = account;
         message.messageType = MessageType.ACCOUNT_COPY;
-        return message;
-    }
-
-    public static Message makeCustomDecksCopyMessage(String sender, String receiver, Deck[] customDecks, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.customDecks = customDecks;
-        message.messageType = MessageType.CUSTOM_DECKS_COPY;
-        return message;
-    }
-
-    public static Message makeLeaderBoardCopyMessage(String sender, String receiver, Account[] leaderBoard, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.leaderBoard = leaderBoard;
-        message.messageType = MessageType.LEADERBOARD_COPY;
-        return message;
-    }
-
-    public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.stories = stories;
-        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
@@ -201,7 +173,7 @@ public class Message {
     public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.CREATE_DECK;
         return message;
     }
@@ -209,7 +181,7 @@ public class Message {
     public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.REMOVE_DECK;
         return message;
     }
@@ -217,7 +189,7 @@ public class Message {
     public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.ADD_TO_DECK;
@@ -227,7 +199,7 @@ public class Message {
     public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.REMOVE_FROM_DECK;
@@ -237,7 +209,7 @@ public class Message {
     public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.SELECT_DECK;
         return message;
     }
@@ -324,16 +296,16 @@ public class Message {
 
     public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.REGISTER;
         return message;
     }
 
     public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.LOG_IN;
         return message;
     }
@@ -354,7 +326,7 @@ public class Message {
     public static Message makeSelectUserMessage(String sender, String receiver, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.SELECT_USER;
-        message.userName = userName;
+        message.username = userName;
         return message;
     }
 
@@ -393,19 +365,19 @@ public class Message {
         return shopCards;
     }
 
-    public Account getAccount() {
+    public TempAccount getAccount() {
         return account;
     }
 
-    public Deck[] getCustomDecks() {
+    public DeckInfo[] getCustomDecks() {
         return customDecks;
     }
 
-    public Account[] getLeaderBoard() {
+    public AccountInfo[] getLeaderBoard() {
         return leaderBoard;
     }
 
-    public Story[] getStories() {
+    public DeckInfo[] getStories() {
         return stories;
     }
 
@@ -461,12 +433,12 @@ public class Message {
         return position;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
     public String getDeckName() {

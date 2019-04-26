@@ -1,7 +1,6 @@
-package server.models.account;
+package client.models.account;
 
-import server.models.card.Deck;
-import server.models.card.TempDeck;
+import client.models.card.TempDeck;
 
 import java.util.ArrayList;
 
@@ -14,20 +13,6 @@ public class TempAccount {
     private ArrayList<MatchHistory> matchHistories = new ArrayList<>();
     private int money;
     private int wins;
-
-    public TempAccount(Account account) {
-        this.username = account.getUsername();
-        this.password = account.getPassword();
-        this.collection = account.getCollection();
-        for (Deck deck : account.getDecks()) {
-            this.decks.add(new TempDeck(deck));
-        }
-        if (account.getMainDeck() != null) {
-            this.mainDeckName = account.getMainDeck().getDeckName();
-        }
-        this.money = account.getMoney();
-        this.wins = account.getWins();
-    }
 
     public String getUsername() {
         return username;

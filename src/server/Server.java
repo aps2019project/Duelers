@@ -96,10 +96,10 @@ public class Server {
                     register(message);
                     break;
                 case LOG_IN:
-                    logIn(message);
+                    login(message);
                     break;
                 case LOG_OUT:
-                    logOut(message);
+                    logout(message);
                     break;
                 case GET_LEADERBOARD:
                     sendLeaderBoard(message);
@@ -208,30 +208,30 @@ public class Server {
     }
 
     private void register(Message message) {
-        if (getAccount(message.getUserName()) != null) {
+        if (getAccount(message.getUsername()) != null) {
             sendException("Invalid Username!", message.getSender(), message.getMessageId());
-        } else if (message.getPassWord() == null || message.getPassWord().length() < 4) {
+        } else if (message.getPassword() == null || message.getPassword().length() < 4) {
             sendException("Invalid Password!", message.getSender(), message.getMessageId());
         } else {
-            Account account = new Account(message.getUserName(), message.getPassWord());
+            Account account = new Account(message.getUsername(), message.getPassword());
             accounts.put(account, null);
             onlineGames.put(account, null);
             saveAccount(account);
-            serverPrint(message.getUserName() + " Is Created!");
-            logIn(message);
+            serverPrint(message.getUsername() + " Is Created!");
+            login(message);
         }
     }
 
-    private void logIn(Message message) {
-        Account account = getAccount(message.getUserName());
+    private void login(Message message) {
+        Account account = getAccount(message.getUsername());
         Client client = getClient(message.getSender());
         if (client == null) {
             serverPrint("Client Wasn't Added!");
             sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
         } else if (account == null) {
             sendException("Username Not Found!", message.getSender(), message.getMessageId());
-        } else if (!account.getPassword().equals(message.getPassWord())) {
-            sendException("Incorrect Password!", message.getSender(), message.getMessageId());
+        } else if (!account.getPassword().equals(message.getPassword())) {
+            sendException("Incorrect PassWord!", message.getSender(), message.getMessageId());
         } else if (accounts.get(account) != null) {
             sendException("Online Account!", message.getSender(), message.getMessageId());
         } else if (clients.get(message.getSender()) != null) {
@@ -258,7 +258,7 @@ public class Server {
         }
     }
 
-    private void logOut(Message message) {
+    private void logout(Message message) {
         if (preCheckMessage(message)) {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
@@ -423,7 +423,7 @@ public class Server {
         String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(new TempAccount(account));
 
         try {
-            FileWriter writer = new FileWriter("jsonData/accounts/" + account.getUsername() + ".account.json");
+            FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
             writer.close();
         } catch (IOException e) {

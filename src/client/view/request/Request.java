@@ -20,33 +20,101 @@ public class Request {
         if (RequestType.SUDO.setMatcher(command).find()) {
             client.getCurrentMenu().sendSudoCommand(client, serverName, command);
 
-        } else if (client.getCurrentMenu().equals(AccountMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(AccountMenu.class.getName())) {
             accountMenuHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(BattleMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(BattleMenu.class.getName())) {
             battleRequestHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(CollectionMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(CollectionMenu.class.getName())) {
             collectionMenuHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(CustomGameMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(CustomGameMenu.class.getName())) {
             customGameMenuHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(MainMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(MainMenu.class.getName())) {
             mainMenuHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(MultiPlayerMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(MultiPlayerMenu.class.getName())) {
             multiPlayerHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(Shop.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(Shop.class.getName())) {
             shopHandleRequest(client, serverName);
 
-        } else if (client.getCurrentMenu().equals(SinglePlayerMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(SinglePlayerMenu.class.getName())) {
             singlePlayerMenuHandleRequest(client);
 
-        } else if (client.getCurrentMenu().equals(StoryMenu.getInstance())) {
+        } else if (client.getCurrentMenu().getClass().getName().equals(StoryMenu.class.getName())) {
             storyMenuHandleRequest(client, serverName);
+        } else if (client.getCurrentMenu().getClass().getName().equals(GameCommands.class.getName())) {
+            gameCommandsHandleRequest(client, serverName);
+
         }
+    }
+
+    private void gameCommandsHandleRequest(Client client, String serverName) {
+        GameCommands gameCommands = GameCommands.getInstance();
+        if (GameRequestType.GAME_INFO.maches(command)) {
+            gameCommands.showGameInfo();
+
+        } else if (GameRequestType.SHOW_MY_MINIONS.maches(command)) {
+            gameCommands.showMyMinions();
+
+        } else if (GameRequestType.SHOW_OPP_MINIONS.maches(command)) {
+            gameCommands.showOppMinions();
+
+        } else if (GameRequestType.SHOW_CARD_INFO.maches(command)) {
+            String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
+            gameCommands.showCardInfo(cardId);
+
+        } else if (GameRequestType.SELECT_CARD.maches(command)) {
+            String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
+            gameCommands.selectCard(cardId);
+
+        } else if (GameRequestType.MOVE.maches(command)) {
+            Matcher matcher = GameRequestType.MOVE.getMatcher();
+            int row = Integer.parseInt(matcher.group(1));
+            int column = Integer.parseInt(matcher.group(2));
+            gameCommands.move(row, column);
+
+        } else if (GameRequestType.ATTACK.maches(command)) {
+            String cardId = GameRequestType.ATTACK.getMatcher().group(1);
+            gameCommands.attack(cardId);
+
+        } else if (GameRequestType.ATTACK_COMBO.maches(command)) {
+            Matcher matcher = GameRequestType.ATTACK_COMBO.getMatcher();
+            String oppCardId = matcher.group(1);
+            String[] cardIds = matcher.group(2).split(" ");
+            gameCommands.attackCombo(oppCardId, cardIds);
+
+        } else if (GameRequestType.USE_SPECIAL_POWER.maches(command)) {
+            Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
+            int row = Integer.parseInt(matcher.group(1));
+            int column = Integer.parseInt(matcher.group(2));
+            gameCommands.useSpecialPower(row, column);
+
+        } else if (GameRequestType.SHOW_HAND.maches(command)) {
+            gameCommands.showHand();
+
+        } else if (GameRequestType.INSERT_CARD.maches(command)) {
+            Matcher matcher = GameRequestType.INSERT_CARD.getMatcher();
+            String cardId = matcher.group(1);
+            int row = Integer.parseInt(matcher.group(2));
+            int column = Integer.parseInt(matcher.group(3));
+            gameCommands.insertCard(cardId, row, column);
+
+        } else if (GameRequestType.END_TURN.maches(command)){
+            gameCommands.endTurn();
+
+        }else if (GameRequestType.SHOW_COLLECTABLES.maches(command)){
+            gameCommands.show‫‪Collectables‬‬();
+
+        }else if (GameRequestType.SELECT_ITEM.maches(command)){
+            String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
+            gameCommands.selectItem(itemID);
+
+        }
+
     }
 
     private void storyMenuHandleRequest(Client client, String serverName) throws InputException {
