@@ -1,5 +1,6 @@
 package server.models.card;
 
+import server.Server;
 import server.models.account.Collection;
 
 import java.util.ArrayList;
@@ -19,61 +20,52 @@ public class Deck {
 
     public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
-        this.hero = collection.findHero(tempDeck.getHeroId());
-        this.item = collection.findItem(tempDeck.getItemId());
+        this.hero = collection.getCard(tempDeck.getHeroId());
+        this.item = collection.getCard(tempDeck.getItemId());
         for (String cardId : tempDeck.getOthersIds()) {
-            others.add(collection.findOthers(cardId));
+            others.add(collection.getCard(cardId));
         }
     }
 
     public Deck(String deckName) {
-        this.deckName=deckName;
+        this.deckName = deckName;
     }
 
-    public String getName() {
-        return this.deckName;
+    public void addCard(String cardId, Collection collection) {
+        if (collection.hasCard(cardId)) {
+            addCard(collection.getCard(cardId));
+        } else {
+            Server.getInstance().serverPrint("Error!");
+        }
     }
 
-    public Card getHero() {
-        return this.hero;
+    private void addCard(Card card) {
+        if (card == null)
+            Server.getInstance().serverPrint("Error!");
+        switch (card.getType()) {
+            case HERO:
+                hero = card;
+                break;
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                item = card;
+                break;
+            case FLAG:
+                Server.getInstance().serverPrint("Error!");
+                break;
+            case MINION:
+            case SPELL:
+                others.add(card);
+                break;
+        }
     }
 
-    public void setHero(Card hero) {
-        this.hero = hero;
-    }
-
-    public void removeHero(Card hero) {
-
-    }
-
-    public ArrayList<Card> getOthers() {
-        return this.others;
-    }
-
-
-    public void addCard(Card item) {
-
-    }
-
-
-    public void removeCard(Card item) {
-
-    }
-
-    public int getPopulation() {
-        return 0;
-    }
-
-    public Card getItem() {
-        return this.item;
-    }
-
-    public void setItem(Card item) {
-        this.item = item;
-    }
-
-    public boolean areSame(String deckName) {
-        return this.deckName.equals(deckName);
+    public void removeCard(Card card) {
+        if (hero == card)
+            hero = null;
+        if (item == card)
+            item = null;
+        others.remove(card);
     }
 
     public boolean isValid() {
@@ -108,5 +100,21 @@ public class Deck {
             if (card.areSame(name)) number++;
         }
         return number;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public Card getHero() {
+        return hero;
+    }
+
+    public ArrayList<Card> getOthers() {
+        return others;
+    }
+
+    public Card getItem() {
+        return item;
     }
 }

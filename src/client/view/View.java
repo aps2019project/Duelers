@@ -153,6 +153,10 @@ public class View {
         
     }
 
+    public void showShop(Collection collection) {
+
+    }
+
     public void showCardIds(ArrayList<Card> cards) {
         for (Card card : cards) {
             showCardId(card);

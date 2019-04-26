@@ -41,7 +41,7 @@ public class StoryMaker {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(story);
 
         try {
-            FileWriter writer = new FileWriter("jsonData/stories/" + story.getDeck().getName().replaceAll(" ", "") + ".story.json");
+            FileWriter writer = new FileWriter("jsonData/stories/" + story.getDeck().getDeckName().replaceAll(" ", "") + ".story.json");
             writer.write(json);
             writer.close();
         } catch (IOException e) {

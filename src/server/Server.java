@@ -25,16 +25,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-    private static final String accountsPath = "jsonData/accounts";
-    private static final String[] cardPaths = {
+    private static final String ACCOUNTS_PATH = "jsonData/accounts";
+    private static final String[] CARDS_PATHS = {
             "jsonData/heroCards",
             "jsonData/minionCards",
             "jsonData/spellCards",
             "jsonData/itemCards/collectible",
             "jsonData/itemCards/usable"
     };
-    private static final String flagPath = "jsonData/itemCards/flag/Flag.item.card.json";
-    private static final String storiesPath = "jsonData/stories";
+    private static final String FLAG_PATH = "jsonData/itemCards/flag/Flag.item.card.json";
+    private static final String STORIES_PATH = "jsonData/stories";
 
     private static Server server;
     private String serverName;
@@ -106,6 +106,9 @@ public class Server {
                     break;
                 case GET_ORIGINAL_CARDS:
                     sendOriginalCards(message);
+                    break;
+                case GET_STORIES:
+                    sendStories(message);
                     break;
                 case BUY_CARD:
                     buyCard(message);
@@ -209,9 +212,9 @@ public class Server {
 
     private void register(Message message) {
         if (getAccount(message.getUsername()) != null) {
-            sendException("Invalid UserName!", message.getSender(), message.getMessageId());
+            sendException("Invalid Username!", message.getSender(), message.getMessageId());
         } else if (message.getPassword() == null || message.getPassword().length() < 4) {
-            sendException("Invalid PassWord!", message.getSender(), message.getMessageId());
+            sendException("Invalid Password!", message.getSender(), message.getMessageId());
         } else {
             Account account = new Account(message.getUsername(), message.getPassword());
             accounts.put(account, null);
@@ -220,7 +223,6 @@ public class Server {
             serverPrint(message.getUsername() + " Is Created!");
             login(message);
         }
-
     }
 
     private void login(Message message) {
@@ -230,7 +232,7 @@ public class Server {
             serverPrint("Client Wasn't Added!");
             sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
         } else if (account == null) {
-            sendException("UserName Not Found!", message.getSender(), message.getMessageId());
+            sendException("Username Not Found!", message.getSender(), message.getMessageId());
         } else if (!account.getPassword().equals(message.getPassword())) {
             sendException("Incorrect PassWord!", message.getSender(), message.getMessageId());
         } else if (accounts.get(account) != null) {
@@ -303,12 +305,22 @@ public class Server {
 
     }
 
-    private void sendOriginalCards(Message message) {
+    private void sendStories(Message message) {
+        if (preCheckMessage(message)) {
+            addToSendingMessages(Message.makeStoriesCopyMessage
+                    (serverName, message.getSender(), stories.toArray(Story[]::new), message.getMessageId()));
+        }
+    }
 
+    private void sendOriginalCards(Message message) {
+        if (preCheckMessage(message)) {
+            addToSendingMessages(Message.makeOriginalCardsCopyMessage(
+                    serverName, message.getSender(), originalCards, message.getMessageId()));
+        }
     }
 
     private void sendLeaderBoard(Message message) {
-        if (accounts.size()==0) {
+        if (accounts.size() == 0) {
             addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
             sendMessages();
         }
@@ -320,7 +332,6 @@ public class Server {
         }
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
-        sendMessages();
     }
 
     private void insertCard(Message message) {
@@ -358,11 +369,15 @@ public class Server {
     }
 
     private void sudo(Message message) {
-
+        if (message.getSudoCommand().contains("accounts")) {
+            for (Map.Entry<Account, String> account : accounts.entrySet()) {
+                serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
+            }
+        }
     }
 
     private void readAccounts() {
-        File[] files = new File(accountsPath).listFiles();
+        File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
                 TempAccount account = loadFile(file, TempAccount.class);
@@ -375,7 +390,7 @@ public class Server {
     }
 
     private void readOriginalCards() {
-        for (String path : cardPaths) {
+        for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
             if (files != null) {
                 for (File file : files) {
@@ -386,7 +401,7 @@ public class Server {
                 }
             }
         }
-        originalFlag = loadFile(new File(flagPath), Card.class);
+        originalFlag = loadFile(new File(FLAG_PATH), Card.class);
         serverPrint("Original Cards loaded");
     }
 
@@ -395,7 +410,7 @@ public class Server {
     }
 
     private void readStories() {
-        File[] files = new File(storiesPath).listFiles();
+        File[] files = new File(STORIES_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
                 TempStory story = loadFile(file, TempStory.class);
@@ -420,7 +435,7 @@ public class Server {
         String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(new TempAccount(account));
 
         try {
-            FileWriter writer = new FileWriter(accountsPath + "/" + account.getUsername() + ".account.json");
+            FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
             writer.close();
         } catch (IOException e) {
@@ -432,7 +447,7 @@ public class Server {
         return serverName;
     }
 
-    private void serverPrint(String string) {
+    public void serverPrint(String string) {
         System.out.println("\u001B[31m" + string.trim() + "\u001B[0m");
     }
 }

@@ -1,100 +1,109 @@
 package server.models.account;
 
+import server.Server;
 import server.models.card.Card;
 
 import java.util.ArrayList;
 
 public class Collection {
-
     private ArrayList<Card> heroes = new ArrayList<>();
     private ArrayList<Card> minions = new ArrayList<>();
     private ArrayList<Card> spells = new ArrayList<>();
     private ArrayList<Card> items = new ArrayList<>();
 
-    public ArrayList<Card> getHeroes() {
-        return this.heroes;
+    public boolean hasCard(String cardId) {
+        return hasCard(cardId, heroes) || hasCard(cardId, minions) || hasCard(cardId, spells) || hasCard(cardId, items);
     }
 
-    public void addCard(Card card) {
+    private boolean hasCard(String cardId, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getCardId().equals(cardId))
+                return true;
+        }
+        return false;
+    }
+
+    public Card getCard(String cardId){
+        if(hasCard(cardId,heroes))
+            return getCard(cardId,heroes);
+        if(hasCard(cardId,minions))
+            return getCard(cardId,minions);
+        if(hasCard(cardId,spells))
+            return getCard(cardId,spells);
+        if(hasCard(cardId,items))
+            return getCard(cardId,items);
+        return null;
+    }
+
+    private Card getCard(String cardId,ArrayList<Card> cards){
+        for(Card card:cards){
+            if(card.getCardId().equals(cardId))
+                return card;
+        }
+        return null;
+    }
+
+    public void addCard(String cardName, Collection originalCards, String username) {//for account collections
+        if(!originalCards.hasCard(cardName)){
+            Server.getInstance().serverPrint("Invalid CardName!");
+            return;
+        }
+        int number = 1;
+        String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
+        while (hasCard(cardId + number))
+            number++;
+        Card newCard=new Card(originalCards.getCard(cardId),username,number);
+    }
+
+    public void addCard(Card card) {//for shop
+        if (card == null) {
+            Server.getInstance().serverPrint("Null Card.");
+            return;
+        }
+        if (hasCard(card.getCardId())) {
+            Server.getInstance().serverPrint("Add Card Error.");
+            return;
+        }
         switch (card.getType()) {
             case HERO:
-                addHero(card);
+                heroes.add(card);
                 break;
             case MINION:
-                addMinion(card);
+                minions.add(card);
                 break;
             case SPELL:
-                addSpell(card);
+                spells.add(card);
                 break;
             case USABLE_ITEM:
             case COLLECTIBLE_ITEM:
-                addItem(card);
+                items.add(card);
+                break;
+            case FLAG:
+                Server.getInstance().serverPrint("Error");
                 break;
         }
     }
 
-    public void addHero(Card hero) {
-        heroes.add(hero);
+    public void removeCard(Card card) {
+        heroes.remove(card);
+        minions.remove(card);
+        spells.remove(card);
+        items.remove(card);
     }
 
-    public void removeHero(Card hero) {
-
+    public ArrayList<Card> getHeroes() {
+        return heroes;
     }
 
     public ArrayList<Card> getMinions() {
-        return this.minions;
-    }
-
-    public void addMinion(Card minion) {
-        minions.add(minion);
-    }
-
-    public void removeMinion(Card minion) {
-
+        return minions;
     }
 
     public ArrayList<Card> getSpells() {
-        return this.spells;
-    }
-
-    public void addSpell(Card spell) {
-        spells.add(spell);
-    }
-
-    public void removeSpell(Card spell) {
-
+        return spells;
     }
 
     public ArrayList<Card> getItems() {
-        return this.items;
-    }
-
-    public void addItem(Card item) {
-        items.add(item);
-    }
-
-    public void removeItem(Card item) {
-
-    }
-
-    public Card findHero(String heroId) {
-        return findCardInList(heroId, heroes);
-    }
-
-    public Card findItem(String itemId) {
-        return findCardInList(itemId, items);
-    }
-
-    public Card findOthers(String cardId) {
-        Card card = findCardInList(cardId, minions);
-        if (card != null) return card;
-        return findCardInList(cardId, spells);
-    }
-
-    private Card findCardInList(String cardId, ArrayList<Card> minions) {
-        for (Card card : minions) {
-            if (card.getCardId().equals(cardId)) return card;
-        }
-        return null;
+        return items;
     }
 }

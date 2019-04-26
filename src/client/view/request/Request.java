@@ -42,7 +42,7 @@ public class Request {
             shopHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().getClass().getName().equals(SinglePlayerMenu.class.getName())) {
-            singlePlayerMenuHandleRequest(client);
+            singlePlayerMenuHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().getClass().getName().equals(StoryMenu.class.getName())) {
             storyMenuHandleRequest(client, serverName);
@@ -147,10 +147,10 @@ public class Request {
 
     }
 
-    private void singlePlayerMenuHandleRequest(Client client) throws InputException {
+    private void singlePlayerMenuHandleRequest(Client client, String serverName) throws InputException {
         SinglePlayerMenu singlePlayerMenu = SinglePlayerMenu.getInstance();
         if (RequestType.STORY.setMatcher(command).find()) {
-            singlePlayerMenu.moveToStoryMenu(client);
+            singlePlayerMenu.moveToStoryMenu(client, serverName);
 
         } else if (RequestType.CUSTOM_GAME.setMatcher(command).find()) {
             singlePlayerMenu.moveToCustomGameMenu(client);

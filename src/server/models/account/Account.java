@@ -80,7 +80,7 @@ public class Account {
 
     public Deck getDeck(String deckName) {
         for (Deck deck : decks) {
-            if (deck.areSame(deckName)) {
+            if (deck.getDeckName().equals(deckName)) {
                 return deck;
             }
         }
