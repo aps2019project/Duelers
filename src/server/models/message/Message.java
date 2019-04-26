@@ -36,7 +36,7 @@ public class Message {
     private int newValue;
     private int stage;
     private Position position;
-    private String userName, passWord;
+    private String username, password;
     private String deckName;
     private String opponentUserName;
     private GameType gameType;
@@ -313,16 +313,16 @@ public class Message {
 
     public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.REGISTER;
         return message;
     }
 
     public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.LOG_IN;
         return message;
     }
@@ -421,12 +421,12 @@ public class Message {
         return position;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
     public String getDeckName() {

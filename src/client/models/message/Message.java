@@ -1,17 +1,13 @@
 package client.models.message;
 
-import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.card.DeckInfo;
-import client.models.card.TempDeck;
 import client.models.game.Game;
 import client.models.game.GameType;
-import client.models.game.Story;
 import client.models.map.Position;
 import com.google.gson.Gson;
 import client.models.account.TempAccount;
-import client.models.game.TempStory;
 
 public class Message {
     private MessageType messageType;
@@ -37,7 +33,7 @@ public class Message {
     private int newValue;
     private int stage;
     private Position position;
-    private String userName, passWord;
+    private String username, password;
     private String deckName;
     private String opponentUserName;
     private GameType gameType;
@@ -177,7 +173,7 @@ public class Message {
     public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.CREATE_DECK;
         return message;
     }
@@ -185,7 +181,7 @@ public class Message {
     public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.REMOVE_DECK;
         return message;
     }
@@ -193,7 +189,7 @@ public class Message {
     public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.ADD_TO_DECK;
@@ -203,7 +199,7 @@ public class Message {
     public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
         message.messageType = MessageType.REMOVE_FROM_DECK;
@@ -213,7 +209,7 @@ public class Message {
     public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
-        message.userName = userName;
+        message.username = userName;
         message.messageType = MessageType.SELECT_DECK;
         return message;
     }
@@ -300,16 +296,16 @@ public class Message {
 
     public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.REGISTER;
         return message;
     }
 
     public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.userName = userName;
-        message.passWord = passWord;
+        message.username = userName;
+        message.password = passWord;
         message.messageType = MessageType.LOG_IN;
         return message;
     }
@@ -330,7 +326,7 @@ public class Message {
     public static Message makeSelectUserMessage(String sender, String receiver, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.SELECT_USER;
-        message.userName = userName;
+        message.username = userName;
         return message;
     }
 
@@ -437,12 +433,12 @@ public class Message {
         return position;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
     public String getDeckName() {
