@@ -76,4 +76,25 @@ public class Collection {
     public void removeItem(Card item) {
 
     }
+
+    public Card findHero(String heroId) {
+        return findCardInList(heroId, heroes);
+    }
+
+    public Card findItem(String itemId) {
+        return findCardInList(itemId, items);
+    }
+
+    public Card findOthers(String cardId) {
+        Card card1 = findCardInList(cardId, minions);
+        if (card1 != null) return card1;
+        return findCardInList(cardId, spells);
+    }
+
+    private Card findCardInList(String cardId, ArrayList<Card> minions) {
+        for (Card card : minions) {
+            if (card.getCardId().equals(cardId)) return card;
+        }
+        return null;
+    }
 }
