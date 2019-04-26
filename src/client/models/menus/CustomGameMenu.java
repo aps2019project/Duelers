@@ -41,7 +41,7 @@ public class CustomGameMenu extends Menu {
                 "1. kill hero\n" +
                 "2. one flag\n" +
                 "3. multi flag\n" +
-                "\"start multiplayer game [mode(number)] [number of flags(if needed)]\"";
+                "\"start game [deck name] [mode(number)] [number of flags(if needed)]\"";
         View.getInstance().showHelp(help);
     }
 
