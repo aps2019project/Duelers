@@ -17,34 +17,34 @@ public class Collection {
 
     private boolean hasCard(String cardId, ArrayList<Card> cards) {
         for (Card card : cards) {
-            if (card.getCardId().equals(cardId))
+            if (card.getCardId().equalsIgnoreCase(cardId))
                 return true;
         }
         return false;
     }
 
-    public Card getCard(String cardId){
-        if(hasCard(cardId,heroes))
-            return getCard(cardId,heroes);
-        if(hasCard(cardId,minions))
-            return getCard(cardId,minions);
-        if(hasCard(cardId,spells))
-            return getCard(cardId,spells);
-        if(hasCard(cardId,items))
-            return getCard(cardId,items);
+    public Card getCard(String cardId) {
+        if (hasCard(cardId, heroes))
+            return getCard(cardId, heroes);
+        if (hasCard(cardId, minions))
+            return getCard(cardId, minions);
+        if (hasCard(cardId, spells))
+            return getCard(cardId, spells);
+        if (hasCard(cardId, items))
+            return getCard(cardId, items);
         return null;
     }
 
-    private Card getCard(String cardId,ArrayList<Card> cards){
-        for(Card card:cards){
-            if(card.getCardId().equals(cardId))
+    private Card getCard(String cardId, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (card.getCardId().equalsIgnoreCase(cardId))
                 return card;
         }
         return null;
     }
 
     public void addCard(String cardName, Collection originalCards, String username) {//for account collections
-        if(!originalCards.hasCard(cardName)){
+        if (!originalCards.hasCard(cardName)) {
             Server.getInstance().serverPrint("Invalid CardName!");
             return;
         }
@@ -52,7 +52,7 @@ public class Collection {
         String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
         while (hasCard(cardId + number))
             number++;
-        Card newCard=new Card(originalCards.getCard(cardId),username,number);
+        Card newCard = new Card(originalCards.getCard(cardId), username, number);
     }
 
     public void addCard(Card card) {//for shop
