@@ -14,18 +14,18 @@ public class Shop extends Menu {
     private Collection originalCards = new Collection();
     private Card resultCard;
 
-    private Shop(Client client, String serverName) {
-        client.addToSendingMessages(
-                Message.makeGetOriginalCardsMessage(
-                        client.getClientName(), serverName, 0
-                )
-        );
-        client.sendMessages();
+    private Shop() {
     }
 
     public static Shop getInstance(Client client, String serverName) {
         if (SHOP == null) {
-            SHOP = new Shop(client, serverName);
+            SHOP = new Shop();
+            client.addToSendingMessages(
+                    Message.makeGetOriginalCardsMessage(
+                            client.getClientName(), serverName, 0
+                    )
+            );
+            client.sendMessages();
         }
         return SHOP;
     }
@@ -96,7 +96,7 @@ public class Shop extends Menu {
     }
 
     public void showMarketCardsAndItems() {
-        View.getInstance().showShop(originalCards);
+        View.getInstance().showCollection(originalCards);
     }
 
     public void setOriginalCards(Collection originalCards) {

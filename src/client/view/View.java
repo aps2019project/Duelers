@@ -30,7 +30,8 @@ public class View {
     public void showMainMenu() {
 
     }
-    public void showShopMenuHelp(){
+
+    public void showShopMenuHelp() {
 
     }
 
@@ -150,11 +151,86 @@ public class View {
     }
 
     public void showCollection(Collection collection) {
-        
+        showHeroes(collection);
+        showItems(collection);
+        showSpells(collection);
+        showMinions(collection);
     }
 
-    public void showShop(Collection collection) {
+    private void showMinions(Collection collection) {
+        System.out.println("Minions:\n");
+        ArrayList<Card> minions = collection.getMinions();
+        for (int i = 0; i < minions.size(); i++) {
+            Card minion = minions.get(i);
+            showMinion(i + 1, minion);
+        }
+    }
 
+    private void showSpells(Collection collection) {
+        System.out.println("Spells:\n");
+        ArrayList<Card> spells = collection.getSpells();
+        for (int i = 0; i < spells.size(); i++) {
+            Card spell = spells.get(i);
+            showSpell(i + 1, spell);
+        }
+    }
+
+    private void showItems(Collection collection) {
+        System.out.println("Items:\n");
+        ArrayList<Card> items = collection.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            Card item = items.get(i);
+            showItem(i + 1, item);
+        }
+    }
+
+    private void showHeroes(Collection collection) {
+        System.out.println("Heroes:\n");
+        ArrayList<Card> heroes = collection.getHeroes();
+        for (int i = 0; i < heroes.size(); i++) {
+            Card hero = heroes.get(i);
+            showHero(i + 1, hero);
+        }
+    }
+
+    private void showMinion(int index, Card minion) {
+        System.out.println(index +
+                " - Name: " + minion.getName() +
+                " - Class: " + minion.getAttackType() +
+                " - AP: " + minion.getDefaultAp() +
+                " - HP: " + minion.getDefaultHp() +
+                " - MP: " + minion.getMannaPoint() +
+                " - Description: " + minion.getDescription() +
+                " - price: " + minion.getPrice()
+        );
+    }
+
+    private void showSpell(int index, Card spell) {
+        System.out.println(index +
+                " - Name: " + spell.getName() +
+                " - MP: " + spell.getMannaPoint() +
+                " - Description: " + spell.getDescription() +
+                " - price: " + spell.getPrice()
+        );
+    }
+
+    private void showItem(int index, Card item) {
+        System.out.println(index +
+                " - Name: " + item.getName() +
+                " - Description: " + item.getDescription() +
+                " - price: " + item.getPrice()
+        );
+    }
+
+    private void showHero(int index, Card hero) {
+        System.out.println(index +
+                " - Name: " + hero.getName() +
+                " - AP: " + hero.getDefaultAp() +
+                " - HP: " + hero.getDefaultHp() +
+                " - Class: " + hero.getAttackType() +
+                " - Description: " + hero.getDescription() +
+                " - Price: " + hero.getPrice()
+        );
     }
 
     public void showCardIds(ArrayList<Card> cards) {

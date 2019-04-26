@@ -23,10 +23,6 @@ public class MainMenu extends Menu {
             client.setCurrentMenu(CollectionMenu.getInstance());
         }
         if (menuName.equals("shop")) {
-            client.addToSendingMessages(
-                    Message.makeGetOriginalCardsMessage(client.getClientName(), serverName, 0)
-            );
-            client.sendMessages();
             client.setCurrentMenu(Shop.getInstance(client, serverName));
         }
         if (menuName.equals("battle")) {
