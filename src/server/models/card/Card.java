@@ -18,12 +18,17 @@ public class Card {
     private int range;
     private boolean hasCombo;
 
-    public Card(Card referenceCard) {
+    public Card(Card referenceCard, String username, int number) {
+        this(referenceCard);
+        this.cardId = (username + "_" + referenceCard.name + "_" + number).replaceAll("\\s+", "");
+    }
+
+    public Card(Card referenceCard){
         this.name = referenceCard.name;
         this.description = referenceCard.description;
-        this.cardId = referenceCard.cardId;
+        this.cardId=referenceCard.cardId;
         this.type = referenceCard.type;
-        if (referenceCard.spells != null){
+        if (referenceCard.spells != null) {
             for (Spell spell : referenceCard.spells) {
                 spells.add(new Spell(spell));
             }
@@ -34,9 +39,11 @@ public class Card {
         this.price = referenceCard.price;
         this.attackType = referenceCard.attackType;
         this.hasCombo = referenceCard.hasCombo;
+        this.range = referenceCard.range;
     }
 
-    public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+    public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp,
+                int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;
         this.type = type;

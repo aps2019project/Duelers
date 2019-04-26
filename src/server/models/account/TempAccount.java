@@ -23,7 +23,7 @@ public class TempAccount {
             this.decks.add(new TempDeck(deck));
         }
         if (account.getMainDeck() != null) {
-            this.mainDeckName = account.getMainDeck().getName();
+            this.mainDeckName = account.getMainDeck().getDeckName();
         }
         this.money = account.getMoney();
         this.wins = account.getWins();
