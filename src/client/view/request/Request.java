@@ -113,6 +113,18 @@ public class Request {
             String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
             gameCommands.selectItem(itemID);
 
+        } else if (gameCommands.isItemSelected() && GameRequestType.SHOW_INFO_OF_ITEM.maches(command)) {
+            gameCommands.showSelectedItemInfo();
+
+        }else if (gameCommands.isItemSelected()&&GameRequestType.USE_ITEM.maches(command)){
+
+        }
+
+        else if (GameRequestType.SHOW_NEXT_CARD.maches(command)) {
+            gameCommands.showNextCard();
+
+        } else if (GameRequestType.ENTER_GRAVE_YARD.maches(command)) {
+
         }
 
     }

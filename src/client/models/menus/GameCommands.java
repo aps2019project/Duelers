@@ -4,9 +4,11 @@ import client.Client;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
+    private String selectedItem;
 
     private GameCommands() {
     }
+
 
     public static GameCommands getInstance() {
         return ourInstance;
@@ -21,7 +23,7 @@ public class GameCommands extends Menu {
     public void showHelp() {
     }
 
-    public void showGameInfo(){
+    public void showGameInfo() {
 
     }
 
@@ -48,7 +50,7 @@ public class GameCommands extends Menu {
 
     }
 
-    public void attackCombo(String oppCardId, String[]  cardIds) {
+    public void attackCombo(String oppCardId, String[] cardIds) {
 
     }
 
@@ -73,6 +75,18 @@ public class GameCommands extends Menu {
     }
 
     public void selectItem(String itemID) {
+
+    }
+
+    public void showNextCard() {
+
+    }
+
+    public boolean isItemSelected() {
+        return selectedItem != null;
+    }
+
+    public void showSelectedItemInfo() {
 
     }
 }
