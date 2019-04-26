@@ -12,7 +12,7 @@ public enum RequestType {
         this.pattern = Pattern.compile(pattern);
     }
 
-    public boolean maches(String command) {
+    public boolean matches(String command) {
         this.matcher = pattern.matcher(command);
         return matcher.find();
     }

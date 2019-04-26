@@ -371,7 +371,7 @@ public class Server {
 
     private void sudo(Message message) {
         String command =message.getSudoCommand();
-        if (RequestType.SHOW_ACCOUNTS.maches(command)) {
+        if (RequestType.SHOW_ACCOUNTS.matches(command)) {
             for (Map.Entry<Account, String> account : accounts.entrySet()) {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
             }
