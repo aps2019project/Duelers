@@ -5,6 +5,7 @@ import client.Client;
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
     private String selectedItem;
+    private boolean isInGraveYard;
 
     private GameCommands() {
     }
@@ -23,6 +24,9 @@ public class GameCommands extends Menu {
     public void showHelp() {
     }
 
+    public void showGameActions(){
+
+    }
     public void showGameInfo() {
 
     }
@@ -87,6 +91,34 @@ public class GameCommands extends Menu {
     }
 
     public void showSelectedItemInfo() {
+
+    }
+
+    public void useItem(int row, int column) {
+
+    }
+
+    public boolean isInGraveYard() {
+        return isInGraveYard;
+    }
+
+    public void enterGraveYard() {
+
+    }
+
+    public void showCardInfoInGraveYard(String cardId) {
+
+    }
+
+    public void exitFromGraveYard() {
+        isInGraveYard = false;
+    }
+
+    public void showCardsInGraveYard() {
+
+    }
+
+    public void endGame() {
 
     }
 }
