@@ -4,6 +4,7 @@ import client.Client;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.ExitCommand;
+import client.view.request.InputException;
 
 public class MainMenu extends Menu {
     private static MainMenu MAIN_MENU;
@@ -18,15 +19,19 @@ public class MainMenu extends Menu {
         return MAIN_MENU;
     }
 
-    public void moveToMenu(Client client, String serverName, String menuName) {
-        if (menuName.equals("collection")) {
-            client.setCurrentMenu(CollectionMenu.getInstance());
-        }
-        if (menuName.equals("shop")) {
-            client.setCurrentMenu(Shop.getInstance(client, serverName));
-        }
-        if (menuName.equals("battle")) {
-            client.setCurrentMenu(BattleMenu.getInstance());
+    public void moveToMenu(Client client, String serverName, String menuName) throws InputException {
+        switch (menuName) {
+            case "collection":
+                client.setCurrentMenu(CollectionMenu.getInstance());
+                break;
+            case "shop":
+                client.setCurrentMenu(Shop.getInstance(client, serverName));
+                break;
+            case "battle":
+                client.setCurrentMenu(BattleMenu.getInstance());
+                break;
+            default:
+                throw new InputException("invalid command");
         }
     }
 

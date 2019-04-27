@@ -97,7 +97,7 @@ public class Shop extends Menu {
                 "\"search [item name | card name]\"\n" +
                 "\"search collection [item name | card name]\"\n" +
                 "\"buy [item name | card name]\"\n" +
-                "\"sell [item name | card name]\"\n" +
+                "\"sell [item id | card id]\"\n" +
                 "\"show\"\n" +
                 "\"exit\"";
         View.getInstance().showHelp(help);

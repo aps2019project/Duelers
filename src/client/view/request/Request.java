@@ -198,15 +198,15 @@ public class Request {
         } else if (RequestType.SHOW_COLLECTION.setMatcher(command).find()) {
             shop.showCollection(client);
 
-        } else if (RequestType.SEARCH.setMatcher(command).find()) {
-            shop.searchInShop(
-                    RequestType.SEARCH.getMatcher().group(1)
-            );
-
         } else if (RequestType.SEARCH_COLLECTION.setMatcher(command).find()) {
             shop.searchInCollection(
                     RequestType.SEARCH_COLLECTION.getMatcher().group(1),
                     client
+            );
+
+        } else if (RequestType.SEARCH.setMatcher(command).find()) {
+            shop.searchInShop(
+            RequestType.SEARCH.getMatcher().group(1)
             );
 
         } else if (RequestType.BUY.setMatcher(command).find()) {
@@ -226,6 +226,8 @@ public class Request {
 
         } else if (RequestType.HELP.setMatcher(command).find()) {
             shop.showHelp();
+        } else {
+            throw new InputException("invalid command");
         }
     }
 
