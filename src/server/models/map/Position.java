@@ -1,6 +1,6 @@
 package server.models.map;
 
-public class Position {
+public class Position {//TODO:Change class name
 	private int row;
 	private int column;
 
