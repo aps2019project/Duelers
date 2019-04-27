@@ -8,12 +8,4 @@ public class AccountInfo {
         this.username = account.getUsername();
         this.wins = account.getWins();
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getWins() {
-        return wins;
-    }
 }
