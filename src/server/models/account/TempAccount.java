@@ -11,7 +11,7 @@ public class TempAccount {
     private Collection collection;
     private ArrayList<TempDeck> decks = new ArrayList<>();
     private String mainDeckName;
-    private ArrayList<MatchHistory> matchHistories = new ArrayList<>();
+    private ArrayList<MatchHistory> matchHistories;
     private int money;
     private int wins;
 
@@ -25,6 +25,7 @@ public class TempAccount {
         if (account.getMainDeck() != null) {
             this.mainDeckName = account.getMainDeck().getDeckName();
         }
+        this.matchHistories = account.getMatchHistories();
         this.money = account.getMoney();
         this.wins = account.getWins();
     }

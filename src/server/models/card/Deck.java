@@ -109,10 +109,10 @@ public class Deck {
     }
 
     private int numberOf(String name) {//Todo:reCode
-        if (hero.areSame(name) || item.areSame(name)) return 0;
+        if (hero.getName().equals(name)|| item.getName().equals(name)) return 0;
         int number = 0;
         for (Card card : others) {
-            if (card.areSame(name)) number++;
+            if (card.getName().equals(name)) number++;
         }
         return number;
     }

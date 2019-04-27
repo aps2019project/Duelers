@@ -20,10 +20,11 @@ public class Card {
 
     public Card(Card referenceCard, String username, int number) {
         this(referenceCard);
-        this.cardId = (username + "_" + referenceCard.name + "_" + number).replaceAll("\\s+", "");
+        this.cardId = (username + "_" + referenceCard.name + "_" + number).replaceAll(" ", "");
     }
 
-    public Card(Card referenceCard){
+    //dangerous
+    public Card(Card referenceCard){//TODO:Should be private
         this.name = referenceCard.name;
         this.description = referenceCard.description;
         this.cardId=referenceCard.cardId;
@@ -42,6 +43,7 @@ public class Card {
         this.range = referenceCard.range;
     }
 
+    //dangerous
     public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp,
                 int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
@@ -55,10 +57,6 @@ public class Card {
         this.attackType = attackType;
         this.range = range;
         this.hasCombo = hasCombo;
-    }
-
-    public boolean areSame(String cardName) {
-        return this.name.equals(cardName);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class Card {
         return this.cardId;
     }
 
-    public void setCardId(String cardId) {
+    public void setCardId(String cardId) {//TODO:Should be removed!
         this.cardId = cardId;
     }
 
