@@ -191,91 +191,6 @@ public class Message {
         return message;
     }
 
-    public static Message makeGetOriginalCardsMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.GET_ORIGINAL_CARDS;
-        return message;
-    }
-
-    public static Message makeGetLeaderBoardMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.GET_LEADERBOARD;
-        return message;
-    }
-
-    public static Message makeSaveAccountMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.SAVE_CHANGES;
-        return message;
-    }
-
-    public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.deckName = deckName;
-        message.messageType = MessageType.CREATE_DECK;
-        return message;
-    }
-
-    public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.deckName = deckName;
-        message.messageType = MessageType.REMOVE_DECK;
-        return message;
-    }
-
-    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver,GameType gameType, String opponentAccount, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.opponentUserName =opponentAccount;
-        message.gameType=gameType;
-        message.messageType = MessageType.NEW_GAME;
-        return message;
-    }
-
-    public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.deckName = deckName;
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.ADD_TO_DECK;
-        return message;
-    }
-
-    public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.deckName = deckName;
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.REMOVE_FROM_DECK;
-        return message;
-    }
-
-    public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.deckName = deckName;
-        message.messageType = MessageType.SELECT_DECK;
-        return message;
-    }
-
-    public static Message makeBuyCardMessage(String sender, String receiver, String cardName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardName = cardName;
-        message.messageType = MessageType.BUY_CARD;
-        return message;
-    }
-
-    public static Message makeSellCardMessage(String sender, String receiver, String cardName, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardName = cardName;
-        message.messageType = MessageType.SELL_CARD;
-        return message;
-    }
-
-    public static Message makeEndTurnMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.END_TURN;
-        return message;
-    }
-
     public static Message makeInsertMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardIds = new String[1];
@@ -308,28 +223,6 @@ public class Message {
         message.spellId = spellId;
         message.position = position;
         message.messageType = MessageType.USE_SPELL;
-        return message;
-    }
-
-    public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.username = userName;
-        message.password = passWord;
-        message.messageType = MessageType.REGISTER;
-        return message;
-    }
-
-    public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.username = userName;
-        message.password = passWord;
-        message.messageType = MessageType.LOG_IN;
-        return message;
-    }
-
-    public static Message makeLogOutMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.LOG_OUT;
         return message;
     }
 

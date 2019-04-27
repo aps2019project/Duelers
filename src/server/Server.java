@@ -367,7 +367,7 @@ public class Server {
             if (!account.getCollection().hasCard(message.getCardName())) {
                 sendException("invalid card name", message.getSender(), message.getMessageId());
             } else {
-                account.sellCard(message.getCardName());
+                account.sellCard(message.getCardId());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
             }

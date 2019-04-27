@@ -49,20 +49,6 @@ public class Message {
         return new Gson().fromJson(messageJson, Message.class);
     }
 
-    public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.game = game;
-        message.messageType = MessageType.GAME_COPY;
-        return message;
-    }
-
-    public static Message makeAccountCopyMessage(String sender, String receiver, TempAccount account, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.account = account;
-        message.messageType = MessageType.ACCOUNT_COPY;
-        return message;
-    }
-
     public static Message makePositionsCopyMessage(String sender, String receiver, Position[] positions, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.positions = positions;
@@ -76,79 +62,6 @@ public class Message {
         message.cardIds[0] = cardId;
         message.position = position;
         message.messageType = MessageType.MOVE_TROOP;
-        return message;
-    }
-
-    public static Message makeToHandMessage(String sender, String receiver, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.TO_HAND;
-        return message;
-    }
-
-    public static Message makeToNextMessage(String sender, String receiver, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.TO_NEXT;
-        return message;
-    }
-
-    public static Message makeToGraveYardMessage(String sender, String receiver, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.TO_GRAVEYARD;
-        return message;
-    }
-
-    public static Message makeToCollectedItemsMessage(String sender, String receiver, String cardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.messageType = MessageType.TO_COLLECTED_CARDS;
-        return message;
-    }
-
-    public static Message makeToMapMessage(String sender, String receiver, String cardId, Position position, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.position = position;
-        message.messageType = MessageType.TO_MAP;
-        return message;
-    }
-
-    public static Message makeChangeAPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.newValue = newValue;
-        message.messageType = MessageType.TROOP_AP;
-        return message;
-    }
-
-    public static Message makeChangeHPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.newValue = newValue;
-        message.messageType = MessageType.TROOP_HP;
-        return message;
-    }
-
-    public static Message makeExceptionMessage(String sender, String receiver, String exceptionString, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.exceptionString = exceptionString;
-        message.messageType = MessageType.SEND_EXCEPTION;
-        return message;
-    }
-
-    public static Message makeEndTurnMessage(String sender, String receiver, int turnNum, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.turnNum = turnNum;
-        message.messageType = MessageType.END_TURN;
         return message;
     }
 
@@ -436,15 +349,8 @@ public class Message {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getDeckName() {
         return deckName;
     }
 
-    public String getSudoCommand() {
-        return sudoCommand;
-    }
 }
