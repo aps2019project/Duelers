@@ -33,12 +33,12 @@ public class Deck {
     }
 
     public boolean hasCard(String cardId) {
-        if (hero != null && hero.getCardId().equals(cardId))
+        if (hero != null && hero.getCardId().equalsIgnoreCase(cardId))
             return true;
-        if (item != null && item.getCardId().equals(cardId))
+        if (item != null && item.getCardId().equalsIgnoreCase(cardId))
             return true;
         for (Card card : others) {
-            if (card.getCardId().equals(cardId))
+            if (card.getCardId().equalsIgnoreCase(cardId))
                 return true;
         }
         return false;

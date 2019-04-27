@@ -319,7 +319,7 @@ public class Request {
             );
 
         } else if (RequestType.REMOVE_FROM_DECK.setMatcher(command).find()) {
-            Matcher matcher = RequestType.ADD_TO_DECK.getMatcher();
+            Matcher matcher = RequestType.REMOVE_FROM_DECK.getMatcher();
             collectionMenu.removeCardFromDeck(
                     matcher.group(2), matcher.group(1),
                     client, serverName
