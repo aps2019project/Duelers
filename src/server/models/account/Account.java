@@ -1,7 +1,7 @@
 package server.models.account;
 
-import org.jetbrains.annotations.NotNull;
 import server.Server;
+import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.card.TempDeck;
 
@@ -22,10 +22,9 @@ public class Account {
         this.password = password;
         this.money = 15000;
         this.collection = new Collection();
-        this.wins = 0;
     }
 
-    public Account(@NotNull TempAccount account) {
+    public Account(TempAccount account) {
         this.username = account.getUsername();
         this.password = account.getPassword();
         this.collection = account.getCollection();
@@ -37,6 +36,7 @@ public class Account {
         this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
         this.wins = account.getWins();
+        this.matchHistories=account.getMatchHistories();
     }
 
     public boolean hasDeck(String deckName) {
@@ -45,14 +45,6 @@ public class Account {
                 return true;
         }
         return false;
-    }
-
-    public void setMainDeck(String deckName) {
-        if (!hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
-            return;
-        }
-        mainDeck = getDeck(deckName);
     }
 
     public void changeMoney(int change) {
@@ -99,7 +91,13 @@ public class Account {
             return;
         }
         money += collection.getCard(cardId).getPrice();
-        collection.removeCard(collection.getCard(cardId));
+        Card card=collection.getCard(cardId);
+        collection.removeCard(card);
+        for(Deck deck:decks){
+            if(deck.hasCard(cardId)){
+                deck.removeCard(card);
+            }
+        }
     }
 
     public void addCardToDeck(String cardId, String deckName) {

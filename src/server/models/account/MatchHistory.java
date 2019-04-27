@@ -2,23 +2,23 @@ package server.models.account;
 
 public class MatchHistory {
 
-	private String winner;
-	private String loser;
-	private int occurrenceTime;
+    private String winnerAccount;
+    private String loserAccount;
+    private int occurrenceTime;
 
-	public MatchHistory(String winner, String loser) {
+    public MatchHistory(String winnerAccount, String loserAccount) {
 
-}
+    }
 
-	public String getWinner() {
-		return this.winner;
-	}
+    public String getWinnerAccount() {
+        return this.winnerAccount;
+    }
 
-	public String getLoser() {
-		return this.loser;
-	}
+    public String getLoserAccount() {
+        return this.loserAccount;
+    }
 
-	public int getOccurrenceTime() {
-		return this.occurrenceTime;
-	}
+    public int getOccurrenceTime() {
+        return this.occurrenceTime;
+    }
 }
