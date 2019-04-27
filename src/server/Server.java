@@ -3,7 +3,6 @@ package server;
 import client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import server.models.RequestType;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
@@ -115,9 +114,6 @@ public class Server {
                     break;
                 case SELL_CARD:
                     sellCard(message);
-                    break;
-                case SAVE_CHANGES:
-                    saveChanges(message);
                     break;
                 case CREATE_DECK:
                     createDeck(message);
@@ -276,6 +272,7 @@ public class Server {
                 account.addDeck(message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
@@ -290,6 +287,7 @@ public class Server {
                 account.deleteDeck(message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             } else {
                 addToSendingMessages(Message.makeExceptionMessage(
                         serverName, message.getSender(), "deck was not found.", message.getMessageId()));
@@ -310,6 +308,7 @@ public class Server {
                 account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             }
         }
     }
@@ -325,6 +324,7 @@ public class Server {
                 account.removeCardFromDeck(message.getCardIds()[0], message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             }
         }
     }
@@ -342,6 +342,7 @@ public class Server {
                 account.selectDeck(message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             }
         }
     }
@@ -357,6 +358,7 @@ public class Server {
                 account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             }
         }
     }
@@ -370,6 +372,7 @@ public class Server {
                 account.sellCard(message.getCardId());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
+                saveAccount(account);
             }
         }
     }
@@ -388,7 +391,7 @@ public class Server {
         }
     }
 
-    private void sendLeaderBoard(Message message) {
+    private void sendLeaderBoard(Message message) {//Check
         if (accounts.size() == 0) {
             addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
             sendMessages();
@@ -439,11 +442,6 @@ public class Server {
 
     private void sudo(Message message) {
         String command = message.getSudoCommand().toLowerCase();
-        /*if (RequestType.SHOW_ACCOUNTS.matches(command)) {
-            for (Map.Entry<Account, String> account : accounts.entrySet()) {
-                serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
-            }
-        }*/
         if (command.contains("account")) {
             for (Map.Entry<Account, String> account : accounts.entrySet()) {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());

@@ -12,6 +12,7 @@ import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.map.Position;
 
+//TODO:Finish send && get Messages
 public class Message {
     private MessageType messageType;
     //serverName || clientName
@@ -95,7 +96,7 @@ public class Message {
 
     public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.stories = new DeckInfo[stories.length];
+        message.stories = new DeckInfo[stories.length];//TODO:reCode Story
         for (int i = 0; i < stories.length; i++) {
             message.stories[i] = new DeckInfo(stories[i]);
         }        message.messageType = MessageType.STORIES_COPY;
