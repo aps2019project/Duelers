@@ -18,7 +18,7 @@ public class Collection {
     private boolean hasCard(String cardId, ArrayList<Card> cards) {
         for (Card card : cards) {
             if (cardId == null) continue;
-            if (card.getCardId().equalsIgnoreCase(cardId.replaceAll(" ", "")))
+            if (card.getCardId().equalsIgnoreCase(cardId))
                 return true;
         }
         return false;
@@ -38,7 +38,7 @@ public class Collection {
 
     private Card getCard(String cardId, ArrayList<Card> cards) {
         for (Card card : cards) {
-            if (card.getCardId().equalsIgnoreCase(cardId.replaceAll(" ", "")))
+            if (card.getCardId().equalsIgnoreCase(cardId))
                 return card;
         }
         return null;
