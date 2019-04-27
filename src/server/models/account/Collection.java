@@ -49,7 +49,7 @@ public class Collection {
             return;
         }
         int number = 1;
-        String cardId = (username + "_" + cardName + "_").replaceAll("\\s+", "");
+        String cardId = (username + "_" + cardName + "_").replaceAll(" ", "");
         while (hasCard(cardId + number))
             number++;
         Card newCard = new Card(originalCards.getCard(cardName), username, number);
@@ -58,11 +58,11 @@ public class Collection {
 
     public void addCard(Card card) {//for shop
         if (card == null) {
-            Server.getInstance().serverPrint("Null Card.");
+            Server.getInstance().serverPrint("Error!");
             return;
         }
         if (hasCard(card.getCardId())) {
-            Server.getInstance().serverPrint("Add Card Error.");
+            Server.getInstance().serverPrint("Error!");
             return;
         }
         switch (card.getType()) {
