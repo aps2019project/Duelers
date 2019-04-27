@@ -7,6 +7,7 @@ import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
 import server.models.card.Card;
+import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.game.Game;
 import server.models.game.Story;
@@ -42,7 +43,7 @@ public class Server {
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Client> onlineClients = new ArrayList<>();
-    private Collection originalCards = new Collection();
+    private Collection originalCards = new Collection(); // TODO: collectibles may be in a different field
     private Card originalFlag;
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
@@ -302,9 +303,9 @@ public class Server {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
             } else if (!account.getCollection().hasCard(message.getCardIds()[0])) {
                 sendException("invalid cardid.", message.getSender(), message.getMessageId());
-            } else if(account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+            } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
                 sendException("deck had this card.", message.getSender(), message.getMessageId());
-            } else{
+            } else {
                 account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
@@ -350,7 +351,7 @@ public class Server {
     private void buyCard(Message message) {
         if (preCheckMessage(message)) {
             Account account = clients.get(message.getSender());
-            if (!originalCards.hasCard(message.getCardName())) {
+            if (!originalCards.hasCard(message.getCardName()) || originalCards.getCard(message.getCardName()).getType() == CardType.COLLECTIBLE_ITEM) { // TODO
                 sendException("invalid card name", message.getSender(), message.getMessageId());
             } else if (account.getMoney() < originalCards.getCard(message.getCardName()).getPrice()) {
                 sendException("account's money isn't enough.", message.getSender(), message.getMessageId());

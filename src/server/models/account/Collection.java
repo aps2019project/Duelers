@@ -77,10 +77,10 @@ public class Collection {
                 spells.add(card);
                 break;
             case USABLE_ITEM:
-            case COLLECTIBLE_ITEM:
                 items.add(card);
                 break;
             case FLAG:
+            case COLLECTIBLE_ITEM:
                 Server.getInstance().serverPrint("Error");
                 break;
         }
