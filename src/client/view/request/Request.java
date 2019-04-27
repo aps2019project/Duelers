@@ -332,7 +332,7 @@ public class Request {
 
         } else if (RequestType.SELECT_MAIN_DECK.setMatcher(command).find()) {
             collectionMenu.selectDeck(
-                    RequestType.SELECT_MAIN_DECK.getMatcher().group(2),
+                    RequestType.SELECT_MAIN_DECK.getMatcher().group(1),
                     client, serverName
             );
 

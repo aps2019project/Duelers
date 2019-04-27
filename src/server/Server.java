@@ -334,8 +334,10 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found", message.getSender(), message.getMessageId());
-            } else if (account.getMainDeck().getDeckName().equals(message.getDeckName())) {
+
+            } else if (account.getMainDeck() != null && account.getMainDeck().getDeckName().equals(message.getDeckName())) {
                 sendException("deck was already the main deck.", message.getSender(), message.getMessageId());
+
             } else {
                 account.selectDeck(message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(

@@ -326,9 +326,12 @@
   "decks": [
     {
       "deckName": "strongdeck",
+      "heroId": "ahmad_Rustam_1",
+      "itemId": "ahmad_SuperShield_1",
       "othersIds": []
     }
   ],
+  "mainDeckName": "strongdeck",
   "matchHistories": [],
   "money": 1700,
   "wins": 0

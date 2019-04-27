@@ -22,7 +22,7 @@ public enum RequestType {
     SHOW("^show$"),
     CREATE_DECK("^create deck (\\w+)$"),
     DELETE_DECK("^delete deck (\\w+)$"),
-    SEARCH("^search (\\w+)$"),
+    SEARCH("^search (.+)$"),
     ADD_TO_DECK("^add (\\w+) to deck (\\w+)$"),
     REMOVE_FROM_DECK("^remove (\\w+) from deck (\\w+)$"),
     VALIDATE_DECK("^validate deck (\\w+)$"),

@@ -19,7 +19,7 @@ public class Card {
     private boolean hasCombo;
 
     public boolean areSame(String cardName) {
-        return this.name.equalsIgnoreCase(cardName.replaceAll(" ", ""));
+        return this.name.equalsIgnoreCase(cardName);
     }
 
     @Override
