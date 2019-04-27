@@ -51,7 +51,11 @@ public class SpellAction {
         this.duration = action.duration;
     }
 
-    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun, boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison, boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff, boolean addSpell, boolean killsTarget, boolean isForGladiator, boolean durable, int removeBuffs, int duration, int delay, Spell carryingSpell) {
+    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun,
+                       boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison,
+                       boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff,
+                       boolean addSpell, boolean killsTarget, boolean isForGladiator, boolean durable, int removeBuffs,
+                       int duration, int delay, Spell carryingSpell) {
         this.enemyHitChanges = enemyHitChanges;
         this.apChange = apChange;
         this.hpChange = hpChange;
