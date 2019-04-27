@@ -36,7 +36,7 @@ public class Account {
         this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
         this.wins = account.getWins();
-        this.matchHistories=account.getMatchHistories();
+        this.matchHistories = account.getMatchHistories();
     }
 
     public boolean hasDeck(String deckName) {
@@ -91,47 +91,39 @@ public class Account {
             return;
         }
         money += collection.getCard(cardId).getPrice();
-        Card card=collection.getCard(cardId);
+        Card card = collection.getCard(cardId);
         collection.removeCard(card);
-        for(Deck deck:decks){
-            if(deck.hasCard(cardId)){
+        for (Deck deck : decks) {
+            if (deck.hasCard(cardId)) {
                 deck.removeCard(card);
             }
         }
     }
 
     public void addCardToDeck(String cardId, String deckName) {
-        Deck deck = getDeck(deckName);
-        if (deck == null) {
+        if (!hasDeck(deckName)) {
             Server.getInstance().serverPrint("Error");
-            return;
-        }
-        if (!collection.hasCard(cardId)) {
+        } else if (!collection.hasCard(cardId)) {
             Server.getInstance().serverPrint("Error");
-            return;
+        } else {
+            getDeck(deckName).addCard(cardId, collection);
         }
-        deck.addCard(cardId, collection);
     }
 
     public void removeCardFromDeck(String cardId, String deckName) {
-        Deck deck = getDeck(deckName);
-        if (deck == null) {
+        if (!hasDeck(deckName)) {
             Server.getInstance().serverPrint("Error");
-            return;
+        } else {
+            getDeck(deckName).removeCard(collection.getCard(cardId));
         }
-        if (!deck.hasCard(cardId)) {
-            Server.getInstance().serverPrint("Deck doesn't have Error");
-            return;
-        }
-        deck.removeCard(collection.getCard(cardId));
     }
 
     public void selectDeck(String deckName) {
         if (!hasDeck(deckName)) {
             Server.getInstance().serverPrint("Error");
-            return;
+        }else{
+            mainDeck = getDeck(deckName);
         }
-        mainDeck = getDeck(deckName);
     }
 
     public String getUsername() {

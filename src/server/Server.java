@@ -302,11 +302,11 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
-                return;
-            } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+            } else if (!account.getCollection().hasCard(message.getCardIds()[0])) {
+                sendException("invalid cardid.", message.getSender(), message.getMessageId());
+            } else if(account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
                 sendException("deck had this card.", message.getSender(), message.getMessageId());
-                return;
-            } else {
+            } else{
                 account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
@@ -319,10 +319,8 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
-                return;
             } else if (!account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
                 sendException("deck didn't have this card.", message.getSender(), message.getMessageId());
-                return;
             } else {
                 account.removeCardFromDeck(message.getCardIds()[0], message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(

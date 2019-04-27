@@ -11,6 +11,7 @@ public class Deck {
     private Card item;
     private ArrayList<Card> others = new ArrayList<>();
 
+    //ERROR:This uses same reference!
     public Deck(String deckName, Card hero, Card item, ArrayList<Card> others) {
         this.deckName = deckName;
         this.hero = hero;
@@ -18,12 +19,12 @@ public class Deck {
         this.others = others;
     }
 
-    public Deck(TempDeck tempDeck, Collection originalCards) {
+    public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
-        this.hero = originalCards.getCard(tempDeck.getHeroId());
-        this.item = originalCards.getCard(tempDeck.getItemId());
+        this.hero = collection.getCard(tempDeck.getHeroId());
+        this.item = collection.getCard(tempDeck.getItemId());
         for (String cardId : tempDeck.getOthersIds()) {
-            others.add(originalCards.getCard(cardId));
+            others.add(collection.getCard(cardId));
         }
     }
 
@@ -31,20 +32,20 @@ public class Deck {
         this.deckName = deckName;
     }
 
-    public boolean hasCard(String cardId){
-        if(hero.getCardId().equals(cardId))
+    public boolean hasCard(String cardId) {
+        if (hero.getCardId().equals(cardId))
             return true;
-        if(item.getCardId().equals(cardId))
+        if (item.getCardId().equals(cardId))
             return true;
-        for(Card card:others){
-            if(card.getCardId().equals(cardId))
+        for (Card card : others) {
+            if (card.getCardId().equals(cardId))
                 return true;
         }
         return false;
     }
 
     public void addCard(String cardId, Collection collection) {
-        if (collection.hasCard(cardId)) {
+        if (collection.hasCard(cardId) && !hasCard(cardId)) {
             addCard(collection.getCard(cardId));
         } else {
             Server.getInstance().serverPrint("Error!");
@@ -52,10 +53,6 @@ public class Deck {
     }
 
     private void addCard(Card card) {
-        if (card == null || hasCard(card.getCardId())){
-            Server.getInstance().serverPrint("Error!");
-            return;
-        }
         switch (card.getType()) {
             case HERO:
                 hero = card;
@@ -75,7 +72,7 @@ public class Deck {
     }
 
     public void removeCard(Card card) {
-        if (!hasCard(card.getCardId())){
+        if (card == null || !hasCard(card.getCardId())) {
             Server.getInstance().serverPrint("Error!");
             return;
         }
@@ -86,12 +83,12 @@ public class Deck {
         others.remove(card);
     }
 
-    public boolean isValid() {
+    public boolean isValid() {//TODO:reCode
         if (hero == null) return false;
         return others.size() == 20;
     }
 
-    public void copyCards() {
+    public void copyCards() {//TODO:reCode
         this.hero = new Card(hero);
         this.hero.setCardId(makeId(hero, 1));
         this.item = new Card(item);
@@ -105,13 +102,13 @@ public class Deck {
         }
     }
 
-    private String makeId(Card card, int number) {
+    private String makeId(Card card, int number) {//TODO:reCode
         return deckName.replaceAll(" ", "") + "_" +
                 card.getName().replaceAll(" ", "") + "_" +
                 number;
     }
 
-    private int numberOf(String name) {
+    private int numberOf(String name) {//Todo:reCode
         if (hero.areSame(name) || item.areSame(name)) return 0;
         int number = 0;
         for (Card card : others) {
@@ -135,5 +132,4 @@ public class Deck {
     public Card getItem() {
         return item;
     }
-
 }
