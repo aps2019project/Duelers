@@ -366,8 +366,8 @@ public class Server {
     private void sellCard(Message message) {
         if (preCheckMessage(message)) {
             Account account = clients.get(message.getSender());
-            if (!account.getCollection().hasCard(message.getCardName())) {
-                sendException("invalid card name", message.getSender(), message.getMessageId());
+            if (!account.getCollection().hasCard(message.getCardId())) {
+                sendException("invalid card id", message.getSender(), message.getMessageId());
             } else {
                 account.sellCard(message.getCardId());
                 addToSendingMessages(Message.makeAccountCopyMessage(

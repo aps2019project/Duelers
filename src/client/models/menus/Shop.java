@@ -45,7 +45,7 @@ public class Shop extends Menu {
     public void buy(String cardName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeBuyCardMessage(
-                        client.getClientName(), serverName, cardName, 0
+                        client.getClientName(), serverName, cardName.replaceAll(" ", ""), 0
                 )
         );
         client.sendMessages();
