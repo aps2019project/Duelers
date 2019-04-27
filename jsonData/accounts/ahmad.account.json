@@ -2,7 +2,22 @@
   "username": "ahmad",
   "password": "123456",
   "collection": {
-    "heroes": [],
+    "heroes": [
+      {
+        "name": "Rustam",
+        "description": "a hybrid HERO with 7 AP, 55 HP",
+        "cardId": "ahmad_Rustam_1",
+        "type": "HERO",
+        "spells": [],
+        "defaultAp": 7,
+        "defaultHp": 55,
+        "mannaPoint": 0,
+        "price": 8000,
+        "attackType": "HYBRID",
+        "range": 4,
+        "hasCombo": false
+      }
+    ],
     "minions": [
       {
         "name": "Piran",
@@ -234,10 +249,87 @@
       }
     ],
     "spells": [],
-    "items": []
+    "items": [
+      {
+        "name": "Super Shield",
+        "description": "a usable ITEM that gives HERO 12 HOLY BUFFs",
+        "cardId": "ahmad_SuperShield_1",
+        "type": "USABLE_ITEM",
+        "spells": [
+          {
+            "spellId": "ss_holy_12",
+            "action": {
+              "enemyHitChanges": -12,
+              "apChange": 0,
+              "hpChange": 0,
+              "mpChange": 0,
+              "poison": false,
+              "makeStun": false,
+              "makeDisarm": false,
+              "actionAtTheEndOfTurn": false,
+              "noDisarm": false,
+              "noPoison": false,
+              "noStun": false,
+              "noBadEffect": false,
+              "noAttackFromWeakerOnes": false,
+              "disableHolyBuff": false,
+              "addSpell": false,
+              "killsTarget": false,
+              "isForGladiator": false,
+              "durable": false,
+              "removeBuffs": 0,
+              "duration": 2147483647,
+              "delay": 0
+            },
+            "target": {
+              "isRelatedToCardOwnerPosition": false,
+              "isForAroundOwnHero": false,
+              "isRandom": false,
+              "isForDeckCards": false,
+              "owner": {
+                "own": true,
+                "enemy": false
+              },
+              "cardType": {
+                "cell": false,
+                "hero": true,
+                "minion": false
+              },
+              "attackType": {
+                "melee": true,
+                "ranged": true,
+                "hybrid": true
+              }
+            },
+            "availabilityType": {
+              "onPut": false,
+              "onAttack": false,
+              "onDeath": false,
+              "continuous": false,
+              "specialPower": false,
+              "onStart": true
+            },
+            "coolDown": 0,
+            "mannaPoint": 0,
+            "lastTurnUsed": 0
+          }
+        ],
+        "defaultAp": 0,
+        "defaultHp": 0,
+        "mannaPoint": 0,
+        "price": 4000,
+        "range": 0,
+        "hasCombo": false
+      }
+    ]
   },
-  "decks": [],
+  "decks": [
+    {
+      "deckName": "strongdeck",
+      "othersIds": []
+    }
+  ],
   "matchHistories": [],
-  "money": 13700,
+  "money": 1700,
   "wins": 0
 }

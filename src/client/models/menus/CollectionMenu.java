@@ -130,7 +130,7 @@ public class CollectionMenu extends Menu {
     }
 
     public void showItemsAndCards(Client client) {
-        View.getInstance().showCollection(client.getAccount().getCollection());
+        View.getInstance().showCollection(client.getAccount().getCollection(), false);
     }
 
     public void search(String cardName, Client client) throws InputException {

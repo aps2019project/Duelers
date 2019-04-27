@@ -83,6 +83,6 @@ public class Account {
     }
 
     public boolean isMainDeck(Deck deck) {
-        return this.mainDeck.equals(deck);
+        return deck.equals(this.mainDeck);
     }
 }

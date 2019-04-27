@@ -33,9 +33,9 @@ public class Deck {
     }
 
     public boolean hasCard(String cardId) {
-        if (hero.getCardId().equals(cardId))
+        if (hero != null && hero.getCardId().equals(cardId))
             return true;
-        if (item.getCardId().equals(cardId))
+        if (item != null && item.getCardId().equals(cardId))
             return true;
         for (Card card : others) {
             if (card.getCardId().equals(cardId))

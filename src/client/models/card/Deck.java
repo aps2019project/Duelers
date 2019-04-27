@@ -21,6 +21,7 @@ public class Deck {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) return false;
         if (!obj.getClass().getName().equals(Deck.class.getName())) return false;
         Deck deck = (Deck) obj;
         return deck.getName().equals(deckName);

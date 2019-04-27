@@ -10,8 +10,12 @@ public class TempDeck {
 
     public TempDeck(Deck deck) {
         this.deckName = deck.getDeckName();
-        this.heroId = deck.getHero().getCardId();
-        this.itemId = deck.getItem().getCardId();
+        if (deck.getHero() != null) {
+            this.heroId = deck.getHero().getCardId();
+        }
+        if (deck.getItem() != null) {
+            this.itemId = deck.getItem().getCardId();
+        }
         for (Card card : deck.getOthers()) {
             this.othersIds.add(card.getCardId());
         }

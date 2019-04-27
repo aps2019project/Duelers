@@ -43,8 +43,11 @@ public class View {
 
     public void showDecksList(Account account) {
         int counter = 1;
-        System.out.printf("%2d - ", counter++);
-        showDeck(account.getMainDeck());
+        Deck mainDeck = account.getMainDeck();
+        if (mainDeck != null) {
+            System.out.printf("%2d - ", counter++);
+            showDeck(account.getMainDeck());
+        }
         for (Deck deck : account.getDecks()) {
             if (account.isMainDeck(deck)) continue;
             System.out.printf("%2d - ", counter++);
@@ -56,9 +59,13 @@ public class View {
         if (deck == null) return;
         System.out.println(deck.getName() + ":\n");
         System.out.println("Hero:");
-        showHero(1, deck.getHero());
+        if (deck.getHero() != null) {
+            showHero(1, deck.getHero());
+        }
         System.out.println("Item:");
-        showItem(1, deck.getItem());
+        if (deck.getItem() != null) {
+            showItem(1, deck.getItem());
+        }
         showOtherCards(deck.getOthers());
     }
 
@@ -136,9 +143,9 @@ public class View {
 
     }
 
-    public void showCollection(Collection collection) {
+    public void showCollection(Collection collection, boolean justUsable) {
         showHeroes(collection.getHeroes());
-        showItems(collection.getItems());
+        showItems(collection.getItems(), justUsable);
         showSpells(collection.getSpells());
         showMinions(collection.getMinions());
     }
@@ -161,12 +168,13 @@ public class View {
         }
     }
 
-    private void showItems(ArrayList<Card> items) {
+    private void showItems(ArrayList<Card> items, boolean justUsable) {
         System.out.println("Items:\n");
         if (items.size() == 0) return;
-        for (int i = 0; i < items.size(); i++) {
-            Card item = items.get(i);
-            showItem(i + 1, item);
+        int counter = 1;
+        for (Card item : items) {
+            if (justUsable && item.getType() != CardType.USABLE_ITEM) continue;
+            showItem(counter++, item);
         }
     }
 
