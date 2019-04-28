@@ -72,23 +72,23 @@ public class Request {
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
-            if (!gameCommands.selectCard()){
+            if (!gameCommands.selectCard()) {
                 throw new InputException("select a card");
             }
             Matcher matcher = GameRequestType.MOVE.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
-            gameCommands.move(row, column);
+            gameCommands.move(client, serverName, row, column);
 
         } else if (GameRequestType.ATTACK.matches(command)) {
-            if (!gameCommands.selectCard()){
+            if (!gameCommands.selectCard()) {
                 throw new InputException("select a card");
             }
             String cardId = GameRequestType.ATTACK.getMatcher().group(1);
             gameCommands.attack(cardId);
 
         } else if (GameRequestType.ATTACK_COMBO.matches(command)) {
-            if (!gameCommands.selectCard()){
+            if (!gameCommands.selectCard()) {
                 throw new InputException("select a card");
             }
             Matcher matcher = GameRequestType.ATTACK_COMBO.getMatcher();
@@ -97,7 +97,7 @@ public class Request {
             gameCommands.attackCombo(oppCardId, cardIds);
 
         } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
-            if (!gameCommands.selectCard()){
+            if (!gameCommands.selectCard()) {
                 throw new InputException("select a card");
             }
             Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
@@ -125,14 +125,14 @@ public class Request {
             String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
             gameCommands.selectItem(itemID);
 
-        } else if ( GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
-            if (!gameCommands.isItemSelected()){
+        } else if (GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
+            if (!gameCommands.isItemSelected()) {
                 throw new InputException("select an item");
             }
             gameCommands.showSelectedItemInfo();
 
         } else if (GameRequestType.USE_ITEM.matches(command)) {
-            if (!gameCommands.isItemSelected()){
+            if (!gameCommands.isItemSelected()) {
                 throw new InputException("select an item");
             }
             Matcher matcher = GameRequestType.USE_ITEM.getMatcher();

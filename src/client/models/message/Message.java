@@ -57,7 +57,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeTroopPositionMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+    public static Message makeMoveTroopMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;

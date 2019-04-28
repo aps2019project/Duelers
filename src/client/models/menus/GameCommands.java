@@ -51,7 +51,10 @@ public class GameCommands extends Menu {
         selectedCardId = cardId;
     }
 
-    public void move(int row, int column) {
+    public void move(Client client , String serverName,int row, int column) {
+        Message message = Message.makeMoveTroopMessage(client.getClientName(),serverName,selectedCardId,new Position(row,column),0);
+        client.addToSendingMessages(message);
+        client.sendMessages();
 
     }
 
