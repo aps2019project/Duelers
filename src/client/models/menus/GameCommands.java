@@ -2,9 +2,11 @@ package client.models.menus;
 
 import client.Client;
 import client.models.game.Game;
+import client.models.game.Troop;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
+import client.models.card.Card;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
@@ -56,7 +58,16 @@ public class GameCommands extends Menu {
     }
 
     public void showCardInfo(String cardId) {
-
+        Troop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
+        if (troop != null) {
+            View.getInstance().showTroopInfo(troop);
+            return;
+        }
+        Card card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
+        if (card != null) {
+            View.getInstance().showCardInfo(card);
+            return;
+        }
     }
 
     public void selectCard(String cardId) {

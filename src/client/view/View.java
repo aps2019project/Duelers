@@ -112,14 +112,6 @@ public class View {
 
     }
 
-    public void showInMapMinions(Player player) {
-
-    }
-
-    public void showInMapCardInfo(Card card) {
-
-    }
-
     public void showMoveCardMessage(Card card, Cell targetCell) {
 
     }
@@ -295,5 +287,34 @@ public class View {
                 troop.getCell() + ", power: " +
                 troop.getCurrentAp()
         );
+    }
+
+    public void showTroopInfo(Troop troop) {
+        System.out.println(troop.getCard().getType() + ":" +
+                "\nName: " + troop.getCard().getName() +
+                "\nHP: " + troop.getCurrentHp() +
+                "  AP: " + troop.getCurrentAp() +
+                "\nCombo ability: " + troop.getCard().hasCombo() +
+                "\nAttack type: " + troop.getCard().getAttackType() +
+                "\nDescription:" + troop.getCard().getDescription()
+        );
+    }
+
+    public void showCardInfo(Card card) {
+        if (card.getType() == CardType.SPELL) {
+            System.out.println(card.getType() + ":" +
+                    "\nMP: " + card.getMannaPoint() +
+                    "\nDescription: " + card.getDescription()
+            );
+        } else {
+            System.out.println(card.getType() + ":" +
+                    "\nName: " + card.getName() +
+                    "\nHP: " + card.getDefaultHp() +
+                    "  AP: " + card.getDefaultAp() +
+                    "  MP: " + card.getMannaPoint() +
+                    "\nCombo ability: " + card.hasCombo() +
+                    "\nDescription: " + card.getDescription()
+            );
+        }
     }
 }

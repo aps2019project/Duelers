@@ -66,4 +66,18 @@ public class Player {
         }
         return null;
     }
+
+    public Troop searchTroop(String cardId) {
+        for (Troop troop : troops) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) return troop;
+        }
+        return null;
+    }
+
+    public Card searchCard(String cardId) {
+        for (Card card : hand) {
+            if (card.getCardId().equalsIgnoreCase(cardId)) return card;
+        }
+        return null;
+    }
 }
