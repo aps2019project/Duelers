@@ -72,18 +72,12 @@ public class Request {
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
-            if (!gameCommands.isAnyCardSelected()) {
-                throw new InputException("select a card");
-            }
             Matcher matcher = GameRequestType.MOVE.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
             gameCommands.move(client, serverName, row, column);
 
         } else if (GameRequestType.ATTACK.matches(command)) {
-            if (!gameCommands.isAnyCardSelected()) {
-                throw new InputException("select a card");
-            }
             String oppCardId = GameRequestType.ATTACK.getMatcher().group(1);
             gameCommands.attack(client, serverName, oppCardId);
 
@@ -94,9 +88,6 @@ public class Request {
             gameCommands.attackCombo(client, serverName, oppCardId, cardIds);
 
         } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
-            if (!gameCommands.isAnyCardSelected()) {
-                throw new InputException("select a card");
-            }
             Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));

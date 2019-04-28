@@ -117,7 +117,18 @@ public class View {
     }
 
     public void showHand(Player player) {
-
+        System.out.println("Hand Cards:");
+        for (Card card : player.getHand()) {
+            System.out.println(card.getCardId() + ":");
+            showCardInfo(card);
+        }
+        Card nextCard = player.getNextCard();
+        if (nextCard != null) {
+            System.out.println("Next Card:\n" +
+                    nextCard.getCardId() + ":"
+            );
+            showCardInfo(nextCard);
+        }
     }
 
     public void showCardInsertionMessage(Card card, Cell targetCell) {

@@ -79,37 +79,64 @@ public class GameCommands extends Menu {
         selectedCardId = cardId;
     }
 
-    public void move(Client client, String serverName, int row, int column) {
+    public void move(Client client, String serverName, int row, int column) throws InputException {
+        if (selectedCardId == null) {
+            throw new InputException("select a card");
+        }
+
         Message message = Message.makeMoveTroopMessage(
                 client.getClientName(), serverName, selectedCardId, new Position(row, column), 0
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
-    public void attack(Client client, String severName, String oppCardId) {
+    public void attack(Client client, String severName, String oppCardId) throws InputException {
+        if (selectedCardId == null) {
+            throw new InputException("select a card");
+        }
+
         Message message = Message.makeAttackMessage(
                 client.getClientName(), severName, selectedCardId, oppCardId, 0
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
-    public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) {
+    public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) throws InputException {
         Message message = Message.makeComboAttackMessage(
                 client.getClientName(), serverName, oppCardId, cardIds, 0
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
-    public void useSpecialPower(Client client, String serverName, int row, int column) {
+    public void useSpecialPower(Client client, String serverName, int row, int column) throws InputException {
+        if (selectedCardId == null) {
+            throw new InputException("select a card");
+        }
+
         Message message = Message.makeUseSpecialPowerMessage(
                 client.getClientName(), serverName, selectedCardId, new Position(row, column), 0
         );
         client.addToSendingMessages(message);
         client.sendMessages();
 
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
     public void showHand(Client client) {
@@ -178,10 +205,6 @@ public class GameCommands extends Menu {
 
     public void endGame() {
 
-    }
-
-    public boolean isAnyCardSelected() {
-        return selectedCardId != null;
     }
 
     public void setCurrentGame(Game currentGame) {
