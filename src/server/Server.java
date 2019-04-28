@@ -583,7 +583,7 @@ public class Server {
     }
 
     private void saveAccount(Account account) {
-        String accountJson = JsonConverter.toJson(account);
+        String accountJson = JsonConverter.toJson(new TempAccount(account));
 
         try {
             FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
