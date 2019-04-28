@@ -1,7 +1,7 @@
 package client.models.menus;
 
 import client.Client;
-import client.models.account.Account;
+import client.models.account.AccountInfo;
 import client.models.game.GameType;
 import client.models.message.Message;
 import client.view.View;
@@ -9,7 +9,7 @@ import client.view.request.InputException;
 
 public class MultiPlayerMenu extends Menu {
     private static final MultiPlayerMenu MULTI_PLAYER_MENU = new MultiPlayerMenu();
-    private Account secondAccount;
+    private AccountInfo secondAccount;
 
     private MultiPlayerMenu() {
     }
@@ -18,11 +18,14 @@ public class MultiPlayerMenu extends Menu {
         return MULTI_PLAYER_MENU;
     }
 
-    public void setSecondAccount(Account secondAccount) {
+    public void setSecondAccount(AccountInfo secondAccount) {
         this.secondAccount = secondAccount;
     }
 
     public void selectUser(String userName, Client client, String serverName) throws InputException {
+        if (client.getAccount().getUsername().equals(userName)) {
+            throw new InputException("this is your username");
+        }
         client.addToSendingMessages(
                 Message.makeSelectUserMessage(
                         client.getClientName(), serverName, userName, 0
