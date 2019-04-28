@@ -492,6 +492,7 @@ public class Server {
                     (serverName, message.getSender(), game, message.getMessageId()));
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, accounts.get(opponentAccount), game, 0));
+            sendMessages();
         }
     }
 
