@@ -84,17 +84,14 @@ public class Request {
             if (!gameCommands.selectCard()) {
                 throw new InputException("select a card");
             }
-            String cardId = GameRequestType.ATTACK.getMatcher().group(1);
-            gameCommands.attack(cardId);
+            String oppCardId = GameRequestType.ATTACK.getMatcher().group(1);
+            gameCommands.attack(client, serverName, oppCardId);
 
         } else if (GameRequestType.ATTACK_COMBO.matches(command)) {
-            if (!gameCommands.selectCard()) {
-                throw new InputException("select a card");
-            }
             Matcher matcher = GameRequestType.ATTACK_COMBO.getMatcher();
             String oppCardId = matcher.group(1);
             String[] cardIds = matcher.group(2).split(" ");
-            gameCommands.attackCombo(oppCardId, cardIds);
+            gameCommands.attackCombo(client, serverName, oppCardId, cardIds);
 
         } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
             if (!gameCommands.selectCard()) {

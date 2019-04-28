@@ -4,6 +4,7 @@ import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.card.Card;
 import client.models.card.DeckInfo;
+import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.AccountMenu;
 import client.models.menus.Menu;
@@ -11,7 +12,6 @@ import client.models.menus.Shop;
 import client.models.menus.StoryMenu;
 import client.models.message.Message;
 import server.Server;
-import client.models.game.Game;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class Client {
         this.account = account;
     }
 
-    public void updateLeaderBoard(String serverName)  {
+    public void updateLeaderBoard(String serverName) {
         this.addToSendingMessages(Message.makeGetLeaderBoardMessage(clientName, serverName, 0));
         this.sendMessages();
     }
@@ -94,7 +94,7 @@ public class Client {
         receivingMessages.add(Message.convertJsonToMessage(messageJson));
     }
 
-    private void receiveMessages()  {
+    private void receiveMessages() {
         validation = true;
         for (Message message : receivingMessages) {
             switch (message.getMessageType()) {
@@ -128,17 +128,13 @@ public class Client {
         receivingMessages.clear();
     }
 
-    public void sendMessages()  {
+    public void sendMessages() {
         for (Message message : sendingMessages) {
             server.addToReceivingMessages(message.toJson());
         }
         sendingMessages.clear();
         server.receiveMessages();
         receiveMessages();
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     public void setCustomDecks(DeckInfo[] customDecks) {
@@ -155,5 +151,9 @@ public class Client {
 
     public Game getGame() {
         return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

@@ -172,9 +172,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeComboAttackMessage(String sender, String receiver, int messageId, String... opponentAndMyCardIds) {
+    public static Message makeComboAttackMessage(String sender, String receiver , String oppCardId ,String[] myCardIds,int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = opponentAndMyCardIds;
+        message.cardId = oppCardId;
+        message.cardIds = myCardIds;
         message.messageType = MessageType.COMBO;
         return message;
     }

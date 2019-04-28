@@ -51,22 +51,32 @@ public class GameCommands extends Menu {
         selectedCardId = cardId;
     }
 
-    public void move(Client client , String serverName,int row, int column) {
-        Message message = Message.makeMoveTroopMessage(client.getClientName(),serverName,selectedCardId,new Position(row,column),0);
+    public void move(Client client, String serverName, int row, int column) {
+        Message message = Message.makeMoveTroopMessage(
+                client.getClientName(), serverName, selectedCardId, new Position(row, column), 0
+        );
         client.addToSendingMessages(message);
         client.sendMessages();
 
     }
 
-    public void attack(String cardId) {
-
+    public void attack(Client client, String severName, String oppCardId) {
+        Message message = Message.makeAttackMessage(
+                client.getClientName(), severName, selectedCardId, oppCardId, 0
+        );
+        client.addToSendingMessages(message);
+        client.sendMessages();
     }
 
-    public void attackCombo(String oppCardId, String[] cardIds) {
-
+    public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) {
+        Message message = Message.makeComboAttackMessage(
+                client.getClientName(), serverName, oppCardId, cardIds, 0
+        );
+        client.addToSendingMessages(message);
+        client.sendMessages();
     }
 
-    public void useSpecialPower( Client client , String serverName,int row, int column) {
+    public void useSpecialPower(Client client, String serverName, int row, int column) {
     }
 
     public void showHand(Client client) {
@@ -135,8 +145,8 @@ public class GameCommands extends Menu {
 
     }
 
-    public boolean selectCard(){
-        return  selectedCardId != null;
+    public boolean selectCard() {
+        return selectedCardId != null;
 
 
     }
