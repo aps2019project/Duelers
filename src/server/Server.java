@@ -217,7 +217,9 @@ public class Server {
     }
 
     private void selectUserForMultiPlayer(Message message) {
-//        if (getAccount(message.getOpponentUserName()))
+//        if (getAccount(message.getOpponentUserName())!=null){
+//            sendException("invalid ");
+//        }
     }
 
     private void register(Message message) {
