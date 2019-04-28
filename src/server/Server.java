@@ -2,7 +2,7 @@ package server;
 
 import client.Client;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import server.models.JsonConverter;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
@@ -500,7 +500,7 @@ public class Server {
 
     private <T> T loadFile(File file, Class<T> classOfT) {
         try {
-            return new Gson().fromJson(new BufferedReader(new FileReader(file)), classOfT);
+            return JsonConverter.fromJson(new BufferedReader(new FileReader(file)), classOfT);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -508,7 +508,7 @@ public class Server {
     }
 
     private void saveAccount(Account account) {
-        String accountJson = new GsonBuilder().setPrettyPrinting().create().toJson(new TempAccount(account));
+        String accountJson = JsonConverter.toJson(account);
 
         try {
             FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
