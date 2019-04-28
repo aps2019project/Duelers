@@ -1,19 +1,20 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.game.Game;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
+    private Game currentGame;
     private String selectedItem;
     private boolean isInGraveYard;
     private String selectedCardId;
 
     private GameCommands() {
     }
-
 
     public static GameCommands getInstance() {
         return ourInstance;
@@ -103,7 +104,7 @@ public class GameCommands extends Menu {
         client.sendMessages();
     }
 
-    public void show‫‪Collectables‬‬() {
+    public void showCollectibleItems() {
 
     }
 
@@ -153,9 +154,7 @@ public class GameCommands extends Menu {
 
     }
 
-    public boolean selectCard() {
+    public boolean isAnyCardSelected() {
         return selectedCardId != null;
-
-
     }
 }

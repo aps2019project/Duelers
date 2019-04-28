@@ -1,7 +1,6 @@
 package controller;
 
 import client.Client;
-import client.models.menus.AccountMenu;
 import client.view.View;
 import client.view.request.ExitCommand;
 import client.view.request.InputException;
@@ -11,17 +10,32 @@ import server.Server;
 import java.util.ArrayList;
 
 public class Controller {
+    private static Controller mainController;
+    private static Client currentClient;
     private View view = View.getInstance();
     private ArrayList<Client> clients = new ArrayList<>();
     private Server server = Server.getInstance();
-    private Client thisClient;
+    private Client mainClient;
+    private Client otherClient;
+
+    public static void changeTurn() {
+        if (mainController.mainClient.equals(currentClient)) {
+            currentClient = mainController.otherClient;
+        } else {
+            currentClient = mainController.mainClient;
+        }
+    }
+
+    public static Client getCurrentClient() {
+        return currentClient;
+    }
 
     public void main() {
         do {
             Request request = new Request();
             request.getNewCommand();
             try {
-                request.handleRequest(thisClient, server.getServerName());
+                request.handleRequest(currentClient, server.getServerName());
             } catch (InputException e) {
                 view.showError(e);
             } catch (ExitCommand e) {
@@ -31,10 +45,12 @@ public class Controller {
     }
 
     public void preProcess() {
+        mainController = this;
         clients.add(
                 new Client(java.lang.System.getProperty("user.name"), Server.getInstance())
         );
-        thisClient = clients.get(0);
-        server.addClient(thisClient);
+        mainClient = clients.get(0);
+        currentClient = mainClient;
+        server.addClient(mainClient);
     }
 }

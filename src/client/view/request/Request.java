@@ -24,7 +24,7 @@ public class Request {
             accountMenuHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().getClass().getName().equals(BattleMenu.class.getName())) {
-            battleRequestHandleRequest(client, serverName);
+            battleMenuHandleRequest(client, serverName);
 
         } else if (client.getCurrentMenu().getClass().getName().equals(CollectionMenu.class.getName())) {
             collectionMenuHandleRequest(client, serverName);
@@ -72,7 +72,7 @@ public class Request {
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
-            if (!gameCommands.selectCard()) {
+            if (!gameCommands.isAnyCardSelected()) {
                 throw new InputException("select a card");
             }
             Matcher matcher = GameRequestType.MOVE.getMatcher();
@@ -81,7 +81,7 @@ public class Request {
             gameCommands.move(client, serverName, row, column);
 
         } else if (GameRequestType.ATTACK.matches(command)) {
-            if (!gameCommands.selectCard()) {
+            if (!gameCommands.isAnyCardSelected()) {
                 throw new InputException("select a card");
             }
             String oppCardId = GameRequestType.ATTACK.getMatcher().group(1);
@@ -94,7 +94,7 @@ public class Request {
             gameCommands.attackCombo(client, serverName, oppCardId, cardIds);
 
         } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
-            if (!gameCommands.selectCard()) {
+            if (!gameCommands.isAnyCardSelected()) {
                 throw new InputException("select a card");
             }
             Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
@@ -116,7 +116,7 @@ public class Request {
             gameCommands.endTurn(client, serverName);
 
         } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
-            gameCommands.show‫‪Collectables‬‬();
+            gameCommands.showCollectibleItems();
 
         } else if (GameRequestType.SELECT_ITEM.matches(command)) {
             String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
@@ -391,7 +391,7 @@ public class Request {
         }
     }
 
-    private void battleRequestHandleRequest(Client client, String serverName) throws InputException {
+    private void battleMenuHandleRequest(Client client, String serverName) throws InputException {
         BattleMenu battleMenu = BattleMenu.getInstance();
 
         if (RequestType.SINGLE_PLAYER.setMatcher(command).find()) {
