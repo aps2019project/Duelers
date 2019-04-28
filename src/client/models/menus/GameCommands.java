@@ -48,15 +48,11 @@ public class GameCommands extends Menu {
     }
 
     public void showMyMinions() {
-        if (currentGame.getTurnNumber() % 2 == 1) {
-            View.getInstance().showMinionTroops(currentGame.getPlayerOne());
-        } else {
-            View.getInstance().showMinionTroops(currentGame.getPlayerTwo());
-        }
+        View.getInstance().showTroops(currentGame.getCurrentTurnPlayer());
     }
 
     public void showOppMinions() {
-
+        View.getInstance().showTroops(currentGame.getOtherTurnPlayer());
     }
 
     public void showCardInfo(String cardId) {

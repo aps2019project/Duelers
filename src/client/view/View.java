@@ -282,15 +282,13 @@ public class View {
         }
     }
 
-    public void showMinionTroops(Player player) {
+    public void showTroops(Player player) {
         for (Troop troop : player.getTroops()) {
-            if (troop.getCard().getType() == CardType.MINION) {
-                showMinionTroop(troop);
-            }
+            showTroop(troop);
         }
     }
 
-    private void showMinionTroop(Troop troop) {
+    private void showTroop(Troop troop) {
         System.out.println(troop.getCard().getCardId() + " : " +
                 troop.getCard().getName() + ", health: " +
                 troop.getCurrentHp() + ", location: " +
