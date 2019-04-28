@@ -11,19 +11,26 @@ import java.util.ArrayList;
 public abstract class Game {
     private GameType gameType;
     private Player playerOne;
+    private Player playerTwo;
     private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(GameType gameType, Account account1, GameMap gameMap) {
+    protected Game(GameType gameType, Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameType=gameType;
         this.gameMap=gameMap;
+        this.playerOne = new Player(accountOne);
+        this.playerTwo = new Player(accountTwo);
     }
 
     public Player getPlayerOne() {
         return this.playerOne;
+    }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
     }
 
     public void addCellEffect(CellEffect cellEffect) {

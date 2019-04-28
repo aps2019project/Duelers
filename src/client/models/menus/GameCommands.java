@@ -157,4 +157,8 @@ public class GameCommands extends Menu {
     public boolean isAnyCardSelected() {
         return selectedCardId != null;
     }
+
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
+    }
 }

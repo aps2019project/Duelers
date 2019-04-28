@@ -103,7 +103,8 @@ public class Client {
                     account = new Account(message.getAccount());
                     break;
                 case GAME_COPY:
-                    game = message.getGame();
+                    GameCommands.getInstance().setCurrentGame(message.getGame());
+                    currentMenu = GameCommands.getInstance();
                     break;
                 case ORIGINAL_CARDS_COPY:
                     Shop.getInstance().setOriginalCards(message.getShopCards());
