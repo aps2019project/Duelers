@@ -90,7 +90,7 @@ public class Client {
         receivingMessages.add(Message.convertJsonToMessage(messageJson));
     }
 
-    private void receiveMessages() {
+    public void receiveMessages() {
         validation = true;
         for (Message message : receivingMessages) {
             switch (message.getMessageType()) {

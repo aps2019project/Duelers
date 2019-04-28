@@ -25,6 +25,7 @@ public class Controller {
         } else {
             currentClient = mainController.mainClient;
         }
+        currentClient.receiveMessages();
     }
 
     public static Client getCurrentClient() {
