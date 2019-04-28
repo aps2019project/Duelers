@@ -8,7 +8,6 @@ import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
-import client.models.game.Game;
 import client.models.game.Player;
 import client.models.map.Cell;
 

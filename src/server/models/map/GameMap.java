@@ -6,14 +6,14 @@ import server.models.game.Troop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Map {
+public class GameMap {
 
     private Cell[][] cells;
     private ArrayList<Troop> playerOneTroops = new ArrayList<>();
     private ArrayList<Troop> playerTwoTroops = new ArrayList<>();
     private int numberOfFlags;
 
-    public Map(HashMap<Cell, Card> items, int numberOfFlags) {
+    public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
 
     }
 

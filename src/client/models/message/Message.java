@@ -3,11 +3,11 @@ package client.models.message;
 import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.card.DeckInfo;
-import client.models.game.Game;
 import client.models.game.GameType;
 import client.models.map.Position;
 import com.google.gson.Gson;
 import client.models.account.TempAccount;
+import client.models.game.Game;
 
 public class Message {
     private MessageType messageType;

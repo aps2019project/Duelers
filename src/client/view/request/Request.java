@@ -101,10 +101,10 @@ public class Request {
             String cardId = matcher.group(1);
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
-            gameCommands.insertCard(cardId, row, column);
+            gameCommands.insertCard(client , serverName,cardId, row, column);
 
         } else if (GameRequestType.END_TURN.matches(command)) {
-            gameCommands.endTurn();
+            gameCommands.endTurn(client , serverName);
 
         } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
             gameCommands.show‫‪Collectables‬‬();

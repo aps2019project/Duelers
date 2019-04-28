@@ -1,6 +1,8 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.map.Position;
+import client.models.message.Message;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
@@ -24,9 +26,10 @@ public class GameCommands extends Menu {
     public void showHelp() {
     }
 
-    public void showGameActions(){
+    public void showGameActions() {
 
     }
+
     public void showGameInfo() {
 
     }
@@ -66,12 +69,18 @@ public class GameCommands extends Menu {
 
     }
 
-    public void insertCard(String cardId, int row, int column) {
-
+    public void insertCard(Client client, String serverName, String cardId, int row, int column) {
+        Message message = Message.makeInsertMessage(
+                client.getClientName(), serverName, cardId, new Position(row, column), 0
+        );
+        client.addToSendingMessages(message);
+        client.sendMessages();
     }
 
-    public void endTurn() {
-
+    public void endTurn(Client client, String serverName) {
+        Message message = Message.makeEndTurnMessage(client.getClientName(), serverName, 0);
+        client.addToSendingMessages(message);
+        client.sendMessages();
     }
 
     public void show‫‪Collectables‬‬() {

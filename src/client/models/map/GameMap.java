@@ -4,7 +4,7 @@ import client.models.game.Troop;
 
 import java.util.ArrayList;
 
-public class Map {
+public class GameMap {
     private Cell[][] cells;
     private ArrayList<Troop> playerOneTroops = new ArrayList<>();
     private ArrayList<Troop> playerTwoTroops = new ArrayList<>();

@@ -4,7 +4,6 @@ import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.card.Card;
 import client.models.card.DeckInfo;
-import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.AccountMenu;
 import client.models.menus.Menu;
@@ -12,6 +11,7 @@ import client.models.menus.Shop;
 import client.models.menus.StoryMenu;
 import client.models.message.Message;
 import server.Server;
+import client.models.game.Game;
 
 import java.util.ArrayList;
 
