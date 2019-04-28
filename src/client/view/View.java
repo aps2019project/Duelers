@@ -238,4 +238,11 @@ public class View {
                 " - Price: " + hero.getPrice() + "\n"
         );
     }
+
+    public void showAccount(Account account) {
+        System.out.println("\tusername: " + account.getUsername() +
+                "\n\tpassword: ********" +
+                "\n\tmoney: " + account.getMoney()
+        );
+    }
 }

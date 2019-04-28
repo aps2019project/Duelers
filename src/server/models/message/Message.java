@@ -1,6 +1,6 @@
 package server.models.message;
 
-import com.google.gson.Gson;
+import server.models.JsonConverter;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -50,7 +50,7 @@ public class Message {
     }
 
     public static Message convertJsonToMessage(String messageJson) {
-        return new Gson().fromJson(messageJson, Message.class);
+        return JsonConverter.fromJson(messageJson, Message.class);
     }
 
     public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
@@ -228,7 +228,7 @@ public class Message {
     }
 
     public String toJson() {
-        return new Gson().toJson(this);
+        return JsonConverter.toJson(this);
     }
 
     public MessageType getMessageType() {
