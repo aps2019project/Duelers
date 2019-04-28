@@ -257,6 +257,17 @@ public class Request {
 
         } else if (RequestType.START_MULTIPLAYER_GAME.setMatcher(command).find()) {
             Matcher matcher = RequestType.START_MULTIPLAYER_GAME.getMatcher();
+            /*if (matcher.group(3) == null) {
+                customGameMenu.startGame(
+                        matcher.group(1), Integer.parseInt(matcher.group(2)), 0,
+                        client, serverName
+                );
+            } else {
+                customGameMenu.startGame(
+                        matcher.group(1), Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)),
+                        client, serverName
+                );
+            }*/
             multiPlayerMenu.startGame(
                     Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)),
                     client, serverName

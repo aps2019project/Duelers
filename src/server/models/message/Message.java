@@ -230,7 +230,9 @@ public class Message {
     public static Message makeAccountInfoMessage(String sender , String receiver , AccountInfo accountInfo, int messageId){
         Message message = new Message(sender,receiver,messageId);
         message.accountInfo = accountInfo;
+        message.messageType = MessageType.ACCOUNT_INFO;
         return message;
+
     }
 
     public String toJson() {

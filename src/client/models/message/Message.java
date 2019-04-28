@@ -258,7 +258,7 @@ public class Message {
     public static Message makeSelectUserMessage(String sender, String receiver, String userName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.SELECT_USER;
-        message.username = userName;
+        message.opponentUserName = userName;
         return message;
     }
 

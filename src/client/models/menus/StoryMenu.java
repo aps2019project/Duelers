@@ -37,7 +37,7 @@ public class StoryMenu extends Menu {
                 )
         );
 
-        if (client.getValidation()) {
+        if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
 

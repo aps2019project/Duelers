@@ -33,7 +33,7 @@ public class MultiPlayerMenu extends Menu {
         );
         client.sendMessages();
 
-        if (client.getValidation()) {
+        if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
     }
@@ -51,7 +51,7 @@ public class MultiPlayerMenu extends Menu {
         );
         client.sendMessages();
 
-        if (client.getValidation()) {
+        if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
 
