@@ -6,7 +6,6 @@ import client.models.account.Collection;
 import client.models.card.DeckInfo;
 import client.models.game.GameType;
 import client.models.map.Position;
-import com.google.gson.Gson;
 import client.models.account.TempAccount;
 import client.models.game.Game;
 
@@ -17,7 +16,6 @@ public class Message {
     private String receiver;
     private int messageId;
     private AccountInfo accountInfo;
-
     private Game game;
     private Collection shopCards;
     private TempAccount account;
@@ -285,6 +283,10 @@ public class Message {
 
     public String getReceiver() {
         return receiver;
+    }
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
     }
 
     public int getMessageId() {

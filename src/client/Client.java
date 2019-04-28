@@ -6,10 +6,7 @@ import client.models.card.Card;
 import client.models.card.DeckInfo;
 import client.models.game.Game;
 import client.models.map.Position;
-import client.models.menus.AccountMenu;
-import client.models.menus.Menu;
-import client.models.menus.Shop;
-import client.models.menus.StoryMenu;
+import client.models.menus.*;
 import client.models.message.Message;
 import server.Server;
 
@@ -122,6 +119,9 @@ public class Client {
                     break;
                 case POSITIONS_COPY:
                     positions = message.getPositions();
+                    break;
+                case ACCOUNT_INFO:
+                    MultiPlayerMenu.getInstance().setSecondAccount(message.getAccountInfo());
                     break;
             }
         }
