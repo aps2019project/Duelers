@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameMap {
-
     private Cell[][] cells;
     private ArrayList<Troop> playerOneTroops = new ArrayList<>();
     private ArrayList<Troop> playerTwoTroops = new ArrayList<>();
-    private int numberOfFlags;
+    private ArrayList<Cell> flagCells = new ArrayList<>();
+    private ArrayList<Cell> collectibleItemCells = new ArrayList<>();
 
     public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
 
@@ -21,16 +21,20 @@ public class GameMap {
         return this.cells;
     }
 
+    public ArrayList<Cell> getFlagCells() {
+        return flagCells;
+    }
+
+    public ArrayList<Cell> getCollectibleItemCells() {
+        return collectibleItemCells;
+    }
+
     public ArrayList<Troop> getPlayerOneTroops() {
         return this.playerOneTroops;
     }
 
     public ArrayList<Troop> getPlayerTwoTroops() {
         return this.playerTwoTroops;
-    }
-
-    public int getNumberOfFlags() {
-        return this.numberOfFlags;
     }
 
     public void addTroop(int playerNumber, Troop troop) {

@@ -2,6 +2,7 @@ package client.models.game;
 
 import client.models.account.Account;
 import client.models.card.Card;
+import client.models.card.CardType;
 import client.models.card.Deck;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Player {
     private ArrayList<Card> graveYard;
     private Card nextCard;
     private ArrayList<Card> collectedItems;
+    private ArrayList<Troop> flagCarriers = new ArrayList<>();
 
     public Player(Account account) {
 
@@ -26,6 +28,10 @@ public class Player {
 
     public int getCurrentMP() {
         return this.currentMP;
+    }
+
+    public ArrayList<Troop> getFlagCarriers() {
+        return flagCarriers;
     }
 
     public Deck getDeck() {
@@ -50,5 +56,14 @@ public class Player {
 
     public ArrayList<Card> getCollectedItems() {
         return this.collectedItems;
+    }
+
+    public Troop getHero() {
+        for (Troop troop : troops) {
+            if (troop.getCard().getType() == CardType.HERO) {
+                return troop;
+            }
+        }
+        return null;
     }
 }

@@ -7,7 +7,6 @@ import server.models.card.Deck;
 import java.util.ArrayList;
 
 public class Player {
-
     private String userName;
     private int currentMP;
     private Deck deck;
@@ -16,7 +15,7 @@ public class Player {
     private ArrayList<Card> graveYard;
     private Card nextCard;
     private ArrayList<Card> collectedItems;
-
+    private ArrayList<Troop> flagCarriers = new ArrayList<>();
 
     public Player(Account account) {
 
@@ -30,6 +29,9 @@ public class Player {
         return this.currentMP;
     }
 
+    public ArrayList<Troop> getFlagCarriers() {
+        return flagCarriers;
+    }
 
     public void setCurrentMP(int currentMP) {
         this.currentMP = currentMP;

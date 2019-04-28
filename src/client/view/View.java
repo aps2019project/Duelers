@@ -8,7 +8,9 @@ import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
+import client.models.game.Game;
 import client.models.game.Player;
+import client.models.game.Troop;
 import client.models.map.Cell;
 
 import java.util.ArrayList;
@@ -244,5 +246,39 @@ public class View {
                 "\n\tpassword: ********" +
                 "\n\tmoney: " + account.getMoney()
         );
+    }
+
+    public void showKillHeroGameInfo(Game game) {
+        System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
+                game.getPlayerOne().getHero().getCurrentHp() + "\n" +
+                "HP of " + game.getPlayerTwo().getUserName() + "'s hero: " +
+                game.getPlayerTwo().getHero().getCurrentHp()
+        );
+    }
+
+    public void showOneFlagGameInfo(Game game) {
+        if (game.getGameMap().getFlagCells().size() == 1) {
+            Cell cell = game.getGameMap().getFlagCells().get(0);
+            System.out.println(
+                    "Flag is in cell " + cell
+            );
+        } else {
+            showFlagCarriers(game.getPlayerOne());
+            showFlagCarriers(game.getPlayerTwo());
+        }
+    }
+
+    public void showMultiFlagGameInfo(Game game) {
+        showFlagCarriers(game.getPlayerOne());
+        showFlagCarriers(game.getPlayerTwo());
+    }
+
+    private void showFlagCarriers(Player player) {
+        for (Troop troop : player.getFlagCarriers()) {
+            System.out.println("Troop " + troop.getCard().getCardId() +
+                    "is carrying the flag in cell " +
+                    troop.getCell()
+            );
+        }
     }
 }
