@@ -469,7 +469,8 @@ public class Server {
         if (loginCheck(message) && isOpponentAccountValid(message)) {
             Account myAccount = clients.get(message.getSender());
             Account opponentAccount = getAccount(message.getOpponentUserName());
-            accounts.replace(opponentAccount,onlineClients.get(1).getClientName());
+            accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
+            clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
             GameMap gameMap = null;
             if (message.getGameType() == null) {
@@ -493,7 +494,6 @@ public class Server {
                     (serverName, message.getSender(), game, message.getMessageId()));
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, accounts.get(opponentAccount), game, 0));
-            sendMessages();
         }
     }
 
