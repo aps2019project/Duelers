@@ -115,4 +115,20 @@ public abstract class Game {
     public boolean canInsert(Card card, Cell cell) {
         return false;
     }
+
+    public Player getCurrentTurnPlayer() {
+        if (turnNumber % 2 == 1) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
+    }
+
+    public Player getOtherTurnPlayer() {
+        if (turnNumber % 2 == 0) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
+    }
 }
