@@ -2,6 +2,7 @@ package server.models.account;
 
 import server.Server;
 import server.models.card.Card;
+import server.models.card.CardType;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class Collection {
     }
 
     public void addCard(String cardName, Collection originalCards, String username) {//for account collections
-        if (!originalCards.hasCard(cardName)) {
+        if (!originalCards.hasCard(cardName) || originalCards.getCard(cardName).getType() == CardType.COLLECTIBLE_ITEM) {
             Server.getInstance().serverPrint("Invalid CardName!");
             return;
         }
@@ -77,10 +78,10 @@ public class Collection {
                 spells.add(card);
                 break;
             case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
                 items.add(card);
                 break;
             case FLAG:
-            case COLLECTIBLE_ITEM:
                 Server.getInstance().serverPrint("Error");
                 break;
         }
