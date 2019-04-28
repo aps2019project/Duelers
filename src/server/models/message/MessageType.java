@@ -1,6 +1,7 @@
 package server.models.message;
 
 public enum MessageType {
+    ACCOUNT_INFO,
     SEND_EXCEPTION,
     ACCOUNT_COPY,
     GAME_COPY,
@@ -35,7 +36,7 @@ public enum MessageType {
     LOG_IN,
     LOG_OUT,
     REGISTER,
-    NEW_2_GAME,
+    NEW_MULTIPLAYER_GAME,
     NEW_DECK_GAME,
     NEW_STORY_GAME,
     SELECT_USER,

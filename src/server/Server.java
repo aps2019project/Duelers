@@ -3,7 +3,6 @@ package server;
 import client.Client;
 import server.models.game.*;
 import server.models.map.GameMap;
-import com.google.gson.Gson;
 import server.models.JsonConverter;
 import server.models.account.Account;
 import server.models.account.Collection;
@@ -130,7 +129,7 @@ public class Server {
                 case SELECT_DECK:
                     selectDeck(message);
                     break;
-                case NEW_2_GAME:
+                case NEW_MULTIPLAYER_GAME:
                     newMultiplayerGame(message);
                     break;
                 case NEW_STORY_GAME:
@@ -160,6 +159,9 @@ public class Server {
                 case SUDO:
                     sudo(message);
                     break;
+                case SELECT_USER:
+                    sellectUserForMultiPlayer(message);
+                    break;
                 default:
                     sendException("Invalid Message Type!", message.getSender(), message.getMessageId());
                     serverPrint("Invalid Message Type!");
@@ -168,6 +170,10 @@ public class Server {
         }
         receivingMessages.clear();
         sendMessages();
+    }
+
+    private void sellectUserForMultiPlayer(Message message) {
+
     }
 
     private void sendMessages() {

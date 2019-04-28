@@ -1,7 +1,7 @@
 package client.models.message;
 
 public enum MessageType {
-
+    ACCOUNT_INFO,
     SEND_EXCEPTION,
     ACCOUNT_COPY,
     GAME_COPY,
