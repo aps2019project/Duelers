@@ -72,39 +72,51 @@ public class Request {
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
+            if (!gameCommands.selectCard()){
+                throw new InputException("select a card");
+            }
             Matcher matcher = GameRequestType.MOVE.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
             gameCommands.move(row, column);
 
         } else if (GameRequestType.ATTACK.matches(command)) {
+            if (!gameCommands.selectCard()){
+                throw new InputException("select a card");
+            }
             String cardId = GameRequestType.ATTACK.getMatcher().group(1);
             gameCommands.attack(cardId);
 
         } else if (GameRequestType.ATTACK_COMBO.matches(command)) {
+            if (!gameCommands.selectCard()){
+                throw new InputException("select a card");
+            }
             Matcher matcher = GameRequestType.ATTACK_COMBO.getMatcher();
             String oppCardId = matcher.group(1);
             String[] cardIds = matcher.group(2).split(" ");
             gameCommands.attackCombo(oppCardId, cardIds);
 
         } else if (GameRequestType.USE_SPECIAL_POWER.matches(command)) {
+            if (!gameCommands.selectCard()){
+                throw new InputException("select a card");
+            }
             Matcher matcher = GameRequestType.USE_SPECIAL_POWER.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
-            gameCommands.useSpecialPower(row, column);
+            gameCommands.useSpecialPower(client, serverName, row, column);
 
         } else if (GameRequestType.SHOW_HAND.matches(command)) {
-            gameCommands.showHand();
+            gameCommands.showHand(client);
 
         } else if (GameRequestType.INSERT_CARD.matches(command)) {
             Matcher matcher = GameRequestType.INSERT_CARD.getMatcher();
             String cardId = matcher.group(1);
             int row = Integer.parseInt(matcher.group(2));
             int column = Integer.parseInt(matcher.group(3));
-            gameCommands.insertCard(client , serverName,cardId, row, column);
+            gameCommands.insertCard(client, serverName, cardId, row, column);
 
         } else if (GameRequestType.END_TURN.matches(command)) {
-            gameCommands.endTurn(client , serverName);
+            gameCommands.endTurn(client, serverName);
 
         } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
             gameCommands.show‫‪Collectables‬‬();
@@ -113,10 +125,16 @@ public class Request {
             String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
             gameCommands.selectItem(itemID);
 
-        } else if (gameCommands.isItemSelected() && GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
+        } else if ( GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
+            if (!gameCommands.isItemSelected()){
+                throw new InputException("select an item");
+            }
             gameCommands.showSelectedItemInfo();
 
-        } else if (gameCommands.isItemSelected() && GameRequestType.USE_ITEM.matches(command)) {
+        } else if (GameRequestType.USE_ITEM.matches(command)) {
+            if (!gameCommands.isItemSelected()){
+                throw new InputException("select an item");
+            }
             Matcher matcher = GameRequestType.USE_ITEM.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
@@ -148,7 +166,7 @@ public class Request {
         } else if (GameRequestType.SHOW_MENU_HELP.matches(command)) {
             gameCommands.showHelp();
 
-        }else
+        } else
             throw new InputException("invalid command");
 
     }
@@ -206,7 +224,7 @@ public class Request {
 
         } else if (RequestType.SEARCH.setMatcher(command).find()) {
             shop.searchInShop(
-            RequestType.SEARCH.getMatcher().group(1)
+                    RequestType.SEARCH.getMatcher().group(1)
             );
 
         } else if (RequestType.BUY.setMatcher(command).find()) {

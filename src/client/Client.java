@@ -152,4 +152,8 @@ public class Client {
     public void setPositions(Position[] positions) {
         this.positions = positions;
     }
+
+    public Game getGame() {
+        return game;
+    }
 }

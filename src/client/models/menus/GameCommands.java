@@ -3,11 +3,13 @@ package client.models.menus;
 import client.Client;
 import client.models.map.Position;
 import client.models.message.Message;
+import client.view.View;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
     private String selectedItem;
     private boolean isInGraveYard;
+    private String selectedCardId;
 
     private GameCommands() {
     }
@@ -46,7 +48,7 @@ public class GameCommands extends Menu {
     }
 
     public void selectCard(String cardId) {
-
+        selectedCardId = cardId;
     }
 
     public void move(int row, int column) {
@@ -61,12 +63,11 @@ public class GameCommands extends Menu {
 
     }
 
-    public void useSpecialPower(int row, int column) {
-
+    public void useSpecialPower( Client client , String serverName,int row, int column) {
     }
 
-    public void showHand() {
-
+    public void showHand(Client client) {
+        View.getInstance().showHand(client.getGame().getPlayerOne());
     }
 
     public void insertCard(Client client, String serverName, String cardId, int row, int column) {
@@ -128,6 +129,12 @@ public class GameCommands extends Menu {
     }
 
     public void endGame() {
+
+    }
+
+    public boolean selectCard(){
+        return  selectedCardId != null;
+
 
     }
 }
