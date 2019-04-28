@@ -227,6 +227,12 @@ public class Message {
         return message;
     }
 
+    public static Message makeAccountInfoMessage(String sender , String receiver , AccountInfo accountInfo, int messageId){
+        Message message = new Message(sender,receiver,messageId);
+        message.accountInfo = accountInfo;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
