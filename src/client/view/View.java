@@ -281,4 +281,21 @@ public class View {
             );
         }
     }
+
+    public void showMinionTroops(Player player) {
+        for (Troop troop : player.getTroops()) {
+            if (troop.getCard().getType() == CardType.MINION) {
+                showMinionTroop(troop);
+            }
+        }
+    }
+
+    private void showMinionTroop(Troop troop) {
+        System.out.println(troop.getCard().getCardId() + " : " +
+                troop.getCard().getName() + ", health: " +
+                troop.getCurrentHp() + ", location: " +
+                troop.getCell() + ", power: " +
+                troop.getCurrentAp()
+        );
+    }
 }
