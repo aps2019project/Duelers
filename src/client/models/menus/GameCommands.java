@@ -7,6 +7,7 @@ import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
 import client.models.card.Card;
+import client.view.request.InputException;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
@@ -57,7 +58,7 @@ public class GameCommands extends Menu {
         View.getInstance().showTroops(currentGame.getOtherTurnPlayer());
     }
 
-    public void showCardInfo(String cardId) {
+    public void showCardInfo(String cardId) throws InputException {
         Troop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
         if (troop != null) {
             View.getInstance().showTroopInfo(troop);
@@ -68,6 +69,7 @@ public class GameCommands extends Menu {
             View.getInstance().showCardInfo(card);
             return;
         }
+        throw new InputException("card id is not valid");
     }
 
     public void selectCard(String cardId) {
