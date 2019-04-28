@@ -369,6 +369,8 @@ public class Request {
         } else if (RequestType.LOGOUT.setMatcher(command).find()) {
             mainMenu.logout(client, serverName);
 
+        } else if (RequestType.SHOW_ACCOUNT.setMatcher(command).find()) {
+            mainMenu.showAccount(client);
         } else {
             throw new InputException("invalid command");
         }

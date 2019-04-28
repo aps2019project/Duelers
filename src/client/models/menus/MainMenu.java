@@ -41,6 +41,7 @@ public class MainMenu extends Menu {
                 "\"Enter Collection\"\n" +
                 "\"Enter Battle\"\n" +
                 "\"Enter Shop\"\n" +
+                "\"Show Account\"\n" +
                 "\"logout\"\n" +
                 "\"save\"\n" +
                 "\"exit\"";
@@ -65,5 +66,9 @@ public class MainMenu extends Menu {
 
     public void exit() throws ExitCommand {
         throw new ExitCommand();
+    }
+
+    public void showAccount(Client client) {
+        View.getInstance().showAccount(client.getAccount());
     }
 }
