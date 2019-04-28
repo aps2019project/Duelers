@@ -160,7 +160,7 @@ public class Server {
                     sudo(message);
                     break;
                 case SELECT_USER:
-                    sellectUserForMultiPlayer(message);
+                    selectUserForMultiPlayer(message);
                     break;
                 default:
                     sendException("Invalid Message Type!", message.getSender(), message.getMessageId());
@@ -172,9 +172,7 @@ public class Server {
         sendMessages();
     }
 
-    private void sellectUserForMultiPlayer(Message message) {
 
-    }
 
     private void sendMessages() {
         for (Message message : sendingMessages) {
@@ -216,6 +214,9 @@ public class Server {
     private void sendException(String exceptionString, String receiver, int messageId) {
         addToSendingMessages(Message.makeExceptionMessage(
                 serverName, receiver, exceptionString, messageId));
+    }
+
+    private void selectUserForMultiPlayer(Message message) {
     }
 
     private void register(Message message) {

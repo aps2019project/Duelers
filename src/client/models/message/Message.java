@@ -16,6 +16,7 @@ public class Message {
     private String sender;
     private String receiver;
     private int messageId;
+    private AccountInfo accountInfo;
 
     private Game game;
     private Collection shopCards;
