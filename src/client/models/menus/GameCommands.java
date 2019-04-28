@@ -143,22 +143,29 @@ public class GameCommands extends Menu {
         View.getInstance().showHand(client.getGame().getPlayerOne());
     }
 
-    public void insertCard(Client client, String serverName, String cardId, int row, int column) {
+    public void insertCard(Client client, String serverName, String cardId, int row, int column) throws InputException {
         Message message = Message.makeInsertMessage(
                 client.getClientName(), serverName, cardId, new Position(row, column), 0
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+        //TODO: message should be printed in client.receiveMessages
     }
 
     public void endTurn(Client client, String serverName) {
         Message message = Message.makeEndTurnMessage(client.getClientName(), serverName, 0);
         client.addToSendingMessages(message);
         client.sendMessages();
+        selectedItem = null;
+        selectedCardId = null;
     }
 
     public void showCollectibleItems() {
-
+        View.getInstance().showCollectedItems(currentGame.getCurrentTurnPlayer());
     }
 
     public void selectItem(String itemID) {

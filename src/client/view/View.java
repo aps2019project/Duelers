@@ -136,7 +136,11 @@ public class View {
     }
 
     public void showCollectedItems(Player player) {
-
+        for (Card item : player.getCollectedItems()) {
+            System.out.println(item.getCardId() + ":" +
+                    "\nDescription: " + item.getDescription()
+            );
+        }
     }
 
     public void showGraveYardList(Player player) {
