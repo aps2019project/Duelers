@@ -72,7 +72,10 @@ public class GameCommands extends Menu {
         throw new InputException("card id is not valid");
     }
 
-    public void selectCard(String cardId) {
+    public void selectCard(String cardId) throws InputException {
+        if (currentGame.getCurrentTurnPlayer().searchTroop(cardId) == null) {
+            throw new InputException("card id is not valid");
+        }
         selectedCardId = cardId;
     }
 
@@ -82,7 +85,6 @@ public class GameCommands extends Menu {
         );
         client.addToSendingMessages(message);
         client.sendMessages();
-
     }
 
     public void attack(Client client, String severName, String oppCardId) {
