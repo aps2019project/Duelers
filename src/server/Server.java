@@ -1,23 +1,20 @@
 package server;
 
 import client.Client;
-import server.models.game.*;
-import server.models.map.GameMap;
 import server.models.JsonConverter;
 import server.models.account.Account;
+import server.models.account.AccountInfo;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
+import server.models.game.*;
+import server.models.map.GameMap;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -85,6 +82,10 @@ public class Server {
 
     public void receiveMessages() {
         for (Message message : receivingMessages) {
+            if (message == null){
+                serverPrint("invalid message");
+                continue;
+            }
             if (!message.getReceiver().equals(serverName)) {
                 serverPrint("Message's Receiver Was Not This Server.");
                 continue;
@@ -173,7 +174,6 @@ public class Server {
     }
 
 
-
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
@@ -217,9 +217,21 @@ public class Server {
     }
 
     private void selectUserForMultiPlayer(Message message) {
-//        if (getAccount(message.getOpponentUserName())!=null){
-//            sendException("invalid ");
-//        }
+        Account account = getAccount(message.getOpponentUserName());
+        if (account == null) {
+            sendException("second player is not valid", message.getSender(), 0);
+        } else if (account.getMainDeck() == null || !account.getMainDeck().isValid()) {
+            sendException("selected deck for second player is not valid", message.getSender(), 0);
+        } else {
+            AccountInfo accountInfo = new AccountInfo(account);
+            addToSendingMessages(
+                    Message.makeAccountInfoMessage(
+                            serverName, message.getSender(), accountInfo, 0
+                    )
+            );
+            sendMessages();
+        }
+
     }
 
     private void register(Message message) {
@@ -437,10 +449,6 @@ public class Server {
     }
 
     private boolean isOpponentAccountValid(Message message) {
-        if (message == null) {
-            serverPrint("Error!");
-            return false;
-        }
         if (message.getOpponentUserName() == null) {
             sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
             return false;
