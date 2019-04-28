@@ -131,8 +131,14 @@ public class Server {
                 case SELECT_DECK:
                     selectDeck(message);
                     break;
-                case NEW_GAME:
+                case NEW_2_GAME:
                     newGame(message);
+                    break;
+                case NEW_STORY_GAME:
+
+                    break;
+                case NEW_DECK_GAME:
+
                     break;
                 case INSERT:
                     insertCard(message);
@@ -245,7 +251,7 @@ public class Server {
         }
     }
 
-    private boolean preCheckMessage(Message message) {
+    private boolean loginCheck(Message message) {
         if (!clients.containsKey(message.getSender())) {
             serverPrint("Client Wasn't Added!");
             sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
@@ -258,8 +264,13 @@ public class Server {
         }
     }
 
+    private boolean hasGameCheck(Message message){
+
+        return true;
+    }
+
     private void logout(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
             serverPrint(message.getSender() + " Is Logged Out.");
@@ -267,7 +278,7 @@ public class Server {
     }
 
     private void createDeck(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 account.addDeck(message.getDeckName());
@@ -282,7 +293,7 @@ public class Server {
     }
 
     private void removeDeck(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (account.hasDeck(message.getDeckName())) {
                 account.deleteDeck(message.getDeckName());
@@ -297,7 +308,7 @@ public class Server {
     }
 
     private void addToDeck(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
@@ -315,7 +326,7 @@ public class Server {
     }
 
     private void removeFromDeck(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
@@ -331,7 +342,7 @@ public class Server {
     }
 
     private void selectDeck(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found", message.getSender(), message.getMessageId());
@@ -349,7 +360,7 @@ public class Server {
     }
 
     private void buyCard(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!originalCards.hasCard(message.getCardName()) || originalCards.getCard(message.getCardName()).getType() == CardType.COLLECTIBLE_ITEM) { // TODO
                 sendException("invalid card name", message.getSender(), message.getMessageId());
@@ -365,7 +376,7 @@ public class Server {
     }
 
     private void sellCard(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.getCollection().hasCard(message.getCardId())) {
                 sendException("invalid card id", message.getSender(), message.getMessageId());
@@ -379,14 +390,14 @@ public class Server {
     }
 
     private void sendStories(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             addToSendingMessages(Message.makeStoriesCopyMessage
                     (serverName, message.getSender(), stories.toArray(Story[]::new), message.getMessageId()));
         }
     }
 
     private void sendOriginalCards(Message message) {
-        if (preCheckMessage(message)) {
+        if (loginCheck(message)) {
             addToSendingMessages(Message.makeOriginalCardsCopyMessage(
                     serverName, message.getSender(), originalCards, message.getMessageId()));
         }
@@ -405,6 +416,10 @@ public class Server {
         }
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
+    }
+
+    private void newGame(Message message) {
+
     }
 
     private void insertCard(Message message) {
@@ -428,16 +443,6 @@ public class Server {
     }
 
     private void endTurn(Message message) {
-
-    }
-
-    private void saveChanges(Message message) {
-        if (preCheckMessage(message)) {
-            saveAccount(clients.get(message.getSender()));
-        }
-    }
-
-    private void newGame(Message message) {
 
     }
 

@@ -193,7 +193,7 @@ public class Message {
         message.opponentUserName = opponentAccount;
         message.numberOfFlags = numberOfFlags;
         message.gameType = gameType;
-        message.messageType = MessageType.NEW_GAME;
+        message.messageType = MessageType.NEW_2_GAME;
         return message;
     }
 
@@ -202,14 +202,14 @@ public class Message {
         message.deckName = customDeck;
         message.numberOfFlags = numberOfFlags;
         message.gameType = gameType;
-        message.messageType = MessageType.NEW_GAME;
+        message.messageType = MessageType.NEW_DECK_GAME;
         return message;
     }
 
     public static Message makeNewStoryGameMessage(String sender, String receiver, int stage, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.stage = stage;
-        message.messageType = MessageType.NEW_GAME;
+        message.messageType = MessageType.NEW_STORY_GAME;
         return message;
     }
 

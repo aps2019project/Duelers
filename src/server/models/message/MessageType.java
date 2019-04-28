@@ -35,7 +35,9 @@ public enum MessageType {
     LOG_IN,
     LOG_OUT,
     REGISTER,
-    NEW_GAME,
+    NEW_2_GAME,
+    NEW_DECK_GAME,
+    NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
     GET_STORIES
