@@ -217,6 +217,7 @@ public class Server {
     }
 
     private void selectUserForMultiPlayer(Message message) {
+//        if (getAccount(message.getOpponentUserName()))
     }
 
     private void register(Message message) {

@@ -215,7 +215,7 @@ public class Message {
         message.opponentUserName = opponentAccount;
         message.numberOfFlags = numberOfFlags;
         message.gameType = gameType;
-        message.messageType = MessageType.NEW_2_GAME;
+        message.messageType = MessageType.NEW_MULTIPLAYER_GAME;
         return message;
     }
 
