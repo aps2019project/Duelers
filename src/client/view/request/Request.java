@@ -135,7 +135,7 @@ public class Request {
             Matcher matcher = GameRequestType.USE_ITEM.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
-            gameCommands.useItem(row, column);
+            gameCommands.useItem(client, serverName, row, column);
 
         } else if (GameRequestType.SHOW_NEXT_CARD.matches(command)) {
             gameCommands.showNextCard();

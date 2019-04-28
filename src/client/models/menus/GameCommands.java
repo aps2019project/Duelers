@@ -77,6 +77,12 @@ public class GameCommands extends Menu {
     }
 
     public void useSpecialPower(Client client, String serverName, int row, int column) {
+        Message message = Message.makeUseSpecialPowerMessage(
+                client.getClientName(), serverName, selectedCardId, new Position(row, column), 0
+        );
+        client.addToSendingMessages(message);
+        client.sendMessages();
+
     }
 
     public void showHand(Client client) {
@@ -102,7 +108,7 @@ public class GameCommands extends Menu {
     }
 
     public void selectItem(String itemID) {
-
+        selectedItem = itemID;
     }
 
     public void showNextCard() {
@@ -117,8 +123,10 @@ public class GameCommands extends Menu {
 
     }
 
-    public void useItem(int row, int column) {
-
+    public void useItem(Client client, String serverName, int row, int column) {
+        Message message = Message.useItem(client.getClientName(), serverName, selectedItem, new Position(row, column), 0);
+        client.addToSendingMessages(message);
+        client.sendMessages();
     }
 
     public boolean isInGraveYard() {

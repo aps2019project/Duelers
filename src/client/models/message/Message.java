@@ -186,15 +186,22 @@ public class Message {
         message.cardIds[0] = cardId;
         message.spellId = spellId;
         message.position = position;
-        message.messageType = MessageType.USE_SPELL;
+        message.messageType = MessageType.USE_SPECIAL_POWER;
         return message;
     }
 
-    public static Message makeUseSpecialPowerMessage(String sender, String receiver, String cardId, String spellId, Position position, int messageId) {
+    public static Message useItem(String sender , String receiver , String itemId ,Position position , int messageId){
+        Message message = new Message(sender,receiver,messageId);
+        message.cardId = itemId;
+        message.position = position;
+        message.messageType = MessageType.INSERT;
+        return message;
+    }
+
+    public static Message makeUseSpecialPowerMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardIds = new String[1];
         message.cardIds[0] = cardId;
-        message.spellId = spellId;
         message.position = position;
         message.messageType = MessageType.USE_SPECIAL_POWER;
         return message;

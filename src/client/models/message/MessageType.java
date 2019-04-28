@@ -1,6 +1,7 @@
 package client.models.message;
 
 public enum MessageType {
+
     SEND_EXCEPTION,
     ACCOUNT_COPY,
     GAME_COPY,
@@ -30,7 +31,6 @@ public enum MessageType {
     INSERT,
     ATTACK,
     COMBO,
-    USE_SPELL,
     USE_SPECIAL_POWER,
     END_TURN,
     LOG_IN,

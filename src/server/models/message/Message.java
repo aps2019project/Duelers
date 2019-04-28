@@ -223,7 +223,7 @@ public class Message {
         message.cardIds[0] = cardId;
         message.spellId = spellId;
         message.position = position;
-        message.messageType = MessageType.USE_SPELL;
+        message.messageType = MessageType.USE_SPECIAL_POWER;
         return message;
     }
 

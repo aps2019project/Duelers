@@ -151,7 +151,7 @@ public class Server {
                 case COMBO:
                     combo(message);
                     break;
-                case USE_SPELL:
+                case USE_SPECIAL_POWER:
                     useSpell(message);
                     break;
                 case MOVE_TROOP:
