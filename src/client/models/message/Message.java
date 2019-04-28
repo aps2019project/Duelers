@@ -1,5 +1,6 @@
 package client.models.message;
 
+import client.models.JsonConverter;
 import client.models.account.AccountInfo;
 import client.models.account.Collection;
 import client.models.card.DeckInfo;
@@ -46,7 +47,7 @@ public class Message {
     }
 
     public static Message convertJsonToMessage(String messageJson) {
-        return new Gson().fromJson(messageJson, Message.class);
+        return JsonConverter.fromJson(messageJson, Message.class);
     }
 
     public static Message makePositionsCopyMessage(String sender, String receiver, Position[] positions, int messageId) {
@@ -250,7 +251,7 @@ public class Message {
     }
 
     public String toJson() {
-        return new Gson().toJson(this);
+        return JsonConverter.toJson(this);
     }
 
     public MessageType getMessageType() {
