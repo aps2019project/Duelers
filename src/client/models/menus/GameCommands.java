@@ -34,7 +34,17 @@ public class GameCommands extends Menu {
     }
 
     public void showGameInfo() {
-
+        switch (currentGame.getGameType()) {
+            case KILL_HERO:
+                View.getInstance().showKillHeroGameInfo(currentGame);
+                break;
+            case A_FLAG:
+                View.getInstance().showOneFlagGameInfo(currentGame);
+                break;
+            case SOME_FLAG:
+                View.getInstance().showMultiFlagGameInfo(currentGame);
+                break;
+        }
     }
 
     public void showMyMinions() {

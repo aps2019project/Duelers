@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public abstract class Game {
     private GameType gameType;
     private Player playerOne;
+    private Player playerTwo;
     private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
     private GameMap gameMap;
@@ -21,8 +22,20 @@ public abstract class Game {
 
     }
 
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public int getLastTurnChangingTime() {
+        return lastTurnChangingTime;
+    }
+
     public Player getPlayerOne() {
         return this.playerOne;
+    }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
     }
 
     public void addCellEffect(CellEffect cellEffect) {

@@ -8,7 +8,8 @@ public class GameMap {
     private Cell[][] cells;
     private ArrayList<Troop> playerOneTroops = new ArrayList<>();
     private ArrayList<Troop> playerTwoTroops = new ArrayList<>();
-    private int numberOfFlags;
+    private ArrayList<Cell> flagCells = new ArrayList<>();
+    private ArrayList<Cell> collectibleItemCells = new ArrayList<>();
 
     public Cell[][] getCells() {
         return this.cells;
@@ -22,8 +23,12 @@ public class GameMap {
         return this.playerTwoTroops;
     }
 
-    public int getNumberOfFlags() {
-        return this.numberOfFlags;
+    public ArrayList<Cell> getFlagCells() {
+        return flagCells;
+    }
+
+    public ArrayList<Cell> getCollectibleItemCells() {
+        return collectibleItemCells;
     }
 
     public Troop getTroop(Cell cell) {

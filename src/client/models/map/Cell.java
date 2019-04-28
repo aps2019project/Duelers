@@ -7,6 +7,11 @@ public class Cell {
     private int column;
     private Card item;
 
+    @Override
+    public String toString() {
+        return "(" + row + ", " + column + ")";
+    }
+
     public int getRow() {
         return this.row;
     }
