@@ -1,6 +1,8 @@
 package server;
 
 import client.Client;
+import server.models.game.*;
+import server.models.map.GameMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import server.models.account.Account;
@@ -9,9 +11,6 @@ import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
-import server.models.game.Game;
-import server.models.game.Story;
-import server.models.game.TempStory;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
 
@@ -132,7 +131,7 @@ public class Server {
                     selectDeck(message);
                     break;
                 case NEW_2_GAME:
-                    newGame(message);
+                    newMultiplayerGame(message);
                     break;
                 case NEW_STORY_GAME:
 
@@ -262,11 +261,6 @@ public class Server {
         } else {
             return true;
         }
-    }
-
-    private boolean hasGameCheck(Message message){
-
-        return true;
     }
 
     private void logout(Message message) {
@@ -418,8 +412,69 @@ public class Server {
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
     }
 
-    private void newGame(Message message) {
+    private boolean hasOnlineGame(String username) {
+        if (username == null) {
+            serverPrint("Null UserName In hasGame");
+            return false;
+        }
+        for (Map.Entry<Account, Game> map : onlineGames.entrySet()) {
+            if (map.getKey().getUsername().equalsIgnoreCase(username)) {
+                return map.getValue() != null;
+            }
+        }
+        serverPrint("Invalid Username in hasOnlineGame");
+        return false;
+    }
 
+    private boolean isOpponentAccountValid(Message message) {
+        if (message == null) {
+            serverPrint("Error!");
+            return false;
+        }
+        if (message.getOpponentUserName() == null) {
+            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
+            return false;
+        }
+        Account opponentAccount = getAccount(message.getOpponentUserName());
+        if (opponentAccount == null) {
+            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
+            return false;
+        }
+        if (accounts.get(opponentAccount) == null) {
+            sendException("opponentAccount has not logged in!", message.getSender(), message.getMessageId());
+            return false;
+        }
+        return true;
+    }
+
+    private void newMultiplayerGame(Message message) {
+        if (loginCheck(message) && isOpponentAccountValid(message)) {
+            Account myAccount = clients.get(message.getSender());
+            Account opponentAccount = getAccount(message.getOpponentUserName());
+            Game game = null;
+            GameMap gameMap = null;
+            if (message.getGameType() == null) {
+                sendException("invalid gameType!", message.getSender(), message.getMessageId());
+                return;
+            }
+            switch (message.getGameType()) {
+                case KILL_HERO:
+                    game = new KillHeroBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    break;
+                case A_FLAG:
+                    game = new SingleFlagBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    break;
+                case SOME_FLAG:
+                    game = new MultiFlagBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    break;
+            }
+            onlineGames.replace(myAccount, game);
+            onlineGames.replace(opponentAccount, game);
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, message.getSender(), game, message.getMessageId()));
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, accounts.get(opponentAccount), game, 0));
+        }
     }
 
     private void insertCard(Message message) {

@@ -1,30 +1,36 @@
 package client.models.game;
 
+import client.models.account.Account;
 import client.models.card.Card;
 import client.models.card.spell.Spell;
 import client.models.map.Cell;
-import client.models.map.Map;
+import client.models.map.GameMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Game {
+public abstract class Game {
     private GameType gameType;
     private Player playerOne;
-    private Player playerTwo;
     private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
-    private Map map;
+    private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
-    private HashMap<String, Integer> attacksOfGladiators;
+
+    protected Game(GameType gameType, Account account1, GameMap gameMap) {
+
+    }
 
     public Player getPlayerOne() {
         return this.playerOne;
     }
 
-    public Player getPlayerTwo() {
-        return this.playerTwo;
+    public void addCellEffect(CellEffect cellEffect) {
+
+    }
+
+    public void addBuff(Buff buff) {
+
     }
 
     public ArrayList<Buff> getBuffs() {
@@ -35,13 +41,43 @@ public class Game {
         return this.cellEffects;
     }
 
-    public Map getMap() {
-        return this.map;
+    public GameMap getGameMap() {
+        return this.gameMap;
+    }
+
+    public void addTurnNum() {
+
     }
 
     public int getTurnNumber() {
         return this.turnNumber;
     }
+
+    public void receiveMessage(String[] message) {
+
+    }
+
+    public void move(Troop troop, Cell targetCell) {
+
+    }
+
+    public void insert(Card card, Cell targetCell) {
+
+    }
+
+    public void attack(Troop attacker, Troop other) {
+
+    }
+
+    public void useSpell(Troop troop, Spell spell, Cell targetCell) {
+
+    }
+
+    public void nextTurn() {
+
+    }
+
+    public abstract void finishCheck();
 
     public Troop[] getAttackableTroops() {
         return new Troop[]{};

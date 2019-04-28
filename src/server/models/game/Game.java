@@ -1,32 +1,29 @@
 package server.models.game;
 
+import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.spell.Spell;
 import server.models.map.Cell;
-import server.models.map.Map;
+import server.models.map.GameMap;
 
 import java.util.ArrayList;
 
 public abstract class Game {
     private GameType gameType;
     private Player playerOne;
-    private Player playerTwo;
     private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
-    private Map map;
+    private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    public Game(GameType gameType, Player playerOne, Player playerTwo, Map map) {
-
+    protected Game(GameType gameType, Account account1, GameMap gameMap) {
+        this.gameType=gameType;
+        this.gameMap=gameMap;
     }
 
     public Player getPlayerOne() {
         return this.playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return this.playerTwo;
     }
 
     public void addCellEffect(CellEffect cellEffect) {
@@ -45,8 +42,8 @@ public abstract class Game {
         return this.cellEffects;
     }
 
-    public Map getMap() {
-        return this.map;
+    public GameMap getGameMap() {
+        return this.gameMap;
     }
 
     public void addTurnNum() {
