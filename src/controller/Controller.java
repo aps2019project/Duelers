@@ -1,6 +1,7 @@
 package controller;
 
 import client.Client;
+import client.models.menus.AccountMenu;
 import client.view.View;
 import client.view.request.ExitCommand;
 import client.view.request.InputException;
@@ -47,10 +48,16 @@ public class Controller {
     public void preProcess() {
         mainController = this;
         clients.add(
-                new Client(java.lang.System.getProperty("user.name"), Server.getInstance())
+                new Client("mainClient", Server.getInstance())
+        );
+        clients.add(
+                new Client("otherClient", Server.getInstance())
         );
         mainClient = clients.get(0);
+        otherClient = clients.get(1);
         currentClient = mainClient;
         server.addClient(mainClient);
+        mainClient.setCurrentMenu(AccountMenu.getInstance());
+        server.addClient(otherClient);
     }
 }

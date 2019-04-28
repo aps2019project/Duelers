@@ -29,7 +29,6 @@ public class Client {
 
     public Client(String clientName, Server server) {
         this.clientName = clientName;
-        setCurrentMenu(AccountMenu.getInstance());
         this.server = server;
     }
 

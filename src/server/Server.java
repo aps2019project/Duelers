@@ -82,7 +82,7 @@ public class Server {
 
     public void receiveMessages() {
         for (Message message : receivingMessages) {
-            if (message == null){
+            if (message == null) {
                 serverPrint("invalid message");
                 continue;
             }
@@ -469,6 +469,7 @@ public class Server {
         if (loginCheck(message) && isOpponentAccountValid(message)) {
             Account myAccount = clients.get(message.getSender());
             Account opponentAccount = getAccount(message.getOpponentUserName());
+            accounts.replace(opponentAccount,onlineClients.get(1).getClientName());
             Game game = null;
             GameMap gameMap = null;
             if (message.getGameType() == null) {
