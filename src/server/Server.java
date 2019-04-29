@@ -633,6 +633,16 @@ public class Server {
                 (serverName, client2, cardId, 0));
     }
 
+    public void sendAddToGraveyardMessage(Game game, String cardId) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeToGraveYardMessage
+                (serverName, client1, cardId, 0));
+        addToSendingMessages(Message.makeToGraveYardMessage
+                (serverName, client2, cardId, 0));
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
