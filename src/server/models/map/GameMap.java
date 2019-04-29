@@ -19,6 +19,11 @@ public class GameMap {
 
     public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
+        for (int i = 0; i < ROW_NUMBER; i++) {
+            for (int j = 0; j < COLUMN_NUMBER; j++) {
+                cells[i][j] = new Cell(i, j);
+            }
+        }
         for (Map.Entry<Cell, Card> map : items.entrySet()) {
             if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
                 if (map.getValue() != null) {
@@ -30,6 +35,14 @@ public class GameMap {
             }
         }
         //TODO:Generate Keys
+    }
+
+    public static int getRowNumber() {
+        return ROW_NUMBER;
+    }
+
+    public static int getColumnNumber() {
+        return COLUMN_NUMBER;
     }
 
     public Cell[][] getCells() {
@@ -68,7 +81,7 @@ public class GameMap {
         return null;
     }
 
-    public boolean hasTroop(Cell cell){
+    public boolean hasTroop(Cell cell) {
         for (Troop troop : playerOneTroops) {
             if (troop.getCell() == cell)
                 return true;
@@ -78,13 +91,5 @@ public class GameMap {
                 return true;
         }
         return false;
-    }
-
-    public static int getRowNumber() {
-        return ROW_NUMBER;
-    }
-
-    public static int getColumnNumber() {
-        return COLUMN_NUMBER;
     }
 }

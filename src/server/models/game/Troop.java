@@ -21,6 +21,14 @@ public class Troop {
     private boolean disableHolyBuff;
     private int flagNumber;
 
+    public Troop(Card card) {
+        this.card = card;
+    }
+
+    public Troop(Card card, Cell cell) {
+        this.card = card;
+        this.cell = cell;
+    }
 
     public Card getCard() {
         return this.card;
@@ -36,6 +44,10 @@ public class Troop {
 
     public Cell getCell() {
         return this.cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public void moveTo(Cell cell) {
@@ -64,6 +76,11 @@ public class Troop {
         return this.isDisarm;
     }
 
+    public void setDisarm(boolean disarm) {
+        this.isDisarm = disarm;
+        //TODO:Send Message
+    }
+
     public boolean canGetPoison() {
         return !cantGetPoison;
     }
@@ -88,11 +105,6 @@ public class Troop {
         return disableHolyBuff;
     }
 
-    public void setDisarm(boolean disarm) {
-        this.isDisarm = disarm;
-        //TODO:Send Message
-    }
-
     public boolean hasFlag() {
         return this.flagNumber > 0;
     }
@@ -107,8 +119,8 @@ public class Troop {
 
     public void decreaseFlagNumber() {
         flagNumber--;
-        if (flagNumber < 0){
-            flagNumber=0;
+        if (flagNumber < 0) {
+            flagNumber = 0;
             Server.getInstance().serverPrint("Error!");
         }
     }
@@ -126,10 +138,6 @@ public class Troop {
 
     public void changeEnemyHit(int change) {
         enemyHitChanges += change;
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
     }
 
     public void setCantGetPoison(boolean cantGetPoison) {
