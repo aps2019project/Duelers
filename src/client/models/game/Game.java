@@ -17,6 +17,7 @@ public abstract class Game {
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
+    private boolean finished = false;
 
     protected Game(GameType gameType, Account account1, GameMap gameMap) {
 
@@ -44,6 +45,10 @@ public abstract class Game {
 
     public void addBuff(Buff buff) {
 
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
     public ArrayList<Buff> getBuffs() {

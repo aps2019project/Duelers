@@ -222,6 +222,9 @@ public class GameCommands extends Menu {
             throw new InputException("you are not in graveyard");
         }
 
+        for (Card card : currentGame.getCurrentTurnPlayer().getGraveyard()) {
+            View.getInstance().showCardInfo(card);
+        }
     }
 
     public void showCardInfoInGraveYard(String cardId) throws InputException {
@@ -235,7 +238,6 @@ public class GameCommands extends Menu {
         }
 
         View.getInstance().showCardInfo(card);
-        isInGraveYard = false;
     }
 
     public void exitFromGraveYard() {
@@ -246,8 +248,11 @@ public class GameCommands extends Menu {
         return isInGraveYard;
     }
 
-    public void endGame() {
-
+    public void endGame() throws InputException {
+        if (!currentGame.isFinished()) {
+            throw new InputException("game is not finished.");
+        }
+        //TODO: both clients will move to main menu.
     }
 
     public void setCurrentGame(Game currentGame) {

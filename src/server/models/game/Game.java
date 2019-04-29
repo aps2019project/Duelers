@@ -18,6 +18,7 @@ public abstract class Game {
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
+    private boolean finished = false;
 
     protected Game(GameType gameType, Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameType = gameType;
