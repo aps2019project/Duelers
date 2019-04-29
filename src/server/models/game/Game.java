@@ -2,6 +2,7 @@ package server.models.game;
 
 import server.models.account.Account;
 import server.models.card.spell.Spell;
+import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
@@ -12,7 +13,7 @@ public abstract class Game {
     private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
-    private ArrayList<CellEffect> cellEffects;
+//    private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
     private GameMap gameMap;
     private int turnNumber;
@@ -90,7 +91,49 @@ public abstract class Game {
     }
 
     private void applySpell(Spell spell, TargetData target) {
+        spell.setLastTurnUsed(turnNumber);
+        Buff buff = new Buff(spell.getAction(), target);
+        buffs.add(buff);
+        applyBuff(buff);
+    }
 
+    private void applyBuff(Buff buff) {
+        SpellAction action = buff.getAction();
+        TargetData target = buff.getTarget();
+        if (action.getDelay() > 0) {
+            action.decreaseDelay();
+            return;
+        }
+        for (Card card : target.getCards()) {
+            if (action.isAddSpell()) {
+                card.addSpell(action.getCarryingSpell());
+            }
+        }
+        for (Troop troop : target.getTroops()) {
+
+        }
+        ArrayList<Troop> inCellTroops = getInCellTargetTroops(target.getCells());
+        for (Player player: target.getPlayers()) {
+
+        }
+        action.decreaseDuration();
+        if (action.getDuration() == 0) {
+            buffs.remove(buff);
+        }
+    }
+
+    private ArrayList<Troop> getInCellTargetTroops(ArrayList<Cell> cells) {
+        ArrayList<Troop> inCellTroops = new ArrayList<>();
+        for (Cell cell : cells) {
+            Troop troop = playerOne.getTroop(cell);
+            if (troop == null) {
+                troop = playerTwo.getTroop(cell);
+            }
+            if (troop != null) {
+                inCellTroops.add(troop);
+            }
+        }
+        return inCellTroops;
     }
 
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {

@@ -25,63 +25,29 @@ public class SpellAction {
     private int delay;
     private Spell carryingSpell;
 
-    public SpellAction(SpellAction action) {
-        this.enemyHitChanges = action.enemyHitChanges;
-        this.apChange = action.apChange;
-        this.hpChange = action.hpChange;
-        this.mpChange = action.mpChange;
-        this.poison = action.poison;
-        this.makeStun = action.makeStun;
-        this.makeDisarm = action.makeDisarm;
-        this.actionAtTheEndOfTurn = action.actionAtTheEndOfTurn;
-        this.noDisarm = action.noDisarm;
-        this.noPoison = action.noPoison;
-        this.noStun = action.noStun;
-        this.noBadEffect = action.noBadEffect;
-        this.noAttackFromWeakerOnes = action.noAttackFromWeakerOnes;
-        this.disableHolyBuff = action.disableHolyBuff;
-        this.addSpell = action.addSpell;
-        this.killsTarget = action.killsTarget;
-        this.isForGladiator = action.isForGladiator;
-        this.durable = action.durable;
-        this.removeBuffs = action.removeBuffs;
-        this.delay = action.delay;
-        if (action.carryingSpell != null)
-            this.carryingSpell = new Spell(action.carryingSpell);
-        this.duration = action.duration;
-    }
-
-    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun,
-                       boolean makeDisarm, boolean actionAtTheEndOfTurn, boolean noDisarm, boolean noPoison,
-                       boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean disableHolyBuff,
-                       boolean addSpell, boolean killsTarget, boolean isForGladiator, boolean durable, int removeBuffs,
-                       int duration, int delay, Spell carryingSpell) {
-        this.enemyHitChanges = enemyHitChanges;
-        this.apChange = apChange;
-        this.hpChange = hpChange;
-        this.mpChange = mpChange;
-        this.poison = poison;
-        this.makeStun = makeStun;
-        this.makeDisarm = makeDisarm;
-        this.actionAtTheEndOfTurn = actionAtTheEndOfTurn;
-        this.noDisarm = noDisarm;
-        this.noPoison = noPoison;
-        this.noStun = noStun;
-        this.noBadEffect = noBadEffect;
-        this.noAttackFromWeakerOnes = noAttackFromWeakerOnes;
-        this.disableHolyBuff = disableHolyBuff;
-        this.addSpell = addSpell;
-        this.killsTarget = killsTarget;
-        this.isForGladiator = isForGladiator;
-        this.durable = durable;
-        this.removeBuffs = removeBuffs;
-        this.delay = delay;
-        this.carryingSpell = carryingSpell;
-        if (duration == -1) {
-            this.duration = Integer.MAX_VALUE;
-            return;
-        }
-        this.duration = duration;
+    public SpellAction(SpellAction referenceAction) { // copy constructor
+        this.enemyHitChanges = referenceAction.enemyHitChanges;
+        this.apChange = referenceAction.apChange;
+        this.hpChange = referenceAction.hpChange;
+        this.mpChange = referenceAction.mpChange;
+        this.poison = referenceAction.poison;
+        this.makeStun = referenceAction.makeStun;
+        this.makeDisarm = referenceAction.makeDisarm;
+        this.actionAtTheEndOfTurn = referenceAction.actionAtTheEndOfTurn;
+        this.noDisarm = referenceAction.noDisarm;
+        this.noPoison = referenceAction.noPoison;
+        this.noStun = referenceAction.noStun;
+        this.noBadEffect = referenceAction.noBadEffect;
+        this.noAttackFromWeakerOnes = referenceAction.noAttackFromWeakerOnes;
+        this.disableHolyBuff = referenceAction.disableHolyBuff;
+        this.addSpell = referenceAction.addSpell;
+        this.killsTarget = referenceAction.killsTarget;
+        this.isForGladiator = referenceAction.isForGladiator;
+        this.durable = referenceAction.durable;
+        this.removeBuffs = referenceAction.removeBuffs;
+        this.duration = referenceAction.duration;
+        this.delay = referenceAction.delay;
+        this.carryingSpell = referenceAction.carryingSpell;
     }
 
     public int getEnemyHitChanges() {
@@ -170,5 +136,13 @@ public class SpellAction {
 
     public Spell getCarryingSpell() {
         return carryingSpell;
+    }
+
+    public void decreaseDuration() {
+        duration--;
+    }
+
+    public void decreaseDelay() {
+        delay--;
     }
 }
