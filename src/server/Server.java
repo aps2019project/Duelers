@@ -664,6 +664,16 @@ public class Server {
                 (serverName, client2, cardId, position, 0));
     }
 
+    public void sendAddToCollectedItemsMessage(Game game, String cardId, String username) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeToCollectedItemsMessage
+                (serverName, client1, cardId, username, 0));
+        addToSendingMessages(Message.makeToCollectedItemsMessage
+                (serverName, client2, cardId, username, 0));
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
