@@ -654,6 +654,16 @@ public class Server {
                 (serverName, client2, cardId, position, 0));
     }
 
+    public void sendTroopPositionMessage(Game game, String cardId, Position position) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeTroopPositionMessage
+                (serverName, client1, cardId, position, 0));
+        addToSendingMessages(Message.makeTroopPositionMessage
+                (serverName, client2, cardId, position, 0));
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
