@@ -9,14 +9,17 @@ public class Buff {
     private int turnsRemaining;
     private ArrayList<Troop> targetTroops;
 
-
-    public Buff(BuffType type, int changes, ArrayList<Troop> targetTroops) {
-
+    public Buff(BuffType type, int numberOfChanges, int turnsRemaining, ArrayList<Troop> targetTroops) {
+        this.type = type;
+        this.numberOfChanges = numberOfChanges;
+        this.turnsRemaining = turnsRemaining;
+        this.targetTroops = targetTroops;
     }
 
-
-    public Buff(BuffType type, ArrayList<Troop> targetTroops) {
-
+    public Buff(BuffType type, int turnsRemaining, ArrayList<Troop> targetTroops) {
+        this.type = type;
+        this.turnsRemaining = turnsRemaining;
+        this.targetTroops = targetTroops;
     }
 
     public BuffType getType() {
@@ -36,7 +39,6 @@ public class Buff {
     }
 
     public void decreaseTurnsRemaining() {
-
+        turnsRemaining--;
     }
-
 }
