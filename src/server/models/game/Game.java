@@ -123,11 +123,15 @@ public abstract class Game {
         applyBuffOnCards(action, target.getCards());
         applyBuffOnCellTroops(buff, target);
         applyBuffOnTroops(buff, target.getTroops());
-        for (Player player : target.getPlayers()) {
-
-        }
+        applyBuffOnPlayers(action, target);
 
         decreaseDuration(buff);
+    }
+
+    private void applyBuffOnPlayers(SpellAction action, TargetData target) {
+        for (Player player : target.getPlayers()) {
+            player.changeCurrentMP(action.getMpChange());
+        }
     }
 
     private void decreaseDuration(Buff buff) {
