@@ -80,4 +80,11 @@ public class Player {
         }
         return null;
     }
+
+    public Card searchCollectedItems(String cardId) {
+        for (Card item : collectedItems) {
+            if (item.getCardId().equalsIgnoreCase(cardId)) return item;
+        }
+        return null;
+    }
 }

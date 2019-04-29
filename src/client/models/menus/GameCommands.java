@@ -12,7 +12,7 @@ import client.view.request.InputException;
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
     private Game currentGame;
-    private String selectedItem;
+    private String selectedItemId;
     private boolean isInGraveYard;
     private String selectedCardId;
 
@@ -73,10 +73,14 @@ public class GameCommands extends Menu {
     }
 
     public void selectCard(String cardId) throws InputException {
-        if (currentGame.getCurrentTurnPlayer().searchTroop(cardId) == null) {
+        if (currentGame.getCurrentTurnPlayer().searchTroop(cardId) != null) {
+            selectedCardId = cardId;
+        } else if (currentGame.getCurrentTurnPlayer().searchCollectedItems(cardId) != null) {
+            selectedItemId = cardId;
+        } else {
             throw new InputException("card id is not valid");
         }
-        selectedCardId = cardId;
+
     }
 
     public void move(Client client, String serverName, int row, int column) throws InputException {
@@ -160,7 +164,7 @@ public class GameCommands extends Menu {
         Message message = Message.makeEndTurnMessage(client.getClientName(), serverName, 0);
         client.addToSendingMessages(message);
         client.sendMessages();
-        selectedItem = null;
+        selectedItemId = null;
         selectedCardId = null;
     }
 
@@ -169,7 +173,7 @@ public class GameCommands extends Menu {
     }
 
     public void selectItem(String itemID) {
-        selectedItem = itemID;
+        selectedItemId = itemID;
     }
 
     public void showNextCard() {
@@ -177,7 +181,7 @@ public class GameCommands extends Menu {
     }
 
     public boolean isItemSelected() {
-        return selectedItem != null;
+        return selectedItemId != null;
     }
 
     public void showSelectedItemInfo() {
@@ -185,7 +189,7 @@ public class GameCommands extends Menu {
     }
 
     public void useItem(Client client, String serverName, int row, int column) {
-        Message message = Message.useItem(client.getClientName(), serverName, selectedItem, new Position(row, column), 0);
+        Message message = Message.useItem(client.getClientName(), serverName, selectedItemId, new Position(row, column), 0);
         client.addToSendingMessages(message);
         client.sendMessages();
     }
