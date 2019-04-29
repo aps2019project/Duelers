@@ -12,7 +12,6 @@ import server.models.game.GameType;
 import server.models.game.Story;
 import server.models.map.Position;
 
-//TODO:Finish send && get Messages
 public class Message {
     private MessageType messageType;
     //serverName || clientName
@@ -99,7 +98,8 @@ public class Message {
         message.stories = new DeckInfo[stories.length];//TODO:reCode Story
         for (int i = 0; i < stories.length; i++) {
             message.stories[i] = new DeckInfo(stories[i]);
-        }        message.messageType = MessageType.STORIES_COPY;
+        }
+        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
@@ -112,8 +112,7 @@ public class Message {
 
     public static Message makeTroopPositionMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.position = position;
         message.messageType = MessageType.MOVE_TROOP;
         return message;
@@ -121,40 +120,35 @@ public class Message {
 
     public static Message makeToHandMessage(String sender, String receiver, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.TO_HAND;
         return message;
     }
 
     public static Message makeToNextMessage(String sender, String receiver, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.TO_NEXT;
         return message;
     }
 
     public static Message makeToGraveYardMessage(String sender, String receiver, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.TO_GRAVEYARD;
         return message;
     }
 
     public static Message makeToCollectedItemsMessage(String sender, String receiver, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.TO_COLLECTED_CARDS;
         return message;
     }
 
     public static Message makeToMapMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.position = position;
         message.messageType = MessageType.TO_MAP;
         return message;
@@ -162,8 +156,7 @@ public class Message {
 
     public static Message makeChangeAPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.newValue = newValue;
         message.messageType = MessageType.TROOP_AP;
         return message;
@@ -171,8 +164,7 @@ public class Message {
 
     public static Message makeChangeHPMessage(String sender, String receiver, String cardId, int newValue, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.newValue = newValue;
         message.messageType = MessageType.TROOP_HP;
         return message;
@@ -192,43 +184,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeInsertMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+    public static Message makeAccountInfoMessage(String sender, String receiver, AccountInfo accountInfo, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.position = position;
-        message.messageType = MessageType.INSERT;
-        return message;
-    }
-
-    public static Message makeAttackMessage(String sender, String receiver, String myCardId, String opponentCardId, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[2];
-        message.cardIds[0] = myCardId;
-        message.cardIds[1] = opponentCardId;
-        message.messageType = MessageType.ATTACK;
-        return message;
-    }
-
-    public static Message makeComboAttackMessage(String sender, String receiver, int messageId, String... opponentAndMyCardIds) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = opponentAndMyCardIds;
-        message.messageType = MessageType.COMBO;
-        return message;
-    }
-
-    public static Message makeUseSpellMessage(String sender, String receiver, String cardId, String spellId, Position position, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
-        message.spellId = spellId;
-        message.position = position;
-        message.messageType = MessageType.USE_SPECIAL_POWER;
-        return message;
-    }
-
-    public static Message makeAccountInfoMessage(String sender , String receiver , AccountInfo accountInfo, int messageId){
-        Message message = new Message(sender,receiver,messageId);
         message.accountInfo = accountInfo;
         message.messageType = MessageType.ACCOUNT_INFO;
         return message;
@@ -255,44 +212,12 @@ public class Message {
         return messageId;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
-    public Collection getShopCards() {
-        return shopCards;
-    }
-
-    public TempAccount getAccount() {
-        return account;
-    }
-
-    public AccountInfo[] getLeaderBoard() {
-        return leaderBoard;
-    }
-
-    public DeckInfo[] getCustomDecks() {
-        return customDecks;
-    }
-
-    public DeckInfo[] getStories() {
-        return stories;
-    }
-
     public int getNumberOfFlags() {
         return numberOfFlags;
     }
 
     public int getStage() {
         return stage;
-    }
-
-    public Position[] getPositions() {
-        return positions;
-    }
-
-    public String getExceptionString() {
-        return exceptionString;
     }
 
     public String getCardId() {
@@ -307,20 +232,8 @@ public class Message {
         return spellId;
     }
 
-    public int getTurnNum() {
-        return turnNum;
-    }
-
     public String getCardName() {
         return cardName;
-    }
-
-    public int getNewValue() {
-        return newValue;
-    }
-
-    public Position getPosition() {
-        return position;
     }
 
     public String getUsername() {

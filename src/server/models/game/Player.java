@@ -6,12 +6,14 @@ import server.models.card.Deck;
 import server.models.map.Cell;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
     private String userName;
     private int currentMP;
     private Deck deck;
-    private Card[] hand;
+    private Troop hero;
+    private ArrayList<Card> hand = new ArrayList<>();
     private ArrayList<Troop> troops;
     private ArrayList<Card> graveyard;
     private Card nextCard;
@@ -19,7 +21,22 @@ public class Player {
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
 
     public Player(Account account) {
+        deck = new Deck(account.getMainDeck());
+        for (int i = 0; i < 5; i++) {
+            setNextCard();
+            addNextCardToHand();
+        }
+        setNextCard();
+    }
 
+    public void setNextCard() {
+        int index = new Random().nextInt(deck.getOthers().size());
+        nextCard = deck.getOthers().get(index);
+    }
+
+    public void addNextCardToHand() {
+        if (hand.size() <= 5)
+            hand.add(nextCard);
     }
 
     public String getUserName() {
@@ -30,14 +47,13 @@ public class Player {
         return this.currentMP;
     }
 
-    public ArrayList<Troop> getFlagCarriers() {
-        return flagCarriers;
-    }
-
     public void setCurrentMP(int currentMP) {
         this.currentMP = currentMP;
     }
 
+    public ArrayList<Troop> getFlagCarriers() {
+        return flagCarriers;
+    }
 
     public void changeCurrentMP(int change) {
 
@@ -49,15 +65,6 @@ public class Player {
 
     public Card collectFromDeck() {
         return null;
-    }
-
-    public Card[] getHand() {
-        return this.hand;
-    }
-
-
-    public void setHand(Card[] hand) {
-        this.hand = hand;
     }
 
 
@@ -103,5 +110,13 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public Troop getHero() {
+        return hero;
+    }
+
+    public void setHero(Troop hero) {
+        hero = hero;
     }
 }

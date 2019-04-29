@@ -258,6 +258,11 @@ public abstract class Game {
             centerPosition = new Position(clickCell);
         }
         ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+        detectTargets(spell, targetData, player, targetCells);
+        return targetData;
+    }
+
+    private void detectTargets(Spell spell, TargetData targetData, Player player, ArrayList<Cell> targetCells) {
         for (Cell cell : targetCells) {
             if (spell.getTarget().getCardType().isCell()) {
                 targetData.getCells().add(cell);
@@ -268,7 +273,7 @@ public abstract class Game {
                     troop = getOtherTurnPlayer().getTroop(cell);
                 }
                 if (troop != null) {
-                    if (troop.getCard().getType().equals(CardType.HERO)) {
+                    if (troop.getCard().getType() == CardType.HERO) {
                         targetData.getTroops().add(troop);
                     }
                 }
@@ -279,13 +284,12 @@ public abstract class Game {
                     troop = getOtherTurnPlayer().getTroop(cell);
                 }
                 if (troop != null) {
-                    if (troop.getCard().getType().equals(CardType.MINION)) {
+                    if (troop.getCard().getType() == CardType.MINION) {
                         targetData.getTroops().add(troop);
                     }
                 }
             }
         }
-        return targetData;
     }
 
     private ArrayList<Cell> detectCells(Position centerPosition, Position dimensions) {

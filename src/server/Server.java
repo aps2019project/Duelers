@@ -173,7 +173,6 @@ public class Server {
         sendMessages();
     }
 
-
     private void sendMessages() {
         for (Message message : sendingMessages) {
             Client client = getClient(message.getReceiver());
@@ -186,13 +185,13 @@ public class Server {
         sendingMessages.clear();
     }
 
-    private Account getAccount(String userName) {
-        if (userName == null) {
-            serverPrint("Null UserName In getAccount.");
+    private Account getAccount(String username) {
+        if (username == null) {
+            serverPrint("Null Username In getAccount.");
             return null;
         }
         for (Map.Entry<Account, String> map : accounts.entrySet()) {
-            if (map.getKey().getUsername().equals(userName)) {
+            if (map.getKey().getUsername().equalsIgnoreCase(username)) {
                 return map.getKey();
             }
         }
@@ -205,10 +204,17 @@ public class Server {
             return null;
         }
         for (Client client : onlineClients) {
-            if (client.getClientName().equals(clientName))
+            if (client.getClientName().equalsIgnoreCase(clientName))
                 return client;
         }
         return null;
+    }
+
+    public String getClientName(String username) {
+        Account account = getAccount(username);
+        if (account == null)
+            return null;
+        return accounts.get(account);
     }
 
     private void sendException(String exceptionString, String receiver, int messageId) {
@@ -439,13 +445,12 @@ public class Server {
             serverPrint("Null UserName In hasGame");
             return false;
         }
-        for (Map.Entry<Account, Game> map : onlineGames.entrySet()) {
-            if (map.getKey().getUsername().equalsIgnoreCase(username)) {
-                return map.getValue() != null;
-            }
+        Account account=getAccount(username);
+        if(account==null){
+            serverPrint("Invalid Username in hasOnlineGame");
+            return false;
         }
-        serverPrint("Invalid Username in hasOnlineGame");
-        return false;
+        return onlineGames.get(account) != null;
     }
 
     private boolean isOpponentAccountValid(Message message) {
