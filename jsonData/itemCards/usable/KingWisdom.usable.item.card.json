@@ -10,6 +10,9 @@
         "mpChange": 1,
         "duration": 2147483647
       },
+      "target": {
+        "player": true
+      },
       "availabilityType": {
         "onStart": true
       }

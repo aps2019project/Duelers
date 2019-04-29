@@ -195,7 +195,7 @@ public class CardMaker {
             carryingSpell = makeNewSpell();
         }
 
-        return new SpellAction(enemyHitChanges, apChange, hpChange, mpChange, poison, makeStun, makeDisarm, actionAtTheEndOfTurn, noDisarm, noPoison, noStun, noBadEffect, noAttackFromWeakerOnes, disableHolyBuff, addSpell, killsTarget, isForGladiator, durable, removeBuffs, duration, delay, carryingSpell);
+        return null;// new SpellAction(enemyHitChanges, apChange, hpChange, mpChange, poison, makeStun, makeDisarm, actionAtTheEndOfTurn, noDisarm, noPoison, noStun, noBadEffect, noAttackFromWeakerOnes, disableHolyBuff, addSpell, killsTarget, isForGladiator, durable, removeBuffs, duration, delay, carryingSpell);
     }
 
     private static Target makeNewTarget() {
@@ -230,7 +230,7 @@ public class CardMaker {
         System.out.println("is for minion?");
         boolean minion = parseBoolean(scanner.nextLine());
 
-        TargetCardType cardType = new TargetCardType(cell, hero, minion);
+        TargetCardType cardType = new TargetCardType(cell, hero, minion, false);
 
         System.out.println("is for melee?");
         boolean melee = parseBoolean(scanner.nextLine());

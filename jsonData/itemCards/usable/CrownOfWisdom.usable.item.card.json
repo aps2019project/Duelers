@@ -11,6 +11,9 @@
         "durable": true,
         "duration": 3
       },
+      "target": {
+        "player": true
+      },
       "availabilityType": {
         "onStart": true
       }

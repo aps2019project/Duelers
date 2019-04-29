@@ -12,6 +12,9 @@
         "duration": 1,
         "delay": 1
       },
+      "target": {
+        "player": true
+      },
       "availabilityType": {
         "onPut": true
       },
