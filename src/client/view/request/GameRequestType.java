@@ -17,7 +17,6 @@ public enum GameRequestType {
     INSERT_CARD("^inset (\\w+) in \\((\\d+), (\\d+)\\)$"),
     END_TURN("^end turn$"),
     SHOW_COLLECTABLES("^show collectible$"),
-    SELECT_ITEM("^select (\\W+)"),
     SHOW_INFO_OF_ITEM("^show info$"),
     USE_ITEM("^use \\((\\d+), (\\d+)\\)$"),
     SHOW_NEXT_CARD("^show next card$"),

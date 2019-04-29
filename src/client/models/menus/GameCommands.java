@@ -80,7 +80,6 @@ public class GameCommands extends Menu {
         } else {
             throw new InputException("card id is not valid");
         }
-
     }
 
     public void move(Client client, String serverName, int row, int column) throws InputException {
@@ -93,6 +92,7 @@ public class GameCommands extends Menu {
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+        selectedCardId = null;
 
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
@@ -109,6 +109,7 @@ public class GameCommands extends Menu {
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+        selectedCardId = null;
 
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
@@ -137,6 +138,7 @@ public class GameCommands extends Menu {
         );
         client.addToSendingMessages(message);
         client.sendMessages();
+        selectedCardId = null;
 
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
@@ -172,26 +174,36 @@ public class GameCommands extends Menu {
         View.getInstance().showCollectedItems(currentGame.getCurrentTurnPlayer());
     }
 
-    public void selectItem(String itemID) {
-        selectedItemId = itemID;
+    public void showSelectedItemInfo() throws InputException {
+        if (selectedItemId == null) {
+            throw new InputException("select an item");
+        }
+
+        Card item = currentGame.getCurrentTurnPlayer().searchCollectedItems(selectedItemId);
+        View.getInstance().showItemInfo(item);
+        selectedItemId = null;
+    }
+
+    public void useItem(Client client, String serverName, int row, int column) throws InputException {
+        if (selectedItemId == null) {
+            throw new InputException("select an item");
+        }
+
+        client.addToSendingMessages(
+                Message.useItem(
+                        client.getClientName(), serverName, selectedItemId, new Position(row, column), 0
+                )
+        );
+        client.sendMessages();
+        selectedItemId = null;
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
     }
 
     public void showNextCard() {
 
-    }
-
-    public boolean isItemSelected() {
-        return selectedItemId != null;
-    }
-
-    public void showSelectedItemInfo() {
-
-    }
-
-    public void useItem(Client client, String serverName, int row, int column) {
-        Message message = Message.useItem(client.getClientName(), serverName, selectedItemId, new Position(row, column), 0);
-        client.addToSendingMessages(message);
-        client.sendMessages();
     }
 
     public boolean isInGraveYard() {

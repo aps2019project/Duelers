@@ -109,20 +109,10 @@ public class Request {
         } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
             gameCommands.showCollectibleItems();
 
-        } else if (GameRequestType.SELECT_ITEM.matches(command)) {
-            String itemID = GameRequestType.SELECT_ITEM.getMatcher().group(1);
-            gameCommands.selectItem(itemID);
-
         } else if (GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
-            if (!gameCommands.isItemSelected()) {
-                throw new InputException("select an item");
-            }
             gameCommands.showSelectedItemInfo();
 
         } else if (GameRequestType.USE_ITEM.matches(command)) {
-            if (!gameCommands.isItemSelected()) {
-                throw new InputException("select an item");
-            }
             Matcher matcher = GameRequestType.USE_ITEM.getMatcher();
             int row = Integer.parseInt(matcher.group(1));
             int column = Integer.parseInt(matcher.group(2));
