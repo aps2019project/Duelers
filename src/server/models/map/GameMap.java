@@ -19,17 +19,21 @@ public class GameMap {
 
     public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
-        for (Map.Entry<Cell, Card> map : items.entrySet()) {
-            if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
-                if (map.getValue() != null) {
-                    //cells[map.getKey().getRow()][map.getKey().getColumn()].setItem(map.getValue());
-                    //TODO:manage cardIds!
+        if (items != null) {
+            for (Map.Entry<Cell, Card> map : items.entrySet()) {
+                if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
+                    if (map.getValue() != null) {
+                        //cells[map.getKey().getRow()][map.getKey().getColumn()].setItem(map.getValue());
+                        //TODO:manage cardIds!
+                    }
+                } else {
+                    Server.getInstance().serverPrint("Error!");
                 }
-            } else {
-                Server.getInstance().serverPrint("Error!");
             }
         }
-        //TODO:Generate Keys
+        if (numberOfFlags > 0) {
+            //TODO:Generate Keys
+        }
     }
 
     public Cell[][] getCells() {
@@ -68,7 +72,7 @@ public class GameMap {
         return null;
     }
 
-    public boolean hasTroop(Cell cell){
+    public boolean hasTroop(Cell cell) {
         for (Troop troop : playerOneTroops) {
             if (troop.getCell() == cell)
                 return true;

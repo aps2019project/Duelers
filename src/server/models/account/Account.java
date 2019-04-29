@@ -121,7 +121,7 @@ public class Account {
     public void selectDeck(String deckName) {
         if (!hasDeck(deckName)) {
             Server.getInstance().serverPrint("Error");
-        }else{
+        } else {
             mainDeck = getDeck(deckName);
         }
     }
@@ -140,6 +140,10 @@ public class Account {
 
     public Deck getMainDeck() {
         return mainDeck;
+    }
+
+    public boolean hasValidMainDeck() {
+        return mainDeck != null && mainDeck.isValid();
     }
 
     public ArrayList<MatchHistory> getMatchHistories() {

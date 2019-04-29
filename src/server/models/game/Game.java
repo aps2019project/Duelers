@@ -59,26 +59,26 @@ public abstract class Game {
         return turnNumber % 2 == 1 && username.equalsIgnoreCase(playerOne.getUserName());
     }
 
-    public void changeTurn(String username) {
+    public void changeTurn(String username) throws Exception{
         if (canCommand(username)) {
             turnNumber++;
             //TODO:Send Message
         }
     }
 
-    public void move(String username, String cardId, Position position) {
+    public void move(String username, String cardId, Position position) throws Exception{
 
     }
 
-    public void insert(String username, String cardId, Position target) {
+    public void insert(String username, String cardId, Position target) throws Exception {
 
     }
 
-    public void attack(String username, String attackerCardId, String defenderCardId) {
+    public void attack(String username, String attackerCardId, String defenderCardId) throws Exception{
 
     }
 
-    public void useSpell(String username, String CardId, String spellId, Position target) {
+    public void useSpell(String username, String CardId, String spellId, Position target) throws Exception{
 
     }
 

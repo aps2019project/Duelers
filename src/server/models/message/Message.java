@@ -260,4 +260,11 @@ public class Message {
         return sudoCommand;
     }
 
+    public Position[] getPositions() {
+        return positions;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
 }
