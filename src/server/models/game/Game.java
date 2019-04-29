@@ -5,6 +5,7 @@ import server.models.card.Card;
 import server.models.card.spell.Spell;
 import server.models.map.Cell;
 import server.models.map.GameMap;
+import server.models.map.Position;
 
 import java.util.ArrayList;
 
@@ -19,95 +20,74 @@ public abstract class Game {
     private int lastTurnChangingTime;
 
     protected Game(GameType gameType, Account accountOne, Account accountTwo, GameMap gameMap) {
-        this.gameType=gameType;
-        this.gameMap=gameMap;
+        this.gameType = gameType;
+        this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
     }
 
-    public Player getPlayerOne() {
-        return this.playerOne;
+    public String getUsernameOne() {
+        return this.playerOne.getUserName();
     }
 
-    public Player getPlayerTwo() {
-        return playerTwo;
+    public String getUsernameTwo() {
+        return playerTwo.getUserName();
     }
 
-    public void addCellEffect(CellEffect cellEffect) {
-
+    private boolean canCommand(String username) {
+        if (turnNumber % 2 == 0 && username.equalsIgnoreCase(playerTwo.getUserName()))
+            return true;
+        if (turnNumber % 2 == 1 && username.equalsIgnoreCase(playerOne.getUserName()))
+            return true;
+        return false;
     }
 
-    public void addBuff(Buff buff) {
-
+    public void changeTurn(String username) {
+        if (canCommand(username)) {
+            turnNumber++;
+            //TODO:Send Message
+        }
     }
 
-    public ArrayList<Buff> getBuffs() {
-        return this.buffs;
-    }
-
-    public ArrayList<CellEffect> getCellEffects() {
-        return this.cellEffects;
-    }
-
-    public GameMap getGameMap() {
-        return this.gameMap;
-    }
-
-    public void addTurnNum() {
+    public void move(String username, String cardId, Position position) {
 
     }
 
-    public int getTurnNumber() {
-        return this.turnNumber;
-    }
-
-    public void receiveMessage(String[] message) {
+    public void insert(String username, String cardId, Position target) {
 
     }
 
-    public void move(Troop troop, Cell targetCell) {
+    public void attack(String username, String attackerCardId, String defenderCardId) {
 
     }
 
-    public void insert(Card card, Cell targetCell) {
-
-    }
-
-    public void attack(Troop attacker, Troop other) {
-
-    }
-
-    public void useSpell(Troop troop, Spell spell, Cell targetCell) {
-
-    }
-
-    public void nextTurn() {
+    public void useSpell(String username, String CardId, String spellId, Position target) {
 
     }
 
     public abstract void finishCheck();
 
-    public Troop[] getAttackableTroops() {
+    public Troop[] getAttackableTroops(String cardId) {
         return new Troop[]{};
     }
 
-    public Cell[] getSpellableCells(Troop troop, Spell spell) {
+    public Cell[] getSpellableCells(String cardId, String spellId) {
         return new Cell[]{};
     }
 
-    public Cell[] getMovableCells(Troop troop) {
+    public Cell[] getMovableCells(String cardId) {
         return new Cell[]{};
     }
 
-    public boolean canAttack(Troop myTroop, Troop enemyTroop) {
+    public boolean canAttack(String attackerCardId, String defenderCardId) {
         return false;
     }
 
-    public boolean canSpell(Troop myTroop, Cell cell) {
+    public boolean canSpell(String cardId, Position position) {
         return false;
     }
 
-    public boolean canInsert(Card card, Cell cell) {
+    public boolean canInsert(String cardId, Position position) {
         return false;
     }
 }
