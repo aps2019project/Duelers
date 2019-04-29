@@ -91,4 +91,8 @@ public abstract class Game {
     public boolean canInsert(String cardId, Position position) {
         return false;
     }
+
+    private void applySpell(Spell spell, TargetData target) {
+
+    }
 }
