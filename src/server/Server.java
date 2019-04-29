@@ -11,6 +11,7 @@ import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.game.*;
 import server.models.map.GameMap;
+import server.models.map.Position;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
 
@@ -641,6 +642,16 @@ public class Server {
                 (serverName, client1, cardId, 0));
         addToSendingMessages(Message.makeToGraveYardMessage
                 (serverName, client2, cardId, 0));
+    }
+
+    public void sendAddToMapMessage(Game game, String cardId, Position position) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeToMapMessage
+                (serverName, client1, cardId, position, 0));
+        addToSendingMessages(Message.makeToMapMessage
+                (serverName, client2, cardId, position, 0));
     }
 
     private void readAccounts() {

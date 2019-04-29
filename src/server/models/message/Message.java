@@ -139,9 +139,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeToCollectedItemsMessage(String sender, String receiver, String cardId, int messageId) {
+    public static Message makeToCollectedItemsMessage(String sender, String receiver, String cardId, String username, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardId = cardId;
+        message.username = username;
         message.messageType = MessageType.TO_COLLECTED_CARDS;
         return message;
     }
