@@ -604,6 +604,35 @@ public class Server {
 
     }
 
+    private void checkGameAccountsClient(String client1, String client2) throws Exception {
+        if (client1 == null) {
+            throw new Exception("Player1 has logged out!");
+        }
+        if (client2 == null) {
+            throw new Exception("Player2 has logged out!");
+        }
+    }
+
+    public void sendAddToHandMessage(Game game, String cardId) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeToHandMessage
+                (serverName, client1, cardId, 0));
+        addToSendingMessages(Message.makeToHandMessage
+                (serverName, client2, cardId, 0));
+    }
+
+    public void sendAddToNextMessage(Game game, String cardId) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeToNextMessage
+                (serverName, client1, cardId, 0));
+        addToSendingMessages(Message.makeToNextMessage
+                (serverName, client2, cardId, 0));
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {

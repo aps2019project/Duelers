@@ -27,6 +27,15 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
+        this.turnNumber = 1;
+    }
+
+    public Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
     }
 
     public Player getCurrentTurnPlayer() {
@@ -45,28 +54,19 @@ public abstract class Game {
         }
     }
 
-    public String getUsernameOne() {
-        return this.playerOne.getUserName();
-    }
-
-    public String getUsernameTwo() {
-        return playerTwo.getUserName();
-    }
-
     private boolean canCommand(String username) {
-        if (turnNumber % 2 == 0 && username.equalsIgnoreCase(playerTwo.getUserName()))
-            return true;
-        return turnNumber % 2 == 1 && username.equalsIgnoreCase(playerOne.getUserName());
+        return (turnNumber % 2 == 0 && username.equalsIgnoreCase(playerTwo.getUserName()))
+                || (turnNumber % 2 == 1 && username.equalsIgnoreCase(playerOne.getUserName()));
     }
 
-    public void changeTurn(String username) throws Exception{
+    public void changeTurn(String username) throws Exception {
         if (canCommand(username)) {
             turnNumber++;
             //TODO:Send Message
         }
     }
 
-    public void moveTroop(String username, String cardId, Position position) throws Exception{
+    public void moveTroop(String username, String cardId, Position position) throws Exception {
 
     }
 
@@ -74,15 +74,15 @@ public abstract class Game {
 
     }
 
-    public void attack(String username, String attackerCardId, String defenderCardId) throws Exception{
+    public void attack(String username, String attackerCardId, String defenderCardId) throws Exception {
 
     }
 
-    public void useSpell(String username, String CardId, String spellId, Position target) throws Exception{
+    public void useSpell(String username, String CardId, String spellId, Position target) throws Exception {
 
     }
 
-    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception{
+    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception {
 
     }
 
