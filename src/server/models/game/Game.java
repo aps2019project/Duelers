@@ -94,6 +94,14 @@ public abstract class Game {
     }
 
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
+        TargetData targetData = new TargetData();
+        if (spell.getTarget().getCardType().isPlayer()) {
+            if (turnNumber % 2 == 1)
+                targetData.getPlayers().add(playerOne);
+            else
+                targetData.getPlayers().add(playerTwo);
+            return targetData;
+        }
         Position centerPosition;
         if (spell.getTarget().isRelatedToCardOwnerPosition()) {
             centerPosition = new Position(cardCell);
@@ -103,6 +111,9 @@ public abstract class Game {
             centerPosition = new Position(clickCell);
         }
         ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+        for (Cell cell : targetCells) {
+
+        }
         return null;
     }
 
