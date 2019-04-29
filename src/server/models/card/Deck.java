@@ -19,6 +19,16 @@ public class Deck {
         this.others = others;
     }
 
+    public Deck(Deck deck) {
+        this.deckName = deck.deckName;
+        this.hero = new Card(deck.getHero());
+        this.item = new Card(deck.item);
+        for (Card card :
+                deck.others) {
+            others.add(new Card(card));
+        }
+    }
+
     public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
         this.hero = collection.getCard(tempDeck.getHeroId());
@@ -109,7 +119,7 @@ public class Deck {
     }
 
     private int numberOf(String name) {//Todo:reCode
-        if (hero.getName().equals(name)|| item.getName().equals(name)) return 0;
+        if (hero.getName().equals(name) || item.getName().equals(name)) return 0;
         int number = 0;
         for (Card card : others) {
             if (card.getName().equals(name)) number++;

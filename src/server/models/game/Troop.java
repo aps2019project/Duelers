@@ -2,10 +2,7 @@ package server.models.game;
 
 import server.Server;
 import server.models.card.Card;
-import server.models.card.spell.Spell;
 import server.models.map.Cell;
-
-import java.util.ArrayList;
 
 public class Troop {
     private Card card;
@@ -23,6 +20,7 @@ public class Troop {
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
     private int flagNumber;
+
 
     public Card getCard() {
         return this.card;
