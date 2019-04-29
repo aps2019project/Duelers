@@ -2,6 +2,7 @@ package server.models.game;
 
 import server.models.account.Account;
 import server.models.card.Card;
+import server.models.card.CardType;
 import server.models.card.spell.Spell;
 import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
@@ -14,7 +15,7 @@ public abstract class Game {
     private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
-//    private ArrayList<CellEffect> cellEffects;
+    //    private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
     private GameMap gameMap;
     private int turnNumber;
@@ -26,6 +27,22 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
+    }
+
+    public Player getCurrentTurnPlayer() {
+        if (turnNumber % 2 == 1) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
+    }
+
+    public Player getOtherTurnPlayer() {
+        if (turnNumber % 2 == 0) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
     }
 
     public String getUsernameOne() {
@@ -142,6 +159,12 @@ public abstract class Game {
     }
 
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
+        TargetData targetData = new TargetData();
+        Player player = getCurrentTurnPlayer();
+        if (spell.getTarget().getCardType().isPlayer()) {
+            targetData.getPlayers().add(player);
+            return targetData;
+        }
         Position centerPosition;
         if (spell.getTarget().isRelatedToCardOwnerPosition()) {
             centerPosition = new Position(cardCell);
@@ -151,7 +174,34 @@ public abstract class Game {
             centerPosition = new Position(clickCell);
         }
         ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
-        return null;
+        for (Cell cell : targetCells) {
+            if (spell.getTarget().getCardType().isCell()) {
+                targetData.getCells().add(cell);
+            }
+            if (spell.getTarget().getCardType().isHero()) {
+                Troop troop = player.getTroop(cell);
+                if (troop == null) {
+                    troop = getOtherTurnPlayer().getTroop(cell);
+                }
+                if (troop != null) {
+                    if (troop.getCard().getType().equals(CardType.HERO)) {
+                        targetData.getTroops().add(troop);
+                    }
+                }
+            }
+            if (spell.getTarget().getCardType().isMinion()) {
+                Troop troop = player.getTroop(cell);
+                if (troop == null) {
+                    troop = getOtherTurnPlayer().getTroop(cell);
+                }
+                if (troop != null) {
+                    if (troop.getCard().getType().equals(CardType.MINION)) {
+                        targetData.getTroops().add(troop);
+                    }
+                }
+            }
+        }
+        return targetData;
     }
 
     private ArrayList<Cell> detectCells(Position centerPosition, Position dimensions) {
