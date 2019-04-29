@@ -458,10 +458,10 @@ public class Server {
             sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
             return false;
         }
-        /*if (accounts.get(opponentAccount) == null) {
+        if (accounts.get(opponentAccount) == null) {
             sendException("opponentAccount has not logged in!", message.getSender(), message.getMessageId());
             return false;
-        }*/
+        }
         return true;
     }
 
