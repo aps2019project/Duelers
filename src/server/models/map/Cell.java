@@ -9,7 +9,8 @@ public class Cell {
     private Card item;
 
     public Cell(int row, int column) {
-
+        this.row = row;
+        this.column = column;
     }
 
     public int getRow() {
