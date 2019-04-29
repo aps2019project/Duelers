@@ -25,15 +25,16 @@ public class GameCommands extends Menu {
 
     @Override
     public void exit(Client client) {
-
+        client.setCurrentMenu(MainMenu.getInstance());
     }
 
     @Override
     public void showHelp() {
+        // TODO help of each part
     }
 
     public void showGameActions() {
-
+        // TODO all of actions
     }
 
     public void showGameInfo() {
