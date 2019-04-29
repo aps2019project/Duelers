@@ -117,4 +117,8 @@ public class Card {
     public boolean hasCombo() {
         return hasCombo;
     }
+
+    public void addSpell(Spell spell) {
+        spells.add(spell);
+    }
 }

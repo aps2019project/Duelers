@@ -1,44 +1,21 @@
 package server.models.game;
 
-import java.util.ArrayList;
+import server.models.card.spell.SpellAction;
 
 public class Buff {
+    private SpellAction action;
+    private TargetData target;
 
-    private BuffType type;
-    private int numberOfChanges;
-    private int turnsRemaining;
-    private ArrayList<Troop> targetTroops;
-
-    public Buff(BuffType type, int numberOfChanges, int turnsRemaining, ArrayList<Troop> targetTroops) {
-        this.type = type;
-        this.numberOfChanges = numberOfChanges;
-        this.turnsRemaining = turnsRemaining;
-        this.targetTroops = targetTroops;
+    Buff(SpellAction action, TargetData target) {
+        this.action = new SpellAction(action);
+        this.target = target;
     }
 
-    public Buff(BuffType type, int turnsRemaining, ArrayList<Troop> targetTroops) {
-        this.type = type;
-        this.turnsRemaining = turnsRemaining;
-        this.targetTroops = targetTroops;
+    public SpellAction getAction() {
+        return action;
     }
 
-    public BuffType getType() {
-        return this.type;
-    }
-
-    public int getNumberOfChanges() {
-        return this.numberOfChanges;
-    }
-
-    public int getTurnsRemaining() {
-        return this.turnsRemaining;
-    }
-
-    public ArrayList<Troop> getTargetTroops() {
-        return this.targetTroops;
-    }
-
-    public void decreaseTurnsRemaining() {
-        turnsRemaining--;
+    public TargetData getTarget() {
+        return target;
     }
 }

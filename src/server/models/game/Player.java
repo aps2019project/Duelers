@@ -3,6 +3,7 @@ package server.models.game;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
+import server.models.map.Cell;
 
 import java.util.ArrayList;
 
@@ -95,4 +96,12 @@ public class Player {
         return this.collectedItems;
     }
 
+    public Troop getTroop(Cell cell) {
+        for (Troop troop : troops) {
+            if (troop.getCell().equals(cell)) {
+                return troop;
+            }
+        }
+        return null;
+    }
 }
