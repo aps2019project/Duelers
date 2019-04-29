@@ -523,21 +523,29 @@ public class Server {
     private void insertCard(Message message) {
         Game game;
         try {
-            game=getGame(message.getSender());
+            game = getGame(message.getSender());
             try {
-                game.insert(clients.get(message.getSender()).getUsername(),message.getCardId(),message.getPosition());
+                game.insert(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
             }
-            catch (Exception e){
-                sendException(e.getMessage(),message.getSender(),message.getMessageId());
-            }
-        }
-        catch (Exception e){
-            sendException(e.getMessage(),message.getSender(),message.getMessageId());
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
         }
     }
 
     private void attack(Message message) {
-
+        Game game;
+        try {
+            game = getGame(message.getSender());
+            try {
+                game.attack(clients.get(message.getSender()).getUsername(), message.getCardIds()[0], message.getCardIds()[1]);
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            }
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
+        }
     }
 
     private void combo(Message message) {
