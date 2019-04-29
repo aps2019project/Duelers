@@ -1,5 +1,6 @@
 package server.models.game;
 
+import server.Server;
 import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.CardType;
@@ -62,7 +63,10 @@ public abstract class Game {
     public void changeTurn(String username) throws Exception {
         if (canCommand(username)) {
             turnNumber++;
-            //TODO:Send Message
+            Server.getInstance().sendChangeTurnMessage(this,turnNumber);
+            //change turn buffs
+        }else{
+            throw new Exception("it isn't your turn!");
         }
     }
 

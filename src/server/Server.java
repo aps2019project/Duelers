@@ -214,7 +214,7 @@ public class Server {
         return null;
     }
 
-    public String getClientName(String username) {
+    private String getClientName(String username) {
         Account account = getAccount(username);
         if (account == null)
             return null;
