@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameMap {
-    public static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
+    private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
 
     private Cell[][] cells;
     private ArrayList<Troop> playerOneTroops = new ArrayList<>();
@@ -80,4 +80,11 @@ public class GameMap {
         return false;
     }
 
+    public static int getRowNumber() {
+        return ROW_NUMBER;
+    }
+
+    public static int getColumnNumber() {
+        return COLUMN_NUMBER;
+    }
 }
