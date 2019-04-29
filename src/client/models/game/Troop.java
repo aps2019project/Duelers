@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Troop {
     private Card card;
-    private ArrayList<Spell> excessiveSpells;
     private int currentAp;
     private int currentHp;
     private Cell cell;

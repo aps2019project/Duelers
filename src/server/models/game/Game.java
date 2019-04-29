@@ -1,6 +1,7 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.card.Card;
 import server.models.card.spell.Spell;
 import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
@@ -109,10 +110,14 @@ public abstract class Game {
                 card.addSpell(action.getCarryingSpell());
             }
         }
-        for (Troop troop : target.getTroops()) {
-
-        }
         ArrayList<Troop> inCellTroops = getInCellTargetTroops(target.getCells());
+        for (Troop troop : target.getTroops()) {
+            troop.changeEnemyHit(action.getEnemyHitChanges());
+            troop.changeCurrentAp(action.getApChange());
+            if (!action.isPoison() || troop.canGetPoison()) {
+                troop.changeCurrentHp(action.getHpChange());
+            }
+        }
         for (Player player: target.getPlayers()) {
 
         }
