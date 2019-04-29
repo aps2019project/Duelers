@@ -2,10 +2,12 @@ package server.models.game;
 
 import server.models.account.Account;
 import server.models.card.Card;
+import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.map.Cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Player {
@@ -14,10 +16,10 @@ public class Player {
     private Deck deck;
     private Troop hero;
     private ArrayList<Card> hand = new ArrayList<>();
-    private ArrayList<Troop> troops;
-    private ArrayList<Card> graveyard;
+    private ArrayList<Troop> troops = new ArrayList<>();
+    private ArrayList<Card> graveyard = new ArrayList<>();
     private Card nextCard;
-    private ArrayList<Card> collectedItems;
+    private ArrayList<Card> collectedItems = new ArrayList<>();
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
 
     public Player(Account account) {
@@ -29,14 +31,38 @@ public class Player {
         setNextCard();
     }
 
+    public void insert(String cardId, Cell cell) {
+        Card card = null;
+        Iterator iterator = hand.iterator();
+        while (iterator.hasNext()) {
+            Card card1 = (Card) iterator.next();
+            if (card1.getCardId().equals(cardId)) {
+                card = card1;
+                iterator.remove();
+            }
+        }
+        if (card != null) {
+            if (card.getType() == CardType.MINION) {
+                Troop troop = new Troop(card, cell);
+                troops.add(troop);
+            }
+        }
+
+    }
+
     public void setNextCard() {
-        int index = new Random().nextInt(deck.getOthers().size());
-        nextCard = deck.getOthers().get(index);
+        if (nextCard != null) {
+            int index = new Random().nextInt(deck.getOthers().size());
+            nextCard = deck.getOthers().get(index);
+            deck.getOthers().remove(nextCard);
+        }
     }
 
     public void addNextCardToHand() {
-        if (hand.size() <= 5)
+        if (hand.size() <= 5) {
             hand.add(nextCard);
+            nextCard = null;
+        }
     }
 
     public String getUserName() {

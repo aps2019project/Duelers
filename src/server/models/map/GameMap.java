@@ -19,21 +19,30 @@ public class GameMap {
 
     public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
-        if (items != null) {
-            for (Map.Entry<Cell, Card> map : items.entrySet()) {
-                if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
-                    if (map.getValue() != null) {
-                        //cells[map.getKey().getRow()][map.getKey().getColumn()].setItem(map.getValue());
-                        //TODO:manage cardIds!
-                    }
-                } else {
-                    Server.getInstance().serverPrint("Error!");
-                }
+        for (int i = 0; i < ROW_NUMBER; i++) {
+            for (int j = 0; j < COLUMN_NUMBER; j++) {
+                cells[i][j] = new Cell(i, j);
             }
         }
-        if (numberOfFlags > 0) {
-            //TODO:Generate Keys
+        for (Map.Entry<Cell, Card> map : items.entrySet()) {
+            if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
+                if (map.getValue() != null) {
+                    //cells[map.getKey().getRow()][map.getKey().getColumn()].setItem(map.getValue());
+                    //TODO:manage cardIds!
+                }
+            } else {
+                Server.getInstance().serverPrint("Error!");
+            }
         }
+        //TODO:Generate Keys
+    }
+
+    public static int getRowNumber() {
+        return ROW_NUMBER;
+    }
+
+    public static int getColumnNumber() {
+        return COLUMN_NUMBER;
     }
 
     public Cell[][] getCells() {
@@ -82,13 +91,5 @@ public class GameMap {
                 return true;
         }
         return false;
-    }
-
-    public static int getRowNumber() {
-        return ROW_NUMBER;
-    }
-
-    public static int getColumnNumber() {
-        return COLUMN_NUMBER;
     }
 }
