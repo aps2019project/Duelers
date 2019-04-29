@@ -495,7 +495,7 @@ public class Server {
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
             clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
-            GameMap gameMap = new GameMap(new HashMap<>(),message.getNumberOfFlags());
+            GameMap gameMap = new GameMap(new HashMap<>(), message.getNumberOfFlags());
             if (message.getGameType() == null) {
                 sendException("invalid gameType!", message.getSender(), message.getMessageId());
                 return;
@@ -549,7 +549,17 @@ public class Server {
     }
 
     private void combo(Message message) {
-
+        Game game;
+        try {
+            game = getGame(message.getSender());
+            try {
+                game.comboAttack(clients.get(message.getSender()).getUsername(), message.getCardIds(), message.getCardId());
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            }
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
+        }
     }
 
     private void useSpell(Message message) {
@@ -557,11 +567,31 @@ public class Server {
     }
 
     private void moveTroop(Message message) {
-
+        Game game;
+        try {
+            game = getGame(message.getSender());
+            try {
+                game.moveTroop(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            }
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
+        }
     }
 
     private void endTurn(Message message) {
-
+        Game game;
+        try {
+            game = getGame(message.getSender());
+            try {
+                game.changeTurn(clients.get(message.getSender()).getUsername());
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            }
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
+        }
     }
 
     private void sudo(Message message) {

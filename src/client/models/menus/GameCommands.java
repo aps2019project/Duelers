@@ -253,7 +253,7 @@ public class GameCommands extends Menu {
         if (!currentGame.isFinished()) {
             throw new InputException("game is not finished.");
         }
-        //TODO: both clients will move to main menu.
+        //TODO: both clients will moveTroop to main menu.
     }
 
     public void setCurrentGame(Game currentGame) {

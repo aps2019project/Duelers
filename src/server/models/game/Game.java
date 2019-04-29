@@ -66,7 +66,7 @@ public abstract class Game {
         }
     }
 
-    public void move(String username, String cardId, Position position) throws Exception{
+    public void moveTroop(String username, String cardId, Position position) throws Exception{
 
     }
 
@@ -79,6 +79,10 @@ public abstract class Game {
     }
 
     public void useSpell(String username, String CardId, String spellId, Position target) throws Exception{
+
+    }
+
+    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception{
 
     }
 
