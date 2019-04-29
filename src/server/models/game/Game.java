@@ -118,30 +118,114 @@ public abstract class Game {
     private void applyBuff(Buff buff) {
         SpellAction action = buff.getAction();
         TargetData target = buff.getTarget();
-        if (action.getDelay() > 0) {
-            action.decreaseDelay();
-            return;
-        }
-        for (Card card : target.getCards()) {
-            if (action.isAddSpell()) {
-                card.addSpell(action.getCarryingSpell());
-            }
-        }
-        ArrayList<Troop> inCellTroops = getInCellTargetTroops(target.getCells());
-        for (Troop troop : target.getTroops()) {
-            troop.changeEnemyHit(action.getEnemyHitChanges());
-            troop.changeCurrentAp(action.getApChange());
-            if (!action.isPoison() || troop.canGetPoison()) {
-                troop.changeCurrentHp(action.getHpChange());
-            }
-        }
-        for (Player player: target.getPlayers()) {
+        if (haveDelay(action)) return;
+
+        applyBuffOnCards(action, target.getCards());
+        applyBuffOnCellTroops(buff, target);
+        applyBuffOnTroops(buff, target.getTroops());
+        for (Player player : target.getPlayers()) {
 
         }
+
+        decreaseDuration(buff);
+    }
+
+    private void decreaseDuration(Buff buff) {
+        SpellAction action = buff.getAction();
         action.decreaseDuration();
         if (action.getDuration() == 0) {
             buffs.remove(buff);
         }
+    }
+
+    private boolean haveDelay(SpellAction action) {
+        if (action.getDelay() > 0) {
+            action.decreaseDelay();
+            return true;
+        }
+        return false;
+    }
+
+    private void applyBuffOnCards(SpellAction action, ArrayList<Card> cards) {
+        for (Card card : cards) {
+            if (action.isAddSpell()) {
+                card.addSpell(action.getCarryingSpell());
+            }
+        }
+    }
+
+    private void applyBuffOnCellTroops(Buff buff, TargetData target) {
+        ArrayList<Troop> inCellTroops = getInCellTargetTroops(target.getCells());
+        applyBuffOnTroops(buff, inCellTroops);
+    }
+
+    private void applyBuffOnTroops(Buff buff, ArrayList<Troop> targetTroops) {
+        SpellAction action = buff.getAction();
+        for (Troop troop : targetTroops) {
+            if (!(buff.isPositive() || troop.canGiveBadEffect())) continue;
+
+            troop.changeEnemyHit(action.getEnemyHitChanges());
+            troop.changeCurrentAp(action.getApChange());
+            if (!action.isPoison() || troop.canGetPoison()) {
+                troop.changeCurrentHp(action.getHpChange());
+                if (troop.getCurrentHp() <= 0) {
+                    killTroop(troop);
+                }
+            }
+            if (action.isMakeStun() && troop.canGetStun()) {
+                troop.setCanMove(false);
+            }
+            if (action.isMakeDisarm() && troop.canGetDisarm()) {
+                troop.setDisarm(true);
+            }
+            if (action.isNoDisarm()) {
+                troop.setCantGetDisarm(true);
+            }
+            if (action.isNoPoison()) {
+                troop.setCantGetPoison(true);
+            }
+            if (action.isNoStun()) {
+                troop.setCantGetStun(true);
+            }
+            if (action.isNoBadEffect()) {
+                troop.setDontGiveBadEffect(true);
+            }
+            if (action.isNoAttackFromWeakerOnes()) {
+                troop.setNoAttackFromWeakerOnes(true);
+            }
+            if (action.isDisableHolyBuff()) {
+                troop.setDisableHolyBuff(true);
+            }
+            if (action.isKillsTarget()) {
+                killTroop(troop);
+            }
+            if (action.getRemoveBuffs() > 0) {
+                removePositiveBuffs(troop);
+            }
+            if (action.getRemoveBuffs() < 0) {
+                removeNegativeBuffs(troop);
+            }
+        }
+    }
+
+    private void removePositiveBuffs(Troop troop) {
+        for (Buff buff : buffs) {
+            if (buff.isPositive()) {
+                buff.getTarget().getTroops().remove(troop);
+            }
+        }
+    }
+
+    private void removeNegativeBuffs(Troop troop) {
+        for (Buff buff : buffs) {
+            if (!buff.isPositive()) {
+                buff.getTarget().getTroops().remove(troop);
+            }
+        }
+    }
+
+    private void killTroop(Troop troop) {
+
     }
 
     private ArrayList<Troop> getInCellTargetTroops(ArrayList<Cell> cells) {
