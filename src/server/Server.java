@@ -237,7 +237,6 @@ public class Server {
             );
             sendMessages();
         }
-
     }
 
     private void register(Message message) {
@@ -334,12 +333,12 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
-            } else if (!account.getCollection().hasCard(message.getCardIds()[0])) {
+            } else if (!account.getCollection().hasCard(message.getCardId())) {
                 sendException("invalid cardid.", message.getSender(), message.getMessageId());
-            } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+            } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardId())) {
                 sendException("deck had this card.", message.getSender(), message.getMessageId());
             } else {
-                account.addCardToDeck(message.getCardIds()[0], message.getDeckName());
+                account.addCardToDeck(message.getCardId(), message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
                 saveAccount(account);
@@ -352,10 +351,10 @@ public class Server {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
                 sendException("deck was not found.", message.getSender(), message.getMessageId());
-            } else if (!account.getDeck(message.getDeckName()).hasCard(message.getCardIds()[0])) {
+            } else if (!account.getDeck(message.getDeckName()).hasCard(message.getCardId())) {
                 sendException("deck didn't have this card.", message.getSender(), message.getMessageId());
             } else {
-                account.removeCardFromDeck(message.getCardIds()[0], message.getDeckName());
+                account.removeCardFromDeck(message.getCardId(), message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, message.getSender(), account, message.getMessageId()));
                 saveAccount(account);

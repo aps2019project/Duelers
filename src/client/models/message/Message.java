@@ -49,17 +49,9 @@ public class Message {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
 
-    public static Message makePositionsCopyMessage(String sender, String receiver, Position[] positions, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.positions = positions;
-        message.messageType = MessageType.POSITIONS_COPY;
-        return message;
-    }
-
     public static Message makeMoveTroopMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.position = position;
         message.messageType = MessageType.MOVE_TROOP;
         return message;
@@ -109,8 +101,7 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
         message.username = userName;
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.ADD_TO_DECK;
         return message;
     }
@@ -119,8 +110,7 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.deckName = deckName;
         message.username = userName;
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.messageType = MessageType.REMOVE_FROM_DECK;
         return message;
     }
@@ -155,8 +145,7 @@ public class Message {
 
     public static Message makeInsertMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.position = position;
         message.messageType = MessageType.INSERT;
         return message;
@@ -181,8 +170,7 @@ public class Message {
 
     public static Message makeUseSpellMessage(String sender, String receiver, String cardId, String spellId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.spellId = spellId;
         message.position = position;
         message.messageType = MessageType.USE_SPECIAL_POWER;
@@ -199,14 +187,11 @@ public class Message {
 
     public static Message makeUseSpecialPowerMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.cardIds = new String[1];
-        message.cardIds[0] = cardId;
+        message.cardId = cardId;
         message.position = position;
         message.messageType = MessageType.USE_SPECIAL_POWER;
         return message;
     }
-
-
 
     public static Message makeNewMultiPlayerGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentAccount, int messageId) {
         Message message = new Message(sender, receiver, messageId);
@@ -329,10 +314,6 @@ public class Message {
         return cardId;
     }
 
-    public String[] getCardIds() {
-        return cardIds;
-    }
-
     public String getSpellId() {
         return spellId;
     }
@@ -341,28 +322,12 @@ public class Message {
         return turnNum;
     }
 
-    public int getNumberOfFlags() {
-        return numberOfFlags;
-    }
-
-    public String getOpponentUserName() {
-        return opponentUserName;
-    }
-
     public GameType getGameType() {
         return gameType;
     }
 
-    public String getCardName() {
-        return cardName;
-    }
-
     public int getNewValue() {
         return newValue;
-    }
-
-    public int getStage() {
-        return stage;
     }
 
     public Position getPosition() {

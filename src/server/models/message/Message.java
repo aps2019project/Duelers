@@ -259,4 +259,5 @@ public class Message {
     public String getSudoCommand() {
         return sudoCommand;
     }
+
 }
