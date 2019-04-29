@@ -47,6 +47,7 @@ public abstract class Game {
 
     }
 
+
     public boolean isFinished() {
         return finished;
     }

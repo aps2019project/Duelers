@@ -4,7 +4,7 @@ public class Position {//TODO:Change class name
 	private int row;
 	private int column;
 
-	Position(Cell cell) {
+	public Position(Cell cell) {
 		this.row = cell.getRow();
 		this.column = cell.getColumn();
 	}
