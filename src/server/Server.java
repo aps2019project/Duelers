@@ -694,6 +694,16 @@ public class Server {
                 (serverName, client2, cardId, newValue, 0));
     }
 
+    public void sendChangeTurnMessage(Game game, int newTurn) throws Exception {
+        String client1 = getClientName(game.getPlayerOne().getUserName());
+        String client2 = getClientName(game.getPlayerTwo().getUserName());
+        checkGameAccountsClient(client1, client2);
+        addToSendingMessages(Message.makeEndTurnMessage
+                (serverName, client1, newTurn, 0));
+        addToSendingMessages(Message.makeEndTurnMessage
+                (serverName, client2, newTurn, 0));
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
