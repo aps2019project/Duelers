@@ -12,7 +12,7 @@ public class Player {
     private Deck deck;
     private Card[] hand;
     private ArrayList<Troop> troops;
-    private ArrayList<Card> graveYard;
+    private ArrayList<Card> graveyard;
     private Card nextCard;
     private ArrayList<Card> collectedItems;
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
@@ -73,8 +73,8 @@ public class Player {
         return this.troops;
     }
 
-    public ArrayList<Card> getGraveYard() {
-        return this.graveYard;
+    public ArrayList<Card> getGraveyard() {
+        return this.graveyard;
     }
 
 

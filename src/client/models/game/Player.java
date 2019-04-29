@@ -13,7 +13,7 @@ public class Player {
     private Deck deck;
     private Card[] hand;
     private ArrayList<Troop> troops;
-    private ArrayList<Card> graveYard;
+    private ArrayList<Card> graveyard;
     private Card nextCard;
     private ArrayList<Card> collectedItems;
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
@@ -46,8 +46,8 @@ public class Player {
         return this.troops;
     }
 
-    public ArrayList<Card> getGraveYard() {
-        return this.graveYard;
+    public ArrayList<Card> getGraveyard() {
+        return this.graveyard;
     }
 
     public Card getNextCard() {
@@ -84,6 +84,13 @@ public class Player {
     public Card searchCollectedItems(String cardId) {
         for (Card item : collectedItems) {
             if (item.getCardId().equalsIgnoreCase(cardId)) return item;
+        }
+        return null;
+    }
+
+    public Card searchGraveyard(String cardId) {
+        for (Card card : graveyard) {
+            if (card.getCardId().equalsIgnoreCase(cardId)) return card;
         }
         return null;
     }

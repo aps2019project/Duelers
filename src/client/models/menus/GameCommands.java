@@ -202,28 +202,48 @@ public class GameCommands extends Menu {
         }
     }
 
-    public void showNextCard() {
+    public void showNextCard() throws InputException {
+        Card nextCard = currentGame.getCurrentTurnPlayer().getNextCard();
+        if (nextCard == null) {
+            throw new InputException("no cards remaining");
+        }
+        View.getInstance().showCardInfo(nextCard);
+    }
+
+    public void enterGraveYard() throws InputException {
+        if (isInGraveYard) {
+            throw new InputException("already in graveyard");
+        }
+        isInGraveYard = true;
+    }
+
+    public void showCardsInGraveYard() throws InputException {
+        if (!isInGraveYard) {
+            throw new InputException("you are not in graveyard");
+        }
 
     }
 
-    public boolean isInGraveYard() {
-        return isInGraveYard;
-    }
+    public void showCardInfoInGraveYard(String cardId) throws InputException {
+        if (!isInGraveYard) {
+            throw new InputException("you are not in graveyard");
+        }
 
-    public void enterGraveYard() {
+        Card card = currentGame.getCurrentTurnPlayer().searchGraveyard(cardId);
+        if (card == null) {
+            throw new InputException("this card is not in graveyard");
+        }
 
-    }
-
-    public void showCardInfoInGraveYard(String cardId) {
-
+        View.getInstance().showCardInfo(card);
+        isInGraveYard = false;
     }
 
     public void exitFromGraveYard() {
         isInGraveYard = false;
     }
 
-    public void showCardsInGraveYard() {
-
+    public boolean isInGraveYard() {
+        return isInGraveYard;
     }
 
     public void endGame() {
