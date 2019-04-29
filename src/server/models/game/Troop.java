@@ -1,5 +1,6 @@
 package server.models.game;
 
+import server.Server;
 import server.models.card.Card;
 import server.models.card.spell.Spell;
 import server.models.map.Cell;
@@ -12,20 +13,16 @@ public class Troop {
     private int currentAp;
     private int currentHp;
     private Cell cell;
-    private boolean cantMove;
-    private boolean cantAttack;
+    private boolean canMove;
+    private boolean canAttack;
     private boolean isDisarm;
-    private boolean cantBePoison;
-    private boolean cantBeDisarm;
-    private boolean cantBeStun;
+    private boolean cantGetPoison;
+    private boolean cantGetDisarm;
+    private boolean cantGetStun;
     private boolean dontGiveBadEffect;
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
-    private Card flag;
-
-    public Troop(Card card, Cell cell) {
-
-    }
+    private int flagNumber;
 
     public Card getCard() {
         return this.card;
@@ -48,19 +45,21 @@ public class Troop {
     }
 
     public boolean canMove() {
-        return this.cantMove;
+        return this.canMove;
     }
 
-    public void setCantMove(boolean can) {
-        this.cantMove = can;
+    public void setCanMove(boolean can) {
+        this.canMove = can;
+        //TODO:Send Message
     }
 
     public boolean canAttack() {
-        return this.cantAttack;
+        return this.canAttack;
     }
 
-    public void setCantAttack(boolean can) {
-        this.cantAttack = can;
+    public void setCanAttack(boolean can) {
+        this.canAttack = can;
+        //TODO:Send Message
     }
 
     public boolean isDisarm() {
@@ -69,14 +68,22 @@ public class Troop {
 
     public void setDisarm(boolean disarm) {
         this.isDisarm = disarm;
+        //TODO:Send Message
     }
 
     public boolean hasFlag() {
-        return this.flag != null;
+        return this.flagNumber > 0;
     }
 
-    public void collectFlag() {
+    public void increaseFlagNumber() {
 
     }
 
+    public void decreaseFlagNumber() {
+        flagNumber--;
+        if (flagNumber < 0){
+            flagNumber=0;
+            Server.getInstance().serverPrint("Error!");
+        }
+    }
 }
