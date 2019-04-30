@@ -28,7 +28,9 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
+        this.turnNumber = 1;
         put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        this.turnNumber = 2;
         put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
         applyOnStartSpells(playerOne);
@@ -177,7 +179,7 @@ public abstract class Game {
     private void applyOnPutSpells(Troop troop, Cell cell) {
         for (Spell spell : troop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnPut())
-                applySpell(spell, detectTarget(spell, cell, gameMap.getCell(0, 0), gameMap.getCell(0, 0)));
+                applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
         }
     }
 
