@@ -47,39 +47,39 @@ public class Game {
         return this.turnNumber;
     }
 
-    public void toHand(String cardId) {
+    public void toHand(String cardId) {//TODO
 
     }
 
-    public void toNext(String cardId) {
+    public void toNext(String cardId) {//TODO
 
     }
 
-    public void toGraveYard(String cardId) {
+    public void toGraveYard(String cardId) {//TODO
 
     }
 
-    public void toMap(String cardId, Position position) {
+    public void toMap(String cardId, Position position) {//TODO
 
     }
 
-    public void toCollectedCards(String cardId, String username) {
+    public void toCollectedCards(String cardId, String username) {//TODO
 
     }
 
-    public void moveTroop(String cardId, Position position) {
+    public void moveTroop(String cardId, Position position) {//TODO
 
     }
 
-    public void changeTroopAP(String cardId, int newValue) {
+    public void changeTroopAP(String cardId, int newValue) {//TODO
 
     }
 
-    public void changeTroopHP(String cardId, int newValue) {
+    public void changeTroopHP(String cardId, int newValue) {//TODO
 
     }
 
-    public void changeTurn(String cardId, int newValue) {
+    public void changeTurn(String cardId, int newValue) {//TODO
 
     }
 

@@ -30,8 +30,44 @@ public class GameCommands extends Menu {
     }
 
     @Override
-    public void showHelp() {//SHOW menu help
-        // TODO help of each part
+    public void showHelp() {
+        String help;
+        if (isInGraveYard) {
+            help = "Battle:\n" +
+                    "\"Game info\"\n" +
+                    "\"Show my minions\"\n" +
+                    "\"Show opponent minions\"\n" +
+                    "\"Show card info [card id]\"\n" +
+                    "\"Select [card id]\"\n";
+            if (selectedCardId != null) {
+                help += "\"Move to ([x]; [y])\"\n" +
+                        "\"Attack [opponent card id]\"\n" +
+                        "\"Attack combo [opponent card id] [my card id] [my card id] [...]\"\n" +
+                        "\"Use special power (x, y)\"\n";
+            }
+            help += "\"Show hand\"\n" +
+                    "\"Show Next Card\"\n" +
+                    "\"Insert [card name] in (x, y)\"\n" +
+                    "\"show all decks\"\n" +
+                    "\"show deck [deck name]\"\n" +
+                    "\"Show collectables\"\n" +
+                    "\"Select [collectable id]\"\n";
+            if (selectedItemId != null) {
+                help += "\"Show info\"\n" +
+                        "\"Use [location x, y]\"\n";
+            }
+            help += "\"Enter graveyard\"\n" +
+                    "\"End turn\"\n" +
+                    "\"help\"\n" +
+                    "\"exit\"\n";
+        } else {
+            help = "GraveYard:\n" +
+                    "\"Show info [card id]\"\n" +
+                    "\"Show cards\"\n" +
+                    "\"help\"\n" +
+                    "\"exit\"";
+        }
+        View.getInstance().showHelp(help);
     }
 
     public void showGameActions() {//help
