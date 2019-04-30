@@ -21,8 +21,12 @@ public class Deck {
 
     public Deck(Deck deck) {
         this.deckName = deck.deckName;
-        this.hero = new Card(deck.getHero());
-        this.item = new Card(deck.item);
+        if (deck.hero != null) {
+            this.hero = new Card(deck.hero);
+        }
+        if (deck.item != null) {
+            this.item = new Card(deck.item);
+        }
         for (Card card :
                 deck.others) {
             others.add(new Card(card));
