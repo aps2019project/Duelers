@@ -82,7 +82,7 @@ public abstract class Game {
             turnNumber++;
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             applyAllBuffs();
-            allTroopsCanAttack();
+            selAllTroopsCanAttack();
             if (turnNumber < 14)
                 getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
             else
@@ -92,11 +92,8 @@ public abstract class Game {
         }
     }
 
-    private void allTroopsCanAttack() {
-        for (Troop troop : playerOne.getTroops()) {
-            troop.setCanAttack(true);
-        }
-        for (Troop troop : playerTwo.getTroops()) {
+    private void selAllTroopsCanAttack() {
+        for (Troop troop : gameMap.getTroops()) {
             troop.setCanAttack(true);
         }
     }
@@ -190,38 +187,14 @@ public abstract class Game {
             throw new Exception("its not your turn");
         }
 
-        Troop attackerTroop = getCurrentTurnPlayer().getTroop(attackerCardId);
-        if (attackerTroop == null) {
-            throw new Exception("attacker id is not valid");
-        }
+        Troop attackerTroop = getAndValidateTroop(attackerCardId, getCurrentTurnPlayer());
+        Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
 
-        Troop defenderTroop = getOtherTurnPlayer().getTroop(defenderCardId);
-        if (defenderTroop == null) {
-            throw new Exception("target id is not valid");
-        }
-
-        attack(attackerTroop, defenderTroop);
-    }
-
-    public void attack(Troop attackerTroop, Troop defenderTroop) throws Exception {
         if (!attackerTroop.canAttack()) {
             throw new Exception("attacker can not attack");
         }
 
-        if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
-            if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
-                throw new Exception("can not attack to this target");
-            }
-        } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
-            if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
-                    attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new Exception("can not attack to this target");
-            }
-        } else { // HYBRID
-            if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new Exception("can not attack to this target");
-            }
-        }
+        checkRangeForAttack(attackerTroop, defenderTroop);
 
         if (defenderTroop.canGiveBadEffect() &&
                 (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
@@ -260,20 +233,7 @@ public abstract class Game {
             throw new Exception("defender is disarm");
         }
 
-        if (defenderTroop.getCard().getAttackType() == AttackType.MELEE) {
-            if (!defenderTroop.getCell().isNextTo(attackerTroop.getCell())) {
-                throw new Exception("can not counter attack to this target");
-            }
-        } else if (defenderTroop.getCard().getAttackType() == AttackType.RANGED) {
-            if (defenderTroop.getCell().isNextTo(attackerTroop.getCell()) ||
-                    defenderTroop.getCell().manhattanDistance(attackerTroop.getCell()) > defenderTroop.getCard().getRange()) {
-                throw new Exception("can not counter attack to this target");
-            }
-        } else { // HYBRID
-            if (defenderTroop.getCell().manhattanDistance(attackerTroop.getCell()) > defenderTroop.getCard().getRange()) {
-                throw new Exception("can not counter attack to this target");
-            }
-        }
+        checkRangeForAttack(defenderTroop, attackerTroop);
 
         if (attackerTroop.canGiveBadEffect() &&
                 (attackerTroop.canBeAttackedFromWeakerOnes() || defenderTroop.getCurrentAp() > attackerTroop.getCurrentAp())
@@ -283,14 +243,21 @@ public abstract class Game {
     }
 
     private void damage(Troop attackerTroop, Troop defenderTroop) {
+        int attackPower = calculateAp(attackerTroop, defenderTroop);
+
+        defenderTroop.changeCurrentHp(-attackPower);
+
+        if (defenderTroop.getCurrentHp() <= 0) {
+            killTroop(defenderTroop);
+        }
+    }
+
+    private int calculateAp(Troop attackerTroop, Troop defenderTroop) {
         int attackPower = attackerTroop.getCurrentAp();
         if (!attackerTroop.isHolyBuffDisabling() || defenderTroop.getEnemyHitChanges() > 0) {
             attackPower += defenderTroop.getEnemyHitChanges();
         }
-        defenderTroop.changeCurrentHp(-attackPower);
-        if (defenderTroop.getCurrentHp() <= 0) {
-            killTroop(defenderTroop);
-        }
+        return attackPower;
     }
 
     public void useSpecialPower(String username, String cardId, Position target) throws Exception {
