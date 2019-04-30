@@ -94,4 +94,13 @@ public class Player {
         }
         return null;
     }
+
+    public Troop getTroop(String cardId) {
+        for (Troop troop : troops) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
+                return troop;
+            }
+        }
+        return null;
+    }
 }

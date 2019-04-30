@@ -1,6 +1,7 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.card.AttackType;
 import client.models.game.Game;
 import client.models.game.Troop;
 import client.models.map.Position;
@@ -103,6 +104,31 @@ public class GameCommands extends Menu {
     public void attack(Client client, String severName, String oppCardId) throws InputException {
         if (selectedCardId == null) {
             throw new InputException("select a card");
+        }
+        Troop attackerTroop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
+
+        if (!attackerTroop.canAttack()) {
+            throw new InputException("attacker can not attack");
+        }
+
+        Troop defenderTroop = currentGame.getOtherTurnPlayer().getTroop(oppCardId);
+        if (defenderTroop == null) {
+            throw new InputException("target card is not valid");
+        }
+
+        if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
+            if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
+                throw new InputException("you can not attack to this target");
+            }
+        } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
+            if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
+                    attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new InputException("you can not attack to this target");
+            }
+        } else { // HYBRID
+            if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new InputException("you can not attack to this target");
+            }
         }
 
         Message message = Message.makeAttackMessage(

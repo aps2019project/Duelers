@@ -45,4 +45,12 @@ public class Cell {
     public void addItem(Card item) {
         this.items.add(item);
     }
+
+    public boolean isNextTo(Cell cell) {
+        return Math.abs(cell.row - row) < 2 && Math.abs(cell.column - column) < 2;
+    }
+
+    public int manhattanDistance(Cell cell) {
+        return Math.abs(cell.row - row) + Math.abs(cell.column - column);
+    }
 }
