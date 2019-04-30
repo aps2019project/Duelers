@@ -5,6 +5,7 @@ import client.models.card.Card;
 import client.models.card.spell.Spell;
 import client.models.map.Cell;
 import client.models.map.GameMap;
+import client.models.map.Position;
 
 public class Game {
     private GameType gameType;
@@ -15,8 +16,7 @@ public class Game {
     private int lastTurnChangingTime;
     private boolean finished = false;
 
-    protected Game(GameType gameType, Account account1, GameMap gameMap) {
-
+    private Game() {
     }
 
     public GameType getGameType() {
@@ -43,35 +43,43 @@ public class Game {
         return this.gameMap;
     }
 
-    public void addTurnNum() {
-
-    }
-
     public int getTurnNumber() {
         return this.turnNumber;
     }
 
-    public void receiveMessage(String[] message) {
+    public void toHand(String cardId) {
 
     }
 
-    public void move(Troop troop, Cell targetCell) {
+    public void toNext(String cardId) {
 
     }
 
-    public void insert(Card card, Cell targetCell) {
+    public void toGraveYard(String cardId) {
 
     }
 
-    public void attack(Troop attacker, Troop other) {
+    public void toMap(String cardId, Position position) {
 
     }
 
-    public void useSpell(Troop troop, Spell spell, Cell targetCell) {
+    public void toCollectedCards(String cardId, String username) {
 
     }
 
-    public void nextTurn() {
+    public void moveTroop(String cardId, Position position) {
+
+    }
+
+    public void changeTroopAP(String cardId, int newValue) {
+
+    }
+
+    public void changeTroopHP(String cardId, int newValue) {
+
+    }
+
+    public void changeTurn(String cardId, int newValue) {
 
     }
 

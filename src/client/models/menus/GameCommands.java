@@ -30,11 +30,11 @@ public class GameCommands extends Menu {
     }
 
     @Override
-    public void showHelp() {
+    public void showHelp() {//SHOW menu help
         // TODO help of each part
     }
 
-    public void showGameActions() {
+    public void showGameActions() {//help
         // TODO all of actions
     }
 
@@ -90,8 +90,7 @@ public class GameCommands extends Menu {
         }
 
         Message message = Message.makeMoveTroopMessage(
-                client.getClientName(), serverName, selectedCardId, new Position(row, column), 0
-        );
+                client.getClientName(), serverName, selectedCardId, new Position(row, column), 0);
         client.addToSendingMessages(message);
         client.sendMessages();
         selectedCardId = null;
@@ -173,7 +172,7 @@ public class GameCommands extends Menu {
     }
 
     public void showHand(Client client) {
-        View.getInstance().showHand(client.getGame().getPlayerOne());
+        View.getInstance().showHand(currentGame.getPlayerOne());
     }
 
     public void insertCard(Client client, String serverName, String cardId, int row, int column) throws InputException {
@@ -284,5 +283,9 @@ public class GameCommands extends Menu {
 
     public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
     }
 }

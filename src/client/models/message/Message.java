@@ -26,7 +26,6 @@ public class Message {
     private String exceptionString;
     private String cardId;
     private String[] cardIds;
-    private int turnNum;
     private int numberOfFlags;
     private String cardName;
     private int newValue;
@@ -288,10 +287,6 @@ public class Message {
 
     public String getCardId() {
         return cardId;
-    }
-
-    public int getTurnNum() {
-        return turnNum;
     }
 
     public GameType getGameType() {

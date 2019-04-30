@@ -18,7 +18,6 @@ public class Client {
     private Account account;
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
-    private Game game;
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
     private Menu currentMenu;
@@ -123,6 +122,33 @@ public class Client {
                 case ACCOUNT_INFO:
                     MultiPlayerMenu.getInstance().setSecondAccount(message.getAccountInfo());
                     break;
+                case TO_HAND:
+                    GameCommands.getInstance().getCurrentGame().toHand(message.getCardId());
+                    break;
+                case TO_NEXT:
+                    GameCommands.getInstance().getCurrentGame().toNext(message.getCardId());
+                    break;
+                case TO_GRAVEYARD:
+                    GameCommands.getInstance().getCurrentGame().toGraveYard(message.getCardId());
+                    break;
+                case TO_MAP:
+                    GameCommands.getInstance().getCurrentGame().toMap(message.getCardId(), message.getPosition());
+                    break;
+                case TO_COLLECTED_CARDS:
+                    GameCommands.getInstance().getCurrentGame().toCollectedCards(message.getCardId(), message.getUsername());
+                    break;
+                case MOVE_TROOP:
+                    GameCommands.getInstance().getCurrentGame().moveTroop(message.getCardId(), message.getPosition());
+                    break;
+                case TROOP_AP:
+                    GameCommands.getInstance().getCurrentGame().changeTroopAP(message.getCardId(), message.getNewValue());
+                    break;
+                case TROOP_HP:
+                    GameCommands.getInstance().getCurrentGame().changeTroopHP(message.getCardId(), message.getNewValue());
+                    break;
+                case END_TURN:
+                    GameCommands.getInstance().getCurrentGame().changeTurn(message.getCardId(), message.getNewValue());
+                    break;
             }
         }
         receivingMessages.clear();
@@ -147,13 +173,5 @@ public class Client {
 
     public void setPositions(Position[] positions) {
         this.positions = positions;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 }

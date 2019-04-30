@@ -29,7 +29,6 @@ public class Message {
     private String exceptionString;
     private String cardId;
     private String[] cardIds;
-    private int turnNum;
     private int numberOfFlags;
     private String cardName;
     private int newValue;
@@ -177,9 +176,9 @@ public class Message {
         return message;
     }
 
-    public static Message makeEndTurnMessage(String sender, String receiver, int turnNum, int messageId) {
+    public static Message makeEndTurnMessage(String sender, String receiver, int newValue, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.turnNum = turnNum;
+        message.newValue = newValue;
         message.messageType = MessageType.END_TURN;
         return message;
     }
