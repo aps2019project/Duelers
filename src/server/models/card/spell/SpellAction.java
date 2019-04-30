@@ -9,7 +9,6 @@ public class SpellAction {
     private boolean poison;
     private boolean makeStun;
     private boolean makeDisarm;
-    private boolean actionAtTheEndOfTurn;
     private boolean noDisarm;
     private boolean noPoison;
     private boolean noStun;
@@ -33,7 +32,6 @@ public class SpellAction {
         this.poison = referenceAction.poison;
         this.makeStun = referenceAction.makeStun;
         this.makeDisarm = referenceAction.makeDisarm;
-        this.actionAtTheEndOfTurn = referenceAction.actionAtTheEndOfTurn;
         this.noDisarm = referenceAction.noDisarm;
         this.noPoison = referenceAction.noPoison;
         this.noStun = referenceAction.noStun;
@@ -83,10 +81,6 @@ public class SpellAction {
 
     public boolean isMakeDisarm() {
         return makeDisarm;
-    }
-
-    public boolean isActionAtTheEndOfTurn() {
-        return actionAtTheEndOfTurn;
     }
 
     public boolean isNoDisarm() {

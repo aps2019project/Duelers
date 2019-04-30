@@ -8,9 +8,9 @@
       "spellId": "hellfire",
       "action": {
         "hpChange": -2,
-        "actionAtTheEndOfTurn": true,
         "durable": true,
-        "duration": 2
+        "duration": 2,
+        "delay": 1
       },
       "availabilityType": {
         "onPut": true

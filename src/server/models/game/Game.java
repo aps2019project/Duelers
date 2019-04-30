@@ -16,7 +16,6 @@ public abstract class Game {
     private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
-    //    private ArrayList<CellEffect> cellEffects;
     private ArrayList<Buff> buffs;
     private GameMap gameMap;
     private int turnNumber;
@@ -80,7 +79,6 @@ public abstract class Game {
 
     public void changeTurn(String username) throws Exception {
         if (canCommand(username)) {
-            applyEndTurnBuffs();
             getCurrentTurnPlayer().addNextCardToHand();
             revertNotDurableBuffs();
             turnNumber++;
@@ -93,17 +91,7 @@ public abstract class Game {
 
     private void applyStartTurnBuffs() {
         for (Buff buff : buffs) {
-            if (!buff.getAction().isActionAtTheEndOfTurn()) {
-                applyBuff(buff);
-            }
-        }
-    }
-
-    private void applyEndTurnBuffs() {
-        for (Buff buff : buffs) {
-            if (buff.getAction().isActionAtTheEndOfTurn()) {
-                applyBuff(buff);
-            }
+            applyBuff(buff);
         }
     }
 
@@ -219,9 +207,7 @@ public abstract class Game {
         spell.setLastTurnUsed(turnNumber);
         Buff buff = new Buff(spell.getAction(), target);
         buffs.add(buff);
-        if (!buff.getAction().isActionAtTheEndOfTurn()) {
-            applyBuff(buff);
-        }
+        applyBuff(buff);
     }
 
     private void applyBuff(Buff buff) {
@@ -245,7 +231,7 @@ public abstract class Game {
 
     private void decreaseDuration(Buff buff) {
         SpellAction action = buff.getAction();
-        if (action.getDuration() > 0)  {
+        if (action.getDuration() > 0) {
             action.decreaseDuration();
         }
         if (action.getDuration() == 0) {
