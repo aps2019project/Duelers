@@ -153,9 +153,7 @@ public abstract class Game {
         }
     }
 
-    public void moveTroop(String username, String cardId, Position position) throws Exception {
 
-    }
 
     public void insert(String username, String cardId, Position position) throws Exception {
         if (!canCommand(username)) {
@@ -181,7 +179,35 @@ public abstract class Game {
                 applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
         }
     }
+    public void moveTroop(String username, String cardId, Position position) throws Exception {
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
 
+        if (!gameMap.checkCoordination(position)) {
+            throw new Exception("coordination is not valid");
+        }
+
+        Troop troop = gameMap.getTroop(cardId);
+        if (troop == null) {
+            throw new Exception("select a valid card");
+        }
+        if (troop.getCell().manhattanDistance(position) > 2) {
+            throw new Exception("too far to go");
+        }
+        Cell cell = gameMap.getCell(position);
+        troop.setCell(cell);
+        for (Card card : cell.getItems()) {
+            if (card.getType() == CardType.FLAG) {
+                troop.addFlag(card);
+                getCurrentTurnPlayer().increaseNumberOfCollectedFlags(1);
+                getCurrentTurnPlayer().addFlagCarier(troop);
+            } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
+                getCurrentTurnPlayer().addCollectibleItems(card);
+            }
+        }
+        cell.clearItems();
+    }
     public void attack(String username, String attackerCardId, String defenderCardId) throws Exception {
         if (!canCommand(username)) {
             throw new Exception("its not your turn");
