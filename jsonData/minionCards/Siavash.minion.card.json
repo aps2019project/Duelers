@@ -15,6 +15,7 @@
         "onDeath": true
       },
       "target": {
+        "isRelatedToCardOwnerPosition": true,
         "dimensions": {
           "row": 10,
           "column": 18

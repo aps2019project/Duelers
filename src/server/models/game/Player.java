@@ -21,15 +21,17 @@ public class Player {
     private Card nextCard;
     private ArrayList<Card> collectedItems = new ArrayList<>();
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
+    private int playerNumber;
 
-    public Player(Account account) {
+    public Player(Account account, int playerNumber) {
+        this.playerNumber = playerNumber;
         userName = account.getUsername();
         deck = new Deck(account.getMainDeck());
         setNextCard();
         for (int i = 0; i < 5; i++) {
             addNextCardToHand();
         }
-        hero = new Troop(deck.getHero());
+        hero = new Troop(deck.getHero(), playerNumber);
         troops.add(hero);
     }
 
@@ -46,12 +48,11 @@ public class Player {
         }
         if (card != null) {
             if (card.getType() == CardType.MINION) {
-                Troop troop = new Troop(card, cell);
+                Troop troop = new Troop(card, playerNumber);
                 troops.add(troop);
                 return troop;
             }
         }
-
         return null;
     }
 
@@ -86,6 +87,10 @@ public class Player {
 
     public void changeCurrentMP(int change) {
 
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
     public Deck getDeck() {
@@ -156,5 +161,10 @@ public class Player {
 
     public void setHero(Troop hero) {
         hero = hero;
+    }
+
+    public void killTroop(Troop troop) {
+        addToGraveYard(troop.getCard());
+        troops.remove(troop);
     }
 }

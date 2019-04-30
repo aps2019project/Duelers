@@ -26,8 +26,8 @@ public abstract class Game {
     protected Game(GameType gameType, Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameType = gameType;
         this.gameMap = gameMap;
-        this.playerOne = new Player(accountOne);
-        this.playerTwo = new Player(accountTwo);
+        this.playerOne = new Player(accountOne, 1);
+        this.playerTwo = new Player(accountTwo, 2);
         this.turnNumber = 1;
         put(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -167,7 +167,11 @@ public abstract class Game {
         if (!canCommand(username)) {
             throw new Exception("its not your turn");
         }
-        put(2 - (turnNumber % 2), getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)), gameMap.getCellWithPosition(position));
+        put(
+                getCurrentTurnPlayer().getPlayerNumber(),
+                getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)),
+                gameMap.getCellWithPosition(position)
+        );
     }
 
     private void put(int playerNumber, Troop troop, Cell cell) {
@@ -244,7 +248,7 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnAttack())
                 applySpell(
                         spell,
-                        detectTarget(spell, defenderTroop.getCell(), gameMap.getCell(0, 0), getCurrentTurnPlayer().getHero().getCell())
+                        detectTarget(spell, defenderTroop.getCell(), defenderTroop.getCell(), getCurrentTurnPlayer().getHero().getCell())
                 );
         }
     }
@@ -254,7 +258,7 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(
                         spell,
-                        detectTarget(spell, attackerTroop.getCell(), gameMap.getCell(0, 0), getOtherTurnPlayer().getHero().getCell())
+                        detectTarget(spell, attackerTroop.getCell(), attackerTroop.getCell(), getOtherTurnPlayer().getHero().getCell())
                 );
         }
     }
@@ -455,7 +459,23 @@ public abstract class Game {
     }
 
     private void killTroop(Troop troop) {
+        applyOnDeathSpells(troop);
+        if (troop.getPlayerNumber() == 1) {
+            playerOne.killTroop(troop);
+        } else if (troop.getPlayerNumber() == 2) {
+            playerTwo.killTroop(troop);
+        }
+        gameMap.removeTroop(troop);
+    }
 
+    private void applyOnDeathSpells(Troop troop) {
+        for (Spell spell : troop.getCard().getSpells()) {
+            if (spell.getAvailabilityType().isOnDefend())
+                applySpell(
+                        spell,
+                        detectTarget(spell, troop.getCell(), gameMap.getCell(0, 0), getOtherTurnPlayer().getHero().getCell())
+                );
+        }
     }
 
     private ArrayList<Troop> getInCellTargetTroops(ArrayList<Cell> cells) {

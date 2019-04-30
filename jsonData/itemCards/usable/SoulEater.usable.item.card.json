@@ -17,6 +17,7 @@
             "duration": 2147483647
           },
           "target": {
+            "isRelatedToCardOwnerPosition": true,
             "isRandom": true,
             "dimensions": {
               "row": 10,

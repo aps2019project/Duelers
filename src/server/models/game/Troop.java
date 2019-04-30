@@ -21,15 +21,17 @@ public class Troop {
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
     private ArrayList<Card> flags;
+    private int playerNumber;
 
-    public Troop(Card card) {
+    public Troop(Card card, int playerNumber) {
         this.card = card;
         this.currentAp = card.getDefaultAp();
         this.currentHp = card.getDefaultHp();
+        this.playerNumber = playerNumber;
     }
 
-    public Troop(Card card, Cell cell) {
-        this.card = card;
+    public Troop(Card card, Cell cell, int playerNumber) {
+        this(card, playerNumber);
         this.cell = cell;
     }
 
@@ -108,6 +110,9 @@ public class Troop {
         return disableHolyBuff;
     }
 
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
 
     public int getEnemyHitChanges() {
         return enemyHitChanges;
