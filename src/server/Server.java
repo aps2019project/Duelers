@@ -153,7 +153,7 @@ public class Server {
                     combo(message);
                     break;
                 case USE_SPECIAL_POWER:
-                    useSpell(message);
+                    useSpecialPower(message);
                     break;
                 case MOVE_TROOP:
                     moveTroop(message);
@@ -163,9 +163,6 @@ public class Server {
                     break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
-                    break;
-                case SAVE_CHANGES:
-                    serverPrint("Auto Save is On!");
                     break;
                 default:
                     sendException("Invalid Message Type!", message.getSender(), message.getMessageId());
@@ -563,8 +560,18 @@ public class Server {
         }
     }
 
-    private void useSpell(Message message) {
-
+    private void useSpecialPower(Message message) {
+        Game game;
+        try {
+            game = getGame(message.getSender());
+            try {
+                game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
+            } catch (Exception e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            }
+        } catch (Exception e) {
+            sendException(e.getMessage(), message.getSender(), message.getMessageId());
+        }
     }
 
     private void moveTroop(Message message) {

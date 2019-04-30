@@ -191,7 +191,7 @@ public class GameCommands extends Menu {
         }
 
         client.addToSendingMessages(
-                Message.useItem(
+                Message.makeInsertMessage(
                         client.getClientName(), serverName, selectedItemId, new Position(row, column), 0
                 )
         );

@@ -106,7 +106,7 @@ public class Client {
                     currentMenu = GameCommands.getInstance();
                     break;
                 case ORIGINAL_CARDS_COPY:
-                    Shop.getInstance().setOriginalCards(message.getShopCards());
+                    Shop.getInstance().setOriginalCards(message.getOriginalCards());
                     break;
                 case CUSTOM_DECKS_COPY:
                     customDecks = message.getCustomDecks();
