@@ -11,6 +11,13 @@ public class TargetData {
     private ArrayList<Cell> cells = new ArrayList<>();
     private ArrayList<Player> players = new ArrayList<>();
 
+    TargetData(ArrayList<Troop> troops) {
+        this.troops = troops;
+    }
+
+    TargetData() {
+    }
+
     public ArrayList<Card> getCards() {
         return cards;
     }
