@@ -62,11 +62,21 @@ public abstract class Game {
 
     public void changeTurn(String username) throws Exception {
         if (canCommand(username)) {
+            applyEndTurnBuffs();
+            getCurrentTurnPlayer().addNextCardToHand();
             turnNumber++;
             Server.getInstance().sendChangeTurnMessage(this,turnNumber);
-            //change turn buffs
+            // change turn buffs
         }else{
             throw new Exception("it isn't your turn!");
+        }
+    }
+
+    private void applyEndTurnBuffs() {
+        for (Buff buff : buffs) {
+            if (buff.getAction().isActionAtTheEndOfTurn()) {
+                applyBuff(buff);
+            }
         }
     }
 
@@ -120,24 +130,26 @@ public abstract class Game {
         spell.setLastTurnUsed(turnNumber);
         Buff buff = new Buff(spell.getAction(), target);
         buffs.add(buff);
-        applyBuff(buff);
+        if (!buff.getAction().isActionAtTheEndOfTurn()) {
+            applyBuff(buff);
+        }
     }
 
     private void applyBuff(Buff buff) {
-        SpellAction action = buff.getAction();
         TargetData target = buff.getTarget();
-        if (haveDelay(action)) return;
+        if (haveDelay(buff)) return;
 
-        applyBuffOnCards(action, target.getCards());
-        applyBuffOnCellTroops(buff, target);
+        applyBuffOnCards(buff, target.getCards());
+        applyBuffOnCellTroops(buff, target.getCells());
         applyBuffOnTroops(buff, target.getTroops());
-        applyBuffOnPlayers(action, target);
+        applyBuffOnPlayers(buff, target.getPlayers());
 
         decreaseDuration(buff);
     }
 
-    private void applyBuffOnPlayers(SpellAction action, TargetData target) {
-        for (Player player : target.getPlayers()) {
+    private void applyBuffOnPlayers(Buff buff, ArrayList<Player> players) {
+        SpellAction action = buff.getAction();
+        for (Player player : players) {
             player.changeCurrentMP(action.getMpChange());
         }
     }
@@ -150,7 +162,8 @@ public abstract class Game {
         }
     }
 
-    private boolean haveDelay(SpellAction action) {
+    private boolean haveDelay(Buff buff) {
+        SpellAction action = buff.getAction();
         if (action.getDelay() > 0) {
             action.decreaseDelay();
             return true;
@@ -158,7 +171,8 @@ public abstract class Game {
         return false;
     }
 
-    private void applyBuffOnCards(SpellAction action, ArrayList<Card> cards) {
+    private void applyBuffOnCards(Buff buff, ArrayList<Card> cards) {
+        SpellAction action = buff.getAction();
         for (Card card : cards) {
             if (action.isAddSpell()) {
                 card.addSpell(action.getCarryingSpell());
@@ -166,8 +180,8 @@ public abstract class Game {
         }
     }
 
-    private void applyBuffOnCellTroops(Buff buff, TargetData target) {
-        ArrayList<Troop> inCellTroops = getInCellTargetTroops(target.getCells());
+    private void applyBuffOnCellTroops(Buff buff, ArrayList<Cell> cells) {
+        ArrayList<Troop> inCellTroops = getInCellTargetTroops(cells);
         applyBuffOnTroops(buff, inCellTroops);
     }
 
