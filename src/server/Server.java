@@ -493,7 +493,7 @@ public class Server {
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
             clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
-            GameMap gameMap = new GameMap(new HashMap<>(), message.getNumberOfFlags());
+            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(),originalFlag);
             if (message.getGameType() == null) {
                 sendException("invalid gameType!", message.getSender(), message.getMessageId());
                 return;

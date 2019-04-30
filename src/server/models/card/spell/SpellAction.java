@@ -50,6 +50,13 @@ public class SpellAction {
         this.carryingSpell = referenceAction.carryingSpell;
     }
 
+    public SpellAction makeCopyAction(int duration, int delay) {
+        SpellAction spellAction = new SpellAction(this);
+        spellAction.duration = duration;
+        spellAction.delay = delay;
+        return spellAction;
+    }
+
     public int getEnemyHitChanges() {
         return enemyHitChanges;
     }

@@ -59,6 +59,7 @@ public class Card {
         this.hasCombo = hasCombo;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (!this.getClass().getName().equals(obj.getClass().getName())) return false;

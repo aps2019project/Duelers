@@ -24,11 +24,11 @@ public class Player {
 
     public Player(Account account) {
         deck = new Deck(account.getMainDeck());
+        setNextCard();
         for (int i = 0; i < 5; i++) {
-            setNextCard();
             addNextCardToHand();
         }
-        setNextCard();
+        hero = new Troop(deck.getHero());
     }
 
     public void insert(String cardId, Cell cell) {
@@ -61,7 +61,7 @@ public class Player {
     public void addNextCardToHand() {
         if (hand.size() <= 5) {
             hand.add(nextCard);
-            nextCard = null;
+            setNextCard();
         }
     }
 
