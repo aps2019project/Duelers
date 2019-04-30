@@ -6,14 +6,10 @@ import client.models.card.spell.Spell;
 import client.models.map.Cell;
 import client.models.map.GameMap;
 
-import java.util.ArrayList;
-
 public class Game {
     private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
-    private ArrayList<CellEffect> cellEffects;
-    private ArrayList<Buff> buffs;
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
@@ -39,25 +35,8 @@ public class Game {
         return playerTwo;
     }
 
-    public void addCellEffect(CellEffect cellEffect) {
-
-    }
-
-    public void addBuff(Buff buff) {
-
-    }
-
-
     public boolean isFinished() {
         return finished;
-    }
-
-    public ArrayList<Buff> getBuffs() {
-        return this.buffs;
-    }
-
-    public ArrayList<CellEffect> getCellEffects() {
-        return this.cellEffects;
     }
 
     public GameMap getGameMap() {
