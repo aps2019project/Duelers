@@ -28,8 +28,8 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
-        put(1,playerOne.getHero(),gameMap.getCell(2,0));
-        put(2,playerTwo.getHero(),gameMap.getCell(2,8));
+        put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
         applyStartSpells(playerOne);
         applyStartSpells(playerTwo);
@@ -85,6 +85,11 @@ public abstract class Game {
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             applyAllBuffs();
             allTroopsCanAttack();
+            if (getCurrentTurnPlayer().getUserName().equals(playerOne.getUserName())) {
+                getCurrentTurnPlayer().setCurrentMP(turnNumber + 1);
+            } else {
+                getCurrentTurnPlayer().setCurrentMP(turnNumber + 2);
+            }
         } else {
             throw new Exception("it isn't your turn!");
         }
