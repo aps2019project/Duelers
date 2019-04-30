@@ -5,9 +5,10 @@ import client.models.game.Troop;
 import java.util.ArrayList;
 
 public class GameMap {
+    private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
+
     private Cell[][] cells;
-    private ArrayList<Troop> playerOneTroops = new ArrayList<>();
-    private ArrayList<Troop> playerTwoTroops = new ArrayList<>();
+    private ArrayList<Troop> troops = new ArrayList<>();
     private ArrayList<Cell> flagCells = new ArrayList<>();
     private ArrayList<Cell> collectibleItemCells = new ArrayList<>();
 
@@ -15,13 +16,30 @@ public class GameMap {
         return this.cells;
     }
 
-    public ArrayList<Troop> getPlayerOneTroops() {
-        return this.playerOneTroops;
+    public boolean checkCoordination(int row, int column) {
+        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
 
-    public ArrayList<Troop> getPlayerTwoTroops() {
-        return this.playerTwoTroops;
+    public Cell getCellWithPosition(Position position) {
+        return cells[position.getRow()][position.getColumn()];
     }
+
+    public Cell getCell(int row, int column) {
+        if (checkCoordination(row, column)) {
+            return cells[row][column];
+        }
+        return null;
+    }
+
+    public Troop getTroop(int row, int column) {
+        for (Troop troop : troops) {
+            if (troop.getCell().getColumn() == column && troop.getCell().getRow() == row) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
 
     public ArrayList<Cell> getFlagCells() {
         return flagCells;
@@ -31,7 +49,4 @@ public class GameMap {
         return collectibleItemCells;
     }
 
-    public Troop getTroop(Cell cell) {
-        return null;
-    }
 }
