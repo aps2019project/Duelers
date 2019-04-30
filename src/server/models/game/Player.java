@@ -35,7 +35,7 @@ public class Player {
         troops.add(hero);
     }
 
-    public Troop insert(String cardId, Cell cell) {//TODO: apply spells
+    public Troop insert(String cardId, Cell cell) throws Exception {
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
@@ -46,13 +46,20 @@ public class Player {
                 break;
             }
         }
-        if (card != null) {
-            if (card.getType() == CardType.MINION) {
-                Troop troop = new Troop(card, playerNumber);
-                troops.add(troop);
-                return troop;
-            }
+        if (card == null)
+            throw new Exception("card id is not valid");
+
+        if (card.getMannaPoint() > currentMP)
+            throw new Exception("not enough mana point");
+
+        currentMP -= card.getMannaPoint();
+
+        if (card.getType() == CardType.MINION) {
+            Troop troop = new Troop(card, playerNumber);
+            troops.add(troop);
+            return troop;
         }
+
         return null;
     }
 

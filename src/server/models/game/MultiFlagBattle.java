@@ -5,8 +5,8 @@ import server.models.map.GameMap;
 
 public class MultiFlagBattle extends Game {
 
-    public MultiFlagBattle(GameType gameType, Account account1, Account account2, GameMap gameMap) {
-        super(gameType, account1, account2, gameMap);
+    public MultiFlagBattle(Account account1, Account account2, GameMap gameMap) {
+        super(account1, account2, gameMap);
     }
 
     @Override

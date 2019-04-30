@@ -2,12 +2,12 @@ package client.models.menus;
 
 import client.Client;
 import client.models.card.AttackType;
+import client.models.card.Card;
 import client.models.game.Game;
 import client.models.game.Troop;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
-import client.models.card.Card;
 import client.view.request.InputException;
 
 public class GameCommands extends Menu {
@@ -123,6 +123,25 @@ public class GameCommands extends Menu {
     public void move(Client client, String serverName, int row, int column) throws InputException {
         if (selectedCardId == null) {
             throw new InputException("select a card");
+        }
+
+
+        Troop troop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
+
+        if (!troop.canMove()) {
+            throw new InputException("troop can not move");
+
+        }
+        if (!currentGame.getGameMap().checkCoordination(row, column)) {
+            throw new InputException("coordination is not valid");
+
+        }
+        if (currentGame.getGameMap().getTroop(row, column) != null) {
+            throw new InputException("cell is not empty");
+
+        }
+        if (troop.getCell().manhattanDistance(row, column) > 2) {
+            throw new InputException("to far to go");
         }
 
         Message message = Message.makeMoveTroopMessage(

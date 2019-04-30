@@ -5,8 +5,8 @@ import server.models.map.GameMap;
 
 public class SingleFlagBattle extends Game {
 
-    public SingleFlagBattle(GameType gameType, Account account1, Account account2, GameMap gameMap) {
-        super(gameType, account1, account2, gameMap);
+    public SingleFlagBattle(Account account1, Account account2, GameMap gameMap) {
+        super(account1, account2, gameMap);
     }
 
     @Override
