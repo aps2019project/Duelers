@@ -588,6 +588,7 @@ public class Server {
             game = getGame(message.getSender());
             try {
                 game.moveTroop(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
+                addToSendingMessages(Message.makeMoveTroopMessage(serverName,message.getSender(),message.getCardId(),message.getPosition(),0));
             } catch (Exception e) {
                 sendException(e.getMessage(), message.getSender(), message.getMessageId());
             }

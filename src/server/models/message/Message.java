@@ -188,7 +188,13 @@ public class Message {
         message.accountInfo = accountInfo;
         message.messageType = MessageType.ACCOUNT_INFO;
         return message;
+    }
 
+    public static Message makeMoveTroopMessage(String sender,String receiver,String cardId,Position position,int messageId){
+        Message message= new Message(sender,receiver,messageId);
+        message.cardId=cardId;
+        message.position=position;
+        return message;
     }
 
     public String toJson() {
