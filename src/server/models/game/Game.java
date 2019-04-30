@@ -1,6 +1,5 @@
 package server.models.game;
 
-import client.view.request.InputException;
 import server.Server;
 import server.models.account.Account;
 import server.models.card.AttackType;
@@ -168,8 +167,8 @@ public abstract class Game {
         Player player = getCurrentTurnPlayer();
         put(
                 player.getPlayerNumber(),
-                player.insert(cardId, gameMap.convertPositionToCell(position)),
-                gameMap.convertPositionToCell(position)
+                player.insert(cardId, gameMap.getCell(position)),
+                gameMap.getCell(position)
         );
     }
 
@@ -304,7 +303,7 @@ public abstract class Game {
 
         applySpell(
                 specialPower,
-                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target), hero.getCell())
+                detectTarget(specialPower, hero.getCell(), gameMap.getCell(target), hero.getCell())
         );
     }
 
