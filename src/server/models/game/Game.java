@@ -164,13 +164,10 @@ public abstract class Game {
         if (!canCommand(username)) {
             throw new Exception("its not your turn");
         }
-        Player player=getCurrentTurnPlayer();
+        Player player = getCurrentTurnPlayer();
         put(
                 player.getPlayerNumber(),
-                getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)),
-                gameMap.getCellWithPosition(position)
-                getCurrentTurnPlayer().getPlayerNumber(),
-                getCurrentTurnPlayer().insert(cardId, gameMap.convertPositionToCell(position)),
+                player.insert(cardId, gameMap.convertPositionToCell(position)),
                 gameMap.convertPositionToCell(position)
         );
     }
@@ -321,7 +318,7 @@ public abstract class Game {
 
         applySpell(
                 specialPower,
-                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target) , hero.getCell())
+                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target), hero.getCell())
         );
     }
 
