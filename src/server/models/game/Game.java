@@ -158,33 +158,7 @@ public abstract class Game {
     }
 
     public void moveTroop(String username, String cardId, Position position) throws Exception {
-        if (!canCommand(username)) {
-            throw new Exception("its not your turn");
-        }
 
-        if (!gameMap.checkCoordination(position)) {
-            throw new InputException("coordination is not valid");
-        }
-
-        Troop troop = gameMap.getTroop(cardId);
-        if (troop == null) {
-            throw new Exception("select a valid card");
-        }
-        if (troop.getCell().manhattanDistance(position) > 2) {
-            throw new Exception("too far to go");
-        }
-        Cell cell = gameMap.getCell(position);
-        troop.setCell(cell);
-        for (Card card : cell.getItems()) {
-            if (card.getType() == CardType.FLAG) {
-                troop.addFlag(card);
-                getCurrentTurnPlayer().increaseNumberOfCollectedFlags(1);
-                getCurrentTurnPlayer().addFlagCarier(troop);
-            } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
-                getCurrentTurnPlayer().addCollectibleItems(card);
-            }
-        }
-        cell.clearItems();
     }
 
     public void insert(String username, String cardId, Position position) throws Exception {
@@ -194,8 +168,8 @@ public abstract class Game {
         Player player = getCurrentTurnPlayer();
         put(
                 player.getPlayerNumber(),
-                player.insert(cardId, gameMap.getCell(position)),
-                gameMap.getCell(position)
+                player.insert(cardId, gameMap.convertPositionToCell(position)),
+                gameMap.convertPositionToCell(position)
         );
     }
 
@@ -325,11 +299,24 @@ public abstract class Game {
             throw new Exception("its not your turn");
         }
 
+        Troop hero = getAndValidateHero(cardId);
+        Spell specialPower = getAndValidateSpecialPower(hero);
+
+        applySpell(
+                specialPower,
+                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target), hero.getCell())
+        );
+    }
+
+    private Troop getAndValidateHero(String cardId) throws Exception {
         Troop hero = getCurrentTurnPlayer().getHero();
         if (hero == null || !hero.getCard().getCardId().equalsIgnoreCase(cardId)) {
             throw new Exception("hero id is not valid");
         }
+        return hero;
+    }
 
+    private Spell getAndValidateSpecialPower(Troop hero) throws Exception {
         Spell specialPower = hero.getCard().getSpells().get(0);
         if (specialPower == null || specialPower.getAvailabilityType().isSpecialPower()) {
             throw new Exception("special power is not available");
@@ -342,16 +329,71 @@ public abstract class Game {
         if (getCurrentTurnPlayer().getCurrentMP() < specialPower.getMannaPoint()) {
             throw new Exception("insufficient manna");
         }
-
-        applySpell(
-                specialPower,
-                detectTarget(specialPower, hero.getCell(), gameMap.getCell(target), hero.getCell())
-        );
+        return specialPower;
     }
 
     public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception {
         if (!canCommand(username)) {
             throw new Exception("its not your turn");
+        }
+
+        Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
+        Troop[] attackerTroops = getAndValidateAttackerTroops(attackerCardIds, defenderTroop);
+
+        damageFromAllAttackers(defenderTroop, attackerTroops);
+
+        applyOnDefendSpells(defenderTroop, attackerTroops[0]);
+        counterAttack(defenderTroop, attackerTroops[0]);
+    }
+
+    private Troop getAndValidateTroop(String defenderCardId, Player otherTurnPlayer) throws Exception {
+        Troop troop = otherTurnPlayer.getTroop(defenderCardId);
+        if (troop == null) {
+            throw new Exception("card id is not valid");
+        }
+        return troop;
+    }
+
+    private Troop[] getAndValidateAttackerTroops(String[] attackerCardIds, Troop defenderTroop) throws Exception {
+        Troop[] attackerTroops = new Troop[attackerCardIds.length];
+        for (int i = 0; i < attackerTroops.length; i++) {
+            attackerTroops[i] = getCurrentTurnPlayer().getTroop(attackerCardIds[i]);
+            if (attackerTroops[i] == null || !attackerTroops[i].getCard().hasCombo()) {
+                throw new Exception("invalid attacker troop");
+            }
+
+            checkRangeForAttack(attackerTroops[i], defenderTroop);
+        }
+        return attackerTroops;
+    }
+
+    private void checkRangeForAttack(Troop attackerTroop, Troop defenderTroop) throws Exception {
+        if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
+            if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
+                throw new Exception("can not attack to this target");
+            }
+        } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
+            if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
+                    attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new Exception("can not attack to this target");
+            }
+        } else { // HYBRID
+            if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new Exception("can not attack to this target");
+            }
+        }
+    }
+
+    private void damageFromAllAttackers(Troop defenderTroop, Troop[] attackerTroops) {
+        for (Troop attackerTroop : attackerTroops) {
+            if (defenderTroop.canGiveBadEffect() &&
+                    (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
+            ) {
+                damage(attackerTroop, defenderTroop);
+
+                attackerTroop.setCanAttack(false);
+                applyOnAttackSpells(attackerTroop, defenderTroop);
+            }
         }
     }
 

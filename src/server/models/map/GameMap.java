@@ -102,4 +102,8 @@ public class GameMap {
     public void removeTroop(Troop troop) {
         troops.remove(troop);
     }
+
+    public ArrayList<Troop> getTroops() {
+        return troops;
+    }
 }
