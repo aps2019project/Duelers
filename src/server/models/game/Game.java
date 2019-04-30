@@ -83,6 +83,11 @@ public abstract class Game {
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             applyAllBuffs();
             allTroopsCanAttack();
+            if (getCurrentTurnPlayer().getUserName().equals(playerOne.getUserName())) {
+                getCurrentTurnPlayer().setCurrentMP(turnNumber + 1);
+            } else {
+                getCurrentTurnPlayer().setCurrentMP(turnNumber + 2);
+            }
         } else {
             throw new Exception("it isn't your turn!");
         }
