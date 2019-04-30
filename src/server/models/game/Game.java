@@ -2,6 +2,7 @@ package server.models.game;
 
 import server.Server;
 import server.models.account.Account;
+import server.models.card.AttackType;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.spell.Spell;
@@ -82,13 +83,23 @@ public abstract class Game {
             revertNotDurableBuffs();
             turnNumber++;
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
-            applyStartTurnBuffs();
+            applyAllBuffs();
+            allTroopsCanAttack();
         } else {
             throw new Exception("it isn't your turn!");
         }
     }
 
-    private void applyStartTurnBuffs() {
+    private void allTroopsCanAttack() {
+        for (Troop troop : playerOne.getTroops()) {
+            troop.setCanAttack(true);
+        }
+        for (Troop troop : playerTwo.getTroops()) {
+            troop.setCanAttack(true);
+        }
+    }
+
+    private void applyAllBuffs() {
         for (Buff buff : buffs) {
             applyBuff(buff);
         }
@@ -165,7 +176,48 @@ public abstract class Game {
     }
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws Exception {
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
 
+        Troop attackerTroop = getCurrentTurnPlayer().getTroop(attackerCardId);
+        if (attackerTroop == null) {
+            throw new Exception("attacker id is not valid");
+        }
+
+        if (!attackerTroop.canAttack()) {
+            throw new Exception("attacker can not attack");
+        }
+
+        Troop defenderTroop = getOtherTurnPlayer().getTroop(defenderCardId);
+        if (defenderTroop == null) {
+            throw new Exception("target id is not valid");
+        }
+
+        if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
+            if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
+                throw new Exception("you can not attack to this target");
+            }
+        } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
+            if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
+                    attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new Exception("you can not attack to this target");
+            }
+        } else { // HYBRID
+            if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+                throw new Exception("you can not attack to this target");
+            }
+        }
+
+        if (defenderTroop.canGiveBadEffect() &&
+                (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())) {
+            int attackPower = attackerTroop.getCurrentAp();
+            if (!attackerTroop.isHolyBuffDisabling() || defenderTroop.getEnemyHitChanges() > 0) {
+                attackPower += defenderTroop.getEnemyHitChanges();
+            }
+            defenderTroop.changeCurrentHp(attackPower);
+            attackerTroop.setCanAttack(false);
+        }
     }
 
     public void useSpecialPower(String username, String CardId, Position target) throws Exception {

@@ -1,10 +1,7 @@
 package client.models.game;
 
 import client.models.card.Card;
-import client.models.card.spell.Spell;
 import client.models.map.Cell;
-
-import java.util.ArrayList;
 
 public class Troop {
     private Card card;
