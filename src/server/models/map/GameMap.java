@@ -1,6 +1,7 @@
 package server.models.map;
 
 import server.models.card.Card;
+import server.models.game.Player;
 import server.models.game.Troop;
 
 import java.util.ArrayList;
@@ -99,8 +100,16 @@ public class GameMap {
         return null;
     }
 
-    public void removeTroop(Troop troop) {
+    public void removeTroop(Player player, Troop troop) {
         troops.remove(troop);
+        throwFlags(player, troop);
+    }
+
+    private void throwFlags(Player player, Troop troop) {
+        for (Card flag : troop.getFlags()) {
+            troop.getCell().addItem(flag);
+            player.decreaseNumberOfCollectedFlags();
+        }
     }
 
     public ArrayList<Troop> getTroops() {

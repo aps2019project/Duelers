@@ -200,7 +200,7 @@ public abstract class Game {
         for (Card card : cell.getItems()) {
             if (card.getType() == CardType.FLAG) {
                 troop.addFlag(card);
-                getCurrentTurnPlayer().increaseNumberOfCollectedFlags(1);
+                getCurrentTurnPlayer().increaseNumberOfCollectedFlags();
                 getCurrentTurnPlayer().addFlagCarier(troop);
             } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
                 getCurrentTurnPlayer().addCollectibleItems(card);
@@ -523,10 +523,11 @@ public abstract class Game {
         applyOnDeathSpells(troop);
         if (troop.getPlayerNumber() == 1) {
             playerOne.killTroop(troop);
+            gameMap.removeTroop(playerOne, troop);
         } else if (troop.getPlayerNumber() == 2) {
             playerTwo.killTroop(troop);
+            gameMap.removeTroop(playerTwo, troop);
         }
-        gameMap.removeTroop(troop);
     }
 
     private void applyOnDeathSpells(Troop troop) {

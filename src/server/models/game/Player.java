@@ -190,11 +190,11 @@ public class Player {
         return numberOfCollectedFlags;
     }
 
-    public void increaseNumberOfCollectedFlags(int number) {
-        this.numberOfCollectedFlags += number;
+    public void increaseNumberOfCollectedFlags() {
+        this.numberOfCollectedFlags++;
     }
 
-    public void decreaseNumberOfCollectedFlags(int number) {
-        this.numberOfCollectedFlags -= number;
+    public void decreaseNumberOfCollectedFlags() {
+        this.numberOfCollectedFlags--;
     }
 }
