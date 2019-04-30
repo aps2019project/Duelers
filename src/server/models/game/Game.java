@@ -28,23 +28,21 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
-        put(1,playerOne.getHero(),gameMap.getCell(2,0));
-        put(2,playerTwo.getHero(),gameMap.getCell(2,8));
+        put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
-        applyStartSpells(playerOne);
-        applyStartSpells(playerTwo);
+        applyOnStartSpells(playerOne);
+        applyOnStartSpells(playerTwo);
     }
 
-    private void applyStartSpells(Player player) {
+    private void applyOnStartSpells(Player player) {
         for (Card card : player.getDeck().getOthers()) {
             for (Spell spell : card.getSpells()) {
                 if (spell.getAvailabilityType().isOnStart())
-                    applySpell(
-                            spell, detectTarget(
+                    applySpell(spell, detectTarget(
                                     spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
                     );
             }
-
         }
     }
 
@@ -165,11 +163,14 @@ public abstract class Game {
         put(2 - (turnNumber % 2), getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)), gameMap.getCellWithPosition(position));
     }
 
-    public void put(int playerNumber, Troop troop, Cell cell) {
+    private void put(int playerNumber, Troop troop, Cell cell) {
         troop.setCell(cell);
         gameMap.addTroop(playerNumber, troop);
-        for (Spell spell :
-                troop.getCard().getSpells()) {
+        applyOnPutSpells(troop, cell);
+    }
+
+    private void applyOnPutSpells(Troop troop, Cell cell) {
+        for (Spell spell : troop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnPut())
                 applySpell(spell, detectTarget(spell, cell, gameMap.getCell(0, 0), gameMap.getCell(0, 0)));
         }
@@ -221,8 +222,23 @@ public abstract class Game {
             }
             defenderTroop.changeCurrentHp(attackPower);
             attackerTroop.setCanAttack(false);
+            applyOnAttackSpells(attackerTroop, defenderTroop);
+            applyOnDefendSpells(defenderTroop, attackerTroop);
             counterAttack(defenderTroop, attackerTroop);
         }
+    }
+
+    private void applyOnAttackSpells(Troop attackerTroop, Troop defenderTroop) {
+        for (Spell spell : attackerTroop.getCard().getSpells()) {
+            if (spell.getAvailabilityType().isOnAttack())
+                applySpell(
+                        spell, detectTarget(spell, defenderTroop.getCell(), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                );
+        }
+    }
+
+    private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) {
+
     }
 
     private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws Exception {
