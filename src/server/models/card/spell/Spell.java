@@ -62,4 +62,8 @@ public class Spell {
     public void setLastTurnUsed(int turn) {
         this.lastTurnUsed = turn;
     }
+
+    public boolean isCoolDown(int turnNumber) {
+        return lastTurnUsed + coolDown * 2 >= turnNumber;
+    }
 }

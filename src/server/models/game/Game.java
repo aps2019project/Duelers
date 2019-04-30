@@ -14,17 +14,15 @@ import server.models.map.Position;
 import java.util.ArrayList;
 
 public abstract class Game {
-    private GameType gameType;
     private Player playerOne;
     private Player playerTwo;
-    private ArrayList<Buff> buffs;
+    private ArrayList<Buff> buffs = new ArrayList<>();
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
     private boolean finished = false;
 
-    protected Game(GameType gameType, Account accountOne, Account accountTwo, GameMap gameMap) {
-        this.gameType = gameType;
+    protected Game(Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne, 1);
         this.playerTwo = new Player(accountTwo, 2);
@@ -56,7 +54,7 @@ public abstract class Game {
         return playerTwo;
     }
 
-    public Player getCurrentTurnPlayer() {
+    private Player getCurrentTurnPlayer() {
         if (turnNumber % 2 == 1) {
             return playerOne;
         } else {
@@ -64,7 +62,7 @@ public abstract class Game {
         }
     }
 
-    public Player getOtherTurnPlayer() {
+    private Player getOtherTurnPlayer() {
         if (turnNumber % 2 == 0) {
             return playerOne;
         } else {
@@ -169,8 +167,8 @@ public abstract class Game {
         }
         put(
                 getCurrentTurnPlayer().getPlayerNumber(),
-                getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)),
-                gameMap.getCellWithPosition(position)
+                getCurrentTurnPlayer().insert(cardId, gameMap.convertPositionToCell(position)),
+                gameMap.convertPositionToCell(position)
         );
     }
 
@@ -226,15 +224,9 @@ public abstract class Game {
         }
 
         if (defenderTroop.canGiveBadEffect() &&
-                (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())) {
-            int attackPower = attackerTroop.getCurrentAp();
-            if (!attackerTroop.isHolyBuffDisabling() || defenderTroop.getEnemyHitChanges() > 0) {
-                attackPower += defenderTroop.getEnemyHitChanges();
-            }
-            defenderTroop.changeCurrentHp(-attackPower);
-            if (defenderTroop.getCurrentHp() <= 0) {
-                killTroop(defenderTroop);
-            }
+                (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
+        ) {
+            damage(attackerTroop, defenderTroop);
 
             attackerTroop.setCanAttack(false);
             applyOnAttackSpells(attackerTroop, defenderTroop);
@@ -284,51 +276,59 @@ public abstract class Game {
         }
 
         if (attackerTroop.canGiveBadEffect() &&
-                (attackerTroop.canBeAttackedFromWeakerOnes() || defenderTroop.getCurrentAp() > attackerTroop.getCurrentAp())) {
-            int attackPower = defenderTroop.getCurrentAp();
-            if (!defenderTroop.isHolyBuffDisabling() || attackerTroop.getEnemyHitChanges() > 0) {
-                attackPower += attackerTroop.getEnemyHitChanges();
-            }
-            attackerTroop.changeCurrentHp(-attackPower);
-            if (attackerTroop.getCurrentHp() <= 0) {
-                killTroop(attackerTroop);
-            }
+                (attackerTroop.canBeAttackedFromWeakerOnes() || defenderTroop.getCurrentAp() > attackerTroop.getCurrentAp())
+        ) {
+            damage(defenderTroop, attackerTroop);
         }
     }
 
-    public void useSpecialPower(String username, String CardId, Position target) throws Exception {
+    private void damage(Troop attackerTroop, Troop defenderTroop) {
+        int attackPower = attackerTroop.getCurrentAp();
+        if (!attackerTroop.isHolyBuffDisabling() || defenderTroop.getEnemyHitChanges() > 0) {
+            attackPower += defenderTroop.getEnemyHitChanges();
+        }
+        defenderTroop.changeCurrentHp(-attackPower);
+        if (defenderTroop.getCurrentHp() <= 0) {
+            killTroop(defenderTroop);
+        }
+    }
 
+    public void useSpecialPower(String username, String cardId, Position target) throws Exception {
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
+
+        Troop hero = getCurrentTurnPlayer().getHero();
+        if (hero == null || !hero.getCard().getCardId().equalsIgnoreCase(cardId)) {
+            throw new Exception("hero id is not valid");
+        }
+
+        Spell specialPower = hero.getCard().getSpells().get(0);
+        if (specialPower == null || specialPower.getAvailabilityType().isSpecialPower()) {
+            throw new Exception("special power is not available");
+        }
+
+        if (specialPower.isCoolDown(turnNumber)) {
+            throw new Exception("special power is cool down");
+        }
+
+        if (getCurrentTurnPlayer().getCurrentMP() < specialPower.getMannaPoint()) {
+            throw new Exception("insufficient manna");
+        }
+
+        applySpell(
+                specialPower,
+                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target) , hero.getCell())
+        );
     }
 
     public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception {
-
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
     }
 
     public abstract void finishCheck();
-
-    public Troop[] getAttackableTroops(String cardId) {
-        return new Troop[]{};
-    }
-
-    public Cell[] getSpellableCells(String cardId, String spellId) {
-        return new Cell[]{};
-    }
-
-    public Cell[] getMovableCells(String cardId) {
-        return new Cell[]{};
-    }
-
-    public boolean canAttack(String attackerCardId, String defenderCardId) {
-        return false;
-    }
-
-    public boolean canSpell(String cardId, Position position) {
-        return false;
-    }
-
-    public boolean canInsert(String cardId, Position position) {
-        return false;
-    }
 
     private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);

@@ -44,7 +44,7 @@ public class GameMap {
         return COLUMN_NUMBER;
     }
 
-    public Cell getCellWithPosition(Position position) {
+    public Cell convertPositionToCell(Position position) {
         return cells[position.getRow()][position.getColumn()];
     }
 
