@@ -1,12 +1,10 @@
 package server.models.map;
 
-import server.Server;
 import server.models.card.Card;
 import server.models.game.Troop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
 public class GameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
@@ -17,24 +15,27 @@ public class GameMap {
     private ArrayList<Cell> flagCells = new ArrayList<>();
     private ArrayList<Cell> collectibleItemCells = new ArrayList<>();
 
-    public GameMap(HashMap<Cell, Card> items, int numberOfFlags) {
+    public GameMap(ArrayList<Card> items, int numberOfFlags, Card originalFlag) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
         for (int i = 0; i < ROW_NUMBER; i++) {
             for (int j = 0; j < COLUMN_NUMBER; j++) {
                 cells[i][j] = new Cell(i, j);
             }
         }
-        for (Map.Entry<Cell, Card> map : items.entrySet()) {
-            if (map.getKey().getRow() < ROW_NUMBER && map.getKey().getColumn() < COLUMN_NUMBER) {
-                if (map.getValue() != null) {
-                    //cells[map.getKey().getRow()][map.getKey().getColumn()].setItem(map.getValue());
-                    //TODO:manage cardIds!
-                }
-            } else {
-                Server.getInstance().serverPrint("Error!");
+        cells[0][4].addItem(items.get(new Random(items.size()).nextInt()));
+        cells[2][5].addItem(items.get(new Random(items.size()).nextInt()));
+        cells[4][4].addItem(items.get(new Random(items.size()).nextInt()));
+
+        for (int i = 0; i < numberOfFlags; i++) {
+            int row = new Random(5).nextInt();
+            int column = new Random(9).nextInt();
+            while (!cells[row][column].getItems().isEmpty()) {
+                row = new Random(5).nextInt();
+                column = new Random(9).nextInt();
             }
+            cells[row][column].addItem(new Card(originalFlag, "Flag", i));
         }
-        //TODO:Generate Keys
+
     }
 
     public static int getRowNumber() {
