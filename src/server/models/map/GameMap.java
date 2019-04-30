@@ -1,6 +1,7 @@
 package server.models.map;
 
 import server.models.card.Card;
+import server.models.game.Player;
 import server.models.game.Troop;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class GameMap {
         return COLUMN_NUMBER;
     }
 
-    public Cell convertPositionToCell(Position position) {
+    public Cell getCell(Position position) {
         return cells[position.getRow()][position.getColumn()];
     }
 
@@ -55,9 +56,14 @@ public class GameMap {
         return null;
     }
 
-    private boolean checkCoordination(int row, int column) {
+    public boolean checkCoordination(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
+
+    public boolean checkCoordination(Position position) {
+        return position.getRow() >= 0 && position.getRow() < ROW_NUMBER && position.getColumn() >= 0 && position.getColumn() < COLUMN_NUMBER;
+    }
+
 
     public Cell[][] getCells() {
         return this.cells;
@@ -85,7 +91,28 @@ public class GameMap {
         return null;
     }
 
-    public void removeTroop(Troop troop) {
+    public Troop getTroop(String cardId) {
+        for (Troop troop : troops) {
+            if (troop.getCard().getCardId().equals(cardId)) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
+    public void removeTroop(Player player, Troop troop) {
         troops.remove(troop);
+        throwFlags(player, troop);
+    }
+
+    private void throwFlags(Player player, Troop troop) {
+        for (Card flag : troop.getFlags()) {
+            troop.getCell().addItem(flag);
+            player.decreaseNumberOfCollectedFlags();
+        }
+    }
+
+    public ArrayList<Troop> getTroops() {
+        return troops;
     }
 }

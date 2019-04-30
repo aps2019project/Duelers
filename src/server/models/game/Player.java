@@ -22,6 +22,7 @@ public class Player {
     private ArrayList<Card> collectedItems = new ArrayList<>();
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
     private int playerNumber;
+    private int numberOfCollectedFlags;
 
     public Player(Account account, int playerNumber) {
         this.playerNumber = playerNumber;
@@ -46,11 +47,13 @@ public class Player {
                 break;
             }
         }
+
         if (card == null)
             throw new Exception("card id is not valid");
 
         if (card.getMannaPoint() > currentMP)
             throw new Exception("not enough mana point");
+
 
         currentMP -= card.getMannaPoint();
 
@@ -59,7 +62,6 @@ public class Player {
             troops.add(troop);
             return troop;
         }
-
         return null;
     }
 
@@ -90,6 +92,11 @@ public class Player {
 
     public ArrayList<Troop> getFlagCarriers() {
         return flagCarriers;
+    }
+
+    public void addFlagCarier(Troop troop) {
+        if (!this.flagCarriers.contains(troop))
+            this.flagCarriers.add(troop);
     }
 
     public void changeCurrentMP(int change) {
@@ -144,6 +151,10 @@ public class Player {
         return this.collectedItems;
     }
 
+    public void addCollectibleItems(Card card){
+
+    }
+
     public Troop getTroop(Cell cell) {
         for (Troop troop : troops) {
             if (troop.getCell().equals(cell)) {
@@ -173,5 +184,17 @@ public class Player {
     public void killTroop(Troop troop) {
         addToGraveYard(troop.getCard());
         troops.remove(troop);
+    }
+
+    public int getNumberOfCollectedFlags() {
+        return numberOfCollectedFlags;
+    }
+
+    public void increaseNumberOfCollectedFlags() {
+        this.numberOfCollectedFlags++;
+    }
+
+    public void decreaseNumberOfCollectedFlags() {
+        this.numberOfCollectedFlags--;
     }
 }

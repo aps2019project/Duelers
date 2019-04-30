@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Cell {
     private int row;
     private int column;
-    private Card item;
     private ArrayList<Card> items = new ArrayList<>();
 
     public Cell(int row, int column) {
@@ -30,16 +29,13 @@ public class Cell {
         return this.column;
     }
 
-    public Card getItem() {
-        return this.item;
-    }
-
-    public void setItem(Card item) {
-        this.item = item;
-    }
 
     public ArrayList<Card> getItems() {
         return items;
+    }
+
+    public void clearItems(){
+        items.clear();
     }
 
     public void addItem(Card item) {
@@ -52,5 +48,13 @@ public class Cell {
 
     public int manhattanDistance(Cell cell) {
         return Math.abs(cell.row - row) + Math.abs(cell.column - column);
+    }
+    public int manhattanDistance(int selectedRow , int selectedColumn){
+        return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
+
+    }
+    public int manhattanDistance(Position position){
+        return Math.abs(position.getRow() - this.row) + Math.abs(position.getColumn() - this.column);
+
     }
 }

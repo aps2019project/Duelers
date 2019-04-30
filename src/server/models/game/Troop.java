@@ -20,7 +20,7 @@ public class Troop {
     private boolean dontGiveBadEffect;
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
-    private ArrayList<Card> flags;
+    private ArrayList<Card> flags = new ArrayList<>();
     private int playerNumber;
 
     public Troop(Card card, int playerNumber) {
@@ -33,6 +33,10 @@ public class Troop {
     public Troop(Card card, Cell cell, int playerNumber) {
         this(card, playerNumber);
         this.cell = cell;
+    }
+
+    public void addFlag(Card card){
+        this.flags.add(card);
     }
 
     public Card getCard() {
@@ -61,6 +65,10 @@ public class Troop {
 
     public boolean canMove() {
         return this.canMove;
+    }
+
+    public ArrayList<Card> getFlags() {
+        return flags;
     }
 
     public void setCanMove(boolean can) {
@@ -160,6 +168,4 @@ public class Troop {
     public void setDisableHolyBuff(boolean disableHolyBuff) {
         this.disableHolyBuff = disableHolyBuff;
     }
-
-
 }
