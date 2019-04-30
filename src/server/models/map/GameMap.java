@@ -111,4 +111,8 @@ public class GameMap {
         }
         return false;
     }
+
+    public void removeTroop(Troop troop) {
+        playerOneTroops.remove(troop);
+    }
 }
