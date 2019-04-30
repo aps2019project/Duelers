@@ -1,24 +1,40 @@
 package server.models.account;
 
 public class MatchHistory {
-
-    private String winnerAccount;
-    private String loserAccount;
+    private String accountOne;
+    private boolean oneIsWinner;
+    private String accountTwo;
+    private boolean twoIsWinner;
     private int occurrenceTime;
 
-    public MatchHistory(String winnerAccount, String loserAccount) {
+    public MatchHistory(String accountOne, boolean oneIsWinner, String accountTwo, boolean twoIsWinner) {
+        this.accountOne = accountOne;
+        this.oneIsWinner = oneIsWinner;
+        this.accountTwo = accountTwo;
+        this.twoIsWinner = twoIsWinner;
+    }
+
+    public MatchHistory(String accountOne, String accountTwo) {
 
     }
 
-    public String getWinnerAccount() {
-        return this.winnerAccount;
+    public String getAccountOne() {
+        return this.accountOne;
     }
 
-    public String getLoserAccount() {
-        return this.loserAccount;
+    public String getAccountTwo() {
+        return this.accountTwo;
     }
 
     public int getOccurrenceTime() {
         return this.occurrenceTime;
+    }
+
+    public boolean isOneIsWinner() {
+        return oneIsWinner;
+    }
+
+    public boolean isTwoIsWinner() {
+        return twoIsWinner;
     }
 }

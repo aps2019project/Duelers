@@ -36,7 +36,7 @@ public class Player {
         troops.add(hero);
     }
 
-    public Troop insert(String cardId, Cell cell) throws Exception {
+    public Troop insert(String cardId) throws Exception {
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {

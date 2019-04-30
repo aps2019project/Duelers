@@ -1,6 +1,7 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.account.MatchHistory;
 import server.models.map.GameMap;
 
 public class MultiFlagBattle extends Game {
@@ -10,7 +11,7 @@ public class MultiFlagBattle extends Game {
     }
 
     @Override
-    public void finishCheck() {
-
+    public MatchHistory finishCheck() {
+        return null;
     }
 }

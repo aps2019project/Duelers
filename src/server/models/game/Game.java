@@ -2,6 +2,7 @@ package server.models.game;
 
 import server.Server;
 import server.models.account.Account;
+import server.models.account.MatchHistory;
 import server.models.card.AttackType;
 import server.models.card.Card;
 import server.models.card.CardType;
@@ -162,7 +163,7 @@ public abstract class Game {
         Player player = getCurrentTurnPlayer();
         put(
                 player.getPlayerNumber(),
-                player.insert(cardId, gameMap.getCell(position)),
+                player.insert(cardId),
                 gameMap.getCell(position)
         );
     }
@@ -389,7 +390,7 @@ public abstract class Game {
         }
     }
 
-    public abstract void finishCheck();
+    public abstract MatchHistory finishCheck();
 
     private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);
@@ -624,5 +625,9 @@ public abstract class Game {
             }
         }
         return targetCells;
+    }
+
+    public void finishGame() {
+        this.finished = true;
     }
 }

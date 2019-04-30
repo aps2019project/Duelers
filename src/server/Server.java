@@ -43,7 +43,6 @@ public class Server {
     private Card originalFlag;
     private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
-    private Account[] leaderBoard;
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
 
@@ -413,7 +412,7 @@ public class Server {
             addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
             sendMessages();
         }
-        leaderBoard = new Account[accounts.size()];
+        Account[] leaderBoard = new Account[accounts.size()];
         int counter = 0;
         for (Account account : accounts.keySet()) {
             leaderBoard[counter] = account;
