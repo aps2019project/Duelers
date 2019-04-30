@@ -28,6 +28,7 @@ public class Player {
         for (int i = 0; i < 5; i++) {
             addNextCardToHand();
         }
+        hero = new Troop(deck.getHero());
     }
 
     public void insert(String cardId, Cell cell) {

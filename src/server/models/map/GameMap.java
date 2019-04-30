@@ -27,16 +27,16 @@ public class GameMap {
         cells[4][4].addItem(items.get(new Random(items.size()).nextInt()));
 
         for (int i = 0; i < numberOfFlags; i++) {
-            int row = new Random(5).nextInt();
-            int column = new Random(9).nextInt();
+            int row = new Random(ROW_NUMBER).nextInt();
+            int column = new Random(COLUMN_NUMBER).nextInt();
             while (!cells[row][column].getItems().isEmpty()) {
-                row = new Random(5).nextInt();
-                column = new Random(9).nextInt();
+                row = new Random(ROW_NUMBER).nextInt();
+                column = new Random(COLUMN_NUMBER).nextInt();
             }
             cells[row][column].addItem(new Card(originalFlag, "Flag", i));
         }
-
     }
+
 
     public static int getRowNumber() {
         return ROW_NUMBER;

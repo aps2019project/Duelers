@@ -28,7 +28,21 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
+        playerOne.getHero().setCell(gameMap.getCells()[2][0]);
+        playerTwo.getHero().setCell(gameMap.getCells()[2][8]);
         this.turnNumber = 1;
+        applyStartSpells(playerOne);
+        applyStartSpells(playerTwo);
+    }
+
+    private void applyStartSpells(Player player) {
+        for (Card card : player.getDeck().getOthers()) {
+            for (Spell spell : card.getSpells()) {
+                if (spell.getAvailabilityType().isOnStart())
+                    applySpell(spell, detectTarget(spell, gameMap.getCells()[0][0], gameMap.getCells()[0][0], gameMap.getCells()[0][0]));
+            }
+
+        }
     }
 
     public Player getPlayerOne() {
@@ -65,9 +79,9 @@ public abstract class Game {
             applyEndTurnBuffs();
             getCurrentTurnPlayer().addNextCardToHand();
             turnNumber++;
-            Server.getInstance().sendChangeTurnMessage(this,turnNumber);
+            Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             // change turn buffs
-        }else{
+        } else {
             throw new Exception("it isn't your turn!");
         }
     }
