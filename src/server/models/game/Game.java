@@ -232,13 +232,20 @@ public abstract class Game {
         for (Spell spell : attackerTroop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnAttack())
                 applySpell(
-                        spell, detectTarget(spell, defenderTroop.getCell(), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                        spell,
+                        detectTarget(spell, defenderTroop.getCell(), gameMap.getCell(0, 0), getCurrentTurnPlayer().getHero().getCell())
                 );
         }
     }
 
     private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) {
-
+        for (Spell spell : defenderTroop.getCard().getSpells()) {
+            if (spell.getAvailabilityType().isOnDefend())
+                applySpell(
+                        spell,
+                        detectTarget(spell, attackerTroop.getCell(), gameMap.getCell(0, 0), getOtherTurnPlayer().getHero().getCell())
+                );
+        }
     }
 
     private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws Exception {
