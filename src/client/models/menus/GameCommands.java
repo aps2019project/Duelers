@@ -90,18 +90,22 @@ public class GameCommands extends Menu {
         }
 
 
-        Troop Troop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
+        Troop troop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
 
-        if (!Troop.canMove()) {
+        if (!troop.canMove()) {
             throw new InputException("troop can not move");
-        }
 
+        }
         if (!currentGame.getGameMap().checkCoordination(row, column)) {
             throw new InputException("coordination is not valid");
+
         }
+        if (currentGame.getGameMap().getTroop(row, column) != null) {
+            throw new InputException("cell is not empty");
 
-        if (currentGame.getGameMap().getTroop(row,column) != null){
-
+        }
+        if (troop.getCell().manhattanDistance(row, column) > 2) {
+            throw new InputException("to far to go");
         }
 
         Message message = Message.makeMoveTroopMessage(
