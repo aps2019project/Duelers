@@ -500,13 +500,13 @@ public class Server {
             }
             switch (message.getGameType()) {
                 case KILL_HERO:
-                    game = new KillHeroBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
                     break;
                 case A_FLAG:
-                    game = new SingleFlagBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
                     break;
                 case SOME_FLAG:
-                    game = new MultiFlagBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
+                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
                     break;
             }
             if (onlineGames.containsKey(myAccount)) {
