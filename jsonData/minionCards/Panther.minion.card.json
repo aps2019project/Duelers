@@ -13,8 +13,6 @@
         "duration": 1,
         "delay": 1
       },
-      "type": "BUFF",
-      "definiteType": "POISON_BUFF",
       "availabilityType": {
         "onAttack": true
       },

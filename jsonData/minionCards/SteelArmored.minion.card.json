@@ -8,10 +8,10 @@
       "spellId": "sa_holy",
       "action": {
         "enemyHitChanges": -12,
-        "duration": 1
+        "duration": -1
       },
       "availabilityType": {
-        "continuous": true
+        "onPut": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,

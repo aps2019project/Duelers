@@ -206,7 +206,9 @@ public abstract class Game {
 
     private void decreaseDuration(Buff buff) {
         SpellAction action = buff.getAction();
-        action.decreaseDuration();
+        if (action.getDuration() > 0)  {
+            action.decreaseDuration();
+        }
         if (action.getDuration() == 0) {
             buffs.remove(buff);
         }
@@ -290,7 +292,7 @@ public abstract class Game {
 
     private void removePositiveBuffs(Troop troop) {
         for (Buff buff : buffs) {
-            if (buff.isPositive()) {
+            if (buff.isPositive() && buff.getAction().getDuration() >= 0) {
                 buff.getTarget().getTroops().remove(troop);
             }
         }
@@ -298,7 +300,7 @@ public abstract class Game {
 
     private void removeNegativeBuffs(Troop troop) {
         for (Buff buff : buffs) {
-            if (!buff.isPositive()) {
+            if (!buff.isPositive() && buff.getAction().getDuration() >= 0) {
                 buff.getTarget().getTroops().remove(troop);
             }
         }

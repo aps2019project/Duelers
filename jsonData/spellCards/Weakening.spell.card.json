@@ -10,8 +10,6 @@
         "apChange": -4,
         "duration": 2147483647
       },
-      "type": "BUFF",
-      "definiteType": "WEAKNESS_AP_BUFF",
       "availabilityType": {
         "onPut": true
       },

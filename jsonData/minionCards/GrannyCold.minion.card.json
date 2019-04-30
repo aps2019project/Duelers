@@ -10,8 +10,6 @@
         "makeStun": true,
         "duration": 1
       },
-      "type": "BUFF",
-      "definiteType": "STUN_BUFF",
       "availabilityType": {
         "onPut": true
       },

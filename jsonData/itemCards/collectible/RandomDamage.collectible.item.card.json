@@ -11,8 +11,6 @@
         "durable": true,
         "duration": 1
       },
-      "type": "CARD_EFFECT",
-      "definiteType": "INCREASE_AP_CARD_EFFECT",
       "availabilityType": {
         "onPut": true
       },
