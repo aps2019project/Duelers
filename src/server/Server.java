@@ -493,7 +493,7 @@ public class Server {
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
             clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
-            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(),originalFlag);
+            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
             if (message.getGameType() == null) {
                 sendException("invalid gameType!", message.getSender(), message.getMessageId());
                 return;
@@ -509,8 +509,16 @@ public class Server {
                     game = new MultiFlagBattle(message.getGameType(), myAccount, opponentAccount, gameMap);
                     break;
             }
-            onlineGames.replace(myAccount, game);
-            onlineGames.replace(opponentAccount, game);
+            if (onlineGames.containsKey(myAccount)) {
+                onlineGames.replace(myAccount, game);
+            } else {
+                onlineGames.put(myAccount, game);
+            }
+            if (onlineGames.containsKey(opponentAccount)) {
+                onlineGames.replace(opponentAccount, game);
+            } else {
+                onlineGames.put(opponentAccount, game);
+            }
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, message.getSender(), game, message.getMessageId()));
             addToSendingMessages(Message.makeGameCopyMessage

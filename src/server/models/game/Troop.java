@@ -1,8 +1,9 @@
 package server.models.game;
 
-import server.Server;
 import server.models.card.Card;
 import server.models.map.Cell;
+
+import java.util.ArrayList;
 
 public class Troop {
     private Card card;
@@ -10,8 +11,8 @@ public class Troop {
     private int currentHp;
     private int enemyHitChanges;
     private Cell cell;
-    private boolean canMove;
-    private boolean canAttack;
+    private boolean canMove = true;
+    private boolean canAttack = true;
     private boolean isDisarm;
     private boolean cantGetPoison;
     private boolean cantGetDisarm;
@@ -19,10 +20,12 @@ public class Troop {
     private boolean dontGiveBadEffect;
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
-    private int flagNumber;
+    private ArrayList<Card> flags;
 
     public Troop(Card card) {
         this.card = card;
+        this.currentAp = card.getDefaultAp();
+        this.currentHp = card.getDefaultHp();
     }
 
     public Troop(Card card, Cell cell) {
@@ -105,24 +108,13 @@ public class Troop {
         return disableHolyBuff;
     }
 
-    public boolean hasFlag() {
-        return this.flagNumber > 0;
-    }
 
     public int getEnemyHitChanges() {
         return enemyHitChanges;
     }
 
-    public void increaseFlagNumber() {
-
-    }
-
-    public void decreaseFlagNumber() {
-        flagNumber--;
-        if (flagNumber < 0) {
-            flagNumber = 0;
-            Server.getInstance().serverPrint("Error!");
-        }
+    public void collectFlag(Card flag) {
+        this.flags.add(flag);
     }
 
     public void changeCurrentAp(int change) {

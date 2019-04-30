@@ -23,6 +23,7 @@ public class Player {
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
 
     public Player(Account account) {
+        userName = account.getUsername();
         deck = new Deck(account.getMainDeck());
         setNextCard();
         for (int i = 0; i < 5; i++) {
