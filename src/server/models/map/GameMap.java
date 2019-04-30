@@ -44,7 +44,7 @@ public class GameMap {
         return COLUMN_NUMBER;
     }
 
-    public Cell convertPositionToCell(Position position) {
+    public Cell getCell(Position position) {
         return cells[position.getRow()][position.getColumn()];
     }
 
@@ -55,9 +55,14 @@ public class GameMap {
         return null;
     }
 
-    private boolean checkCoordination(int row, int column) {
+    public boolean checkCoordination(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
+
+    public boolean checkCoordination(Position position) {
+        return position.getRow() >= 0 && position.getRow() < ROW_NUMBER && position.getColumn() >= 0 && position.getColumn() < COLUMN_NUMBER;
+    }
+
 
     public Cell[][] getCells() {
         return this.cells;
@@ -79,6 +84,15 @@ public class GameMap {
     public Troop getTroop(int row, int column) {
         for (Troop troop : troops) {
             if (troop.getCell().getColumn() == column && troop.getCell().getRow() == row) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
+    public Troop getTroop(String cardId) {
+        for (Troop troop : troops) {
+            if (troop.getCard().getCardId().equals(cardId)) {
                 return troop;
             }
         }

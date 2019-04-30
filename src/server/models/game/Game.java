@@ -1,5 +1,6 @@
 package server.models.game;
 
+import client.view.request.InputException;
 import server.Server;
 import server.models.account.Account;
 import server.models.card.AttackType;
@@ -157,7 +158,33 @@ public abstract class Game {
     }
 
     public void moveTroop(String username, String cardId, Position position) throws Exception {
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
 
+        if (!gameMap.checkCoordination(position)) {
+            throw new InputException("coordination is not valid");
+        }
+
+        Troop troop = gameMap.getTroop(cardId);
+        if (troop == null) {
+            throw new Exception("select a valid card");
+        }
+        if (troop.getCell().manhattanDistance(position) > 2) {
+            throw new Exception("too far to go");
+        }
+        Cell cell = gameMap.getCell(position);
+        troop.setCell(cell);
+        for (Card card : cell.getItems()) {
+            if (card.getType() == CardType.FLAG) {
+                troop.addFlag(card);
+                getCurrentTurnPlayer().increaseNumberOfCollectedFlags(1);
+                getCurrentTurnPlayer().addFlagCarier(troop);
+            } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
+                getCurrentTurnPlayer().addCollectibleItems(card);
+            }
+        }
+        cell.clearItems();
     }
 
     public void insert(String username, String cardId, Position position) throws Exception {
@@ -167,8 +194,8 @@ public abstract class Game {
         Player player = getCurrentTurnPlayer();
         put(
                 player.getPlayerNumber(),
-                player.insert(cardId, gameMap.convertPositionToCell(position)),
-                gameMap.convertPositionToCell(position)
+                player.insert(cardId, gameMap.getCell(position)),
+                gameMap.getCell(position)
         );
     }
 
@@ -318,7 +345,7 @@ public abstract class Game {
 
         applySpell(
                 specialPower,
-                detectTarget(specialPower, hero.getCell(), gameMap.convertPositionToCell(target), hero.getCell())
+                detectTarget(specialPower, hero.getCell(), gameMap.getCell(target), hero.getCell())
         );
     }
 

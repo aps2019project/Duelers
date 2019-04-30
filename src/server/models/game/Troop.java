@@ -35,6 +35,9 @@ public class Troop {
         this.cell = cell;
     }
 
+    public void addFlag(Card card){
+        this.flags.add(card);
+    }
     public Card getCard() {
         return this.card;
     }
