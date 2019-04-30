@@ -37,13 +37,27 @@ public class GameMap {
         }
     }
 
-
     public static int getRowNumber() {
         return ROW_NUMBER;
     }
 
     public static int getColumnNumber() {
         return COLUMN_NUMBER;
+    }
+
+    public Cell getCellWithPosition(Position position) {
+        return cells[position.getRow()][position.getColumn()];
+    }
+
+    public Cell getCell(int row, int column) {
+        if (checkCoordination(row,column)){
+            return cells[row][column];
+        }
+        return null;
+    }
+
+    private boolean checkCoordination(int row, int column) {
+        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
 
     public Cell[][] getCells() {
@@ -67,7 +81,11 @@ public class GameMap {
     }
 
     public void addTroop(int playerNumber, Troop troop) {
-
+        if (playerNumber==1){
+            playerOneTroops.add(troop);
+        }else if (playerNumber==2){
+            playerTwoTroops.add(troop);
+        }
     }
 
     public Troop getTroop(Cell cell) {

@@ -31,7 +31,7 @@ public class Player {
         hero = new Troop(deck.getHero());
     }
 
-    public void insert(String cardId, Cell cell) {
+    public Troop insert(String cardId, Cell cell) {//TODO: apply spells
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
@@ -39,15 +39,18 @@ public class Player {
             if (card1.getCardId().equals(cardId)) {
                 card = card1;
                 iterator.remove();
+                break;
             }
         }
         if (card != null) {
             if (card.getType() == CardType.MINION) {
                 Troop troop = new Troop(card, cell);
                 troops.add(troop);
+                return troop;
             }
         }
 
+        return null;
     }
 
     public void setNextCard() {

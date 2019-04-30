@@ -28,6 +28,7 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
+
         playerOne.getHero().setCell(gameMap.getCells()[2][0]);
         playerTwo.getHero().setCell(gameMap.getCells()[2][8]);
         this.turnNumber = 1;
@@ -39,7 +40,10 @@ public abstract class Game {
         for (Card card : player.getDeck().getOthers()) {
             for (Spell spell : card.getSpells()) {
                 if (spell.getAvailabilityType().isOnStart())
-                    applySpell(spell, detectTarget(spell, gameMap.getCells()[0][0], gameMap.getCells()[0][0], gameMap.getCells()[0][0]));
+                    applySpell(
+                            spell, detectTarget(
+                                    spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                    );
             }
 
         }
@@ -148,8 +152,21 @@ public abstract class Game {
 
     }
 
-    public void insert(String username, String cardId, Position target) throws Exception {
+    public void insert(String username, String cardId, Position position) throws Exception {
+        if (!canCommand(username)) {
+            throw new Exception("its not your turn");
+        }
+        put(2 - (turnNumber % 2), getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)), gameMap.getCellWithPosition(position));
 
+    }
+
+    public void put(int playerNumber, Troop troop, Cell cell) {
+        gameMap.addTroop(playerNumber, troop);
+        for (Spell spell :
+                troop.getCard().getSpells()) {
+            if (spell.getAvailabilityType().isOnPut())
+                applySpell(spell, detectTarget(spell, cell, gameMap.getCell(0, 0), gameMap.getCell(0, 0)));
+        }
     }
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws Exception {
