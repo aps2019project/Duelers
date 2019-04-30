@@ -29,6 +29,7 @@ public class Player {
             addNextCardToHand();
         }
         hero = new Troop(deck.getHero());
+        troops.add(hero);
     }
 
     public Troop insert(String cardId, Cell cell) {//TODO: apply spells
@@ -54,11 +55,9 @@ public class Player {
     }
 
     public void setNextCard() {
-        if (nextCard != null) {
-            int index = new Random().nextInt(deck.getOthers().size());
-            nextCard = deck.getOthers().get(index);
-            deck.getOthers().remove(nextCard);
-        }
+        int index = new Random().nextInt(deck.getOthers().size());
+        nextCard = deck.getOthers().get(index);
+        deck.getOthers().remove(nextCard);
     }
 
     public void addNextCardToHand() {

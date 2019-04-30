@@ -22,16 +22,16 @@ public class GameMap {
                 cells[i][j] = new Cell(i, j);
             }
         }
-        cells[0][4].addItem(items.get(new Random(items.size()).nextInt()));
-        cells[2][5].addItem(items.get(new Random(items.size()).nextInt()));
-        cells[4][4].addItem(items.get(new Random(items.size()).nextInt()));
+        cells[0][4].addItem(items.get(new Random().nextInt(items.size())));
+        cells[2][5].addItem(items.get(new Random().nextInt(items.size())));
+        cells[4][4].addItem(items.get(new Random().nextInt(items.size())));
 
         for (int i = 0; i < numberOfFlags; i++) {
-            int row = new Random(ROW_NUMBER).nextInt();
-            int column = new Random(COLUMN_NUMBER).nextInt();
+            int row = new Random().nextInt(ROW_NUMBER);
+            int column = new Random().nextInt(COLUMN_NUMBER);
             while (!cells[row][column].getItems().isEmpty()) {
-                row = new Random(ROW_NUMBER).nextInt();
-                column = new Random(COLUMN_NUMBER).nextInt();
+                row = new Random().nextInt(ROW_NUMBER);
+                column = new Random().nextInt(COLUMN_NUMBER);
             }
             cells[row][column].addItem(new Card(originalFlag, "Flag", i));
         }
@@ -50,7 +50,7 @@ public class GameMap {
     }
 
     public Cell getCell(int row, int column) {
-        if (checkCoordination(row,column)){
+        if (checkCoordination(row, column)) {
             return cells[row][column];
         }
         return null;
@@ -81,9 +81,9 @@ public class GameMap {
     }
 
     public void addTroop(int playerNumber, Troop troop) {
-        if (playerNumber==1){
+        if (playerNumber == 1) {
             playerOneTroops.add(troop);
-        }else if (playerNumber==2){
+        } else if (playerNumber == 2) {
             playerTwoTroops.add(troop);
         }
     }

@@ -27,9 +27,8 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne);
         this.playerTwo = new Player(accountTwo);
-
-        playerOne.getHero().setCell(gameMap.getCells()[2][0]);
-        playerTwo.getHero().setCell(gameMap.getCells()[2][8]);
+        put(1,playerOne.getHero(),gameMap.getCell(2,0));
+        put(2,playerTwo.getHero(),gameMap.getCell(2,8));
         this.turnNumber = 1;
         applyStartSpells(playerOne);
         applyStartSpells(playerTwo);
@@ -153,10 +152,10 @@ public abstract class Game {
             throw new Exception("its not your turn");
         }
         put(2 - (turnNumber % 2), getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)), gameMap.getCellWithPosition(position));
-
     }
 
     public void put(int playerNumber, Troop troop, Cell cell) {
+        troop.setCell(cell);
         gameMap.addTroop(playerNumber, troop);
         for (Spell spell :
                 troop.getCard().getSpells()) {
