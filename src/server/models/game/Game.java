@@ -81,9 +81,17 @@ public abstract class Game {
             revertNotDurableBuffs();
             turnNumber++;
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
-            // change turn buffs
+            applyStartTurnBuffs();
         } else {
             throw new Exception("it isn't your turn!");
+        }
+    }
+
+    private void applyStartTurnBuffs() {
+        for (Buff buff : buffs) {
+            if (!buff.getAction().isActionAtTheEndOfTurn()) {
+                applyBuff(buff);
+            }
         }
     }
 
