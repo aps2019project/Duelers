@@ -6,10 +6,12 @@
   "spells": [
     {
       "spellId": "w_power",
-      "type": "BUFF",
-      "definiteType": "POWER_AP_BUFF",
+      "action": {
+        "apChange": 2,
+        "duration": -1
+      },
       "availabilityType": {
-        "continuous": true
+        "onPut": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
@@ -28,16 +30,16 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 2,
-      "duration": 1
+      }
     },
     {
       "spellId": "w_weakness",
-      "type": "BUFF",
-      "definiteType": "WEAKNESS_HP_BUFF",
+      "action": {
+        "hpChange": -1,
+        "duration": -1
+      },
       "availabilityType": {
-        "continuous": true
+        "onPut": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
@@ -56,9 +58,7 @@
           "ranged": true,
           "hybrid": true
         }
-      },
-      "numberOfChange": 1,
-      "duration": 1
+      }
     }
   ],
   "defaultAp": 4,

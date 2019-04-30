@@ -10,8 +10,6 @@
         "makeDisarm": true,
         "duration": 2147483647
       },
-      "type": "BUFF",
-      "definiteType": "DISARM_BUFF",
       "availabilityType": {
         "onPut": true
       },

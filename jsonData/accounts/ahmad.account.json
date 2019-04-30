@@ -90,7 +90,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -212,7 +212,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           },
           {
@@ -240,7 +240,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -282,7 +282,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           },
           {
@@ -310,7 +310,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -447,7 +447,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           },
           {
@@ -475,7 +475,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -513,7 +513,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           },
           {
@@ -537,7 +537,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -708,7 +708,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -749,7 +749,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -790,7 +790,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -831,7 +831,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -872,7 +872,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -913,7 +913,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -954,7 +954,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -995,7 +995,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1036,7 +1036,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1077,7 +1077,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1118,7 +1118,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1159,7 +1159,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1200,7 +1200,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1241,7 +1241,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1282,7 +1282,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1323,7 +1323,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1364,7 +1364,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1405,7 +1405,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1446,7 +1446,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1487,7 +1487,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1528,7 +1528,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1569,7 +1569,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1610,7 +1610,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1651,7 +1651,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1692,7 +1692,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1733,7 +1733,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1774,7 +1774,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1815,7 +1815,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1856,7 +1856,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1897,7 +1897,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1938,7 +1938,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -1979,7 +1979,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2020,7 +2020,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2061,7 +2061,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2102,7 +2102,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2143,7 +2143,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2184,7 +2184,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2225,7 +2225,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2266,7 +2266,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2307,7 +2307,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2348,7 +2348,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2389,7 +2389,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2430,7 +2430,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2471,7 +2471,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2512,7 +2512,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2553,7 +2553,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2594,7 +2594,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2635,7 +2635,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2676,7 +2676,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2717,7 +2717,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2758,7 +2758,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2799,7 +2799,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2840,7 +2840,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2881,7 +2881,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2922,7 +2922,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -2963,7 +2963,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3004,7 +3004,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3045,7 +3045,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3086,7 +3086,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3127,7 +3127,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3168,7 +3168,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3209,7 +3209,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3250,7 +3250,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3291,7 +3291,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3332,7 +3332,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3373,7 +3373,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3414,7 +3414,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3455,7 +3455,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3496,7 +3496,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3537,7 +3537,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3578,7 +3578,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3619,7 +3619,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3660,7 +3660,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3701,7 +3701,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3742,7 +3742,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3783,7 +3783,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3824,7 +3824,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3865,7 +3865,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3906,7 +3906,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3947,7 +3947,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -3988,7 +3988,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4029,7 +4029,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4070,7 +4070,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4111,7 +4111,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4152,7 +4152,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4193,7 +4193,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4234,7 +4234,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4275,7 +4275,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4316,7 +4316,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4357,7 +4357,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4398,7 +4398,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4439,7 +4439,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4480,7 +4480,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4521,7 +4521,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4562,7 +4562,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4603,7 +4603,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4644,7 +4644,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4685,7 +4685,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4726,7 +4726,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4767,7 +4767,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4808,7 +4808,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4849,7 +4849,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4890,7 +4890,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4931,7 +4931,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -4972,7 +4972,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5013,7 +5013,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5054,7 +5054,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5095,7 +5095,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5136,7 +5136,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5177,7 +5177,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5218,7 +5218,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5259,7 +5259,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5300,7 +5300,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5341,7 +5341,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5382,7 +5382,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5423,7 +5423,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5464,7 +5464,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5505,7 +5505,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5546,7 +5546,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5587,7 +5587,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5628,7 +5628,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5669,7 +5669,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5710,7 +5710,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5751,7 +5751,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5792,7 +5792,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5833,7 +5833,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5874,7 +5874,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5915,7 +5915,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5956,7 +5956,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -5997,7 +5997,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6038,7 +6038,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6079,7 +6079,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6120,7 +6120,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6161,7 +6161,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6202,7 +6202,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6243,7 +6243,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6284,7 +6284,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6325,7 +6325,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6366,7 +6366,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6407,7 +6407,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6448,7 +6448,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6489,7 +6489,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6530,7 +6530,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6571,7 +6571,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6612,7 +6612,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6653,7 +6653,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6694,7 +6694,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6735,7 +6735,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6776,7 +6776,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6817,7 +6817,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6858,7 +6858,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6899,7 +6899,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6940,7 +6940,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -6981,7 +6981,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7022,7 +7022,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7063,7 +7063,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7104,7 +7104,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7145,7 +7145,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7186,7 +7186,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7227,7 +7227,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7268,7 +7268,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7309,7 +7309,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7350,7 +7350,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7391,7 +7391,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7432,7 +7432,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7473,7 +7473,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7514,7 +7514,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7555,7 +7555,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7596,7 +7596,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7637,7 +7637,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7678,7 +7678,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7719,7 +7719,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7760,7 +7760,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7801,7 +7801,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7842,7 +7842,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7883,7 +7883,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7924,7 +7924,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -7965,7 +7965,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8006,7 +8006,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8047,7 +8047,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8088,7 +8088,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8129,7 +8129,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8170,7 +8170,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8211,7 +8211,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8252,7 +8252,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8293,7 +8293,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8334,7 +8334,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8375,7 +8375,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8416,7 +8416,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8457,7 +8457,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8498,7 +8498,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8539,7 +8539,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],
@@ -8580,7 +8580,7 @@
               }
             },
             "availabilityType": {
-              "continuous": true
+              "onPut": true
             }
           }
         ],

@@ -8,10 +8,10 @@
       "spellId": "e_power_buff",
       "action": {
         "apChange": 10,
-        "duration": 1
+        "duration": -1
       },
       "availabilityType": {
-        "continuous": true
+        "onPut": true
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,

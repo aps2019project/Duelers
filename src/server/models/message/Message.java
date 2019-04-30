@@ -20,7 +20,7 @@ public class Message {
     private int messageId;
     private AccountInfo accountInfo;
     private Game game;
-    private Collection shopCards;
+    private Collection originalCards;
     private TempAccount account;
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
@@ -29,7 +29,6 @@ public class Message {
     private String exceptionString;
     private String cardId;
     private String[] cardIds;
-    private String spellId;
     private int turnNum;
     private int numberOfFlags;
     private String cardName;
@@ -61,7 +60,7 @@ public class Message {
 
     public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection shopCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.shopCards = shopCards;
+        message.originalCards = shopCards;
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
         return message;
     }
@@ -227,10 +226,6 @@ public class Message {
 
     public String[] getCardIds() {
         return cardIds;
-    }
-
-    public String getSpellId() {
-        return spellId;
     }
 
     public String getCardName() {

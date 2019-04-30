@@ -350,7 +350,7 @@ public class Request {
             );
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
-            collectionMenu.save(client, serverName);
+            //collectionMenu.save(client, serverName);
         } else {
             throw new InputException("invalid command");
         }
@@ -367,8 +367,7 @@ public class Request {
             mainMenu.exit();
 
         } else if (RequestType.SAVE.setMatcher(command).find()) {
-            mainMenu.save(client, serverName);
-
+            //mainMenu.save(client, serverName);
         } else if (RequestType.LOGOUT.setMatcher(command).find()) {
             mainMenu.logout(client, serverName);
 

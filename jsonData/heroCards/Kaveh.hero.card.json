@@ -10,8 +10,6 @@
         "enemyHitChanges": -1,
         "duration": 3
       },
-      "type": "CELL_EFFECT",
-      "definiteType": "HOLY_CELL_EFFECT",
       "availabilityType": {
         "specialPower": true
       },

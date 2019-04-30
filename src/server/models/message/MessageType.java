@@ -15,12 +15,11 @@ public enum MessageType {
     TO_NEXT,
     TO_COLLECTED_CARDS,
     TO_GRAVEYARD,
-    MOVE_TROOP,
+    MOVE_TROOP,//Send && Get
     TROOP_AP,
     TROOP_HP,
     GET_ORIGINAL_CARDS,
     GET_LEADERBOARD,
-    SAVE_CHANGES,
     CREATE_DECK,
     REMOVE_DECK,
     ADD_TO_DECK,
