@@ -40,7 +40,7 @@ public abstract class Game {
             for (Spell spell : card.getSpells()) {
                 if (spell.getAvailabilityType().isOnStart())
                     applySpell(spell, detectTarget(
-                                    spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                            spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
                     );
             }
         }
@@ -225,7 +225,11 @@ public abstract class Game {
             if (!attackerTroop.isHolyBuffDisabling() || defenderTroop.getEnemyHitChanges() > 0) {
                 attackPower += defenderTroop.getEnemyHitChanges();
             }
-            defenderTroop.changeCurrentHp(attackPower);
+            defenderTroop.changeCurrentHp(-attackPower);
+            if (defenderTroop.getCurrentHp() <= 0) {
+                killTroop(defenderTroop);
+            }
+
             attackerTroop.setCanAttack(false);
             applyOnAttackSpells(attackerTroop, defenderTroop);
             applyOnDefendSpells(defenderTroop, attackerTroop);
@@ -279,7 +283,10 @@ public abstract class Game {
             if (!defenderTroop.isHolyBuffDisabling() || attackerTroop.getEnemyHitChanges() > 0) {
                 attackPower += attackerTroop.getEnemyHitChanges();
             }
-            attackerTroop.changeCurrentHp(attackPower);
+            attackerTroop.changeCurrentHp(-attackPower);
+            if (attackerTroop.getCurrentHp() <= 0) {
+                killTroop(attackerTroop);
+            }
         }
     }
 
