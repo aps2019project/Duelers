@@ -2,10 +2,13 @@ package server.models.map;
 
 import server.models.card.Card;
 
+import java.util.ArrayList;
+
 public class Cell {
     private int row;
     private int column;
     private Card item;
+    private ArrayList<Card> items = new ArrayList<>();
 
     public Cell(int row, int column) {
         this.row = row;
@@ -33,5 +36,13 @@ public class Cell {
 
     public void setItem(Card item) {
         this.item = item;
+    }
+
+    public ArrayList<Card> getItems() {
+        return items;
+    }
+
+    public void addItem(Card item) {
+        this.items.add(item);
     }
 }
