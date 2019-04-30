@@ -9,7 +9,7 @@ public enum GameRequestType {
     SHOW_OPP_MINIONS("^show opponent minions$"),
     SHOW_CARD_INFO("^show card info (\\w+)$"),
     SELECT_CARD("^select (\\w+)$"),
-    MOVE("^moveTroop to |(\\d+)| |(\\d+)|$"),
+    MOVE("^move Troop to |(\\d+)| |(\\d+)|$"),
     ATTACK("^attack (\\w+)$"),
     ATTACK_COMBO("^attack combo (\\w+)(.+)"),
     USE_SPECIAL_POWER("^use special power \\((\\d+), (\\d+)\\)"),
