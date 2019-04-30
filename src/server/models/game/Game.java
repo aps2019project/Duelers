@@ -78,6 +78,7 @@ public abstract class Game {
         if (canCommand(username)) {
             applyEndTurnBuffs();
             getCurrentTurnPlayer().addNextCardToHand();
+            revertNotDurableBuffs();
             turnNumber++;
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             // change turn buffs
@@ -90,6 +91,55 @@ public abstract class Game {
         for (Buff buff : buffs) {
             if (buff.getAction().isActionAtTheEndOfTurn()) {
                 applyBuff(buff);
+            }
+        }
+    }
+
+    private void revertNotDurableBuffs() {
+        for (Buff buff : buffs) {
+            if (!buff.getAction().isDurable()) {
+                revertBuff(buff);
+            }
+        }
+    }
+
+    private void revertBuff(Buff buff) {
+        SpellAction action = buff.getAction();
+
+        for (Troop troop : buff.getTarget().getTroops()) {
+            if (!(buff.isPositive() || troop.canGiveBadEffect())) continue;
+
+            troop.changeEnemyHit(-action.getEnemyHitChanges());
+            troop.changeCurrentAp(-action.getApChange());
+            if (!action.isPoison() || troop.canGetPoison()) {
+                troop.changeCurrentHp(-action.getHpChange());
+                if (troop.getCurrentHp() <= 0) {
+                    killTroop(troop);
+                }
+            }
+            if (action.isMakeStun() && troop.canGetStun()) {
+                troop.setCanMove(true);
+            }
+            if (action.isMakeDisarm() && troop.canGetDisarm()) {
+                troop.setDisarm(false);
+            }
+            if (action.isNoDisarm()) {
+                troop.setCantGetDisarm(false);
+            }
+            if (action.isNoPoison()) {
+                troop.setCantGetPoison(false);
+            }
+            if (action.isNoStun()) {
+                troop.setCantGetStun(false);
+            }
+            if (action.isNoBadEffect()) {
+                troop.setDontGiveBadEffect(false);
+            }
+            if (action.isNoAttackFromWeakerOnes()) {
+                troop.setNoAttackFromWeakerOnes(false);
+            }
+            if (action.isDisableHolyBuff()) {
+                troop.setDisableHolyBuff(false);
             }
         }
     }
@@ -196,7 +246,11 @@ public abstract class Game {
 
     private void applyBuffOnCellTroops(Buff buff, ArrayList<Cell> cells) {
         ArrayList<Troop> inCellTroops = getInCellTargetTroops(cells);
-        applyBuffOnTroops(buff, inCellTroops);
+        Buff troopBuff = new Buff(
+                buff.getAction().makeCopyAction(1, 0), new TargetData(inCellTroops)
+        );
+        buffs.add(troopBuff);
+        applyBuffOnTroops(troopBuff, inCellTroops);
     }
 
     private void applyBuffOnTroops(Buff buff, ArrayList<Troop> targetTroops) {

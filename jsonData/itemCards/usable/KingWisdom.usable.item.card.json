@@ -8,6 +8,7 @@
       "spellId": "kw_increase_mp",
       "action": {
         "mpChange": 1,
+        "durable": true,
         "duration": 2147483647
       },
       "target": {
