@@ -160,7 +160,7 @@ public class Player {
     }
 
     public void setHero(Troop hero) {
-        hero = hero;
+        this.hero = hero;
     }
 
     public void killTroop(Troop troop) {
