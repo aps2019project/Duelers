@@ -201,7 +201,7 @@ public abstract class Game {
             if (card.getType() == CardType.FLAG) {
                 troop.addFlag(card);
                 getCurrentTurnPlayer().increaseNumberOfCollectedFlags();
-                getCurrentTurnPlayer().addFlagCarier(troop);
+                getCurrentTurnPlayer().addFlagCarrier(troop);
             } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
                 getCurrentTurnPlayer().addCollectibleItems(card);
             }
