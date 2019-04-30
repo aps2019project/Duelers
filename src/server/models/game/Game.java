@@ -63,9 +63,9 @@ public abstract class Game {
     public void changeTurn(String username) throws Exception {
         if (canCommand(username)) {
             turnNumber++;
-            Server.getInstance().sendChangeTurnMessage(this,turnNumber);
+            Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             //change turn buffs
-        }else{
+        } else {
             throw new Exception("it isn't your turn!");
         }
     }
@@ -82,7 +82,7 @@ public abstract class Game {
 
     }
 
-    public void useSpell(String username, String CardId, String spellId, Position target) throws Exception {
+    public void useSpecialPower(String username, String CardId, Position target) throws Exception {
 
     }
 

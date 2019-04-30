@@ -17,7 +17,7 @@ public class Message {
     private int messageId;
     private AccountInfo accountInfo;
     private Game game;
-    private Collection shopCards;
+    private Collection originalCards;
     private TempAccount account;
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
@@ -26,7 +26,6 @@ public class Message {
     private String exceptionString;
     private String cardId;
     private String[] cardIds;
-    private String spellId;
     private int turnNum;
     private int numberOfFlags;
     private String cardName;
@@ -72,12 +71,6 @@ public class Message {
     public static Message makeGetLeaderBoardMessage(String sender, String receiver, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.GET_LEADERBOARD;
-        return message;
-    }
-
-    public static Message makeSaveAccountMessage(String sender, String receiver, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.messageType = MessageType.SAVE_CHANGES;
         return message;
     }
 
@@ -165,23 +158,6 @@ public class Message {
         message.cardId = oppCardId;
         message.cardIds = myCardIds;
         message.messageType = MessageType.COMBO;
-        return message;
-    }
-
-    public static Message makeUseSpellMessage(String sender, String receiver, String cardId, String spellId, Position position, int messageId) {
-        Message message = new Message(sender, receiver, messageId);
-        message.cardId = cardId;
-        message.spellId = spellId;
-        message.position = position;
-        message.messageType = MessageType.USE_SPECIAL_POWER;
-        return message;
-    }
-
-    public static Message useItem(String sender , String receiver , String itemId ,Position position , int messageId){
-        Message message = new Message(sender,receiver,messageId);
-        message.cardId = itemId;
-        message.position = position;
-        message.messageType = MessageType.INSERT;
         return message;
     }
 
@@ -282,8 +258,8 @@ public class Message {
         return game;
     }
 
-    public Collection getShopCards() {
-        return shopCards;
+    public Collection getOriginalCards() {
+        return originalCards;
     }
 
     public TempAccount getAccount() {
@@ -314,10 +290,6 @@ public class Message {
         return cardId;
     }
 
-    public String getSpellId() {
-        return spellId;
-    }
-
     public int getTurnNum() {
         return turnNum;
     }
@@ -341,5 +313,4 @@ public class Message {
     public String getDeckName() {
         return deckName;
     }
-
 }

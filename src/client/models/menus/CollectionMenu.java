@@ -69,11 +69,6 @@ public class CollectionMenu extends Menu {
         }
     }
 
-    public void save(Client client, String serverName) {
-        client.addToSendingMessages(Message.makeSaveAccountMessage(client.getClientName(), serverName, 0));
-        client.sendMessages();
-    }
-
     public void removeDeck(String deckName, Client client, String serverName) throws InputException {
         client.addToSendingMessages(
                 Message.makeRemoveDeckMessage(
