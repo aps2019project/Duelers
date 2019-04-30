@@ -6,6 +6,7 @@ public class AvailabilityType {
     private boolean onDeath;
     private boolean specialPower;
     private boolean onStart;
+    private boolean onDefend;
 
     public AvailabilityType(boolean onPut, boolean onAttack, boolean onDeath, boolean continuous, boolean specialPower, boolean onStart) {
         this.onPut = onPut;
@@ -33,5 +34,9 @@ public class AvailabilityType {
 
     public boolean isOnStart() {
         return onStart;
+    }
+
+    public boolean isOnDefend() {
+        return onDefend;
     }
 }
