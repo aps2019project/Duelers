@@ -85,11 +85,10 @@ public abstract class Game {
             Server.getInstance().sendChangeTurnMessage(this, turnNumber);
             applyAllBuffs();
             allTroopsCanAttack();
-            if (getCurrentTurnPlayer().getUserName().equals(playerOne.getUserName())) {
-                getCurrentTurnPlayer().setCurrentMP(turnNumber + 1);
-            } else {
-                getCurrentTurnPlayer().setCurrentMP(turnNumber + 2);
-            }
+            if (turnNumber < 14)
+                getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
+            else
+                getCurrentTurnPlayer().setCurrentMP(9);
         } else {
             throw new Exception("it isn't your turn!");
         }
@@ -167,8 +166,9 @@ public abstract class Game {
         if (!canCommand(username)) {
             throw new Exception("its not your turn");
         }
+        Player player=getCurrentTurnPlayer();
         put(
-                getCurrentTurnPlayer().getPlayerNumber(),
+                player.getPlayerNumber(),
                 getCurrentTurnPlayer().insert(cardId, gameMap.getCellWithPosition(position)),
                 gameMap.getCellWithPosition(position)
         );
