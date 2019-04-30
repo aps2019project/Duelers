@@ -103,6 +103,7 @@ public class GameMap {
     public void removeTroop(Player player, Troop troop) {
         troops.remove(troop);
         throwFlags(player, troop);
+        player.removeFlagCarrier(troop);
     }
 
     private void throwFlags(Player player, Troop troop) {

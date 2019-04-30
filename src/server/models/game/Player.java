@@ -94,9 +94,13 @@ public class Player {
         return flagCarriers;
     }
 
-    public void addFlagCarier(Troop troop) {
+    public void addFlagCarrier(Troop troop) {
         if (!this.flagCarriers.contains(troop))
             this.flagCarriers.add(troop);
+    }
+
+    public void removeFlagCarrier(Troop troop) {
+        flagCarriers.remove(troop);
     }
 
     public void changeCurrentMP(int change) {
