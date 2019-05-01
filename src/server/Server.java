@@ -1,7 +1,9 @@
 package server;
 
 import client.Client;
+import server.models.ClientException;
 import server.models.JsonConverter;
+import server.models.ServerException;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -238,7 +240,7 @@ public class Server {
                     game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
                     break;
                 case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNumberOfFlags());
                     break;
             }
             if (onlineGames.containsKey(myAccount)) {
