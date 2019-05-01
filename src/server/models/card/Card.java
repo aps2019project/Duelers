@@ -25,10 +25,10 @@ public class Card {
     }
 
     //dangerous
-    public Card(Card referenceCard){//TODO:Should be private
+    public Card(Card referenceCard) {//TODO:Should be private
         this.name = referenceCard.name;
         this.description = referenceCard.description;
-        this.cardId=referenceCard.cardId;
+        this.cardId = referenceCard.cardId;
         this.type = referenceCard.type;
         if (referenceCard.spells != null) {
             for (Spell spell : referenceCard.spells) {
@@ -60,6 +60,11 @@ public class Card {
         this.hasCombo = hasCombo;
     }
 
+    public CompressedCard toCompressedCard() {
+        return new CompressedCard(
+                name, description, cardId, type, spells, defaultAp, defaultHp, mannaPoint, attackType, range, hasCombo);
+
+    }
 
     @Override
     public boolean equals(Object obj) {
