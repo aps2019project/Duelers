@@ -184,19 +184,19 @@ public class Server {
                 sendException("you have online game!", message.getSender(), message.getMessageId());
                 return;
             }
-            Game game=null;
+            Game game = null;
             Story story = stories.get(message.getStage());
-            GameMap gameMap = new GameMap(originalCards.getItems(),story.getNumberOfFlags() , originalFlag);
+            GameMap gameMap = new GameMap(originalCards.getItems(), story.getNumberOfFlags(), originalFlag);
             switch (story.getGameType()) {
                 case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, story, gameMap);
+                    game = new KillHeroBattle(myAccount, story.getDeck(), gameMap);
                     break;
                 case A_FLAG:
-//                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                    game = new SingleFlagBattle(myAccount, story.getDeck(), gameMap);
                     break;
                 case SOME_FLAG:
-//                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
-                    brea-k;
+                    game = new MultiFlagBattle(myAccount, story.getDeck(), gameMap, story.getNumberOfFlags());
+                    break;
             }
 
         }

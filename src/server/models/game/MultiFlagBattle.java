@@ -1,6 +1,7 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.card.Deck;
 import server.models.map.GameMap;
 
 public class MultiFlagBattle extends Game {
@@ -8,6 +9,11 @@ public class MultiFlagBattle extends Game {
 
     public MultiFlagBattle(Account accountOne, Account accountTwo, GameMap gameMap, int numberOfFlags) {
         super(accountOne, accountTwo, gameMap);
+        this.numberOfFlags = numberOfFlags;
+    }
+
+    public MultiFlagBattle(Account account1, Deck deck, GameMap gameMap,int numberOfFlags) {
+        super(account1, deck, gameMap);
         this.numberOfFlags = numberOfFlags;
     }
 

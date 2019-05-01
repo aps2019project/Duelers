@@ -36,10 +36,10 @@ public abstract class Game {
         applyOnStartSpells(playerTwo.getDeck());
     }
 
-    protected Game(Account account, Story story, GameMap gameMap) {
+    protected Game(Account account, Deck deck, GameMap gameMap) {
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
-        this.playerTwo = new Player(story.getDeck(), "AI", 2);
+        this.playerTwo = new Player(deck, "AI", 2);
         this.turnNumber = 1;
         put(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;

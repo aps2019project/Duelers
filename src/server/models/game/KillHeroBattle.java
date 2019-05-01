@@ -1,6 +1,7 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.card.Deck;
 import server.models.map.GameMap;
 
 public class KillHeroBattle extends Game {
@@ -9,8 +10,8 @@ public class KillHeroBattle extends Game {
         super(account1, account2, gameMap);
     }
 
-    public KillHeroBattle(Account account1 , Story story,GameMap gameMap){
-        super(account1,story,gameMap);
+    public KillHeroBattle(Account account1 , Deck deck, GameMap gameMap){
+        super(account1,deck,gameMap);
     }
 
     @Override

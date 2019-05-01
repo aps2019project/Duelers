@@ -1,12 +1,17 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.card.Deck;
 import server.models.map.GameMap;
 
 public class SingleFlagBattle extends Game {
 
     public SingleFlagBattle(Account accountOne, Account accountTwo, GameMap gameMap) {
         super(accountOne, accountTwo, gameMap);
+    }
+
+    public SingleFlagBattle(Account account1 , Deck deck, GameMap gameMap){
+        super(account1,deck,gameMap);
     }
 
     @Override
