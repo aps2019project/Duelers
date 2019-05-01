@@ -505,7 +505,7 @@ public class Server {
                     game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
                     break;
                 case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNumberOfFlags());
                     break;
             }
             if (onlineGames.containsKey(myAccount)) {

@@ -1,40 +1,33 @@
 package server.models.account;
 
+import java.util.Date;
+
 public class MatchHistory {
-    private String accountOne;
-    private boolean oneIsWinner;
-    private String accountTwo;
-    private boolean twoIsWinner;
-    private int occurrenceTime;
+    private String oppName;
+    private boolean amIWinner;
+    private long occurrenceTime;
 
-    public MatchHistory(String accountOne, boolean oneIsWinner, String accountTwo, boolean twoIsWinner) {
-        this.accountOne = accountOne;
-        this.oneIsWinner = oneIsWinner;
-        this.accountTwo = accountTwo;
-        this.twoIsWinner = twoIsWinner;
+    public MatchHistory(String oppName, boolean amIWinner) {
+        this.oppName = oppName;
+        this.amIWinner = amIWinner;
+        this.occurrenceTime = System.currentTimeMillis();
     }
 
-    public MatchHistory(String accountOne, String accountTwo) {
-
+    public String getOppName() {
+        return this.oppName;
     }
 
-    public String getAccountOne() {
-        return this.accountOne;
-    }
-
-    public String getAccountTwo() {
-        return this.accountTwo;
-    }
-
-    public int getOccurrenceTime() {
+    public long getExactTime() {
         return this.occurrenceTime;
     }
 
-    public boolean isOneIsWinner() {
-        return oneIsWinner;
+    public String getDate() {
+        Date date = new Date();
+        new Date().setTime(occurrenceTime);
+        return date.toLocaleString();
     }
 
-    public boolean isTwoIsWinner() {
-        return twoIsWinner;
+    public boolean isAmIWinner() {
+        return amIWinner;
     }
 }

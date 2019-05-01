@@ -390,7 +390,7 @@ public abstract class Game {
         }
     }
 
-    public abstract MatchHistory finishCheck();
+    public abstract void finishCheck();
 
     private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);
@@ -627,7 +627,19 @@ public abstract class Game {
         return targetCells;
     }
 
-    public void finishGame() {
+    private void finishGame() {
         this.finished = true;
+    }
+
+    void setMatchHistories(boolean resultOne, boolean resultTwo) {
+        finishGame();
+
+        playerOne.setMatchHistory(
+                new MatchHistory(playerTwo.getUserName(), resultOne)
+        );
+
+        playerTwo.setMatchHistory(
+                new MatchHistory(playerOne.getUserName(), resultTwo)
+        );
     }
 }

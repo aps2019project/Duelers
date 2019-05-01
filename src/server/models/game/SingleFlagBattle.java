@@ -6,12 +6,16 @@ import server.models.map.GameMap;
 
 public class SingleFlagBattle extends Game {
 
-    public SingleFlagBattle(Account account1, Account account2, GameMap gameMap) {
-        super(account1, account2, gameMap);
+    public SingleFlagBattle(Account accountOne, Account accountTwo, GameMap gameMap) {
+        super(accountOne, accountTwo, gameMap);
     }
 
     @Override
-    public MatchHistory finishCheck() {
-        return null;
+    public void finishCheck() {
+        if (getPlayerOne().getNumberOfCollectedFlags() > 0) {
+            setMatchHistories(true, false);
+        } else if (getPlayerTwo().getNumberOfCollectedFlags() > 0) {
+            setMatchHistories(false, true);
+        }
     }
 }
