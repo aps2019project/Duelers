@@ -1,6 +1,8 @@
 package server.models.game;
 
 import server.Server;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
 import server.models.account.Account;
 import server.models.account.MatchHistory;
 import server.models.card.AttackType;
@@ -54,7 +56,10 @@ public abstract class Game {
             for (Spell spell : card.getSpells()) {
                 if (spell.getAvailabilityType().isOnStart())
                     applySpell(spell, detectTarget(
-                            spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                            spell,
+                            gameMap.getCell(0, 0),
+                            gameMap.getCell(0, 0),
+                            gameMap.getCell(0, 0))
                     );
             }
         }
@@ -97,7 +102,7 @@ public abstract class Game {
                 || (turnNumber % 2 == 1 && username.equalsIgnoreCase(playerOne.getUserName()));
     }
 
-    public void changeTurn(String username) throws Exception {
+    public void changeTurn(String username) throws LogicException {
         if (canCommand(username)) {
             getCurrentTurnPlayer().addNextCardToHand();
             revertNotDurableBuffs();
@@ -110,7 +115,7 @@ public abstract class Game {
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
         } else {
-            throw new Exception("it isn't your turn!");
+            throw new ClientException("it isn't your turn!");
         }
     }
 
@@ -176,9 +181,9 @@ public abstract class Game {
     }
 
 
-    public void insert(String username, String cardId, Position position) throws Exception {
+    public void insert(String username, String cardId, Position position) throws ClientException {
         if (!canCommand(username)) {
-            throw new Exception("its not your turn");
+            throw new ClientException("it's not your turn");
         }
         Player player = getCurrentTurnPlayer();
         put(
@@ -201,24 +206,24 @@ public abstract class Game {
         }
     }
 
-    public void moveTroop(String username, String cardId, Position position) throws Exception {
+    public void moveTroop(String username, String cardId, Position position) throws ClientException {
         if (!canCommand(username)) {
-            throw new Exception("its not your turn");
+            throw new ClientException("its not your turn");
         }
 
         if (!gameMap.checkCoordination(position)) {
-            throw new Exception("coordination is not valid");
+            throw new ClientException("coordination is not valid");
         }
 
         Troop troop = gameMap.getTroop(cardId);
         if (troop == null) {
-            throw new Exception("select a valid card");
+            throw new ClientException("select a valid card");
         }
         if (troop.getCell().manhattanDistance(position) > 2) {
-            throw new Exception("too far to go");
+            throw new ClientException("too far to go");
         }
         if (!troop.canMove()) {
-            throw new Exception("can not move");
+            throw new ClientException("troop can not move");
         }
 
         Cell cell = gameMap.getCell(position);
@@ -236,16 +241,16 @@ public abstract class Game {
         cell.clearItems();
     }
 
-    public void attack(String username, String attackerCardId, String defenderCardId) throws Exception {
+    public void attack(String username, String attackerCardId, String defenderCardId) throws ClientException {
         if (!canCommand(username)) {
-            throw new Exception("its not your turn");
+            throw new ClientException("its not your turn");
         }
 
         Troop attackerTroop = getAndValidateTroop(attackerCardId, getCurrentTurnPlayer());
         Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
 
         if (!attackerTroop.canAttack()) {
-            throw new Exception("attacker can not attack");
+            throw new ClientException("attacker can not attack");
         }
 
         checkRangeForAttack(attackerTroop, defenderTroop);
@@ -283,9 +288,9 @@ public abstract class Game {
         }
     }
 
-    private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws Exception {
+    private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws ClientException {
         if (defenderTroop.isDisarm()) {
-            throw new Exception("defender is disarm");
+            throw new ClientException("defender is disarm");
         }
 
         checkRangeForAttack(defenderTroop, attackerTroop);
@@ -315,9 +320,9 @@ public abstract class Game {
         return attackPower;
     }
 
-    public void useSpecialPower(String username, String cardId, Position target) throws Exception {
+    public void useSpecialPower(String username, String cardId, Position target) throws ClientException {
         if (!canCommand(username)) {
-            throw new Exception("its not your turn");
+            throw new ClientException("its not your turn");
         }
 
         Troop hero = getAndValidateHero(cardId);
@@ -329,33 +334,33 @@ public abstract class Game {
         );
     }
 
-    private Troop getAndValidateHero(String cardId) throws Exception {
+    private Troop getAndValidateHero(String cardId) throws ClientException {
         Troop hero = getCurrentTurnPlayer().getHero();
         if (hero == null || !hero.getCard().getCardId().equalsIgnoreCase(cardId)) {
-            throw new Exception("hero id is not valid");
+            throw new ClientException("hero id is not valid");
         }
         return hero;
     }
 
-    private Spell getAndValidateSpecialPower(Troop hero) throws Exception {
+    private Spell getAndValidateSpecialPower(Troop hero) throws ClientException {
         Spell specialPower = hero.getCard().getSpells().get(0);
         if (specialPower == null || specialPower.getAvailabilityType().isSpecialPower()) {
-            throw new Exception("special power is not available");
+            throw new ClientException("special power is not available");
         }
 
         if (specialPower.isCoolDown(turnNumber)) {
-            throw new Exception("special power is cool down");
+            throw new ClientException("special power is cool down");
         }
 
         if (getCurrentTurnPlayer().getCurrentMP() < specialPower.getMannaPoint()) {
-            throw new Exception("insufficient manna");
+            throw new ClientException("insufficient manna");
         }
         return specialPower;
     }
 
-    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws Exception {
+    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws ClientException {
         if (!canCommand(username)) {
-            throw new Exception("its not your turn");
+            throw new ClientException("its not your turn");
         }
 
         Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
@@ -367,20 +372,20 @@ public abstract class Game {
         counterAttack(defenderTroop, attackerTroops[0]);
     }
 
-    private Troop getAndValidateTroop(String defenderCardId, Player otherTurnPlayer) throws Exception {
+    private Troop getAndValidateTroop(String defenderCardId, Player otherTurnPlayer) throws ClientException {
         Troop troop = otherTurnPlayer.getTroop(defenderCardId);
         if (troop == null) {
-            throw new Exception("card id is not valid");
+            throw new ClientException("card id is not valid");
         }
         return troop;
     }
 
-    private Troop[] getAndValidateAttackerTroops(String[] attackerCardIds, Troop defenderTroop) throws Exception {
+    private Troop[] getAndValidateAttackerTroops(String[] attackerCardIds, Troop defenderTroop) throws ClientException {
         Troop[] attackerTroops = new Troop[attackerCardIds.length];
         for (int i = 0; i < attackerTroops.length; i++) {
             attackerTroops[i] = getCurrentTurnPlayer().getTroop(attackerCardIds[i]);
             if (attackerTroops[i] == null || !attackerTroops[i].getCard().hasCombo()) {
-                throw new Exception("invalid attacker troop");
+                throw new ClientException("invalid attacker troop");
             }
 
             checkRangeForAttack(attackerTroops[i], defenderTroop);
@@ -388,19 +393,19 @@ public abstract class Game {
         return attackerTroops;
     }
 
-    private void checkRangeForAttack(Troop attackerTroop, Troop defenderTroop) throws Exception {
+    private void checkRangeForAttack(Troop attackerTroop, Troop defenderTroop) throws ClientException {
         if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
             if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
-                throw new Exception("can not attack to this target");
+                throw new ClientException("can not attack to this target");
             }
         } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
             if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
                     attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new Exception("can not attack to this target");
+                throw new ClientException("can not attack to this target");
             }
         } else { // HYBRID
             if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new Exception("can not attack to this target");
+                throw new ClientException("can not attack to this target");
             }
         }
     }

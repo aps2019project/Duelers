@@ -1,5 +1,7 @@
 package server.models.game;
 
+import server.models.exceptions.ClientException;
+import server.models.account.Account;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
 import server.models.card.CardType;
@@ -37,7 +39,7 @@ public class Player {
         troops.add(hero);
     }
 
-    public Troop insert(String cardId) throws Exception {
+    public Troop insert(String cardId) throws ClientException {
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
@@ -50,10 +52,10 @@ public class Player {
         }
 
         if (card == null)
-            throw new Exception("card id is not valid");
+            throw new ClientException("card id is not valid");
 
         if (card.getMannaPoint() > currentMP)
-            throw new Exception("not enough mana point");
+            throw new ClientException("not enough manna point");
 
 
         currentMP -= card.getMannaPoint();
