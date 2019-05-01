@@ -1,6 +1,7 @@
 package server.models.card;
 
 import server.models.card.spell.Spell;
+import server.models.message.CompressedCard;
 
 import java.util.ArrayList;
 
