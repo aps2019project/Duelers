@@ -1,7 +1,7 @@
 package server.models.message;
 
-import client.models.card.spell.AvailabilityType;
-import client.models.card.spell.Target;
+import server.models.card.spell.AvailabilityType;
+import server.models.card.spell.Target;
 
 public class CompressedSpell {
     private String spellId;

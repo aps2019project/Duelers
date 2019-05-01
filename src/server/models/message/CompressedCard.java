@@ -5,6 +5,7 @@ import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.spell.Spell;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 
 public class CompressedCard {
@@ -34,8 +35,12 @@ public class CompressedCard {
         this.attackType = attackType;
         this.range = range;
         this.hasCombo = hasCombo;
-        if(type==CardType.HERO){
-
+        if (type == CardType.HERO) {
+            for (Spell spell : spells) {
+                if (spell.getAvailabilityType().isSpecialPower()) {
+                    this.spell = spell.toCompressedSpell();
+                }
+            }
         }
     }
 }
