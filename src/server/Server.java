@@ -134,7 +134,7 @@ public class Server {
                     newMultiplayerGame(message);
                     break;
                 case NEW_STORY_GAME:
-
+                    newStoryGame(message);
                     break;
                 case NEW_DECK_GAME:
 
@@ -172,6 +172,92 @@ public class Server {
         receivingMessages.clear();
         sendMessages();
     }
+
+    private void newStoryGame(Message message) {
+        if (loginCheck(message)) {
+            Account myAccount = clients.get(message.getSender());
+            if (!myAccount.hasValidMainDeck()) {
+                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
+                return;
+            }
+            if (onlineGames.get(myAccount) != null) {
+                sendException("you have online game!", message.getSender(), message.getMessageId());
+                return;
+            }
+            Game game=null;
+            Story story = stories.get(message.getStage());
+            /*switch (story.getGameType()) {
+                case KILL_HERO:
+                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                    break;
+                case A_FLAG:
+                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                    break;
+                case SOME_FLAG:
+                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    break;
+            }*/
+
+        }
+    }
+
+    private void newMultiplayerGame(Message message) {
+        if (loginCheck(message) && isOpponentAccountValid(message)) {
+            Account myAccount = clients.get(message.getSender());
+            Account opponentAccount = getAccount(message.getOpponentUserName());
+            if (!myAccount.hasValidMainDeck()) {
+                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
+                return;
+            }
+            if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
+                sendException("opponent doesn't have valid main deck!", message.getSender(), message.getMessageId());
+                return;
+            }
+            if (onlineGames.get(myAccount) != null) {
+                sendException("you have online game!", message.getSender(), message.getMessageId());
+                return;
+            }
+            if (onlineGames.get(opponentAccount) != null) {
+                sendException("opponent has online game!", message.getSender(), message.getMessageId());
+                return;
+            }
+            //Should be removed
+            accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
+            clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
+            Game game = null;
+            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
+            if (message.getGameType() == null) {
+                sendException("invalid gameType!", message.getSender(), message.getMessageId());
+                return;
+            }
+            switch (message.getGameType()) {
+                case KILL_HERO:
+                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                    break;
+                case A_FLAG:
+                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                    break;
+                case SOME_FLAG:
+                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    break;
+            }
+            if (onlineGames.containsKey(myAccount)) {
+                onlineGames.replace(myAccount, game);
+            } else {
+                onlineGames.put(myAccount, game);
+            }
+            if (onlineGames.containsKey(opponentAccount)) {
+                onlineGames.replace(opponentAccount, game);
+            } else {
+                onlineGames.put(opponentAccount, game);
+            }
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, message.getSender(), game, message.getMessageId()));
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, accounts.get(opponentAccount), game, 0));
+        }
+    }
+
 
     private void sendMessages() {
         for (Message message : sendingMessages) {
@@ -468,62 +554,6 @@ public class Server {
         return true;
     }
 
-    private void newMultiplayerGame(Message message) {
-        if (loginCheck(message) && isOpponentAccountValid(message)) {
-            Account myAccount = clients.get(message.getSender());
-            Account opponentAccount = getAccount(message.getOpponentUserName());
-            if (!myAccount.hasValidMainDeck()) {
-                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
-            }
-            if (!opponentAccount.hasValidMainDeck()) {
-                sendException("opponent doesn't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
-            }
-            if (onlineGames.get(myAccount) != null) {
-                sendException("you have online game!", message.getSender(), message.getMessageId());
-                return;
-            }
-            if (onlineGames.get(opponentAccount) != null) {
-                sendException("opponent has online game!", message.getSender(), message.getMessageId());
-                return;
-            }
-            //Should be removed
-            accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
-            clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
-            Game game = null;
-            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
-            if (message.getGameType() == null) {
-                sendException("invalid gameType!", message.getSender(), message.getMessageId());
-                return;
-            }
-            switch (message.getGameType()) {
-                case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case A_FLAG:
-                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
-                    break;
-            }
-            if (onlineGames.containsKey(myAccount)) {
-                onlineGames.replace(myAccount, game);
-            } else {
-                onlineGames.put(myAccount, game);
-            }
-            if (onlineGames.containsKey(opponentAccount)) {
-                onlineGames.replace(opponentAccount, game);
-            } else {
-                onlineGames.put(opponentAccount, game);
-            }
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, message.getMessageId()));
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, accounts.get(opponentAccount), game, 0));
-        }
-    }
 
     private void insertCard(Message message) {
         Game game;
@@ -587,7 +617,7 @@ public class Server {
             game = getGame(message.getSender());
             try {
                 game.moveTroop(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
-                addToSendingMessages(Message.makeMoveTroopMessage(serverName,message.getSender(),message.getCardId(),message.getPosition(),0));
+                addToSendingMessages(Message.makeMoveTroopMessage(serverName, message.getSender(), message.getCardId(), message.getPosition(), 0));
             } catch (Exception e) {
                 sendException(e.getMessage(), message.getSender(), message.getMessageId());
             }

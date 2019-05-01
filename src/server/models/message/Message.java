@@ -190,10 +190,12 @@ public class Message {
         return message;
     }
 
-    public static Message makeMoveTroopMessage(String sender,String receiver,String cardId,Position position,int messageId){
-        Message message= new Message(sender,receiver,messageId);
-        message.cardId=cardId;
-        message.position=position;
+    public static Message makeMoveTroopMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardId = cardId;
+        message.position = position;
+        message.messageType = MessageType.MOVE_TROOP;
+
         return message;
     }
 
