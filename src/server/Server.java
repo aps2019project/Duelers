@@ -1,10 +1,7 @@
 package server;
 
 import client.Client;
-import server.models.exceptions.ClientException;
 import server.models.JsonConverter;
-import server.models.exceptions.LogicException;
-import server.models.exceptions.ServerException;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -12,6 +9,9 @@ import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
+import server.models.exceptions.ServerException;
 import server.models.game.*;
 import server.models.map.GameMap;
 import server.models.map.Position;

@@ -36,7 +36,7 @@ public enum GameRequestType {
 
     public boolean matches(String command) {
         this.matcher = pattern.matcher(command);
-        return matcher.find();
+        return this.matcher.find();
     }
 
     public Matcher getMatcher() {
