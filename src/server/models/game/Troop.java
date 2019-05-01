@@ -2,6 +2,7 @@ package server.models.game;
 
 import server.models.card.Card;
 import server.models.map.Cell;
+import server.models.message.CompressedTroop;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,13 @@ public class Troop {
         this.cell = cell;
     }
 
-    public void addFlag(Card card){
+    public CompressedTroop toCompressedTroop() {
+        return new CompressedTroop(
+                card, currentAp, currentHp, enemyHitChanges, cell, canMove, canAttack, isDisarm, noAttackFromWeakerOnes,
+                flags.size(), playerNumber);
+    }
+
+    public void addFlag(Card card) {
         this.flags.add(card);
     }
 

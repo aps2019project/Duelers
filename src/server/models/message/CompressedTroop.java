@@ -1,7 +1,8 @@
 package server.models.message;
 
-import client.models.map.Position;
+import server.models.map.Position;
 import server.models.card.Card;
+import server.models.map.Cell;
 
 public class CompressedTroop {
     private CompressedCard card;
@@ -16,14 +17,14 @@ public class CompressedTroop {
     private int numberOfCollectedFlags;
     private int playerNumber;
 
-    public CompressedTroop(Card card, int currentAp, int currentHp, int enemyHitChanges, Position position,
+    public CompressedTroop(Card card, int currentAp, int currentHp, int enemyHitChanges, Cell cell,
                            boolean canMove, boolean canAttack, boolean isDisarm, boolean noAttackFromWeakerOnes,
                            int numberOfCollectedFlags, int playerNumber) {
         this.card = card.toCompressedCard();
         this.currentAp = currentAp;
         this.currentHp = currentHp;
         this.enemyHitChanges = enemyHitChanges;
-        this.position = position;
+        this.position = new server.models.map.Position(cell.getRow(), cell.getColumn());
         this.canMove = canMove;
         this.canAttack = canAttack;
         this.isDisarm = isDisarm;
