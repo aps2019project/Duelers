@@ -18,7 +18,11 @@ import server.models.map.Position;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,9 +46,9 @@ public class Server {
     private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private ArrayList<Client> onlineClients = new ArrayList<>();
-    private Collection originalCards = new Collection(); // TODO: collectibles may be in a different field
+    private Collection originalCards = new Collection();
+    private ArrayList<Card> collectibleItems = new ArrayList<>();
     private Card originalFlag;
-    private ArrayList<Deck> customDecks = new ArrayList<>();
     private ArrayList<Story> stories = new ArrayList<>();
     private ArrayList<Message> sendingMessages = new ArrayList<>();
     private ArrayList<Message> receivingMessages = new ArrayList<>();
@@ -185,19 +189,17 @@ public class Server {
         if (loginCheck(message)) {
             Account myAccount = clients.get(message.getSender());
             if (!myAccount.hasValidMainDeck()) {
-                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you don't have valid main deck!");
             }
             if (onlineGames.get(myAccount) != null) {
-                sendException("you have online game!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you have online game!");
             }
             Deck deck = myAccount.getDeck(message.getDeckName());
             if (deck == null || !deck.isValid()) {
-                sendException("selected deck is not valid", message.getSender(), message.getMessageId());
+                throw new ClientException("selected deck is not valid");
             }
             Game game = null;
-            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
+            GameMap gameMap = new GameMap(collectibleItems, message.getNumberOfFlags(), originalFlag);
             switch (message.getGameType()) {
                 case KILL_HERO:
                     game = new KillHeroBattle(myAccount, deck, gameMap);
@@ -227,7 +229,7 @@ public class Server {
             }
             Game game = null;
             Story story = stories.get(message.getStage());
-            GameMap gameMap = new GameMap(originalCards.getItems(), story.getNumberOfFlags(), originalFlag);
+            GameMap gameMap = new GameMap(collectibleItems, story.getNumberOfFlags(), originalFlag);
             switch (story.getGameType()) {
                 case KILL_HERO:
                     game = new KillHeroBattle(myAccount, story.getDeck(), gameMap);
@@ -266,7 +268,7 @@ public class Server {
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
             clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
-            GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
+            GameMap gameMap = new GameMap(collectibleItems, message.getNumberOfFlags(), originalFlag);
             if (message.getGameType() == null) {
                 throw new ClientException("invalid gameType!");
             }
@@ -475,7 +477,7 @@ public class Server {
     private void buyCard(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
-            if (!originalCards.hasCard(message.getCardName()) || originalCards.getCard(message.getCardName()).getType() == CardType.COLLECTIBLE_ITEM) { // TODO
+            if (!originalCards.hasCard(message.getCardName())) {
                 throw new ClientException("invalid card name");
             } else if (account.getMoney() < originalCards.getCard(message.getCardName()).getPrice()) {
                 throw new ClientException("account's money isn't enough.");
@@ -738,7 +740,11 @@ public class Server {
                     Card card = loadFile(file, Card.class);
                     if (card == null) continue;
 
-                    originalCards.addCard(card);
+                    if (card.getType() == CardType.COLLECTIBLE_ITEM) {
+                        collectibleItems.add(card);
+                    } else {
+                        originalCards.addCard(card);
+                    }
                 }
             }
         }

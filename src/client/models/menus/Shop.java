@@ -39,7 +39,7 @@ public class Shop extends Menu {
     }
 
     public void showCollection(Client client) {
-        View.getInstance().showCollection(client.getAccount().getCollection(), false);
+        View.getInstance().showCollection(client.getAccount().getCollection());
     }
 
     public void buy(String cardName, Client client, String serverName) throws InputException {
@@ -83,7 +83,7 @@ public class Shop extends Menu {
     }
 
     public void showMarketCardsAndItems() {
-        View.getInstance().showCollection(originalCards, true);
+        View.getInstance().showCollection(originalCards);
     }
 
     public void setOriginalCards(Collection originalCards) {

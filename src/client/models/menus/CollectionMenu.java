@@ -125,7 +125,7 @@ public class CollectionMenu extends Menu {
     }
 
     public void showItemsAndCards(Client client) {
-        View.getInstance().showCollection(client.getAccount().getCollection(), false);
+        View.getInstance().showCollection(client.getAccount().getCollection());
     }
 
     public void search(String cardName, Client client) throws InputException {

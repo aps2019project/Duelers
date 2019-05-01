@@ -155,9 +155,9 @@ public class View {
 
     }
 
-    public void showCollection(Collection collection, boolean justUsable) {
+    public void showCollection(Collection collection) {
         showHeroes(collection.getHeroes());
-        showItems(collection.getItems(), justUsable);
+        showItems(collection.getItems());
         showSpells(collection.getSpells());
         showMinions(collection.getMinions());
     }
@@ -180,12 +180,11 @@ public class View {
         }
     }
 
-    private void showItems(ArrayList<Card> items, boolean justUsable) {
+    private void showItems(ArrayList<Card> items) {
         System.out.println("Items:\n");
         if (items.size() == 0) return;
         int counter = 1;
         for (Card item : items) {
-            if (justUsable && item.getType() != CardType.USABLE_ITEM) continue;
             showItem(counter++, item);
         }
     }

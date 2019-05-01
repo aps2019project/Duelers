@@ -33,7 +33,7 @@ public class StoryMaker {
             System.out.println("reward:");
             int reward = Integer.parseInt(scanner.nextLine());
 
-            writeStoryFile(new Story(new Deck(deckName, hero, item, others), GameType.values()[i], reward, 18));
+            writeStoryFile(new Story(new Deck(deckName, hero, item, others), GameType.values()[i], reward, 16));
             //ERROR:This deck uses same reference!
         }
     }
