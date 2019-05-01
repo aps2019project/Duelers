@@ -139,7 +139,7 @@ public class Server {
                         newStoryGame(message);
                         break;
                     case NEW_DECK_GAME:
-                    newDeckGame(message);
+                        newDeckGame(message);
                         break;
                     case INSERT:
                         insertCard(message);
@@ -181,20 +181,18 @@ public class Server {
         sendMessages();
     }
 
-    private void newDeckGame(Message message) throws LogicException{
+    private void newDeckGame(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account myAccount = clients.get(message.getSender());
             if (!myAccount.hasValidMainDeck()) {
-                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you don't have valid main deck!");
             }
             if (onlineGames.get(myAccount) != null) {
-                sendException("you have online game!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you have online game!");
             }
             Deck deck = myAccount.getDeck(message.getDeckName());
-            if (deck == null && !deck.isValid()) {
-                sendException("selected deck is not valid", message.getSender(), message.getMessageId());
+            if (deck == null || !deck.isValid()) {
+                throw new ClientException("selected deck is not valid");
             }
             Game game = null;
             GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
