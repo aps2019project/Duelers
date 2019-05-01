@@ -1,6 +1,6 @@
 package client.models.game;
 
-public class CompressesGame {
+public class CompressedGame {
     private CompressedPlayer playerOne;
     private CompressedPlayer playerTwo;
     private CompressedGameMap gameMap;
