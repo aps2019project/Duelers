@@ -39,6 +39,7 @@ public class CompressedCard {
             for (Spell spell : spells) {
                 if (spell.getAvailabilityType().isSpecialPower()) {
                     this.spell = spell.toCompressedSpell();
+                    break;
                 }
             }
         }
