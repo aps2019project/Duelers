@@ -629,84 +629,24 @@ public class Server {
         }
     }
 
-    public void sendAddToHandMessage(Game game, String cardId) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeToHandMessage
-                (serverName, client1, cardId, 0));
-        addToSendingMessages(Message.makeToHandMessage
-                (serverName, client2, cardId, 0));
+    public void sendAddToHandMessage(Game game, Card card) throws ServerException {
+
     }
 
-    public void sendAddToNextMessage(Game game, String cardId) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeToNextMessage
-                (serverName, client1, cardId, 0));
-        addToSendingMessages(Message.makeToNextMessage
-                (serverName, client2, cardId, 0));
+    public void sendAddToNextMessage(Game game, Card card) throws ServerException {
+
     }
 
-    public void sendAddToGraveyardMessage(Game game, String cardId) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeToGraveYardMessage
-                (serverName, client1, cardId, 0));
-        addToSendingMessages(Message.makeToGraveYardMessage
-                (serverName, client2, cardId, 0));
+    public void sendAddToGraveyardMessage(Game game, Card card) throws ServerException {
+
     }
 
-    public void sendAddToMapMessage(Game game, String cardId, Position position) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeToMapMessage
-                (serverName, client1, cardId, position, 0));
-        addToSendingMessages(Message.makeToMapMessage
-                (serverName, client2, cardId, position, 0));
+    public void sendAddToCollectedItemsMessage(Game game, Card card, Player currentPlayer) throws ServerException {
+
     }
 
-    public void sendTroopPositionMessage(Game game, String cardId, Position position) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeTroopPositionMessage
-                (serverName, client1, cardId, position, 0));
-        addToSendingMessages(Message.makeTroopPositionMessage
-                (serverName, client2, cardId, position, 0));
-    }
+    public void sendUpdatedTroopMessage(Game game, Troop troop) throws ServerException {
 
-    public void sendAddToCollectedItemsMessage(Game game, String cardId, String username) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeToCollectedItemsMessage
-                (serverName, client1, cardId, username, 0));
-        addToSendingMessages(Message.makeToCollectedItemsMessage
-                (serverName, client2, cardId, username, 0));
-    }
-
-    public void sendHPMessage(Game game, String cardId, int newValue) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeChangeHPMessage
-                (serverName, client1, cardId, newValue, 0));
-        addToSendingMessages(Message.makeChangeHPMessage
-                (serverName, client2, cardId, newValue, 0));
-    }
-
-    public void sendAPMessage(Game game, String cardId, int newValue) throws ServerException {
-        String client1 = getClientName(game.getPlayerOne().getUserName());
-        String client2 = getClientName(game.getPlayerTwo().getUserName());
-        checkGameAccountsClient(client1, client2);
-        addToSendingMessages(Message.makeChangeAPMessage
-                (serverName, client1, cardId, newValue, 0));
-        addToSendingMessages(Message.makeChangeAPMessage
-                (serverName, client2, cardId, newValue, 0));
     }
 
     public void sendChangeTurnMessage(Game game, int newTurn) throws ServerException {
