@@ -7,6 +7,7 @@ import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.map.Cell;
+import server.models.message.CompressedPlayer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ public class Player {
     private int numberOfCollectedFlags;
     private MatchHistory matchHistory;
 
-    public Player(Deck mainDeck,String userName, int playerNumber) {
+    public Player(Deck mainDeck, String userName, int playerNumber) {
         this.playerNumber = playerNumber;
         this.userName = userName;
         deck = new Deck(mainDeck);
@@ -37,6 +38,11 @@ public class Player {
         }
         hero = new Troop(deck.getHero(), playerNumber);
         troops.add(hero);
+    }
+
+    public CompressedPlayer toCompressedPlayer() {
+        return new CompressedPlayer(
+                userName, currentMP, hand, graveyard, nextCard, collectedItems, playerNumber, numberOfCollectedFlags);
     }
 
     public Troop insert(String cardId) throws ClientException {
@@ -158,7 +164,7 @@ public class Player {
         return this.collectedItems;
     }
 
-    public void addCollectibleItems(Card card){
+    public void addCollectibleItems(Card card) {
 
     }
 
