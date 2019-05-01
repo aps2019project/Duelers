@@ -27,5 +27,6 @@
     ]
   },
   "gameType": "A_FLAG",
-  "reward": 1000
+  "reward": 1000,
+  "numberOfFlags": 1
 }

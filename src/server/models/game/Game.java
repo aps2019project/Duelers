@@ -8,6 +8,7 @@ import server.models.account.MatchHistory;
 import server.models.card.AttackType;
 import server.models.card.Card;
 import server.models.card.CardType;
+import server.models.card.Deck;
 import server.models.card.spell.Spell;
 import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
@@ -26,19 +27,32 @@ public abstract class Game {
 
     protected Game(Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameMap = gameMap;
-        this.playerOne = new Player(accountOne, 1);
-        this.playerTwo = new Player(accountTwo, 2);
+        this.playerOne = new Player(accountOne.getMainDeck(), accountOne.getUsername(), 1);
+        this.playerTwo = new Player(accountTwo.getMainDeck(), accountTwo.getUsername(), 2);
         this.turnNumber = 1;
         put(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
         put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
-        applyOnStartSpells(playerOne);
-        applyOnStartSpells(playerTwo);
+        applyOnStartSpells(playerTwo.getDeck());
+        applyOnStartSpells(playerTwo.getDeck());
     }
 
-    private void applyOnStartSpells(Player player) {
-        for (Card card : player.getDeck().getOthers()) {
+    protected Game(Account account, Deck deck, GameMap gameMap) {
+        this.gameMap = gameMap;
+        this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
+        this.playerTwo = new Player(deck, "AI", 2);
+        this.turnNumber = 1;
+        put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        this.turnNumber = 2;
+        put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
+        this.turnNumber = 1;
+        applyOnStartSpells(playerTwo.getDeck());
+        applyOnStartSpells(playerTwo.getDeck());
+    }
+
+    private void applyOnStartSpells(Deck deck) {
+        for (Card card : deck.getOthers()) {
             for (Spell spell : card.getSpells()) {
                 if (spell.getAvailabilityType().isOnStart())
                     applySpell(spell, detectTarget(
@@ -46,6 +60,14 @@ public abstract class Game {
                             gameMap.getCell(0, 0),
                             gameMap.getCell(0, 0),
                             gameMap.getCell(0, 0))
+                    );
+            }
+        }
+        if (deck.getItem() != null) {
+            for (Spell spell : deck.getItem().getSpells()) {
+                if (spell.getAvailabilityType().isOnStart())
+                    applySpell(spell, detectTarget(
+                            spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
                     );
             }
         }
@@ -159,7 +181,6 @@ public abstract class Game {
     }
 
 
-
     public void insert(String username, String cardId, Position position) throws ClientException {
         if (!canCommand(username)) {
             throw new ClientException("it's not your turn");
@@ -184,6 +205,7 @@ public abstract class Game {
                 applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
         }
     }
+
     public void moveTroop(String username, String cardId, Position position) throws ClientException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");
@@ -218,6 +240,7 @@ public abstract class Game {
         }
         cell.clearItems();
     }
+
     public void attack(String username, String attackerCardId, String defenderCardId) throws ClientException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");

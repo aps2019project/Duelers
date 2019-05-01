@@ -27,5 +27,6 @@
     ]
   },
   "gameType": "KILL_HERO",
-  "reward": 500
+  "reward": 500,
+  "numberOfFlags": 0
 }

@@ -27,5 +27,6 @@
     ]
   },
   "gameType": "SOME_FLAG",
-  "reward": 1500
+  "reward": 1500,
+  "numberOfFlags": 16
 }

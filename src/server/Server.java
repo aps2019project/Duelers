@@ -192,17 +192,18 @@ public class Server {
             }
             Game game = null;
             Story story = stories.get(message.getStage());
-            /*switch (story.getGameType()) {
+            GameMap gameMap = new GameMap(originalCards.getItems(), story.getNumberOfFlags(), originalFlag);
+            switch (story.getGameType()) {
                 case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                    game = new KillHeroBattle(myAccount, story.getDeck(), gameMap);
                     break;
                 case A_FLAG:
-                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                    game = new SingleFlagBattle(myAccount, story.getDeck(), gameMap);
                     break;
                 case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    game = new MultiFlagBattle(myAccount, story.getDeck(), gameMap, story.getNumberOfFlags());
                     break;
-            }*/
+            }
 
         }
     }
