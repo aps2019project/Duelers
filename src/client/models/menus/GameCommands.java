@@ -32,7 +32,7 @@ public class GameCommands extends Menu {
     @Override
     public void showHelp() {
         String help;
-        if (isInGraveYard) {
+        if (!isInGraveYard) {
             help = "Battle:\n" +
                     "\"Game info\"\n" +
                     "\"Show my minions\"\n" +
