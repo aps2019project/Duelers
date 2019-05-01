@@ -10,15 +10,21 @@ public class KillHeroBattle extends Game {
     }
 
     @Override
-    public void finishCheck() {
+    public boolean finishCheck() {
         if (getPlayerOne().getHero() == null && getPlayerTwo().getHero() == null) {
             setMatchHistories(true, true);
+            return true;
 
-        } else if (getPlayerOne().getHero() == null) {
-            setMatchHistories(false, true);
-
-        } else if (getPlayerTwo().getHero() == null) {
-            setMatchHistories(true, false);
         }
+        if (getPlayerOne().getHero() == null) {
+            setMatchHistories(false, true);
+            return true;
+
+        }
+        if (getPlayerTwo().getHero() == null) {
+            setMatchHistories(true, false);
+            return true;
+        }
+        return false;
     }
 }

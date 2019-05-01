@@ -12,11 +12,15 @@ public class MultiFlagBattle extends Game {
     }
 
     @Override
-    public void finishCheck() {
+    public boolean finishCheck() {
         if (getPlayerOne().getNumberOfCollectedFlags() >= numberOfFlags / 2) {
             setMatchHistories(true, false);
-        } else if (getPlayerTwo().getNumberOfCollectedFlags() >= numberOfFlags / 2) {
-            setMatchHistories(false, true);
+            return true;
         }
+        if (getPlayerTwo().getNumberOfCollectedFlags() >= numberOfFlags / 2) {
+            setMatchHistories(false, true);
+            return true;
+        }
+        return false;
     }
 }

@@ -21,7 +21,6 @@ public abstract class Game {
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
-    private boolean finished = false;
 
     protected Game(Account accountOne, Account accountTwo, GameMap gameMap) {
         this.gameMap = gameMap;
@@ -196,8 +195,13 @@ public abstract class Game {
         if (troop.getCell().manhattanDistance(position) > 2) {
             throw new Exception("too far to go");
         }
+        if (!troop.canMove()) {
+            throw new Exception("can not move");
+        }
+
         Cell cell = gameMap.getCell(position);
         troop.setCell(cell);
+        troop.setCanMove(false);
         for (Card card : cell.getItems()) {
             if (card.getType() == CardType.FLAG) {
                 troop.addFlag(card);
@@ -229,6 +233,7 @@ public abstract class Game {
             damage(attackerTroop, defenderTroop);
 
             attackerTroop.setCanAttack(false);
+            attackerTroop.setCanMove(false);
             applyOnAttackSpells(attackerTroop, defenderTroop);
             applyOnDefendSpells(defenderTroop, attackerTroop);
             counterAttack(defenderTroop, attackerTroop);
@@ -390,7 +395,7 @@ public abstract class Game {
         }
     }
 
-    public abstract void finishCheck();
+    public abstract boolean finishCheck();
 
     private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);
@@ -627,13 +632,8 @@ public abstract class Game {
         return targetCells;
     }
 
-    private void finishGame() {
-        this.finished = true;
-    }
 
     void setMatchHistories(boolean resultOne, boolean resultTwo) {
-        finishGame();
-
         playerOne.setMatchHistory(
                 new MatchHistory(playerTwo.getUserName(), resultOne)
         );
