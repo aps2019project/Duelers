@@ -3,6 +3,7 @@ package server.models.map;
 import server.models.card.Card;
 import server.models.game.Player;
 import server.models.game.Troop;
+import server.models.message.CompressedGameMap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,6 +36,10 @@ public class GameMap {
             }
             cells[row][column].addItem(new Card(originalFlag, "Flag", i));
         }
+    }
+
+    public CompressedGameMap toCompressedGameMap() {
+        return new CompressedGameMap(cells, troops);
     }
 
     public static int getRowNumber() {
