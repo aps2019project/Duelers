@@ -1,6 +1,7 @@
 package server.models.game;
 
 import server.models.account.Account;
+import server.models.account.MatchHistory;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
@@ -23,6 +24,7 @@ public class Player {
     private ArrayList<Troop> flagCarriers = new ArrayList<>();
     private int playerNumber;
     private int numberOfCollectedFlags;
+    private MatchHistory matchHistory;
 
     public Player(Account account, int playerNumber) {
         this.playerNumber = playerNumber;
@@ -200,5 +202,9 @@ public class Player {
 
     public void decreaseNumberOfCollectedFlags() {
         this.numberOfCollectedFlags--;
+    }
+
+    public void setMatchHistory(MatchHistory matchHistory) {
+        this.matchHistory = matchHistory;
     }
 }

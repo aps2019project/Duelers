@@ -1,7 +1,6 @@
 package server.models.game;
 
 import server.models.account.Account;
-import server.models.account.MatchHistory;
 import server.models.map.GameMap;
 
 public class KillHeroBattle extends Game {
@@ -11,27 +10,21 @@ public class KillHeroBattle extends Game {
     }
 
     @Override
-    public MatchHistory finishCheck() {
-        MatchHistory matchHistory = null;
+    public boolean finishCheck() {
         if (getPlayerOne().getHero() == null && getPlayerTwo().getHero() == null) {
-            finishGame();
-            matchHistory = new MatchHistory(
-                    getPlayerOne().getUserName(), true, getPlayerTwo().getUserName(), true
-            );
+            setMatchHistories(true, true);
+            return true;
 
         }
         if (getPlayerOne().getHero() == null) {
-            finishGame();
-            matchHistory = new MatchHistory(
-                    getPlayerOne().getUserName(), true, getPlayerTwo().getUserName(), true
-            );
+            setMatchHistories(false, true);
+            return true;
+
         }
         if (getPlayerTwo().getHero() == null) {
-            finishGame();
-            matchHistory = new MatchHistory(
-                    getPlayerOne().getUserName(), true, getPlayerTwo().getUserName(), true
-            );
+            setMatchHistories(true, false);
+            return true;
         }
-        return matchHistory;
+        return false;
     }
 }
