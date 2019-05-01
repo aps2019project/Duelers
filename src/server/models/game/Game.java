@@ -14,6 +14,7 @@ import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
+import server.models.message.CompressedGame;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,10 @@ public abstract class Game {
         this.turnNumber = 1;
         applyOnStartSpells(playerTwo.getDeck());
         applyOnStartSpells(playerTwo.getDeck());
+    }
+
+    public CompressedGame toCompressedGame() {
+        return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber);
     }
 
     private void applyOnStartSpells(Deck deck) {
