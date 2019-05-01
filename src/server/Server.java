@@ -1,10 +1,7 @@
 package server;
 
 import client.Client;
-import server.models.exceptions.ClientException;
 import server.models.JsonConverter;
-import server.models.exceptions.LogicException;
-import server.models.exceptions.ServerException;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -12,6 +9,9 @@ import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
+import server.models.exceptions.ServerException;
 import server.models.game.*;
 import server.models.map.GameMap;
 import server.models.map.Position;
@@ -139,7 +139,7 @@ public class Server {
                         newStoryGame(message);
                         break;
                     case NEW_DECK_GAME:
-                    newDeckGame(message);
+                        newDeckGame(message);
                         break;
                     case INSERT:
                         insertCard(message);
@@ -181,7 +181,7 @@ public class Server {
         sendMessages();
     }
 
-    private void newDeckGame(Message message) throws LogicException{
+    private void newDeckGame(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account myAccount = clients.get(message.getSender());
             if (!myAccount.hasValidMainDeck()) {
@@ -193,7 +193,7 @@ public class Server {
                 return;
             }
             Deck deck = myAccount.getDeck(message.getDeckName());
-            if (deck == null && !deck.isValid()) {
+            if (deck == null || !deck.isValid()) {
                 sendException("selected deck is not valid", message.getSender(), message.getMessageId());
             }
             Game game = null;
