@@ -9,6 +9,10 @@ public class KillHeroBattle extends Game {
         super(account1, account2, gameMap);
     }
 
+    public KillHeroBattle(Account account1 , Story story,GameMap gameMap){
+        super(account1,story,gameMap);
+    }
+
     @Override
     public boolean finishCheck() {
         if (getPlayerOne().getHero() == null && getPlayerTwo().getHero() == null) {

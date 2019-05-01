@@ -1,9 +1,7 @@
 package server;
 
 import client.Client;
-import server.models.ClientException;
 import server.models.JsonConverter;
-import server.models.ServerException;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -188,17 +186,18 @@ public class Server {
             }
             Game game=null;
             Story story = stories.get(message.getStage());
-            /*switch (story.getGameType()) {
+            GameMap gameMap = new GameMap(originalCards.getItems(),story.getNumberOfFlags() , originalFlag);
+            switch (story.getGameType()) {
                 case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                    game = new KillHeroBattle(myAccount, story, gameMap);
                     break;
                 case A_FLAG:
-                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+//                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
                     break;
                 case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
-                    break;
-            }*/
+//                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap);
+                    brea-k;
+            }
 
         }
     }

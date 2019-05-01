@@ -7,11 +7,14 @@ public class Story {
     private Deck deck;
     private GameType gameType;
     private int reward;
+    private int numberOfFlags;
 
-    public Story(Deck deck, GameType gameType, int reward) {
+    public Story(Deck deck, GameType gameType, int reward, int numberOfFlags) {
         this.deck = deck;
         this.gameType = gameType;
         this.reward = reward;
+        this.numberOfFlags = numberOfFlags;
+
     }
 
     public Story(TempStory story, Collection originalCards) {
@@ -19,6 +22,14 @@ public class Story {
         deck.copyCards();
         this.gameType = story.getGameType();
         this.reward = story.getReward();
+    }
+
+    public int getNumberOfFlags() {
+        return numberOfFlags;
+    }
+
+    public void setNumberOfFlags(int numberOfFlags) {
+        this.numberOfFlags = numberOfFlags;
     }
 
     public Deck getDeck() {

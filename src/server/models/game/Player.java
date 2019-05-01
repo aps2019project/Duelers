@@ -1,6 +1,5 @@
 package server.models.game;
 
-import server.models.account.Account;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
 import server.models.card.CardType;
@@ -26,10 +25,10 @@ public class Player {
     private int numberOfCollectedFlags;
     private MatchHistory matchHistory;
 
-    public Player(Account account, int playerNumber) {
+    public Player(Deck mainDeck,String userName, int playerNumber) {
         this.playerNumber = playerNumber;
-        userName = account.getUsername();
-        deck = new Deck(account.getMainDeck());
+        this.userName = userName;
+        deck = new Deck(mainDeck);
         setNextCard();
         for (int i = 0; i < 5; i++) {
             addNextCardToHand();
