@@ -1,9 +1,10 @@
 package server;
 
 import client.Client;
-import server.models.ClientException;
+import server.models.exceptions.ClientException;
 import server.models.JsonConverter;
-import server.models.ServerException;
+import server.models.exceptions.LogicException;
+import server.models.exceptions.ServerException;
 import server.models.account.Account;
 import server.models.account.AccountInfo;
 import server.models.account.Collection;
@@ -84,109 +85,112 @@ public class Server {
 
     public void receiveMessages() {
         for (Message message : receivingMessages) {
-            if (message == null) {
-                serverPrint("invalid message");
-                continue;
-            }
-            if (!message.getReceiver().equals(serverName)) {
-                serverPrint("Message's Receiver Was Not This Server.");
-                continue;
-            }
-            switch (message.getMessageType()) {
-                case REGISTER:
-                    register(message);
-                    break;
-                case LOG_IN:
-                    login(message);
-                    break;
-                case LOG_OUT:
-                    logout(message);
-                    break;
-                case GET_LEADERBOARD:
-                    sendLeaderBoard(message);
-                    break;
-                case GET_ORIGINAL_CARDS:
-                    sendOriginalCards(message);
-                    break;
-                case GET_STORIES:
-                    sendStories(message);
-                    break;
-                case BUY_CARD:
-                    buyCard(message);
-                    break;
-                case SELL_CARD:
-                    sellCard(message);
-                    break;
-                case CREATE_DECK:
-                    createDeck(message);
-                    break;
-                case REMOVE_DECK:
-                    removeDeck(message);
-                    break;
-                case ADD_TO_DECK:
-                    addToDeck(message);
-                    break;
-                case REMOVE_FROM_DECK:
-                    removeFromDeck(message);
-                    break;
-                case SELECT_DECK:
-                    selectDeck(message);
-                    break;
-                case NEW_MULTIPLAYER_GAME:
-                    newMultiplayerGame(message);
-                    break;
-                case NEW_STORY_GAME:
-                    newStoryGame(message);
-                    break;
-                case NEW_DECK_GAME:
+            try {
+                if (message == null) {
+                    throw new ServerException("invalid message");
+                }
+                if (!message.getReceiver().equals(serverName)) {
+                    throw new ServerException("Message's Receiver Was Not This Server.");
+                }
+                switch (message.getMessageType()) {
+                    case REGISTER:
+                        register(message);
+                        break;
+                    case LOG_IN:
+                        login(message);
+                        break;
+                    case LOG_OUT:
+                        logout(message);
+                        break;
+                    case GET_LEADERBOARD:
+                        sendLeaderBoard(message);
+                        break;
+                    case GET_ORIGINAL_CARDS:
+                        sendOriginalCards(message);
+                        break;
+                    case GET_STORIES:
+                        sendStories(message);
+                        break;
+                    case BUY_CARD:
+                        buyCard(message);
+                        break;
+                    case SELL_CARD:
+                        sellCard(message);
+                        break;
+                    case CREATE_DECK:
+                        createDeck(message);
+                        break;
+                    case REMOVE_DECK:
+                        removeDeck(message);
+                        break;
+                    case ADD_TO_DECK:
+                        addToDeck(message);
+                        break;
+                    case REMOVE_FROM_DECK:
+                        removeFromDeck(message);
+                        break;
+                    case SELECT_DECK:
+                        selectDeck(message);
+                        break;
+                    case NEW_MULTIPLAYER_GAME:
+                        newMultiplayerGame(message);
+                        break;
+                    case NEW_STORY_GAME:
+                        newStoryGame(message);
+                        break;
+                    case NEW_DECK_GAME:
 
-                    break;
-                case INSERT:
-                    insertCard(message);
-                    break;
-                case ATTACK:
-                    attack(message);
-                    break;
-                case END_TURN:
-                    endTurn(message);
-                    break;
-                case COMBO:
-                    combo(message);
-                    break;
-                case USE_SPECIAL_POWER:
-                    useSpecialPower(message);
-                    break;
-                case MOVE_TROOP:
-                    moveTroop(message);
-                    break;
-                case SUDO:
-                    sudo(message);
-                    break;
-                case SELECT_USER:
-                    selectUserForMultiPlayer(message);
-                    break;
-                default:
-                    sendException("Invalid Message Type!", message.getSender(), message.getMessageId());
-                    serverPrint("Invalid Message Type!");
-                    break;
+                        break;
+                    case INSERT:
+                        insertCard(message);
+                        break;
+                    case ATTACK:
+                        attack(message);
+                        break;
+                    case END_TURN:
+                        endTurn(message);
+                        break;
+                    case COMBO:
+                        combo(message);
+                        break;
+                    case USE_SPECIAL_POWER:
+                        useSpecialPower(message);
+                        break;
+                    case MOVE_TROOP:
+                        moveTroop(message);
+                        break;
+                    case SUDO:
+                        sudo(message);
+                        break;
+                    case SELECT_USER:
+                        selectUserForMultiPlayer(message);
+                        break;
+                    default:
+                        throw new LogicException("Invalid Message Type!");
+                }
+            } catch (ServerException e) {
+                serverPrint(e.getMessage());
+            } catch (ClientException e) {
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
+            } catch (LogicException e) {
+                serverPrint(e.getMessage());
+                sendException(e.getMessage(), message.getSender(), message.getMessageId());
             }
         }
         receivingMessages.clear();
         sendMessages();
     }
 
-    private void newStoryGame(Message message) {
+    private void newStoryGame(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account myAccount = clients.get(message.getSender());
             if (!myAccount.hasValidMainDeck()) {
-                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you don't have valid main deck!");
             }
             if (onlineGames.get(myAccount) != null) {
-                sendException("you have online game!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you have online game!");
             }
-            Game game=null;
+            Game game = null;
             Story story = stories.get(message.getStage());
             /*switch (story.getGameType()) {
                 case KILL_HERO:
@@ -203,25 +207,21 @@ public class Server {
         }
     }
 
-    private void newMultiplayerGame(Message message) {
+    private void newMultiplayerGame(Message message) throws LogicException {
         if (loginCheck(message) && isOpponentAccountValid(message)) {
             Account myAccount = clients.get(message.getSender());
             Account opponentAccount = getAccount(message.getOpponentUserName());
             if (!myAccount.hasValidMainDeck()) {
-                sendException("you don't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you don't have valid main deck!");
             }
             if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
-                sendException("opponent doesn't have valid main deck!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("opponent's main deck is not valid");
             }
             if (onlineGames.get(myAccount) != null) {
-                sendException("you have online game!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("you have online game!");
             }
             if (onlineGames.get(opponentAccount) != null) {
-                sendException("opponent has online game!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("opponent has online game!");
             }
             //Should be removed
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
@@ -229,8 +229,7 @@ public class Server {
             Game game = null;
             GameMap gameMap = new GameMap(originalCards.getItems(), message.getNumberOfFlags(), originalFlag);
             if (message.getGameType() == null) {
-                sendException("invalid gameType!", message.getSender(), message.getMessageId());
-                return;
+                throw new ClientException("invalid gameType!");
             }
             switch (message.getGameType()) {
                 case KILL_HERO:
@@ -310,11 +309,11 @@ public class Server {
                 serverName, receiver, exceptionString, messageId));
     }
 
-    private void register(Message message) {
+    private void register(Message message) throws LogicException {
         if (getAccount(message.getUsername()) != null) {
-            sendException("Invalid Username!", message.getSender(), message.getMessageId());
+            throw new ClientException("Invalid Username!");
         } else if (message.getPassword() == null || message.getPassword().length() < 4) {
-            sendException("Invalid Password!", message.getSender(), message.getMessageId());
+            throw new ClientException("Invalid Password!");
         } else {
             Account account = new Account(message.getUsername(), message.getPassword());
             accounts.put(account, null);
@@ -325,20 +324,19 @@ public class Server {
         }
     }
 
-    private void login(Message message) {
+    private void login(Message message) throws LogicException {
         Account account = getAccount(message.getUsername());
         Client client = getClient(message.getSender());
         if (client == null) {
-            serverPrint("Client Wasn't Added!");
-            sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
+            throw new LogicException("Client Wasn't Added!");
         } else if (account == null) {
-            sendException("Username Not Found!", message.getSender(), message.getMessageId());
+            throw new ClientException("Username Not Found!");
         } else if (!account.getPassword().equals(message.getPassword())) {
-            sendException("Incorrect PassWord!", message.getSender(), message.getMessageId());
+            throw new ClientException("Incorrect PassWord!");
         } else if (accounts.get(account) != null) {
-            sendException("Online Account!", message.getSender(), message.getMessageId());
+            throw new ClientException("Online Account!");
         } else if (clients.get(message.getSender()) != null) {
-            sendException("Client Was Logged In!", message.getSender(), message.getMessageId());
+            throw new ClientException("Client Was Logged In!");
         } else {
             accounts.replace(account, message.getSender());
             clients.replace(message.getSender(), account);
@@ -348,20 +346,16 @@ public class Server {
         }
     }
 
-    private boolean loginCheck(Message message) {
+    private boolean loginCheck(Message message) throws LogicException {
         if (!clients.containsKey(message.getSender())) {
-            serverPrint("Client Wasn't Added!");
-            sendException("Client Wasn't Added!", message.getSender(), message.getMessageId());
-            return false;
+            throw new LogicException("Client Wasn't Added!");
         } else if (clients.get(message.getSender()) == null) {
-            sendException("Client Was Not LoggedIn", message.getSender(), message.getMessageId());
-            return false;
-        } else {
-            return true;
+            throw new ClientException("Client Was Not LoggedIn");
         }
+        return true;
     }
 
-    private void logout(Message message) {
+    private void logout(Message message) throws LogicException {
         if (loginCheck(message)) {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
@@ -369,7 +363,7 @@ public class Server {
         }
     }
 
-    private void createDeck(Message message) {
+    private void createDeck(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
@@ -378,13 +372,12 @@ public class Server {
                         serverName, message.getSender(), account, message.getMessageId()));
                 saveAccount(account);
             } else {
-                addToSendingMessages(Message.makeExceptionMessage(
-                        serverName, message.getSender(), "deck's name was duplicate.", message.getMessageId()));
+                throw new ClientException("deck's name was duplicate.");
             }
         }
     }
 
-    private void removeDeck(Message message) {
+    private void removeDeck(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (account.hasDeck(message.getDeckName())) {
@@ -393,21 +386,20 @@ public class Server {
                         serverName, message.getSender(), account, message.getMessageId()));
                 saveAccount(account);
             } else {
-                addToSendingMessages(Message.makeExceptionMessage(
-                        serverName, message.getSender(), "deck was not found.", message.getMessageId()));
+                throw new ClientException("deck was not found.");
             }
         }
     }
 
-    private void addToDeck(Message message) {
+    private void addToDeck(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
-                sendException("deck was not found.", message.getSender(), message.getMessageId());
+                throw new ClientException("deck was not found.");
             } else if (!account.getCollection().hasCard(message.getCardId())) {
-                sendException("invalid cardid.", message.getSender(), message.getMessageId());
+                throw new ClientException("invalid card id.");
             } else if (account.getDeck(message.getDeckName()).hasCard(message.getCardId())) {
-                sendException("deck had this card.", message.getSender(), message.getMessageId());
+                throw new ClientException("deck had this card.");
             } else {
                 account.addCardToDeck(message.getCardId(), message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -417,13 +409,13 @@ public class Server {
         }
     }
 
-    private void removeFromDeck(Message message) {
+    private void removeFromDeck(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
-                sendException("deck was not found.", message.getSender(), message.getMessageId());
+                throw new ClientException("deck was not found.");
             } else if (!account.getDeck(message.getDeckName()).hasCard(message.getCardId())) {
-                sendException("deck didn't have this card.", message.getSender(), message.getMessageId());
+                throw new ClientException("deck don't have this card.");
             } else {
                 account.removeCardFromDeck(message.getCardId(), message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -433,15 +425,13 @@ public class Server {
         }
     }
 
-    private void selectDeck(Message message) {
+    private void selectDeck(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.hasDeck(message.getDeckName())) {
-                sendException("deck was not found", message.getSender(), message.getMessageId());
-
+                throw new ClientException("deck was not found.");
             } else if (account.getMainDeck() != null && account.getMainDeck().getDeckName().equals(message.getDeckName())) {
-                sendException("deck was already the main deck.", message.getSender(), message.getMessageId());
-
+                throw new ClientException("deck was already the main deck.");
             } else {
                 account.selectDeck(message.getDeckName());
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -451,13 +441,13 @@ public class Server {
         }
     }
 
-    private void buyCard(Message message) {
+    private void buyCard(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!originalCards.hasCard(message.getCardName()) || originalCards.getCard(message.getCardName()).getType() == CardType.COLLECTIBLE_ITEM) { // TODO
-                sendException("invalid card name", message.getSender(), message.getMessageId());
+                throw new ClientException("invalid card name");
             } else if (account.getMoney() < originalCards.getCard(message.getCardName()).getPrice()) {
-                sendException("account's money isn't enough.", message.getSender(), message.getMessageId());
+                throw new ClientException("account's money isn't enough.");
             } else {
                 account.buyCard(message.getCardName(), originalCards.getCard(message.getCardName()).getPrice(), originalCards);
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -467,11 +457,11 @@ public class Server {
         }
     }
 
-    private void sellCard(Message message) {
+    private void sellCard(Message message) throws LogicException {
         if (loginCheck(message)) {
             Account account = clients.get(message.getSender());
             if (!account.getCollection().hasCard(message.getCardId())) {
-                sendException("invalid card id", message.getSender(), message.getMessageId());
+                throw new ClientException("invalid card id");
             } else {
                 account.sellCard(message.getCardId());
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -481,21 +471,21 @@ public class Server {
         }
     }
 
-    private void sendStories(Message message) {
+    private void sendStories(Message message) throws LogicException {
         if (loginCheck(message)) {
             addToSendingMessages(Message.makeStoriesCopyMessage
                     (serverName, message.getSender(), stories.toArray(Story[]::new), message.getMessageId()));
         }
     }
 
-    private void sendOriginalCards(Message message) {
+    private void sendOriginalCards(Message message) throws LogicException {
         if (loginCheck(message)) {
             addToSendingMessages(Message.makeOriginalCardsCopyMessage(
                     serverName, message.getSender(), originalCards, message.getMessageId()));
         }
     }
 
-    private void sendLeaderBoard(Message message) {//Check
+    private void sendLeaderBoard(Message message) { //Check
         if (accounts.size() == 0) {
             addToSendingMessages(Message.makeExceptionMessage(serverName, message.getSender(), "leader board is empty", 0));
             sendMessages();
@@ -510,12 +500,12 @@ public class Server {
         addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), leaderBoard, 0));
     }
 
-    private void selectUserForMultiPlayer(Message message) {
+    private void selectUserForMultiPlayer(Message message) throws ClientException {
         Account account = getAccount(message.getOpponentUserName());
         if (account == null) {
-            sendException("second player is not valid", message.getSender(), 0);
+            throw new ClientException("second player is not valid");
         } else if (!account.hasValidMainDeck()) {
-            sendException("selected deck for second player is not valid", message.getSender(), 0);
+            throw new ClientException("selected deck for second player is not valid");
         } else {
             AccountInfo accountInfo = new AccountInfo(account);
             addToSendingMessages(
@@ -527,14 +517,14 @@ public class Server {
         }
     }
 
-    private Game getGame(String clientName) throws Exception {
+    private Game getGame(String clientName) throws ClientException {
         Account account = clients.get(clientName);
         if (account == null) {
-            throw new Exception("your client hasn't logged in!");
+            throw new ClientException("your client hasn't logged in!");
         }
         Game game = onlineGames.get(account);
         if (game == null) {
-            throw new Exception("you don't have online game!");
+            throw new ClientException("you don't have online game!");
         }
         return game;
     }
@@ -557,89 +547,35 @@ public class Server {
     }
 
 
-    private void insertCard(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.insert(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void insertCard(Message message) throws ClientException {
+        Game game = getGame(message.getSender());
+        game.insert(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
     }
 
-    private void attack(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.attack(clients.get(message.getSender()).getUsername(), message.getCardIds()[0], message.getCardIds()[1]);
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void attack(Message message) throws ClientException {
+        Game game = getGame(message.getSender());
+        game.attack(clients.get(message.getSender()).getUsername(), message.getCardIds()[0], message.getCardIds()[1]);
     }
 
-    private void combo(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.comboAttack(clients.get(message.getSender()).getUsername(), message.getCardIds(), message.getCardId());
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void combo(Message message) throws ClientException {
+        Game game = getGame(message.getSender());
+        game.comboAttack(clients.get(message.getSender()).getUsername(), message.getCardIds(), message.getCardId());
     }
 
-    private void useSpecialPower(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void useSpecialPower(Message message) throws ClientException {
+        Game game = getGame(message.getSender());
+        game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
     }
 
-    private void moveTroop(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.moveTroop(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
-                addToSendingMessages(Message.makeMoveTroopMessage(serverName, message.getSender(), message.getCardId(), message.getPosition(), 0));
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void moveTroop(Message message) throws ClientException {
+        Game game = getGame(message.getSender());
+        game.moveTroop(clients.get(message.getSender()).getUsername(), message.getCardId(), message.getPosition());
+        addToSendingMessages(Message.makeMoveTroopMessage(serverName, message.getSender(), message.getCardId(), message.getPosition(), 0));
     }
 
-    private void endTurn(Message message) {
-        Game game;
-        try {
-            game = getGame(message.getSender());
-            try {
-                game.changeTurn(clients.get(message.getSender()).getUsername());
-            } catch (Exception e) {
-                sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            }
-        } catch (Exception e) {
-            sendException(e.getMessage(), message.getSender(), message.getMessageId());
-        }
+    private void endTurn(Message message) throws LogicException {
+        Game game = getGame(message.getSender());
+        game.changeTurn(clients.get(message.getSender()).getUsername());
     }
 
     private void sudo(Message message) {
@@ -649,19 +585,18 @@ public class Server {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
             }
         }
-
     }
 
-    private void checkGameAccountsClient(String client1, String client2) throws Exception {
+    private void checkGameAccountsClient(String client1, String client2) throws ServerException {
         if (client1 == null) {
-            throw new Exception("Player1 has logged out!");
+            throw new ServerException("Player1 has logged out!");
         }
         if (client2 == null) {
-            throw new Exception("Player2 has logged out!");
+            throw new ServerException("Player2 has logged out!");
         }
     }
 
-    public void sendAddToHandMessage(Game game, String cardId) throws Exception {
+    public void sendAddToHandMessage(Game game, String cardId) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -671,7 +606,7 @@ public class Server {
                 (serverName, client2, cardId, 0));
     }
 
-    public void sendAddToNextMessage(Game game, String cardId) throws Exception {
+    public void sendAddToNextMessage(Game game, String cardId) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -681,7 +616,7 @@ public class Server {
                 (serverName, client2, cardId, 0));
     }
 
-    public void sendAddToGraveyardMessage(Game game, String cardId) throws Exception {
+    public void sendAddToGraveyardMessage(Game game, String cardId) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -691,7 +626,7 @@ public class Server {
                 (serverName, client2, cardId, 0));
     }
 
-    public void sendAddToMapMessage(Game game, String cardId, Position position) throws Exception {
+    public void sendAddToMapMessage(Game game, String cardId, Position position) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -701,7 +636,7 @@ public class Server {
                 (serverName, client2, cardId, position, 0));
     }
 
-    public void sendTroopPositionMessage(Game game, String cardId, Position position) throws Exception {
+    public void sendTroopPositionMessage(Game game, String cardId, Position position) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -711,7 +646,7 @@ public class Server {
                 (serverName, client2, cardId, position, 0));
     }
 
-    public void sendAddToCollectedItemsMessage(Game game, String cardId, String username) throws Exception {
+    public void sendAddToCollectedItemsMessage(Game game, String cardId, String username) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -721,7 +656,7 @@ public class Server {
                 (serverName, client2, cardId, username, 0));
     }
 
-    public void sendHPMessage(Game game, String cardId, int newValue) throws Exception {
+    public void sendHPMessage(Game game, String cardId, int newValue) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -731,7 +666,7 @@ public class Server {
                 (serverName, client2, cardId, newValue, 0));
     }
 
-    public void sendAPMessage(Game game, String cardId, int newValue) throws Exception {
+    public void sendAPMessage(Game game, String cardId, int newValue) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
@@ -741,7 +676,7 @@ public class Server {
                 (serverName, client2, cardId, newValue, 0));
     }
 
-    public void sendChangeTurnMessage(Game game, int newTurn) throws Exception {
+    public void sendChangeTurnMessage(Game game, int newTurn) throws ServerException {
         String client1 = getClientName(game.getPlayerOne().getUserName());
         String client2 = getClientName(game.getPlayerTwo().getUserName());
         checkGameAccountsClient(client1, client2);
