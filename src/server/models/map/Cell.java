@@ -1,6 +1,7 @@
 package server.models.map;
 
 import server.models.card.Card;
+import server.models.message.CompressedCell;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,10 @@ public class Cell {
     public Cell(int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    public CompressedCell toCompressedCell(){
+        return new CompressedCell(row,column,items);
     }
 
     @Override
