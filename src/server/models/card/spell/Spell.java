@@ -1,6 +1,6 @@
 package server.models.card.spell;
 
-import server.models.message.CompressedSpell;
+import server.models.comperessedData.CompressedSpell;
 
 public class Spell {
     private String spellId;

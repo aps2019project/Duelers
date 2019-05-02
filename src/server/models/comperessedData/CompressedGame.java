@@ -1,4 +1,4 @@
-package server.models.message;
+package server.models.comperessedData;
 
 import server.models.game.Player;
 import server.models.map.GameMap;

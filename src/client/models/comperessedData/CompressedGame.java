@@ -1,4 +1,4 @@
-package client.models.game;
+package client.models.comperessedData;
 
 public class CompressedGame {
     private CompressedPlayer playerOne;

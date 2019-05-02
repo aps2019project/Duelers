@@ -1,7 +1,7 @@
 package server.models.map;
 
 import server.models.card.Card;
-import server.models.message.CompressedCell;
+import server.models.comperessedData.CompressedCell;
 
 import java.util.ArrayList;
 

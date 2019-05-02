@@ -1,9 +1,7 @@
-package client.models.game;
+package client.models.comperessedData;
 
 import client.models.card.AttackType;
 import client.models.card.CardType;
-
-import java.util.ArrayList;
 
 public class CompressedCard {
     private String name;

@@ -50,8 +50,8 @@ public class GameCommands extends Menu {
                     "\"Insert [card name] in (x, y)\"\n" +
                     "\"show all decks\"\n" +
                     "\"show deck [deck name]\"\n" +
-                    "\"Show collectables\"\n" +
-                    "\"Select [collectable id]\"\n";
+                    "\"Show collectibles\"\n" +
+                    "\"Select [collectible id]\"\n";
             if (selectedItemId != null) {
                 help += "\"Show info\"\n" +
                         "\"Use [location x, y]\"\n";

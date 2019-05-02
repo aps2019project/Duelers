@@ -1,11 +1,9 @@
-package server.models.message;
+package server.models.comperessedData;
 
 import server.models.card.AttackType;
-import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.spell.Spell;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 
 public class CompressedCard {

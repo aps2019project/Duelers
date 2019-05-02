@@ -1,8 +1,6 @@
-package client.models.game;
+package client.models.comperessedData;
 
 import client.models.map.Position;
-
-import java.util.ArrayList;
 
 public class CompressedTroop {
     private CompressedCard card;

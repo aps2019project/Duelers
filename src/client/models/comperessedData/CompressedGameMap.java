@@ -1,4 +1,4 @@
-package client.models.game;
+package client.models.comperessedData;
 
 import java.util.ArrayList;
 

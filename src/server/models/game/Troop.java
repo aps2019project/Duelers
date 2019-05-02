@@ -2,7 +2,7 @@ package server.models.game;
 
 import server.models.card.Card;
 import server.models.map.Cell;
-import server.models.message.CompressedTroop;
+import server.models.comperessedData.CompressedTroop;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package server.models.message;
+package server.models.comperessedData;
 
 import server.models.game.Troop;
 import server.models.map.Cell;

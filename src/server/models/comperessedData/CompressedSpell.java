@@ -1,4 +1,4 @@
-package server.models.message;
+package server.models.comperessedData;
 
 import server.models.card.spell.AvailabilityType;
 import server.models.card.spell.Target;

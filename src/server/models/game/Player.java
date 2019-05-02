@@ -1,13 +1,12 @@
 package server.models.game;
 
 import server.models.exceptions.ClientException;
-import server.models.account.Account;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
 import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.map.Cell;
-import server.models.message.CompressedPlayer;
+import server.models.comperessedData.CompressedPlayer;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package client.models.game;
+package client.models.comperessedData;
 
 public class CompressedCell {
     private int row;

@@ -1,6 +1,4 @@
-package client.models.game;
-
-import client.models.card.Deck;
+package client.models.comperessedData;
 
 import java.util.ArrayList;
 

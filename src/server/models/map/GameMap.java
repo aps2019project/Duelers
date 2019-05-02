@@ -3,7 +3,7 @@ package server.models.map;
 import server.models.card.Card;
 import server.models.game.Player;
 import server.models.game.Troop;
-import server.models.message.CompressedGameMap;
+import server.models.comperessedData.CompressedGameMap;
 
 import java.util.ArrayList;
 import java.util.Random;

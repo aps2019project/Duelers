@@ -14,7 +14,7 @@ import server.models.card.spell.SpellAction;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
-import server.models.message.CompressedGame;
+import server.models.comperessedData.CompressedGame;
 
 import java.util.ArrayList;
 

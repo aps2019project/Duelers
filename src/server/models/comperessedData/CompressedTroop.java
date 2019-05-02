@@ -1,4 +1,4 @@
-package server.models.message;
+package server.models.comperessedData;
 
 import server.models.map.Position;
 import server.models.card.Card;

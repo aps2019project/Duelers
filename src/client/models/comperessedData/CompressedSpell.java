@@ -1,4 +1,4 @@
-package client.models.game;
+package client.models.comperessedData;
 
 import client.models.card.spell.AvailabilityType;
 import client.models.card.spell.SpellAction;
