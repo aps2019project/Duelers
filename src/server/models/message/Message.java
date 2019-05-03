@@ -3,6 +3,7 @@ package server.models.message;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.game.Game;
+import server.models.game.Story;
 
 public class Message {
     private MessageType messageType;
@@ -15,6 +16,7 @@ public class Message {
     private OriginalCardsCopyMessage originalCardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
+    private StoriesCopyMessage storiesCopyMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -48,6 +50,13 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.leaderBoardCopyMessage = new LeaderBoardCopyMessage(leaderBoard);
         message.messageType = MessageType.LEADERBOARD_COPY;
+        return message;
+    }
+
+    public static Message makeStoriesCopyMessage(String sender, String receiver, Story[] stories, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.storiesCopyMessage = new StoriesCopyMessage(stories);
+        message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 }
