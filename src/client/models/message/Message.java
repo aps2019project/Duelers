@@ -21,14 +21,9 @@ public class Message {
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
 
+    //SENDER:CLIENT
+    private GetDataMessage getDataMessage;
 
-    public static Message convertJsonToMessage(String messageJson) {
-        return JsonConverter.fromJson(messageJson, Message.class);
-    }
-
-    public String toJson() {
-        return JsonConverter.toJson(this);
-    }
 
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
@@ -36,10 +31,23 @@ public class Message {
         this.messageId = messageId;
     }
 
+    public static Message convertJsonToMessage(String messageJson) {
+        return JsonConverter.fromJson(messageJson, Message.class);
+    }
 
     public MessageType getMessageType() {
         return messageType;
     }
+
+    public static Message makeGetDataMessage(String sender, String receiver,DataName dataName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.getDataMessage=new GetDataMessage(dataName);
+        message.messageType = MessageType.GET_DATA;
+        return message;
+    }
+
+
+
 
     public String getSender() {
         return sender;

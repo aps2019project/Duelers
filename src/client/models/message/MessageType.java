@@ -14,9 +14,8 @@ public enum MessageType {
     GAME_UPDATE,
 
     //SENDER:CLIENT
+    GET_DATA,
     MOVE_TROOP,
-    GET_ORIGINAL_CARDS,
-    GET_LEADERBOARD,
     CREATE_DECK,
     REMOVE_DECK,
     ADD_TO_DECK,
@@ -37,5 +36,4 @@ public enum MessageType {
     NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
-    GET_STORIES
 }

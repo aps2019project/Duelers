@@ -8,7 +8,7 @@ import server.models.game.Game;
 import server.models.game.Story;
 import server.models.game.Troop;
 
-public class Message {
+public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private MessageType messageType;
     //serverName || clientName
     private String sender;
