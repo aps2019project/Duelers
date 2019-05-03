@@ -14,6 +14,7 @@ public class Message {
     private GameCopyMessage gameCopyMessage;
     private OriginalCardsCopyMessage originalCardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
+    private LeaderBoardCopyMessage leaderBoardCopyMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -40,6 +41,13 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.accountCopyMessage = new AccountCopyMessage(account);
         message.messageType = MessageType.ACCOUNT_COPY;
+        return message;
+    }
+
+    public static Message makeLeaderBoardCopyMessage(String sender, String receiver, Account[] leaderBoard, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.leaderBoardCopyMessage = new LeaderBoardCopyMessage(leaderBoard);
+        message.messageType = MessageType.LEADERBOARD_COPY;
         return message;
     }
 }
