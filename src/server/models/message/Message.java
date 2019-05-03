@@ -22,6 +22,7 @@ public class Message {
     private CardPositionMessage cardPositionMessage;
     private TroopUpdateMessage troopUpdateMessage;
     private GameUpdateMessage gameUpdateMessage;
+    private ExceptionMessage exceptionMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -86,6 +87,13 @@ public class Message {
         message.gameUpdateMessage = new GameUpdateMessage(turnNumber, player1CurrentMP, player1NumberOfCollectedFlags,
                 player2CurrentMP, player2NumberOfCollectedFlags);
         message.messageType = MessageType.GAME_UPDATE;
+        return message;
+    }
+
+    public static Message makeExceptionMessage(String sender, String receiver, String exceptionString, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.exceptionMessage = new ExceptionMessage(exceptionString);
+        message.messageType = MessageType.SEND_EXCEPTION;
         return message;
     }
 }
