@@ -14,6 +14,7 @@ public class Message {
     private String receiver;
     private int messageId;
 
+    //SENDER:SERVER
     private GameCopyMessage gameCopyMessage;
     private OriginalCardsCopyMessage originalCardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
@@ -23,6 +24,7 @@ public class Message {
     private TroopUpdateMessage troopUpdateMessage;
     private GameUpdateMessage gameUpdateMessage;
     private ExceptionMessage exceptionMessage;
+    private OpponentInfoMessage opponentInfoMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -94,6 +96,13 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.exceptionMessage = new ExceptionMessage(exceptionString);
         message.messageType = MessageType.SEND_EXCEPTION;
+        return message;
+    }
+
+    public static Message makeAccountInfoMessage(String sender, String receiver, Account opponent, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.opponentInfoMessage=new OpponentInfoMessage(opponent);
+        message.messageType = MessageType.OPPONENT_INFO;
         return message;
     }
 }
