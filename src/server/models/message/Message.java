@@ -5,6 +5,7 @@ import server.models.account.Collection;
 import server.models.card.Card;
 import server.models.game.Game;
 import server.models.game.Story;
+import server.models.game.Troop;
 
 public class Message {
     private MessageType messageType;
@@ -19,6 +20,7 @@ public class Message {
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
     private CardPositionMessage cardPositionMessage;
+    private TroopUpdateMessage troopUpdateMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -65,6 +67,12 @@ public class Message {
     public static Message makeChangeCardPositionMessage(String sender, String receiver, Card card, CardPosition cardPosition, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardPositionMessage = new CardPositionMessage(card, cardPosition);
+        return message;
+    }
+
+    public static Message makeTroopUpdateMessage(String sender, String receiver, Troop troop, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.troopUpdateMessage=new TroopUpdateMessage(troop);
         return message;
     }
 }
