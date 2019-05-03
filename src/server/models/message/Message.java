@@ -2,6 +2,7 @@ package server.models.message;
 
 import server.models.account.Account;
 import server.models.account.Collection;
+import server.models.card.Card;
 import server.models.game.Game;
 import server.models.game.Story;
 
@@ -17,6 +18,7 @@ public class Message {
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
+    private CardPositionMessage cardPositionMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -57,6 +59,12 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.storiesCopyMessage = new StoriesCopyMessage(stories);
         message.messageType = MessageType.STORIES_COPY;
+        return message;
+    }
+
+    public static Message makeChangeCardPositionMessage(String sender, String receiver, Card card, CardPosition cardPosition, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardPositionMessage = new CardPositionMessage(card, cardPosition);
         return message;
     }
 }
