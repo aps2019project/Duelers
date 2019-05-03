@@ -3,7 +3,7 @@ package server.models.message;
 import server.models.card.spell.DeckInfo;
 import server.models.game.Story;
 
-public class StoriesCopyMessage {
+public class StoriesCopyMessage {//TODO:send reward and game type
     private DeckInfo[] stories;
 
     public StoriesCopyMessage(Story[] stories) {
