@@ -1,5 +1,6 @@
 package server.models.message;
 
+import server.models.JsonConverter;
 import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.card.Card;
@@ -26,6 +27,14 @@ public class Message {
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
 
+
+    public static Message convertJsonToMessage(String messageJson) {
+        return JsonConverter.fromJson(messageJson, Message.class);
+    }
+
+    public String toJson() {
+        return JsonConverter.toJson(this);
+    }
 
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;

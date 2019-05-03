@@ -19,16 +19,4 @@ public class DeckInfo {
         this.deckName = deck.getDeckName();
         this.HeroName = deck.getHero().getName();
     }
-
-    public String getDeckName() {
-        return deckName;
-    }
-
-    public String getHeroName() {
-        return HeroName;
-    }
-
-    public GameType getType() {
-        return type;
-    }
 }
