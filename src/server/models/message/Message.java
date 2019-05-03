@@ -1,5 +1,6 @@
 package server.models.message;
 
+import server.models.account.Account;
 import server.models.account.Collection;
 import server.models.game.Game;
 
@@ -12,6 +13,8 @@ public class Message {
 
     private GameCopyMessage gameCopyMessage;
     private OriginalCardsCopyMessage originalCardsCopyMessage;
+    private AccountCopyMessage accountCopyMessage;
+
 
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
@@ -30,6 +33,13 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.originalCardsCopyMessage = new OriginalCardsCopyMessage(originalCards);
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
+        return message;
+    }
+
+    public static Message makeAccountCopyMessage(String sender, String receiver, Account account, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.accountCopyMessage = new AccountCopyMessage(account);
+        message.messageType = MessageType.ACCOUNT_COPY;
         return message;
     }
 }
