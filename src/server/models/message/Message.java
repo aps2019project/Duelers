@@ -21,6 +21,7 @@ public class Message {
     private StoriesCopyMessage storiesCopyMessage;
     private CardPositionMessage cardPositionMessage;
     private TroopUpdateMessage troopUpdateMessage;
+    private GameUpdateMessage gameUpdateMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -67,12 +68,24 @@ public class Message {
     public static Message makeChangeCardPositionMessage(String sender, String receiver, Card card, CardPosition cardPosition, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.cardPositionMessage = new CardPositionMessage(card, cardPosition);
+        message.messageType = MessageType.CARD_POSITION;
         return message;
     }
 
     public static Message makeTroopUpdateMessage(String sender, String receiver, Troop troop, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.troopUpdateMessage=new TroopUpdateMessage(troop);
+        message.troopUpdateMessage = new TroopUpdateMessage(troop);
+        message.messageType = MessageType.TROOP_UPDATE;
+        return message;
+    }
+
+    public static Message makeGameUpdateMessage(String sender, String receiver, int turnNumber, int player1CurrentMP,
+                                                int player1NumberOfCollectedFlags, int player2CurrentMP,
+                                                int player2NumberOfCollectedFlags, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.gameUpdateMessage = new GameUpdateMessage(turnNumber, player1CurrentMP, player1NumberOfCollectedFlags,
+                player2CurrentMP, player2NumberOfCollectedFlags);
+        message.messageType = MessageType.GAME_UPDATE;
         return message;
     }
 }
