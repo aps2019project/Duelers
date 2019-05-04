@@ -29,14 +29,14 @@ public abstract class Game {
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account account, Deck secondDeck,String userName, GameMap gameMap, GameType gameType) {
+    protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(secondDeck, userName, 2);
     }
 
-    public void startGame()throws ServerException {
+    public void startGame() throws ServerException {
         this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -105,7 +105,7 @@ public abstract class Game {
 
     public void changeTurn(String username) throws LogicException {
         if (canCommand(username)) {
-            getCurrentTurnPlayer().addNextCardToHand();
+            addNextCardToHand();
             revertNotDurableBuffs();
             removeFinishedBuffs();
             turnNumber++;
@@ -121,6 +121,14 @@ public abstract class Game {
             }
         } else {
             throw new ClientException("it isn't your turn!");
+        }
+    }
+
+    private void addNextCardToHand() throws ServerException {
+        Card nextCard = getCurrentTurnPlayer().getNextCard();
+        if (getCurrentTurnPlayer().addNextCardToHand()) {
+            Server.getInstance().sendChangeCardPositionMessage(this, nextCard, CardPosition.HAND);
+            Server.getInstance().sendChangeCardPositionMessage(this, getCurrentTurnPlayer().getNextCard(), CardPosition.NEXT);
         }
     }
 
