@@ -234,17 +234,26 @@ public abstract class Game {
         Cell cell = gameMap.getCell(position);
         troop.setCell(cell);
         troop.setCanMove(false);
-        for (Card card : cell.getItems()) {
-            if (card.getType() == CardType.FLAG) {
-                troop.addFlag(card);
-                getCurrentTurnPlayer().increaseNumberOfCollectedFlags();
-                getCurrentTurnPlayer().addFlagCarrier(troop);
-            } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
-                getCurrentTurnPlayer().addCollectibleItems(card);
+        for (Card item : cell.getItems()) {
+            if (item.getType() == CardType.FLAG) {
+                catchFlag(troop, item);
+            } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
+                catchItem(item);
             }
         }
         cell.clearItems();
     }
+
+    void catchFlag(Troop troop, Card item) {
+        troop.addFlag(item);
+        getCurrentTurnPlayer().increaseNumberOfCollectedFlags();
+        getCurrentTurnPlayer().addFlagCarrier(troop);
+    }
+
+    private void catchItem(Card item) {
+        getCurrentTurnPlayer().addCollectibleItems(item);
+    }
+
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws ClientException {
         if (!canCommand(username)) {
