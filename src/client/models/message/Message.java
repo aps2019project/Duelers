@@ -69,6 +69,20 @@ public class Message {
         return message;
     }
 
+    public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.changeDeckMessage = new ChangeDeckMessage(deckName, cardId);
+        message.messageType = MessageType.ADD_TO_DECK;
+        return message;
+    }
+
+    public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.changeDeckMessage = new ChangeDeckMessage(deckName, cardId);
+        message.messageType = MessageType.REMOVE_FROM_DECK;
+        return message;
+    }
+
 
     public String getSender() {
         return sender;
