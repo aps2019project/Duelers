@@ -3,7 +3,6 @@ package server;
 import client.Client;
 import server.models.JsonConverter;
 import server.models.account.Account;
-import server.models.account.AccountInfo;
 import server.models.account.Collection;
 import server.models.account.TempAccount;
 import server.models.card.Card;
@@ -14,23 +13,15 @@ import server.models.exceptions.LogicException;
 import server.models.exceptions.ServerException;
 import server.models.game.*;
 import server.models.map.GameMap;
-import server.models.map.Position;
 import server.models.message.CardPosition;
 import server.models.message.Message;
-import server.models.message.MessageType;
 import server.models.sorter.LeaderBoardSorter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static server.models.message.MessageType.*;
 
 public class Server {
     private static final String ACCOUNTS_PATH = "jsonData/accounts";
@@ -84,6 +75,7 @@ public class Server {
     }
 
     private void addToSendingMessages(Message message) {
+
         sendingMessages.add(message);
     }
 
@@ -219,6 +211,7 @@ public class Server {
                     break;
             }
             onlineGames.put(myAccount, game);
+            game.startGame();
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, message.getSender(), game, message.getMessageId()));
 
@@ -248,6 +241,7 @@ public class Server {
                     game = new MultiFlagBattle(myAccount, story.getDeck(), gameMap, story.getNumberOfFlags());
                     break;
             }
+            game.startGame();
             onlineGames.put(myAccount, game);
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, message.getSender(), game, message.getMessageId()));
@@ -292,6 +286,7 @@ public class Server {
             }
             onlineGames.put(myAccount, game);
             onlineGames.put(opponentAccount, game);
+            game.startGame();
             addToSendingMessages(Message.makeGameCopyMessage
                     (serverName, message.getSender(), game, message.getMessageId()));
             addToSendingMessages(Message.makeGameCopyMessage
@@ -631,15 +626,15 @@ public class Server {
     }
 
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) throws ServerException {
-
+        //TODO: ignore playerTwo when userName == AI
     }
 
     public void sendTroopUpdateMessage(Game game, Troop troop) throws ServerException {
-
+        //TODO: ignore playerTwo when userName == AI
     }
 
     public void sendGameUpdateMessage(Game game) throws ServerException {
-
+        //TODO: ignore playerTwo when userName == AI
     }
 
     private void readAccounts() {

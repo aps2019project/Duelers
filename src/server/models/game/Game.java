@@ -29,25 +29,14 @@ public abstract class Game {
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account accountOne, Account accountTwo, GameMap gameMap, GameType gameType) throws ServerException {
-        this.gameType = gameType;
-        this.gameMap = gameMap;
-        this.playerOne = new Player(accountOne.getMainDeck(), accountOne.getUsername(), 1);
-        this.playerTwo = new Player(accountTwo.getMainDeck(), accountTwo.getUsername(), 2);
-        this.turnNumber = 1;
-        putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
-        this.turnNumber = 2;
-        putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
-        this.turnNumber = 1;
-        applyOnStartSpells(playerTwo.getDeck());
-        applyOnStartSpells(playerTwo.getDeck());
-    }
-
-    protected Game(Account account, Deck deck, GameMap gameMap, GameType gameType) throws ServerException {
+    protected Game(Account account, Deck secondDeck,String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
-        this.playerTwo = new Player(deck, "AI", 2);
+        this.playerTwo = new Player(secondDeck, userName, 2);
+    }
+
+    public void startGame()throws ServerException {
         this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -68,7 +57,6 @@ public abstract class Game {
         if (deck.getItem() != null) {
             iterateOnOnStartSpells(deck.getItem());
         }
-
         if (deck.getHero() != null) {
             iterateOnOnStartSpells(deck.getHero());
         }
@@ -128,9 +116,17 @@ public abstract class Game {
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
             Server.getInstance().sendGameUpdateMessage(this);
+            if (getCurrentTurnPlayer().getUserName().equals("AI")) {
+                playCurrentTurn();
+            }
         } else {
             throw new ClientException("it isn't your turn!");
         }
+    }
+
+    private void playCurrentTurn() {
+        //TODO:write AI
+        //TODO: change turn
     }
 
     private void removeFinishedBuffs() {
@@ -221,6 +217,9 @@ public abstract class Game {
             );
         } else {
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
+        }
+        if (card.getType() == CardType.SPELL) {
+            player.addToGraveYard(card);
         }
         applyOnPutSpells(card, gameMap.getCell(position));
     }
