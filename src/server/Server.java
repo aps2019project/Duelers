@@ -641,31 +641,49 @@ public class Server {
 
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) throws ServerException {
         String clientName;
-        if(!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")){
-            clientName=getClientName(game.getPlayerOne().getUserName());
-            if(clientName==null){
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
                 throw new ServerException("player one has logged out during game!");
             }
             addToSendingMessages(Message.makeChangeCardPositionMessage(
-                    serverName,clientName,card,newCardPosition,0));//TODO:add messageId
+                    serverName, clientName, card, newCardPosition, 0));//TODO:add messageId
         }
-        if(!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")){
-            clientName=getClientName(game.getPlayerTwo().getUserName());
-            if(clientName==null){
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
                 throw new ServerException("player two has logged out during game!");
             }
             addToSendingMessages(Message.makeChangeCardPositionMessage(
-                    serverName,clientName,card,newCardPosition,0));//TODO:add messageId
+                    serverName, clientName, card, newCardPosition, 0));//TODO:add messageId
         }
     }
 
     public void sendTroopUpdateMessage(Game game, Troop troop) throws ServerException {
-        //TODO: ignore playerTwo when userName == AI
+        String clientName;
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
+                throw new ServerException("player one has logged out during game!");
+            }
+            addToSendingMessages(Message.makeTroopUpdateMessage(
+                    serverName, clientName, troop, 0));//TODO:add messageId
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
+                throw new ServerException("player two has logged out during game!");
+            }
+            addToSendingMessages(Message.makeTroopUpdateMessage(
+                    serverName, clientName, troop, 0));//TODO:add messageId
+        }
     }
 
     public void sendGameUpdateMessage(Game game) throws ServerException {
-        //TODO: ignore playerTwo when userName == AI
+
     }
+
+
 
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();

@@ -85,6 +85,10 @@ public abstract class Game {
         return playerTwo;
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
     private Player getCurrentTurnPlayer() {
         if (turnNumber % 2 == 1) {
             return playerOne;
