@@ -1,7 +1,6 @@
 package client.models.message;
 
 import client.models.JsonConverter;
-import server.models.message.ChangeDeckMessage;
 
 public class Message {
     private MessageType messageType;
@@ -24,7 +23,8 @@ public class Message {
 
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
-    private ChangeDeckMessage changeDeckMessage;
+    private OtherFields otherFields;
+    private AccountFields accountFields;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -50,38 +50,73 @@ public class Message {
 
     public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.changeDeckMessage = new ChangeDeckMessage(deckName);
+        message.otherFields=new OtherFields();
+        message.otherFields.setDeckName(deckName);
         message.messageType = MessageType.CREATE_DECK;
         return message;
     }
 
     public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.changeDeckMessage = new ChangeDeckMessage(deckName);
+        message.otherFields=new OtherFields();
+        message.otherFields.setDeckName(deckName);
         message.messageType = MessageType.REMOVE_DECK;
         return message;
     }
 
     public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.changeDeckMessage = new ChangeDeckMessage(deckName);
+        message.otherFields=new OtherFields();
+        message.otherFields.setDeckName(deckName);
         message.messageType = MessageType.SELECT_DECK;
         return message;
     }
 
     public static Message makeAddCardToDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.changeDeckMessage = new ChangeDeckMessage(deckName, cardId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setDeckName(deckName);
+        message.otherFields.setMyCardId(cardId);
         message.messageType = MessageType.ADD_TO_DECK;
         return message;
     }
 
     public static Message makeRemoveCardFromDeckMessage(String sender, String receiver, String deckName, String cardId, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.changeDeckMessage = new ChangeDeckMessage(deckName, cardId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setDeckName(deckName);
+        message.otherFields.setMyCardId(cardId);
         message.messageType = MessageType.REMOVE_FROM_DECK;
         return message;
     }
+
+    public static Message makeBuyCardMessage(String sender, String receiver, String cardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setCardName(cardName);
+        message.messageType = MessageType.BUY_CARD;
+        return message;
+    }
+
+    public static Message makeSellCardMessage(String sender, String receiver, String cardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setMyCardId(cardId);
+        message.messageType = MessageType.SELL_CARD;
+        return message;
+    }
+
+    public static Message makeEndTurnMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.messageType = MessageType.END_TURN;
+        return message;
+    }
+
+
+
+
+
+
 
 
     public String getSender() {
