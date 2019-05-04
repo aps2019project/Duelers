@@ -74,11 +74,11 @@ public abstract class Game {
         }
     }
 
-    Player getPlayerOne() {
+    public Player getPlayerOne() {
         return playerOne;
     }
 
-    Player getPlayerTwo() {
+    public Player getPlayerTwo() {
         return playerTwo;
     }
 
@@ -268,11 +268,10 @@ public abstract class Game {
                 catchFlag(troop, item);
             } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
                 catchItem(item);
-                //TODO: send collected items.
+                Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
             }
         }
         cell.clearItems();
-        //TODO: clear items update should be sent(map)
     }
 
     void catchFlag(Troop troop, Card item) throws ServerException {
@@ -712,7 +711,6 @@ public abstract class Game {
         }
         return targetCells;
     }
-
 
     void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(

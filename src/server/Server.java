@@ -4,6 +4,7 @@ import client.Client;
 import server.models.JsonConverter;
 import server.models.account.Account;
 import server.models.account.Collection;
+import server.models.account.MatchHistory;
 import server.models.account.TempAccount;
 import server.models.card.Card;
 import server.models.card.CardType;
@@ -580,31 +581,45 @@ public class Server {
     private void insertCard(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.insert(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+        checkGameFinish(game);
     }
 
     private void attack(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.attack(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
+        checkGameFinish(game);
     }
 
     private void combo(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.comboAttack(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
+        checkGameFinish(game);
     }
 
     private void useSpecialPower(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+        checkGameFinish(game);
     }
 
     private void moveTroop(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.moveTroop(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+        checkGameFinish(game);
     }
 
     private void endTurn(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.changeTurn(clients.get(message.getSender()).getUsername());
+        checkGameFinish(game);
+    }
+
+    private void checkGameFinish(Game game) {
+        if (game.finishCheck()) {
+            MatchHistory playerOneHistory = game.getPlayerOne().getMatchHistory();
+            MatchHistory playerTwoHistory = game.getPlayerTwo().getMatchHistory();
+            //TODO: do sth
+        }
     }
 
     private void sudo(Message message) {

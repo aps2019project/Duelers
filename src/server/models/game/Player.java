@@ -209,4 +209,8 @@ public class Player {
     public void setMatchHistory(MatchHistory matchHistory) {
         this.matchHistory = matchHistory;
     }
+
+    public MatchHistory getMatchHistory() {
+        return matchHistory;
+    }
 }
