@@ -285,6 +285,7 @@ public class Server {
             accounts.replace(clients.get(message.getSender()), null);
             clients.replace(message.getSender(), null);
             serverPrint(message.getSender() + " Is Logged Out.");
+            //TODO:Check online games
         }
     }
 
@@ -626,16 +627,25 @@ public class Server {
         if (game.finishCheck()) {
             MatchHistory playerOneHistory = game.getPlayerOne().getMatchHistory();
             MatchHistory playerTwoHistory = game.getPlayerTwo().getMatchHistory();
-            //TODO: do sth
-        }
-    }
-
-    private void checkGameAccountsClient(String client1, String client2) throws ServerException {
-        if (client1 == null) {
-            throw new ServerException("Player1 has logged out!");
-        }
-        if (client2 == null) {
-            throw new ServerException("Player2 has logged out!");
+            if(!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")){
+                Account account=getAccount(game.getPlayerOne().getUserName());
+                if(account==null)
+                    serverPrint("Error");
+                else {
+                    account.addMatchHistory(playerOneHistory);
+                    saveAccount(account);
+                }
+            }
+            if(!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")){
+                Account account=getAccount(game.getPlayerTwo().getUserName());
+                if(account==null)
+                    serverPrint("Error");
+                else {
+                    account.addMatchHistory(playerTwoHistory);
+                    saveAccount(account);
+                }
+            }
+            sendGameFinishMessages(game);
         }
     }
 
@@ -703,7 +713,31 @@ public class Server {
         }
     }
 
-
+    private void sendGameFinishMessages(Game game)  {
+        String clientName;
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
+                serverPrint("player one has logged out during game!");
+            }else{
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        serverName, clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), 0));
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, clientName, getAccount(game.getPlayerOne().getUserName()), 0));
+            }
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
+                serverPrint("player two has logged out during game!");
+            }else{
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        serverName, clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), 0));
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        serverName, clientName, getAccount(game.getPlayerTwo().getUserName()), 0));
+            }
+        }
+    }
 
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
