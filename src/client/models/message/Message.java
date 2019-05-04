@@ -55,6 +55,20 @@ public class Message {
         return message;
     }
 
+    public static Message makeRemoveDeckMessage(String sender, String receiver, String deckName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.changeDeckMessage = new ChangeDeckMessage(deckName);
+        message.messageType = MessageType.REMOVE_DECK;
+        return message;
+    }
+
+    public static Message makeSelectDeckMessage(String sender, String receiver, String deckName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.changeDeckMessage = new ChangeDeckMessage(deckName);
+        message.messageType = MessageType.SELECT_DECK;
+        return message;
+    }
+
 
     public String getSender() {
         return sender;
