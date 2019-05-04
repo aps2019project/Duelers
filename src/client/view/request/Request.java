@@ -68,7 +68,7 @@ public class Request {
             gameCommands.showCardInfo(cardId);
 
         } else if (GameRequestType.SELECT_CARD.matches(command)) {
-            String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
+            String cardId = GameRequestType.SELECT_CARD.getMatcher().group(1);
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
@@ -106,7 +106,7 @@ public class Request {
         } else if (GameRequestType.END_TURN.matches(command)) {
             gameCommands.endTurn(client, serverName);
 
-        } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
+        } else if (GameRequestType.SHOW_COLLECTIBLES.matches(command)) {
             gameCommands.showCollectibleItems();
 
         } else if (GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {
@@ -124,7 +124,7 @@ public class Request {
         } else if (GameRequestType.ENTER_GRAVE_YARD.matches(command)) {
             gameCommands.enterGraveYard();
 
-        } else if (GameRequestType.SHOW_INFO_OF_CARD_INGRAVEYARD.matches(command)) {
+        } else if (GameRequestType.SHOW_INFO_OF_CARD_IN_GRAVEYARD.matches(command)) {
             Matcher matcher = GameRequestType.SHOW_CRADS_IN_GRAVE_YARD.getMatcher();
             String cardId = matcher.group(1);
             gameCommands.showCardInfoInGraveYard(cardId);

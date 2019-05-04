@@ -48,8 +48,6 @@ public class GameCommands extends Menu {
             help += "\"Show hand\"\n" +
                     "\"Show Next Card\"\n" +
                     "\"Insert [card name] in (x, y)\"\n" +
-                    "\"show all decks\"\n" +
-                    "\"show deck [deck name]\"\n" +
                     "\"Show collectibles\"\n" +
                     "\"Select [collectible id]\"\n";
             if (selectedItemId != null) {

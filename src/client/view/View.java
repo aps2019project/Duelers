@@ -262,11 +262,11 @@ public class View {
     }
 
     public void showKillHeroGameInfo(CompressedGame game) {//TODO
-        /*System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
+        System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
                 game.getPlayerOne().getHero().getCurrentHp() + "\n" +
                 "HP of " + game.getPlayerTwo().getUserName() + "'s hero: " +
                 game.getPlayerTwo().getHero().getCurrentHp()
-        );*/
+        );
     }
 
     public void showOneFlagGameInfo(CompressedGame game) {//TODO

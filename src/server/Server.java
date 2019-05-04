@@ -115,6 +115,7 @@ public class Server {
                                 sendStories(message);
                                 break;
                         }
+                        break;
                     case BUY_CARD:
                         buyCard(message);
                         break;
