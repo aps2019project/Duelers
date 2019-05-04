@@ -34,6 +34,15 @@ public class CompressedGameMap {
         return null;
     }
 
+    public CompressedTroop getTroop(int row, int column) {
+        for (CompressedTroop troop : troops) {
+            if (troop.getCell().getColumn() == column && troop.getCell().getRow() == row) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<CompressedTroop> getPlayerTroop(int playerNumber) {
         ArrayList<CompressedTroop> compressedTroops = new ArrayList<>();
         for (CompressedTroop troop : troops) {
@@ -43,4 +52,7 @@ public class CompressedGameMap {
         return compressedTroops;
     }
 
+    public boolean checkCoordination(int row, int column) {
+        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
+    }
 }

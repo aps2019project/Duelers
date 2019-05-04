@@ -35,11 +35,11 @@ public class CompressedTroop {
         return position;
     }
 
-    public boolean isCanMove() {
+    public boolean canMove() {
         return canMove;
     }
 
-    public boolean isCanAttack() {
+    public boolean canAttack() {
         return canAttack;
     }
 

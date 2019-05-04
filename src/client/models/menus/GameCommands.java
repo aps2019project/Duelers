@@ -129,7 +129,7 @@ public class GameCommands extends Menu {
         }
 
 
-        Troop troop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
+        CompressedTroop troop = currentGame.getGameMap().searchTroop(selectedCardId);
 
         if (!troop.canMove()) {
             throw new InputException("troop can not move");
