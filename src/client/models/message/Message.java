@@ -30,6 +30,10 @@ public class Message {
     private NewGameFields newGameFields;
 
 
+    public String toJson() {
+        return server.models.JsonConverter.toJson(this);
+    }
+
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
         this.receiver = receiver;

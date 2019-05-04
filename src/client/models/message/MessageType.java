@@ -35,5 +35,5 @@ public enum MessageType {
     NEW_DECK_GAME,
     NEW_STORY_GAME,
     SELECT_USER,
-    SUDO,
+    SUDO
 }

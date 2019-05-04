@@ -16,6 +16,7 @@ import server.models.game.*;
 import server.models.map.GameMap;
 import server.models.map.Position;
 import server.models.message.Message;
+import server.models.message.MessageType;
 import server.models.sorter.LeaderBoardSorter;
 
 import java.io.BufferedReader;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static server.models.message.MessageType.*;
 
 public class Server {
     private static final String ACCOUNTS_PATH = "jsonData/accounts";
@@ -106,15 +109,18 @@ public class Server {
                     case LOG_OUT:
                         logout(message);
                         break;
-                    case GET_LEADERBOARD:
-                        sendLeaderBoard(message);
-                        break;
-                    case GET_ORIGINAL_CARDS:
-                        sendOriginalCards(message);
-                        break;
-                    case GET_STORIES:
-                        sendStories(message);
-                        break;
+                    case GET_DATA:
+                        switch (message.getGetDataMessage().getDataName()) {
+                            case LEADERBOARD:
+                                sendLeaderBoard(message);
+                                break;
+                            case ORIGINAL_CARDS:
+                                sendOriginalCards(message);
+                                break;
+                            case STORIES:
+                                sendStories(message);
+                                break;
+                        }
                     case BUY_CARD:
                         buyCard(message);
                         break;

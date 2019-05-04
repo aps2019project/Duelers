@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.card.AttackType;
 import client.models.card.Card;
+import client.models.comperessedData.CompressedGame;
 import client.models.game.Game;
 import client.models.game.Troop;
 import client.models.map.Position;
@@ -12,7 +13,7 @@ import client.view.request.InputException;
 
 public class GameCommands extends Menu {
     private static GameCommands ourInstance = new GameCommands();
-    private Game currentGame;
+    private CompressedGame currentGame;
     private String selectedItemId;
     private boolean isInGraveYard;
     private String selectedCardId;
@@ -336,7 +337,7 @@ public class GameCommands extends Menu {
         //TODO: both clients will moveTroop to main menu.
     }
 
-    public void setCurrentGame(Game currentGame) {
+    public void setCurrentGame(CompressedGame currentGame) {
         this.currentGame = currentGame;
     }
 

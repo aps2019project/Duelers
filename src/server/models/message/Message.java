@@ -121,6 +121,21 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
 
     public GetDataMessage getGetDataMessage() {
         return getDataMessage;

@@ -14,5 +14,26 @@ public enum MessageType {
     GAME_UPDATE,
 
     //SENDER:CLIENT
-
+    GET_DATA,
+    MOVE_TROOP,
+    CREATE_DECK,
+    REMOVE_DECK,
+    ADD_TO_DECK,
+    REMOVE_FROM_DECK,
+    SELECT_DECK,
+    BUY_CARD,
+    SELL_CARD,
+    INSERT,
+    ATTACK,
+    COMBO,
+    USE_SPECIAL_POWER,
+    END_TURN,
+    LOG_IN,
+    LOG_OUT,
+    REGISTER,
+    NEW_MULTIPLAYER_GAME,
+    NEW_DECK_GAME,
+    NEW_STORY_GAME,
+    SELECT_USER,
+    SUDO
 }
