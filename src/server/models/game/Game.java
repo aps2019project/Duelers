@@ -21,12 +21,14 @@ import java.util.ArrayList;
 public abstract class Game {
     private Player playerOne;
     private Player playerTwo;
+    private GameType gameType;
     private ArrayList<Buff> buffs = new ArrayList<>();
     private GameMap gameMap;
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account accountOne, Account accountTwo, GameMap gameMap) {
+    protected Game(Account accountOne, Account accountTwo, GameMap gameMap,GameType gameType) {
+        this.gameType=gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne.getMainDeck(), accountOne.getUsername(), 1);
         this.playerTwo = new Player(accountTwo.getMainDeck(), accountTwo.getUsername(), 2);
@@ -39,7 +41,8 @@ public abstract class Game {
         applyOnStartSpells(playerTwo.getDeck());
     }
 
-    protected Game(Account account, Deck deck, GameMap gameMap) {
+    protected Game(Account account, Deck deck, GameMap gameMap,GameType gameType) {
+        this.gameType=gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(deck, "AI", 2);
@@ -53,7 +56,7 @@ public abstract class Game {
     }
 
     public CompressedGame toCompressedGame() {
-        return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber);
+        return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber,gameType);
     }
 
     private void applyOnStartSpells(Deck deck) {

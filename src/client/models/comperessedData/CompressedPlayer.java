@@ -11,4 +11,36 @@ public class CompressedPlayer {
     private ArrayList<CompressedCard> collectedItems = new ArrayList<>();
     private int playerNumber;
     private int numberOfCollectedFlags;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public int getCurrentMP() {
+        return currentMP;
+    }
+
+    public ArrayList<CompressedCard> getHand() {
+        return hand;
+    }
+
+    public ArrayList<CompressedCard> getGraveyard() {
+        return graveyard;
+    }
+
+    public CompressedCard getNextCard() {
+        return nextCard;
+    }
+
+    public ArrayList<CompressedCard> getCollectedItems() {
+        return collectedItems;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public int getNumberOfCollectedFlags() {
+        return numberOfCollectedFlags;
+    }
 }

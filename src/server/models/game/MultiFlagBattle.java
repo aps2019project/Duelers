@@ -8,12 +8,12 @@ public class MultiFlagBattle extends Game {
     private int numberOfFlags;
 
     public MultiFlagBattle(Account accountOne, Account accountTwo, GameMap gameMap, int numberOfFlags) {
-        super(accountOne, accountTwo, gameMap);
+        super(accountOne, accountTwo, gameMap,GameType.SOME_FLAG);
         this.numberOfFlags = numberOfFlags;
     }
 
     public MultiFlagBattle(Account account1, Deck deck, GameMap gameMap,int numberOfFlags) {
-        super(account1, deck, gameMap);
+        super(account1, deck, gameMap,GameType.SOME_FLAG);
         this.numberOfFlags = numberOfFlags;
     }
 

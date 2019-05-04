@@ -2,6 +2,7 @@ package client.models.menus;
 
 import client.Client;
 import client.models.card.DeckInfo;
+import client.models.message.DataName;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
@@ -17,10 +18,7 @@ public class StoryMenu extends Menu {
         if (STORY_MENU == null) {
             STORY_MENU = new StoryMenu();
             client.addToSendingMessages(
-                    Message.makeGetStoriesInfoMessage(
-                            client.getClientName(), serverName, 0
-                    )
-            );
+                    Message.makeGetDataMessage(client.getClientName(), serverName, DataName.STORIES, 0));
             client.sendMessages();
         }
         return STORY_MENU;

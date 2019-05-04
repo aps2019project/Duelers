@@ -7,4 +7,20 @@ public class CompressedGameMap {
 
     private CompressedCell[][] cells;
     private ArrayList<CompressedTroop> troops = new ArrayList<>();
+
+    public static int getRowNumber() {
+        return ROW_NUMBER;
+    }
+
+    public static int getColumnNumber() {
+        return COLUMN_NUMBER;
+    }
+
+    public CompressedCell[][] getCells() {
+        return cells;
+    }
+
+    public ArrayList<CompressedTroop> getTroops() {
+        return troops;
+    }
 }

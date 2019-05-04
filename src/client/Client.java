@@ -4,7 +4,6 @@ import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.card.Card;
 import client.models.card.DeckInfo;
-import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.*;
 import client.models.message.CardPosition;

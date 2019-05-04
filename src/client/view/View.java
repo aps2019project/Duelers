@@ -8,7 +8,7 @@ import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
-import client.models.game.Game;
+import client.models.comperessedData.CompressedGame;
 import client.models.game.Player;
 import client.models.game.Troop;
 import client.models.map.Cell;
@@ -258,16 +258,16 @@ public class View {
         );
     }
 
-    public void showKillHeroGameInfo(Game game) {
-        System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
+    public void showKillHeroGameInfo(CompressedGame game) {//TODO
+        /*System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
                 game.getPlayerOne().getHero().getCurrentHp() + "\n" +
                 "HP of " + game.getPlayerTwo().getUserName() + "'s hero: " +
                 game.getPlayerTwo().getHero().getCurrentHp()
-        );
+        );*/
     }
 
-    public void showOneFlagGameInfo(Game game) {
-        if (game.getGameMap().getFlagCells().size() == 1) {
+    public void showOneFlagGameInfo(CompressedGame game) {//TODO
+        /*if (game.getGameMap().getFlagCells().size() == 1) {
             Cell cell = game.getGameMap().getFlagCells().get(0);
             System.out.println(
                     "Flag is in cell " + cell
@@ -275,12 +275,12 @@ public class View {
         } else {
             showFlagCarriers(game.getPlayerOne());
             showFlagCarriers(game.getPlayerTwo());
-        }
+        }*/
     }
 
-    public void showMultiFlagGameInfo(Game game) {
-        showFlagCarriers(game.getPlayerOne());
-        showFlagCarriers(game.getPlayerTwo());
+    public void showMultiFlagGameInfo(CompressedGame game) {
+        /*showFlagCarriers(game.getPlayerOne());//TODO
+        showFlagCarriers(game.getPlayerTwo());*/
     }
 
     private void showFlagCarriers(Player player) {

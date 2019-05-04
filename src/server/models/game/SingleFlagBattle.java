@@ -7,11 +7,11 @@ import server.models.map.GameMap;
 public class SingleFlagBattle extends Game {
 
     public SingleFlagBattle(Account accountOne, Account accountTwo, GameMap gameMap) {
-        super(accountOne, accountTwo, gameMap);
+        super(accountOne, accountTwo, gameMap, GameType.A_FLAG);
     }
 
-    public SingleFlagBattle(Account account1 , Deck deck, GameMap gameMap){
-        super(account1,deck,gameMap);
+    public SingleFlagBattle(Account account1, Deck deck, GameMap gameMap) {
+        super(account1, deck, gameMap, GameType.A_FLAG);
     }
 
     @Override

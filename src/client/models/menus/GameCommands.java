@@ -4,7 +4,6 @@ import client.Client;
 import client.models.card.AttackType;
 import client.models.card.Card;
 import client.models.comperessedData.CompressedGame;
-import client.models.game.Game;
 import client.models.game.Troop;
 import client.models.map.Position;
 import client.models.message.Message;
@@ -341,7 +340,7 @@ public class GameCommands extends Menu {
         this.currentGame = currentGame;
     }
 
-    public Game getCurrentGame() {
+    public CompressedGame getCurrentGame() {
         return currentGame;
     }
 }
