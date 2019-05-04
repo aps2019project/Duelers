@@ -680,7 +680,27 @@ public class Server {
     }
 
     public void sendGameUpdateMessage(Game game) throws ServerException {
-
+        String clientName;
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
+                throw new ServerException("player one has logged out during game!");
+            }
+            addToSendingMessages(Message.makeGameUpdateMessage(
+                    serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
+                    game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
+                    game.getPlayerTwo().getNumberOfCollectedFlags(), 0));//TODO:add messageId
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
+                throw new ServerException("player two has logged out during game!");
+            }
+            addToSendingMessages(Message.makeGameUpdateMessage(
+                    serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
+                    game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
+                    game.getPlayerTwo().getNumberOfCollectedFlags(), 0));//TODO:add messageId
+        }
     }
 
 
