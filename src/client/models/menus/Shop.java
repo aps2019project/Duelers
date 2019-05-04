@@ -3,6 +3,7 @@ package client.models.menus;
 import client.Client;
 import client.models.account.Collection;
 import client.models.card.Card;
+import client.models.message.DataName;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
@@ -20,9 +21,7 @@ public class Shop extends Menu {
         if (SHOP == null) {
             SHOP = new Shop();
             client.addToSendingMessages(
-                    Message.makeGetOriginalCardsMessage(
-                            client.getClientName(), serverName, 0
-                    )
+                    Message.makeGetDataMessage(client.getClientName(),serverName, DataName.ORIGINAL_CARDS,0)
             );
             client.sendMessages();
         }

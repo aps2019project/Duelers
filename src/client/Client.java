@@ -4,9 +4,10 @@ import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.card.Card;
 import client.models.card.DeckInfo;
-import client.models.game.Game;
 import client.models.map.Position;
 import client.models.menus.*;
+import client.models.message.CardPosition;
+import client.models.message.DataName;
 import client.models.message.Message;
 import server.Server;
 
@@ -40,7 +41,7 @@ public class Client {
     }
 
     public void updateLeaderBoard(String serverName) {
-        this.addToSendingMessages(Message.makeGetLeaderBoardMessage(clientName, serverName, 0));
+        this.addToSendingMessages(Message.makeGetDataMessage(clientName, serverName, DataName.LEADERBOARD, 0));
         this.sendMessages();
     }
 
@@ -95,59 +96,51 @@ public class Client {
             switch (message.getMessageType()) {
                 case SEND_EXCEPTION:
                     validation = false;
-                    errorMessage = message.getExceptionString();
+                    errorMessage = message.getExceptionMessage().getExceptionString();
                     break;
                 case ACCOUNT_COPY:
-                    account = new Account(message.getAccount());
+                    account = new Account(message.getAccountCopyMessage().getAccount());
                     break;
                 case GAME_COPY:
-                    GameCommands.getInstance().setCurrentGame(message.getGame());
+                    GameCommands.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
                     currentMenu = GameCommands.getInstance();
                     break;
                 case ORIGINAL_CARDS_COPY:
-                    Shop.getInstance().setOriginalCards(message.getOriginalCards());
-                    break;
-                case CUSTOM_DECKS_COPY:
-                    customDecks = message.getCustomDecks();
+                    Shop.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
                     break;
                 case LEADERBOARD_COPY:
-                    leaderBoard = message.getLeaderBoard();
+                    leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
                     break;
                 case STORIES_COPY:
-                    StoryMenu.getInstance().setStories(message.getStories());
+                    StoryMenu.getInstance().setStories(message.getStoriesCopyMessage().getStories());
                     break;
-                case POSITIONS_COPY:
-                    positions = message.getPositions();
+                case OPPONENT_INFO:
+                    MultiPlayerMenu.getInstance().setSecondAccount(message.getOpponentInfoMessage().getOpponentInfo());
                     break;
-                case ACCOUNT_INFO:
-                    MultiPlayerMenu.getInstance().setSecondAccount(message.getAccountInfo());
+                case CARD_POSITION://TODO:CHANGE
+                    CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
+                    switch (cardPosition) {
+                        case MAP:
+
+                            break;
+                        case HAND:
+
+                            break;
+                        case NEXT:
+
+                            break;
+                        case GRAVE_YARD:
+
+                            break;
+                        case COLLECTED:
+
+                            break;
+                    }
+                case TROOP_UPDATE:
+
                     break;
-                case TO_HAND:
-                    GameCommands.getInstance().getCurrentGame().toHand(message.getCardId());
-                    break;
-                case TO_NEXT:
-                    GameCommands.getInstance().getCurrentGame().toNext(message.getCardId());
-                    break;
-                case TO_GRAVEYARD:
-                    GameCommands.getInstance().getCurrentGame().toGraveYard(message.getCardId());
-                    break;
-                case TO_MAP:
-                    GameCommands.getInstance().getCurrentGame().toMap(message.getCardId(), message.getPosition());
-                    break;
-                case TO_COLLECTED_CARDS:
-                    GameCommands.getInstance().getCurrentGame().toCollectedCards(message.getCardId(), message.getUsername());
-                    break;
-                case MOVE_TROOP:
-                    GameCommands.getInstance().getCurrentGame().moveTroop(message.getCardId(), message.getPosition());
-                    break;
-                case TROOP_AP:
-                    GameCommands.getInstance().getCurrentGame().changeTroopAP(message.getCardId(), message.getNewValue());
-                    break;
-                case TROOP_HP:
-                    GameCommands.getInstance().getCurrentGame().changeTroopHP(message.getCardId(), message.getNewValue());
-                    break;
-                case END_TURN:
-                    GameCommands.getInstance().getCurrentGame().changeTurn(message.getCardId(), message.getNewValue());
+                case GAME_UPDATE:
+
                     break;
             }
         }

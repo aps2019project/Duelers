@@ -27,6 +27,12 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
 
+    //SENDER:CLIENT
+    private GetDataMessage getDataMessage;
+    private OtherFields otherFields;
+    private AccountFields accountFields;
+    private NewGameFields newGameFields;
+
 
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
@@ -113,5 +119,37 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         message.opponentInfoMessage=new OpponentInfoMessage(opponent);
         message.messageType = MessageType.OPPONENT_INFO;
         return message;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public GetDataMessage getGetDataMessage() {
+        return getDataMessage;
+    }
+
+    public OtherFields getOtherFields() {
+        return otherFields;
+    }
+
+    public AccountFields getAccountFields() {
+        return accountFields;
+    }
+
+    public NewGameFields getNewGameFields() {
+        return newGameFields;
     }
 }
