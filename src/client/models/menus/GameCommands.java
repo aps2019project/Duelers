@@ -5,7 +5,7 @@ import client.models.card.AttackType;
 import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
 import client.models.comperessedData.CompressedTroop;
-import client.models.game.availableActions.*;
+import client.models.game.availableActions.AvailableActions;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
@@ -127,7 +127,7 @@ public class GameCommands extends Menu {
         }
 
         CompressedTroop troop = currentGame.getGameMap().searchTroop(selectedCardId);
-
+        Position target = new Position(row, column);
         if (!troop.canMove()) {
             throw new InputException("troop can not move");
 
@@ -145,7 +145,7 @@ public class GameCommands extends Menu {
         }
 
         Message message = Message.makeMoveTroopMessage(
-                client.getClientName(), serverName, selectedCardId, new Position(row, column), 0);
+                client.getClientName(), serverName, selectedCardId, target, 0);
         client.addToSendingMessages(message);
         client.sendMessages();
         selectedCardId = null;
@@ -154,6 +154,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
+        View.getInstance().showMoveCardMessage(troop, target);
         availableActions.calculate(currentGame);
     }
 
@@ -234,11 +235,13 @@ public class GameCommands extends Menu {
         availableActions.calculate(currentGame);
     }
 
-    public void showHand(Client client) {
+    public void showHand() {
         View.getInstance().showHand(currentGame.getPlayerOne());
     }
 
     public void insertCard(Client client, String serverName, String cardId, int row, int column) throws InputException {
+        CompressedCard card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
+        Position target = new Position(row, column);
         Message message = Message.makeInsertMessage(
                 client.getClientName(), serverName, cardId, new Position(row, column), 0
         );
@@ -249,8 +252,8 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
+        View.getInstance().showCardInsertionMessage(card, target);
         availableActions.calculate(currentGame);
-        //TODO: message should be printed in client.receiveMessages
     }
 
     public void endTurn(Client client, String serverName) throws InputException {

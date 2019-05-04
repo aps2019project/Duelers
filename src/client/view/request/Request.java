@@ -94,7 +94,7 @@ public class Request {
             gameCommands.useSpecialPower(client, serverName, row, column);
 
         } else if (GameRequestType.SHOW_HAND.matches(command)) {
-            gameCommands.showHand(client);
+            gameCommands.showHand();
 
         } else if (GameRequestType.INSERT_CARD.matches(command)) {
             Matcher matcher = GameRequestType.INSERT_CARD.getMatcher();

@@ -4,7 +4,6 @@ import client.Client;
 import client.models.account.Account;
 import client.models.account.AccountInfo;
 import client.models.account.Collection;
-import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
@@ -15,7 +14,6 @@ import client.models.comperessedData.CompressedTroop;
 import client.models.game.Player;
 import client.models.game.Troop;
 import client.models.game.availableActions.*;
-import client.models.map.Cell;
 import client.models.map.Position;
 
 import java.util.ArrayList;
@@ -113,12 +111,8 @@ public class View {
         System.out.println("Sell successfully done");
     }
 
-    public void showGameInfo(MatchHistory game) {
-
-    }
-
-    public void showMoveCardMessage(Card card, Cell targetCell) {
-
+    public void showMoveCardMessage(CompressedTroop troop, Position targetCell) {
+        System.out.println(troop.getCard().getCardId() + " moved to " + targetCell);
     }
 
     public void showHand(CompressedPlayer player) {
@@ -136,8 +130,8 @@ public class View {
         }
     }
 
-    public void showCardInsertionMessage(Card card, Cell targetCell) {
-
+    public void showCardInsertionMessage(CompressedCard card, Position targetCell) {
+        System.out.println(card.getName() + " with " + card.getCardId() + " inserted to " + targetCell);
     }
 
     public void showCollectedItems(CompressedPlayer player) {
@@ -150,14 +144,6 @@ public class View {
         System.out.println(item.getCardId() + ":" +
                 "\nDescription: " + item.getDescription() + "\n"
         );
-    }
-
-    public void showGraveYardList(Player player) {
-
-    }
-
-    public void showTurnActionHelp(Player player) {
-
     }
 
     public void showCollection(Collection collection) {
