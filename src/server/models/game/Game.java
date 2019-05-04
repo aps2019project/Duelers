@@ -1,8 +1,6 @@
 package server.models.game;
 
 import server.Server;
-import server.models.exceptions.ClientException;
-import server.models.exceptions.LogicException;
 import server.models.account.Account;
 import server.models.account.MatchHistory;
 import server.models.card.AttackType;
@@ -11,11 +9,13 @@ import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.card.spell.Spell;
 import server.models.card.spell.SpellAction;
+import server.models.comperessedData.CompressedGame;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
 import server.models.exceptions.ServerException;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
-import server.models.comperessedData.CompressedGame;
 
 import java.util.ArrayList;
 
@@ -28,36 +28,36 @@ public abstract class Game {
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account accountOne, Account accountTwo, GameMap gameMap,GameType gameType) {
-        this.gameType=gameType;
+    protected Game(Account accountOne, Account accountTwo, GameMap gameMap, GameType gameType) {
+        this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(accountOne.getMainDeck(), accountOne.getUsername(), 1);
         this.playerTwo = new Player(accountTwo.getMainDeck(), accountTwo.getUsername(), 2);
         this.turnNumber = 1;
-        put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
-        put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
+        putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
         applyOnStartSpells(playerTwo.getDeck());
         applyOnStartSpells(playerTwo.getDeck());
     }
 
-    protected Game(Account account, Deck deck, GameMap gameMap,GameType gameType) {
-        this.gameType=gameType;
+    protected Game(Account account, Deck deck, GameMap gameMap, GameType gameType) {
+        this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(deck, "AI", 2);
         this.turnNumber = 1;
-        put(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
-        put(2, playerTwo.getHero(), gameMap.getCell(2, 8));
+        putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
         applyOnStartSpells(playerTwo.getDeck());
         applyOnStartSpells(playerTwo.getDeck());
     }
 
     public CompressedGame toCompressedGame() {
-        return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber,gameType);
+        return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber, gameType);
     }
 
     private void applyOnStartSpells(Deck deck) {
@@ -123,6 +123,7 @@ public abstract class Game {
                 getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
+
         } else {
             throw new ClientException("it isn't your turn!");
         }
@@ -195,23 +196,28 @@ public abstract class Game {
             throw new ClientException("it's not your turn");
         }
         Player player = getCurrentTurnPlayer();
-        put(
-                player.getPlayerNumber(),
-                player.insert(cardId),
-                gameMap.getCell(position)
-        );
+        Card card = player.insert(cardId);
+        if (card.getType() == CardType.MINION) {
+            putMinion(
+                    player.getPlayerNumber(),
+                    new Troop(card, getCurrentTurnPlayer().getPlayerNumber()),
+                    gameMap.getCell(position)
+            );
+        }
+        applyOnPutSpells(card, gameMap.getCell(position));
+
 
         //TODO send message;
     }
 
-    private void put(int playerNumber, Troop troop, Cell cell) {
+
+    private void putMinion(int playerNumber, Troop troop, Cell cell) {
         troop.setCell(cell);
         gameMap.addTroop(playerNumber, troop);
-        applyOnPutSpells(troop, cell);
     }
 
-    private void applyOnPutSpells(Troop troop, Cell cell) {
-        for (Spell spell : troop.getCard().getSpells()) {
+    private void applyOnPutSpells(Card card, Cell cell) {
+        for (Spell spell : card.getSpells()) {
             if (spell.getAvailabilityType().isOnPut())
                 applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
         }
