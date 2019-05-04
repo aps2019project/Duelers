@@ -7,11 +7,11 @@ import server.models.map.GameMap;
 public class KillHeroBattle extends Game {
 
     public KillHeroBattle(Account account1, Account account2, GameMap gameMap) {
-        super(account1, account2, gameMap,GameType.KILL_HERO);
+        super(account1, account2.getMainDeck(), account2.getUsername(), gameMap, GameType.KILL_HERO);
     }
 
-    public KillHeroBattle(Account account1 , Deck deck, GameMap gameMap){
-        super(account1,deck,gameMap,GameType.KILL_HERO);
+    public KillHeroBattle(Account account1, Deck deck, GameMap gameMap) {
+        super(account1, deck, "AI", gameMap, GameType.KILL_HERO);
     }
 
     @Override

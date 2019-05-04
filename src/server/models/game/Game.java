@@ -28,25 +28,14 @@ public abstract class Game {
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account accountOne, Account accountTwo, GameMap gameMap, GameType gameType) {
-        this.gameType = gameType;
-        this.gameMap = gameMap;
-        this.playerOne = new Player(accountOne.getMainDeck(), accountOne.getUsername(), 1);
-        this.playerTwo = new Player(accountTwo.getMainDeck(), accountTwo.getUsername(), 2);
-        this.turnNumber = 1;
-        putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
-        this.turnNumber = 2;
-        putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
-        this.turnNumber = 1;
-        applyOnStartSpells(playerTwo.getDeck());
-        applyOnStartSpells(playerTwo.getDeck());
-    }
-
-    protected Game(Account account, Deck deck, GameMap gameMap, GameType gameType) {
+    protected Game(Account account, Deck secondDeck,String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
-        this.playerTwo = new Player(deck, "AI", 2);
+        this.playerTwo = new Player(secondDeck, userName, 2);
+    }
+
+    public void startGame(){
         this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -79,6 +68,12 @@ public abstract class Game {
                             spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
                     );
             }
+        }
+        for (Spell spell:deck.getHero().getSpells()){
+            if (spell.getAvailabilityType().isOnStart())
+                applySpell(spell, detectTarget(
+                        spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
+                );
         }
     }
 
@@ -123,10 +118,16 @@ public abstract class Game {
                 getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
-
+            if (getCurrentTurnPlayer().getUserName().equals("AI")) {
+                playCurrentTurn();
+            }
         } else {
             throw new ClientException("it isn't your turn!");
         }
+    }
+
+    private void playCurrentTurn() {
+        //TODO:write AI
     }
 
     private void selAllTroopsCanAttack() {
@@ -203,6 +204,9 @@ public abstract class Game {
                     new Troop(card, getCurrentTurnPlayer().getPlayerNumber()),
                     gameMap.getCell(position)
             );
+        }
+        if (card.getType() == CardType.SPELL) {
+            player.addToGraveYard(card);
         }
         applyOnPutSpells(card, gameMap.getCell(position));
 

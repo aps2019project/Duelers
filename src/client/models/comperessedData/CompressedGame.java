@@ -28,4 +28,12 @@ public class CompressedGame {
     public GameType getGameType() {
         return gameType;
     }
+
+    public CompressedPlayer getCurrentTurnPlayer() {
+        if (turnNumber % 2 == 1) {
+            return playerOne;
+        } else {
+            return playerTwo;
+        }
+    }
 }

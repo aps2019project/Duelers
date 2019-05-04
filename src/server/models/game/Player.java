@@ -34,8 +34,6 @@ public class Player {
         for (int i = 0; i < 5; i++) {
             addNextCardToHand();
         }
-        hero = new Troop(deck.getHero(), playerNumber);
-        troops.add(hero);
     }
 
     public CompressedPlayer toCompressedPlayer() {
@@ -140,7 +138,8 @@ public class Player {
 
 
     public void addToGraveYard(Card card) {
-
+        graveyard.add(card);
+        //TODO: message
     }
 
     public Card getNextCard() {
@@ -179,6 +178,10 @@ public class Player {
     }
 
     public Troop getHero() {
+        if (hero == null){
+            hero = new Troop(deck.getHero(), playerNumber);
+            troops.add(hero);
+        }
         return hero;
     }
 
