@@ -34,7 +34,7 @@ public class Position {
         return Math.abs(cell.getRow() - row) + Math.abs(cell.getColumn() - column);
     }
 
-    public int manhattanDistance(int selectedRow , int selectedColumn){
+    public int manhattanDistance(int selectedRow, int selectedColumn) {
         return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
     }
 

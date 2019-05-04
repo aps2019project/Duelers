@@ -2,8 +2,6 @@ package client.models.card.spell;
 
 import server.models.map.Position;
 
-import java.util.Scanner;
-
 public class Target {
     private boolean isRelatedToCardOwnerPosition;
     private boolean isForAroundOwnHero;

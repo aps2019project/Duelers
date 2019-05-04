@@ -21,7 +21,7 @@ public enum GameRequestType {
     USE_ITEM("^use \\((\\d+), (\\d+)\\)$"),
     SHOW_NEXT_CARD("^show next card$"),
     ENTER_GRAVE_YARD("^enter graveyard"),
-    SHOW_INFO_OF_CARD_IN_GRAVEYARD("^show info (\\w+)$"),
+    SHOW_INFO_OF_CARD_INGRAVEYARD("^show info (\\w+)$"),
     SHOW_CRADS_IN_GRAVE_YARD("^show cards$"),
     HELP("^help$"),
     EXIT("^exit$"),

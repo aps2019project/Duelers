@@ -2,7 +2,6 @@ package client.models.menus;
 
 import client.Client;
 import client.view.View;
-import client.view.request.InputException;
 
 public class BattleMenu extends Menu {
     private static final BattleMenu BATTLE_MENU = new BattleMenu();
@@ -25,7 +24,7 @@ public class BattleMenu extends Menu {
     }
 
     @Override
-    public void exit(Client client){
+    public void exit(Client client) {
         client.setCurrentMenu(MainMenu.getInstance());
     }
 

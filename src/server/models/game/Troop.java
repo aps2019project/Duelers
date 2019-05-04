@@ -1,8 +1,8 @@
 package server.models.game;
 
 import server.models.card.Card;
-import server.models.map.Cell;
 import server.models.comperessedData.CompressedTroop;
+import server.models.map.Cell;
 
 import java.util.ArrayList;
 

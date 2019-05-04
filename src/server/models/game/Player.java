@@ -180,7 +180,7 @@ public class Player {
     }
 
     public Troop getHero() {
-        if (hero == null){
+        if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
             troops.add(hero);
         }
@@ -208,11 +208,11 @@ public class Player {
         this.numberOfCollectedFlags--;
     }
 
-    public void setMatchHistory(MatchHistory matchHistory) {
-        this.matchHistory = matchHistory;
-    }
-
     public MatchHistory getMatchHistory() {
         return matchHistory;
+    }
+
+    public void setMatchHistory(MatchHistory matchHistory) {
+        this.matchHistory = matchHistory;
     }
 }

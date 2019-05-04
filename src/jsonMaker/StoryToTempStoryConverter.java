@@ -21,7 +21,7 @@ public class StoryToTempStoryConverter {
                     TempStory tempStory = new TempStory(story);
 
                     String string = new GsonBuilder().setPrettyPrinting().create().toJson(tempStory);
-                    string = string.replaceAll("(First|Second|Third)Stage_", "").replaceAll("_\\d","");
+                    string = string.replaceAll("(First|Second|Third)Stage_", "").replaceAll("_\\d", "");
                     System.out.println(string);
 
                     write(directory + "/" + file.getName(), string);

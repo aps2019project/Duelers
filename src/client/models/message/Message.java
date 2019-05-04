@@ -30,10 +30,6 @@ public class Message {
     private NewGameFields newGameFields;
 
 
-    public String toJson() {
-        return server.models.JsonConverter.toJson(this);
-    }
-
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
         this.receiver = receiver;
@@ -42,10 +38,6 @@ public class Message {
 
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
-    }
-
-    public MessageType getMessageType() {
-        return messageType;
     }
 
     public static Message makeGetDataMessage(String sender, String receiver, DataName dataName, int messageId) {
@@ -222,10 +214,18 @@ public class Message {
 
     public static Message makeSudoMessage(String sender, String receiver, String sudoCommand, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.otherFields=new OtherFields();
+        message.otherFields = new OtherFields();
         message.otherFields.setSudoCommand(sudoCommand);
         message.messageType = MessageType.SUDO;
         return message;
+    }
+
+    public String toJson() {
+        return server.models.JsonConverter.toJson(this);
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
     }
 
     public String getSender() {

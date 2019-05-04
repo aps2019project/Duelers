@@ -1,11 +1,11 @@
 package client.models.menus;
 
 import client.Client;
+import client.models.card.Deck;
 import client.models.game.GameType;
 import client.models.message.Message;
 import client.view.View;
 import client.view.request.InputException;
-import client.models.card.Deck;
 
 public class CustomGameMenu extends Menu {
     private static final CustomGameMenu CUSTOM_GAME_MENU = new CustomGameMenu();

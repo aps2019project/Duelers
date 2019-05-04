@@ -21,7 +21,7 @@ public class Shop extends Menu {
         if (SHOP == null) {
             SHOP = new Shop();
             client.addToSendingMessages(
-                    Message.makeGetDataMessage(client.getClientName(),serverName, DataName.ORIGINAL_CARDS,0)
+                    Message.makeGetDataMessage(client.getClientName(), serverName, DataName.ORIGINAL_CARDS, 0)
             );
             client.sendMessages();
         }

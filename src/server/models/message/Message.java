@@ -34,18 +34,14 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private NewGameFields newGameFields;
 
 
-    public static Message convertJsonToMessage(String messageJson) {
-        return JsonConverter.fromJson(messageJson, Message.class);
-    }
-
-    public String toJson() {
-        return JsonConverter.toJson(this);
-    }
-
     private Message(String sender, String receiver, int messageId) {
         this.sender = sender;
         this.receiver = receiver;
         this.messageId = messageId;
+    }
+
+    public static Message convertJsonToMessage(String messageJson) {
+        return JsonConverter.fromJson(messageJson, Message.class);
     }
 
     public static Message makeGameCopyMessage(String sender, String receiver, Game game, int messageId) {
@@ -116,9 +112,13 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
 
     public static Message makeAccountInfoMessage(String sender, String receiver, Account opponent, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.opponentInfoMessage=new OpponentInfoMessage(opponent);
+        message.opponentInfoMessage = new OpponentInfoMessage(opponent);
         message.messageType = MessageType.OPPONENT_INFO;
         return message;
+    }
+
+    public String toJson() {
+        return JsonConverter.toJson(this);
     }
 
     public MessageType getMessageType() {

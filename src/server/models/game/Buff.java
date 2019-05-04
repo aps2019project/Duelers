@@ -16,7 +16,7 @@ public class Buff {
     private boolean evaluate() {
         int weight = action.getApChange() +
                 action.getHpChange() -
-                action.getEnemyHitChanges()-
+                action.getEnemyHitChanges() -
                 action.getRemoveBuffs();
         if (action.isMakeDisarm()) weight--;
         if (action.isMakeDisarm()) weight--;

@@ -1,6 +1,5 @@
 package client.models.message;
 
-import client.models.card.Card;
 import client.models.comperessedData.CompressedCard;
 
 public class CardPositionMessage {

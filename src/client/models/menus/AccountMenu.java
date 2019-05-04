@@ -45,7 +45,7 @@ public class AccountMenu extends Menu {
 
     public void showLeaderBoard(Client client, String serverName) throws InputException {
         client.updateLeaderBoard(serverName);
-        if (!client.getValidation()){
+        if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
         View.getInstance().showLeaderBoard(client);
