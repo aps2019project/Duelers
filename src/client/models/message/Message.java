@@ -1,8 +1,7 @@
 package client.models.message;
 
 import client.models.JsonConverter;
-import jsonMaker.CardReader;
-import server.models.message.CreateDeckMessage;
+import server.models.message.ChangeDeckMessage;
 
 public class Message {
     private MessageType messageType;
@@ -25,7 +24,7 @@ public class Message {
 
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
-    private CreateDeckMessage createDeckMessage;
+    private ChangeDeckMessage changeDeckMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -51,7 +50,7 @@ public class Message {
 
     public static Message makeCreateDeckMessage(String sender, String receiver, String deckName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.createDeckMessage = new CreateDeckMessage(deckName);
+        message.changeDeckMessage = new ChangeDeckMessage(deckName);
         message.messageType = MessageType.CREATE_DECK;
         return message;
     }
