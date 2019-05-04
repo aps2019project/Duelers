@@ -40,7 +40,7 @@ public class SingleFlagBattle extends Game {
     }
 
     @Override
-    void catchFlag(Troop troop, Card item) {
+    void catchFlag(Troop troop, Card item) throws ServerException {
         super.catchFlag(troop, item);
         currentCombo = 0;
     }

@@ -57,17 +57,14 @@ public class Message {
 
     public static Message makeRegisterMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.accountFields = new AccountFields();
-        message.accountFields.setUsername(userName);
-        message.accountFields.setPassword(passWord);
+        message.accountFields = new AccountFields(userName, passWord);
         message.messageType = MessageType.REGISTER;
         return message;
     }
 
     public static Message makeLogInMessage(String sender, String receiver, String userName, String passWord, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.accountFields.setUsername(userName);
-        message.accountFields.setPassword(passWord);
+        message.accountFields = new AccountFields(userName, passWord);
         message.messageType = MessageType.LOG_IN;
         return message;
     }
@@ -230,7 +227,6 @@ public class Message {
         message.messageType = MessageType.SUDO;
         return message;
     }
-
 
     public String getSender() {
         return sender;
