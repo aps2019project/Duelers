@@ -602,7 +602,7 @@ public class Server {
         game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
     }
 
-    private void moveTroop(Message message) throws ClientException {
+    private void moveTroop(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.moveTroop(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
     }
@@ -641,8 +641,6 @@ public class Server {
     public void sendGameUpdateMessage(Game game) throws ServerException {
 
     }
-
-
 
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
