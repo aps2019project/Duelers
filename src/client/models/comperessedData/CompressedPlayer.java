@@ -11,6 +11,8 @@ public class CompressedPlayer {
     private ArrayList<CompressedCard> collectedItems = new ArrayList<>();
     private int playerNumber;
     private int numberOfCollectedFlags;
+    private ArrayList<CompressedTroop> troops = new ArrayList<>(); // TODO: implementing needed;
+    private CompressedTroop hero; // TODO: implementing needed;
 
     public String getUserName() {
         return userName;
@@ -62,5 +64,13 @@ public class CompressedPlayer {
             }
         }
         return null;
+    }
+
+    public ArrayList<CompressedTroop> getTroops() {
+        return troops;
+    }
+
+    public CompressedTroop getHero() {
+        return hero;
     }
 }
