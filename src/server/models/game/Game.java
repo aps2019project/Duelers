@@ -16,7 +16,6 @@ import server.models.exceptions.ServerException;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
-import server.models.comperessedData.CompressedGame;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public abstract class Game {
         this.playerTwo = new Player(secondDeck, userName, 2);
     }
 
-    public void startGame(){
+    public void startGame()throws ServerException {
         this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -57,7 +56,6 @@ public abstract class Game {
         if (deck.getItem() != null) {
             iterateOnOnStartSpells(deck.getItem());
         }
-
         if (deck.getHero() != null) {
             iterateOnOnStartSpells(deck.getHero());
         }
@@ -71,20 +69,6 @@ public abstract class Game {
                         gameMap.getCell(0, 0),
                         gameMap.getCell(0, 0),
                         gameMap.getCell(0, 0))
-                );
-        }
-        if (deck.getItem() != null) {
-            for (Spell spell : deck.getItem().getSpells()) {
-                if (spell.getAvailabilityType().isOnStart())
-                    applySpell(spell, detectTarget(
-                            spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
-                    );
-            }
-        }
-        for (Spell spell:deck.getHero().getSpells()){
-            if (spell.getAvailabilityType().isOnStart())
-                applySpell(spell, detectTarget(
-                        spell, gameMap.getCell(0, 0), gameMap.getCell(0, 0), gameMap.getCell(0, 0))
                 );
         }
     }
@@ -140,6 +124,7 @@ public abstract class Game {
 
     private void playCurrentTurn() {
         //TODO:write AI
+        //TODO: change turn
     }
 
     private void selAllTroopsCanAttack() {
