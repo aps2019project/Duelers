@@ -1,5 +1,7 @@
 package client.models.comperessedData;
 
+import client.models.map.Position;
+
 import java.util.ArrayList;
 
 public class CompressedGameMap {
@@ -34,15 +36,6 @@ public class CompressedGameMap {
         return null;
     }
 
-    public CompressedTroop getTroop(int row, int column) {
-        for (CompressedTroop troop : troops) {
-            if (troop.getCell().getColumn() == column && troop.getCell().getRow() == row) {
-                return troop;
-            }
-        }
-        return null;
-    }
-
     public ArrayList<CompressedTroop> getPlayerTroop(int playerNumber) {
         ArrayList<CompressedTroop> compressedTroops = new ArrayList<>();
         for (CompressedTroop troop : troops) {
@@ -52,7 +45,24 @@ public class CompressedGameMap {
         return compressedTroops;
     }
 
-    public boolean checkCoordination(int row, int column) {
+    public CompressedCell getCell(int row, int column) {
+        if (isInMap(row, column)) {
+            return cells[row][column];
+        }
+
+        return null;
+    }
+
+    private boolean isInMap(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
+    }
+
+    public CompressedTroop getTroop(Position cell) {
+        for (CompressedTroop troop : troops) {
+            if (troop.getPosition().equals(cell)) {
+                return troop;
+            }
+        }
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package client.models.comperessedData;
 
+import client.models.map.Position;
+
 public class CompressedCell {
     private int row;
     private int column;
@@ -20,5 +22,13 @@ public class CompressedCell {
 
     public int getNumberOfFlags() {
         return numberOfFlags;
+    }
+
+    public int manhattanDistance(CompressedCell cell) {
+        return Math.abs(cell.row - row) + Math.abs(cell.column - column);
+    }
+
+    public Position toPosition() {
+        return new Position(row, column);
     }
 }

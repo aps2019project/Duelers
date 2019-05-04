@@ -35,4 +35,8 @@ public class CompressedSpell {
     public int getLastTurnUsed() {
         return lastTurnUsed;
     }
+
+    public boolean isCoolDown(int turnNumber) {
+        return lastTurnUsed + coolDown * 2 >= turnNumber;
+    }
 }

@@ -4,14 +4,18 @@ public class Position {
     private int row;
     private int column;
 
-    Position(Cell cell) {
-        this.row = cell.getRow();
-        this.column = cell.getColumn();
-    }
-
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return row == position.row &&
+                column == position.column;
     }
 
     public int getRow() {
@@ -20,6 +24,14 @@ public class Position {
 
     public int getColumn() {
         return column;
+    }
+
+    public int manhattanDistance(Position position) {
+        return Math.abs(row - position.row) + Math.abs(column - position.column);
+    }
+
+    public boolean isNextTo(Position position) {
+        return Math.abs(position.row - row) < 2 && Math.abs(position.column - column) < 2;
     }
 
     @Override
