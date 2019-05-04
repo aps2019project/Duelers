@@ -9,6 +9,7 @@ public class OtherFields {
     private String opponentCardId;
     private String[] myCardIds;
     private Position position;
+    private String sudoCommand;
 
     public void setDeckName(String deckName) {
         this.deckName = deckName;
@@ -32,5 +33,9 @@ public class OtherFields {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setSudoCommand(String sudoCommand) {
+        this.sudoCommand = sudoCommand;
     }
 }
