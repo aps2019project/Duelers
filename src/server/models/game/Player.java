@@ -70,11 +70,13 @@ public class Player {
         deck.getOthers().remove(nextCard);
     }
 
-    public void addNextCardToHand() {
+    public boolean addNextCardToHand() {
         if (hand.size() <= 5) {
             hand.add(nextCard);
             setNextCard();
+            return true;
         }
+        return false;
     }
 
     public String getUserName() {
@@ -208,5 +210,9 @@ public class Player {
 
     public void setMatchHistory(MatchHistory matchHistory) {
         this.matchHistory = matchHistory;
+    }
+
+    public MatchHistory getMatchHistory() {
+        return matchHistory;
     }
 }

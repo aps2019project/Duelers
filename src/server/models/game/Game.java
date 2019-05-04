@@ -16,6 +16,7 @@ import server.models.exceptions.ServerException;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
+import server.models.message.CardPosition;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,14 @@ public abstract class Game {
     private int turnNumber;
     private int lastTurnChangingTime;
 
-    protected Game(Account account, Deck secondDeck,String userName, GameMap gameMap, GameType gameType) {
+    protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(secondDeck, userName, 2);
     }
 
-    public void startGame()throws ServerException {
+    public void startGame() throws ServerException {
         this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
@@ -104,16 +105,17 @@ public abstract class Game {
 
     public void changeTurn(String username) throws LogicException {
         if (canCommand(username)) {
-            getCurrentTurnPlayer().addNextCardToHand();
+            addNextCardToHand();
             revertNotDurableBuffs();
+            removeFinishedBuffs();
             turnNumber++;
-            Server.getInstance().sendGameUpdateMessage(this);
+            setAllTroopsCanAttackAndCanMove();
             applyAllBuffs();
-            selAllTroopsCanAttack();
             if (turnNumber < 14)
                 getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
+            Server.getInstance().sendGameUpdateMessage(this);
             if (getCurrentTurnPlayer().getUserName().equals("AI")) {
                 playCurrentTurn();
             }
@@ -122,14 +124,32 @@ public abstract class Game {
         }
     }
 
+    private void addNextCardToHand() throws ServerException {
+        Card nextCard = getCurrentTurnPlayer().getNextCard();
+        if (getCurrentTurnPlayer().addNextCardToHand()) {
+            Server.getInstance().sendChangeCardPositionMessage(this, nextCard, CardPosition.HAND);
+            Server.getInstance().sendChangeCardPositionMessage(this, getCurrentTurnPlayer().getNextCard(), CardPosition.NEXT);
+        }
+    }
+
     private void playCurrentTurn() {
         //TODO:write AI
         //TODO: change turn
     }
 
-    private void selAllTroopsCanAttack() {
+    private void removeFinishedBuffs() {
+        for (Buff buff : buffs) {
+            if (buff.getAction().getDuration() == 0) {
+                buffs.remove(buff);
+            }
+        }
+    }
+
+    private void setAllTroopsCanAttackAndCanMove() throws ServerException {
         for (Troop troop : gameMap.getTroops()) {
             troop.setCanAttack(true);
+            troop.setCanMove(true);
+            Server.getInstance().sendTroopUpdateMessage(this, troop);
         }
     }
 
@@ -185,9 +205,9 @@ public abstract class Game {
             if (action.isDisableHolyBuff()) {
                 troop.setDisableHolyBuff(false);
             }
+            Server.getInstance().sendTroopUpdateMessage(this, troop);
         }
     }
-
 
     public void insert(String username, String cardId, Position position) throws LogicException {
         if (!canCommand(username)) {
@@ -195,12 +215,16 @@ public abstract class Game {
         }
         Player player = getCurrentTurnPlayer();
         Card card = player.insert(cardId);
+
         if (card.getType() == CardType.MINION) {
+            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
             putMinion(
                     player.getPlayerNumber(),
                     new Troop(card, getCurrentTurnPlayer().getPlayerNumber()),
                     gameMap.getCell(position)
             );
+        } else {
+            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
         if (card.getType() == CardType.SPELL) {
             player.addToGraveYard(card);
@@ -216,12 +240,13 @@ public abstract class Game {
 
     private void applyOnPutSpells(Card card, Cell cell) throws ServerException {
         for (Spell spell : card.getSpells()) {
-            if (spell.getAvailabilityType().isOnPut())
+            if (spell.getAvailabilityType().isOnPut()) {
                 applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
+            }
         }
     }
 
-    public void moveTroop(String username, String cardId, Position position) throws ClientException {
+    public void moveTroop(String username, String cardId, Position position) throws ClientException, ServerException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");
         }
@@ -244,20 +269,24 @@ public abstract class Game {
         Cell cell = gameMap.getCell(position);
         troop.setCell(cell);
         troop.setCanMove(false);
+        Server.getInstance().sendTroopUpdateMessage(this, troop);
+
         for (Card item : cell.getItems()) {
             if (item.getType() == CardType.FLAG) {
                 catchFlag(troop, item);
             } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
                 catchItem(item);
+                Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
             }
         }
         cell.clearItems();
     }
 
-    void catchFlag(Troop troop, Card item) {
+    void catchFlag(Troop troop, Card item) throws ServerException {
         troop.addFlag(item);
         getCurrentTurnPlayer().increaseNumberOfCollectedFlags();
         getCurrentTurnPlayer().addFlagCarrier(troop);
+        Server.getInstance().sendGameUpdateMessage(this);
     }
 
     private void catchItem(Card item) {
@@ -474,10 +503,11 @@ public abstract class Game {
         decreaseDuration(buff);
     }
 
-    private void applyBuffOnPlayers(Buff buff, ArrayList<Player> players) {
+    private void applyBuffOnPlayers(Buff buff, ArrayList<Player> players) throws ServerException {
         SpellAction action = buff.getAction();
         for (Player player : players) {
             player.changeCurrentMP(action.getMpChange());
+            Server.getInstance().sendGameUpdateMessage(this);
         }
     }
 
@@ -485,9 +515,6 @@ public abstract class Game {
         SpellAction action = buff.getAction();
         if (action.getDuration() > 0) {
             action.decreaseDuration();
-        }
-        if (action.getDuration() == 0) {
-            buffs.remove(buff);
         }
     }
 
@@ -594,6 +621,7 @@ public abstract class Game {
             playerTwo.killTroop(troop);
             gameMap.removeTroop(playerTwo, troop);
         }
+        Server.getInstance().sendChangeCardPositionMessage(this, troop.getCard(), CardPosition.GRAVE_YARD);
     }
 
     private void applyOnDeathSpells(Troop troop) throws ServerException {
@@ -691,7 +719,6 @@ public abstract class Game {
         }
         return targetCells;
     }
-
 
     void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(
