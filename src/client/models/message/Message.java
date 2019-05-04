@@ -1,6 +1,7 @@
 package client.models.message;
 
 import client.models.JsonConverter;
+import client.models.map.Position;
 
 public class Message {
     private MessageType messageType;
@@ -112,7 +113,51 @@ public class Message {
         return message;
     }
 
+    public static Message makeMoveTroopMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setMyCardId(cardId);
+        message.otherFields.setPosition(position);
+        message.messageType = MessageType.MOVE_TROOP;
+        return message;
+    }
 
+
+    public static Message makeInsertMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setMyCardId(cardId);
+        message.otherFields.setPosition(position);
+        message.messageType = MessageType.INSERT;
+        return message;
+    }
+
+    public static Message makeAttackMessage(String sender, String receiver, String myCardId, String opponentCardId, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setMyCardId(myCardId);
+        message.otherFields.setOpponentCardId(opponentCardId);
+        message.messageType = MessageType.ATTACK;
+        return message;
+    }
+
+    public static Message makeComboAttackMessage(String sender, String receiver , String opponentCardId ,String[] myCardIds,int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setOpponentCardId(opponentCardId);
+        message.otherFields.setMyCardIds(myCardIds);
+        message.messageType = MessageType.COMBO;
+        return message;
+    }
+
+    public static Message makeUseSpecialPowerMessage(String sender, String receiver, String cardId, Position position, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.otherFields=new OtherFields();
+        message.otherFields.setMyCardId(cardId);
+        message.otherFields.setPosition(position);
+        message.messageType = MessageType.USE_SPECIAL_POWER;
+        return message;
+    }
 
 
 

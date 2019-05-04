@@ -1,11 +1,14 @@
 package client.models.message;
 
+import client.models.map.Position;
+
 public class OtherFields {
     private String deckName;
     private String cardName;
     private String myCardId;
     private String opponentCardId;
     private String[] myCardIds;
+    private Position position;
 
     public void setDeckName(String deckName) {
         this.deckName = deckName;
@@ -25,5 +28,9 @@ public class OtherFields {
 
     public void setMyCardIds(String[] myCardIds) {
         this.myCardIds = myCardIds;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }
