@@ -3,7 +3,9 @@ package client.models.menus;
 import client.Client;
 import client.models.card.AttackType;
 import client.models.card.Card;
+import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
+import client.models.comperessedData.CompressedTroop;
 import client.models.game.Troop;
 import client.models.map.Position;
 import client.models.message.Message;
@@ -89,20 +91,20 @@ public class GameCommands extends Menu {
     }
 
     public void showMyMinions() {
-        View.getInstance().showTroops(currentGame.getCurrentTurnPlayer());
+        View.getInstance().showTroops(currentGame.getGameMap().getPlayerTroop(currentGame.getCurrentTurnPlayer().getPlayerNumber()));
     }
 
     public void showOppMinions() {
-        View.getInstance().showTroops(currentGame.getOtherTurnPlayer());
+        View.getInstance().showTroops(currentGame.getGameMap().getPlayerTroop(currentGame.getOtherTurnPlayer().getPlayerNumber()));
     }
 
     public void showCardInfo(String cardId) throws InputException {
-        Troop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
+        CompressedTroop troop = currentGame.getGameMap().searchTroop(cardId);
         if (troop != null) {
             View.getInstance().showTroopInfo(troop);
             return;
         }
-        Card card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
+        CompressedCard card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
         if (card != null) {
             View.getInstance().showCardInfo(card);
             return;
@@ -111,7 +113,8 @@ public class GameCommands extends Menu {
     }
 
     public void selectCard(String cardId) throws InputException {
-        if (currentGame.getCurrentTurnPlayer().searchTroop(cardId) != null) {
+        CompressedTroop troop = currentGame.getGameMap().searchTroop(cardId);
+        if (troop != null && troop.getPlayerNumber() == currentGame.getCurrentTurnPlayer().getPlayerNumber()) {
             selectedCardId = cardId;
         } else if (currentGame.getCurrentTurnPlayer().searchCollectedItems(cardId) != null) {
             selectedItemId = cardId;
@@ -336,11 +339,11 @@ public class GameCommands extends Menu {
         //TODO: both clients will moveTroop to main menu.
     }
 
-    public void setCurrentGame(CompressedGame currentGame) {
-        this.currentGame = currentGame;
-    }
-
     public CompressedGame getCurrentGame() {
         return currentGame;
+    }
+
+    public void setCurrentGame(CompressedGame currentGame) {
+        this.currentGame = currentGame;
     }
 }

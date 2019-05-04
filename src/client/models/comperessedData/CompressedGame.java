@@ -36,4 +36,11 @@ public class CompressedGame {
             return playerTwo;
         }
     }
+    public CompressedPlayer getOtherTurnPlayer() {
+        if (turnNumber % 2 == 1) {
+            return playerTwo;
+        } else {
+            return playerOne;
+        }
+    }
 }

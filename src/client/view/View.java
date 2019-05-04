@@ -8,7 +8,10 @@ import client.models.account.MatchHistory;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
+import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
+import client.models.comperessedData.CompressedPlayer;
+import client.models.comperessedData.CompressedTroop;
 import client.models.game.Player;
 import client.models.game.Troop;
 import client.models.map.Cell;
@@ -116,13 +119,13 @@ public class View {
 
     }
 
-    public void showHand(Player player) {
+    public void showHand(CompressedPlayer player) {
         System.out.println("Hand Cards:");
-        for (Card card : player.getHand()) {
+        for (CompressedCard card : player.getHand()) {
             System.out.println(card.getCardId() + ":");
             showCardInfo(card);
         }
-        Card nextCard = player.getNextCard();
+        CompressedCard nextCard = player.getNextCard();
         if (nextCard != null) {
             System.out.println("Next Card:\n" +
                     nextCard.getCardId() + ":"
@@ -292,33 +295,33 @@ public class View {
         }
     }
 
-    public void showTroops(Player player) {
-        for (Troop troop : player.getTroops()) {
+    public void showTroops(ArrayList<CompressedTroop> troops) {
+        for (CompressedTroop troop : troops) {
             showTroop(troop);
         }
     }
 
-    private void showTroop(Troop troop) {
+    private void showTroop(CompressedTroop troop) {
         System.out.println(troop.getCard().getCardId() + " : " +
                 troop.getCard().getName() + ", health: " +
                 troop.getCurrentHp() + ", location: " +
-                troop.getCell() + ", power: " +
+                troop.getPosition().toString() + ", power: " +
                 troop.getCurrentAp()
         );
     }
 
-    public void showTroopInfo(Troop troop) {
+    public void showTroopInfo(CompressedTroop troop) {
         System.out.println(troop.getCard().getType() + ":" +
                 "\nName: " + troop.getCard().getName() +
                 "\nHP: " + troop.getCurrentHp() +
                 "  AP: " + troop.getCurrentAp() +
-                "\nCombo ability: " + troop.getCard().hasCombo() +
+                "\nCombo ability: " + troop.getCard().isHasCombo() +
                 "\nAttack type: " + troop.getCard().getAttackType() +
                 "\nDescription:" + troop.getCard().getDescription()
         );
     }
 
-    public void showCardInfo(Card card) {
+    public void showCardInfo(CompressedCard card) {
         if (card.getType() == CardType.SPELL) {
             System.out.println(card.getType() + ":" +
                     "\nMP: " + card.getMannaPoint() +
@@ -330,7 +333,7 @@ public class View {
                     "\nHP: " + card.getDefaultHp() +
                     "  AP: " + card.getDefaultAp() +
                     "  MP: " + card.getMannaPoint() +
-                    "\nCombo ability: " + card.hasCombo() +
+                    "\nCombo ability: " + card.isHasCombo() +
                     "\nDescription: " + card.getDescription()
             );
         }

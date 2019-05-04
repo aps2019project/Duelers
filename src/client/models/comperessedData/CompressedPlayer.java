@@ -43,4 +43,24 @@ public class CompressedPlayer {
     public int getNumberOfCollectedFlags() {
         return numberOfCollectedFlags;
     }
+
+    public CompressedCard searchCard(String cardId) {
+        for (CompressedCard card :
+                hand) {
+            if (card.getCardId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public CompressedCard searchCollectedItems(String cardId) {
+        for (CompressedCard card :
+                collectedItems) {
+            if (card.getCardId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
+    }
 }

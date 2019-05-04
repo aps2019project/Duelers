@@ -23,4 +23,24 @@ public class CompressedGameMap {
     public ArrayList<CompressedTroop> getTroops() {
         return troops;
     }
+
+    public CompressedTroop searchTroop(String cardID) {
+        for (CompressedTroop troop :
+                troops) {
+            if (troop.getCard().getCardId().equals(cardID)){
+                return troop;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<CompressedTroop> getPlayerTroop(int playerNumber) {
+        ArrayList<CompressedTroop> compressedTroops = new ArrayList<>();
+        for (CompressedTroop troop : troops) {
+            if (troop.getPlayerNumber() == playerNumber)
+                compressedTroops.add(troop);
+        }
+        return compressedTroops;
+    }
+
 }

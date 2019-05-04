@@ -4,6 +4,7 @@ import server.models.account.Account;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.exceptions.LogicException;
+import server.models.exceptions.ServerException;
 import server.models.map.GameMap;
 
 public class SingleFlagBattle extends Game {
@@ -45,7 +46,7 @@ public class SingleFlagBattle extends Game {
     }
 
     @Override
-    void killTroop(Troop troop) {
+    void killTroop(Troop troop) throws ServerException {
         if (troop.getFlags().size() > 0) {
             currentCombo = -1;
         }
