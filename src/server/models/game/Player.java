@@ -1,12 +1,11 @@
 package server.models.game;
 
-import server.models.exceptions.ClientException;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
-import server.models.card.CardType;
 import server.models.card.Deck;
-import server.models.map.Cell;
 import server.models.comperessedData.CompressedPlayer;
+import server.models.exceptions.ClientException;
+import server.models.map.Cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +43,7 @@ public class Player {
                 userName, currentMP, hand, graveyard, nextCard, collectedItems, playerNumber, numberOfCollectedFlags);
     }
 
-    public Troop insert(String cardId) throws ClientException {
+    public Card insert(String cardId) throws ClientException {
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
@@ -62,15 +61,9 @@ public class Player {
         if (card.getMannaPoint() > currentMP)
             throw new ClientException("not enough manna point");
 
-
         currentMP -= card.getMannaPoint();
 
-        if (card.getType() == CardType.MINION) {
-            Troop troop = new Troop(card, playerNumber);
-            troops.add(troop);
-            return troop;
-        }
-        return null;
+        return card;
     }
 
     public void setNextCard() {
