@@ -22,6 +22,7 @@ public class Message {
     private GameUpdateMessage gameUpdateMessage;
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
+    private GameFinishMessage gameFinishMessage;
 
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
@@ -278,5 +279,9 @@ public class Message {
 
     public OpponentInfoMessage getOpponentInfoMessage() {
         return opponentInfoMessage;
+    }
+
+    public GameFinishMessage getGameFinishMessage() {
+        return gameFinishMessage;
     }
 }

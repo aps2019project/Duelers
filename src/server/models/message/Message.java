@@ -26,6 +26,7 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private GameUpdateMessage gameUpdateMessage;
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
+    private GameFinishMessage gameFinishMessage;
 
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
@@ -114,6 +115,13 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         Message message = new Message(sender, receiver, messageId);
         message.opponentInfoMessage = new OpponentInfoMessage(opponent);
         message.messageType = MessageType.OPPONENT_INFO;
+        return message;
+    }
+
+    public static Message makeGameFinishMessage(String sender, String receiver,boolean youWon,int messageId){
+        Message message = new Message(sender, receiver, messageId);
+        message.gameFinishMessage=new GameFinishMessage(youWon);
+        message.messageType = MessageType.Game_FINISH;
         return message;
     }
 
