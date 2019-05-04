@@ -587,12 +587,12 @@ public class Server {
         game.insert(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
     }
 
-    private void attack(Message message) throws ClientException {
+    private void attack(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.attack(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
     }
 
-    private void combo(Message message) throws ClientException {
+    private void combo(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.comboAttack(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
     }

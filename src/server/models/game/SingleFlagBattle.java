@@ -44,6 +44,14 @@ public class SingleFlagBattle extends Game {
         currentCombo = 0;
     }
 
+    @Override
+    void killTroop(Troop troop) {
+        if (troop.getFlags().size() > 0) {
+            currentCombo = -1;
+        }
+        super.killTroop(troop);
+    }
+
     private void increaseCombo() {
         if (currentCombo >= 0) {
             currentCombo++;

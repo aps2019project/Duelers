@@ -11,6 +11,7 @@ import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.card.spell.Spell;
 import server.models.card.spell.SpellAction;
+import server.models.exceptions.ServerException;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
@@ -115,7 +116,7 @@ public abstract class Game {
             getCurrentTurnPlayer().addNextCardToHand();
             revertNotDurableBuffs();
             turnNumber++;
-            Server.getInstance().sendChangeTurnMessage(this, turnNumber);
+            Server.getInstance().sendGameUpdateMessage(this);
             applyAllBuffs();
             selAllTroopsCanAttack();
             if (turnNumber < 14)
@@ -199,6 +200,8 @@ public abstract class Game {
                 player.insert(cardId),
                 gameMap.getCell(position)
         );
+
+        //TODO send message;
     }
 
     private void put(int playerNumber, Troop troop, Cell cell) {
@@ -258,7 +261,7 @@ public abstract class Game {
     }
 
 
-    public void attack(String username, String attackerCardId, String defenderCardId) throws ClientException {
+    public void attack(String username, String attackerCardId, String defenderCardId) throws LogicException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");
         }
@@ -279,33 +282,38 @@ public abstract class Game {
 
             attackerTroop.setCanAttack(false);
             attackerTroop.setCanMove(false);
+            Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
+            Server.getInstance().sendTroopUpdateMessage(this, defenderTroop);
+
             applyOnAttackSpells(attackerTroop, defenderTroop);
             applyOnDefendSpells(defenderTroop, attackerTroop);
             counterAttack(defenderTroop, attackerTroop);
         }
     }
 
-    private void applyOnAttackSpells(Troop attackerTroop, Troop defenderTroop) {
+    private void applyOnAttackSpells(Troop attackerTroop, Troop defenderTroop) throws ServerException {
         for (Spell spell : attackerTroop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnAttack())
                 applySpell(
                         spell,
                         detectTarget(spell, defenderTroop.getCell(), defenderTroop.getCell(), getCurrentTurnPlayer().getHero().getCell())
                 );
+            Server.getInstance().sendTroopUpdateMessage(this, defenderTroop);
         }
     }
 
-    private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) {
+    private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) throws ServerException {
         for (Spell spell : defenderTroop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(
                         spell,
                         detectTarget(spell, attackerTroop.getCell(), attackerTroop.getCell(), getOtherTurnPlayer().getHero().getCell())
                 );
+            Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
         }
     }
 
-    private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws ClientException {
+    private void counterAttack(Troop defenderTroop, Troop attackerTroop) throws LogicException {
         if (defenderTroop.isDisarm()) {
             throw new ClientException("defender is disarm");
         }
@@ -316,6 +324,8 @@ public abstract class Game {
                 (attackerTroop.canBeAttackedFromWeakerOnes() || defenderTroop.getCurrentAp() > attackerTroop.getCurrentAp())
         ) {
             damage(defenderTroop, attackerTroop);
+
+            Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
         }
     }
 
@@ -375,7 +385,7 @@ public abstract class Game {
         return specialPower;
     }
 
-    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws ClientException {
+    public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws LogicException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");
         }
@@ -427,7 +437,7 @@ public abstract class Game {
         }
     }
 
-    private void damageFromAllAttackers(Troop defenderTroop, Troop[] attackerTroops) {
+    private void damageFromAllAttackers(Troop defenderTroop, Troop[] attackerTroops) throws ServerException {
         for (Troop attackerTroop : attackerTroops) {
             if (defenderTroop.canGiveBadEffect() &&
                     (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
@@ -570,7 +580,7 @@ public abstract class Game {
         }
     }
 
-    private void killTroop(Troop troop) {
+    void killTroop(Troop troop) {
         applyOnDeathSpells(troop);
         if (troop.getPlayerNumber() == 1) {
             playerOne.killTroop(troop);
