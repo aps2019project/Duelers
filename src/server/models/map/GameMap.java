@@ -1,9 +1,9 @@
 package server.models.map;
 
 import server.models.card.Card;
+import server.models.comperessedData.CompressedGameMap;
 import server.models.game.Player;
 import server.models.game.Troop;
-import server.models.comperessedData.CompressedGameMap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,8 +13,6 @@ public class GameMap {
 
     private Cell[][] cells;
     private ArrayList<Troop> troops = new ArrayList<>();
-    private ArrayList<Cell> flagCells = new ArrayList<>();
-    private ArrayList<Cell> collectibleItemCells = new ArrayList<>();
 
     public GameMap(ArrayList<Card> items, int numberOfFlags, Card originalFlag) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
@@ -38,16 +36,16 @@ public class GameMap {
         }
     }
 
-    public CompressedGameMap toCompressedGameMap() {
-        return new CompressedGameMap(cells, troops);
-    }
-
     public static int getRowNumber() {
         return ROW_NUMBER;
     }
 
     public static int getColumnNumber() {
         return COLUMN_NUMBER;
+    }
+
+    public CompressedGameMap toCompressedGameMap() {
+        return new CompressedGameMap(cells, troops);
     }
 
     public Cell getCell(Position position) {
@@ -72,14 +70,6 @@ public class GameMap {
 
     public Cell[][] getCells() {
         return this.cells;
-    }
-
-    public ArrayList<Cell> getFlagCells() {
-        return flagCells;
-    }
-
-    public ArrayList<Cell> getCollectibleItemCells() {
-        return collectibleItemCells;
     }
 
 
