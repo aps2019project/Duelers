@@ -1,5 +1,7 @@
 package client.models.comperessedData;
 
+import client.models.card.CardType;
+
 import java.util.ArrayList;
 
 public class CompressedPlayer {
@@ -56,7 +58,7 @@ public class CompressedPlayer {
         return null;
     }
 
-    public CompressedTroop seachTroop(String cardId) {
+    public CompressedTroop searchTroop(String cardId) {
         for (CompressedTroop troop :
                 troops) {
             if (troop.getCard().getCardId().equals(cardId)) {
@@ -65,7 +67,6 @@ public class CompressedPlayer {
         }
         return null;
     }
-
 
     public CompressedCard searchCollectedItems(String cardId) {
         for (CompressedCard card :
@@ -93,5 +94,15 @@ public class CompressedPlayer {
             }
         }
         return null;
+    }
+
+    public void setTroops(ArrayList<CompressedTroop> troops) {
+        this.troops = troops;
+
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getType() == CardType.HERO) {
+                hero = troop;
+            }
+        }
     }
 }

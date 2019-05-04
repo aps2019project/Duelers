@@ -14,7 +14,7 @@ public class AvailableActions {
     private SpecialPower specialPower;
     private ArrayList<Move> moves = new ArrayList<>();
 
-    public void calculateAvailableActions(CompressedGame game) {
+    public void calculate(CompressedGame game) {
         CompressedPlayer ownPlayer = game.getCurrentTurnPlayer();
         CompressedPlayer otherPlayer = game.getOtherTurnPlayer();
 
@@ -80,10 +80,12 @@ public class AvailableActions {
             ArrayList<Position> targets = new ArrayList<>();
 
             for (int column = currentPosition.getColumn() - 2; column <= currentPosition.getColumn() + 2; column++) {
-                int rowDown = currentPosition.getRow() + (4 - Math.abs(column - currentPosition.getColumn()));
-                int rowUp = currentPosition.getRow() - (4 - Math.abs(column - currentPosition.getColumn()));
+                int rowDown = currentPosition.getRow() + (2 - Math.abs(column - currentPosition.getColumn()));
+                int rowUp = currentPosition.getRow() - (2 - Math.abs(column - currentPosition.getColumn()));
 
                 for (int row = rowUp; row <= rowDown; row++) {
+                    if (!game.getGameMap().isInMap(row, column)) continue;
+
                     Position cell = game.getGameMap().getCell(row, column).toPosition();
                     if (currentPosition.equals(cell)) continue;
 
@@ -108,5 +110,29 @@ public class AvailableActions {
         } else { // HYBRID
             return myTroop.getPosition().manhattanDistance(enemyTroop.getPosition()) > myTroop.getCard().getRange();
         }
+    }
+
+    public ArrayList<Insert> getHandInserts() {
+        return handInserts;
+    }
+
+    public ArrayList<Insert> getCollectibleInserts() {
+        return collectibleInserts;
+    }
+
+    public ArrayList<Attack> getAttacks() {
+        return attacks;
+    }
+
+    public ArrayList<Combo> getCombos() {
+        return combos;
+    }
+
+    public SpecialPower getSpecialPower() {
+        return specialPower;
+    }
+
+    public ArrayList<Move> getMoves() {
+        return moves;
     }
 }

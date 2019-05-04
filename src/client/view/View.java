@@ -14,7 +14,9 @@ import client.models.comperessedData.CompressedPlayer;
 import client.models.comperessedData.CompressedTroop;
 import client.models.game.Player;
 import client.models.game.Troop;
+import client.models.game.availableActions.*;
 import client.models.map.Cell;
+import client.models.map.Position;
 
 import java.util.ArrayList;
 
@@ -146,7 +148,7 @@ public class View {
 
     public void showItemInfo(CompressedCard item) {
         System.out.println(item.getCardId() + ":" +
-                "\nDescription: " + item.getDescription()
+                "\nDescription: " + item.getDescription() + "\n"
         );
     }
 
@@ -306,7 +308,7 @@ public class View {
                 troop.getCard().getName() + ", health: " +
                 troop.getCurrentHp() + ", location: " +
                 troop.getPosition().toString() + ", power: " +
-                troop.getCurrentAp()
+                troop.getCurrentAp() + "\n"
         );
     }
 
@@ -325,7 +327,7 @@ public class View {
         if (card.getType() == CardType.SPELL) {
             System.out.println(card.getType() + ":" +
                     "\nMP: " + card.getMannaPoint() +
-                    "\nDescription: " + card.getDescription()
+                    "\nDescription: " + card.getDescription() + "\n"
             );
         } else {
             System.out.println(card.getType() + ":" +
@@ -334,8 +336,57 @@ public class View {
                     "  AP: " + card.getDefaultAp() +
                     "  MP: " + card.getMannaPoint() +
                     "\nCombo ability: " + card.isHasCombo() +
-                    "\nDescription: " + card.getDescription()
+                    "\nDescription: " + card.getDescription() + "\n"
             );
+        }
+    }
+
+    public void showAvailableActions(CompressedGame game, AvailableActions availableActions) {
+        System.out.println("your current manna: " + game.getCurrentTurnPlayer().getCurrentMP() + "\n");
+
+        System.out.println("Available card insertions:");
+        for (Insert insert : availableActions.getHandInserts()) {
+            System.out.println("\t" + insert.getCard().getCardId() + " : " + insert.getCard().getMannaPoint() + " MP");
+        }
+
+        System.out.println("Available collectible uses:");
+        for (Insert insert : availableActions.getCollectibleInserts()) {
+            System.out.println("\t" + insert.getCard().getCardId());
+        }
+
+        System.out.println("Available moves:");
+        for (Move move : availableActions.getMoves()) {
+            System.out.println("\tTroop: " + move.getTroop().getCard().getCardId());
+            System.out.println("\ttargets:");
+            for (Position target : move.getTargets()) {
+                System.out.println("\t\t" + target);
+            }
+            System.out.println();
+        }
+
+        System.out.println("Available attacks:");
+        for (Attack attack : availableActions.getAttacks()) {
+            System.out.println("\tattacker: " + attack.getAttackerTroop().getCard().getCardId());
+            System.out.println("\tdefenders:");
+            for (CompressedTroop defender : attack.getDefenders()) {
+                System.out.println("\t\t" + defender.getCard().getCardId());
+            }
+            System.out.println();
+        }
+
+        System.out.println("Available combo attacks:");
+        for (Combo combo : availableActions.getCombos()) {
+            System.out.println("\tdefender: " + combo.getDefenderTroop().getCard().getCardId());
+            System.out.println("\tattackers: ");
+            for (CompressedTroop attacker : combo.getAttackers()) {
+                System.out.println("\t\t" + attacker.getCard().getCardId());
+            }
+            System.out.println();
+        }
+
+        if (availableActions.getSpecialPower() != null) {
+            System.out.println("Special power is available; requires " +
+                    availableActions.getSpecialPower().getHero().getCard().getMannaPoint() + "MP\n");
         }
     }
 }

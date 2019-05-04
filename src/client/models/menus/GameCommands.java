@@ -5,6 +5,7 @@ import client.models.card.AttackType;
 import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
 import client.models.comperessedData.CompressedTroop;
+import client.models.game.availableActions.*;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
@@ -16,6 +17,7 @@ public class GameCommands extends Menu {
     private String selectedItemId;
     private boolean isInGraveYard;
     private String selectedCardId;
+    private AvailableActions availableActions = new AvailableActions();
 
     private GameCommands() {
     }
@@ -68,8 +70,8 @@ public class GameCommands extends Menu {
         View.getInstance().showHelp(help);
     }
 
-    public void showGameActions() {//help
-
+    public void showGameActions() { //help
+        View.getInstance().showAvailableActions(currentGame, availableActions);
     }
 
     public void showGameInfo() {
@@ -87,11 +89,11 @@ public class GameCommands extends Menu {
     }
 
     public void showMyMinions() {
-        View.getInstance().showTroops(currentGame.getGameMap().getPlayerTroop(currentGame.getCurrentTurnPlayer().getPlayerNumber()));
+        View.getInstance().showTroops(currentGame.getCurrentTurnPlayer().getTroops());
     }
 
     public void showOppMinions() {
-        View.getInstance().showTroops(currentGame.getGameMap().getPlayerTroop(currentGame.getOtherTurnPlayer().getPlayerNumber()));
+        View.getInstance().showTroops(currentGame.getOtherTurnPlayer().getTroops());
     }
 
     public void showCardInfo(String cardId) throws InputException {
@@ -124,7 +126,6 @@ public class GameCommands extends Menu {
             throw new InputException("select a card");
         }
 
-
         CompressedTroop troop = currentGame.getGameMap().searchTroop(selectedCardId);
 
         if (!troop.canMove()) {
@@ -152,18 +153,20 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
     }
 
     public void attack(Client client, String severName, String oppCardId) throws InputException {
         if (selectedCardId == null) {
             throw new InputException("select a card");
         }
-        CompressedTroop attackerTroop = currentGame.getCurrentTurnPlayer().seachTroop(selectedCardId);
+        CompressedTroop attackerTroop = currentGame.getCurrentTurnPlayer().searchTroop(selectedCardId);
 
         if (!attackerTroop.canAttack()) {
             throw new InputException("attacker can not attack");
         }
-        CompressedTroop defenderTroop = currentGame.getOtherTurnPlayer().seachTroop(oppCardId);
+        CompressedTroop defenderTroop = currentGame.getOtherTurnPlayer().searchTroop(oppCardId);
 
         if (defenderTroop == null) {
             throw new InputException("target card is not valid");
@@ -194,9 +197,11 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
     }
 
-    public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) throws InputException {
+    public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) throws InputException { // TODO: check validation
         Message message = Message.makeComboAttackMessage(
                 client.getClientName(), serverName, oppCardId, cardIds, 0
         );
@@ -206,6 +211,8 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
     }
 
     public void useSpecialPower(Client client, String serverName, int row, int column) throws InputException {
@@ -223,6 +230,8 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
     }
 
     public void showHand(Client client) {
@@ -239,15 +248,23 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
         //TODO: message should be printed in client.receiveMessages
     }
 
-    public void endTurn(Client client, String serverName) {
+    public void endTurn(Client client, String serverName) throws InputException {
         Message message = Message.makeEndTurnMessage(client.getClientName(), serverName, 0);
         client.addToSendingMessages(message);
         client.sendMessages();
         selectedItemId = null;
         selectedCardId = null;
+
+        if (!client.getValidation()) {
+            throw new InputException(client.getErrorMessage());
+        }
+
+        availableActions.calculate(currentGame);
     }
 
     public void showCollectibleItems() {
@@ -280,6 +297,8 @@ public class GameCommands extends Menu {
         if (!client.getValidation()) {
             throw new InputException(client.getErrorMessage());
         }
+
+        availableActions.calculate(currentGame);
     }
 
     public void showNextCard() throws InputException {
@@ -334,11 +353,11 @@ public class GameCommands extends Menu {
         throw new InputException("game is not finished.");
     }
 
-    public CompressedGame getCurrentGame() {
-        return currentGame;
-    }
-
     public void setCurrentGame(CompressedGame currentGame) {
         this.currentGame = currentGame;
+        currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
+        currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
+        availableActions.calculate(currentGame);
     }
 }
+
