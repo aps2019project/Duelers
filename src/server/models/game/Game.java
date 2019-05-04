@@ -209,14 +209,12 @@ public abstract class Game {
             );
         }
         applyOnPutSpells(card, gameMap.getCell(position));
-
-
-        //TODO send message;
     }
 
-    private void putMinion(int playerNumber, Troop troop, Cell cell) {
+    private void putMinion(int playerNumber, Troop troop, Cell cell) throws ServerException {
         troop.setCell(cell);
         gameMap.addTroop(playerNumber, troop);
+        Server.getInstance().sendTroopUpdateMessage(this, troop);
     }
 
     private void applyOnPutSpells(Card card, Cell cell) throws ServerException {
@@ -268,7 +266,6 @@ public abstract class Game {
     private void catchItem(Card item) {
         getCurrentTurnPlayer().addCollectibleItems(item);
     }
-
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws LogicException {
         if (!canCommand(username)) {
@@ -451,6 +448,9 @@ public abstract class Game {
                 damage(attackerTroop, defenderTroop);
 
                 attackerTroop.setCanAttack(false);
+                attackerTroop.setCanMove(false);
+                Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
+
                 applyOnAttackSpells(attackerTroop, defenderTroop);
             }
         }

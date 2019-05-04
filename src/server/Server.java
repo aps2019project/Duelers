@@ -582,7 +582,7 @@ public class Server {
     }
 
 
-    private void insertCard(Message message) throws ClientException {
+    private void insertCard(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.insert(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
     }
@@ -597,7 +597,7 @@ public class Server {
         game.comboAttack(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
     }
 
-    private void useSpecialPower(Message message) throws ClientException {
+    private void useSpecialPower(Message message) throws LogicException {
         Game game = getGame(message.getSender());
         game.useSpecialPower(clients.get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
     }
