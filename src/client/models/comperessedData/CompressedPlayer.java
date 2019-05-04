@@ -56,6 +56,17 @@ public class CompressedPlayer {
         return null;
     }
 
+    public CompressedTroop seachTroop(String cardId) {
+        for (CompressedTroop troop :
+                troops) {
+            if (troop.getCard().getCardId().equals(cardId)){
+                return troop;
+            }
+        }
+        return null;
+    }
+
+
     public CompressedCard searchCollectedItems(String cardId) {
         for (CompressedCard card :
                 collectedItems) {
@@ -72,5 +83,15 @@ public class CompressedPlayer {
 
     public CompressedTroop getHero() {
         return hero;
+    }
+
+    public CompressedCard searchGraveyard(String cardId) {
+        for (CompressedCard card :
+                graveyard) {
+            if (card.getCardId().equals(cardId)){
+                return card;
+            }
+        }
+        return null;
     }
 }

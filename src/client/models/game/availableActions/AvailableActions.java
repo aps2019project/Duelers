@@ -29,7 +29,7 @@ public class AvailableActions {
         }
 
         for (CompressedTroop myTroop : ownPlayer.getTroops()) {
-            if (!myTroop.isCanAttack()) continue;
+            if (!myTroop.canAttack()) continue;
 
             ArrayList<CompressedTroop> targets = new ArrayList<>();
             for (CompressedTroop enemyTroop : otherPlayer.getTroops()) {
@@ -50,7 +50,7 @@ public class AvailableActions {
 
             ArrayList<CompressedTroop> attackers = new ArrayList<>();
             for (CompressedTroop myTroop : ownPlayer.getTroops()) {
-                if (!myTroop.getCard().isHasCombo() || !myTroop.isCanAttack()) continue;
+                if (!myTroop.getCard().isHasCombo() || !myTroop.canAttack()) continue;
 
                 if (enemyTroop.isNoAttackFromWeakerOnes() && myTroop.getCurrentAp() < enemyTroop.getCurrentAp())
                     continue;

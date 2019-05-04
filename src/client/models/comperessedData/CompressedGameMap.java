@@ -55,6 +55,10 @@ public class CompressedGameMap {
 
     private boolean isInMap(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
+
+    }
+    public boolean checkCoordination(int row, int column) {
+        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
 
     public CompressedTroop getTroop(Position cell) {

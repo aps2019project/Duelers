@@ -138,13 +138,13 @@ public class View {
 
     }
 
-    public void showCollectedItems(Player player) {
-        for (Card item : player.getCollectedItems()) {
+    public void showCollectedItems(CompressedPlayer player) {
+        for (CompressedCard item : player.getCollectedItems()) {
             showItemInfo(item);
         }
     }
 
-    public void showItemInfo(Card item) {
+    public void showItemInfo(CompressedCard item) {
         System.out.println(item.getCardId() + ":" +
                 "\nDescription: " + item.getDescription()
         );

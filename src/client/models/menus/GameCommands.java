@@ -2,11 +2,9 @@ package client.models.menus;
 
 import client.Client;
 import client.models.card.AttackType;
-import client.models.card.Card;
 import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
 import client.models.comperessedData.CompressedTroop;
-import client.models.game.Troop;
 import client.models.map.Position;
 import client.models.message.Message;
 import client.view.View;
@@ -139,11 +137,11 @@ public class GameCommands extends Menu {
             throw new InputException("coordination is not valid");
 
         }
-        if (currentGame.getGameMap().getTroop(row, column) != null) {
+        if (currentGame.getGameMap().getTroop(new Position(row, column)) != null) {
             throw new InputException("cell is not empty");
 
         }
-        if (troop.getCell().manhattanDistance(row, column) > 2) {
+        if (troop.getPosition().manhattanDistance(row, column) > 2) {
             throw new InputException("to far to go");
         }
 
@@ -162,28 +160,28 @@ public class GameCommands extends Menu {
         if (selectedCardId == null) {
             throw new InputException("select a card");
         }
-        Troop attackerTroop = currentGame.getCurrentTurnPlayer().getTroop(selectedCardId);
+        CompressedTroop attackerTroop = currentGame.getCurrentTurnPlayer().seachTroop(selectedCardId);
 
         if (!attackerTroop.canAttack()) {
             throw new InputException("attacker can not attack");
         }
+        CompressedTroop defenderTroop = currentGame.getOtherTurnPlayer().seachTroop(oppCardId);
 
-        Troop defenderTroop = currentGame.getOtherTurnPlayer().getTroop(oppCardId);
         if (defenderTroop == null) {
             throw new InputException("target card is not valid");
         }
 
         if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
-            if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
+            if (!attackerTroop.getPosition().isNextTo(defenderTroop.getPosition())) {
                 throw new InputException("you can not attack to this target");
             }
         } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
-            if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
-                    attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+            if (attackerTroop.getPosition().isNextTo(defenderTroop.getPosition()) ||
+                    attackerTroop.getPosition().manhattanDistance(defenderTroop.getPosition()) > attackerTroop.getCard().getRange()) {
                 throw new InputException("you can not attack to this target");
             }
         } else { // HYBRID
-            if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
+            if (attackerTroop.getPosition().manhattanDistance(defenderTroop.getPosition()) > attackerTroop.getCard().getRange()) {
                 throw new InputException("you can not attack to this target");
             }
         }
@@ -263,7 +261,7 @@ public class GameCommands extends Menu {
             throw new InputException("select an item");
         }
 
-        Card item = currentGame.getCurrentTurnPlayer().searchCollectedItems(selectedItemId);
+        CompressedCard item = currentGame.getCurrentTurnPlayer().searchCollectedItems(selectedItemId);
         View.getInstance().showItemInfo(item);
         selectedItemId = null;
     }
@@ -287,7 +285,7 @@ public class GameCommands extends Menu {
     }
 
     public void showNextCard() throws InputException {
-        Card nextCard = currentGame.getCurrentTurnPlayer().getNextCard();
+        CompressedCard nextCard = currentGame.getCurrentTurnPlayer().getNextCard();
         if (nextCard == null) {
             throw new InputException("no cards remaining");
         }
@@ -306,7 +304,7 @@ public class GameCommands extends Menu {
             throw new InputException("you are not in graveyard");
         }
 
-        for (Card card : currentGame.getCurrentTurnPlayer().getGraveyard()) {
+        for (CompressedCard card : currentGame.getCurrentTurnPlayer().getGraveyard()) {
             View.getInstance().showCardInfo(card);
         }
     }
@@ -316,7 +314,7 @@ public class GameCommands extends Menu {
             throw new InputException("you are not in graveyard");
         }
 
-        Card card = currentGame.getCurrentTurnPlayer().searchGraveyard(cardId);
+        CompressedCard card = currentGame.getCurrentTurnPlayer().searchGraveyard(cardId);
         if (card == null) {
             throw new InputException("this card is not in graveyard");
         }
@@ -333,10 +331,9 @@ public class GameCommands extends Menu {
     }
 
     public void endGame() throws InputException {
-        if (!currentGame.isFinished()) {
-            throw new InputException("game is not finished.");
-        }
         //TODO: both clients will moveTroop to main menu.
+        //TODO:
+            throw new InputException("game is not finished.");
     }
 
     public CompressedGame getCurrentGame() {

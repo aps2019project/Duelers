@@ -30,6 +30,14 @@ public class Position {
         return Math.abs(row - position.row) + Math.abs(column - position.column);
     }
 
+    public int manhattanDistance(Cell cell) {
+        return Math.abs(cell.getRow() - row) + Math.abs(cell.getColumn() - column);
+    }
+
+    public int manhattanDistance(int selectedRow , int selectedColumn){
+        return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
+    }
+
     public boolean isNextTo(Position position) {
         return Math.abs(position.row - row) < 2 && Math.abs(position.column - column) < 2;
     }
