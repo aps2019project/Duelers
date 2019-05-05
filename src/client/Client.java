@@ -171,8 +171,9 @@ public class Client {
             }
             receivingMessages.clear();
         }
+    }
 
-        public void sendMessages () {
+    public void sendMessages() {
         synchronized (sendingMessages) {
             for (Message message : sendingMessages) {
                 message.setMessageId(++lastSentMessageId);
@@ -188,17 +189,17 @@ public class Client {
             }
             receiveMessages();
         }
-        }
-
-        public void setCustomDecks (DeckInfo[]customDecks){
-            this.customDecks = customDecks;
-        }
-
-        public void setSelected (Card selected){
-            this.selected = selected;
-        }
-
-        public void setPositions (Position[]positions){
-            this.positions = positions;
-        }
     }
+
+    public void setCustomDecks(DeckInfo[] customDecks) {
+        this.customDecks = customDecks;
+    }
+
+    public void setSelected(Card selected) {
+        this.selected = selected;
+    }
+
+    public void setPositions(Position[] positions) {
+        this.positions = positions;
+    }
+}
