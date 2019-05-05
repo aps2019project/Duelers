@@ -11,8 +11,6 @@ import client.models.comperessedData.CompressedCard;
 import client.models.comperessedData.CompressedGame;
 import client.models.comperessedData.CompressedPlayer;
 import client.models.comperessedData.CompressedTroop;
-import client.models.game.Player;
-import client.models.game.Troop;
 import client.models.game.availableActions.*;
 import client.models.map.Position;
 
@@ -274,13 +272,13 @@ public class View {
         showFlagCarriers(game.getPlayerTwo());*/
     }
 
-    private void showFlagCarriers(Player player) {
-        for (Troop troop : player.getFlagCarriers()) {
+    private void showFlagCarriers(CompressedPlayer player) {//TODO
+        /*for (Troop troop : player.getFlagCarriers()) {
             System.out.println("Troop " + troop.getCard().getCardId() +
                     "is carrying the flag in cell " +
                     troop.getCell()
             );
-        }
+        }*/
     }
 
     public void showTroops(ArrayList<CompressedTroop> troops) {

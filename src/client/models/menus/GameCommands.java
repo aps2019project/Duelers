@@ -102,7 +102,7 @@ public class GameCommands extends Menu {
             View.getInstance().showTroopInfo(troop);
             return;
         }
-        CompressedCard card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
+        CompressedCard card = currentGame.getCurrentTurnPlayer().searchHand(cardId);
         if (card != null) {
             View.getInstance().showCardInfo(card);
             return;
@@ -240,7 +240,7 @@ public class GameCommands extends Menu {
     }
 
     public void insertCard(Client client, String serverName, String cardId, int row, int column) throws InputException {
-        CompressedCard card = currentGame.getCurrentTurnPlayer().searchCard(cardId);
+        CompressedCard card = currentGame.getCurrentTurnPlayer().searchHand(cardId);
         Position target = new Position(row, column);
         Message message = Message.makeInsertMessage(
                 client.getClientName(), serverName, cardId, new Position(row, column), 0

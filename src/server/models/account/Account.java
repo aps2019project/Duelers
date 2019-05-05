@@ -126,6 +126,10 @@ public class Account {
         }
     }
 
+    public void addMatchHistory(MatchHistory matchHistory){
+        matchHistories.add(matchHistory);
+    }
+
     public String getUsername() {
         return username;
     }

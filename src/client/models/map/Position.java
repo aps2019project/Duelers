@@ -1,5 +1,7 @@
 package client.models.map;
 
+import client.models.comperessedData.CompressedCell;
+
 public class Position {
     private int row;
     private int column;
@@ -30,7 +32,7 @@ public class Position {
         return Math.abs(row - position.row) + Math.abs(column - position.column);
     }
 
-    public int manhattanDistance(Cell cell) {
+    public int manhattanDistance(CompressedCell cell) {
         return Math.abs(cell.getRow() - row) + Math.abs(cell.getColumn() - column);
     }
 
