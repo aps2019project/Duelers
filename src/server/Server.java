@@ -17,6 +17,7 @@ import server.models.map.GameMap;
 import server.models.message.CardPosition;
 import server.models.message.Message;
 import server.models.sorter.LeaderBoardSorter;
+import server.models.sorter.StoriesSorter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -782,6 +783,7 @@ public class Server {
                 stories.add(new Story(story, originalCards));
             }
         }
+        stories.sort(new StoriesSorter());
         serverPrint("Stories loaded");
     }
 

@@ -11,15 +11,14 @@ public class CompressedGame {
     private GameType gameType;
     private boolean isFinished;
 
-
-    public void moveCardToHand(CompressedCard card) {
-        CompressedPlayer player = getCurrentTurnPlayer();//TODO:Ahmad Check
-        player.removeCardFromNext(card.getCardId());
+    public void moveCardToHand() {
+        CompressedPlayer player = getCurrentTurnPlayer();
         player.addNextCardToHand();
+        player.removeCardFromNext();
     }
 
     public void moveCardToNext(CompressedCard card) {
-        CompressedPlayer player = getCurrentTurnPlayer();//TODO:Ahmad Check
+        CompressedPlayer player = getCurrentTurnPlayer();
         player.addCardToNext(card);
     }
 
@@ -35,11 +34,7 @@ public class CompressedGame {
             if (troop == null) {
                 System.out.println("Client Game Error!");
             } else {
-                if (troop.getPlayerNumber() == 1) {//TODO:Ahmad check
-                    player = playerOne;
-                } else {
-                    player = playerTwo;
-                }
+                player = getPlayer(troop.getPlayerNumber());
                 player.removeTroop(card.getCardId());
                 player.addCardToGraveYard(card);
                 gameMap.killTroop(card.getCardId());
@@ -52,19 +47,15 @@ public class CompressedGame {
         }
     }
 
-    public void moveCardToCollecteds(CompressedCard card) {
+    public void moveCardToCollectedItems(CompressedCard card) {
         CompressedPlayer player = getCurrentTurnPlayer();
         gameMap.removeItem(card.getCardId());
         player.addCardToCollectedItems(card);
     }
 
-    public void troopUpdate(CompressedTroop troop) {//check both + map flag
-        CompressedPlayer player = null;
-        if (troop.getPlayerNumber() == 1) {//TODO:Ahmad check
-            player = playerOne;
-        } else {
-            player = playerTwo;
-        }
+    public void troopUpdate(CompressedTroop troop) {
+        CompressedPlayer player;
+        player = getPlayer(troop.getPlayerNumber());
         player.troopUpdate(troop);
         gameMap.updateTroop(troop);
     }
@@ -73,8 +64,8 @@ public class CompressedGame {
                            int player2CurrentMP, int player2NumberOfCollectedFlags) {
         this.turnNumber = turnNumber;
         playerOne.setCurrentMP(player1CurrentMP);
-        playerOne.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
-        playerTwo.setCurrentMP(player1CurrentMP);
+        playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
+        playerTwo.setCurrentMP(player2CurrentMP);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
     }
 
@@ -99,18 +90,18 @@ public class CompressedGame {
     }
 
     public CompressedPlayer getCurrentTurnPlayer() {
-        if (turnNumber % 2 == 1) {
-            return playerOne;
-        } else {
-            return playerTwo;
-        }
+        return getPlayer(turnNumber % 2);
     }
 
     public CompressedPlayer getOtherTurnPlayer() {
-        if (turnNumber % 2 == 1) {
-            return playerTwo;
-        } else {
+        return getPlayer(turnNumber % 2 + 1);
+    }
+
+    private CompressedPlayer getPlayer(int number) {
+        if (number == 1) {
             return playerOne;
+        } else {
+            return playerTwo;
         }
     }
 

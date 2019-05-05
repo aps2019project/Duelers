@@ -56,12 +56,8 @@ public class CompressedPlayer {
         hand.removeIf(compressedCard -> compressedCard.getCardId().equals(cardId));
     }
 
-    public void removeCardFromNext(String cardId) {
-        if (nextCard.getCardId().equals(cardId)) {
-            nextCard = null;
-        } else {
-            System.out.println("Client Game Error!");
-        }
+    public void removeCardFromNext() {
+        nextCard = null;
     }
 
     public void removeCardFromCollectedItems(String cardId) {

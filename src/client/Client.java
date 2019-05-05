@@ -123,10 +123,10 @@ public class Client {
                     CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
                     switch (cardPosition) {
                         case MAP:
-                            gameCommands.getCurrentGame().getCurrentTurnPlayer().removeCardFromHand(message.getCardPositionMessage().getCompressedCard().getCardId());
+                            gameCommands.getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
                             break;
                         case HAND:
-                            gameCommands.getCurrentGame().moveCardToHand(message.getCardPositionMessage().getCompressedCard());
+                            gameCommands.getCurrentGame().moveCardToHand();
                             break;
                         case NEXT:
                             gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
@@ -135,7 +135,7 @@ public class Client {
                             gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
                             break;
                         case COLLECTED:
-                            gameCommands.getCurrentGame().moveCardToCollecteds(message.getCardPositionMessage().getCompressedCard());
+                            gameCommands.getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
                             break;
                     }
                 case TROOP_UPDATE:

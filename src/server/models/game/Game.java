@@ -174,6 +174,8 @@ public abstract class Game {
             }
             actions.calculateAvailableInsets(this);
         }
+
+        changeTurn("AI");
     }
 
     private void removeFinishedBuffs() {
@@ -690,20 +692,38 @@ public abstract class Game {
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
         TargetData targetData = new TargetData();
         Player player = getCurrentTurnPlayer();
-        if (spell.getTarget().getCardType().isPlayer()) {
-            targetData.getPlayers().add(player);
-            return targetData;
+        if (spell.getTarget().getOwner().isOwn()) {
+            player = getCurrentTurnPlayer();
+            if (spell.getTarget().getCardType().isPlayer()) {
+                targetData.getPlayers().add(player);
+            }
+
+            if (spell.getTarget().isForDeckCards()) {
+                for (Card card : player.getDeck().getOthers()) {
+                    if (spell.getTarget().getCardType().isHero() && card.getType() == CardType.HERO)
+                        targetData.getCards().add(card);
+                    if (spell.getTarget().getCardType().isMinion() && card.getType() == CardType.HERO)
+                        targetData.getCards().add(card);
+                }
+                targetData.getCards().add(player.getNextCard());
+            }
+
+            Position centerPosition;
+            if (spell.getTarget().isRelatedToCardOwnerPosition()) {
+                centerPosition = new Position(cardCell);
+            } else if (spell.getTarget().isForAroundOwnHero()) {
+                centerPosition = new Position(heroCell);
+            } else {
+                centerPosition = new Position(clickCell);
+            }
+            ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+            detectTargets(spell, targetData, player, targetCells);
         }
-        Position centerPosition;
-        if (spell.getTarget().isRelatedToCardOwnerPosition()) {
-            centerPosition = new Position(cardCell);
-        } else if (spell.getTarget().isForAroundOwnHero()) {
-            centerPosition = new Position(heroCell);
-        } else {
-            centerPosition = new Position(clickCell);
+        if (spell.getTarget().getOwner().isEnemy()) {
+            player = getOtherTurnPlayer();
         }
-        ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
-        detectTargets(spell, targetData, player, targetCells);
+
+
         return targetData;
     }
 
@@ -712,27 +732,35 @@ public abstract class Game {
             if (spell.getTarget().getCardType().isCell()) {
                 targetData.getCells().add(cell);
             }
-            if (spell.getTarget().getCardType().isHero()) {
-                Troop troop = player.getTroop(cell);
-                if (troop == null) {
-                    troop = getOtherTurnPlayer().getTroop(cell);
+            Troop troop = player.getTroop(cell);
+            if (troop != null) {
+                if (spell.getTarget().getAttackType().isHybrid() && troop.getCard().getAttackType() == AttackType.HYBRID) {
+                    addTroopToTargetData(spell, targetData, troop);
                 }
-                if (troop != null) {
-                    if (troop.getCard().getType() == CardType.HERO) {
-                        targetData.getTroops().add(troop);
-                    }
+                if (spell.getTarget().getAttackType().isMelee() && troop.getCard().getAttackType() == AttackType.MELEE) {
+                    addTroopToTargetData(spell, targetData, troop);
+                }
+                if (spell.getTarget().getAttackType().isRanged() && troop.getCard().getAttackType() == AttackType.RANGED) {
+                    addTroopToTargetData(spell, targetData, troop);
                 }
             }
-            if (spell.getTarget().getCardType().isMinion()) {
-                Troop troop = player.getTroop(cell);
-                if (troop == null) {
-                    troop = getOtherTurnPlayer().getTroop(cell);
-                }
-                if (troop != null) {
-                    if (troop.getCard().getType() == CardType.MINION) {
-                        targetData.getTroops().add(troop);
-                    }
-                }
+        }
+        if (spell.getTarget().isRandom()) {
+            Troop randomTroop = targetData.getTroops().get(new Random().nextInt(targetData.getTroops().size()));
+            targetData.getTroops().clear();
+            targetData.getTroops().add(randomTroop);
+        }
+    }
+
+    private void addTroopToTargetData(Spell spell, TargetData targetData, Troop troop) {
+        if (spell.getTarget().getCardType().isHero()) {
+            if (troop.getCard().getType() == CardType.HERO) {
+                targetData.getTroops().add(troop);
+            }
+        }
+        if (spell.getTarget().getCardType().isMinion()) {
+            if (troop.getCard().getType() == CardType.MINION) {
+                targetData.getTroops().add(troop);
             }
         }
     }
