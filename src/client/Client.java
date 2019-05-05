@@ -152,7 +152,8 @@ public class Client {
 
                     break;
                 case Game_FINISH:
-                    gameCommands.getCurrentGame().setFinished();
+                    GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+                    setCurrentMenu(GameResultStatus.getInstance());
                     break;
             }
         }
