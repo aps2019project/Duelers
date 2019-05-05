@@ -118,9 +118,9 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
-    public static Message makeGameFinishMessage(String sender, String receiver,boolean youWon,int messageId){
+    public static Message makeGameFinishMessage(String sender, String receiver, boolean youWon, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.gameFinishMessage=new GameFinishMessage(youWon);
+        message.gameFinishMessage = new GameFinishMessage(youWon);
         message.messageType = MessageType.Game_FINISH;
         return message;
     }

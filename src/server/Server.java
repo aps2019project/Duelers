@@ -627,18 +627,18 @@ public class Server {
         if (game.finishCheck()) {
             MatchHistory playerOneHistory = game.getPlayerOne().getMatchHistory();
             MatchHistory playerTwoHistory = game.getPlayerTwo().getMatchHistory();
-            if(!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")){
-                Account account=getAccount(game.getPlayerOne().getUserName());
-                if(account==null)
+            if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+                Account account = getAccount(game.getPlayerOne().getUserName());
+                if (account == null)
                     serverPrint("Error");
                 else {
                     account.addMatchHistory(playerOneHistory);
                     saveAccount(account);
                 }
             }
-            if(!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")){
-                Account account=getAccount(game.getPlayerTwo().getUserName());
-                if(account==null)
+            if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+                Account account = getAccount(game.getPlayerTwo().getUserName());
+                if (account == null)
                     serverPrint("Error");
                 else {
                     account.addMatchHistory(playerTwoHistory);
@@ -713,13 +713,13 @@ public class Server {
         }
     }
 
-    private void sendGameFinishMessages(Game game)  {
+    private void sendGameFinishMessages(Game game) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
                 serverPrint("player one has logged out during game!");
-            }else{
+            } else {
                 addToSendingMessages(Message.makeGameFinishMessage(
                         serverName, clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), 0));
                 addToSendingMessages(Message.makeAccountCopyMessage(
@@ -730,7 +730,7 @@ public class Server {
             clientName = getClientName(game.getPlayerTwo().getUserName());
             if (clientName == null) {
                 serverPrint("player two has logged out during game!");
-            }else{
+            } else {
                 addToSendingMessages(Message.makeGameFinishMessage(
                         serverName, clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), 0));
                 addToSendingMessages(Message.makeAccountCopyMessage(

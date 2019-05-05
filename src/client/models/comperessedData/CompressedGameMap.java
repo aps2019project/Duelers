@@ -3,7 +3,6 @@ package client.models.comperessedData;
 import client.models.map.Position;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CompressedGameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
@@ -36,6 +35,10 @@ public class CompressedGameMap {
         return null;
     }
 
+    public void addTroop(CompressedTroop troop) {
+        troops.add(troop);
+    }
+
     public ArrayList<CompressedTroop> getPlayerTroop(int playerNumber) {
         ArrayList<CompressedTroop> compressedTroops = new ArrayList<>();
         for (CompressedTroop troop : troops) {
@@ -58,10 +61,6 @@ public class CompressedGameMap {
 
     }
 
-    public boolean checkCoordination(int row, int column) {
-        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
-    }
-
     public CompressedTroop getTroop(Position cell) {
         for (CompressedTroop troop : troops) {
             if (troop.getPosition().equals(cell)) {
@@ -71,47 +70,43 @@ public class CompressedGameMap {
         return null;
     }
 
-    public void removeItem(String cardId){
-        for(CompressedCell[] cells1:cells){
-            for(CompressedCell cell:cells1){
-                if(cell.getItem().getCardId().equals(cardId))
+    public void removeItem(String cardId) {
+        for (CompressedCell[] cells1 : cells) {
+            for (CompressedCell cell : cells1) {
+                if (cell.getItem().getCardId().equals(cardId))
                     cell.removeItem();
             }
         }
     }
 
-    public void addFlagNum(Position position, int addition){
+    public void addFlagNum(Position position, int addition) {
         cells[position.getRow()][position.getColumn()].addNumberOfFlags(addition);
     }
 
-    public int getFlagNum(Position position){
+    public int getFlagNum(Position position) {
         return cells[position.getRow()][position.getColumn()].getNumberOfFlags();//TODO:Ahmad Check
     }
 
-    public void updateTroop(CompressedTroop troop){//flag
+    public void updateTroop(CompressedTroop troop) {//flag
         removeTroop(troop.getCard().getCardId());
         troops.add(troop);
         cells[troop.getPosition().getRow()][troop.getPosition().getColumn()].removeFlags();
     }
 
-    public void killTroop(String cardId){//flag
-        for(CompressedTroop troop:troops){
-            if(troop.getCard().getCardId().equals(cardId)){
-                addFlagNum(troop.getPosition(),troop.getNumberOfCollectedFlags());
+    public void killTroop(String cardId) {//flag
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getCardId().equals(cardId)) {
+                addFlagNum(troop.getPosition(), troop.getNumberOfCollectedFlags());
             }
         }
         removeTroop(cardId);
     }
 
-    private void removeTroop(String cardId){
-        Iterator<CompressedTroop> iterator=troops.iterator();
-        while (iterator.hasNext()){
-            if(iterator.next().getCard().getCardId().equals(cardId))
-                iterator.remove();
-        }
+    private void removeTroop(String cardId) {
+        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equals(cardId));
     }
 
-    public CompressedTroop getTroop(String cardId){
+    public CompressedTroop getTroop(String cardId) {
         for (CompressedTroop troop : troops) {
             if (troop.getCard().getCardId().equals(cardId)) {
                 return troop;

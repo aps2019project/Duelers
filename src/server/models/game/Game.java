@@ -158,19 +158,19 @@ public abstract class Game {
             actions.calculateAvailableMoves(this);
         }
         actions.calculateAvailableAttacks(this);
-        while (actions.getAttacks().size()>0){
-            Attack attack=actions.getAttacks().get(new Random().nextInt(actions.getAttacks().size()));
-            attack("AI",attack.getAttackerTroop().getCard().getCardId(),attack.getDefenders().get(new Random().nextInt(attack.getDefenders().size())).getCard().getCardId());
+        while (actions.getAttacks().size() > 0) {
+            Attack attack = actions.getAttacks().get(new Random().nextInt(actions.getAttacks().size()));
+            attack("AI", attack.getAttackerTroop().getCard().getCardId(), attack.getDefenders().get(new Random().nextInt(attack.getDefenders().size())).getCard().getCardId());
             actions.calculateAvailableAttacks(this);
         }
         actions.calculateAvailableInsets(this);
-        while (actions.getHandInserts().size()>0&&actions.getCollectibleInserts().size()>0){
-            if (new Random().nextInt(2)==1){
-                Insert insert =actions.getHandInserts().get(new Random().nextInt(actions.getHandInserts().size()));
-                insert("AI",insert.getCard().getCardId(),new Position (new Random().nextInt(5),new Random().nextInt(9)));
-            }else {
-                Insert insert =actions.getCollectibleInserts().get(new Random().nextInt(actions.getHandInserts().size()));
-                insert("AI",insert.getCard().getCardId(),new Position (new Random().nextInt(5),new Random().nextInt(9)));
+        while (actions.getHandInserts().size() > 0 && actions.getCollectibleInserts().size() > 0) {
+            if (new Random().nextInt(2) == 1) {
+                Insert insert = actions.getHandInserts().get(new Random().nextInt(actions.getHandInserts().size()));
+                insert("AI", insert.getCard().getCardId(), new Position(new Random().nextInt(5), new Random().nextInt(9)));
+            } else {
+                Insert insert = actions.getCollectibleInserts().get(new Random().nextInt(actions.getHandInserts().size()));
+                insert("AI", insert.getCard().getCardId(), new Position(new Random().nextInt(5), new Random().nextInt(9)));
             }
             actions.calculateAvailableInsets(this);
         }

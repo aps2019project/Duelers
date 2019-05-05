@@ -19,7 +19,7 @@ public class Position {//TODO:Change class name
         this.column = column;
     }
 
-    public boolean equals(Cell cell){
+    public boolean equals(Cell cell) {
         return this.row == cell.getRow() && this.column == cell.getColumn();
     }
 

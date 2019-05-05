@@ -126,7 +126,7 @@ public class Account {
         }
     }
 
-    public void addMatchHistory(MatchHistory matchHistory){
+    public void addMatchHistory(MatchHistory matchHistory) {
         matchHistories.add(matchHistory);
     }
 

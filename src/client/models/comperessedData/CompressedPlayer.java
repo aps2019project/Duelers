@@ -3,7 +3,6 @@ package client.models.comperessedData;
 import client.models.card.CardType;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CompressedPlayer {
     private String userName;
@@ -18,8 +17,8 @@ public class CompressedPlayer {
     private CompressedTroop hero;
 
 
-    public void addCardToHand(CompressedCard card) {
-        hand.add(card);
+    public void addNextCardToHand() {
+        hand.add(nextCard);
         if (hand.size() > 5)
             System.out.println("Client Game Error!");
     }
@@ -40,20 +39,21 @@ public class CompressedPlayer {
     }
 
     public void troopUpdate(CompressedTroop troop) {
-        if(troops==null)
-            troops=new ArrayList<>();
+        if (troops == null)
+            troops = new ArrayList<>();
         removeTroop(troop.getCard().getCardId());
         troops.add(troop);
         if (troop.getCard().getType() == CardType.HERO)
             hero = troop;
     }
 
+    public void addTroop(CompressedTroop troop) {
+        troops.add(troop);
+    }
+
     public void removeCardFromHand(String cardId) {
-        Iterator<CompressedCard> iterator = hand.iterator();
-        while (iterator.hasNext()) {//TODO:Ahmad Check syntax
-            if (iterator.next().getCardId().equals(cardId))
-                iterator.remove();
-        }
+        //TODO:Ahmad Check syntax
+        hand.removeIf(compressedCard -> compressedCard.getCardId().equals(cardId));
     }
 
     public void removeCardFromNext(String cardId) {
@@ -65,21 +65,15 @@ public class CompressedPlayer {
     }
 
     public void removeCardFromCollectedItems(String cardId) {
-        Iterator<CompressedCard> iterator = collectedItems.iterator();
-        while (iterator.hasNext()) {//TODO:Ahmad Check syntax
-            if (iterator.next().getCardId().equals(cardId))
-                iterator.remove();
-        }
+        //TODO:Ahmad Check syntax
+        collectedItems.removeIf(compressedCard -> compressedCard.getCardId().equals(cardId));
     }
 
     public void removeTroop(String cardId) {
-        if(troops==null)
-            troops=new ArrayList<>();
-        Iterator<CompressedTroop> iterator = troops.iterator();
-        while (iterator.hasNext()) {//TODO:Ahmad Check syntax
-            if (iterator.next().getCard().getCardId().equals(cardId))
-                iterator.remove();
-        }
+        if (troops == null)
+            troops = new ArrayList<>();
+        //TODO:Ahmad Check syntax
+        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equals(cardId));
         if (hero.getCard().getCardId().equals(cardId))
             hero = null;
     }
@@ -109,14 +103,6 @@ public class CompressedPlayer {
             }
         }
         return null;
-    }
-
-    public void setCurrentMP(int currentMP) {
-        this.currentMP = currentMP;
-    }
-
-    public void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
-        this.numberOfCollectedFlags = numberOfCollectedFlags;
     }
 
     public ArrayList<CompressedTroop> getTroops() {
@@ -154,6 +140,10 @@ public class CompressedPlayer {
         return currentMP;
     }
 
+    public void setCurrentMP(int currentMP) {
+        this.currentMP = currentMP;
+    }
+
     public ArrayList<CompressedCard> getHand() {
         return hand;
     }
@@ -176,5 +166,9 @@ public class CompressedPlayer {
 
     public int getNumberOfCollectedFlags() {
         return numberOfCollectedFlags;
+    }
+
+    public void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
+        this.numberOfCollectedFlags = numberOfCollectedFlags;
     }
 }

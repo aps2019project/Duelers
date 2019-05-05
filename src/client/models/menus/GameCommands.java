@@ -70,6 +70,17 @@ public class GameCommands extends Menu {
         View.getInstance().showHelp(help);
     }
 
+    public CompressedGame getCurrentGame() {
+        return currentGame;
+    }
+
+    public void setCurrentGame(CompressedGame currentGame) {
+        this.currentGame = currentGame;
+        currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
+        currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
+        availableActions.calculate(currentGame);
+    }
+
     public void showGameActions() { //help
         View.getInstance().showAvailableActions(currentGame, availableActions);
     }
@@ -132,7 +143,7 @@ public class GameCommands extends Menu {
             throw new InputException("troop can not move");
 
         }
-        if (!currentGame.getGameMap().checkCoordination(row, column)) {
+        if (!currentGame.getGameMap().isInMap(row, column)) {
             throw new InputException("coordination is not valid");
 
         }
@@ -354,13 +365,6 @@ public class GameCommands extends Menu {
         //TODO: both clients will moveTroop to main menu.
         //TODO:
         throw new InputException("game is not finished.");
-    }
-
-    public void setCurrentGame(CompressedGame currentGame) {
-        this.currentGame = currentGame;
-        currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
-        currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
-        availableActions.calculate(currentGame);
     }
 }
 

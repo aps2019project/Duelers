@@ -8,6 +8,7 @@ import client.models.map.Position;
 import client.models.menus.*;
 import client.models.message.CardPosition;
 import client.models.message.DataName;
+import client.models.message.GameUpdateMessage;
 import client.models.message.Message;
 import server.Server;
 
@@ -119,27 +120,37 @@ public class Client {
                     break;
                 case CARD_POSITION://TODO:CHANGE
                     CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
+                    GameCommands gameCommands = GameCommands.getInstance();
                     switch (cardPosition) {
                         case MAP:
-
+                            gameCommands.getCurrentGame().getCurrentTurnPlayer().removeCardFromHand(message.getCardPositionMessage().getCompressedCard().getCardId());
                             break;
                         case HAND:
-
+                            gameCommands.getCurrentGame().moveCardToHand(message.getCardPositionMessage().getCompressedCard());
                             break;
                         case NEXT:
-
+                            gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
                             break;
-                        case GRAVE_YARD: // TODO: throw flags
-
+                        case GRAVE_YARD:
+                            gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
                             break;
                         case COLLECTED:
-
+                            gameCommands.getCurrentGame().moveCardToCollecteds(message.getCardPositionMessage().getCompressedCard());
                             break;
                     }
                 case TROOP_UPDATE:
-
+                    gameCommands = GameCommands.getInstance();
+                    gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
                     break;
                 case GAME_UPDATE:
+                     gameCommands = GameCommands.getInstance();
+                    GameUpdateMessage gameUpdateMessage= message.getGameUpdateMessage();
+                     gameCommands.getCurrentGame().gameUpdate(
+                             gameUpdateMessage.getTurnNumber(),
+                             gameUpdateMessage.getPlayer1CurrentMP(),
+                             gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
+                             gameUpdateMessage.getPlayer2CurrentMP(),
+                             gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
 
                     break;
                 case Game_FINISH:
