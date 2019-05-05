@@ -333,7 +333,7 @@ public class GameCommands extends Menu {
     public void endGame() throws InputException {
         //TODO: both clients will moveTroop to main menu.
         //TODO:
-            throw new InputException("game is not finished.");
+        throw new InputException("game is not finished.");
     }
 
     public CompressedGame getCurrentGame() {

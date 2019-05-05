@@ -13,12 +13,17 @@ import server.models.comperessedData.CompressedGame;
 import server.models.exceptions.ClientException;
 import server.models.exceptions.LogicException;
 import server.models.exceptions.ServerException;
+import server.models.game.availableActions.Attack;
+import server.models.game.availableActions.AvailableActions;
+import server.models.game.availableActions.Insert;
+import server.models.game.availableActions.Move;
 import server.models.map.Cell;
 import server.models.map.GameMap;
 import server.models.map.Position;
 import server.models.message.CardPosition;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Game {
     private Player playerOne;
@@ -34,6 +39,14 @@ public abstract class Game {
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(secondDeck, userName, 2);
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     public void startGame() throws ServerException {
@@ -82,7 +95,7 @@ public abstract class Game {
         return playerTwo;
     }
 
-    private Player getCurrentTurnPlayer() {
+    public Player getCurrentTurnPlayer() {
         if (turnNumber % 2 == 1) {
             return playerOne;
         } else {
@@ -90,7 +103,7 @@ public abstract class Game {
         }
     }
 
-    private Player getOtherTurnPlayer() {
+    public Player getOtherTurnPlayer() {
         if (turnNumber % 2 == 0) {
             return playerOne;
         } else {
@@ -132,9 +145,31 @@ public abstract class Game {
         }
     }
 
-    private void playCurrentTurn() {
-        //TODO:write AI
-        //TODO: change turn
+    private void playCurrentTurn() throws LogicException {
+        AvailableActions actions = new AvailableActions();
+        actions.calculateAvailableActions(this);
+        while (actions.getMoves().size() > 0) {
+            Move move = actions.getMoves().get(new Random().nextInt(actions.getMoves().size()));
+            moveTroop("AI", move.getTroop().getCard().getCardId(), move.getTargets().get(new Random().nextInt(move.getTargets().size())));
+            actions.calculateAvailableMoves(this);
+        }
+        actions.calculateAvailableAttacks(this);
+        while (actions.getAttacks().size()>0){
+            Attack attack=actions.getAttacks().get(new Random().nextInt(actions.getAttacks().size()));
+            attack("AI",attack.getAttackerTroop().getCard().getCardId(),attack.getDefenders().get(new Random().nextInt(attack.getDefenders().size())).getCard().getCardId());
+            actions.calculateAvailableAttacks(this);
+        }
+        actions.calculateAvailableInsets(this);
+        while (actions.getHandInserts().size()>0&&actions.getCollectibleInserts().size()>0){
+            if (new Random().nextInt(2)==1){
+                Insert insert =actions.getHandInserts().get(new Random().nextInt(actions.getHandInserts().size()));
+                insert("AI",insert.getCard().getCardId(),new Position (new Random().nextInt(5),new Random().nextInt(9)));
+            }else {
+                Insert insert =actions.getCollectibleInserts().get(new Random().nextInt(actions.getHandInserts().size()));
+                insert("AI",insert.getCard().getCardId(),new Position (new Random().nextInt(5),new Random().nextInt(9)));
+            }
+            actions.calculateAvailableInsets(this);
+        }
     }
 
     private void removeFinishedBuffs() {
@@ -246,7 +281,7 @@ public abstract class Game {
         }
     }
 
-    public void moveTroop(String username, String cardId, Position position) throws ClientException, ServerException {
+    public void moveTroop(String username, String cardId, Position position) throws LogicException {
         if (!canCommand(username)) {
             throw new ClientException("its not your turn");
         }

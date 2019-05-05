@@ -139,15 +139,16 @@ public class Deck {
         return hero;
     }
 
-    public Card getCardFromOthers(String cardId){
+    public Card getCardFromOthers(String cardId) {
         for (Card card :
                 others) {
-            if (cardId.equals(card.getCardId())){
+            if (cardId.equals(card.getCardId())) {
                 return card;
             }
         }
         return null;
     }
+
     public ArrayList<Card> getOthers() {
         return others;
     }

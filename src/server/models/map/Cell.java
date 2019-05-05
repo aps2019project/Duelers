@@ -15,8 +15,8 @@ public class Cell {
         this.column = column;
     }
 
-    public CompressedCell toCompressedCell(){
-        return new CompressedCell(row,column,items);
+    public CompressedCell toCompressedCell() {
+        return new CompressedCell(row, column, items);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Cell {
         return items;
     }
 
-    public void clearItems(){
+    public void clearItems() {
         items.clear();
     }
 
@@ -54,10 +54,12 @@ public class Cell {
     public int manhattanDistance(Cell cell) {
         return Math.abs(cell.row - row) + Math.abs(cell.column - column);
     }
-    public int manhattanDistance(int selectedRow , int selectedColumn){
+
+    public int manhattanDistance(int selectedRow, int selectedColumn) {
         return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
     }
-    public int manhattanDistance(Position position){
+
+    public int manhattanDistance(Position position) {
         return Math.abs(position.getRow() - this.row) + Math.abs(position.getColumn() - this.column);
 
     }

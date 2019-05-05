@@ -8,8 +8,8 @@ public class JsonConverter {
     public static <T> String toJson(T object) {
         return new Gson().toJson(object)
                 .replaceAll("\"\\w+\":(0|false),?", "")
-                .replaceAll(",}","}")
-                .replaceAll(",]","]");
+                .replaceAll(",}", "}")
+                .replaceAll(",]", "]");
     }
 
     public static <T> T fromJson(String json, Class<T> classOfT) {

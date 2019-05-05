@@ -41,6 +41,10 @@ public class Player {
                 userName, currentMP, hand, graveyard, nextCard, collectedItems, playerNumber, numberOfCollectedFlags);
     }
 
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
     public Card insert(String cardId) throws ClientException {
         Card card = null;
         Iterator iterator = hand.iterator();
@@ -180,7 +184,7 @@ public class Player {
     }
 
     public Troop getHero() {
-        if (hero == null){
+        if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
             troops.add(hero);
         }
@@ -208,11 +212,11 @@ public class Player {
         this.numberOfCollectedFlags--;
     }
 
-    public void setMatchHistory(MatchHistory matchHistory) {
-        this.matchHistory = matchHistory;
-    }
-
     public MatchHistory getMatchHistory() {
         return matchHistory;
+    }
+
+    public void setMatchHistory(MatchHistory matchHistory) {
+        this.matchHistory = matchHistory;
     }
 }

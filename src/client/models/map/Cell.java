@@ -32,7 +32,7 @@ public class Cell {
         return Math.abs(cell.row - row) + Math.abs(cell.column - column);
     }
 
-    public int manhattanDistance(int selectedRow , int selectedColumn){
+    public int manhattanDistance(int selectedRow, int selectedColumn) {
         return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
     }
 }

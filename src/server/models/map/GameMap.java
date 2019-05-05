@@ -86,6 +86,15 @@ public class GameMap {
         return null;
     }
 
+    public Troop getTroop(Cell cell) {
+        for (Troop troop : troops) {
+            if (troop.getCell().getColumn() == cell.getColumn() && troop.getCell().getRow() == cell.getRow()) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
     public Troop getTroop(String cardId) {
         for (Troop troop : troops) {
             if (troop.getCard().getCardId().equals(cardId)) {

@@ -1,7 +1,6 @@
 package client.models.comperessedData;
 
 import client.models.card.spell.AvailabilityType;
-import client.models.card.spell.SpellAction;
 import client.models.card.spell.Target;
 
 public class CompressedSpell {

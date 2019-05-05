@@ -46,11 +46,11 @@ public class Spell {
         return this.lastTurnUsed;
     }
 
-    public SpellAction getAction() {
-        return action;
-    }
-
     public void setLastTurnUsed(int turn) {
         this.lastTurnUsed = turn;
+    }
+
+    public SpellAction getAction() {
+        return action;
     }
 }

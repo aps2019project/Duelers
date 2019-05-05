@@ -17,18 +17,18 @@ public class SinglePlayerMenu extends Menu {
         client.setCurrentMenu(StoryMenu.getInstance(client, serverName));
     }
 
-    public void moveToCustomGameMenu(Client client){
+    public void moveToCustomGameMenu(Client client) {
         CustomGameMenu.getInstance().setHelp(client);
         client.setCurrentMenu(CustomGameMenu.getInstance());
     }
 
     @Override
-    public void exit(Client client){
+    public void exit(Client client) {
         client.setCurrentMenu(BattleMenu.getInstance());
     }
 
     @Override
-    public void showHelp(){
+    public void showHelp() {
         String help = "Single Palyer:\n" +
                 "\"story\"\n" +
                 "\"custom game\"\n" +

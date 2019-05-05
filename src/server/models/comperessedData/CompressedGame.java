@@ -11,11 +11,11 @@ public class CompressedGame {
     private int turnNumber;
     private GameType gameType;
 
-    public CompressedGame(Player playerOne, Player playerTwo, GameMap gameMap, int turnNumber,GameType gameType) {
+    public CompressedGame(Player playerOne, Player playerTwo, GameMap gameMap, int turnNumber, GameType gameType) {
         this.playerOne = playerOne.toCompressedPlayer();
         this.playerTwo = playerTwo.toCompressedPlayer();
         this.gameMap = gameMap.toCompressedGameMap();
         this.turnNumber = turnNumber;
-        this.gameType=gameType;
+        this.gameType = gameType;
     }
 }

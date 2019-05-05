@@ -1,8 +1,8 @@
 package server.models.comperessedData;
 
-import server.models.map.Position;
 import server.models.card.Card;
 import server.models.map.Cell;
+import server.models.map.Position;
 
 public class CompressedTroop {
     private CompressedCard card;
