@@ -100,7 +100,7 @@ public class Client {
     public void receiveMessages() {
         GameCommands gameCommands = GameCommands.getInstance();
         validation = true;
-        synchronized (receivingMessages){
+        synchronized (receivingMessages) {
             for (Message message : receivingMessages) {
                 if (message.getMessageId() > lastReceivedMessageId)
                     lastReceivedMessageId = message.getMessageId();
@@ -161,7 +161,8 @@ public class Client {
 
                         break;
                     case Game_FINISH:
-                        gameCommands.getCurrentGame().setFinished();
+                        GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+                        setCurrentMenu(GameResultStatus.getInstance());
                         break;
                     case DONE:
                         //nothing/just update last received message id
@@ -170,9 +171,8 @@ public class Client {
             }
             receivingMessages.clear();
         }
-    }
 
-    public void sendMessages() {
+        public void sendMessages () {
         synchronized (sendingMessages) {
             for (Message message : sendingMessages) {
                 message.setMessageId(++lastSentMessageId);
@@ -188,17 +188,17 @@ public class Client {
             }
             receiveMessages();
         }
-    }
+        }
 
-    public void setCustomDecks(DeckInfo[] customDecks) {
-        this.customDecks = customDecks;
-    }
+        public void setCustomDecks (DeckInfo[]customDecks){
+            this.customDecks = customDecks;
+        }
 
-    public void setSelected(Card selected) {
-        this.selected = selected;
-    }
+        public void setSelected (Card selected){
+            this.selected = selected;
+        }
 
-    public void setPositions(Position[] positions) {
-        this.positions = positions;
+        public void setPositions (Position[]positions){
+            this.positions = positions;
+        }
     }
-}

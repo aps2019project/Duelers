@@ -4,13 +4,16 @@ import client.Client;
 import client.view.View;
 
 public class BattleMenu extends Menu {
-    private static final BattleMenu BATTLE_MENU = new BattleMenu();
+    private static BattleMenu ourInstance;
 
     private BattleMenu() {
     }
 
     public static BattleMenu getInstance() {
-        return BATTLE_MENU;
+        if (ourInstance == null) {
+            ourInstance = new BattleMenu();
+        }
+        return ourInstance;
     }
 
     public void moveToSinglePlayerMenu(Client client) {

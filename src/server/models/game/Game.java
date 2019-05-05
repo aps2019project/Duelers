@@ -691,43 +691,80 @@ public abstract class Game {
 
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
         TargetData targetData = new TargetData();
-        Player player = getCurrentTurnPlayer();
+        Player player;
         if (spell.getTarget().getOwner().isOwn()) {
             player = getCurrentTurnPlayer();
-            if (spell.getTarget().getCardType().isPlayer()) {
-                targetData.getPlayers().add(player);
-            }
-
-            if (spell.getTarget().isForDeckCards()) {
-                for (Card card : player.getDeck().getOthers()) {
-                    if (spell.getTarget().getCardType().isHero() && card.getType() == CardType.HERO)
-                        targetData.getCards().add(card);
-                    if (spell.getTarget().getCardType().isMinion() && card.getType() == CardType.HERO)
-                        targetData.getCards().add(card);
-                }
-                targetData.getCards().add(player.getNextCard());
-            }
-
-            Position centerPosition;
-            if (spell.getTarget().isRelatedToCardOwnerPosition()) {
-                centerPosition = new Position(cardCell);
-            } else if (spell.getTarget().isForAroundOwnHero()) {
-                centerPosition = new Position(heroCell);
-            } else {
-                centerPosition = new Position(clickCell);
-            }
-            ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
-            detectTargets(spell, targetData, player, targetCells);
+            setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
         }
         if (spell.getTarget().getOwner().isEnemy()) {
             player = getOtherTurnPlayer();
+            setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
         }
+        if (spell.getTarget().isRandom()) {
+            if (targetData.getCards().size() > 0) {
+                Card card = targetData.getCards().get(new Random().nextInt(targetData.getCards().size()));
+                targetData.getCards().clear();
+                targetData.getCards().add(card);
 
-
+            }
+        }
         return targetData;
     }
 
-    private void detectTargets(Spell spell, TargetData targetData, Player player, ArrayList<Cell> targetCells) {
+    private void setTargetData(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell, Player player, TargetData targetData) {
+
+        if (spell.getTarget().getCardType().isPlayer()) {
+            targetData.getPlayers().add(player);
+        }
+
+        if (spell.getTarget().isForDeckCards()) {
+            for (Card card : player.getDeck().getOthers()) {
+                addCardToTargetData(spell, targetData, card);
+            }
+            addCardToTargetData(spell, targetData, player.getNextCard());
+        }
+
+        Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
+        ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+        addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
+
+        if (spell.getTarget().isRandom()){
+            randomizeList(targetData.getTroops());
+            randomizeList(targetData.getCells());
+            randomizeList(targetData.getPlayers());
+            randomizeList(targetData.getCards());
+        }
+    }
+
+    private Position getCenterPosition(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
+        Position centerPosition;
+        if (spell.getTarget().isRelatedToCardOwnerPosition()) {
+            centerPosition = new Position(cardCell);
+        } else if (spell.getTarget().isForAroundOwnHero()) {
+            centerPosition = new Position(heroCell);
+        } else {
+            centerPosition = new Position(clickCell);
+        }
+        return centerPosition;
+    }
+
+    private <T> void randomizeList(ArrayList<T> list) {
+        if (list.size() == 0) return;
+
+        int random = new Random().nextInt(list.size());
+        T e = list.get(random);
+        list.clear();
+        list.add(e);
+    }
+
+    private void addCardToTargetData(Spell spell, TargetData targetData, Card card) {
+        if (spell.getTarget().getCardType().isHero() && card.getType() == CardType.HERO)
+            targetData.getCards().add(card);
+        if (spell.getTarget().getCardType().isMinion() && card.getType() == CardType.MINION)
+            targetData.getCards().add(card);
+    }
+
+    private void addTroopsAndCellsToTargetData(Spell spell, TargetData targetData, Player player, ArrayList<Cell> targetCells) {
         for (Cell cell : targetCells) {
             if (spell.getTarget().getCardType().isCell()) {
                 targetData.getCells().add(cell);
@@ -744,47 +781,51 @@ public abstract class Game {
                     addTroopToTargetData(spell, targetData, troop);
                 }
             }
-        }
-        if (spell.getTarget().isRandom()) {
-            Troop randomTroop = targetData.getTroops().get(new Random().nextInt(targetData.getTroops().size()));
-            targetData.getTroops().clear();
-            targetData.getTroops().add(randomTroop);
+            if (spell.getTarget().getCardType().isCell()) {
+                targetData.getCells().add(cell);
+            }
         }
     }
 
     private void addTroopToTargetData(Spell spell, TargetData targetData, Troop troop) {
-        if (spell.getTarget().getCardType().isHero()) {
-            if (troop.getCard().getType() == CardType.HERO) {
-                targetData.getTroops().add(troop);
-            }
+        if (spell.getTarget().getCardType().isHero() && troop.getCard().getType() == CardType.HERO) {
+            targetData.getTroops().add(troop);
         }
-        if (spell.getTarget().getCardType().isMinion()) {
-            if (troop.getCard().getType() == CardType.MINION) {
-                targetData.getTroops().add(troop);
-            }
+        if (spell.getTarget().getCardType().isMinion() && troop.getCard().getType() == CardType.MINION) {
+            targetData.getTroops().add(troop);
         }
     }
 
     private ArrayList<Cell> detectCells(Position centerPosition, Position dimensions) {
-        int firstRow = centerPosition.getRow() - (dimensions.getRow() - 1) / 2;
-        int lastRow = centerPosition.getRow() + dimensions.getRow();
-        int firstColumn = centerPosition.getColumn() - (dimensions.getColumn() - 1) / 2;
-        int lastColumn = centerPosition.getColumn() + dimensions.getColumn();
-        if (firstRow < 0)
-            firstRow = 0;
-        if (lastRow > GameMap.getRowNumber())
-            lastRow = GameMap.getRowNumber();
-        if (firstColumn < 0)
-            firstColumn = 0;
-        if (lastColumn > GameMap.getColumnNumber())
-            lastColumn = GameMap.getColumnNumber();
+        int firstRow = calculateFirstCoordinate(centerPosition.getRow(), dimensions.getRow());
+        int firstColumn = calculateFirstCoordinate(centerPosition.getColumn(), dimensions.getColumn());
+
+        int lastRow = calculateLastCoordinate(centerPosition.getRow(), dimensions.getRow(), GameMap.getRowNumber());
+        int lastColumn = calculateLastCoordinate(centerPosition.getColumn(), dimensions.getColumn(), GameMap.getColumnNumber());
+
         ArrayList<Cell> targetCells = new ArrayList<>();
         for (int i = firstRow; i <= lastRow; i++) {
             for (int j = firstColumn; j <= lastColumn; j++) {
-                targetCells.add(gameMap.getCells()[i][j]);
+                if (gameMap.checkCoordination(i, j))
+                    targetCells.add(gameMap.getCells()[i][j]);
             }
         }
         return targetCells;
+    }
+
+    private int calculateFirstCoordinate(int center, int dimension) {
+        int firstCoordinate = center - (dimension - 1) / 2;
+        if (firstCoordinate < 0)
+            firstCoordinate = 0;
+        return firstCoordinate;
+    }
+
+    private int calculateLastCoordinate(int center, int dimension, int maxNumber) {
+        int lastRow = center + dimension;
+        if (lastRow > maxNumber) {
+            lastRow = maxNumber;
+        }
+        return lastRow;
     }
 
     void setMatchHistories(boolean resultOne, boolean resultTwo) {

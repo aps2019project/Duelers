@@ -8,14 +8,17 @@ import client.view.View;
 import client.view.request.InputException;
 
 public class MultiPlayerMenu extends Menu {
-    private static final MultiPlayerMenu MULTI_PLAYER_MENU = new MultiPlayerMenu();
+    private static MultiPlayerMenu ourInstance;
     private AccountInfo secondAccount;
 
     private MultiPlayerMenu() {
     }
 
     public static MultiPlayerMenu getInstance() {
-        return MULTI_PLAYER_MENU;
+        if (ourInstance == null) {
+            ourInstance = new MultiPlayerMenu();
+        }
+        return ourInstance;
     }
 
     public void setSecondAccount(AccountInfo secondAccount) {

@@ -3,7 +3,7 @@ package client.models.comperessedData;
 import client.models.card.CardType;
 import client.models.game.GameType;
 
-public class CompressedGame {
+public class  CompressedGame {
     private CompressedPlayer playerOne;
     private CompressedPlayer playerTwo;
     private CompressedGameMap gameMap;
@@ -111,5 +111,6 @@ public class CompressedGame {
 
     public void setFinished() {
         isFinished = true;
+
     }
 }

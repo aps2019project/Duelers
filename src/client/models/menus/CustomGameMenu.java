@@ -8,14 +8,17 @@ import client.view.View;
 import client.view.request.InputException;
 
 public class CustomGameMenu extends Menu {
-    private static final CustomGameMenu CUSTOM_GAME_MENU = new CustomGameMenu();
+    private static CustomGameMenu ourInstance;
     private String help;
 
     private CustomGameMenu() {
     }
 
     public static CustomGameMenu getInstance() {
-        return CUSTOM_GAME_MENU;
+        if (ourInstance == null) {
+            ourInstance = new CustomGameMenu();
+        }
+        return ourInstance;
     }
 
     public void startGame(String deckName, int mode, int numberOfFlags, Client client, String serverName) throws InputException {

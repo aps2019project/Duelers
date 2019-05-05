@@ -8,24 +8,24 @@ import client.view.View;
 import client.view.request.InputException;
 
 public class StoryMenu extends Menu {
-    private static StoryMenu STORY_MENU;
+    private static StoryMenu ourInstance;
     private DeckInfo[] stories;
 
     private StoryMenu() {
     }
 
     public static StoryMenu getInstance(Client client, String serverName) {
-        if (STORY_MENU == null) {
-            STORY_MENU = new StoryMenu();
+        if (ourInstance == null) {
+            ourInstance = new StoryMenu();
             client.addToSendingMessages(
                     Message.makeGetDataMessage(client.getClientName(), serverName, DataName.STORIES, 0));
             client.sendMessages();
         }
-        return STORY_MENU;
+        return ourInstance;
     }
 
     public static StoryMenu getInstance() {
-        return STORY_MENU;
+        return ourInstance;
     }
 
     public void startGame(int stage, Client client, String serverName) throws InputException {

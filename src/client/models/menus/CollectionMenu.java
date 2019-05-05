@@ -10,15 +10,16 @@ import client.view.request.InputException;
 import java.util.ArrayList;
 
 public class CollectionMenu extends Menu {
-    private static CollectionMenu collectionMenu;
+    private static CollectionMenu ourInstance;
 
     private CollectionMenu() {
     }
 
     public static CollectionMenu getInstance() {
-        if (collectionMenu == null)
-            collectionMenu = new CollectionMenu();
-        return collectionMenu;
+        if (ourInstance == null) {
+            ourInstance = new CollectionMenu();
+        }
+        return ourInstance;
     }
 
     public void showAllDecks(Client client) {
