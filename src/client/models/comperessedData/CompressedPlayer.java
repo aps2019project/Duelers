@@ -16,6 +16,109 @@ public class CompressedPlayer {
     private ArrayList<CompressedTroop> troops = new ArrayList<>(); // TODO: implementing needed;
     private CompressedTroop hero; // TODO: implementing needed;
 
+
+    public void addCardToHand(CompressedCard card){
+
+    }
+
+    public void addCardToNext(CompressedCard card){
+
+    }
+
+    public void addCardToCollectedItems(CompressedCard card){
+
+    }
+
+    public void addCardToGraveYard(CompressedCard card){
+
+    }
+
+    public void troopUpdate(CompressedTroop troop) {
+
+    }
+
+    public void removeCardFromHand(String cardId){
+
+    }
+
+    public void removeCardFromNext(String cardId){
+
+    }
+
+    public void removeCardFromCollectedItems(String cardId){
+
+    }
+
+    public void removeCardFromGraveYard(String cardId){
+
+    }
+
+    public void removeTroop(String cardId) {
+
+    }
+
+    public CompressedCard searchCard(String cardId) {
+        for (CompressedCard card : hand) {
+            if (card.getCardId().equals(cardId)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public CompressedTroop searchTroop(String cardId) {
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getCardId().equals(cardId)) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
+    public CompressedCard searchCollectedItems(String cardId) {
+        for (CompressedCard card : collectedItems) {
+            if (card.getCardId().equals(cardId)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public void setCurrentMP(int currentMP) {
+        this.currentMP = currentMP;
+    }
+
+    public void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
+        this.numberOfCollectedFlags = numberOfCollectedFlags;
+    }
+
+    public ArrayList<CompressedTroop> getTroops() {
+        return troops;
+    }
+
+    public void setTroops(ArrayList<CompressedTroop> troops) {
+        this.troops = troops;
+
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getType() == CardType.HERO) {
+                hero = troop;
+            }
+        }
+    }
+
+    public CompressedTroop getHero() {
+        return hero;
+    }
+
+    public CompressedCard searchGraveyard(String cardId) {
+        for (CompressedCard card : graveyard) {
+            if (card.getCardId().equals(cardId)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -46,59 +149,5 @@ public class CompressedPlayer {
 
     public int getNumberOfCollectedFlags() {
         return numberOfCollectedFlags;
-    }
-
-    public CompressedCard searchCard(String cardId) {
-        for (CompressedCard card : hand) {
-            if (card.getCardId().equals(cardId)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public CompressedTroop searchTroop(String cardId) {
-        for (CompressedTroop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
-                return troop;
-            }
-        }
-        return null;
-    }
-
-    public CompressedCard searchCollectedItems(String cardId) {
-        for (CompressedCard card : collectedItems) {
-            if (card.getCardId().equals(cardId)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<CompressedTroop> getTroops() {
-        return troops;
-    }
-
-    public void setTroops(ArrayList<CompressedTroop> troops) {
-        this.troops = troops;
-
-        for (CompressedTroop troop : troops) {
-            if (troop.getCard().getType() == CardType.HERO) {
-                hero = troop;
-            }
-        }
-    }
-
-    public CompressedTroop getHero() {
-        return hero;
-    }
-
-    public CompressedCard searchGraveyard(String cardId) {
-        for (CompressedCard card : graveyard) {
-            if (card.getCardId().equals(cardId)) {
-                return card;
-            }
-        }
-        return null;
     }
 }

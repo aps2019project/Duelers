@@ -69,4 +69,38 @@ public class CompressedGameMap {
         }
         return null;
     }
+
+    public void removeItem(String cardId){
+        for(CompressedCell[] cells1:cells){
+            for(CompressedCell cell:cells1){
+                if(cell.getItem().getCardId().equals(cardId))
+                    cell.removeItem();
+            }
+        }
+    }
+
+    public void changeFlagNum(Position position,int newFlagNum){
+        cells[position.getRow()][position.getColumn()].setNumberOfFlags(newFlagNum);
+    }
+
+    public int getFlagNum(Position position){
+        return cells[position.getRow()][position.getColumn()].getNumberOfFlags();//TODO:Ahmad Check
+    }
+
+    public void updateTroop(CompressedTroop troop){//flag
+
+    }
+
+    public void removeTroop(String cardId){//flag
+
+    }
+
+    public CompressedTroop getTroop(String cardId){
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getCardId().equals(cardId)) {
+                return troop;
+            }
+        }
+        return null;
+    }
 }
