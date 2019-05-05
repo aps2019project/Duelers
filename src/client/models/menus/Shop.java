@@ -11,25 +11,25 @@ import client.view.request.InputException;
 import java.util.ArrayList;
 
 public class Shop extends Menu {
-    private static Shop SHOP;
+    private static Shop ourInstance;
     private Collection originalCards = new Collection();
 
     private Shop() {
     }
 
     public static Shop getInstance(Client client, String serverName) {
-        if (SHOP == null) {
-            SHOP = new Shop();
+        if (ourInstance == null) {
+            ourInstance = new Shop();
             client.addToSendingMessages(
                     Message.makeGetDataMessage(client.getClientName(), serverName, DataName.ORIGINAL_CARDS, 0)
             );
             client.sendMessages();
         }
-        return SHOP;
+        return ourInstance;
     }
 
     public static Shop getInstance() {
-        return SHOP;
+        return ourInstance;
     }
 
     @Override
