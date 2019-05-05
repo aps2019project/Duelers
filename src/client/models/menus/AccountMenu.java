@@ -7,16 +7,16 @@ import client.view.request.ExitCommand;
 import client.view.request.InputException;
 
 public class AccountMenu extends Menu {
-    private static AccountMenu ACCOUNT_MENU;
+    private static AccountMenu ourInstance;
 
     private AccountMenu() {
     }
 
     public static AccountMenu getInstance() {
-        if (ACCOUNT_MENU == null) {
-            ACCOUNT_MENU = new AccountMenu();
+        if (ourInstance == null) {
+            ourInstance = new AccountMenu();
         }
-        return ACCOUNT_MENU;
+        return ourInstance;
     }
 
     public void register(Client client, String serverName, String userName, String password) throws InputException {
