@@ -92,6 +92,7 @@ public class Client {
     }
 
     public void receiveMessages() {
+        GameCommands gameCommands = GameCommands.getInstance();
         validation = true;
         for (Message message : receivingMessages) {
             switch (message.getMessageType()) {
@@ -120,7 +121,6 @@ public class Client {
                     break;
                 case CARD_POSITION://TODO:CHANGE
                     CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
-                    GameCommands gameCommands = GameCommands.getInstance();
                     switch (cardPosition) {
                         case MAP:
                             gameCommands.getCurrentGame().getCurrentTurnPlayer().removeCardFromHand(message.getCardPositionMessage().getCompressedCard().getCardId());
@@ -139,22 +139,20 @@ public class Client {
                             break;
                     }
                 case TROOP_UPDATE:
-                    gameCommands = GameCommands.getInstance();
                     gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
                     break;
                 case GAME_UPDATE:
-                     gameCommands = GameCommands.getInstance();
-                    GameUpdateMessage gameUpdateMessage= message.getGameUpdateMessage();
-                     gameCommands.getCurrentGame().gameUpdate(
-                             gameUpdateMessage.getTurnNumber(),
-                             gameUpdateMessage.getPlayer1CurrentMP(),
-                             gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
-                             gameUpdateMessage.getPlayer2CurrentMP(),
-                             gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
+                    GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
+                    gameCommands.getCurrentGame().gameUpdate(
+                            gameUpdateMessage.getTurnNumber(),
+                            gameUpdateMessage.getPlayer1CurrentMP(),
+                            gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
+                            gameUpdateMessage.getPlayer2CurrentMP(),
+                            gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
 
                     break;
                 case Game_FINISH:
-
+                    gameCommands.getCurrentGame().setFinished();
                     break;
             }
         }

@@ -19,6 +19,7 @@ public class GameCommands extends Menu {
     private String selectedCardId;
     private AvailableActions availableActions = new AvailableActions();
 
+
     private GameCommands() {
     }
 
@@ -366,5 +367,6 @@ public class GameCommands extends Menu {
         //TODO:
         throw new InputException("game is not finished.");
     }
+
 }
 
