@@ -49,6 +49,20 @@ public class Request {
         } else if (client.getCurrentMenu().getClass().getName().equals(GameCommands.class.getName())) {
             gameCommandsHandleRequest(client, serverName);
 
+        } else if (client.getCurrentMenu().getClass().getName().equals(GameResultStatus.class.getName())) {
+            gameResultStatusHandleRequest(client);
+        }
+    }
+
+    private void gameResultStatusHandleRequest(Client client) throws InputException {
+        GameResultStatus gameResultStatus = GameResultStatus.getInstance();
+        if (RequestType.END_GAME.setMatcher(command).find() || RequestType.EXIT.setMatcher(command).find()) {
+            gameResultStatus.exit(client);
+        }
+        if (RequestType.HELP.setMatcher(command).find()) {
+            gameResultStatus.showHelp();
+        } else {
+            throw new InputException("invalid command");
         }
     }
 

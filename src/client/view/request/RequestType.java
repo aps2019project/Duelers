@@ -41,7 +41,9 @@ public enum RequestType {
     SHOW_COLLECTION("^show collection$"),
     SEARCH_COLLECTION("^search collection (\\w+)$"),
     BUY("^buy (.+)$"),
-    SELL("sell (\\w+)$");
+    SELL("sell (\\w+)$"),
+    //game Result Status menu
+    END_GAME("^end game$");
     private Pattern pattern;
     private Matcher matcher;
 

@@ -8,7 +8,7 @@ public class GameResultStatus extends Menu{
     private GameResultStatus() {
     }
 
-    public GameResultStatus getInstance() {
+    public static GameResultStatus getInstance() {
         return ourInstance;
     }
 
