@@ -16,8 +16,9 @@ public class CollectionMenu extends Menu {
     }
 
     public static CollectionMenu getInstance() {
-        if (ourInstance == null)
+        if (ourInstance == null) {
             ourInstance = new CollectionMenu();
+        }
         return ourInstance;
     }
 

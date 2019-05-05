@@ -7,16 +7,16 @@ import client.view.request.ExitCommand;
 import client.view.request.InputException;
 
 public class MainMenu extends Menu {
-    private static MainMenu MAIN_MENU;
+    private static MainMenu ourInstance;
 
     private MainMenu() {
     }
 
     public static MainMenu getInstance() {
-        if (MAIN_MENU == null) {
-            MAIN_MENU = new MainMenu();
+        if (ourInstance == null) {
+            ourInstance = new MainMenu();
         }
-        return MAIN_MENU;
+        return ourInstance;
     }
 
     public void moveToMenu(Client client, String serverName, String menuName) throws InputException {

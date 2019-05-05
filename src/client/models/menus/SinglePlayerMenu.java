@@ -4,13 +4,16 @@ import client.Client;
 import client.view.View;
 
 public class SinglePlayerMenu extends Menu {
-    private static final SinglePlayerMenu SINGLE_PLAYER_MENU = new SinglePlayerMenu();
+    private static SinglePlayerMenu ourInstance;
 
     private SinglePlayerMenu() {
     }
 
     public static SinglePlayerMenu getInstance() {
-        return SINGLE_PLAYER_MENU;
+        if (ourInstance == null) {
+            ourInstance = new SinglePlayerMenu();
+        }
+        return ourInstance;
     }
 
     public void moveToStoryMenu(Client client, String serverName) {

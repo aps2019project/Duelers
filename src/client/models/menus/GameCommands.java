@@ -12,7 +12,7 @@ import client.view.View;
 import client.view.request.InputException;
 
 public class GameCommands extends Menu {
-    private static GameCommands ourInstance = new GameCommands();
+    private static GameCommands ourInstance;
     private CompressedGame currentGame;
     private String selectedItemId;
     private boolean isInGraveYard;
@@ -24,6 +24,9 @@ public class GameCommands extends Menu {
     }
 
     public static GameCommands getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new GameCommands();
+        }
         return ourInstance;
     }
 
