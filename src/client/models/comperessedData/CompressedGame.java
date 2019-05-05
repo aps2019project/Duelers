@@ -40,7 +40,7 @@ public class CompressedGame {
                 }
                 player.removeTroop(card.getCardId());
                 player.addCardToGraveYard(card);
-                gameMap.removeTroop(card.getCardId());
+                gameMap.killTroop(card.getCardId());
             }
         }else{
             player=getCurrentTurnPlayer();

@@ -24,12 +24,16 @@ public class CompressedCell {
         return numberOfFlags;
     }
 
-    public void setNumberOfFlags(int numberOfFlags) {
-        this.numberOfFlags = numberOfFlags;
+    public void addNumberOfFlags(int addition) {
+        this.numberOfFlags += addition;
     }
 
-    public void removeItem(){
-        item=null;
+    public void removeFlags() {
+        this.numberOfFlags = 0;
+    }
+
+    public void removeItem() {
+        item = null;
     }
 
     public int manhattanDistance(CompressedCell cell) {
