@@ -44,6 +44,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "position=[" + row + "," + column + "]";
+        return "(" + row + ", " + column + ")";
     }
 }

@@ -68,7 +68,7 @@ public class Request {
             gameCommands.showCardInfo(cardId);
 
         } else if (GameRequestType.SELECT_CARD.matches(command)) {
-            String cardId = GameRequestType.SHOW_CARD_INFO.getMatcher().group(1);
+            String cardId = GameRequestType.SELECT_CARD.getMatcher().group(1);
             gameCommands.selectCard(cardId);
 
         } else if (GameRequestType.MOVE.matches(command)) {
@@ -94,7 +94,7 @@ public class Request {
             gameCommands.useSpecialPower(client, serverName, row, column);
 
         } else if (GameRequestType.SHOW_HAND.matches(command)) {
-            gameCommands.showHand(client);
+            gameCommands.showHand();
 
         } else if (GameRequestType.INSERT_CARD.matches(command)) {
             Matcher matcher = GameRequestType.INSERT_CARD.getMatcher();
@@ -106,7 +106,7 @@ public class Request {
         } else if (GameRequestType.END_TURN.matches(command)) {
             gameCommands.endTurn(client, serverName);
 
-        } else if (GameRequestType.SHOW_COLLECTABLES.matches(command)) {
+        } else if (GameRequestType.SHOW_COLLECTIBLES.matches(command)) {
             gameCommands.showCollectibleItems();
 
         } else if (GameRequestType.SHOW_INFO_OF_ITEM.matches(command)) {

@@ -1,5 +1,7 @@
 package client.models.comperessedData;
 
+import client.models.card.CardType;
+
 import java.util.ArrayList;
 
 public class CompressedPlayer {
@@ -47,8 +49,7 @@ public class CompressedPlayer {
     }
 
     public CompressedCard searchCard(String cardId) {
-        for (CompressedCard card :
-                hand) {
+        for (CompressedCard card : hand) {
             if (card.getCardId().equals(cardId)) {
                 return card;
             }
@@ -56,9 +57,8 @@ public class CompressedPlayer {
         return null;
     }
 
-    public CompressedTroop seachTroop(String cardId) {
-        for (CompressedTroop troop :
-                troops) {
+    public CompressedTroop searchTroop(String cardId) {
+        for (CompressedTroop troop : troops) {
             if (troop.getCard().getCardId().equals(cardId)) {
                 return troop;
             }
@@ -66,10 +66,8 @@ public class CompressedPlayer {
         return null;
     }
 
-
     public CompressedCard searchCollectedItems(String cardId) {
-        for (CompressedCard card :
-                collectedItems) {
+        for (CompressedCard card : collectedItems) {
             if (card.getCardId().equals(cardId)) {
                 return card;
             }
@@ -81,13 +79,22 @@ public class CompressedPlayer {
         return troops;
     }
 
+    public void setTroops(ArrayList<CompressedTroop> troops) {
+        this.troops = troops;
+
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getType() == CardType.HERO) {
+                hero = troop;
+            }
+        }
+    }
+
     public CompressedTroop getHero() {
         return hero;
     }
 
     public CompressedCard searchGraveyard(String cardId) {
-        for (CompressedCard card :
-                graveyard) {
+        for (CompressedCard card : graveyard) {
             if (card.getCardId().equals(cardId)) {
                 return card;
             }

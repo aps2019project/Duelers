@@ -27,9 +27,8 @@ public class CompressedGameMap {
     }
 
     public CompressedTroop searchTroop(String cardID) {
-        for (CompressedTroop troop :
-                troops) {
-            if (troop.getCard().getCardId().equals(cardID)) {
+        for (CompressedTroop troop : troops) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardID)) {
                 return troop;
             }
         }
@@ -53,7 +52,7 @@ public class CompressedGameMap {
         return null;
     }
 
-    private boolean isInMap(int row, int column) {
+    public boolean isInMap(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
 
     }

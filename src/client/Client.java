@@ -142,6 +142,9 @@ public class Client {
                 case GAME_UPDATE:
 
                     break;
+                case Game_FINISH:
+
+                    break;
             }
         }
         receivingMessages.clear();

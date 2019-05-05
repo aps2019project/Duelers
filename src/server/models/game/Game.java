@@ -55,6 +55,9 @@ public abstract class Game {
         this.turnNumber = 2;
         putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
+
+        playerOne.setCurrentMP(2);
+
         applyOnStartSpells(playerTwo.getDeck());
         applyOnStartSpells(playerTwo.getDeck());
     }
@@ -95,7 +98,11 @@ public abstract class Game {
         return playerTwo;
     }
 
-    public Player getCurrentTurnPlayer() {
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    private Player getCurrentTurnPlayer() {
         if (turnNumber % 2 == 1) {
             return playerOne;
         } else {
