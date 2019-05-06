@@ -166,4 +166,12 @@ public class AvailableActions {
     public ArrayList<Move> getMoves() {
         return moves;
     }
+
+    public boolean canInsertCard(String cardId, int row, int column, CompressedGameMap map) {
+        if (!map.isInMap(row, column)) return false;
+        for (Insert insert : handInserts) {
+            if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
+        }
+        return false;
+    }
 }

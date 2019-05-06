@@ -15,7 +15,7 @@ public enum GameRequestType {
     USE_SPECIAL_POWER("^use special power \\((\\d+), (\\d+)\\)"),
     SHOW_HAND("^show hand$"),
     SHOW_NEXT_CARD("^show next card$"),
-    INSERT_CARD("^inset (\\w+) in \\((\\d+), (\\d+)\\)$"),
+    INSERT_CARD("^insert (\\w+) in \\((\\d+), (\\d+)\\)$"),
     SHOW_COLLECTIBLES("^show collectibles$"),
     SHOW_INFO_OF_ITEM("^show info$"),
     USE_ITEM("^use \\((\\d+), (\\d+)\\)$"),

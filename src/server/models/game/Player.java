@@ -186,6 +186,8 @@ public class Player {
     public Troop getHero() {
         if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
+            hero.setCanMove(true);
+            hero.setCanAttack(true);
             troops.add(hero);
         }
         return hero;

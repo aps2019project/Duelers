@@ -1,5 +1,6 @@
 package server.models.game;
 
+import controller.Controller;
 import server.Server;
 import server.models.account.Account;
 import server.models.account.MatchHistory;
@@ -62,7 +63,7 @@ public abstract class Game {
         putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
 
-        playerOne.setCurrentMP(2);
+        playerOne.setCurrentMP(20);
         Server.getInstance().sendGameUpdateMessage(this);
 
         applyOnStartSpells(playerTwo.getDeck());
@@ -132,6 +133,7 @@ public abstract class Game {
             revertNotDurableBuffs();
             removeFinishedBuffs();
             turnNumber++;
+            Controller.changeTurn();
             setAllTroopsCanAttackAndCanMove();
             applyAllBuffs();
             if (turnNumber < 14)
@@ -259,10 +261,18 @@ public abstract class Game {
         if (!canCommand(username)) {
             throw new ClientException("it's not your turn");
         }
+
+        if (!gameMap.isInMap(position)) {
+            throw new ClientException("target cell is not in map");
+        }
+
         Player player = getCurrentTurnPlayer();
         Card card = player.insert(cardId);
 
         if (card.getType() == CardType.MINION) {
+            if (gameMap.getTroop(position) != null) {
+                throw new ClientException("another troop is here.");
+            }
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
             putMinion(
                     player.getPlayerNumber(),
@@ -297,7 +307,7 @@ public abstract class Game {
             throw new ClientException("its not your turn");
         }
 
-        if (!gameMap.checkCoordination(position)) {
+        if (!gameMap.isInMap(position)) {
             throw new ClientException("coordination is not valid");
         }
 
@@ -812,7 +822,7 @@ public abstract class Game {
         ArrayList<Cell> targetCells = new ArrayList<>();
         for (int i = firstRow; i <= lastRow; i++) {
             for (int j = firstColumn; j <= lastColumn; j++) {
-                if (gameMap.checkCoordination(i, j))
+                if (gameMap.isInMap(i, j))
                     targetCells.add(gameMap.getCells()[i][j]);
             }
         }
