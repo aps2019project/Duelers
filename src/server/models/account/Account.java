@@ -1,9 +1,12 @@
 package server.models.account;
 
+import client.Client;
 import server.Server;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.card.TempDeck;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
 
 import java.util.ArrayList;
 
@@ -60,18 +63,16 @@ public class Account {
         return null;
     }
 
-    public void addDeck(String deckName) {
+    public void addDeck(String deckName) throws LogicException {
         if (hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
-            return;
+            throw new ClientException("new deck's name was duplicate.");
         }
         decks.add(new Deck(deckName));
     }
 
-    public void deleteDeck(String deckName) {
+    public void deleteDeck(String deckName) throws LogicException {
         if (!hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
-            return;
+            throw new ClientException("deck was not found.");
         }
         decks.remove(getDeck(deckName));
     }
