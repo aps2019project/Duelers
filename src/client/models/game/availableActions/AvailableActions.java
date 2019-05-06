@@ -19,16 +19,29 @@ public class AvailableActions {
         CompressedPlayer ownPlayer = game.getCurrentTurnPlayer();
         CompressedPlayer otherPlayer = game.getOtherTurnPlayer();
 
+        calculateCardInserts(ownPlayer);
+        calculateCollectibles(ownPlayer);
+        calculateAttacks(ownPlayer, otherPlayer);
+        calculateCombo(ownPlayer, otherPlayer);
+        calculateSpecialPower(game, ownPlayer);
+        calculateMoves(game, ownPlayer);
+    }
+
+    private void calculateCardInserts(CompressedPlayer ownPlayer) {
         for (CompressedCard card : ownPlayer.getHand()) {
             if (ownPlayer.getCurrentMP() >= card.getMannaPoint()) {
                 handInserts.add(new Insert(card));
             }
         }
+    }
 
+    private void calculateCollectibles(CompressedPlayer ownPlayer) {
         for (CompressedCard item : ownPlayer.getCollectedItems()) {
             collectibleInserts.add(new Insert(item));
         }
+    }
 
+    private void calculateAttacks(CompressedPlayer ownPlayer, CompressedPlayer otherPlayer) {
         for (CompressedTroop myTroop : ownPlayer.getTroops()) {
             if (!myTroop.canAttack()) continue;
 
@@ -46,7 +59,9 @@ public class AvailableActions {
 
             attacks.add(new Attack(myTroop, targets));
         }
+    }
 
+    private void calculateCombo(CompressedPlayer ownPlayer, CompressedPlayer otherPlayer) {
         for (CompressedTroop enemyTroop : otherPlayer.getTroops()) {
 
             ArrayList<CompressedTroop> attackers = new ArrayList<>();
@@ -65,7 +80,9 @@ public class AvailableActions {
 
             combos.add(new Combo(attackers, enemyTroop));
         }
+    }
 
+    private void calculateSpecialPower(CompressedGame game, CompressedPlayer ownPlayer) {
         CompressedTroop hero = ownPlayer.getHero();
 
         if (hero != null) {
@@ -75,8 +92,12 @@ public class AvailableActions {
                 specialPower = new SpecialPower(hero);
             }
         }
+    }
 
+    private void calculateMoves(CompressedGame game, CompressedPlayer ownPlayer) {
         for (CompressedTroop troop : ownPlayer.getTroops()) {
+            if (!troop.canMove()) continue;
+
             Position currentPosition = troop.getPosition();
             ArrayList<Position> targets = new ArrayList<>();
 

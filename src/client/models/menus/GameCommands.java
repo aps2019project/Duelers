@@ -91,7 +91,6 @@ public class GameCommands extends Menu {
         this.currentGame = currentGame;
         currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
-        calculateAvailableActions();
     }
 
     public void showGameActions() { //help
@@ -154,16 +153,16 @@ public class GameCommands extends Menu {
         Position target = new Position(row, column);
         if (!troop.canMove()) {
             throw new InputException("troop can not move");
-
         }
+
         if (!currentGame.getGameMap().isInMap(row, column)) {
             throw new InputException("coordination is not valid");
-
         }
+
         if (currentGame.getGameMap().getTroop(new Position(row, column)) != null) {
             throw new InputException("cell is not empty");
-
         }
+
         if (troop.getPosition().manhattanDistance(row, column) > 2) {
             throw new InputException("to far to go");
         }
@@ -179,7 +178,6 @@ public class GameCommands extends Menu {
         }
 
         View.getInstance().showMoveCardMessage(troop, target);
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -224,7 +222,6 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -239,7 +236,6 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -259,7 +255,6 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -281,7 +276,6 @@ public class GameCommands extends Menu {
         }
 
         View.getInstance().showCardInsertionMessage(card, target);
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -296,7 +290,6 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -331,7 +324,6 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
