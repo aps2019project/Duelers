@@ -164,7 +164,7 @@ public class GameCommands extends Menu {
         }
 
         if (troop.getPosition().manhattanDistance(row, column) > 2) {
-            throw new InputException("to far to go");
+            throw new InputException("too far to go");
         }
 
         Message message = Message.makeMoveTroopMessage(
