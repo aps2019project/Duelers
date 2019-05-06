@@ -245,9 +245,9 @@ public class Server {
             serverPrint("Null Username In getAccount.");
             return null;
         }
-        for (Map.Entry<Account, String> map : accounts.entrySet()) {
-            if (map.getKey().getUsername().equalsIgnoreCase(username)) {
-                return map.getKey();
+        for (Account account : accounts.keySet()) {
+            if (account.getUsername().equalsIgnoreCase(username)) {
+                return account;
             }
         }
         return null;
