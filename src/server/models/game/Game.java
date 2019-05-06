@@ -91,9 +91,9 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnStart())
                 applySpell(spell, detectTarget(
                         spell,
-                        gameMap.getCell(0, 0),
-                        gameMap.getCell(0, 0),
-                        gameMap.getCell(0, 0))
+                        gameMap.getCell(2, 2),
+                        gameMap.getCell(2, 2),
+                        gameMap.getCell(2, 2))
                 );
         }
     }
@@ -268,22 +268,34 @@ public abstract class Game {
 
         Player player = getCurrentTurnPlayer();
         Card card = player.insert(cardId);
+        Server.getInstance().sendGameUpdateMessage(this);
 
         if (card.getType() == CardType.MINION) {
             if (gameMap.getTroop(position) != null) {
                 throw new ClientException("another troop is here.");
             }
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
+            Troop troop = new Troop(card, getCurrentTurnPlayer().getPlayerNumber());
+            player.addTroop(troop);
             putMinion(
                     player.getPlayerNumber(),
-                    new Troop(card, getCurrentTurnPlayer().getPlayerNumber()),
+                    troop,
                     gameMap.getCell(position)
             );
+            for (Card item : gameMap.getCell(position).getItems()) {
+                if (item.getType() == CardType.FLAG) {
+                    catchFlag(troop, item);
+                } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
+                    catchItem(item);
+                }
+            }
+            gameMap.getCell(position).clearItems();
         } else {
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
         if (card.getType() == CardType.SPELL) {
             player.addToGraveYard(card);
+            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
         applyOnPutSpells(card, gameMap.getCell(position));
     }
@@ -332,7 +344,6 @@ public abstract class Game {
                 catchFlag(troop, item);
             } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
                 catchItem(item);
-                Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
             }
         }
         cell.clearItems();
@@ -345,8 +356,9 @@ public abstract class Game {
         Server.getInstance().sendGameUpdateMessage(this);
     }
 
-    private void catchItem(Card item) {
-        getCurrentTurnPlayer().addCollectibleItems(item);
+    private void catchItem(Card item) throws ServerException {
+        getCurrentTurnPlayer().collectItem(item);
+        Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
     }
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws LogicException {
@@ -508,16 +520,16 @@ public abstract class Game {
     private void checkRangeForAttack(Troop attackerTroop, Troop defenderTroop) throws ClientException {
         if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
             if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
             if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
                     attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         } else { // HYBRID
             if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         }
     }
@@ -671,10 +683,10 @@ public abstract class Game {
     void killTroop(Troop troop) throws ServerException {
         applyOnDeathSpells(troop);
         if (troop.getPlayerNumber() == 1) {
-            playerOne.killTroop(troop);
+            playerOne.killTroop(this, troop);
             gameMap.removeTroop(playerOne, troop);
         } else if (troop.getPlayerNumber() == 2) {
-            playerTwo.killTroop(troop);
+            playerTwo.killTroop(this, troop);
             gameMap.removeTroop(playerTwo, troop);
         }
         Server.getInstance().sendChangeCardPositionMessage(this, troop.getCard(), CardPosition.GRAVE_YARD);
@@ -816,12 +828,12 @@ public abstract class Game {
         int firstRow = calculateFirstCoordinate(centerPosition.getRow(), dimensions.getRow());
         int firstColumn = calculateFirstCoordinate(centerPosition.getColumn(), dimensions.getColumn());
 
-        int lastRow = calculateLastCoordinate(centerPosition.getRow(), dimensions.getRow(), GameMap.getRowNumber());
-        int lastColumn = calculateLastCoordinate(centerPosition.getColumn(), dimensions.getColumn(), GameMap.getColumnNumber());
+        int lastRow = calculateLastCoordinate(firstRow, dimensions.getRow(), GameMap.getRowNumber());
+        int lastColumn = calculateLastCoordinate(firstColumn, dimensions.getColumn(), GameMap.getColumnNumber());
 
         ArrayList<Cell> targetCells = new ArrayList<>();
-        for (int i = firstRow; i <= lastRow; i++) {
-            for (int j = firstColumn; j <= lastColumn; j++) {
+        for (int i = firstRow; i < lastRow; i++) {
+            for (int j = firstColumn; j < lastColumn; j++) {
                 if (gameMap.isInMap(i, j))
                     targetCells.add(gameMap.getCells()[i][j]);
             }
@@ -836,8 +848,8 @@ public abstract class Game {
         return firstCoordinate;
     }
 
-    private int calculateLastCoordinate(int center, int dimension, int maxNumber) {
-        int lastRow = center + dimension;
+    private int calculateLastCoordinate(int first, int dimension, int maxNumber) {
+        int lastRow = first + dimension;
         if (lastRow > maxNumber) {
             lastRow = maxNumber;
         }

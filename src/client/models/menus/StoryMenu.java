@@ -29,6 +29,10 @@ public class StoryMenu extends Menu {
     }
 
     public void startGame(int stage, Client client, String serverName) throws InputException {
+        stage--;
+        if (stage>=3||stage<0){
+            throw new InputException("stage number is not valid");
+        }
         client.addToSendingMessages(
                 Message.makeNewStoryGameMessage(
                         client.getClientName(), serverName, stage, 0

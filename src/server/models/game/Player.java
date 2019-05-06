@@ -1,11 +1,14 @@
 package server.models.game;
 
+import server.Server;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.comperessedData.CompressedPlayer;
 import server.models.exceptions.ClientException;
+import server.models.exceptions.ServerException;
 import server.models.map.Cell;
+import server.models.message.CardPosition;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,8 +55,18 @@ public class Player {
             Card card1 = (Card) iterator.next();
             if (card1.getCardId().equalsIgnoreCase(cardId)) {
                 card = card1;
-                iterator.remove();
                 break;
+            }
+        }
+
+        if (card == null) {
+            iterator = collectedItems.iterator();
+            while (iterator.hasNext()) {
+                Card card1 = (Card) iterator.next();
+                if (card1.getCardId().equalsIgnoreCase(cardId)) {
+                    card = card1;
+                    break;
+                }
             }
         }
 
@@ -63,6 +76,7 @@ public class Player {
         if (card.getMannaPoint() > currentMP)
             throw new ClientException("not enough manna point");
 
+        iterator.remove();
         currentMP -= card.getMannaPoint();
 
         return card;
@@ -95,10 +109,6 @@ public class Player {
         this.currentMP = currentMP;
     }
 
-    public ArrayList<Troop> getFlagCarriers() {
-        return flagCarriers;
-    }
-
     public void addFlagCarrier(Troop troop) {
         if (!this.flagCarriers.contains(troop))
             this.flagCarriers.add(troop);
@@ -109,7 +119,7 @@ public class Player {
     }
 
     public void changeCurrentMP(int change) {
-
+        currentMP += change;
     }
 
     public int getPlayerNumber() {
@@ -120,49 +130,24 @@ public class Player {
         return this.deck;
     }
 
-    public Card collectFromDeck() {
-        return null;
-    }
-
-
-    public void addToHand(Card card) {
-
-    }
-
-
-    public Card collectFromHand(String cardId) {
-        return null;
-    }
-
     public ArrayList<Troop> getTroops() {
         return this.troops;
     }
 
-    public ArrayList<Card> getGraveyard() {
-        return this.graveyard;
-    }
-
-
     public void addToGraveYard(Card card) {
         graveyard.add(card);
-        //TODO: message
     }
 
     public Card getNextCard() {
         return this.nextCard;
     }
 
-
-    public void setNextCard(Card nextCard) {
-        this.nextCard = nextCard;
-    }
-
     public ArrayList<Card> getCollectedItems() {
         return this.collectedItems;
     }
 
-    public void addCollectibleItems(Card card) {
-
+    public void collectItem(Card card) {
+        collectedItems.add(card);
     }
 
     public Troop getTroop(Cell cell) {
@@ -197,8 +182,9 @@ public class Player {
         this.hero = hero;
     }
 
-    public void killTroop(Troop troop) {
+    public void killTroop(Game game, Troop troop) throws ServerException {
         addToGraveYard(troop.getCard());
+        Server.getInstance().sendChangeCardPositionMessage(game, troop.getCard(), CardPosition.GRAVE_YARD);
         troops.remove(troop);
     }
 
@@ -220,5 +206,9 @@ public class Player {
 
     public void setMatchHistory(MatchHistory matchHistory) {
         this.matchHistory = matchHistory;
+    }
+
+    public void addTroop(Troop troop) {
+        troops.add(troop);
     }
 }
