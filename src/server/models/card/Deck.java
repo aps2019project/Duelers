@@ -2,6 +2,8 @@ package server.models.card;
 
 import server.Server;
 import server.models.account.Collection;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
 
 import java.util.ArrayList;
 
@@ -58,12 +60,11 @@ public class Deck {
         return false;
     }
 
-    public void addCard(String cardId, Collection collection) {
-        if (collection.hasCard(cardId) && !hasCard(cardId)) {
-            addCard(collection.getCard(cardId));
-        } else {
-            Server.getInstance().serverPrint("Error!");
+    public void addCard(String cardId, Collection collection) throws LogicException {
+        if (hasCard(cardId)) {
+            throw new ClientException("deck had this card.");
         }
+        addCard(collection.getCard(cardId));
     }
 
     private void addCard(Card card) {
@@ -85,10 +86,9 @@ public class Deck {
         }
     }
 
-    public void removeCard(Card card) {
-        if (card == null || !hasCard(card.getCardId())) {
-            Server.getInstance().serverPrint("Error!");
-            return;
+    public void removeCard(Card card) throws LogicException {
+        if (!hasCard(card.getCardId())) {
+            throw new ClientException("deck doesn't have this card.");
         }
         if (hero == card)
             hero = null;

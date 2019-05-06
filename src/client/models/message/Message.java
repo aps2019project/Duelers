@@ -225,9 +225,11 @@ public class Message {
         return message;
     }
 
+
     public String toJson() {
         return server.models.JsonConverter.toJson(this);
     }
+
 
     public MessageType getMessageType() {
         return messageType;
