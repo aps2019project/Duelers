@@ -22,6 +22,7 @@ public class Story {
         deck.copyCards();
         this.gameType = story.getGameType();
         this.reward = story.getReward();
+        this.numberOfFlags = story.getNumberOfFlags();
     }
 
     public int getNumberOfFlags() {
