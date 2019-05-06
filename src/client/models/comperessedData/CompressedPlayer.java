@@ -70,7 +70,7 @@ public class CompressedPlayer {
             troops = new ArrayList<>();
         //TODO:Ahmad Check syntax
         troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equals(cardId));
-        if (hero.getCard().getCardId().equals(cardId))
+        if (hero != null && hero.getCard().getCardId().equals(cardId))
             hero = null;
     }
 

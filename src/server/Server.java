@@ -2,14 +2,22 @@ package server;
 
 import client.Client;
 import server.models.JsonConverter;
-import server.models.account.*;
+import server.models.account.Account;
 import server.models.account.Collection;
-import server.models.card.*;
-import server.models.exceptions.*;
+import server.models.account.MatchHistory;
+import server.models.account.TempAccount;
+import server.models.card.Card;
+import server.models.card.CardType;
+import server.models.card.Deck;
+import server.models.exceptions.ClientException;
+import server.models.exceptions.LogicException;
+import server.models.exceptions.ServerException;
 import server.models.game.*;
-import server.models.map.*;
-import server.models.message.*;
-import server.models.sorter.*;
+import server.models.map.GameMap;
+import server.models.message.CardPosition;
+import server.models.message.Message;
+import server.models.sorter.LeaderBoardSorter;
+import server.models.sorter.StoriesSorter;
 
 import java.io.*;
 import java.util.*;
@@ -167,30 +175,39 @@ public class Server {
                     break;
                 case NEW_MULTIPLAYER_GAME:
                     newMultiplayerGame(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case NEW_STORY_GAME:
                     newStoryGame(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case NEW_DECK_GAME:
                     newDeckGame(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case INSERT:
                     insertCard(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case ATTACK:
                     attack(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case END_TURN:
                     endTurn(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case COMBO:
                     combo(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case USE_SPECIAL_POWER:
                     useSpecialPower(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case MOVE_TROOP:
                     moveTroop(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
@@ -203,7 +220,9 @@ public class Server {
             }
         } catch (ServerException e) {
             serverPrint(e.getMessage());
-            sendException("server has error:(", message.getSender(), message.getMessageId());
+            if (message != null) {
+                sendException("server has error:(", message.getSender(), message.getMessageId());
+            }
         } catch (ClientException e) {
             sendException(e.getMessage(), message.getSender(), message.getMessageId());
         } catch (LogicException e) {
@@ -312,7 +331,7 @@ public class Server {
             serverPrint(message.getSender() + " Is Logged Out.");
             //TODO:Check online games
         }
-        addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
+        addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
     }
 
     private void createDeck(Message message) throws LogicException {
@@ -437,10 +456,9 @@ public class Server {
         }
     }
 
-    private void sendLeaderBoard(Message message) { //Check
+    private void sendLeaderBoard(Message message) throws ClientException { //Check
         if (accounts.size() == 0) {
-            sendException("leader board is empty",message.getSender(),message.getMessageId());
-            return;
+            throw new ClientException("leader board is empty");
         }
         Account[] leaderBoard = new Account[accounts.size()];
         int counter = 0;
@@ -519,9 +537,9 @@ public class Server {
                     break;
             }
             onlineGames.put(myAccount, game);
-            game.startGame();
             addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, message.getMessageId()));
+                    (serverName, message.getSender(), game, 0));
+            game.startGame();
 
         }
     }
@@ -549,10 +567,10 @@ public class Server {
                     game = new MultiFlagBattle(myAccount, story.getDeck(), gameMap, story.getNumberOfFlags());
                     break;
             }
-            game.startGame();
             onlineGames.put(myAccount, game);
             addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, message.getMessageId()));
+                    (serverName, message.getSender(), game, 0));
+            game.startGame();
 
         }
     }
@@ -594,11 +612,11 @@ public class Server {
             }
             onlineGames.put(myAccount, game);
             onlineGames.put(opponentAccount, game);
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, message.getSender(), game, 0));
+            addToSendingMessages(Message.makeGameCopyMessage
+                    (serverName, accounts.get(opponentAccount), game, 0));
             game.startGame();
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, message.getMessageId()));
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, accounts.get(opponentAccount), game, message.getMessageId()));
         }
     }
 
@@ -646,7 +664,7 @@ public class Server {
                 serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
             }
         }
-        addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
+        addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
     }
 
     private void checkGameFinish(Game game) {
@@ -771,9 +789,9 @@ public class Server {
             for (File file : files) {
                 TempAccount account = loadFile(file, TempAccount.class);
                 if (account == null) continue;
-                Account newAccount=new Account(account);
+                Account newAccount = new Account(account);
                 accounts.put(newAccount, null);
-                onlineGames.put(newAccount,null);
+                onlineGames.put(newAccount, null);
             }
         }
         serverPrint("Accounts loaded");

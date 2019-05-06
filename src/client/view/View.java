@@ -10,7 +10,7 @@ import client.models.card.Deck;
 import client.models.comperessedData.*;
 import client.models.game.availableActions.*;
 import client.models.map.Position;
-import server.models.map.GameMap;
+import server.models.game.Troop;
 
 import java.util.ArrayList;
 
@@ -392,7 +392,47 @@ public class View {
         }
     }
 
-    public void showMap(GameMap map) {
+    public void showMap(CompressedGameMap map) {
+        for (CompressedCell[] row : map.getCells()) {
+            showRow(map, row);
+        }
+    }
 
+    private void showRow(CompressedGameMap map, CompressedCell[] row) {
+        for (CompressedCell cell : row) {
+            CompressedTroop troop = map.getTroop(cell.toPosition());
+            if (troop != null) {
+                System.out.print(" " + troop.getCard().getType().toString().charAt(0) + " |");
+                continue;
+            }
+            CompressedCard item = cell.getItem();
+            if (item != null) {
+                System.out.print(" I |");
+                continue;
+            }
+            if (cell.getNumberOfFlags() > 0) {
+                System.out.print(" " + cell.getNumberOfFlags() + " |");
+                continue;
+            }
+            System.out.print("   |");
+        }
+        System.out.println();
+        for (CompressedCell cell : row) {
+            CompressedTroop troop = map.getTroop(cell.toPosition());
+            if (troop != null) {
+                System.out.print(" " + troop.getPlayerNumber() + " |");
+                continue;
+            }
+            if (cell.getNumberOfFlags() > 0) {
+                System.out.print(" " + cell.getNumberOfFlags() + " |");
+                continue;
+            }
+            System.out.print("   |");
+        }
+        System.out.println();
+        for (CompressedCell cell : row) {
+            System.out.print("____");
+        }
+        System.out.println();
     }
 }
