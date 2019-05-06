@@ -57,28 +57,30 @@ public class Server {
         readAllCards();
         readStories();
         new Thread(() -> {
+            serverPrint("Server Thread:sending messages is started...");
             while (true) {
                 synchronized (sendingMessages) {
-                    if (!sendingMessages.isEmpty()) {
+                    while (!sendingMessages.isEmpty()) {
                         sendMessage(sendingMessages.poll());
                     }
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                 } catch (Exception e) {
 
                 }
             }
         }).start();
         new Thread(() -> {
+            serverPrint("Server Thread:receiving messages is started...");
             while (true) {
                 synchronized (receivingMessages) {
-                    if (!receivingMessages.isEmpty()) {
+                    while (!receivingMessages.isEmpty()) {
                         receiveMessage(receivingMessages.poll());
                     }
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                 } catch (Exception e) {
 
                 }
