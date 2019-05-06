@@ -90,7 +90,7 @@ public class Server {
 
     public void addClient(Client client) {
         if (client == null || client.getClientName().length() < 2) {
-            serverPrint("Invalid Client Was Not Added.");
+            serverPrint("Invalid Client(invalid name) Was Not Added.");
         } else if (clients.containsKey(client.getClientName())) {
             serverPrint("Client Name Was Duplicate.");
         } else {
@@ -113,7 +113,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {
+    private void receiveMessage(Message message) {//TODO:add finish game message
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
@@ -176,27 +176,21 @@ public class Server {
                     break;
                 case INSERT:
                     insertCard(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case ATTACK:
                     attack(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case END_TURN:
                     endTurn(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case COMBO:
                     combo(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case USE_SPECIAL_POWER:
                     useSpecialPower(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case MOVE_TROOP:
                     moveTroop(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
                     break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
@@ -209,14 +203,12 @@ public class Server {
             }
         } catch (ServerException e) {
             serverPrint(e.getMessage());
-            addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
+            sendException("server has error:(", message.getSender(), message.getMessageId());
         } catch (ClientException e) {
             sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
         } catch (LogicException e) {
             serverPrint(e.getMessage());
             sendException(e.getMessage(), message.getSender(), message.getMessageId());
-            addToSendingMessages(Message.makeDoneMessage(serverName,message.getSender(),message.getMessageId()));
         }
     }
 
@@ -248,7 +240,7 @@ public class Server {
             return null;
         }
         for (Client client : onlineClients) {
-            if (client.getClientName().equalsIgnoreCase(clientName))
+            if (client.getClientName().equals(clientName))
                 return client;
         }
         return null;
