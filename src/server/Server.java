@@ -452,21 +452,17 @@ public class Server {
         return game;
     }
 
-    private boolean isOpponentAccountValid(Message message) {
+    private void checkOpponentAccountValidation(Message message) throws LogicException {
         if (message.getNewGameFields().getOpponentUsername() == null) {
-            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
-            return false;
+            throw new ClientException("invalid opponentAccount!");
         }
         Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
         if (opponentAccount == null) {
-            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
-            return false;
+            throw new ClientException("invalid opponent username!");
         }
         /*if (accounts.get(opponentAccount) == null) {
             sendException("opponentAccount has not logged in!", message.getSender(), message.getMessageId());
-            return false;
         }*/
-        return true;
     }
 
     private void newDeckGame(Message message) throws LogicException {
@@ -535,48 +531,47 @@ public class Server {
 
     private void newMultiplayerGame(Message message) throws LogicException {
         loginCheck(message);
-        if (isOpponentAccountValid(message)) {
-            Account myAccount = clients.get(message.getSender());
-            Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
-            if (!myAccount.hasValidMainDeck()) {
-                throw new ClientException("you don't have valid main deck!");
-            }
-            if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
-                throw new ClientException("opponent's main deck is not valid");
-            }
-            if (onlineGames.get(myAccount) != null) {
-                throw new ClientException("you have online game!");
-            }
-            if (onlineGames.get(opponentAccount) != null) {
-                throw new ClientException("opponent has online game!");
-            }
-            accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
-            clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
-            Game game = null;
-            GameMap gameMap = new GameMap(collectibleItems, message.getNewGameFields().getNumberOfFlags(), originalFlag);
-            if (message.getNewGameFields().getGameType() == null) {
-                throw new ClientException("invalid gameType!");
-            }
-            switch (message.getNewGameFields().getGameType()) {
-                case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case A_FLAG:
-                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNewGameFields().getNumberOfFlags());
-                    break;
-            }
-            game.setReward(Game.getDefaultReward());
-            onlineGames.put(myAccount, game);
-            onlineGames.put(opponentAccount, game);
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, 0));
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, accounts.get(opponentAccount), game, 0));
-            game.startGame();
+        checkOpponentAccountValidation(message);
+        Account myAccount = clients.get(message.getSender());
+        Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
+        if (!myAccount.hasValidMainDeck()) {
+            throw new ClientException("you don't have valid main deck!");
         }
+        if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
+            throw new ClientException("opponent's main deck is not valid");
+        }
+        if (onlineGames.get(myAccount) != null) {
+            throw new ClientException("you have online game!");
+        }
+        if (onlineGames.get(opponentAccount) != null) {
+            throw new ClientException("opponent has online game!");
+        }
+        accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
+        clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
+        Game game = null;
+        GameMap gameMap = new GameMap(collectibleItems, message.getNewGameFields().getNumberOfFlags(), originalFlag);
+        if (message.getNewGameFields().getGameType() == null) {
+            throw new ClientException("invalid gameType!");
+        }
+        switch (message.getNewGameFields().getGameType()) {
+            case KILL_HERO:
+                game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                break;
+            case A_FLAG:
+                game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                break;
+            case SOME_FLAG:
+                game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNewGameFields().getNumberOfFlags());
+                break;
+        }
+        game.setReward(Game.getDefaultReward());
+        onlineGames.put(myAccount, game);
+        onlineGames.put(opponentAccount, game);
+        addToSendingMessages(Message.makeGameCopyMessage
+                (serverName, message.getSender(), game, 0));
+        addToSendingMessages(Message.makeGameCopyMessage
+                (serverName, accounts.get(opponentAccount), game, 0));
+        game.startGame();
     }
 
     public void finishGame(Game game) {
@@ -644,7 +639,7 @@ public class Server {
                 if (account == null)
                     serverPrint("Error");
                 else {
-                    account.addMatchHistory(playerOneHistory,game.getReward());
+                    account.addMatchHistory(playerOneHistory, game.getReward());
                     saveAccount(account);
                 }
             }
@@ -653,7 +648,7 @@ public class Server {
                 if (account == null)
                     serverPrint("Error");
                 else {
-                    account.addMatchHistory(playerTwoHistory,game.getReward());
+                    account.addMatchHistory(playerTwoHistory, game.getReward());
                     saveAccount(account);
                 }
             }
