@@ -26,7 +26,7 @@ public class MultiPlayerMenu extends Menu {
     }
 
     public void selectUser(String userName, Client client, String serverName) throws InputException {
-        if (client.getAccount().getUsername().equals(userName)) {
+        if (client.getAccount().getUsername().equalsIgnoreCase(userName)) {
             throw new InputException("this is your username");
         }
         client.addToSendingMessages(

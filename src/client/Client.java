@@ -115,6 +115,7 @@ public class Client {
                     case GAME_COPY:
                         GameCommands.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
                         currentMenu = GameCommands.getInstance();
+                        GameCommands.getInstance().calculateAvailableActions();
                         break;
                     case ORIGINAL_CARDS_COPY:
                         Shop.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
@@ -133,22 +134,29 @@ public class Client {
                         switch (cardPosition) {
                             case MAP:
                                 gameCommands.getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
+                                GameCommands.getInstance().calculateAvailableActions();
                                 break;
                             case HAND:
                                 gameCommands.getCurrentGame().moveCardToHand();
+                                GameCommands.getInstance().calculateAvailableActions();
                                 break;
                             case NEXT:
                                 gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
+                                GameCommands.getInstance().calculateAvailableActions();
                                 break;
                             case GRAVE_YARD:
                                 gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
+                                GameCommands.getInstance().calculateAvailableActions();
                                 break;
                             case COLLECTED:
                                 gameCommands.getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
+                                GameCommands.getInstance().calculateAvailableActions();
                                 break;
                         }
+                        break;
                     case TROOP_UPDATE:
                         gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
+                        gameCommands.calculateAvailableActions();
                         break;
                     case GAME_UPDATE:
                         GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
@@ -158,7 +166,7 @@ public class Client {
                                 gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
                                 gameUpdateMessage.getPlayer2CurrentMP(),
                                 gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
-
+                        GameCommands.getInstance().calculateAvailableActions();
                         break;
                     case Game_FINISH:
                         GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());

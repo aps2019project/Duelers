@@ -15,19 +15,33 @@ public class AvailableActions {
     private ArrayList<Move> moves = new ArrayList<>();
 
     public void calculate(CompressedGame game) {
+        clearEverything();
         CompressedPlayer ownPlayer = game.getCurrentTurnPlayer();
         CompressedPlayer otherPlayer = game.getOtherTurnPlayer();
 
+        calculateCardInserts(ownPlayer);
+        calculateCollectibles(ownPlayer);
+        calculateAttacks(ownPlayer, otherPlayer);
+        calculateCombo(ownPlayer, otherPlayer);
+        calculateSpecialPower(game, ownPlayer);
+        calculateMoves(game, ownPlayer);
+    }
+
+    private void calculateCardInserts(CompressedPlayer ownPlayer) {
         for (CompressedCard card : ownPlayer.getHand()) {
             if (ownPlayer.getCurrentMP() >= card.getMannaPoint()) {
                 handInserts.add(new Insert(card));
             }
         }
+    }
 
+    private void calculateCollectibles(CompressedPlayer ownPlayer) {
         for (CompressedCard item : ownPlayer.getCollectedItems()) {
             collectibleInserts.add(new Insert(item));
         }
+    }
 
+    private void calculateAttacks(CompressedPlayer ownPlayer, CompressedPlayer otherPlayer) {
         for (CompressedTroop myTroop : ownPlayer.getTroops()) {
             if (!myTroop.canAttack()) continue;
 
@@ -45,7 +59,9 @@ public class AvailableActions {
 
             attacks.add(new Attack(myTroop, targets));
         }
+    }
 
+    private void calculateCombo(CompressedPlayer ownPlayer, CompressedPlayer otherPlayer) {
         for (CompressedTroop enemyTroop : otherPlayer.getTroops()) {
 
             ArrayList<CompressedTroop> attackers = new ArrayList<>();
@@ -64,7 +80,9 @@ public class AvailableActions {
 
             combos.add(new Combo(attackers, enemyTroop));
         }
+    }
 
+    private void calculateSpecialPower(CompressedGame game, CompressedPlayer ownPlayer) {
         CompressedTroop hero = ownPlayer.getHero();
 
         if (hero != null) {
@@ -74,8 +92,12 @@ public class AvailableActions {
                 specialPower = new SpecialPower(hero);
             }
         }
+    }
 
+    private void calculateMoves(CompressedGame game, CompressedPlayer ownPlayer) {
         for (CompressedTroop troop : ownPlayer.getTroops()) {
+            if (!troop.canMove()) continue;
+
             Position currentPosition = troop.getPosition();
             ArrayList<Position> targets = new ArrayList<>();
 
@@ -99,6 +121,15 @@ public class AvailableActions {
 
             moves.add(new Move(troop, targets));
         }
+    }
+
+    private void clearEverything() {
+        handInserts.clear();
+        collectibleInserts.clear();
+        attacks.clear();
+        combos.clear();
+        moves.clear();
+        specialPower = null;
     }
 
     private boolean checkRangeForAttack(CompressedTroop myTroop, CompressedTroop enemyTroop) {
@@ -134,5 +165,13 @@ public class AvailableActions {
 
     public ArrayList<Move> getMoves() {
         return moves;
+    }
+
+    public boolean canInsertCard(String cardId, int row, int column, CompressedGameMap map) {
+        if (!map.isInMap(row, column)) return false;
+        for (Insert insert : handInserts) {
+            if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
+        }
+        return false;
     }
 }

@@ -303,7 +303,7 @@ public class Server {
             throw new LogicException("Client Wasn't Added!");
         } else if (account == null) {
             throw new ClientException("Username Not Found!");
-        } else if (!account.getPassword().equals(message.getAccountFields().getPassword())) {
+        } else if (!account.getPassword().equalsIgnoreCase(message.getAccountFields().getPassword())) {
             throw new ClientException("Incorrect PassWord!");
         } else if (accounts.get(account) != null) {
             throw new ClientException("Selected Username Is Online!");

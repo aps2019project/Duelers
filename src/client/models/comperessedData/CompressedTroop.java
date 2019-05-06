@@ -8,8 +8,8 @@ public class CompressedTroop {
     private int currentHp;
     private int enemyHitChanges;
     private Position position;
-    private boolean canMove = true;
-    private boolean canAttack = true;
+    private boolean canMove;
+    private boolean canAttack;
     private boolean isDisarm;
     private boolean noAttackFromWeakerOnes;
     private int numberOfCollectedFlags;

@@ -1,19 +1,21 @@
 package client.models.account;
 
+import java.util.Date;
+
 public class MatchHistory {
-    private String winner;
-    private String loser;
-    private int occurrenceTime;
+    private String oppName;
+    private boolean amIWinner;
+    private Date date;
 
-    public String getWinner() {
-        return this.winner;
+    public String getOppName() {
+        return this.oppName;
     }
 
-    public String getLoser() {
-        return this.loser;
+    public String getDate() {
+        return date.toLocaleString();
     }
 
-    public int getOccurrenceTime() {
-        return this.occurrenceTime;
+    public boolean isAmIWinner() {
+        return amIWinner;
     }
 }

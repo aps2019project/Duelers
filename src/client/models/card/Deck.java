@@ -24,7 +24,7 @@ public class Deck {
         if (obj == null) return false;
         if (!obj.getClass().getName().equals(Deck.class.getName())) return false;
         Deck deck = (Deck) obj;
-        return deck.getName().equals(deckName);
+        return deck.getName().equalsIgnoreCase(deckName);
     }
 
     public String getName() {
@@ -48,7 +48,7 @@ public class Deck {
     }
 
     public boolean areSame(String deckName) {
-        return this.deckName.equals(deckName);
+        return this.deckName.equalsIgnoreCase(deckName);
     }
 
     public boolean isValid() {

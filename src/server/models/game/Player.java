@@ -50,7 +50,7 @@ public class Player {
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
             Card card1 = (Card) iterator.next();
-            if (card1.getCardId().equals(cardId)) {
+            if (card1.getCardId().equalsIgnoreCase(cardId)) {
                 card = card1;
                 iterator.remove();
                 break;
@@ -75,7 +75,7 @@ public class Player {
     }
 
     public boolean addNextCardToHand() {
-        if (hand.size() <= 5) {
+        if (hand.size() < 5) {
             hand.add(nextCard);
             setNextCard();
             return true;
@@ -186,6 +186,8 @@ public class Player {
     public Troop getHero() {
         if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
+            hero.setCanMove(true);
+            hero.setCanAttack(true);
             troops.add(hero);
         }
         return hero;

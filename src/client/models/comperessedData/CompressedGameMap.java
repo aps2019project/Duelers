@@ -73,7 +73,7 @@ public class CompressedGameMap {
     public void removeItem(String cardId) {
         for (CompressedCell[] cells1 : cells) {
             for (CompressedCell cell : cells1) {
-                if (cell.getItem().getCardId().equals(cardId))
+                if (cell.getItem().getCardId().equalsIgnoreCase(cardId))
                     cell.removeItem();
             }
         }
@@ -95,7 +95,7 @@ public class CompressedGameMap {
 
     public void killTroop(String cardId) {//flag
         for (CompressedTroop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 addFlagNum(troop.getPosition(), troop.getNumberOfCollectedFlags());
             }
         }
@@ -103,12 +103,12 @@ public class CompressedGameMap {
     }
 
     private void removeTroop(String cardId) {
-        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equals(cardId));
+        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equalsIgnoreCase(cardId));
     }
 
     public CompressedTroop getTroop(String cardId) {
         for (CompressedTroop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 return troop;
             }
         }

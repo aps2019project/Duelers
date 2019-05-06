@@ -53,17 +53,17 @@ public class GameMap {
     }
 
     public Cell getCell(int row, int column) {
-        if (checkCoordination(row, column)) {
+        if (isInMap(row, column)) {
             return cells[row][column];
         }
         return null;
     }
 
-    public boolean checkCoordination(int row, int column) {
+    public boolean isInMap(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
     }
 
-    public boolean checkCoordination(Position position) {
+    public boolean isInMap(Position position) {
         return position.getRow() >= 0 && position.getRow() < ROW_NUMBER && position.getColumn() >= 0 && position.getColumn() < COLUMN_NUMBER;
     }
 
@@ -95,9 +95,18 @@ public class GameMap {
         return null;
     }
 
+    public Troop getTroop(Position cell) {
+        for (Troop troop : troops) {
+            if (troop.getCell().getColumn() == cell.getColumn() && troop.getCell().getRow() == cell.getRow()) {
+                return troop;
+            }
+        }
+        return null;
+    }
+
     public Troop getTroop(String cardId) {
         for (Troop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 return troop;
             }
         }
