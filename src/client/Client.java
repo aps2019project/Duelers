@@ -153,6 +153,7 @@ public class Client {
                                 GameCommands.getInstance().calculateAvailableActions();
                                 break;
                         }
+                        break;
                     case TROOP_UPDATE:
                         gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
                         gameCommands.calculateAvailableActions();
