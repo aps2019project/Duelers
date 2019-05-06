@@ -38,7 +38,7 @@ public class Server {
     private Card originalFlag;
     private ArrayList<Story> stories = new ArrayList<>();
 
-    private LinkedList<Message> sendingMessages = new LinkedList<>();
+    private LinkedList<Message> sendingMessages = new LinkedList<>();//TODO:queue
     private LinkedList<Message> receivingMessages = new LinkedList<>();
 
     private Server(String serverName) {
