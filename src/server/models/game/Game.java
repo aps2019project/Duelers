@@ -173,7 +173,7 @@ public abstract class Game {
             actions.calculateAvailableAttacks(this);
         }
         actions.calculateAvailableInsets(this);
-        while (actions.getHandInserts().size() > 0 && actions.getCollectibleInserts().size() > 0) {
+        while (actions.getHandInserts().size() > 0 || actions.getCollectibleInserts().size() > 0) {
             if (new Random().nextInt(2) == 1) {
                 Insert insert = actions.getHandInserts().get(new Random().nextInt(actions.getHandInserts().size()));
                 insert("AI", insert.getCard().getCardId(), new Position(new Random().nextInt(5), new Random().nextInt(9)));
