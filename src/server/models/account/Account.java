@@ -44,7 +44,7 @@ public class Account {
 
     public boolean hasDeck(String deckName) {
         for (Deck deck : decks) {
-            if (deck.getDeckName().equals(deckName))
+            if (deck.getDeckName().equalsIgnoreCase(deckName))
                 return true;
         }
         return false;
@@ -56,7 +56,7 @@ public class Account {
 
     public Deck getDeck(String deckName) {
         for (Deck deck : decks) {
-            if (deck.getDeckName().equals(deckName)) {
+            if (deck.getDeckName().equalsIgnoreCase(deckName)) {
                 return deck;
             }
         }

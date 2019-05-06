@@ -149,6 +149,7 @@ public class Client {
                         }
                     case TROOP_UPDATE:
                         gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
+                        gameCommands.calculateAvailableActions();
                         break;
                     case GAME_UPDATE:
                         GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();

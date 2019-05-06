@@ -138,12 +138,12 @@ public class Request {
         } else if (GameRequestType.ENTER_GRAVE_YARD.matches(command)) {
             gameCommands.enterGraveYard();
 
-        } else if (GameRequestType.SHOW_INFO_OF_CARD_INGRAVEYARD.matches(command)) {
-            Matcher matcher = GameRequestType.SHOW_CRADS_IN_GRAVE_YARD.getMatcher();
+        } else if (GameRequestType.SHOW_INFO_OF_CARD_IN_GRAVEYARD.matches(command)) {
+            Matcher matcher = GameRequestType.SHOW_CARDS_IN_GRAVE_YARD.getMatcher();
             String cardId = matcher.group(1);
             gameCommands.showCardInfoInGraveYard(cardId);
 
-        } else if (GameRequestType.SHOW_CRADS_IN_GRAVE_YARD.matches(command)) {
+        } else if (GameRequestType.SHOW_CARDS_IN_GRAVE_YARD.matches(command)) {
             gameCommands.showCardsInGraveYard();
 
         } else if (gameCommands.isInGraveYard() && GameRequestType.EXIT.matches(command)) {

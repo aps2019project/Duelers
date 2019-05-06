@@ -97,7 +97,7 @@ public class GameMap {
 
     public Troop getTroop(String cardId) {
         for (Troop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 return troop;
             }
         }

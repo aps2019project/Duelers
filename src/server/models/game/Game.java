@@ -31,7 +31,7 @@ public abstract class Game {
     private GameType gameType;
     private ArrayList<Buff> buffs = new ArrayList<>();
     private GameMap gameMap;
-    private int turnNumber;
+    private int turnNumber = 1;
     private int lastTurnChangingTime;
 
     protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
@@ -50,13 +50,13 @@ public abstract class Game {
     }
 
     public void startGame() throws ServerException {
-        this.turnNumber = 1;
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
         this.turnNumber = 2;
         putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
         this.turnNumber = 1;
 
         playerOne.setCurrentMP(2);
+        Server.getInstance().sendGameUpdateMessage(this);
 
         applyOnStartSpells(playerTwo.getDeck());
         applyOnStartSpells(playerTwo.getDeck());

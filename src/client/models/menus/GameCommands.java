@@ -30,9 +30,15 @@ public class GameCommands extends Menu {
         return ourInstance;
     }
 
+    public void calculateAvailableActions() {
+        availableActions.calculate(currentGame);
+    }
+
     @Override
     public void exit(Client client) {
-        client.setCurrentMenu(MainMenu.getInstance());
+        isInGraveYard = false;
+        selectedItemId = null;
+        selectedCardId = null;
     }
 
     @Override
@@ -46,24 +52,26 @@ public class GameCommands extends Menu {
                     "\"Show card info [card id]\"\n" +
                     "\"Select [card id]\"\n";
             if (selectedCardId != null) {
-                help += "\"Move to ([x]; [y])\"\n" +
+                help += "\"Move to ([x], [y])\"\n" +
                         "\"Attack [opponent card id]\"\n" +
                         "\"Attack combo [opponent card id] [my card id] [my card id] [...]\"\n" +
                         "\"Use special power (x, y)\"\n";
             }
             help += "\"Show hand\"\n" +
                     "\"Show Next Card\"\n" +
-                    "\"Insert [card name] in (x, y)\"\n" +
+                    "\"Insert [card id] in (x, y)\"\n" +
                     "\"Show collectibles\"\n" +
                     "\"Select [collectible id]\"\n";
             if (selectedItemId != null) {
                 help += "\"Show info\"\n" +
-                        "\"Use [location x, y]\"\n";
+                        "\"Use (x, y)\"\n";
             }
             help += "\"Enter graveyard\"\n" +
                     "\"End turn\"\n" +
                     "\"help\"\n" +
-                    "\"exit\"\n";
+                    "\"Show menu\"\n" +
+                    "\"exit\"\n" +
+                    "\"end game\"\n";
         } else {
             help = "GraveYard:\n" +
                     "\"Show info [card id]\"\n" +
@@ -83,7 +91,7 @@ public class GameCommands extends Menu {
         this.currentGame = currentGame;
         currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
     }
 
     public void showGameActions() { //help
@@ -171,7 +179,7 @@ public class GameCommands extends Menu {
         }
 
         View.getInstance().showMoveCardMessage(troop, target);
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -216,7 +224,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -231,7 +239,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -251,7 +259,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -273,7 +281,7 @@ public class GameCommands extends Menu {
         }
 
         View.getInstance().showCardInsertionMessage(card, target);
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -288,7 +296,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 
@@ -323,7 +331,7 @@ public class GameCommands extends Menu {
             throw new InputException(client.getErrorMessage());
         }
 
-        availableActions.calculate(currentGame);
+        calculateAvailableActions();
         View.getInstance().showMap(currentGame.getGameMap());
     }
 

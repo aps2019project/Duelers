@@ -63,7 +63,7 @@ public class Collection {
 
     private Card findCardInList(String cardId, ArrayList<Card> minions) {
         for (Card card : minions) {
-            if (card.getCardId().equals(cardId)) return card;
+            if (card.getCardId().equalsIgnoreCase(cardId)) return card;
         }
         return null;
     }

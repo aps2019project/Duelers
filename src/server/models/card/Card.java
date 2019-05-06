@@ -70,7 +70,7 @@ public class Card {
     public boolean equals(Object obj) {
         if (!this.getClass().getName().equals(obj.getClass().getName())) return false;
         Card card = (Card) obj;
-        return this.cardId.equals(card.cardId);
+        return this.cardId.equalsIgnoreCase(card.cardId);
     }
 
     public String getName() {

@@ -50,7 +50,7 @@ public class Player {
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
             Card card1 = (Card) iterator.next();
-            if (card1.getCardId().equals(cardId)) {
+            if (card1.getCardId().equalsIgnoreCase(cardId)) {
                 card = card1;
                 iterator.remove();
                 break;

@@ -123,10 +123,10 @@ public class Deck {
     }
 
     private int numberOf(String name) {//Todo:reCode
-        if (hero.getName().equals(name) || item.getName().equals(name)) return 0;
+        if (hero.getName().equalsIgnoreCase(name) || item.getName().equalsIgnoreCase(name)) return 0;
         int number = 0;
         for (Card card : others) {
-            if (card.getName().equals(name)) number++;
+            if (card.getName().equalsIgnoreCase(name)) number++;
         }
         return number;
     }
@@ -142,7 +142,7 @@ public class Deck {
     public Card getCardFromOthers(String cardId) {
         for (Card card :
                 others) {
-            if (cardId.equals(card.getCardId())) {
+            if (cardId.equalsIgnoreCase(card.getCardId())) {
                 return card;
             }
         }

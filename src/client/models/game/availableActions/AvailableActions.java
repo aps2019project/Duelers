@@ -15,6 +15,7 @@ public class AvailableActions {
     private ArrayList<Move> moves = new ArrayList<>();
 
     public void calculate(CompressedGame game) {
+        clearEverything();
         CompressedPlayer ownPlayer = game.getCurrentTurnPlayer();
         CompressedPlayer otherPlayer = game.getOtherTurnPlayer();
 
@@ -99,6 +100,15 @@ public class AvailableActions {
 
             moves.add(new Move(troop, targets));
         }
+    }
+
+    private void clearEverything() {
+        handInserts.clear();
+        collectibleInserts.clear();
+        attacks.clear();
+        combos.clear();
+        moves.clear();
+        specialPower = null;
     }
 
     private boolean checkRangeForAttack(CompressedTroop myTroop, CompressedTroop enemyTroop) {

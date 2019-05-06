@@ -424,7 +424,7 @@ public class View {
                 continue;
             }
             if (cell.getNumberOfFlags() > 0) {
-                System.out.print(" " + cell.getNumberOfFlags() + " |");
+                System.out.print(" F |");
                 continue;
             }
             System.out.print("   |");

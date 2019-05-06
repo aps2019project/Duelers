@@ -52,8 +52,7 @@ public class CompressedPlayer {
     }
 
     public void removeCardFromHand(String cardId) {
-        //TODO:Ahmad Check syntax
-        hand.removeIf(compressedCard -> compressedCard.getCardId().equals(cardId));
+        hand.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
     }
 
     public void removeCardFromNext() {
@@ -61,22 +60,20 @@ public class CompressedPlayer {
     }
 
     public void removeCardFromCollectedItems(String cardId) {
-        //TODO:Ahmad Check syntax
-        collectedItems.removeIf(compressedCard -> compressedCard.getCardId().equals(cardId));
+        collectedItems.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
     }
 
     public void removeTroop(String cardId) {
         if (troops == null)
             troops = new ArrayList<>();
-        //TODO:Ahmad Check syntax
-        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equals(cardId));
-        if (hero != null && hero.getCard().getCardId().equals(cardId))
+        troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equalsIgnoreCase(cardId));
+        if (hero != null && hero.getCard().getCardId().equalsIgnoreCase(cardId))
             hero = null;
     }
 
     public CompressedCard searchHand(String cardId) {
         for (CompressedCard card : hand) {
-            if (card.getCardId().equals(cardId)) {
+            if (card.getCardId().equalsIgnoreCase(cardId)) {
                 return card;
             }
         }
@@ -85,7 +82,7 @@ public class CompressedPlayer {
 
     public CompressedTroop searchTroop(String cardId) {
         for (CompressedTroop troop : troops) {
-            if (troop.getCard().getCardId().equals(cardId)) {
+            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 return troop;
             }
         }
@@ -94,7 +91,7 @@ public class CompressedPlayer {
 
     public CompressedCard searchCollectedItems(String cardId) {
         for (CompressedCard card : collectedItems) {
-            if (card.getCardId().equals(cardId)) {
+            if (card.getCardId().equalsIgnoreCase(cardId)) {
                 return card;
             }
         }
@@ -121,7 +118,7 @@ public class CompressedPlayer {
 
     public CompressedCard searchGraveyard(String cardId) {
         for (CompressedCard card : graveyard) {
-            if (card.getCardId().equals(cardId)) {
+            if (card.getCardId().equalsIgnoreCase(cardId)) {
                 return card;
             }
         }
