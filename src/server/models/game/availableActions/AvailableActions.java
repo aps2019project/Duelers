@@ -111,6 +111,8 @@ public class AvailableActions {
         Player ownPlayer = game.getCurrentTurnPlayer();
         moves.clear();
         for (Troop troop : ownPlayer.getTroops()) {
+            if (!troop.canMove()) continue;
+
             Position currentPosition = new Position(troop.getCell());
             ArrayList<Position> targets = new ArrayList<>();
 
