@@ -12,7 +12,12 @@
         "duration": 3
       },
       "target": {
-        "player": true
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "player": true
+        }
       },
       "availabilityType": {
         "onStart": true

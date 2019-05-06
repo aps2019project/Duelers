@@ -91,9 +91,9 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnStart())
                 applySpell(spell, detectTarget(
                         spell,
-                        gameMap.getCell(0, 0),
-                        gameMap.getCell(0, 0),
-                        gameMap.getCell(0, 0))
+                        gameMap.getCell(2, 2),
+                        gameMap.getCell(2, 2),
+                        gameMap.getCell(2, 2))
                 );
         }
     }
