@@ -1,5 +1,7 @@
 package server.models.account;
 
+import server.models.game.Player;
+
 import java.util.Date;
 
 public class MatchHistory {
@@ -7,8 +9,12 @@ public class MatchHistory {
     private boolean amIWinner;
     private Date date;
 
-    public MatchHistory(String oppName, boolean amIWinner) {
-        this.oppName = oppName;
+    public MatchHistory(Player player, boolean amIWinner) {
+        if (player.getUserName().equals("AI")) {
+            this.oppName = player.getDeck().getDeckName();
+        } else {
+            this.oppName = player.getUserName();
+        }
         this.amIWinner = amIWinner;
         this.date = new Date(System.currentTimeMillis());
     }

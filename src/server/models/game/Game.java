@@ -58,16 +58,17 @@ public abstract class Game {
     }
 
     public void startGame() throws ServerException {
+        applyOnStartSpells(playerOne.getDeck());
         putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
+
         this.turnNumber = 2;
+        applyOnStartSpells(playerTwo.getDeck());
         putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
+
         this.turnNumber = 1;
 
         playerOne.setCurrentMP(20);
         Server.getInstance().sendGameUpdateMessage(this);
-
-        applyOnStartSpells(playerTwo.getDeck());
-        applyOnStartSpells(playerTwo.getDeck());
     }
 
     public CompressedGame toCompressedGame() {
@@ -469,7 +470,7 @@ public abstract class Game {
 
     private Spell getAndValidateSpecialPower(Troop hero) throws ClientException {
         Spell specialPower = hero.getCard().getSpells().get(0);
-        if (specialPower == null || specialPower.getAvailabilityType().isSpecialPower()) {
+        if (specialPower == null || !specialPower.getAvailabilityType().isSpecialPower()) {
             throw new ClientException("special power is not available");
         }
 
@@ -747,7 +748,11 @@ public abstract class Game {
             for (Card card : player.getDeck().getOthers()) {
                 addCardToTargetData(spell, targetData, card);
             }
+            for (Card card : player.getHand()) {
+                addCardToTargetData(spell, targetData, card);
+            }
             addCardToTargetData(spell, targetData, player.getNextCard());
+            addCardToTargetData(spell, targetData, player.getDeck().getHero());
         }
         if (spell.getTarget().getDimensions() != null) {
             Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
@@ -850,11 +855,11 @@ public abstract class Game {
 
     void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(
-                new MatchHistory(playerTwo.getUserName(), resultOne)
+                new MatchHistory(playerTwo, resultOne)
         );
 
         playerTwo.setMatchHistory(
-                new MatchHistory(playerOne.getUserName(), resultTwo)
+                new MatchHistory(playerOne, resultTwo)
         );
     }
 

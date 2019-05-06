@@ -70,6 +70,9 @@ public class Spell {
     }
 
     public boolean isCoolDown(int turnNumber) {
+        if (lastTurnUsed == 0) {
+            return false;
+        }
         return lastTurnUsed + coolDown * 2 >= turnNumber;
     }
 }

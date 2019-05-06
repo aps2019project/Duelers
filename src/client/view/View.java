@@ -388,7 +388,7 @@ public class View {
     private void showSpecialPower(AvailableActions availableActions) {
         if (availableActions.getSpecialPower() != null) {
             System.out.println("Special power is available; requires " +
-                    availableActions.getSpecialPower().getHero().getCard().getMannaPoint() + "MP\n");
+                    availableActions.getSpecialPower().getHero().getCard().getSpell().getMannaPoint() + "MP\n");
         }
     }
 

@@ -11,11 +11,7 @@
         "duration": 2147483647
       },
       "target": {
-        "isForAroundOwnHero": true,
-        "dimensions": {
-          "row": 1,
-          "column": 1
-        },
+        "isForDeckCards": true,
         "owner": {
           "own": true
         },
