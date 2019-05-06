@@ -341,76 +341,46 @@ public class Server {
     private void addToDeck(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        if (!account.hasDeck(message.getOtherFields().getDeckName())) {
-            throw new ClientException("deck was not found.");
-        } else if (!account.getCollection().hasCard(message.getOtherFields().getMyCardId())) {
-            throw new ClientException("invalid card id.");
-        } else if (account.getDeck(message.getOtherFields().getDeckName()).hasCard(message.getOtherFields().getMyCardId())) {
-            throw new ClientException("deck had this card.");
-        } else {
-            account.addCardToDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName, message.getSender(), account, message.getMessageId()));
-            saveAccount(account);
-        }
+        account.addCardToDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
+        addToSendingMessages(Message.makeAccountCopyMessage(
+                serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
     }
 
     private void removeFromDeck(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        if (!account.hasDeck(message.getOtherFields().getDeckName())) {
-            throw new ClientException("deck was not found.");
-        } else if (!account.getDeck(message.getOtherFields().getDeckName()).hasCard(message.getOtherFields().getMyCardId())) {
-            throw new ClientException("deck don't have this card.");
-        } else {
-            account.removeCardFromDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName, message.getSender(), account, message.getMessageId()));
-            saveAccount(account);
-        }
+        account.removeCardFromDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
+        addToSendingMessages(Message.makeAccountCopyMessage(
+                serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
     }
 
     private void selectDeck(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        if (!account.hasDeck(message.getOtherFields().getDeckName())) {
-            throw new ClientException("deck was not found.");
-        } else if (account.getMainDeck() != null && account.getMainDeck().getDeckName().equals(message.getOtherFields().getDeckName())) {
-            throw new ClientException("deck was already the main deck.");
-        } else {
-            account.selectDeck(message.getOtherFields().getDeckName());
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName, message.getSender(), account, message.getMessageId()));
-            saveAccount(account);
-        }
+        account.selectDeck(message.getOtherFields().getDeckName());
+        addToSendingMessages(Message.makeAccountCopyMessage(
+                serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
     }
 
     private void buyCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        if (!originalCards.hasCard(message.getOtherFields().getCardName())) {
-            throw new ClientException("invalid card name");
-        } else if (account.getMoney() < originalCards.getCard(message.getOtherFields().getCardName()).getPrice()) {
-            throw new ClientException("account's money isn't enough.");
-        } else {
-            account.buyCard(message.getOtherFields().getCardName(), originalCards.getCard(message.getOtherFields().getCardName()).getPrice(), originalCards);
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName, message.getSender(), account, message.getMessageId()));
-            saveAccount(account);
-        }
+        account.buyCard(message.getOtherFields().getCardName(), originalCards.getCard(message.getOtherFields().getCardName()).getPrice(), originalCards);
+        addToSendingMessages(Message.makeAccountCopyMessage(
+                serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
     }
 
     private void sellCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        if (!account.getCollection().hasCard(message.getOtherFields().getMyCardId())) {
-            throw new ClientException("invalid card id");
-        } else {
-            account.sellCard(message.getOtherFields().getMyCardId());
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    serverName, message.getSender(), account, message.getMessageId()));
-            saveAccount(account);
-        }
+        account.sellCard(message.getOtherFields().getMyCardId());
+        addToSendingMessages(Message.makeAccountCopyMessage(
+                serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
     }
 
     private void sendStories(Message message) throws LogicException {

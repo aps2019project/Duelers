@@ -77,19 +77,20 @@ public class Account {
         decks.remove(getDeck(deckName));
     }
 
-    public void buyCard(String cardName, int price, Collection originalCards) {
-        if (price > money || !originalCards.hasCard(cardName)) {
-            Server.getInstance().serverPrint("Error");
-            return;
+    public void buyCard(String cardName, int price, Collection originalCards) throws LogicException{
+        if(!originalCards.hasCard(cardName)){
+            throw new ClientException("invalid card name");
+        }
+        if (price > money) {
+            throw new ClientException("account's money isn't enough.");
         }
         collection.addCard(cardName, originalCards, username);
         money -= price;
     }
 
-    public void sellCard(String cardId) {
+    public void sellCard(String cardId) throws LogicException{
         if (!collection.hasCard(cardId)) {
-            Server.getInstance().serverPrint("Error");
-            return;
+            throw new ClientException("invalid card id");
         }
         money += collection.getCard(cardId).getPrice();
         Card card = collection.getCard(cardId);
@@ -101,27 +102,27 @@ public class Account {
         }
     }
 
-    public void addCardToDeck(String cardId, String deckName) {
+    public void addCardToDeck(String cardId, String deckName) throws LogicException{
         if (!hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
+            throw new ClientException("deck was not found.");
         } else if (!collection.hasCard(cardId)) {
-            Server.getInstance().serverPrint("Error");
+            throw new ClientException("invalid card id.");
         } else {
             getDeck(deckName).addCard(cardId, collection);
         }
     }
 
-    public void removeCardFromDeck(String cardId, String deckName) {
+    public void removeCardFromDeck(String cardId, String deckName) throws LogicException{
         if (!hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
+            throw new ClientException("deck was not found.");
         } else {
             getDeck(deckName).removeCard(collection.getCard(cardId));
         }
     }
 
-    public void selectDeck(String deckName) {
+    public void selectDeck(String deckName) throws LogicException{
         if (!hasDeck(deckName)) {
-            Server.getInstance().serverPrint("Error");
+            throw new ClientException("deck was not found.");
         } else {
             mainDeck = getDeck(deckName);
         }
