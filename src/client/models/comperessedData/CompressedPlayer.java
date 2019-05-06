@@ -167,4 +167,16 @@ public class CompressedPlayer {
     public void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
         this.numberOfCollectedFlags = numberOfCollectedFlags;
     }
+
+    public ArrayList<CompressedTroop> getFlagCarriers() {
+        ArrayList<CompressedTroop> flagCarriers = new ArrayList<>();
+
+        for (CompressedTroop troop : troops) {
+            if (troop.getNumberOfCollectedFlags() > 0) {
+                flagCarriers.add(troop);
+            }
+        }
+
+        return flagCarriers;
+    }
 }

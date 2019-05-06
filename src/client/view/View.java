@@ -7,12 +7,10 @@ import client.models.account.Collection;
 import client.models.card.Card;
 import client.models.card.CardType;
 import client.models.card.Deck;
-import client.models.comperessedData.CompressedCard;
-import client.models.comperessedData.CompressedGame;
-import client.models.comperessedData.CompressedPlayer;
-import client.models.comperessedData.CompressedTroop;
+import client.models.comperessedData.*;
 import client.models.game.availableActions.*;
 import client.models.map.Position;
+import server.models.map.GameMap;
 
 import java.util.ArrayList;
 
@@ -247,7 +245,7 @@ public class View {
         );
     }
 
-    public void showKillHeroGameInfo(CompressedGame game) {//TODO
+    public void showKillHeroGameInfo(CompressedGame game) {
         System.out.println("HP of " + game.getPlayerOne().getUserName() + "'s hero: " +
                 game.getPlayerOne().getHero().getCurrentHp() + "\n" +
                 "HP of " + game.getPlayerTwo().getUserName() + "'s hero: " +
@@ -255,30 +253,31 @@ public class View {
         );
     }
 
-    public void showOneFlagGameInfo(CompressedGame game) {//TODO
-        /*if (game.getGameMap().getFlagCells().size() == 1) {
-            Cell cell = game.getGameMap().getFlagCells().get(0);
+    public void showOneFlagGameInfo(CompressedGame game) {
+        ArrayList<CompressedCell> flagCells = game.getGameMap().getFlagCells();
+        if (flagCells.size() == 1) {
+            Position cell = flagCells.get(0).toPosition();
             System.out.println(
                     "Flag is in cell " + cell
             );
         } else {
             showFlagCarriers(game.getPlayerOne());
             showFlagCarriers(game.getPlayerTwo());
-        }*/
+        }
     }
 
     public void showMultiFlagGameInfo(CompressedGame game) {
-        /*showFlagCarriers(game.getPlayerOne());//TODO
-        showFlagCarriers(game.getPlayerTwo());*/
+        showFlagCarriers(game.getPlayerOne());
+        showFlagCarriers(game.getPlayerTwo());
     }
 
-    private void showFlagCarriers(CompressedPlayer player) {//TODO
-        /*for (Troop troop : player.getFlagCarriers()) {
+    private void showFlagCarriers(CompressedPlayer player) {
+        for (CompressedTroop troop : player.getFlagCarriers()) {
             System.out.println("Troop " + troop.getCard().getCardId() +
-                    "is carrying the flag in cell " +
-                    troop.getCell()
+                    "is carrying " + troop.getNumberOfCollectedFlags() + " flag(s) in cell " +
+                    troop.getPosition()
             );
-        }*/
+        }
     }
 
     public void showTroops(ArrayList<CompressedTroop> troops) {
@@ -328,26 +327,29 @@ public class View {
     public void showAvailableActions(CompressedGame game, AvailableActions availableActions) {
         System.out.println("your current manna: " + game.getCurrentTurnPlayer().getCurrentMP() + "\n");
 
+        showHandInserts(availableActions);
+        showCollectibleUses(availableActions);
+        showMoves(availableActions);
+        showAttacks(availableActions);
+        showComboAttacks(availableActions);
+        showSpecialPower(availableActions);
+    }
+
+    private void showHandInserts(AvailableActions availableActions) {
         System.out.println("Available card insertions:");
         for (Insert insert : availableActions.getHandInserts()) {
             System.out.println("\t" + insert.getCard().getCardId() + " : " + insert.getCard().getMannaPoint() + " MP");
         }
+    }
 
+    private void showCollectibleUses(AvailableActions availableActions) {
         System.out.println("Available collectible uses:");
         for (Insert insert : availableActions.getCollectibleInserts()) {
             System.out.println("\t" + insert.getCard().getCardId());
         }
+    }
 
-        System.out.println("Available moves:");
-        for (Move move : availableActions.getMoves()) {
-            System.out.println("\tTroop: " + move.getTroop().getCard().getCardId());
-            System.out.println("\ttargets:");
-            for (Position target : move.getTargets()) {
-                System.out.println("\t\t" + target);
-            }
-            System.out.println();
-        }
-
+    private void showAttacks(AvailableActions availableActions) {
         System.out.println("Available attacks:");
         for (Attack attack : availableActions.getAttacks()) {
             System.out.println("\tattacker: " + attack.getAttackerTroop().getCard().getCardId());
@@ -357,7 +359,9 @@ public class View {
             }
             System.out.println();
         }
+    }
 
+    private void showComboAttacks(AvailableActions availableActions) {
         System.out.println("Available combo attacks:");
         for (Combo combo : availableActions.getCombos()) {
             System.out.println("\tdefender: " + combo.getDefenderTroop().getCard().getCardId());
@@ -367,10 +371,28 @@ public class View {
             }
             System.out.println();
         }
+    }
 
+    private void showMoves(AvailableActions availableActions) {
+        System.out.println("Available moves:");
+        for (Move move : availableActions.getMoves()) {
+            System.out.println("\tTroop: " + move.getTroop().getCard().getCardId());
+            System.out.println("\ttargets:");
+            for (Position target : move.getTargets()) {
+                System.out.println("\t\t" + target);
+            }
+            System.out.println();
+        }
+    }
+
+    private void showSpecialPower(AvailableActions availableActions) {
         if (availableActions.getSpecialPower() != null) {
             System.out.println("Special power is available; requires " +
                     availableActions.getSpecialPower().getHero().getCard().getMannaPoint() + "MP\n");
         }
+    }
+
+    public void showMap(GameMap map) {
+
     }
 }
