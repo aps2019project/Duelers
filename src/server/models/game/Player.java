@@ -207,4 +207,8 @@ public class Player {
     public void setMatchHistory(MatchHistory matchHistory) {
         this.matchHistory = matchHistory;
     }
+
+    public void addTroop(Troop troop) {
+        troops.add(troop);
+    }
 }

@@ -276,6 +276,7 @@ public abstract class Game {
             }
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
             Troop troop = new Troop(card, getCurrentTurnPlayer().getPlayerNumber());
+            player.addTroop(troop);
             putMinion(
                     player.getPlayerNumber(),
                     troop,
@@ -827,8 +828,8 @@ public abstract class Game {
         int firstRow = calculateFirstCoordinate(centerPosition.getRow(), dimensions.getRow());
         int firstColumn = calculateFirstCoordinate(centerPosition.getColumn(), dimensions.getColumn());
 
-        int lastRow = calculateLastCoordinate(centerPosition.getRow(), dimensions.getRow(), GameMap.getRowNumber());
-        int lastColumn = calculateLastCoordinate(centerPosition.getColumn(), dimensions.getColumn(), GameMap.getColumnNumber());
+        int lastRow = calculateLastCoordinate(firstRow, dimensions.getRow(), GameMap.getRowNumber());
+        int lastColumn = calculateLastCoordinate(firstColumn, dimensions.getColumn(), GameMap.getColumnNumber());
 
         ArrayList<Cell> targetCells = new ArrayList<>();
         for (int i = firstRow; i < lastRow; i++) {
@@ -847,8 +848,8 @@ public abstract class Game {
         return firstCoordinate;
     }
 
-    private int calculateLastCoordinate(int center, int dimension, int maxNumber) {
-        int lastRow = center + dimension;
+    private int calculateLastCoordinate(int first, int dimension, int maxNumber) {
+        int lastRow = first + dimension;
         if (lastRow > maxNumber) {
             lastRow = maxNumber;
         }
