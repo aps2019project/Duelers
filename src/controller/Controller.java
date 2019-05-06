@@ -47,6 +47,7 @@ public class Controller {
     }
 
     public void preProcess() {
+        server.start();
         mainController = this;
         clients.add(
                 new Client("mainClient", Server.getInstance())
@@ -58,7 +59,7 @@ public class Controller {
         otherClient = clients.get(1);
         currentClient = mainClient;
         server.addClient(mainClient);
-        mainClient.setCurrentMenu(AccountMenu.getInstance());
         server.addClient(otherClient);
+        mainClient.setCurrentMenu(AccountMenu.getInstance());
     }
 }
