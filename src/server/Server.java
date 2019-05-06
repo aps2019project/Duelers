@@ -121,7 +121,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {//TODO:add finish game message
+    private void receiveMessage(Message message) {//TODO:add fast finish game message
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
@@ -452,21 +452,17 @@ public class Server {
         return game;
     }
 
-    private boolean isOpponentAccountValid(Message message) {
+    private void checkOpponentAccountValidation(Message message) throws LogicException {
         if (message.getNewGameFields().getOpponentUsername() == null) {
-            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
-            return false;
+            throw new ClientException("invalid opponentAccount!");
         }
         Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
         if (opponentAccount == null) {
-            sendException("invalid opponentAccount!", message.getSender(), message.getMessageId());
-            return false;
+            throw new ClientException("invalid opponent username!");
         }
         /*if (accounts.get(opponentAccount) == null) {
             sendException("opponentAccount has not logged in!", message.getSender(), message.getMessageId());
-            return false;
         }*/
-        return true;
     }
 
     private void newDeckGame(Message message) throws LogicException {
@@ -535,58 +531,64 @@ public class Server {
 
     private void newMultiplayerGame(Message message) throws LogicException {
         loginCheck(message);
-        if (isOpponentAccountValid(message)) {
-            Account myAccount = clients.get(message.getSender());
-            Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
-            if (!myAccount.hasValidMainDeck()) {
-                throw new ClientException("you don't have valid main deck!");
-            }
-            if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
-                throw new ClientException("opponent's main deck is not valid");
-            }
-            if (onlineGames.get(myAccount) != null) {
-                throw new ClientException("you have online game!");
-            }
-            if (onlineGames.get(opponentAccount) != null) {
-                throw new ClientException("opponent has online game!");
-            }
-            accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
-            clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
-            Game game = null;
-            GameMap gameMap = new GameMap(collectibleItems, message.getNewGameFields().getNumberOfFlags(), originalFlag);
-            if (message.getNewGameFields().getGameType() == null) {
-                throw new ClientException("invalid gameType!");
-            }
-            switch (message.getNewGameFields().getGameType()) {
-                case KILL_HERO:
-                    game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case A_FLAG:
-                    game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
-                    break;
-                case SOME_FLAG:
-                    game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNewGameFields().getNumberOfFlags());
-                    break;
-            }
-            game.setReward(Game.getDefaultReward());
-            onlineGames.put(myAccount, game);
-            onlineGames.put(opponentAccount, game);
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, message.getSender(), game, 0));
-            addToSendingMessages(Message.makeGameCopyMessage
-                    (serverName, accounts.get(opponentAccount), game, 0));
-            game.startGame();
+        checkOpponentAccountValidation(message);
+        Account myAccount = clients.get(message.getSender());
+        Account opponentAccount = getAccount(message.getNewGameFields().getOpponentUsername());
+        if (!myAccount.hasValidMainDeck()) {
+            throw new ClientException("you don't have valid main deck!");
         }
+        if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
+            throw new ClientException("opponent's main deck is not valid");
+        }
+        if (onlineGames.get(myAccount) != null) {
+            throw new ClientException("you have online game!");
+        }
+        if (onlineGames.get(opponentAccount) != null) {
+            throw new ClientException("opponent has online game!");
+        }
+        accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
+        clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
+        Game game = null;
+        GameMap gameMap = new GameMap(collectibleItems, message.getNewGameFields().getNumberOfFlags(), originalFlag);
+        if (message.getNewGameFields().getGameType() == null) {
+            throw new ClientException("invalid gameType!");
+        }
+        switch (message.getNewGameFields().getGameType()) {
+            case KILL_HERO:
+                game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                break;
+            case A_FLAG:
+                game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                break;
+            case SOME_FLAG:
+                game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNewGameFields().getNumberOfFlags());
+                break;
+        }
+        game.setReward(Game.getDefaultReward());
+        onlineGames.put(myAccount, game);
+        onlineGames.put(opponentAccount, game);
+        addToSendingMessages(Message.makeGameCopyMessage
+                (serverName, message.getSender(), game, 0));
+        addToSendingMessages(Message.makeGameCopyMessage
+                (serverName, accounts.get(opponentAccount), game, 0));
+        game.startGame();
     }
 
-    public void finishGame(Game game) {
-        Account myAccount = getAccount(game.getPlayerOne().getUserName());
-        Account opponentAccount = getAccount(game.getPlayerTwo().getUserName());
-        onlineGames.remove(myAccount);
-        onlineGames.remove(opponentAccount);
-        accounts.put(opponentAccount, null);
-        clients.put(onlineClients.get(1).getClientName(), null);
-
+    public void removeGame(Game game) {
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            Account account1 = getAccount(game.getPlayerOne().getUserName());
+            if (account1 != null) {
+                onlineGames.replace(account1, null);
+            }
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            Account account2 = getAccount(game.getPlayerTwo().getUserName());
+            if (account2 != null) {
+                onlineGames.replace(account2, null);
+                accounts.replace(account2, null);
+            }
+        }
+        clients.replace(onlineClients.get(1).getClientName(), null);
     }
 
     private void insertCard(Message message) throws LogicException {
@@ -628,8 +630,8 @@ public class Server {
     private void sudo(Message message) {
         String command = message.getOtherFields().getSudoCommand().toLowerCase();
         if (command.contains("account")) {
-            for (Map.Entry<Account, String> account : accounts.entrySet()) {
-                serverPrint(account.getKey().getUsername() + " " + account.getKey().getPassword());
+            for (Account account : accounts.keySet()) {
+                serverPrint(account.getUsername() + " " + account.getPassword());
             }
         }
         addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
@@ -644,7 +646,7 @@ public class Server {
                 if (account == null)
                     serverPrint("Error");
                 else {
-                    account.addMatchHistory(playerOneHistory,game.getReward());
+                    account.addMatchHistory(playerOneHistory, game.getReward());
                     saveAccount(account);
                 }
             }
@@ -653,76 +655,82 @@ public class Server {
                 if (account == null)
                     serverPrint("Error");
                 else {
-                    account.addMatchHistory(playerTwoHistory,game.getReward());
+                    account.addMatchHistory(playerTwoHistory, game.getReward());
                     saveAccount(account);
                 }
             }
             sendGameFinishMessages(game);
-            finishGame(game);
+            removeGame(game);
         }
     }
 
-    public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) throws ServerException {
+    public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
-                throw new ServerException("player one has logged out during game!");
+                serverPrint("player one has logged out during game!");//ahmad,please don't change this to exception!
+            } else {
+                addToSendingMessages(Message.makeChangeCardPositionMessage(
+                        serverName, clientName, card, newCardPosition, 0));
             }
-            addToSendingMessages(Message.makeChangeCardPositionMessage(
-                    serverName, clientName, card, newCardPosition, 0));
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerTwo().getUserName());
             if (clientName == null) {
-                throw new ServerException("player two has logged out during game!");
+                serverPrint("player two has logged out during game!");//ahmad,please don't change this to exception!
+            } else {
+                addToSendingMessages(Message.makeChangeCardPositionMessage(
+                        serverName, clientName, card, newCardPosition, 0));
             }
-            addToSendingMessages(Message.makeChangeCardPositionMessage(
-                    serverName, clientName, card, newCardPosition, 0));
         }
     }
 
-    public void sendTroopUpdateMessage(Game game, Troop troop) throws ServerException {
+    public void sendTroopUpdateMessage(Game game, Troop troop) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
-                throw new ServerException("player one has logged out during game!");
+                serverPrint("player one has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeTroopUpdateMessage(
+                        serverName, clientName, troop, 0));
             }
-            addToSendingMessages(Message.makeTroopUpdateMessage(
-                    serverName, clientName, troop, 0));
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerTwo().getUserName());
             if (clientName == null) {
-                throw new ServerException("player two has logged out during game!");
+                serverPrint("player two has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeTroopUpdateMessage(
+                        serverName, clientName, troop, 0));
             }
-            addToSendingMessages(Message.makeTroopUpdateMessage(
-                    serverName, clientName, troop, 0));
         }
     }
 
-    public void sendGameUpdateMessage(Game game) throws ServerException {
+    public void sendGameUpdateMessage(Game game) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
-                throw new ServerException("player one has logged out during game!");
+                serverPrint("player one has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeGameUpdateMessage(
+                        serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
+                        game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
+                        game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
             }
-            addToSendingMessages(Message.makeGameUpdateMessage(
-                    serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
-                    game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                    game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
             clientName = getClientName(game.getPlayerTwo().getUserName());
             if (clientName == null) {
-                throw new ServerException("player two has logged out during game!");
+                serverPrint("player two has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeGameUpdateMessage(
+                        serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
+                        game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
+                        game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
             }
-            addToSendingMessages(Message.makeGameUpdateMessage(
-                    serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
-                    game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                    game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
         }
     }
 
@@ -773,7 +781,6 @@ public class Server {
                 for (File file : files) {
                     Card card = loadFile(file, Card.class);
                     if (card == null) continue;
-
                     if (card.getType() == CardType.COLLECTIBLE_ITEM) {
                         collectibleItems.add(card);
                     } else {
