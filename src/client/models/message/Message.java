@@ -37,6 +37,10 @@ public class Message {
         this.messageId = messageId;
     }
 
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
+
     public static Message convertJsonToMessage(String messageJson) {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
@@ -221,9 +225,11 @@ public class Message {
         return message;
     }
 
+
     public String toJson() {
         return server.models.JsonConverter.toJson(this);
     }
+
 
     public MessageType getMessageType() {
         return messageType;

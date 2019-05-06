@@ -13,6 +13,7 @@ public enum MessageType {
     TROOP_UPDATE,
     GAME_UPDATE,
     Game_FINISH,
+    DONE,
 
     //SENDER:CLIENT
     GET_DATA,

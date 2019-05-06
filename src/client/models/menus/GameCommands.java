@@ -72,6 +72,7 @@ public class GameCommands extends Menu {
                     "\"exit\"";
         }
         View.getInstance().showHelp(help);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public CompressedGame getCurrentGame() {
@@ -171,6 +172,7 @@ public class GameCommands extends Menu {
 
         View.getInstance().showMoveCardMessage(troop, target);
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void attack(Client client, String severName, String oppCardId) throws InputException {
@@ -215,6 +217,7 @@ public class GameCommands extends Menu {
         }
 
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void attackCombo(Client client, String serverName, String oppCardId, String[] cardIds) throws InputException { // TODO: check validation
@@ -229,6 +232,7 @@ public class GameCommands extends Menu {
         }
 
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void useSpecialPower(Client client, String serverName, int row, int column) throws InputException {
@@ -248,6 +252,7 @@ public class GameCommands extends Menu {
         }
 
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void showHand() {
@@ -269,6 +274,7 @@ public class GameCommands extends Menu {
 
         View.getInstance().showCardInsertionMessage(card, target);
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void endTurn(Client client, String serverName) throws InputException {
@@ -283,6 +289,7 @@ public class GameCommands extends Menu {
         }
 
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void showCollectibleItems() {
@@ -317,6 +324,7 @@ public class GameCommands extends Menu {
         }
 
         availableActions.calculate(currentGame);
+        View.getInstance().showMap(currentGame.getGameMap());
     }
 
     public void showNextCard() throws InputException {

@@ -10,6 +10,6 @@ public class LeaderBoardSorter implements Comparator<Account> {
         if (o1.getWins() != o2.getWins()) {
             return o2.getWins() - o1.getWins();
         }
-        return o2.getUsername().compareTo(o1.getUsername());
+        return o1.getUsername().compareTo(o2.getUsername());
     }
 }
