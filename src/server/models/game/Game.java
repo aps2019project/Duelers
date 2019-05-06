@@ -26,21 +26,26 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Game {
+    private static final int DEFAULT_REWARD = 1000;
     private Player playerOne;
     private Player playerTwo;
     private GameType gameType;
     private ArrayList<Buff> buffs = new ArrayList<>();
+    private ArrayList<Buff> tempBuffs = new ArrayList<>();
     private GameMap gameMap;
     private int turnNumber = 1;
     private int lastTurnChangingTime;
     private int reward;
-    private static final int DEFAULT_REWARD=1000;
 
     protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
         this.gameMap = gameMap;
         this.playerOne = new Player(account.getMainDeck(), account.getUsername(), 1);
         this.playerTwo = new Player(secondDeck, userName, 2);
+    }
+
+    public static int getDefaultReward() {
+        return DEFAULT_REWARD;
     }
 
     public int getTurnNumber() {
@@ -99,7 +104,6 @@ public abstract class Game {
     public Player getPlayerTwo() {
         return playerTwo;
     }
-
 
     public Player getCurrentTurnPlayer() {
         if (turnNumber % 2 == 1) {
@@ -181,11 +185,7 @@ public abstract class Game {
     }
 
     private void removeFinishedBuffs() {
-        for (Buff buff : buffs) {
-            if (buff.getAction().getDuration() == 0) {
-                buffs.remove(buff);
-            }
-        }
+        buffs.removeIf(buff -> (buff.getAction().getDuration() == 0));
     }
 
     private void setAllTroopsCanAttackAndCanMove() throws ServerException {
@@ -197,9 +197,12 @@ public abstract class Game {
     }
 
     private void applyAllBuffs() throws ServerException {
+        tempBuffs.clear();
         for (Buff buff : buffs) {
             applyBuff(buff);
         }
+        buffs.addAll(tempBuffs);
+        tempBuffs.clear();
     }
 
     private void revertNotDurableBuffs() throws ServerException {
@@ -584,7 +587,7 @@ public abstract class Game {
         Buff troopBuff = new Buff(
                 buff.getAction().makeCopyAction(1, 0), new TargetData(inCellTroops)
         );
-        buffs.add(troopBuff);
+        tempBuffs.add(troopBuff);
         applyBuffOnTroops(troopBuff, inCellTroops);
     }
 
@@ -725,16 +728,17 @@ public abstract class Game {
             }
             addCardToTargetData(spell, targetData, player.getNextCard());
         }
+        if (spell.getTarget().getDimensions() != null) {
+            Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
+            ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+            addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
 
-        Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
-        ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
-        addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
-
-        if (spell.getTarget().isRandom()){
-            randomizeList(targetData.getTroops());
-            randomizeList(targetData.getCells());
-            randomizeList(targetData.getPlayers());
-            randomizeList(targetData.getCards());
+            if (spell.getTarget().isRandom()) {
+                randomizeList(targetData.getTroops());
+                randomizeList(targetData.getCells());
+                randomizeList(targetData.getPlayers());
+                randomizeList(targetData.getCards());
+            }
         }
     }
 
@@ -838,10 +842,6 @@ public abstract class Game {
         playerTwo.setMatchHistory(
                 new MatchHistory(playerOne.getUserName(), resultTwo)
         );
-    }
-
-    public static int getDefaultReward() {
-        return DEFAULT_REWARD;
     }
 
     public int getReward() {
