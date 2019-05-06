@@ -268,6 +268,7 @@ public abstract class Game {
 
         Player player = getCurrentTurnPlayer();
         Card card = player.insert(cardId);
+        Server.getInstance().sendGameUpdateMessage(this);
 
         if (card.getType() == CardType.MINION) {
             if (gameMap.getTroop(position) != null) {
@@ -293,6 +294,7 @@ public abstract class Game {
         }
         if (card.getType() == CardType.SPELL) {
             player.addToGraveYard(card);
+            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
         applyOnPutSpells(card, gameMap.getCell(position));
     }
@@ -354,7 +356,7 @@ public abstract class Game {
     }
 
     private void catchItem(Card item) throws ServerException {
-        getCurrentTurnPlayer().addCollectibleItems(item);
+        getCurrentTurnPlayer().collectItem(item);
         Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
     }
 
@@ -680,10 +682,10 @@ public abstract class Game {
     void killTroop(Troop troop) throws ServerException {
         applyOnDeathSpells(troop);
         if (troop.getPlayerNumber() == 1) {
-            playerOne.killTroop(troop);
+            playerOne.killTroop(this, troop);
             gameMap.removeTroop(playerOne, troop);
         } else if (troop.getPlayerNumber() == 2) {
-            playerTwo.killTroop(troop);
+            playerTwo.killTroop(this, troop);
             gameMap.removeTroop(playerTwo, troop);
         }
         Server.getInstance().sendChangeCardPositionMessage(this, troop.getCard(), CardPosition.GRAVE_YARD);
@@ -829,8 +831,8 @@ public abstract class Game {
         int lastColumn = calculateLastCoordinate(centerPosition.getColumn(), dimensions.getColumn(), GameMap.getColumnNumber());
 
         ArrayList<Cell> targetCells = new ArrayList<>();
-        for (int i = firstRow; i <= lastRow; i++) {
-            for (int j = firstColumn; j <= lastColumn; j++) {
+        for (int i = firstRow; i < lastRow; i++) {
+            for (int j = firstColumn; j < lastColumn; j++) {
                 if (gameMap.isInMap(i, j))
                     targetCells.add(gameMap.getCells()[i][j]);
             }
