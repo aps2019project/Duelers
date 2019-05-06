@@ -574,14 +574,21 @@ public class Server {
         game.startGame();
     }
 
-    public void finishGame(Game game) {
-        Account myAccount = getAccount(game.getPlayerOne().getUserName());
-        Account opponentAccount = getAccount(game.getPlayerTwo().getUserName());
-        onlineGames.remove(myAccount);
-        onlineGames.remove(opponentAccount);
-        accounts.put(opponentAccount, null);
+    public void removeGame(Game game) {
+        if(!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")){
+            Account account1 = getAccount(game.getPlayerOne().getUserName());
+            if(account1!=null){
+                onlineGames.replace(account1,null);
+            }
+        }
+        if(!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")){
+            Account account2 = getAccount(game.getPlayerTwo().getUserName());
+            if(account2!=null){
+                onlineGames.replace(account2,null);
+                accounts.put(account2, null);
+            }
+        }
         clients.put(onlineClients.get(1).getClientName(), null);
-
     }
 
     private void insertCard(Message message) throws LogicException {
@@ -653,7 +660,7 @@ public class Server {
                 }
             }
             sendGameFinishMessages(game);
-            finishGame(game);
+            removeGame(game);
         }
     }
 
