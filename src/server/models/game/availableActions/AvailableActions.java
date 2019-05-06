@@ -117,15 +117,17 @@ public class AvailableActions {
             ArrayList<Position> targets = new ArrayList<>();
 
             for (int column = currentPosition.getColumn() - 2; column <= currentPosition.getColumn() + 2; column++) {
-                int rowDown = currentPosition.getRow() + (4 - Math.abs(column - currentPosition.getColumn()));
-                int rowUp = currentPosition.getRow() - (4 - Math.abs(column - currentPosition.getColumn()));
+                int rowDown = currentPosition.getRow() + (2 - Math.abs(column - currentPosition.getColumn()));
+                int rowUp = currentPosition.getRow() - (2 - Math.abs(column - currentPosition.getColumn()));
 
                 for (int row = rowUp; row <= rowDown; row++) {
-                    Cell cell = game.getGameMap().getCell(row, column);
-                    if (currentPosition.equals(cell)) continue;
+                    if (game.getGameMap().checkCoordination(row,column)) {
+                        Cell cell = game.getGameMap().getCell(row, column);
+                        if (currentPosition.equals(cell)) continue;
 
-                    if (game.getGameMap().getTroop(cell) == null) {
-                        targets.add(new Position(cell));
+                        if (game.getGameMap().getTroop(cell) == null) {
+                            targets.add(new Position(cell));
+                        }
                     }
                 }
             }
@@ -138,12 +140,12 @@ public class AvailableActions {
 
     private boolean checkRangeForAttack(Troop myTroop, Troop enemyTroop) {
         if (myTroop.getCard().getAttackType() == AttackType.MELEE) {
-            return !myTroop.getCell().isNextTo(enemyTroop.getCell());
+            return myTroop.getCell().isNextTo(enemyTroop.getCell());
         } else if (myTroop.getCard().getAttackType() == AttackType.RANGED) {
-            return myTroop.getCell().isNextTo(enemyTroop.getCell()) ||
-                    myTroop.getCell().manhattanDistance(enemyTroop.getCell()) > myTroop.getCard().getRange();
+            return !myTroop.getCell().isNextTo(enemyTroop.getCell()) &&
+                    myTroop.getCell().manhattanDistance(enemyTroop.getCell()) <= myTroop.getCard().getRange();
         } else { // HYBRID
-            return myTroop.getCell().manhattanDistance(enemyTroop.getCell()) > myTroop.getCard().getRange();
+            return myTroop.getCell().manhattanDistance(enemyTroop.getCell()) <= myTroop.getCard().getRange();
         }
     }
 

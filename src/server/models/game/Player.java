@@ -75,7 +75,7 @@ public class Player {
     }
 
     public boolean addNextCardToHand() {
-        if (hand.size() <= 5) {
+        if (hand.size() < 5) {
             hand.add(nextCard);
             setNextCard();
             return true;
