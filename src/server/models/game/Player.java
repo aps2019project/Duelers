@@ -3,6 +3,7 @@ package server.models.game;
 import server.Server;
 import server.models.account.MatchHistory;
 import server.models.card.Card;
+import server.models.card.CardType;
 import server.models.card.Deck;
 import server.models.comperessedData.CompressedPlayer;
 import server.models.exceptions.ClientException;
@@ -186,6 +187,9 @@ public class Player {
         addToGraveYard(troop.getCard());
         Server.getInstance().sendChangeCardPositionMessage(game, troop.getCard(), CardPosition.GRAVE_YARD);
         troops.remove(troop);
+        if (troop.getCard().getType() == CardType.HERO) {
+            hero = null;
+        }
     }
 
     public int getNumberOfCollectedFlags() {

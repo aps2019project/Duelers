@@ -289,6 +289,7 @@ public abstract class Game {
                     catchItem(item);
                 }
             }
+            Server.getInstance().sendTroopUpdateMessage(this, troop);
             gameMap.getCell(position).clearItems();
         } else {
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
@@ -337,7 +338,6 @@ public abstract class Game {
         Cell cell = gameMap.getCell(position);
         troop.setCell(cell);
         troop.setCanMove(false);
-        Server.getInstance().sendTroopUpdateMessage(this, troop);
 
         for (Card item : cell.getItems()) {
             if (item.getType() == CardType.FLAG) {
@@ -346,6 +346,7 @@ public abstract class Game {
                 catchItem(item);
             }
         }
+        Server.getInstance().sendTroopUpdateMessage(this, troop);
         cell.clearItems();
     }
 
@@ -728,12 +729,10 @@ public abstract class Game {
             setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
         }
         if (spell.getTarget().isRandom()) {
-            if (targetData.getCards().size() > 0) {
-                Card card = targetData.getCards().get(new Random().nextInt(targetData.getCards().size()));
-                targetData.getCards().clear();
-                targetData.getCards().add(card);
-
-            }
+            randomizeList(targetData.getTroops());
+            randomizeList(targetData.getCells());
+            randomizeList(targetData.getPlayers());
+            randomizeList(targetData.getCards());
         }
         return targetData;
     }
@@ -754,13 +753,6 @@ public abstract class Game {
             Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
             ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
             addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
-
-            if (spell.getTarget().isRandom()) {
-                randomizeList(targetData.getTroops());
-                randomizeList(targetData.getCells());
-                randomizeList(targetData.getPlayers());
-                randomizeList(targetData.getCards());
-            }
         }
     }
 
