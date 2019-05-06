@@ -9,7 +9,6 @@ public class  CompressedGame {
     private CompressedGameMap gameMap;
     private int turnNumber;
     private GameType gameType;
-    private boolean isFinished;
 
     public void moveCardToHand() {
         CompressedPlayer player = getCurrentTurnPlayer();
@@ -103,14 +102,5 @@ public class  CompressedGame {
         } else {
             return playerTwo;
         }
-    }
-
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public void setFinished() {
-        isFinished = true;
-
     }
 }

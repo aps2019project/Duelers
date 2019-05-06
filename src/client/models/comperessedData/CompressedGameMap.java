@@ -114,4 +114,17 @@ public class CompressedGameMap {
         }
         return null;
     }
+
+    public ArrayList<CompressedCell> getFlagCells() {
+        ArrayList<CompressedCell> flagCells = new ArrayList<>();
+        for (CompressedCell[] row : cells) {
+            for (CompressedCell cell : row) {
+                int number = cell.getNumberOfFlags();
+                while (number-- > 0) {
+                    flagCells.add(cell);
+                }
+            }
+        }
+        return flagCells;
+    }
 }
