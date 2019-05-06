@@ -274,11 +274,20 @@ public abstract class Game {
                 throw new ClientException("another troop is here.");
             }
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
+            Troop troop = new Troop(card, getCurrentTurnPlayer().getPlayerNumber());
             putMinion(
                     player.getPlayerNumber(),
-                    new Troop(card, getCurrentTurnPlayer().getPlayerNumber()),
+                    troop,
                     gameMap.getCell(position)
             );
+            for (Card item : gameMap.getCell(position).getItems()) {
+                if (item.getType() == CardType.FLAG) {
+                    catchFlag(troop, item);
+                } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
+                    catchItem(item);
+                }
+            }
+            gameMap.getCell(position).clearItems();
         } else {
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
@@ -332,7 +341,6 @@ public abstract class Game {
                 catchFlag(troop, item);
             } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
                 catchItem(item);
-                Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
             }
         }
         cell.clearItems();
@@ -345,8 +353,9 @@ public abstract class Game {
         Server.getInstance().sendGameUpdateMessage(this);
     }
 
-    private void catchItem(Card item) {
+    private void catchItem(Card item) throws ServerException {
         getCurrentTurnPlayer().addCollectibleItems(item);
+        Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
     }
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws LogicException {

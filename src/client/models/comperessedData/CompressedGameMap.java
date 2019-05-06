@@ -71,8 +71,10 @@ public class CompressedGameMap {
     }
 
     public void removeItem(String cardId) {
-        for (CompressedCell[] cells1 : cells) {
-            for (CompressedCell cell : cells1) {
+        for (CompressedCell[] row : cells) {
+            for (CompressedCell cell : row) {
+                if (cell.getItem() == null) continue;
+
                 if (cell.getItem().getCardId().equalsIgnoreCase(cardId))
                     cell.removeItem();
             }

@@ -121,7 +121,7 @@ public class AvailableActions {
                 int rowUp = currentPosition.getRow() - (2 - Math.abs(column - currentPosition.getColumn()));
 
                 for (int row = rowUp; row <= rowDown; row++) {
-                    if (game.getGameMap().checkCoordination(row,column)) {
+                    if (game.getGameMap().isInMap(row, column)) {
                         Cell cell = game.getGameMap().getCell(row, column);
                         if (currentPosition.equals(cell)) continue;
 
