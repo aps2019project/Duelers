@@ -33,6 +33,8 @@ public abstract class Game {
     private GameMap gameMap;
     private int turnNumber = 1;
     private int lastTurnChangingTime;
+    private int reward;
+    private static final int DEFAULT_REWARD=1000;
 
     protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
@@ -836,5 +838,17 @@ public abstract class Game {
         playerTwo.setMatchHistory(
                 new MatchHistory(playerOne.getUserName(), resultTwo)
         );
+    }
+
+    public static int getDefaultReward() {
+        return DEFAULT_REWARD;
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
     }
 }

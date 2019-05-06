@@ -1,7 +1,5 @@
 package server.models.account;
 
-import client.Client;
-import server.Server;
 import server.models.card.Card;
 import server.models.card.Deck;
 import server.models.card.TempDeck;
@@ -128,8 +126,11 @@ public class Account {
         }
     }
 
-    public void addMatchHistory(MatchHistory matchHistory) {
+    public void addMatchHistory(MatchHistory matchHistory,int reward) {
         matchHistories.add(matchHistory);
+        if (matchHistory.isAmIWinner()){
+            money += reward;
+        }
     }
 
     public String getUsername() {
