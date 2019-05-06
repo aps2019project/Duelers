@@ -498,16 +498,16 @@ public abstract class Game {
     private void checkRangeForAttack(Troop attackerTroop, Troop defenderTroop) throws ClientException {
         if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
             if (!attackerTroop.getCell().isNextTo(defenderTroop.getCell())) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
             if (attackerTroop.getCell().isNextTo(defenderTroop.getCell()) ||
                     attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         } else { // HYBRID
             if (attackerTroop.getCell().manhattanDistance(defenderTroop.getCell()) > attackerTroop.getCard().getRange()) {
-                throw new ClientException("can not attack to this target");
+                throw new ClientException(attackerTroop.getCard().getCardId() + " can not attack to this target");
             }
         }
     }
