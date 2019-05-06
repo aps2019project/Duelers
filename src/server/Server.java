@@ -549,7 +549,6 @@ public class Server {
             if (onlineGames.get(opponentAccount) != null) {
                 throw new ClientException("opponent has online game!");
             }
-            //Should be removed
             accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
             clients.replace(onlineClients.get(1).getClientName(), opponentAccount);
             Game game = null;
@@ -578,6 +577,15 @@ public class Server {
         }
     }
 
+    public void finishGame(Game game){
+        Account myAccount=getAccount(game.getPlayerOne().getUserName());
+        Account opponentAccount = getAccount(game.getPlayerTwo().getUserName());
+        onlineGames.remove(myAccount);
+        onlineGames.remove(opponentAccount);
+        accounts.put(opponentAccount,null);
+        clients.put(onlineClients.get(1).getClientName(),null);
+
+    }
 
     private void insertCard(Message message) throws LogicException {
         Game game = getGame(message.getSender());
@@ -647,6 +655,7 @@ public class Server {
                 }
             }
             sendGameFinishMessages(game);
+            finishGame(game);
         }
     }
 
