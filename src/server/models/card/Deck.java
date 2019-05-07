@@ -13,7 +13,7 @@ public class Deck {
     private Card item;
     private ArrayList<Card> others = new ArrayList<>();
 
-    //ERROR:This uses same reference!
+
     public Deck(String deckName, Card hero, Card item, ArrayList<Card> others) {
         this.deckName = deckName;
         this.hero = hero;
@@ -29,14 +29,15 @@ public class Deck {
         if (deck.item != null) {
             this.item = new Card(deck.item);
         }
-        for (Card card :
-                deck.others) {
+        for (Card card : deck.others) {
             others.add(new Card(card));
         }
     }
 
     public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
+        if(collection==null)
+            return;
         this.hero = collection.getCard(tempDeck.getHeroId());
         this.item = collection.getCard(tempDeck.getItemId());
         for (String cardId : tempDeck.getOthersIds()) {
@@ -67,13 +68,18 @@ public class Deck {
         addCard(collection.getCard(cardId));
     }
 
-    private void addCard(Card card) {
+    private void addCard(Card card) throws LogicException{
+        if(card==null)
+            throw new ClientException("this card isn't in your collection!");
         switch (card.getType()) {
             case HERO:
+                if(hero!=null)
+                    throw new ClientException("you can't have more than 1 hero!");
                 hero = card;
                 break;
             case USABLE_ITEM:
-            case COLLECTIBLE_ITEM:
+                if(item!=null)
+                    throw new ClientException("you can't have more than 1 item!");
                 item = card;
                 break;
             case MINION:
@@ -97,16 +103,21 @@ public class Deck {
         others.remove(card);
     }
 
-    public boolean isValid() {//TODO:reCode
-        if (hero == null) return false;
+    public boolean isValid() {
+        if (hero == null || item==null) return false;
         return others.size() == 20;
     }
 
     public void copyCards() {//TODO:reCode
-        this.hero = new Card(hero);
-        this.hero.setCardId(makeId(hero, 1));
-        this.item = new Card(item);
-        this.item.setCardId(makeId(item, 1));
+        if(hero!=null){
+            this.hero = new Card(hero);
+            this.hero.setCardId(makeId(hero, 1));
+        }
+        if(item!=null){
+            this.item = new Card(item);
+            this.item.setCardId(makeId(item, 1));
+        }
+
         ArrayList<Card> oldOthers = this.others;
         this.others = new ArrayList<>();
         for (Card other : oldOthers) {
@@ -116,13 +127,13 @@ public class Deck {
         }
     }
 
-    private String makeId(Card card, int number) {//TODO:reCode
+    private String makeId(Card card, int number) {
         return deckName.replaceAll(" ", "") + "_" +
                 card.getName().replaceAll(" ", "") + "_" +
                 number;
     }
 
-    private int numberOf(String name) {//Todo:reCode
+    private int numberOf(String name) {
         if (hero.getName().equalsIgnoreCase(name) || item.getName().equalsIgnoreCase(name)) return 0;
         int number = 0;
         for (Card card : others) {
@@ -137,16 +148,6 @@ public class Deck {
 
     public Card getHero() {
         return hero;
-    }
-
-    public Card getCardFromOthers(String cardId) {
-        for (Card card :
-                others) {
-            if (cardId.equalsIgnoreCase(card.getCardId())) {
-                return card;
-            }
-        }
-        return null;
     }
 
     public ArrayList<Card> getOthers() {
