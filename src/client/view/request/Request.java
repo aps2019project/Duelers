@@ -46,6 +46,7 @@ public class Request {
 
         } else if (client.getCurrentMenu().getClass().getName().equals(StoryMenu.class.getName())) {
             storyMenuHandleRequest(client, serverName);
+
         } else if (client.getCurrentMenu().getClass().getName().equals(GameCommands.class.getName())) {
             gameCommandsHandleRequest(client, serverName);
 
@@ -281,7 +282,7 @@ public class Request {
             Matcher matcher = RequestType.START_GAME.getMatcher();
             if (matcher.group(3) == null) {
                 customGameMenu.startGame(
-                        matcher.group(1), Integer.parseInt(matcher.group(2)), 0,
+                        matcher.group(1), Integer.parseInt(matcher.group(2)), 1,
                         client, serverName
                 );
             } else {

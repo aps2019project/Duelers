@@ -134,7 +134,7 @@ public class GameCommands extends Menu {
     }
 
     public void selectCard(String cardId) throws InputException {
-        CompressedTroop troop = currentGame.getGameMap().searchTroop(cardId);
+        CompressedTroop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
         if (troop != null && troop.getPlayerNumber() == currentGame.getCurrentTurnPlayer().getPlayerNumber()) {
             selectedCardId = cardId;
         } else if (currentGame.getCurrentTurnPlayer().searchCollectedItems(cardId) != null) {

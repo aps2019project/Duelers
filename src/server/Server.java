@@ -474,7 +474,8 @@ public class Server {
         if (onlineGames.get(myAccount) != null) {
             throw new ClientException("you have online game!");
         }
-        Deck deck = myAccount.getDeck(message.getOtherFields().getDeckName());
+        Deck deck = new Deck(myAccount.getDeck(message.getNewGameFields().getCustomDeckName()));
+        deck.makeCustomGameDeck();
         if (deck == null || !deck.isValid()) {
             throw new ClientException("selected deck is not valid");
         }

@@ -156,4 +156,14 @@ public class Deck {
     public Card getItem() {
         return item;
     }
+
+    public void makeCustomGameDeck() {
+        hero.setCardId("customGame_" + hero.getCardId());
+        if (item != null)
+            item.setCardId("customGame_" + item.getCardId());
+        deckName = "customGame_" + deckName;
+        for (Card card : others) {
+            card.setCardId("customGame_" + card.getCardId());
+        }
+    }
 }

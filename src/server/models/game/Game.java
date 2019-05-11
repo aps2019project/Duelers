@@ -67,7 +67,7 @@ public abstract class Game {
 
         this.turnNumber = 1;
 
-        playerOne.setCurrentMP(20);
+        playerOne.setCurrentMP(2);
         Server.getInstance().sendGameUpdateMessage(this);
     }
 
@@ -129,25 +129,25 @@ public abstract class Game {
     }
 
     public void changeTurn(String username) throws LogicException {
-        if (canCommand(username)) {
-            addNextCardToHand();
-            revertNotDurableBuffs();
-            removeFinishedBuffs();
-            turnNumber++;
-            Controller.changeTurn();
-            setAllTroopsCanAttackAndCanMove();
-            applyAllBuffs();
-            if (turnNumber < 14)
-                getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
-            else
-                getCurrentTurnPlayer().setCurrentMP(9);
-            Server.getInstance().sendGameUpdateMessage(this);
-            if (getCurrentTurnPlayer().getUserName().equals("AI")) {
-                playCurrentTurn();
-            }
-        } else {
-            throw new ClientException("it isn't your turn!");
+//        if (canCommand(username)) {
+        addNextCardToHand();
+        revertNotDurableBuffs();
+        removeFinishedBuffs();
+        turnNumber++;
+        Controller.changeTurn();
+        setAllTroopsCanAttackAndCanMove();
+        applyAllBuffs();
+        if (turnNumber < 14)
+            getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
+        else
+            getCurrentTurnPlayer().setCurrentMP(9);
+        Server.getInstance().sendGameUpdateMessage(this);
+        if (getCurrentTurnPlayer().getUserName().equals("AI")) {
+            playCurrentTurn();
         }
+//        } else {
+//            throw new ClientException("it isn't your turn!");
+//        }
     }
 
     private void addNextCardToHand() throws ServerException {
