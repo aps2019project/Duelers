@@ -129,8 +129,7 @@ public abstract class Game {
     }
 
     public void changeTurn(String username) throws LogicException {
-//        if (canCommand(username)) {
-        addNextCardToHand();
+        if (canCommand(username)) {
         revertNotDurableBuffs();
         removeFinishedBuffs();
         turnNumber++;
@@ -145,9 +144,9 @@ public abstract class Game {
         if (getCurrentTurnPlayer().getUserName().equals("AI")) {
             playCurrentTurn();
         }
-//        } else {
-//            throw new ClientException("it isn't your turn!");
-//        }
+        } else {
+            throw new ClientException("it isn't your turn!");
+        }
     }
 
     private void addNextCardToHand() throws ServerException {
