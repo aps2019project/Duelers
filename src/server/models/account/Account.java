@@ -34,13 +34,16 @@ public class Account {
                 this.decks.add(new Deck(deck, collection));
             }
         }
-        this.mainDeck = getDeck(account.getMainDeckName());
+        if (account.getMainDeckName() != null)
+            this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
         this.wins = account.getWins();
         this.matchHistories = account.getMatchHistories();
     }
 
     public boolean hasDeck(String deckName) {
+        if (deckName == null)
+            return false;
         for (Deck deck : decks) {
             if (deck.getDeckName().equalsIgnoreCase(deckName))
                 return true;
@@ -48,11 +51,9 @@ public class Account {
         return false;
     }
 
-    public void changeMoney(int change) {
-        money += change;
-    }
-
     public Deck getDeck(String deckName) {
+        if (deckName == null)
+            return null;
         for (Deck deck : decks) {
             if (deck.getDeckName().equalsIgnoreCase(deckName)) {
                 return deck;
@@ -75,18 +76,21 @@ public class Account {
         decks.remove(getDeck(deckName));
     }
 
-    public void buyCard(String cardName, int price, Collection originalCards) throws LogicException{
-        if(!originalCards.hasCard(cardName)){
+    public void buyCard(String cardName, int price, Collection originalCards) throws LogicException {
+        if (!originalCards.hasCard(cardName)) {
             throw new ClientException("invalid card name");
         }
         if (price > money) {
             throw new ClientException("account's money isn't enough.");
         }
+        if (collection.getItems().size() >= 3) {
+            throw new ClientException("you can't have more than 3 items");
+        }
         collection.addCard(cardName, originalCards, username);
         money -= price;
     }
 
-    public void sellCard(String cardId) throws LogicException{
+    public void sellCard(String cardId) throws LogicException {
         if (!collection.hasCard(cardId)) {
             throw new ClientException("invalid card id");
         }
@@ -100,7 +104,7 @@ public class Account {
         }
     }
 
-    public void addCardToDeck(String cardId, String deckName) throws LogicException{
+    public void addCardToDeck(String cardId, String deckName) throws LogicException {
         if (!hasDeck(deckName)) {
             throw new ClientException("deck was not found.");
         } else if (!collection.hasCard(cardId)) {
@@ -110,7 +114,7 @@ public class Account {
         }
     }
 
-    public void removeCardFromDeck(String cardId, String deckName) throws LogicException{
+    public void removeCardFromDeck(String cardId, String deckName) throws LogicException {
         if (!hasDeck(deckName)) {
             throw new ClientException("deck was not found.");
         } else {
@@ -118,7 +122,7 @@ public class Account {
         }
     }
 
-    public void selectDeck(String deckName) throws LogicException{
+    public void selectDeck(String deckName) throws LogicException {
         if (!hasDeck(deckName)) {
             throw new ClientException("deck was not found.");
         } else {
@@ -126,9 +130,9 @@ public class Account {
         }
     }
 
-    public void addMatchHistory(MatchHistory matchHistory,int reward) {
+    public void addMatchHistory(MatchHistory matchHistory, int reward) {
         matchHistories.add(matchHistory);
-        if (matchHistory.isAmIWinner()){
+        if (matchHistory.isAmIWinner()) {
             money += reward;
         }
     }

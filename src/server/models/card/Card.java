@@ -25,7 +25,7 @@ public class Card {
     }
 
     //dangerous
-    public Card(Card referenceCard) {//TODO:Should be private
+    public Card(Card referenceCard) {
         this.name = referenceCard.name;
         this.description = referenceCard.description;
         this.cardId = referenceCard.cardId;
@@ -63,7 +63,6 @@ public class Card {
     public CompressedCard toCompressedCard() {
         return new CompressedCard(
                 name, description, cardId, type, spells, defaultAp, defaultHp, mannaPoint, attackType, range, hasCombo);
-
     }
 
     @Override
