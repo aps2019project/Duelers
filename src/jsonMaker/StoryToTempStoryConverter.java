@@ -2,8 +2,8 @@ package jsonMaker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import server.models.game.Story;
-import server.models.game.TempStory;
+import server.gameCenter.models.game.Story;
+import server.gameCenter.models.game.TempStory;
 
 import java.io.*;
 

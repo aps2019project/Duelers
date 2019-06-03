@@ -10,7 +10,6 @@ import client.models.card.Deck;
 import client.models.comperessedData.*;
 import client.models.game.availableActions.*;
 import client.models.map.Position;
-import server.models.game.Troop;
 
 import java.util.ArrayList;
 
