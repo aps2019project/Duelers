@@ -1,11 +1,11 @@
 package jsonMaker;
 
 import com.google.gson.GsonBuilder;
-import server.models.card.AttackType;
-import server.models.card.Card;
-import server.models.card.CardType;
-import server.models.card.spell.*;
-import server.models.map.Position;
+import server.detaCenter.models.card.AttackType;
+import server.detaCenter.models.card.Card;
+import server.detaCenter.models.card.CardType;
+import server.detaCenter.models.card.spell.*;
+import server.gameCenter.models.map.Position;
 
 import java.io.FileWriter;
 import java.io.IOException;

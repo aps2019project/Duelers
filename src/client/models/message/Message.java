@@ -227,7 +227,7 @@ public class Message {
 
 
     public String toJson() {
-        return server.models.JsonConverter.toJson(this);
+        return server.clientPortal.models.JsonConverter.toJson(this);
     }
 
 

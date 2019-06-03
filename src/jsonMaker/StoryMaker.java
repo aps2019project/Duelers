@@ -2,10 +2,10 @@ package jsonMaker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import server.models.card.Card;
-import server.models.card.Deck;
-import server.models.game.GameType;
-import server.models.game.Story;
+import server.detaCenter.models.card.Card;
+import server.detaCenter.models.card.Deck;
+import server.gameCenter.models.game.GameType;
+import server.gameCenter.models.game.Story;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
