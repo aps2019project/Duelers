@@ -263,9 +263,9 @@ public class GameCommands extends Menu {
     }
 
     public void insertCard(Client client, String serverName, String cardId, int row, int column) throws InputException {
-        if (!availableActions.canInsertCard(cardId, row, column, currentGame.getGameMap())) {
+        /*if (!availableActions.canInsertCard(cardId, row, column, currentGame.getGameMap())) {
             throw new InputException("card can not be inserted.");
-        }
+        }*/
 
         CompressedCard card = currentGame.getCurrentTurnPlayer().searchHand(cardId);
         Position target = new Position(row, column);
