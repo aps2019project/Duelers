@@ -1,6 +1,5 @@
 package server.gameCenter.models.game;
 
-import controller.Controller;
 import server.Server;
 import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.MatchHistory;
@@ -133,7 +132,6 @@ public abstract class Game {
         revertNotDurableBuffs();
         removeFinishedBuffs();
         turnNumber++;
-        Controller.changeTurn();
         setAllTroopsCanAttackAndCanMove();
         applyAllBuffs();
         if (turnNumber < 14)

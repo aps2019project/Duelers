@@ -1,6 +1,6 @@
 package server.clientPortal.models.message;
 
-import client.models.game.GameType;
+import server.gameCenter.models.game.GameType;
 
 public class NewGameFields {
     private GameType gameType;

@@ -1,7 +1,7 @@
 package server.clientPortal;
 
-import client.Client;
 import server.Server;
+import server.clientPortal.models.message.Message;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -45,7 +45,7 @@ public class ClientPortal extends Thread {
     }
 
     void addMessage(String clientName, String message) {
-        Server.getInstance().addToReceivingMessages(message);
+        Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
     }
 
     public void sendMessage(String clientName, String message) {
