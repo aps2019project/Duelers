@@ -1,8 +1,14 @@
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,41 +20,66 @@ class LoginMenu {
     void show() throws FileNotFoundException {
         Main.setScene(scene);
 
-        BorderPane pane = new BorderPane();
+        BorderPane background = BackgroundMaker.makeMenuBackground();
 
-        Image background = new Image(new FileInputStream("resources/menu/background/background.jpg"));
-        ImageView backgroundView = new ImageView(background);
-        backgroundView.resize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        BorderPane container = new BorderPane();
+        container.setMinSize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        container.setMaxSize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        BorderPane.setAlignment(container, Pos.CENTER);
 
-        Image foreground = new Image(new FileInputStream("resources/menu/background/foreground.png"));
-        ImageView foregroundView = new ImageView(foreground);
-        foregroundView.setFitWidth(Constants.FOREGROUND_WIDTH);
-        foregroundView.setFitHeight(Constants.FOREGROUND_HEIGHT);
-        foregroundView.relocate(
-                Constants.SCENE_WIDTH - Constants.FOREGROUND_WIDTH,
-                Constants.SCENE_HEIGHT - Constants.FOREGROUND_HEIGHT
-        );
+        VBox verticalBox = new VBox(Constants.DEFAULT_SPACING);
+        verticalBox.setMaxWidth(Constants.LOGIN_BOX_SIZE * 2);
+        verticalBox.setAlignment(Pos.CENTER);
+        Image brand = new Image(new FileInputStream("resources/ui/brand_duelyst.png"));
+        ImageView brandView = new ImageView(brand);
+        brandView.setFitWidth(Constants.DUELYST_LOGO_WIDTH);
+        brandView.setFitHeight(Constants.DUELYST_LOGO_HEIGHT);
 
-        Image farPillars = new Image(new FileInputStream("resources/menu/background/far_pillars.png"));
-        ImageView farPillarsView = new ImageView(farPillars);
-        farPillarsView.setFitWidth(Constants.FAR_PILLARS_WIDTH);
-        farPillarsView.setFitHeight(Constants.FAR_PILLARS_HEIGHT);
-        farPillarsView.relocate(0, Constants.SCENE_HEIGHT - Constants.FAR_PILLARS_HEIGHT);
+        HBox horizontalBox = new HBox();
 
-        Image nearPillars = new Image(new FileInputStream("resources/menu/background/near_pillars.png"));
-        ImageView nearPillarsView = new ImageView(nearPillars);
-        nearPillarsView.setFitWidth(Constants.NEAR_PILLARS_WIDTH);
-        nearPillarsView.setFitHeight(Constants.NEAR_PILLARS_HEIGHT);
-        nearPillarsView.relocate(0, Constants.SCENE_HEIGHT - Constants.NEAR_PILLARS_HEIGHT);
+        VBox logoBox = new VBox(Constants.DEFAULT_SPACING * 10);
+        logoBox.setAlignment(Pos.CENTER);
+        logoBox.setBackground(new Background(new BackgroundFill(Color.rgb(15, 16, 11), CornerRadii.EMPTY, Insets.EMPTY)));
+        logoBox.setMinSize(Constants.LOGIN_BOX_SIZE, Constants.LOGIN_BOX_SIZE);
+        logoBox.setMaxSize(Constants.LOGIN_BOX_SIZE, Constants.LOGIN_BOX_SIZE);
 
-        Image vignette = new Image(new FileInputStream("resources/menu/background/vignette.png"));
-        ImageView vignetteView = new ImageView(vignette);
-        vignetteView.setFitWidth(Constants.VIGNETTE_WIDTH);
-        vignetteView.setFitHeight(Constants.VIGNETTE_HEIGHT);
+        ImageView logoView = new ImageView(new Image(new FileInputStream("resources/ui/logo.png")));
+        logoView.setFitWidth(Constants.LOGO_WIDTH);
+        logoView.setFitHeight(Constants.LOGO_HEIGHT);
 
-        Fog fog = new Fog(Constants.SCENE_WIDTH * 0.5, Constants.FOREGROUND_HEIGHT * 0.75);
+        Text text = new Text("LOGIN TO DUELYST USING YOUR ABABEEL ACCOUNT");
+        text.setFill(Color.WHITE);
+        text.setWrappingWidth(Constants.LOGIN_BOX_SIZE - Constants.DEFAULT_SPACING * 5);
+        text.setTextAlignment(TextAlignment.CENTER);
+        text.setFont(Constants.LOGO_TEXT_FONT);
 
-        pane.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, fog.getView(), foregroundView, vignetteView);
-        root.getChildren().addAll(pane);
+        logoBox.getChildren().addAll(logoView, text);
+
+        TextField usernameField = TextFieldMaker.makeDefaultTextField("username");
+        PasswordField passwordField = TextFieldMaker.makePasswordField();
+
+        Region space = new Region();
+        space.setMinHeight(Constants.LOGIN_BOX_SIZE * 0.5);
+
+        HBox buttons = new HBox(Constants.DEFAULT_SPACING);
+
+        Button loginButton = ButtonMaker.makeLoginButton("LOG IN");
+        Button registerButton = ButtonMaker.makeLoginButton("REGISTER");
+
+        buttons.getChildren().addAll(loginButton, registerButton);
+
+        VBox loginBox = new VBox(Constants.DEFAULT_SPACING * 2, usernameField, passwordField, space, buttons);
+        loginBox.setPadding(Constants.LOGIN_BOX_PADDING);
+        loginBox.setBackground(new Background(new BackgroundFill(Color.rgb(100, 100, 100, 0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+        loginBox.setMinSize(Constants.LOGIN_BOX_SIZE, Constants.LOGIN_BOX_SIZE);
+        loginBox.setMaxSize(Constants.LOGIN_BOX_SIZE, Constants.LOGIN_BOX_SIZE);
+
+        horizontalBox.getChildren().addAll(logoBox, loginBox);
+
+        verticalBox.getChildren().addAll(brandView, horizontalBox);
+
+        container.setCenter(verticalBox);
+
+        root.getChildren().addAll(background, container);
     }
 }

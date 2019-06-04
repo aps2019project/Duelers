@@ -1,14 +1,11 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Random;
 
 class Fog {
@@ -17,22 +14,14 @@ class Fog {
     private final Pane fog;
     private final Random random = new Random();
 
-    Fog(double width, double height) throws FileNotFoundException {
+    Fog(double width, double height) {
         this.width = width;
         this.height = height;
         this.fog = new Pane();
-        fog.relocate(800, 0);
-        fog.setEffect(new GaussianBlur((width + height) / 5));
-        for (int i = 0; i < 100; i++) {
+        fog.setEffect(new GaussianBlur((width + height)));
+        for (int i = 0; i < 250; i++) {
             fog.getChildren().add(createFogElement());
         }
-
-        Image vignette = new Image(new FileInputStream("resources/menu/background/vignette.png"));
-        ImageView vignetteView = new ImageView(vignette);
-        vignetteView.setFitWidth(width * 2);
-        vignetteView.setFitHeight(height * 2);
-        fog.getChildren().add(vignetteView);
-
         moveFog();
     }
 
@@ -42,7 +31,7 @@ class Fog {
             private final double velocity = 5;
             private final long duration = (long) (80 * Math.pow(10, 9));
             private double currentX = Constants.SCENE_WIDTH;
-            private double currentY = Constants.SCENE_HEIGHT - height;
+            private double currentY = Constants.SCENE_HEIGHT - Constants.FOREGROUND_HEIGHT * 0.75;
             private long lastTimeStarted;
             private long lastTimeMoved;
 
@@ -67,13 +56,14 @@ class Fog {
     private Circle createFogElement() {
         int radius = 15 + random.nextInt(100);
         Circle circle = new Circle(
-                100 + random.nextInt((int) (width - 200)),
-                100 + random.nextInt((int) (height - 200)),
+                Constants.FOG_CIRCLE_RADIUS + random.nextInt((int) (width - Constants.FOG_CIRCLE_RADIUS * 2)),
+                Constants.FOG_CIRCLE_RADIUS + random.nextInt((int) (height - Constants.FOG_CIRCLE_RADIUS * 2)),
                 radius);
 
         int shade = 200 + random.nextInt(50);
-        double opacity = 0.4 + random.nextDouble() * 0.6;
+        double opacity = 0.2 + random.nextDouble() * 0.8;
         circle.setFill(Color.rgb(shade, shade, shade, opacity));
+        circle.setEffect(new ColorAdjust(1, 0.2, -0.4, 0));
         AnimationTimer anim = new AnimationTimer() {
 
             double xVel = random.nextDouble() * 40 - 20;
