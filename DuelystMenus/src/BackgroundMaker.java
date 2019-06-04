@@ -1,44 +1,34 @@
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 class BackgroundMaker {
 
+    private static final String BACKGROUND_URL = "resources/menu/background/background.jpg";
+    private static final String FOREGROUND_URL = "resources/menu/background/foreground.png";
+    private static final String FAR_PILLAR_URL = "resources/menu/background/far_pillars.png";
+    private static final String NEAR_PILLAR_URL = "resources/menu/background/near_pillars.png";
+    private static final String VIGNETTE_URL = "resources/menu/background/vignette.png";
+
     static BorderPane makeMenuBackground() throws FileNotFoundException {
         BorderPane background = new BorderPane();
 
-        Image backgroundImage = new Image(new FileInputStream("resources/menu/background/background.jpg"));
-        ImageView backgroundView = new ImageView(backgroundImage);
-        backgroundView.resize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
-
-        Image foreground = new Image(new FileInputStream("resources/menu/background/foreground.png"));
-        ImageView foregroundView = new ImageView(foreground);
-        foregroundView.setFitWidth(Constants.FOREGROUND_WIDTH);
-        foregroundView.setFitHeight(Constants.FOREGROUND_HEIGHT);
-        foregroundView.relocate(
+        ImageView backgroundView = ImageLoader.loadImage(BACKGROUND_URL, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        ImageView foregroundView = ImageLoader.loadImage(
+                FOREGROUND_URL, Constants.FOREGROUND_WIDTH, Constants.FOREGROUND_HEIGHT,
                 Constants.SCENE_WIDTH - Constants.FOREGROUND_WIDTH,
                 Constants.SCENE_HEIGHT - Constants.FOREGROUND_HEIGHT
         );
-
-        Image farPillars = new Image(new FileInputStream("resources/menu/background/far_pillars.png"));
-        ImageView farPillarsView = new ImageView(farPillars);
-        farPillarsView.setFitWidth(Constants.FAR_PILLARS_WIDTH);
-        farPillarsView.setFitHeight(Constants.FAR_PILLARS_HEIGHT);
-        farPillarsView.relocate(0, Constants.SCENE_HEIGHT - Constants.FAR_PILLARS_HEIGHT);
-
-        Image nearPillars = new Image(new FileInputStream("resources/menu/background/near_pillars.png"));
-        ImageView nearPillarsView = new ImageView(nearPillars);
-        nearPillarsView.setFitWidth(Constants.NEAR_PILLARS_WIDTH);
-        nearPillarsView.setFitHeight(Constants.NEAR_PILLARS_HEIGHT);
-        nearPillarsView.relocate(0, Constants.SCENE_HEIGHT - Constants.NEAR_PILLARS_HEIGHT);
-
-        Image vignette = new Image(new FileInputStream("resources/menu/background/vignette.png"));
-        ImageView vignetteView = new ImageView(vignette);
-        vignetteView.setFitWidth(Constants.VIGNETTE_WIDTH);
-        vignetteView.setFitHeight(Constants.VIGNETTE_HEIGHT);
+        ImageView farPillarsView = ImageLoader.loadImage(
+                FAR_PILLAR_URL, Constants.FAR_PILLARS_WIDTH, Constants.FAR_PILLARS_HEIGHT,
+                0, Constants.SCENE_HEIGHT - Constants.FAR_PILLARS_HEIGHT
+        );
+        ImageView nearPillarsView = ImageLoader.loadImage(
+                NEAR_PILLAR_URL, Constants.NEAR_PILLARS_WIDTH, Constants.NEAR_PILLARS_HEIGHT,
+                0, Constants.SCENE_HEIGHT - Constants.NEAR_PILLARS_HEIGHT
+        );
+        ImageView vignetteView = ImageLoader.loadImage(VIGNETTE_URL, Constants.VIGNETTE_WIDTH, Constants.VIGNETTE_HEIGHT);
 
         Fog fog = new Fog(Constants.SCENE_WIDTH * 0.5, Constants.FOREGROUND_HEIGHT * 0.9);
 

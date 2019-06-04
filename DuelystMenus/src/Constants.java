@@ -3,7 +3,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 class Constants {
-    private static final double SCALE = 0.6;
+    private static final double SCALE = 1;
+    static final double FOG_VELOCITY = 5 * SCALE;
     static final double LOGO_WIDTH = 700 * SCALE;
     static final double LOGO_HEIGHT = 425 * SCALE;
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
