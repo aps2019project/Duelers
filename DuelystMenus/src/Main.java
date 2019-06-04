@@ -21,7 +21,8 @@ public class Main extends Application {
         LoginMenu loginMenu = new LoginMenu();
         try {
             loginMenu.show();
-        } catch (FileNotFoundException ignored) {
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         stage.setResizable(false);
         stage.show();
