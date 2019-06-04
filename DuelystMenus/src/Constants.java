@@ -14,7 +14,7 @@ class Constants {
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private static final double SCALE = 0.7;
+    private static final double SCALE = 1;
     static final double MAIN_MENU_BOX_X = 100 * SCALE;
     static final double MAIN_MENU_BOX_Y = 400 * SCALE;
     static final double MENU_HINT_WIDTH = 250 * SCALE;

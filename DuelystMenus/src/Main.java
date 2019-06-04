@@ -19,9 +19,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
-        LoginMenu loginMenu = new LoginMenu();
         try {
-            loginMenu.show();
+            new LoginMenu().show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

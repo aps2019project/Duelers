@@ -1,18 +1,19 @@
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
 import java.io.FileNotFoundException;
 
 class BackgroundMaker {
-
     private static final String BACKGROUND_URL = "resources/menu/background/background.jpg";
     private static final String FOREGROUND_URL = "resources/menu/background/foreground.png";
     private static final String FAR_PILLAR_URL = "resources/menu/background/far_pillars.png";
     private static final String NEAR_PILLAR_URL = "resources/menu/background/near_pillars.png";
     private static final String VIGNETTE_URL = "resources/menu/background/vignette.png";
+    private static BorderPane menuBackground;
 
-    static BorderPane makeMenuBackground() throws FileNotFoundException {
-        BorderPane background = new BorderPane();
+    private static void makeMenuBackground() throws FileNotFoundException {
+        menuBackground = new BorderPane();
 
         ImageView backgroundView = ImageLoader.loadImage(BACKGROUND_URL, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
         ImageView foregroundView = ImageLoader.loadImage(
@@ -32,7 +33,18 @@ class BackgroundMaker {
 
         Fog fog = new Fog(Constants.SCENE_WIDTH * 0.5, Constants.FOREGROUND_HEIGHT * 0.9);
 
-        background.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, fog.getView(), foregroundView, vignetteView);
-        return background;
+        menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, fog.getView(), foregroundView, vignetteView);
+    }
+
+    static BorderPane getMenuBackground() throws FileNotFoundException {
+        if (menuBackground == null) {
+            makeMenuBackground();
+        }
+        menuBackground.setEffect(null);
+        return menuBackground;
+    }
+
+    static void makeMenuBackgroundBlur() {
+        menuBackground.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR));
     }
 }

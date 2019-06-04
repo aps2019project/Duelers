@@ -40,7 +40,7 @@ class MainMenu {
         Main.setScene(scene);
         root.setBackground(Constants.ROOT_BACKGROUND);
 
-        BorderPane background = BackgroundMaker.makeMenuBackground();
+        BorderPane background = BackgroundMaker.getMenuBackground();
 
         ImageView brandView = ImageLoader.loadImage(
                 DUELYST_LOGO_URL, Constants.DUELYST_LOGO_WIDTH, Constants.DUELYST_LOGO_HEIGHT

@@ -31,8 +31,8 @@ class LoginMenu {
         Main.setScene(scene);
         root.setBackground(Constants.ROOT_BACKGROUND);
 
-        BorderPane background = BackgroundMaker.makeMenuBackground();
-        background.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR));
+        BorderPane background = BackgroundMaker.getMenuBackground();
+        BackgroundMaker.makeMenuBackgroundBlur();
         BorderPane container = makeContainer();
 
         root.getChildren().addAll(background, container);
