@@ -1,9 +1,8 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -11,7 +10,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 class LoginMenu {
@@ -24,13 +22,17 @@ class LoginMenu {
             new BackgroundFill(Color.rgb(15, 16, 11), CornerRadii.EMPTY, Insets.EMPTY)
     );
     private static final Paint ABABEEL_TEXT_COLOR = Color.rgb(102, 166, 214);
-    private static Group root = new Group();
+    private static final String DUELYST_LOGO_URL = "resources/ui/brand_duelyst.png";
+    private static final String ABABEEL_URL = "resources/ui/logo.png";
+    private static AnchorPane root = new AnchorPane();
     private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
     void show() throws FileNotFoundException {
         Main.setScene(scene);
+        root.setBackground(Constants.ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.makeMenuBackground();
+        background.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR));
         BorderPane container = makeContainer();
 
         root.getChildren().addAll(background, container);
@@ -53,8 +55,8 @@ class LoginMenu {
         verticalBox.setMaxWidth(Constants.LOGIN_BOX_SIZE * 2);
         verticalBox.setAlignment(Pos.CENTER);
 
-        ImageView brandView = makeLogoView(
-                "resources/ui/brand_duelyst.png", Constants.DUELYST_LOGO_WIDTH, Constants.DUELYST_LOGO_HEIGHT
+        ImageView brandView = ImageLoader.loadImage(
+                DUELYST_LOGO_URL, Constants.DUELYST_LOGO_WIDTH, Constants.DUELYST_LOGO_HEIGHT
         );
         HBox horizontalBox = makeHorizontalBox();
 
@@ -92,12 +94,21 @@ class LoginMenu {
 
     private HBox makeButtonsBox() {
         Button loginButton = ButtonMaker.makeLoginButton("LOG IN");
+
+        loginButton.setOnMouseClicked(event -> {
+            try {
+                new MainMenu().show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
         Button registerButton = ButtonMaker.makeLoginButton("REGISTER");
         return new HBox(Constants.DEFAULT_SPACING, loginButton, registerButton);
     }
 
     private VBox makeAbabeelLogoBox() throws FileNotFoundException {
-        ImageView logoView = makeLogoView("resources/ui/logo.png", Constants.LOGO_WIDTH, Constants.LOGO_HEIGHT);
+        ImageView logoView = ImageLoader.loadImage(ABABEEL_URL, Constants.LOGO_WIDTH, Constants.LOGO_HEIGHT);
         Text text = makeAbabeelText();
 
         VBox logoBox = new VBox(Constants.DEFAULT_SPACING * 10, logoView, text);
@@ -115,12 +126,5 @@ class LoginMenu {
         text.setTextAlignment(TextAlignment.CENTER);
         text.setFont(Constants.LOGO_TEXT_FONT);
         return text;
-    }
-
-    private ImageView makeLogoView(String url, double width, double height) throws FileNotFoundException {
-        ImageView brandView = new ImageView(new Image(new FileInputStream(url)));
-        brandView.setFitWidth(width);
-        brandView.setFitHeight(height);
-        return brandView;
     }
 }

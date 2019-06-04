@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -26,5 +27,7 @@ public class Main extends Application {
         }
         stage.setResizable(false);
         stage.show();
+
+        System.out.println(Font.getFamilies());
     }
 }

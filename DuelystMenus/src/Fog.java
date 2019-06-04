@@ -10,7 +10,7 @@ import java.util.Random;
 
 class Fog {
     private static final int NUMBER_OF_CIRCLES = 70;
-    private static final long DURATION = (long) (80 * Math.pow(10, 9));
+    private static final long DURATION = (long) (130 * Math.pow(10, 9));
     private final double width;
     private final double height;
     private final Pane fog;
@@ -53,7 +53,7 @@ class Fog {
     private Circle createFogElement() {
         double centerX = Constants.FOG_CIRCLE_RADIUS + random.nextInt((int) (width - Constants.FOG_CIRCLE_RADIUS * 2));
         double centerY = Constants.FOG_CIRCLE_RADIUS + random.nextInt((int) (height - Constants.FOG_CIRCLE_RADIUS * 2));
-        int radius = 80 + random.nextInt(50);
+        int radius = Constants.FOG_CIRCLE_RADIUS * 4 / 5 + random.nextInt(Constants.FOG_CIRCLE_RADIUS / 2);
         Circle circle = new Circle(centerX, centerY, radius);
 
         int shade = 200 + random.nextInt(50);
