@@ -24,20 +24,34 @@ class MainMenu {
     private static final Background MENU_HINT_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(40, 40, 40), new CornerRadii(Constants.DEFAULT_SPACING * 3), Insets.EMPTY)
     );
+    private static MainMenu menu;
     private static AnchorPane root = new AnchorPane();
     private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
     private Image menuItemImage;
     private Image hoverRing;
 
-    void show() throws FileNotFoundException {
-        root.getChildren().clear();
-        Main.setScene(scene);
+    static MainMenu getInstance() {
+        if (menu == null) {
+            try {
+                menu = new MainMenu();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return menu;
+    }
+
+    private MainMenu() throws FileNotFoundException {
         root.setBackground(Constants.ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.getMenuBackground();
         VBox menuBox = makeMenuBox();
 
         root.getChildren().addAll(background, menuBox);
+    }
+
+    void show() {
+        Main.setScene(scene);
     }
 
     private VBox makeMenuBox() throws FileNotFoundException {
@@ -139,13 +153,7 @@ class MainMenu {
 
     private static class MenuItem {
         private static final MenuItem[] items = {
-                new MenuItem(0, "PLAY", "Single player, multiplayer", event -> {
-                    try {
-                        new PlayMenu().show();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }),
+                new MenuItem(0, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
                 new MenuItem(1, "PROFILE", "See you profile information", event -> {}),
                 new MenuItem(2, "SHOP", "Buy or sell cards", event -> {}),
                 new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> {}),

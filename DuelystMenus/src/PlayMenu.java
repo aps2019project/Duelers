@@ -21,51 +21,33 @@ class PlayMenu {
             )
     );
     private static final double SEPARATOR_OPACITY = 0.3;
+    private static PlayMenu menu;
     private static AnchorPane root = new AnchorPane();
     private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
-    void show() throws FileNotFoundException {
-        root.getChildren().clear();
-        Main.setScene(scene);
+    static PlayMenu getInstance() {
+        if (menu == null) {
+            try {
+                menu = new PlayMenu();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return menu;
+    }
+
+    private PlayMenu() throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.getPlayBackground();
         BorderPane container = makeContainer();
-        AnchorPane backButton = makeBackButton();
+        AnchorPane backButton = ButtonMaker.makeBackButtonPane(event -> MainMenu.getInstance().show());
 
         root.getChildren().addAll(background, container, backButton);
     }
 
-    private AnchorPane makeBackButton() throws FileNotFoundException {
-        ImageView backImage = ImageLoader.loadImage("resources/ui/back_button.png",
-                Constants.BACK_BUTTON_SIZE, Constants.BACK_BUTTON_SIZE,
-                -Constants.BACK_BUTTON_SIZE * 0.5, -Constants.BACK_BUTTON_SIZE * 0.5
-        );
-        ImageView backText = ImageLoader.loadImage("resources/ui/back_text.png",
-                Constants.BACK_BUTTON_SIZE * 0.25, Constants.BACK_BUTTON_SIZE * 0.25,
-                -Constants.DEFAULT_SPACING, -Constants.DEFAULT_SPACING
-        );
-
-        AnchorPane backButton = new AnchorPane(backImage, backText);
-
-        backButton.setOnMouseClicked(event -> {
-            try {
-                new MainMenu().show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
-
-        backButton.setOnMouseEntered(event -> {
-            backButton.setEffect(Constants.BACK_BUTTON_HOVER_EFFECT);
-            backButton.setCursor(Constants.SELECT_CURSOR);
-        });
-
-        backButton.setOnMouseExited(event -> {
-            backButton.setEffect(null);
-            backButton.setCursor(Constants.DEFAULT_CURSOR);
-        });
-        return backButton;
+    void show() {
+        Main.setScene(scene);
     }
 
     private BorderPane makeContainer() {
@@ -100,7 +82,7 @@ class PlayMenu {
         StackPane imageZone = makeImageZone(item);
 
         VBox buttonBox = new VBox(Constants.DEFAULT_SPACING * (-3), imageZone, plate);
-        buttonBox.setEffect(Constants.PLAY_MENU_BUTTON_SHADOW);
+        buttonBox.setEffect(Constants.PLAY_MENU_BOX_SHADOW);
         return buttonBox;
     }
 
@@ -157,7 +139,7 @@ class PlayMenu {
 
     private Label makeTitle(ButtonItem item) {
         Label title = new Label(item.title);
-        title.setFont(Constants.MENU_ITEM_FONT);
+        title.setFont(Constants.PLAY_MENU_ITEM_FONT);
         title.setTextFill(Color.WHITE);
         return title;
     }

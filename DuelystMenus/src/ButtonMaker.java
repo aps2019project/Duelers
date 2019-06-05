@@ -1,10 +1,15 @@
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+
+import java.io.FileNotFoundException;
 
 class ButtonMaker {
     private static final Background LOGIN_DEFAULT_BACKGROUND = new Background(
@@ -17,27 +22,56 @@ class ButtonMaker {
                     Color.rgb(250, 106, 54), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    private static final String BACK_BUTTON_IMAGE_URL = "resources/ui/back_button.png";
+    private static final String BACK_TEXT_IMAGE_URL = "resources/ui/back_text.png";
 
-    static Button makeLoginButton(String s) {
-        Button loginButton = new Button(s);
-        loginButton.setBackground(
+    static Button makeLoginButton(String text, EventHandler<? super MouseEvent> clickEvent) {
+        Button button = new Button(text);
+        button.setBackground(
                 LOGIN_DEFAULT_BACKGROUND
         );
-        loginButton.setPadding(new Insets(Constants.DEFAULT_SPACING * 3));
-        loginButton.setPrefWidth(Constants.LOGIN_BOX_SIZE / 2);
-        loginButton.setFont(Constants.DEFAULT_FONT);
-        loginButton.setTextFill(Color.WHITE);
+        button.setPadding(new Insets(Constants.DEFAULT_SPACING * 3));
+        button.setPrefWidth(Constants.LOGIN_BOX_SIZE / 2);
+        button.setFont(Constants.DEFAULT_FONT);
+        button.setTextFill(Color.WHITE);
 
-        loginButton.setOnMouseEntered(event -> {
-            loginButton.setBackground(LOGIN_HOVER_BACKGROUND);
-            loginButton.setCursor(Constants.SELECT_CURSOR);
+        button.setOnMouseEntered(event -> {
+            button.setBackground(LOGIN_HOVER_BACKGROUND);
+            button.setCursor(Constants.SELECT_CURSOR);
         });
 
-        loginButton.setOnMouseExited(event -> {
-            loginButton.setBackground(LOGIN_DEFAULT_BACKGROUND);
-            loginButton.setCursor(Constants.DEFAULT_CURSOR);
+        button.setOnMouseExited(event -> {
+            button.setBackground(LOGIN_DEFAULT_BACKGROUND);
+            button.setCursor(Constants.DEFAULT_CURSOR);
         });
 
-        return loginButton;
+        button.setOnMouseClicked(clickEvent);
+        return button;
+    }
+    
+    static AnchorPane makeBackButtonPane(EventHandler<? super MouseEvent> clickEvent) throws FileNotFoundException {
+        ImageView backImage = ImageLoader.loadImage(BACK_BUTTON_IMAGE_URL,
+                Constants.BACK_BUTTON_SIZE, Constants.BACK_BUTTON_SIZE,
+                -Constants.BACK_BUTTON_SIZE * 0.5, -Constants.BACK_BUTTON_SIZE * 0.5
+        );
+        ImageView backText = ImageLoader.loadImage(BACK_TEXT_IMAGE_URL,
+                Constants.BACK_BUTTON_SIZE * 0.25, Constants.BACK_BUTTON_SIZE * 0.25,
+                -Constants.DEFAULT_SPACING, -Constants.DEFAULT_SPACING
+        );
+
+        AnchorPane backButton = new AnchorPane(backImage, backText);
+
+        backButton.setOnMouseEntered(event -> {
+            backButton.setEffect(Constants.BACK_BUTTON_HOVER_EFFECT);
+            backButton.setCursor(Constants.SELECT_CURSOR);
+        });
+
+        backButton.setOnMouseExited(event -> {
+            backButton.setEffect(null);
+            backButton.setCursor(Constants.DEFAULT_CURSOR);
+        });
+
+        backButton.setOnMouseClicked(clickEvent);
+        return backButton;
     }
 }

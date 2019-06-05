@@ -5,7 +5,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
-final class Vignette extends Parent {
+class Vignette extends Parent {
     private static final double OPACITY = 0.7;
     private Rectangle region;
 

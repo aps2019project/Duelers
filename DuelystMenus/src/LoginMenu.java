@@ -23,11 +23,22 @@ class LoginMenu {
     private static final Paint ABABEEL_TEXT_COLOR = Color.rgb(102, 166, 214);
     private static final String DUELYST_LOGO_URL = "resources/ui/brand_duelyst.png";
     private static final String ABABEEL_URL = "resources/ui/logo.png";
+    private static LoginMenu menu;
     private static AnchorPane root = new AnchorPane();
     private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
-    void show() throws FileNotFoundException {
-        Main.setScene(scene);
+    static LoginMenu getInstance() {
+        if (menu == null) {
+            try {
+                menu = new LoginMenu();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return menu;
+    }
+
+    private LoginMenu() throws FileNotFoundException {
         root.setBackground(Constants.ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.getMenuBackground();
@@ -35,6 +46,10 @@ class LoginMenu {
         BorderPane container = makeContainer();
 
         root.getChildren().addAll(background, container);
+    }
+
+    void show() {
+        Main.setScene(scene);
     }
 
     private BorderPane makeContainer() throws FileNotFoundException {
@@ -92,17 +107,8 @@ class LoginMenu {
     }
 
     private HBox makeButtonsBox() {
-        Button loginButton = ButtonMaker.makeLoginButton("LOG IN");
-
-        loginButton.setOnMouseClicked(event -> {
-            try {
-                new MainMenu().show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
-
-        Button registerButton = ButtonMaker.makeLoginButton("REGISTER");
+        Button loginButton = ButtonMaker.makeLoginButton("LOG IN", event -> MainMenu.getInstance().show());
+        Button registerButton = ButtonMaker.makeLoginButton("REGISTER", event -> {});
         return new HBox(Constants.DEFAULT_SPACING, loginButton, registerButton);
     }
 

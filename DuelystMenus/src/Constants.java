@@ -21,7 +21,7 @@ class Constants {
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private static final double SCALE = 0.5;
+    private static final double SCALE = 1;
     static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
     static final double BACK_BUTTON_SIZE = 400 * SCALE;
     static final double PLAY_MENU_BUTTON_WIDTH = 632 * SCALE;
@@ -51,13 +51,14 @@ class Constants {
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
     static final Effect MENU_ITEM_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
-    static final Effect PLAY_MENU_BUTTON_SHADOW = new DropShadow(40 * SCALE, Color.gray(0, 0.7));
+    static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.gray(0, 0.7));
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
     static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     static final Font LOGO_TEXT_FONT = Font.font("SansSerif", FontWeight.EXTRA_BOLD, 40 * SCALE);
     static final Font MENU_HINT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     static final Font MENU_ITEM_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 55 * SCALE);
+    static final Font PLAY_MENU_ITEM_FONT = Font.font("SansSerif", FontWeight.BOLD, 55 * SCALE);
     static Cursor DEFAULT_CURSOR;
     static Cursor SELECT_CURSOR;
     static Image PLATE_IMAGE;
