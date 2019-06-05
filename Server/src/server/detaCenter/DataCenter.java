@@ -254,7 +254,6 @@ public class DataCenter extends Thread {
 
     public void saveAccount(Account account) {
         String accountJson = JsonConverter.toJson(new TempAccount(account));
-
         try {
             FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
@@ -301,12 +300,13 @@ public class DataCenter extends Thread {
         if (accounts.size() == 0) {
             throw new ClientException("leader board is empty");
         }
-        Account[] leaderBoard = new Account[accounts.size()];
+        /*Account[] leaderBoard = new Account[accounts.size()];
         int counter = 0;
         for (Account account : accounts.keySet()) {
             leaderBoard[counter] = account;
             counter++;
-        }
+        }*/
+        Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         return leaderBoard;
     }

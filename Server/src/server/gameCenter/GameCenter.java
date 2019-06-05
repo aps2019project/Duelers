@@ -27,7 +27,8 @@ public class GameCenter extends Thread {
 
     @Override
     public void run() {
-        super.run();
+        Server.getInstance().serverPrint("Starting GameCenter...");
+
     }
 
     private Game getGame(String clientName) throws ClientException {
@@ -50,9 +51,13 @@ public class GameCenter extends Thread {
         if (opponentAccount == null) {
             throw new ClientException("invalid opponent username!");
         }
-        /*if (accounts.get(opponentAccount) == null) {
-            sendException("opponentAccount has not logged in!", message.getSender(), message.getMessageId());
-        }*/
+        if (DataCenter.getInstance().getAccounts().get(opponentAccount) == null) {
+            throw new ClientException("opponentAccount has not logged in!");
+        }
+        if(onlineGames.get(opponentAccount)!=null){
+            throw new ClientException("opponentAccount has online game!");
+        }
+        //TODO:Validation
     }
 
     public void newDeckGame(Message message) throws LogicException {
@@ -117,7 +122,6 @@ public class GameCenter extends Thread {
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (Server.getInstance().serverName, message.getSender(), game, 0));
         game.startGame();
-
     }
 
     public void newMultiplayerGame(Message message) throws LogicException {
@@ -169,17 +173,17 @@ public class GameCenter extends Thread {
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             Account account1 = DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName());
             if (account1 != null) {
-                onlineGames.replace(account1, null);
+                onlineGames.remove(account1);
             }
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
             Account account2 = DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName());
             if (account2 != null) {
-                onlineGames.replace(account2, null);
-                DataCenter.getInstance().getAccounts().replace(account2, null);
+                onlineGames.remove(account2);
+                //DataCenter.getInstance().getAccounts().replace(account2, null);
             }
         }
-       // DataCenter.getInstance().getClients().replace(onlineClients.get(1).getClientName(), null);
+        // DataCenter.getInstance().getClients().replace(onlineClients.get(1).getClientName(), null);
     }
 
     public void insertCard(Message message) throws LogicException {
