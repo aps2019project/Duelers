@@ -30,12 +30,12 @@ class ButtonMaker {
 
         loginButton.setOnMouseEntered(event -> {
             loginButton.setBackground(LOGIN_HOVER_BACKGROUND);
-            loginButton.setCursor(Cursor.HAND);
+            loginButton.setCursor(Constants.SELECT_CURSOR);
         });
 
         loginButton.setOnMouseExited(event -> {
             loginButton.setBackground(LOGIN_DEFAULT_BACKGROUND);
-            loginButton.setCursor(Cursor.DEFAULT);
+            loginButton.setCursor(Constants.DEFAULT_CURSOR);
         });
 
         return loginButton;

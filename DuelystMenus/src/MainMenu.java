@@ -4,6 +4,7 @@ import javafx.animation.RotateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -81,7 +82,7 @@ class MainMenu {
         label.setOnMouseEntered(event -> {
             menuView.setOpacity(0.6);
             ringView.setVisible(true);
-            label.setCursor(Cursor.HAND);
+            label.setCursor(Constants.SELECT_CURSOR);
             label.setEffect(Constants.MENU_ITEM_SHADOW);
             rotate.play();
             textWrapper.setVisible(true);
@@ -90,7 +91,7 @@ class MainMenu {
         label.setOnMouseExited(event -> {
             menuView.setOpacity(1);
             ringView.setVisible(false);
-            label.setCursor(Cursor.DEFAULT);
+            label.setCursor(Constants.DEFAULT_CURSOR);
             label.setEffect(null);
             rotate.pause();
             textWrapper.setVisible(false);
