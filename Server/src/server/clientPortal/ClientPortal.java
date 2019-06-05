@@ -22,6 +22,7 @@ public class ClientPortal extends Thread {
 
     @Override
     public void run() {
+        Server.getInstance().serverPrint("Starting ClientPortal...");
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
             while (true) {
@@ -36,11 +37,11 @@ public class ClientPortal extends Thread {
         }
     }
 
-    public boolean hasThisClient(String clientName) {
+    synchronized public boolean hasThisClient(String clientName) {
         return clients.containsKey(clientName);
     }
 
-    public void addClient(String name, Formatter formatter) {//TODO:add remove client
+    synchronized void addClient(String name, Formatter formatter) {//TODO:add remove client
         clients.put(name, formatter);
     }
 
@@ -48,9 +49,9 @@ public class ClientPortal extends Thread {
         Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
     }
 
-    public void sendMessage(String clientName, String message) {
+    synchronized public void sendMessage(String clientName, String message) {
         if (clients.containsKey(clientName)) {
-            clients.get(clientName).format(message);
+            clients.get(clientName).format(message + "\n");
             clients.get(clientName).flush();
         } else {
             Server.getInstance().serverPrint("Client Not Found!");

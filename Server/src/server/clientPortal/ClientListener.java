@@ -18,6 +18,7 @@ public class ClientListener extends Thread {
         Scanner scanner = null;
         Formatter formatter = null;
         try {
+            Server.getInstance().serverPrint("New Socket Is Accepted!");
             scanner = new Scanner(socket.getInputStream());
             formatter = new Formatter(socket.getOutputStream());
             formatter.format("#Listening#\n");
@@ -35,6 +36,7 @@ public class ClientListener extends Thread {
                     formatter.flush();
                 }
             }
+            Server.getInstance().serverPrint("New Client Is Accepted!");
             while (true) {
                 String message = scanner.nextLine();
                 ClientPortal.getInstance().addMessage(name, message);

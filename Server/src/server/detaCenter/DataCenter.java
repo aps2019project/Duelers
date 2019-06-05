@@ -50,9 +50,17 @@ public class DataCenter extends Thread {
 
     @Override
     public void run() {//TODO:Three threads.
-        readAccounts();
+        Server.getInstance().serverPrint("Starting DataCenter...");
+        Server.getInstance().serverPrint("Reading Cards...");
         readAllCards();
-        readStories();
+        new Thread(() -> {
+            Server.getInstance().serverPrint("Reading Accounts...");
+            readAccounts();
+        }).start();
+        new Thread(() -> {
+            Server.getInstance().serverPrint("Reading Stories...");
+            readStories();
+        }).start();
     }
 
     public Account getAccount(String username) {
@@ -208,7 +216,7 @@ public class DataCenter extends Thread {
                 accounts.put(newAccount, null);
             }
         }
-        Server.getInstance().serverPrint("Accounts loaded");
+        Server.getInstance().serverPrint("Accounts Loaded");
     }
 
     private void readAllCards() {
@@ -227,7 +235,7 @@ public class DataCenter extends Thread {
             }
         }
         originalFlag = loadFile(new File(FLAG_PATH), Card.class);
-        Server.getInstance().serverPrint("Original Cards loaded");
+        Server.getInstance().serverPrint("Original Cards Loaded");
     }
 
     private void readStories() {
@@ -241,12 +249,11 @@ public class DataCenter extends Thread {
             }
         }
         stories.sort(new StoriesSorter());
-        Server.getInstance().serverPrint("Stories loaded");
+        Server.getInstance().serverPrint("Stories Loaded");
     }
 
     public void saveAccount(Account account) {
         String accountJson = JsonConverter.toJson(new TempAccount(account));
-
         try {
             FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
@@ -293,12 +300,13 @@ public class DataCenter extends Thread {
         if (accounts.size() == 0) {
             throw new ClientException("leader board is empty");
         }
-        Account[] leaderBoard = new Account[accounts.size()];
+        /*Account[] leaderBoard = new Account[accounts.size()];
         int counter = 0;
         for (Account account : accounts.keySet()) {
             leaderBoard[counter] = account;
             counter++;
-        }
+        }*/
+        Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         return leaderBoard;
     }
