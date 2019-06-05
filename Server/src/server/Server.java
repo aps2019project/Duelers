@@ -18,8 +18,8 @@ public class Server {
     private static Server server;
     public final String serverName;
 
-    private final LinkedList<Message> sendingMessages = new LinkedList<>();//TODO:queue
-    private final LinkedList<Message> receivingMessages = new LinkedList<>();
+    private final Queue<Message> sendingMessages = new LinkedList<>();//TODO:queue
+    private final Queue<Message> receivingMessages = new LinkedList<>();
 
     private Server(String serverName) {
         this.serverName = serverName;
@@ -27,12 +27,15 @@ public class Server {
     }
 
     public static Server getInstance() {
-        if (server == null)
-            server = new Server("Server");
         return server;
     }
 
-    public void start() {
+    public static void main(String[] args) {
+        server = new Server("Server");
+        server.start();
+    }
+
+    private void start() {
         DataCenter.getInstance().start();
         GameCenter.getInstance().start();
         ClientPortal.getInstance().start();
@@ -192,15 +195,14 @@ public class Server {
 
 
     private void sendException(String exceptionString, String receiver, int messageId) {
-        addToSendingMessages(Message.makeExceptionMessage(
-                serverName, receiver, exceptionString, messageId));
+        addToSendingMessages(Message.makeExceptionMessage(serverName, receiver, exceptionString, messageId));
     }
 
 
     private void sendStories(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message);
-        addToSendingMessages(Message.makeStoriesCopyMessage
-                (serverName, message.getSender(), DataCenter.getInstance().getStories().toArray(Story[]::new), message.getMessageId()));
+        addToSendingMessages(Message.makeStoriesCopyMessage(serverName, message.getSender(),
+                DataCenter.getInstance().getStories().toArray(Story[]::new), message.getMessageId()));
     }
 
     private void sendOriginalCards(Message message) throws LogicException {
@@ -211,10 +213,11 @@ public class Server {
     }
 
     private void sendLeaderBoard(Message message) throws ClientException { //Check
-        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(), DataCenter.getInstance().getLeaderBoard(), message.getMessageId()));
+        addToSendingMessages(Message.makeLeaderBoardCopyMessage(serverName, message.getSender(),
+                DataCenter.getInstance().getLeaderBoard(), message.getMessageId()));
     }
 
-    private void selectUserForMultiPlayer(Message message) throws ClientException {//TODO:Think
+    private void selectUserForMultiPlayer(Message message) throws ClientException {
         Account account = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
         if (account == null) {
             throw new ClientException("second player is not valid");
