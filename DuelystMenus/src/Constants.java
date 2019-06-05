@@ -1,12 +1,18 @@
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 class Constants {
     static final Background ROOT_BACKGROUND = new Background(
@@ -15,6 +21,7 @@ class Constants {
             )
     );
     private static final double SCALE = 1;
+    static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
     static final double MAIN_MENU_BOX_X = 100 * SCALE;
     static final double MAIN_MENU_BOX_Y = 400 * SCALE;
     static final double MENU_HINT_WIDTH = 250 * SCALE;
@@ -25,7 +32,6 @@ class Constants {
     static final double LOGO_HEIGHT = 425 * SCALE;
     static final double DEFAULT_SPACING = 10 * SCALE;
     static final double LOGIN_BOX_SIZE = 800 * SCALE;
-    static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
     static final double DUELYST_LOGO_WIDTH = 500 * SCALE;
     static final double DUELYST_LOGO_HEIGHT = 108 * SCALE;
     static final double SCENE_WIDTH = 3636 * SCALE;
@@ -39,9 +45,20 @@ class Constants {
     static final double VIGNETTE_WIDTH = 1429 * SCALE;
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
-    static final Effect MENU_ITEM_SHADOW = new DropShadow(20* SCALE, Color.WHITE);
+    static final Effect MENU_ITEM_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
     static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     static final Font LOGO_TEXT_FONT = Font.font("SansSerif", FontWeight.EXTRA_BOLD, 40 * SCALE);
     static final Font MENU_HINT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     static final Font MENU_ITEM_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 55 * SCALE);
+    static Cursor DEFAULT_CURSOR;
+    static Cursor SELECT_CURSOR;
+
+    static {
+        try {
+            DEFAULT_CURSOR = new ImageCursor(new Image(new FileInputStream("resources/cursors/default.png")));
+            SELECT_CURSOR = new ImageCursor(new Image(new FileInputStream("resources/cursors/select.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

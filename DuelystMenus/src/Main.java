@@ -13,6 +13,7 @@ public class Main extends Application {
     }
 
     static void setScene(Scene scene) {
+        scene.setCursor(Constants.DEFAULT_CURSOR);
         stage.setScene(scene);
     }
 
