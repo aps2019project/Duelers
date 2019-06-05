@@ -1,15 +1,15 @@
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -21,63 +21,66 @@ import java.io.FileNotFoundException;
 
 class MainMenu {
     private static final String DUELYST_LOGO_URL = "resources/ui/brand_duelyst.png";
-    private static final String[][] menuTexts = {
-            {"PLAY", "Single player, multiplayer"},
-            {"PROFILE", "See you profile information"},
-            {"SHOP", "Buy or sell cards"},
-            {"COLLECTION", "View your cards or build a deck"},
-            {"CUSTOM CARD", "Design your card with your own taste"},
-            {"SETTING", "Change game properties"}
-    };
     private static final Background MENU_HINT_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(40, 40, 40), new CornerRadii(Constants.DEFAULT_SPACING * 3), Insets.EMPTY)
     );
     private static AnchorPane root = new AnchorPane();
     private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
-    private Image menuImage;
+    private Image menuItemImage;
     private Image hoverRing;
 
     void show() throws FileNotFoundException {
+        root.getChildren().clear();
         Main.setScene(scene);
         root.setBackground(Constants.ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.getMenuBackground();
+        VBox menuBox = makeMenuBox();
 
+        root.getChildren().addAll(background, menuBox);
+    }
+
+    private VBox makeMenuBox() throws FileNotFoundException {
         ImageView brandView = ImageLoader.loadImage(
                 DUELYST_LOGO_URL, Constants.DUELYST_LOGO_WIDTH, Constants.DUELYST_LOGO_HEIGHT
         );
-
-        GridPane menuGrid = new GridPane();
-        menuGrid.setVgap(Constants.DEFAULT_SPACING * 3);
-        menuGrid.setHgap(Constants.DEFAULT_SPACING * 3);
-
-        menuImage = new Image(new FileInputStream("resources/ui/menu_item.png"));
-        hoverRing = new Image(new FileInputStream("resources/ui/glow_ring.png"));
-
-        for (int i = 0; i < menuTexts.length; i++) {
-            Node[] row = makeRow(menuTexts[i]);
-            menuGrid.addRow(i, row);
-        }
+        GridPane menuGrid = makeMenuGrid();
 
         VBox menuBox = new VBox(Constants.DEFAULT_SPACING * 5, brandView, menuGrid);
         menuBox.setAlignment(Pos.CENTER);
         menuBox.relocate(Constants.MAIN_MENU_BOX_X, Constants.MAIN_MENU_BOX_Y);
         menuBox.setPadding(new Insets(Constants.DEFAULT_SPACING * 6));
-
-        root.getChildren().addAll(background, menuBox);
+        return menuBox;
     }
 
-    private Node[] makeRow(String[] menuItem) {
-        VBox textWrapper = makeHintBox(menuItem[1]);
+    private GridPane makeMenuGrid() throws FileNotFoundException {
+        GridPane menuGrid = new GridPane();
+        menuGrid.setVgap(Constants.DEFAULT_SPACING * 3);
+        menuGrid.setHgap(Constants.DEFAULT_SPACING * 3);
+
+        menuItemImage = new Image(new FileInputStream("resources/ui/menu_item.png"));
+        hoverRing = new Image(new FileInputStream("resources/ui/glow_ring.png"));
+
+        for (MenuItem item : MenuItem.items) {
+            Node[] row = makeRow(item);
+            menuGrid.addRow(item.index, row);
+        }
+        return menuGrid;
+    }
+
+    private Node[] makeRow(MenuItem item) {
+        VBox textWrapper = makeHintBox(item.hint);
         ImageView menuView = ImageLoader.makeImageView(
-                menuImage, Constants.MENU_ITEM_IMAGE_SIZE, Constants.MENU_ITEM_IMAGE_SIZE
+                menuItemImage, Constants.MENU_ITEM_IMAGE_SIZE, Constants.MENU_ITEM_IMAGE_SIZE
         );
         ImageView ringView = ImageLoader.makeImageView(
                 hoverRing, Constants.MENU_ITEM_IMAGE_SIZE, Constants.MENU_ITEM_IMAGE_SIZE
         );
         ringView.setVisible(false);
         RotateTransition rotate = makeRotationAnimation(ringView);
-        Label label = makeMenuLabel(menuItem[0]);
+        Label label = makeMenuLabel(item.title);
+
+        label.setOnMouseClicked(item.event);
 
         label.setOnMouseEntered(event -> {
             menuView.setOpacity(0.6);
@@ -132,5 +135,34 @@ class MainMenu {
         hint.setFont(Constants.MENU_HINT_FONT);
         hint.setFill(Color.WHITE);
         return hint;
+    }
+
+    private static class MenuItem {
+        private static final MenuItem[] items = {
+                new MenuItem(0, "PLAY", "Single player, multiplayer", event -> {
+                    try {
+                        new PlayMenu().show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }),
+                new MenuItem(1, "PROFILE", "See you profile information", event -> {}),
+                new MenuItem(2, "SHOP", "Buy or sell cards", event -> {}),
+                new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> {}),
+                new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> {}),
+                new MenuItem(5, "SETTING", "Change game properties", event -> {}),
+        };
+
+        final private int index;
+        final private String title;
+        final private String hint;
+        final private EventHandler<? super MouseEvent> event;
+
+        private MenuItem(int index, String title, String hint, EventHandler<? super MouseEvent> event) {
+            this.index = index;
+            this.title = title;
+            this.hint = hint;
+            this.event = event;
+        }
     }
 }

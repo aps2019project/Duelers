@@ -25,6 +25,7 @@ public class Main extends Application {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        stage.setTitle("DUELYST");
         stage.setResizable(false);
         stage.show();
 
