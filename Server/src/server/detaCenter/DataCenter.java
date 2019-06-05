@@ -49,18 +49,14 @@ public class DataCenter extends Thread {
     }
 
     @Override
-    public void run() {//TODO:Three threads.
+    public void run() {
         Server.getInstance().serverPrint("Starting DataCenter...");
         Server.getInstance().serverPrint("Reading Cards...");
         readAllCards();
-        new Thread(() -> {
-            Server.getInstance().serverPrint("Reading Accounts...");
-            readAccounts();
-        }).start();
-        new Thread(() -> {
-            Server.getInstance().serverPrint("Reading Stories...");
-            readStories();
-        }).start();
+        Server.getInstance().serverPrint("Reading Accounts...");
+        readAccounts();
+        Server.getInstance().serverPrint("Reading Stories...");
+        readStories();
     }
 
     public Account getAccount(String username) {
