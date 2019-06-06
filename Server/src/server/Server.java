@@ -36,36 +36,45 @@ public class Server {
     }
 
     private void start() {
-        DataCenter.getInstance().start();
+        DataCenter.getInstance().run();//no thread
         GameCenter.getInstance().start();
         ClientPortal.getInstance().start();
 
         new Thread(() -> {
             serverPrint("Server Thread:sending messages is started...");
             while (true) {
+                Message message;
                 synchronized (sendingMessages) {
-                    while (!sendingMessages.isEmpty()) {
-                        Message message = sendingMessages.poll();
-                        ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    }
+                    message = sendingMessages.poll();
                 }
-                try {
-                    Thread.sleep(50);
-                } catch (Exception ignored) {
+                if (message != null) {
+                    ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                } else {
+                    try {
+                        synchronized (sendingMessages) {
+                            sendingMessages.wait();
+                        }
+                    } catch (InterruptedException ignored) {
+                    }
                 }
             }
         }).start();
         new Thread(() -> {
             serverPrint("Server Thread:receiving messages is started...");
             while (true) {
+                Message message;
                 synchronized (receivingMessages) {
-                    while (!receivingMessages.isEmpty()) {
-                        receiveMessage(receivingMessages.poll());
-                    }
+                    message = receivingMessages.poll();
                 }
-                try {
-                    Thread.sleep(50);
-                } catch (Exception ignored) {
+                if (message != null) {
+                    receiveMessage(message);
+                } else {
+                    try {
+                        synchronized (receivingMessages) {
+                            receivingMessages.wait();
+                        }
+                    } catch (InterruptedException ignored) {
+                    }
                 }
             }
         }).start();
@@ -74,12 +83,14 @@ public class Server {
     public void addToSendingMessages(Message message) {
         synchronized (sendingMessages) {
             sendingMessages.add(message);
+            sendingMessages.notify();
         }
     }
 
     public void addToReceivingMessages(Message message) {
         synchronized (receivingMessages) {
             receivingMessages.add(message);
+            receivingMessages.notify();
         }
     }
 

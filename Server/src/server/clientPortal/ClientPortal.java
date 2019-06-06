@@ -49,7 +49,7 @@ public class ClientPortal extends Thread {
         Server.getInstance().addToReceivingMessages(Message.convertJsonToMessage(message));
     }
 
-    synchronized public void sendMessage(String clientName, String message) {
+    synchronized public void sendMessage(String clientName, String message) {//TODO:Change Synchronization
         if (clients.containsKey(clientName)) {
             clients.get(clientName).format(message + "\n");
             clients.get(clientName).flush();
