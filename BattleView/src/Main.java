@@ -10,42 +10,57 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-
+import java.io.FileNotFoundException;
 
 public class Main extends Application {
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private Polygon[][] cells = new Polygon[5][8];
+    private double[][] cellsX = new double[5][8];
+    private double[][] cellsY = new double[5][8];
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         primaryStage.setResizable(false);
         primaryStage.setFullScreen(true);
-        Scene scene = new Scene(root,Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        Scene scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        Image image = new Image(new FileInputStream("resources/battlemap6_middleground.png"));
-        ImageView backGround = new ImageView(image);
-        backGround.setFitWidth(Constants.SCREEN_WIDTH);
-        backGround.setFitHeight(Constants.SCREEN_HEIGHT);
-        root.getChildren().add(backGround);
+        addBackGround(root, "resources/battlemap6_middleground.png");
+        makePolygons(root);
+        addTroops(root);
 
-        Polygon[][] cells = new Polygon[5][8];
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void addBackGround(Group root, String address) {
+        try {
+            Image image = new Image(new FileInputStream(address));
+            ImageView backGround = new ImageView(image);
+            backGround.setFitWidth(Constants.SCREEN_WIDTH);
+            backGround.setFitHeight(Constants.SCREEN_HEIGHT);
+            root.getChildren().add(backGround);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void makePolygons(Group root) {
         for (int j = 0; j < 5; j++) {
-            double newL2 = (j * Constants.L1 + (6 - j) * Constants.L2) / 6;
-            double newL1 = ((j + 1) * Constants.L1 + (6 - (j + 1)) * Constants.L2) / 6;
-            double newH2 = Constants.H * (newL2 - Constants.L2) / (Constants.L1 - Constants.L2) + Constants.Y;
-            double newH1 = Constants.H * (newL1 - Constants.L2) / (Constants.L1 - Constants.L2) + Constants.Y;
+            double upperWidth = (j * Constants.MAP_DOWNER_WIDTH + (6 - j) * Constants.MAP_UPPER_WIDTH) / 6;
+            double downerWidth = ((j + 1) * Constants.MAP_DOWNER_WIDTH + (6 - (j + 1)) * Constants.MAP_UPPER_WIDTH) / 6;
+            double upperY = Constants.MAP_HEIGHT * (upperWidth - Constants.MAP_UPPER_WIDTH) /
+                    (Constants.MAP_DOWNER_WIDTH - Constants.MAP_UPPER_WIDTH) + Constants.MAP_Y;
+            double downerY = Constants.MAP_HEIGHT * (downerWidth - Constants.MAP_UPPER_WIDTH) /
+                    (Constants.MAP_DOWNER_WIDTH - Constants.MAP_UPPER_WIDTH) + Constants.MAP_Y;
             for (int i = 0; i < 8; i++) {
-                double x1 = Constants.X + (Constants.L1 - newL2) / 2 + i * newL2 / 8;
-                double x2 = Constants.X + (Constants.L1 - newL2) / 2 + (i + 1) * newL2 / 8;
-                double x3 = Constants.X + (Constants.L1 - newL1) / 2 + (i + 1) * newL1 / 8;
-                double x4 = Constants.X + (Constants.L1 - newL1) / 2 + i * newL1 / 8;
-                cells[j][i] = new Polygon(x1 + 1, newH2 + 1, x2 - 1, newH2 + 1, x3 - 1, newH1 - 1, x4 + 1, newH1 - 1);
+                double x1 = Constants.MAP_X + (Constants.MAP_DOWNER_WIDTH - upperWidth) / 2 + i * upperWidth / 8;
+                double x2 = Constants.MAP_X + (Constants.MAP_DOWNER_WIDTH - upperWidth) / 2 + (i + 1) * upperWidth / 8;
+                double x3 = Constants.MAP_X + (Constants.MAP_DOWNER_WIDTH - downerWidth) / 2 + (i + 1) * downerWidth / 8;
+                double x4 = Constants.MAP_X + (Constants.MAP_DOWNER_WIDTH - downerWidth) / 2 + i * downerWidth / 8;
+                cells[j][i] = new Polygon(x1 + 1, upperY + 1, x2 - 1, upperY + 1, x3 - 1, downerY - 1, x4 + 1, downerY - 1);
                 cells[j][i].setFill(Color.DARKGREEN);
                 cells[j][i].setOpacity(0.5);
-                final int I=i,J=j;
+                final int I = i, J = j;
                 cells[j][i].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -59,9 +74,28 @@ public class Main extends Application {
                     }
                 });
                 root.getChildren().add(cells[j][i]);
+                cellsX[j][i] = (x1 + x2 + x3 + x4) / 4;
+                cellsY[j][i] = (upperY + downerY) / 2;
             }
         }
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    }
+
+    private void addTroops(Group root) throws Exception {
+        Image heroImage = new Image(new FileInputStream("resources/boss_cindera.png"));
+        ImageView heroView = new ImageView(heroImage);
+        heroView.setScaleX(1);
+        heroView.setScaleY(1);
+        heroView.setX(cellsX[2][2]);
+        heroView.setY(cellsY[2][2]);
+
+        root.getChildren().add(heroView);
+
+        SpriteAnimation animation = new SpriteAnimation(
+                heroView, 100, 7, 0, 0, 131, 131);
+        animation.play(69, 0);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
