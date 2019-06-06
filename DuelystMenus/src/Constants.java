@@ -21,8 +21,7 @@ class Constants {
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private static final double SCALE = 1;
-    static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
+    private static final double SCALE = 0.7;
     static final double BACK_BUTTON_SIZE = 400 * SCALE;
     static final double PLAY_MENU_BUTTON_WIDTH = 632 * SCALE;
     static final double PLAY_MENU_BUTTON_HEIGHT = 1160 * SCALE;
@@ -49,6 +48,7 @@ class Constants {
     static final double FAR_PILLARS_HEIGHT = 1342 * SCALE;
     static final double VIGNETTE_WIDTH = 1429 * SCALE;
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
+    static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
     static final Effect MENU_ITEM_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
     static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.gray(0, 1));

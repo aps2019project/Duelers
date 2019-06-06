@@ -40,14 +40,15 @@ class BackgroundMaker {
     }
 
     private static void makePlayBackground(String url) throws FileNotFoundException {
-        BorderPane playBackground = new BorderPane();
+        BorderPane background = new BorderPane();
 
         ImageView backgroundView = ImageLoader.loadImage(url, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
-        backgroundView.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR / 2));
+        backgroundView.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR / 3));
+        background.setEffect(new ColorAdjust(0, 0, -0.1, 0));
 
-        playBackground.getChildren().addAll(backgroundView);
-        playBackgroundsByUrl.put(url, playBackground);
+        background.getChildren().addAll(backgroundView);
+        playBackgroundsByUrl.put(url, background);
     }
 
     static BorderPane getPlayBackground(String url) throws FileNotFoundException {

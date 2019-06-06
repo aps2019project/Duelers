@@ -8,9 +8,9 @@ class SinglePlayerMenu extends PlayMenu {
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> PlayMenu.getInstance().show();
     private static final PlayButtonItem[] items = {
             new PlayButtonItem("resources/menu/playButtons/story.jpg", "STORY GAME",
-                    "Play in a story of duelyst", event -> {}),
+                    "Play in a story of duelyst", event -> StoryMenu.getInstance().show()),
             new PlayButtonItem("resources/menu/playButtons/custom_game.jpg", "CUSTOM GAME",
-                    "Play with one of your decks controlled by AI", event -> {})
+                    "Play with one of your decks controlled by AI", event -> CustomGameMenu.getInstance().show())
     };
     private static SinglePlayerMenu menu;
 
