@@ -6,7 +6,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 class Vignette extends Parent {
-    private static final double OPACITY = 0.7;
+    private static final double OPACITY = 0.5;
     private Rectangle region;
 
     Vignette(double width, double height) {

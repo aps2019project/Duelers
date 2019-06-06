@@ -51,7 +51,7 @@ class Constants {
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
     static final Effect MENU_ITEM_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
-    static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.gray(0, 0.7));
+    static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.gray(0, 1));
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
     static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
