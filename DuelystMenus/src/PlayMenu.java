@@ -20,15 +20,33 @@ class PlayMenu {
                     Color.rgb(40, 43, 53), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
     private static final double SEPARATOR_OPACITY = 0.3;
+    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> MainMenu.getInstance().show();
+    private static final PlayButtonItem[] items = {
+            new PlayButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
+                    "Story game and custom game, play with AI", event -> SinglePlayerMenu.getInstance().show()),
+            new PlayButtonItem("resources/menu/playButtons/multiplayer.jpg", "MULTIPLAYER",
+                    "Play with your friends and earn money", event -> MultiPlayerMenu.getInstance().show())
+    };
     private static PlayMenu menu;
-    private static AnchorPane root = new AnchorPane();
-    private static Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+    private AnchorPane root = new AnchorPane();
+    private Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+
+    PlayMenu(PlayButtonItem[] items, String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
+        root.setBackground(ROOT_BACKGROUND);
+
+        BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
+        BorderPane container = makeContainer(items);
+        AnchorPane backButton = ButtonMaker.makeBackButton(backEvent);
+
+        root.getChildren().addAll(background, container, backButton);
+    }
 
     static PlayMenu getInstance() {
         if (menu == null) {
             try {
-                menu = new PlayMenu();
+                menu = new PlayMenu(items, BACKGROUND_URL, BACK_EVENT);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -36,45 +54,31 @@ class PlayMenu {
         return menu;
     }
 
-    private PlayMenu() throws FileNotFoundException {
-        root.setBackground(ROOT_BACKGROUND);
-
-        BorderPane background = BackgroundMaker.getPlayBackground();
-        BorderPane container = makeContainer();
-        AnchorPane backButton = ButtonMaker.makeBackButtonPane(event -> MainMenu.getInstance().show());
-
-        root.getChildren().addAll(background, container, backButton);
-    }
-
-    void show() {
-        Main.setScene(scene);
-    }
-
-    private BorderPane makeContainer() {
+    private BorderPane makeContainer(PlayButtonItem[] items) {
         BorderPane container = new BorderPane();
         container.setMinSize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
         container.setMaxSize(Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
         BorderPane.setAlignment(container, Pos.CENTER);
 
-        HBox buttonsWrapper = makeButtonsWrapper();
+        HBox buttonsWrapper = makeButtonsWrapper(items);
 
         container.setCenter(buttonsWrapper);
         return container;
     }
 
-    private HBox makeButtonsWrapper() {
+    private HBox makeButtonsWrapper(PlayButtonItem[] items) {
         HBox buttonsWrapper = new HBox(Constants.DEFAULT_SPACING * 8);
         buttonsWrapper.setAlignment(Pos.CENTER);
         buttonsWrapper.setMaxHeight(Constants.PLAY_MENU_BUTTON_HEIGHT + Constants.PLAY_MENU_PLATE_HEIGHT);
 
-        for (ButtonItem item : ButtonItem.items) {
-            VBox buttonBox = makeButtonBox(item);
+        for (PlayButtonItem item : items) {
+            VBox buttonBox = makePlayButtonBox(item);
             buttonsWrapper.getChildren().add(buttonBox);
         }
         return buttonsWrapper;
     }
 
-    private VBox makeButtonBox(ButtonItem item) {
+    private VBox makePlayButtonBox(PlayButtonItem item) {
         ImageView plate = ImageLoader.makeImageView(
                 Constants.PLATE_IMAGE, Constants.PLAY_MENU_BUTTON_WIDTH, Constants.PLAY_MENU_PLATE_HEIGHT
         );
@@ -86,7 +90,7 @@ class PlayMenu {
         return buttonBox;
     }
 
-    private StackPane makeImageZone(ButtonItem item) {
+    private StackPane makeImageZone(PlayButtonItem item) {
         Region space = makeSpace();
         Label title = makeTitle(item);
         Separator separator = makeSeparator();
@@ -116,7 +120,7 @@ class PlayMenu {
         return imageZone;
     }
 
-    private Text makeDescription(ButtonItem item) {
+    private Text makeDescription(PlayButtonItem item) {
         Text description = new Text(item.description);
         description.setFont(Constants.MENU_HINT_FONT);
         description.setFill(Color.WHITE);
@@ -137,35 +141,14 @@ class PlayMenu {
         return separator;
     }
 
-    private Label makeTitle(ButtonItem item) {
+    private Label makeTitle(PlayButtonItem item) {
         Label title = new Label(item.title);
         title.setFont(Constants.PLAY_MENU_ITEM_FONT);
         title.setTextFill(Color.WHITE);
         return title;
     }
 
-    private static class ButtonItem {
-        private static final ButtonItem[] items = {
-                new ButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
-                        "Story game and custom game, play with AI", event -> {}),
-                new ButtonItem("resources/menu/playButtons/multiplayer.jpg", "MULTIPLAYER",
-                        "Play with your friends and earn money", event -> {})
-        };
-
-        private final String title;
-        private final String description;
-        private final EventHandler<? super MouseEvent> event;
-        private ImageView imageView;
-
-        private ButtonItem(String url, String title, String description, EventHandler<? super MouseEvent> event) {
-            try {
-                this.imageView = ImageLoader.loadImage(url, Constants.PLAY_MENU_BUTTON_WIDTH, Constants.PLAY_MENU_BUTTON_HEIGHT);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            this.title = title;
-            this.description = description;
-            this.event = event;
-        }
+    void show() {
+        Main.setScene(scene);
     }
 }

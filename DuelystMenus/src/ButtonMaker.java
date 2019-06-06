@@ -3,10 +3,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
@@ -49,7 +46,7 @@ class ButtonMaker {
         return button;
     }
     
-    static AnchorPane makeBackButtonPane(EventHandler<? super MouseEvent> clickEvent) throws FileNotFoundException {
+    static AnchorPane makeBackButton(EventHandler<? super MouseEvent> clickEvent) throws FileNotFoundException {
         ImageView backImage = ImageLoader.loadImage(BACK_BUTTON_IMAGE_URL,
                 Constants.BACK_BUTTON_SIZE, Constants.BACK_BUTTON_SIZE,
                 -Constants.BACK_BUTTON_SIZE * 0.5, -Constants.BACK_BUTTON_SIZE * 0.5

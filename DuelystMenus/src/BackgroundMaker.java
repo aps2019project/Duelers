@@ -1,9 +1,10 @@
-import javafx.scene.effect.*;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 class BackgroundMaker {
     private static final String BACKGROUND_URL = "resources/menu/background/background.jpg";
@@ -11,9 +12,8 @@ class BackgroundMaker {
     private static final String FAR_PILLAR_URL = "resources/menu/background/far_pillars.png";
     private static final String NEAR_PILLAR_URL = "resources/menu/background/near_pillars.png";
     private static final String VIGNETTE_URL = "resources/menu/background/vignette.png";
-    private static final String PLAY_BACKGROUND_URL = "resources/menu/background/play_background.jpg";
+    private static final HashMap<String, BorderPane> playBackgroundsByUrl = new HashMap<>();
     private static BorderPane menuBackground;
-    private static BorderPane playBackground;
 
     private static void makeMenuBackground() throws FileNotFoundException {
         menuBackground = new BorderPane();
@@ -39,22 +39,23 @@ class BackgroundMaker {
         menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, fog.getView(), foregroundView, vignetteView);
     }
 
-    private static void makePlayBackground() throws FileNotFoundException {
-        playBackground = new BorderPane();
+    private static void makePlayBackground(String url) throws FileNotFoundException {
+        BorderPane background = new BorderPane();
 
-        ImageView backgroundView = ImageLoader.loadImage(PLAY_BACKGROUND_URL, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
+        ImageView backgroundView = ImageLoader.loadImage(url, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
-        backgroundView.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR));
-        playBackground.setEffect(new ColorAdjust(0, 0, -0.6, -0.8));
+        backgroundView.setEffect(new GaussianBlur(Constants.BACKGROUND_BLUR / 3));
+        background.setEffect(new ColorAdjust(0, 0, -0.1, 0));
 
-        playBackground.getChildren().addAll(backgroundView);
+        background.getChildren().addAll(backgroundView);
+        playBackgroundsByUrl.put(url, background);
     }
 
-    static BorderPane getPlayBackground() throws FileNotFoundException {
-        if (playBackground == null) {
-            makePlayBackground();
+    static BorderPane getPlayBackground(String url) throws FileNotFoundException {
+        if (playBackgroundsByUrl.get(url) == null) {
+            makePlayBackground(url);
         }
-        return playBackground;
+        return playBackgroundsByUrl.get(url);
     }
 
     static BorderPane getMenuBackground() throws FileNotFoundException {
