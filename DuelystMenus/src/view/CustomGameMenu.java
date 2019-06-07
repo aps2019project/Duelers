@@ -2,7 +2,6 @@ package view;
 
 import models.*;
 import javafx.event.EventHandler;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 
 import java.io.FileNotFoundException;
@@ -92,7 +91,7 @@ class CustomGameMenu extends PlayMenu {
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
         AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.exitOnMouseClick(shouldBeClosed, root);
+        dialogContainer.makeClosable(shouldBeClosed, root);
         dialogBox.preventClosingOnClick(shouldBeClosed);
     }
 }

@@ -3,6 +3,7 @@ package models;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -19,13 +20,18 @@ public class DialogContainer extends BorderPane {
         setCenter(center);
     }
 
-    public void exitOnMouseClick(AtomicBoolean shouldBeClosed, AnchorPane root) {
+    public void makeClosable(AtomicBoolean shouldBeClosed, AnchorPane root) {
         setOnMouseClicked(event -> {
             if (!shouldBeClosed.get()) {
                 shouldBeClosed.set(true);
                 return;
             }
             closeFrom(root);
+        });
+        setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                closeFrom(root);
+            }
         });
     }
 
