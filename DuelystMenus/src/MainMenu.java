@@ -100,7 +100,7 @@ class MainMenu {
             menuView.setOpacity(0.6);
             ringView.setVisible(true);
             label.setCursor(Constants.SELECT_CURSOR);
-            label.setEffect(Constants.MENU_ITEM_SHADOW);
+            label.setEffect(Constants.WHITE_TEXT_SHADOW);
             rotate.play();
             textWrapper.setVisible(true);
         });

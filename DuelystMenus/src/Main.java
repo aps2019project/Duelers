@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
 
-        LoginMenu.getInstance().show();
+        CustomGameMenu.getInstance().show();
 
         stage.setTitle("DUELYST");
         stage.setResizable(false);
