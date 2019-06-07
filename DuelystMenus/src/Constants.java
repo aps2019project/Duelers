@@ -21,7 +21,7 @@ class Constants {
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private static final double SCALE = 0.7;
+    private static final double SCALE = 0.5;
     static final double BACK_BUTTON_SIZE = 400 * SCALE;
     static final double PLAY_MENU_BUTTON_WIDTH = 632 * SCALE;
     static final double PLAY_MENU_BUTTON_HEIGHT = 1160 * SCALE;

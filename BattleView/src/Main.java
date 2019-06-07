@@ -2,10 +2,12 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
@@ -26,10 +28,17 @@ public class Main extends Application {
 
         addBackGround(root, "resources/battlemap6_middleground.png");
         makePolygons(root);
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 8; i++) {
+                root.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 5));
+            }
+        }
+
         addTroops(root);
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     private void addBackGround(Group root, String address) {
@@ -81,18 +90,73 @@ public class Main extends Application {
     }
 
     private void addTroops(Group root) throws Exception {
-        Image heroImage = new Image(new FileInputStream("resources/boss_cindera.png"));
-        ImageView heroView = new ImageView(heroImage);
-        heroView.setScaleX(1);
-        heroView.setScaleY(1);
-        heroView.setX(cellsX[2][2]);
-        heroView.setY(cellsY[2][2]);
+        TroopAnimation troopAnimation = new TroopAnimation(root, "resources/boss_malyk", cellsX[2][2], cellsY[2][2]);
 
-        root.getChildren().add(heroView);
+        Button button1 = new Button("KILL");
+        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.DEATH);
+            }
+        });
+        button1.setLayoutX(20);
+        button1.setLayoutY(20);
+        root.getChildren().add(button1);
 
-        SpriteAnimation animation = new SpriteAnimation(
-                heroView, 100, 7, 0, 0, 131, 131);
-        animation.play(69, 0);
+        Button button2 = new Button("IDLE");
+        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.IDLE);
+            }
+        });
+        button2.setLayoutX(20);
+        button2.setLayoutY(120);
+        root.getChildren().add(button2);
+
+        Button button3 = new Button("ATTACK");
+        button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.ATTACK);
+            }
+        });
+        button3.setLayoutX(20);
+        button3.setLayoutY(220);
+        root.getChildren().add(button3);
+
+        Button button4 = new Button("BREATHING");
+        button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.BREATHING);
+            }
+        });
+        button4.setLayoutX(20);
+        button4.setLayoutY(320);
+        root.getChildren().add(button4);
+
+        Button button5 = new Button("RUN");
+        button5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.RUN);
+            }
+        });
+        button5.setLayoutX(20);
+        button5.setLayoutY(420);
+        root.getChildren().add(button5);
+
+        Button button6 = new Button("HIT");
+        button6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                troopAnimation.setAction(ACTION.HIT);
+            }
+        });
+        button6.setLayoutX(20);
+        button6.setLayoutY(520);
+        root.getChildren().add(button6);
     }
 
     public static void main(String[] args) {

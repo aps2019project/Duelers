@@ -35,11 +35,13 @@ public class SpriteAnimation extends Transition {
         this.firstIndex = firstIndex;
         this.lastIndex = lastIndex;
         setCycleDuration(Duration.millis(frameDuration * (firstIndex - lastIndex + 1)));
+        this.setCycleCount(INDEFINITE);
         this.play();
     }
 
     @Override
     protected void interpolate(double k) {
+        System.out.println(k);
         final int index = Math.max(firstIndex - (int) (k * (firstIndex - lastIndex + 1)), lastIndex);
         if (index != lastShownIndex) {
             int x = (index / rows) * width + offsetX;
