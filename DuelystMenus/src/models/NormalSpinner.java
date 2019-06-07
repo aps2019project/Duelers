@@ -1,0 +1,11 @@
+package models;
+
+import javafx.scene.control.Spinner;
+
+public class NormalSpinner extends Spinner<Integer> {
+
+    public NormalSpinner(int min, int max, int initialValue) {
+        super(min, max, initialValue);
+        getEditor().setFont(Constants.DEFAULT_FONT);
+    }
+}
