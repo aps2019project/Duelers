@@ -52,7 +52,7 @@ class CustomGameMenu extends PlayMenu {
             //TODO send data to server
             dialogContainer.closeFrom(root);
         });
-        showDialog(dialogContainer);
+        dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
     }
 
@@ -68,7 +68,7 @@ class CustomGameMenu extends PlayMenu {
             //TODO send data to server
             dialogContainer.closeFrom(root);
         });
-        showDialog(dialogContainer);
+        dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
     }
 
@@ -76,7 +76,7 @@ class CustomGameMenu extends PlayMenu {
         DialogText deckText = new DialogText("Please choose one of your decks to be as opponent's deck");
         DeckListView listView = new DeckListView(deckNames);
         DialogText flagNumText = new DialogText("Please set number of flags in the game");
-        NormalSpinner flagNumSpinner = new NormalSpinner(5, 30, 10);
+        NormalSpinner flagNumSpinner = new NormalSpinner(Constants.FLAG_NUM_MIN, Constants.FLAG_NUM_MAX, Constants.FLAG_NUM_DEFAULT);
 
         DialogBox dialogBox = new DialogBox(deckText, listView, flagNumText, flagNumSpinner);
         DialogContainer dialogContainer = new DialogContainer(dialogBox);
@@ -86,13 +86,8 @@ class CustomGameMenu extends PlayMenu {
             //TODO send data to server
             dialogContainer.closeFrom(root);
         });
-        showDialog(dialogContainer);
+        dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
-    }
-
-    private void showDialog(DialogContainer dialogContainer) {
-        root.getChildren().get(0).setEffect(new GaussianBlur(Constants.ON_DIALOG_BLUR));
-        root.getChildren().add(dialogContainer);
     }
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {

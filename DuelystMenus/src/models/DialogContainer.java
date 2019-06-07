@@ -2,6 +2,7 @@ package models;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -26,6 +27,11 @@ public class DialogContainer extends BorderPane {
             }
             closeFrom(root);
         });
+    }
+
+    public void show(AnchorPane root) {
+        root.getChildren().get(0).setEffect(new GaussianBlur(Constants.ON_DIALOG_BLUR));
+        root.getChildren().add(this);
     }
 
     public void closeFrom(AnchorPane root) {

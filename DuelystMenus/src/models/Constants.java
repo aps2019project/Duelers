@@ -23,13 +23,16 @@ public class Constants {
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    public static final int FLAG_NUM_MIN = 5;
+    public static final int FLAG_NUM_MAX = 30;
+    public static final int FLAG_NUM_DEFAULT = 10;
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
     private static final double SCALE = 1;
     public static final double DEFAULT_SPACING = 10 * SCALE;
     public static final double SCENE_WIDTH = 3636 * SCALE;
     public static final double SCENE_HEIGHT = 2000 * SCALE;
-    public static final double ON_DIALOG_BLUR = 30 * SCALE;
+    static final double ON_DIALOG_BLUR = 30 * SCALE;
     static final double DIALOG_MAX_WIDTH = 1200 * SCALE;
     static final double DIALOG_MAX_HEIGHT = 700 * SCALE;
     static final double BACK_BUTTON_SIZE = 400 * SCALE;
