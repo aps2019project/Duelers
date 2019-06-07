@@ -89,8 +89,8 @@ class LoginMenu {
     }
 
     private VBox makeLoginBox() {
-        TextField usernameField = TextFieldMaker.makeDefaultTextField("username");
-        PasswordField passwordField = TextFieldMaker.makePasswordField();
+        NormalField usernameField = new NormalField("username");
+        NormalPasswordField passwordField = new NormalPasswordField();
 
         Region space = new Region();
         space.setMinHeight(Constants.LOGIN_BOX_SIZE * 0.5);
@@ -107,8 +107,8 @@ class LoginMenu {
     }
 
     private HBox makeButtonsBox() {
-        Button loginButton = ButtonMaker.makeLoginButton("LOG IN", event -> MainMenu.getInstance().show());
-        Button registerButton = ButtonMaker.makeLoginButton("REGISTER", event -> {});
+        OrangeButton loginButton = new OrangeButton("LOG IN", event -> MainMenu.getInstance().show());
+        OrangeButton registerButton = new OrangeButton("REGISTER", event -> {});
         return new HBox(Constants.DEFAULT_SPACING, loginButton, registerButton);
     }
 

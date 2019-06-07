@@ -13,10 +13,6 @@ class TextFieldMaker {
             new BorderStroke(Color.gray(0.4), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)
     );
 
-    static TextField makeDefaultTextField(String text) {
-        return makeField(text, new TextField());
-
-    }
 
     static PasswordField makePasswordField() {
         return makeField("password", new PasswordField());

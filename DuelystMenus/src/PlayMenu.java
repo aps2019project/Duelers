@@ -30,17 +30,18 @@ class PlayMenu {
                     "Play with your friends and earn money", event -> MultiPlayerMenu.getInstance().show())
     };
     private static PlayMenu menu;
-    private AnchorPane root = new AnchorPane();
+    final AnchorPane root = new AnchorPane();
     private Scene scene = new Scene(root, Constants.SCENE_WIDTH, Constants.SCENE_HEIGHT);
 
     PlayMenu(PlayButtonItem[] items, String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
-
         BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
         BorderPane container = makeContainer(items);
-        AnchorPane backButton = ButtonMaker.makeBackButton(backEvent);
+        BackButton backButton = new BackButton(backEvent);
 
-        root.getChildren().addAll(background, container, backButton);
+        AnchorPane sceneContents = new AnchorPane(background, container, backButton);
+
+        root.getChildren().addAll(sceneContents);
     }
 
     static PlayMenu getInstance() {
@@ -99,7 +100,7 @@ class PlayMenu {
         VBox textBox = new VBox(Constants.DEFAULT_SPACING * 2, space, title, separator, description);
         textBox.setAlignment(Pos.CENTER);
 
-        Vignette vignette = new Vignette(Constants.PLAY_MENU_BUTTON_WIDTH, Constants.PLAY_MENU_BUTTON_HEIGHT);
+        LinearVignette vignette = new LinearVignette(Constants.PLAY_MENU_BUTTON_WIDTH, Constants.PLAY_MENU_BUTTON_HEIGHT);
 
         StackPane imageZone = new StackPane(item.imageView, vignette, textBox);
 
@@ -107,7 +108,7 @@ class PlayMenu {
         imageZone.setOnMouseEntered(event -> {
             item.imageView.setEffect(Constants.PLAY_MENU_HOVER_EFFECT);
             imageZone.setCursor(Constants.SELECT_CURSOR);
-            title.setEffect(Constants.MENU_ITEM_SHADOW);
+            title.setEffect(Constants.WHITE_TEXT_SHADOW);
         });
 
         imageZone.setOnMouseExited(event -> {
