@@ -6,7 +6,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class NormalField extends TextField {
-    private static final Background TEXT_FIELD_BACKGROUND = new Background(
+    private static final Background BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(70, 70, 70), CornerRadii.EMPTY, Insets.EMPTY)
     );
     private static final Border DEFAULT_BORDER = new Border(
@@ -14,7 +14,7 @@ public class NormalField extends TextField {
     );
     public NormalField(String text) {
         setFont(Constants.DEFAULT_FONT);
-        setBackground(TEXT_FIELD_BACKGROUND);
+        setBackground(BACKGROUND);
         setBorder(DEFAULT_BORDER);
         setPadding(new Insets(Constants.DEFAULT_SPACING * 2));
         setPromptText(text);
