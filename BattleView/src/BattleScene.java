@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,33 +8,31 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.stage.Stage;
+import models.comperessedData.CompressedGame;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
-public class BattleView extends Application {
+public class BattleScene {
+    private Controller controller;
+    private CompressedGame game;
     private Scene scene;
     private Group root;
     private final Polygon[][] cells = new Polygon[5][8];
     private final double[][] cellsX = new double[5][8];
     private final double[][] cellsY = new double[5][8];
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    public BattleScene(Controller controller,CompressedGame game) throws Exception {
+        this.controller=controller;
+        this.game=game;
         root = new Group();
-        primaryStage.setResizable(false);
-        primaryStage.setFullScreen(true);
         scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         addBackGround("resources/battlemap6_middleground.png");
         makePolygons();
         addCircles();
         addTroops();
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     private void addBackGround(String address) {
@@ -95,13 +92,15 @@ public class BattleView extends Application {
     }
 
     private void addTroops() throws Exception {
-        TroopAnimation troopAnimation = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 2, 2);
+        TroopAnimation troopAnimation1 = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 2, 2);
+        TroopAnimation troopAnimation2 = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 4, 7);
 
         Button button1 = new Button("KILL");
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation.setAction(ACTION.DEATH);
+                troopAnimation1.setAction(ACTION.DEATH);
+                troopAnimation2.setAction(ACTION.DEATH);
             }
         });
         button1.setLayoutX(20);
@@ -112,7 +111,8 @@ public class BattleView extends Application {
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation.setAction(ACTION.IDLE);
+                troopAnimation1.setAction(ACTION.IDLE);
+                troopAnimation2.setAction(ACTION.IDLE);
             }
         });
         button2.setLayoutX(20);
@@ -123,7 +123,8 @@ public class BattleView extends Application {
         button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation.setAction(ACTION.ATTACK);
+                troopAnimation1.setAction(ACTION.ATTACK);
+                troopAnimation2.setAction(ACTION.ATTACK);
             }
         });
         button3.setLayoutX(20);
@@ -134,7 +135,8 @@ public class BattleView extends Application {
         button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation.setAction(ACTION.BREATHING);
+                troopAnimation1.setAction(ACTION.BREATHING);
+                troopAnimation2.setAction(ACTION.BREATHING);
             }
         });
         button4.setLayoutX(20);
@@ -146,8 +148,8 @@ public class BattleView extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Random random = new Random();
-                troopAnimation.moveTo(random.nextInt(5), random.nextInt(8));
-                troopAnimation.setAction(ACTION.RUN);
+                troopAnimation1.moveTo(random.nextInt(5), random.nextInt(8));
+                troopAnimation2.moveTo(random.nextInt(5), random.nextInt(8));
             }
         });
         button5.setLayoutX(20);
@@ -158,7 +160,8 @@ public class BattleView extends Application {
         button6.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation.setAction(ACTION.HIT);
+                troopAnimation1.setAction(ACTION.HIT);
+                troopAnimation2.setAction(ACTION.HIT);
             }
         });
         button6.setLayoutX(20);
@@ -166,7 +169,7 @@ public class BattleView extends Application {
         root.getChildren().add(button6);
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public Scene getScene() {
+        return scene;
     }
 }

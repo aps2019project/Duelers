@@ -66,34 +66,25 @@ public class TroopAnimation extends Transition {
         this.cellsX = cellsX;
         this.cellsY = cellsY;
 
+        currentI = i;
+        currentJ = j;
+
         Image image = new Image(new FileInputStream(fileName + ".png"));
         imageView = new ImageView(image);
         imageView.setScaleX(Constants.SCREEN_WIDTH / 1920);
         imageView.setScaleY(Constants.SCREEN_HEIGHT / 1080);
         imageView.setX(cellsX[j][i] - EXTRA_X);
         imageView.setY(cellsY[j][i] - EXTRA_Y);
-
-        currentI = i;
-        currentJ = j;
-
         root.getChildren().add(imageView);
 
         setCycleDuration(Duration.millis(FRAME_DURATION));
         this.setCycleCount(INDEFINITE);
 
-        /*action = ACTION.IDLE;//?????????????
-        currentActionX = IDLE_X_COORDINATE;
-        currentActionY = IDLE_Y_COORDINATE;
-        nextIndex = 0;
-        this.play();*/
         setAction(ACTION.BREATHING);
     }
 
     @Override
     protected void interpolate(double v) {
-        if (action == ACTION.RUN && imageView.getX() == cellsX[currentJ][currentI] - EXTRA_X && imageView.getY() == cellsY[currentJ][currentI] - EXTRA_Y) {
-            setAction(ACTION.BREATHING);
-        }
         if (v < 0.5 && !flag)
             flag = true;
         if (v > 0.5 && flag) {
@@ -104,17 +95,20 @@ public class TroopAnimation extends Transition {
     }
 
     private void generateNextState() {
+        //has reached to destination
+        if (action == ACTION.RUN && imageView.getX() == cellsX[currentJ][currentI] - EXTRA_X && imageView.getY() == cellsY[currentJ][currentI] - EXTRA_Y) {//may bug
+            setAction(ACTION.BREATHING);
+            return;
+        }
         if (nextIndex != (currentActionX.length - 1)) {
             nextIndex++;
             return;
         }
+        //has reached to last frame
         switch (action) {
             case HIT:
             case ATTACK:
-                action = ACTION.BREATHING;
-                currentActionX = BREATHING_X_COORDINATE;
-                currentActionY = BREATHING_Y_COORDINATE;
-                nextIndex = 0;
+                setAction(ACTION.BREATHING);
                 break;
             case RUN:
             case IDLE:
@@ -125,10 +119,6 @@ public class TroopAnimation extends Transition {
                 //do nothing
                 break;
         }
-    }
-
-    public ACTION getAction() {
-        return action;
     }
 
     public void setAction(ACTION action) {
