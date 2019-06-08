@@ -1,3 +1,6 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -8,6 +11,9 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 
 public class TroopAnimation extends Transition {
+    private final double[][] cellsX;
+    private final double[][] cellsY;
+
     private final double[] ATTACK_X_COORDINATE;
     private final double[] ATTACK_Y_COORDINATE;
     private final double[] BREATHING_X_COORDINATE;
@@ -31,9 +37,11 @@ public class TroopAnimation extends Transition {
     private ACTION action;
     private double[] currentActionX;
     private double[] currentActionY;
+    private int currentI, currentJ;
 
-    public TroopAnimation(Group root, String fileName, double x, double y) throws Exception {
-        //Read From Settings
+
+    public TroopAnimation(Group root, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
+        //Read From Settings********************
         ATTACK_X_COORDINATE = new double[]{404, 808, 707, 707, 707, 707, 707, 707, 707, 707, 707, 707, 606, 606,
                 606, 606, 606, 606, 606, 606, 606};
         ATTACK_Y_COORDINATE = new double[]{0, 0, 909, 808, 707, 606, 505, 404, 303, 202, 101, 0, 909, 808, 707,
@@ -54,29 +62,38 @@ public class TroopAnimation extends Transition {
         FRAME_DURATION = 100;
         EXTRA_X = 50;
         EXTRA_Y = 60;
-
-        action = ACTION.IDLE;
-        currentActionX = IDLE_X_COORDINATE;
-        currentActionY = IDLE_Y_COORDINATE;
-        nextIndex = 0;
-
+        //*******************************
+        this.cellsX = cellsX;
+        this.cellsY = cellsY;
 
         Image image = new Image(new FileInputStream(fileName + ".png"));
         imageView = new ImageView(image);
-        imageView.setScaleX(1);
-        imageView.setScaleY(1);
-        imageView.setX(x - EXTRA_X);
-        imageView.setY(y - EXTRA_Y);
+        imageView.setScaleX(Constants.SCREEN_WIDTH / 1920);
+        imageView.setScaleY(Constants.SCREEN_HEIGHT / 1080);
+        imageView.setX(cellsX[j][i] - EXTRA_X);
+        imageView.setY(cellsY[j][i] - EXTRA_Y);
+
+        currentI = i;
+        currentJ = j;
 
         root.getChildren().add(imageView);
 
         setCycleDuration(Duration.millis(FRAME_DURATION));
         this.setCycleCount(INDEFINITE);
-        this.play();
+
+        /*action = ACTION.IDLE;//?????????????
+        currentActionX = IDLE_X_COORDINATE;
+        currentActionY = IDLE_Y_COORDINATE;
+        nextIndex = 0;
+        this.play();*/
+        setAction(ACTION.BREATHING);
     }
 
     @Override
     protected void interpolate(double v) {
+        if (action == ACTION.RUN && imageView.getX() == cellsX[currentJ][currentI] - EXTRA_X && imageView.getY() == cellsY[currentJ][currentI] - EXTRA_Y) {
+            setAction(ACTION.BREATHING);
+        }
         if (v < 0.5 && !flag)
             flag = true;
         if (v > 0.5 && flag) {
@@ -94,9 +111,9 @@ public class TroopAnimation extends Transition {
         switch (action) {
             case HIT:
             case ATTACK:
-                action = ACTION.IDLE;
-                currentActionX = IDLE_X_COORDINATE;
-                currentActionY = IDLE_Y_COORDINATE;
+                action = ACTION.BREATHING;
+                currentActionX = BREATHING_X_COORDINATE;
+                currentActionY = BREATHING_Y_COORDINATE;
                 nextIndex = 0;
                 break;
             case RUN:
@@ -145,5 +162,21 @@ public class TroopAnimation extends Transition {
                 break;
         }
         this.play();
+    }
+
+    public void moveTo(int j, int i) {
+        this.action = ACTION.RUN;
+        nextIndex = 0;
+        this.stop();
+        currentActionX = RUN_X_COORDINATE;
+        currentActionY = RUN_Y_COORDINATE;
+        this.play();
+        KeyValue xValue = new KeyValue(imageView.xProperty(), cellsX[j][i] - EXTRA_X);
+        KeyValue yValue = new KeyValue(imageView.yProperty(), cellsY[j][i] - EXTRA_Y);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - i) + Math.abs(currentJ - j)) * 200), xValue, yValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.play();
+        currentJ = j;
+        currentI = i;
     }
 }

@@ -13,35 +13,32 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
-public class Main extends Application {
-    private Polygon[][] cells = new Polygon[5][8];
-    private double[][] cellsX = new double[5][8];
-    private double[][] cellsY = new double[5][8];
+public class BattleView extends Application {
+    private Scene scene;
+    private Group root;
+    private final Polygon[][] cells = new Polygon[5][8];
+    private final double[][] cellsX = new double[5][8];
+    private final double[][] cellsY = new double[5][8];
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
+        root = new Group();
         primaryStage.setResizable(false);
         primaryStage.setFullScreen(true);
-        Scene scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        addBackGround(root, "resources/battlemap6_middleground.png");
-        makePolygons(root);
-        for (int j = 0; j < 5; j++) {
-            for (int i = 0; i < 8; i++) {
-                root.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 5));
-            }
-        }
-
-        addTroops(root);
+        addBackGround("resources/battlemap6_middleground.png");
+        makePolygons();
+        addCircles();
+        addTroops();
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
-    private void addBackGround(Group root, String address) {
+    private void addBackGround(String address) {
         try {
             Image image = new Image(new FileInputStream(address));
             ImageView backGround = new ImageView(image);
@@ -53,7 +50,7 @@ public class Main extends Application {
         }
     }
 
-    private void makePolygons(Group root) {
+    private void makePolygons() {
         for (int j = 0; j < 5; j++) {
             double upperWidth = (j * Constants.MAP_DOWNER_WIDTH + (6 - j) * Constants.MAP_UPPER_WIDTH) / 6;
             double downerWidth = ((j + 1) * Constants.MAP_DOWNER_WIDTH + (6 - (j + 1)) * Constants.MAP_UPPER_WIDTH) / 6;
@@ -89,8 +86,16 @@ public class Main extends Application {
         }
     }
 
-    private void addTroops(Group root) throws Exception {
-        TroopAnimation troopAnimation = new TroopAnimation(root, "resources/boss_malyk", cellsX[2][2], cellsY[2][2]);
+    private void addCircles() {
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 8; i++) {
+                root.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 5));
+            }
+        }
+    }
+
+    private void addTroops() throws Exception {
+        TroopAnimation troopAnimation = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 2, 2);
 
         Button button1 = new Button("KILL");
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -140,6 +145,8 @@ public class Main extends Application {
         button5.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                Random random = new Random();
+                troopAnimation.moveTo(random.nextInt(5), random.nextInt(8));
                 troopAnimation.setAction(ACTION.RUN);
             }
         });

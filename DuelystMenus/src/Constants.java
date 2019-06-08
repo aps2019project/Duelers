@@ -23,7 +23,7 @@ class Constants {
     );
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
-    private static final double SCALE = 1;
+    private static final double SCALE = 0.5;
     static final double DIALOG_MAX_WIDTH = 1200 * SCALE;
     static final double DIALOG_MAX_HEIGHT = 700 * SCALE;
     static final double BACK_BUTTON_SIZE = 400 * SCALE;
