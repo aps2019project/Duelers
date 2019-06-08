@@ -1,20 +1,23 @@
 package converters;
 
 import models.newer.Frame;
-import models.newer.FxPlayList;
+import models.newer.Playlist;
 import models.old.Plist;
 import models.old.PlistFrame;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlistToFxPlaylistConverter implements Converter<FxPlayList>{
+public class PlistToFxPlaylistConverter implements Converter<Playlist>{
     private final Pattern framePattern = Pattern.compile("(\\d+),(\\d+)");
 
     @Override
-    public FxPlayList convert(Plist plist) {
-        FxPlayList fxPlayList = new FxPlayList();
+    public Playlist convert(Plist plist) {
+        Playlist fxPlayList = new Playlist();
+        ArrayList<Frame> frames = new ArrayList<>();
+        fxPlayList.lists.put("frames", frames);
         for (Map.Entry<String, PlistFrame> entry : plist.frames.entrySet()) {
             PlistFrame plistFrame = entry.getValue();
 
@@ -25,7 +28,7 @@ public class PlistToFxPlaylistConverter implements Converter<FxPlayList>{
                     Integer.parseInt(matcher.group(2))
             );
 
-            fxPlayList.frames.add(frame);
+            frames.add(frame);
 
             matcher.find();
             fxPlayList.frameWidth = Integer.parseInt(matcher.group(1));

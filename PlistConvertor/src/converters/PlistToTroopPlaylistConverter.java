@@ -1,19 +1,34 @@
 package converters;
 
 import models.newer.Frame;
-import models.newer.TroopPlaylist;
+import models.newer.Playlist;
 import models.old.Plist;
 import models.old.PlistFrame;
 
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlistToTroopPlaylistConverter implements Converter<TroopPlaylist> {
+public class PlistToTroopPlaylistConverter implements Converter<Playlist> {
     private static final Pattern framePattern = Pattern.compile("(\\d+),(\\d+)");
 
-    public TroopPlaylist convert(Plist plist) {
-        TroopPlaylist troopPlaylist = new TroopPlaylist();
+    public Playlist convert(Plist plist) {
+        Playlist troopPlaylist = new Playlist();
+        ArrayList<Frame> attack = new ArrayList<>();
+        ArrayList<Frame> breathing = new ArrayList<>();
+        ArrayList<Frame> death = new ArrayList<>();
+        ArrayList<Frame> hit = new ArrayList<>();
+        ArrayList<Frame> idle = new ArrayList<>();
+        ArrayList<Frame> run = new ArrayList<>();
+
+        troopPlaylist.lists.put("attack", attack);
+        troopPlaylist.lists.put("breathing", breathing);
+        troopPlaylist.lists.put("death", death);
+        troopPlaylist.lists.put("hit", hit);
+        troopPlaylist.lists.put("idle", idle);
+        troopPlaylist.lists.put("run", run);
+
         for (Entry<String, PlistFrame> entry : plist.frames.entrySet()) {
             PlistFrame plistFrame = entry.getValue();
 
@@ -24,17 +39,17 @@ public class PlistToTroopPlaylistConverter implements Converter<TroopPlaylist> {
                     Integer.parseInt(matcher.group(2))
             );
             if (entry.getKey().contains("attack")) {
-                troopPlaylist.attack.add(frame);
+                attack.add(frame);
             } else if (entry.getKey().contains("breathing")) {
-                troopPlaylist.breathing.add(frame);
+                breathing.add(frame);
             } else if (entry.getKey().contains("death")) {
-                troopPlaylist.death.add(frame);
+                death.add(frame);
             } else if (entry.getKey().contains("hit")) {
-                troopPlaylist.hit.add(frame);
+                hit.add(frame);
             } else if (entry.getKey().contains("idle")) {
-                troopPlaylist.idle.add(frame);
+                idle.add(frame);
             } else if (entry.getKey().contains("run")) {
-                troopPlaylist.run.add(frame);
+                run.add(frame);
             }
 
             matcher.find();

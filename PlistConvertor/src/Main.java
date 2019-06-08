@@ -12,12 +12,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static final Type listType = new TypeToken<ArrayList<Plist>>() {
-    }.getType();
+    private static final Type listType = new TypeToken<ArrayList<Plist>>() {}.getType();
 
     public static void main(String[] args) {
         Converter converter;
