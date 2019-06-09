@@ -1,9 +1,9 @@
 package models.gui;
 
+import controller.LoginMenuController;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import view.MainMenu;
 
 class LoginFieldsContainer extends VBox {
     private static final Background LOGIN_BOX_BACKGROUND = new Background(
@@ -11,11 +11,13 @@ class LoginFieldsContainer extends VBox {
                     Color.rgb(100, 100, 100, 0.6), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    private final NormalField usernameField;
+    private final NormalPasswordField passwordField;
 
     LoginFieldsContainer() {
         super(UIConstants.DEFAULT_SPACING * 2);
-        NormalField usernameField = new NormalField("username");
-        NormalPasswordField passwordField = new NormalPasswordField();
+        usernameField = new NormalField("username");
+        passwordField = new NormalPasswordField();
 
         Region space = new Region();
         space.setMinHeight(UIConstants.LOGIN_BOX_SIZE * 0.5);
@@ -30,8 +32,12 @@ class LoginFieldsContainer extends VBox {
     }
 
     private HBox makeButtonsBox() {
-        OrangeButton loginButton = new OrangeButton("LOG IN", event -> MainMenu.getInstance().show());
-        OrangeButton registerButton = new OrangeButton("REGISTER", event -> {});
+        OrangeButton loginButton = new OrangeButton("LOG IN",
+                event -> LoginMenuController.getInstance().login(usernameField.getText(), passwordField.getText())
+        );
+        OrangeButton registerButton = new OrangeButton("REGISTER",
+                event -> LoginMenuController.getInstance().register(usernameField.getText(), passwordField.getText())
+                );
         return new HBox(UIConstants.DEFAULT_SPACING, loginButton, registerButton);
     }
 }
