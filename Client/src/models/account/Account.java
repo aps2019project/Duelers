@@ -1,8 +1,8 @@
 package models.account;
 
-import client.models.card.Deck;
-import client.models.card.TempDeck;
-import client.view.request.InputException;
+
+import models.card.Deck;
+import models.card.TempDeck;
 
 import java.util.ArrayList;
 

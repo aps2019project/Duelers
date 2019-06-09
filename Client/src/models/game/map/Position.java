@@ -1,26 +1,24 @@
 package models.game.map;
 
-public class Position {//TODO:Change class name
+
+import models.comperessedData.CompressedCell;
+
+public class Position {
     private int row;
     private int column;
-
-    public Position(Cell cell) {
-        this.row = cell.getRow();
-        this.column = cell.getColumn();
-    }
-
-    public Position(Position position) {
-        this.row = position.row;
-        this.column = position.column;
-    }
 
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    public boolean equals(Cell cell) {
-        return this.row == cell.getRow() && this.column == cell.getColumn();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return row == position.row &&
+                column == position.column;
     }
 
     public int getRow() {
@@ -29,5 +27,26 @@ public class Position {//TODO:Change class name
 
     public int getColumn() {
         return column;
+    }
+
+    public int manhattanDistance(Position position) {
+        return Math.abs(row - position.row) + Math.abs(column - position.column);
+    }
+
+    public int manhattanDistance(CompressedCell cell) {
+        return Math.abs(cell.getRow() - row) + Math.abs(cell.getColumn() - column);
+    }
+
+    public int manhattanDistance(int selectedRow, int selectedColumn) {
+        return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
+    }
+
+    public boolean isNextTo(Position position) {
+        return Math.abs(position.row - row) < 2 && Math.abs(position.column - column) < 2;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + column + ")";
     }
 }
