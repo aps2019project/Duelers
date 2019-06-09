@@ -51,8 +51,9 @@ public class Client {
     public void connect() throws IOException {
         Socket socket = getSocketReady();
         sendClientNameToServer(socket);
+        sendMessageThread = new Thread(this::sendMessages);
+        recieveMessageThread = new Thread(this::receiveMessages);
         //TODO:show AccountMenu
-
     }
 
     private void sendClientNameToServer(Socket socket) throws IOException {
@@ -73,7 +74,7 @@ public class Client {
         return socket;
     }
 
-    public void addToSendingMessages(Message message) {
+    public void addToSendingMessagesAndSend(Message message) {
         synchronized (sendingMessages) {
             sendingMessages.add(message);
             sendingMessages.notify();
@@ -99,6 +100,104 @@ public class Client {
         }
     }
 
+    private void receiveMessages() {
+        while (true) {
+            try {
+                Message message = gson.fromJson(bufferedReader.readLine(), Message.class);
+                handleMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleMessage(Message message) {
+        if (message.getMessageId() > lastReceivedMessageId)
+            lastReceivedMessageId = message.getMessageId();
+        switch (message.getMessageType()) {
+            case SEND_EXCEPTION:
+                showError(message);
+                break;
+            case ACCOUNT_COPY:
+                login(message);
+                break;
+            case GAME_COPY:
+                GameController.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
+                GameController.getInstance().calculateAvailableActions();
+                //TODO:not completed
+                break;
+            case ORIGINAL_CARDS_COPY:
+                Shop.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
+                break;
+            case LEADERBOARD_COPY:
+                leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
+                break;
+            case STORIES_COPY:
+                StoryMenu.getInstance().setStories(message.getStoriesCopyMessage().getStories());
+                break;
+            case OPPONENT_INFO:
+                MultiPlayerMenu.getInstance().setSecondAccount(message.getOpponentInfoMessage().getOpponentInfo());
+                break;
+            case CARD_POSITION://TODO:CHANGE
+                CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
+                switch (cardPosition) {
+                    case MAP:
+                        gameCommands.getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
+                        GameCommands.getInstance().calculateAvailableActions();
+                        break;
+                    case HAND:
+                        gameCommands.getCurrentGame().moveCardToHand();
+                        GameCommands.getInstance().calculateAvailableActions();
+                        break;
+                    case NEXT:
+                        gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
+                        GameCommands.getInstance().calculateAvailableActions();
+                        break;
+                    case GRAVE_YARD:
+                        gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
+                        GameCommands.getInstance().calculateAvailableActions();
+                        break;
+                    case COLLECTED:
+                        gameCommands.getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
+                        GameCommands.getInstance().calculateAvailableActions();
+                        break;
+                }
+                break;
+            case TROOP_UPDATE:
+                gameCommands.getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
+                gameCommands.calculateAvailableActions();
+                break;
+            case GAME_UPDATE:
+                GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
+                gameCommands.getCurrentGame().gameUpdate(
+                        gameUpdateMessage.getTurnNumber(),
+                        gameUpdateMessage.getPlayer1CurrentMP(),
+                        gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
+                        gameUpdateMessage.getPlayer2CurrentMP(),
+                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
+                GameCommands.getInstance().calculateAvailableActions();
+                break;
+            case Game_FINISH:
+                GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+                setCurrentMenu(GameResultStatus.getInstance());
+                break;
+            case DONE:
+                //nothing/just update last received message id
+                break;
+        }
+    }
+
+    private void showError(Message message) {
+        validation = false;
+        errorMessage = message.getExceptionMessage().getExceptionString();
+        //TODO: graphic show error
+    }
+
+    private void login(Message message) {
+        account = new Account(message.getAccountCopyMessage().getAccount());
+        //TODO:change scene from login menu to main
+    }
+
     public void disconnected() {
     }
 
@@ -110,4 +209,6 @@ public class Client {
     public String getClientName() {
         return clientName;
     }
+
+
 }

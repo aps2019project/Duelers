@@ -1,6 +1,7 @@
 package models.comperessedData;
 
-import client.models.map.Position;
+
+import models.game.map.Position;
 
 public class CompressedTroop {
     private CompressedCard card;

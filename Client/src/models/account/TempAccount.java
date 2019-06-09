@@ -1,6 +1,6 @@
 package models.account;
 
-import client.models.card.TempDeck;
+import models.card.TempDeck;
 
 import java.util.ArrayList;
 

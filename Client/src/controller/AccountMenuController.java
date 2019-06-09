@@ -17,7 +17,7 @@ public class AccountMenuController {
 
 
         Client client = Client.getInstance();
-        client.addToSendingMessages(
+        client.addToSendingMessagesAndSend(
                 Message.makeRegisterMessage(
                         client.getClientName(), Constants.SERVER_NAME, userName, password, 0)
         );
