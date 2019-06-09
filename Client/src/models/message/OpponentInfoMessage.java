@@ -1,6 +1,7 @@
 package models.message;
 
-import client.models.account.AccountInfo;
+
+import models.account.AccountInfo;
 
 public class OpponentInfoMessage {
     private AccountInfo opponentInfo;

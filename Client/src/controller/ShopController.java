@@ -43,5 +43,7 @@ public class ShopController {
         );
     }
 
-
+    public void setOriginalCards(Collection originalCards) {
+        this.originalCards = originalCards;
+    }
 }

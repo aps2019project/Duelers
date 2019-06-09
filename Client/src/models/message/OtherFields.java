@@ -1,6 +1,6 @@
 package models.message;
 
-import client.models.map.Position;
+import models.game.map.Position;
 
 public class OtherFields {
     private String deckName;
