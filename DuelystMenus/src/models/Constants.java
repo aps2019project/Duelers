@@ -28,7 +28,7 @@ public class Constants {
     public static final int FLAG_NUM_DEFAULT = 10;
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
-    private static final double SCALE = 1;
+    private static final double SCALE = 0.5;
     public static final double DEFAULT_SPACING = 10 * SCALE;
     public static final double SCENE_WIDTH = 3636 * SCALE;
     public static final double SCENE_HEIGHT = 2000 * SCALE;

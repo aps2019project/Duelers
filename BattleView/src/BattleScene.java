@@ -92,8 +92,8 @@ public class BattleScene {
     }
 
     private void addTroops() throws Exception {
-        TroopAnimation troopAnimation1 = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 2, 2);
-        TroopAnimation troopAnimation2 = new TroopAnimation(root, cellsX, cellsY, "resources/boss_malyk", 4, 7);
+        TroopAnimation troopAnimation1 = new TroopAnimation(root, cellsX, cellsY, "boss_malyk", 2, 2);
+        TroopAnimation troopAnimation2 = new TroopAnimation(root, cellsX, cellsY, "boss_kron", 4, 4);
 
         Button button1 = new Button("KILL");
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
