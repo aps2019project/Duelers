@@ -10,11 +10,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BattleScene {
-    private Controller controller;
-    private CompressedGame game;
-    private Scene scene;
-    private Group root;
-    private MapView mapView;
+    private final Controller controller;
+    private final CompressedGame game;
+    private final Scene scene;
+    private final Group root;
+    private final MapBox mapBox;
 
 
     public BattleScene(Controller controller, CompressedGame game) throws Exception {
@@ -23,8 +23,8 @@ public class BattleScene {
         root = new Group();
         scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         addBackGround("battlemap6_middleground@2x");
-        mapView = new MapView(controller, game);
-        root.getChildren().add(mapView.getMapGroup());
+        mapBox = new MapBox(controller, game);
+        root.getChildren().add(mapBox.getMapGroup());
     }
 
     private void addBackGround(String address) {
@@ -38,7 +38,6 @@ public class BattleScene {
             e.printStackTrace();
         }
     }
-
 
     public Scene getScene() {
         return scene;

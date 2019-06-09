@@ -8,7 +8,7 @@ public class Controller extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
-        primaryStage.setFullScreen(false);
+        primaryStage.setFullScreen(true);
         primaryStage.setScene(new BattleScene(this, null).getScene());
         primaryStage.show();
     }

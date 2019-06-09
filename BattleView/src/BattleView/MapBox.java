@@ -11,15 +11,15 @@ import models.comperessedData.CompressedGame;
 
 import java.util.Random;
 
-public class MapView {
-    private Controller controller;
-    private CompressedGame game;
-    private Group mapGroup;
+public class MapBox {
+    private final Controller controller;
+    private final CompressedGame game;
+    private final Group mapGroup;
     private final Polygon[][] cells = new Polygon[5][8];
     private final double[][] cellsX = new double[5][8];
     private final double[][] cellsY = new double[5][8];
 
-    public MapView(Controller controller, CompressedGame game) throws Exception {
+    public MapBox(Controller controller, CompressedGame game) throws Exception {
         this.controller = controller;
         this.game = game;
         mapGroup = new Group();
@@ -79,14 +79,22 @@ public class MapView {
     }
 
     private void addTroops() throws Exception {
-        TroopAnimation troopAnimation1 = new TroopAnimation(mapGroup, cellsX, cellsY, "boss_malyk", 2, 2);
-        TroopAnimation troopAnimation2 = new TroopAnimation(mapGroup, cellsX, cellsY, "boss_kron", 4, 4);
+        TroopAnimation[][] troopAnimations = new TroopAnimation[5][8];
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 8; i++) {
+                troopAnimations[j][i] = new TroopAnimation(mapGroup, cellsX, cellsY, "boss_andromeda", j, i);
+            }
+        }
 
         Button button1 = new Button("KILL");
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation1.kill();
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].kill();
+                    }
+                }
             }
         });
         button1.setLayoutX(-20);
@@ -97,7 +105,11 @@ public class MapView {
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation1.idle();
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].idle();
+                    }
+                }
             }
         });
         button2.setLayoutX(-20);
@@ -108,7 +120,11 @@ public class MapView {
         button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation1.attack();
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].attack();
+                    }
+                }
             }
         });
         button3.setLayoutX(-20);
@@ -119,7 +135,11 @@ public class MapView {
         button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation1.breathe();
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].breathe();
+                    }
+                }
             }
         });
         button4.setLayoutX(-20);
@@ -131,7 +151,11 @@ public class MapView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Random random = new Random();
-                troopAnimation1.moveTo(random.nextInt(5), random.nextInt(8));
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].moveTo(random.nextInt(5), random.nextInt(8));
+                    }
+                }
             }
         });
         button5.setLayoutX(-20);
@@ -142,7 +166,11 @@ public class MapView {
         button6.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                troopAnimation1.hit();
+                for (int j = 0; j < 5; j++) {
+                    for (int i = 0; i < 8; i++) {
+                        troopAnimations[j][i].hit();
+                    }
+                }
             }
         });
         button6.setLayoutX(-20);
