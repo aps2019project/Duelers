@@ -22,15 +22,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class DataCenter extends Thread {
-    private static final String ACCOUNTS_PATH = "jsonData/accounts";
+    private static final String ACCOUNTS_PATH = "resources/accounts";
     private static final String[] CARDS_PATHS = {
-            "jsonData/heroCards",
-            "jsonData/minionCards",
-            "jsonData/spellCards",
-            "jsonData/itemCards/collectible",
-            "jsonData/itemCards/usable"};
-    private static final String FLAG_PATH = "jsonData/itemCards/flag/Flag.item.card.json";
-    private static final String STORIES_PATH = "jsonData/stories";
+            "resources/heroCards",
+            "resources/minionCards",
+            "resources/spellCards",
+            "resources/itemCards/collectible",
+            "resources/itemCards/usable"};
+    private static final String FLAG_PATH = "resources/itemCards/flag/Flag.item.card.json";
+    private static final String STORIES_PATH = "resources/stories";
 
     private static DataCenter ourInstance = new DataCenter();
 

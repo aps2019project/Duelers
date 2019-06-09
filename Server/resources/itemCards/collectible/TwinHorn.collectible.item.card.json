@@ -1,0 +1,38 @@
+{
+  "name": "Twin Horn",
+  "cardId": "TwinHorn",
+  "description": "a collectible ITEM that increases AP of a random RANGED or HYBRID troop 2 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "th_increase_ap",
+      "action": {
+        "apChange": 2,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ]
+}

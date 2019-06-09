@@ -1,0 +1,44 @@
+{
+  "name": "Afsaaneh",
+  "cardId": "Afsaaneh",
+  "description": "a ranged HERO with 3 AP, 40 HP, have a DISPEL spell",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "af_dispel",
+      "action": {
+        "durable": true,
+        "removeBuffs": 1,
+        "duration": 1
+      },
+      "availabilityType": {
+        "specialPower": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "coolDown": 2,
+      "mannaPoint": 1
+    }
+  ],
+  "defaultAp": 3,
+  "defaultHp": 40,
+  "price": 11000,
+  "attackType": "RANGED",
+  "range": 3
+}

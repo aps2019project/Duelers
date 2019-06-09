@@ -36,9 +36,9 @@ public class BackgroundMaker {
         );
         ImageView vignetteView = ImageLoader.loadImage(VIGNETTE_URL, UIConstants.VIGNETTE_WIDTH, UIConstants.VIGNETTE_HEIGHT);
 
-        Fog fog = new Fog(UIConstants.SCENE_WIDTH * 0.5, UIConstants.FOREGROUND_HEIGHT * 0.9);
+//        Fog fog = new Fog(UIConstants.SCENE_WIDTH * 0.5, UIConstants.FOREGROUND_HEIGHT * 0.9);
 
-        menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, fog.getView(), foregroundView, vignetteView);
+        menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, /*fog.getView(),*/ foregroundView, vignetteView);
     }
 
     private static void makePlayBackground(String url) throws FileNotFoundException {

@@ -1,0 +1,66 @@
+{
+  "name": "Poisonous Dagger",
+  "cardId": "PoisonousDagger",
+  "description": "TODO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "pd_add_spell",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "pd_poison",
+          "action": {
+            "hpChange": -1,
+            "poison": true,
+            "durable": true,
+            "duration": 1
+          },
+          "target": {
+            "isRandom": true,
+            "dimensions": {
+              "row": 10,
+              "column": 18
+            },
+            "owner": {
+              "enemy": true
+            },
+            "cardType": {
+              "hero": true,
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onAttack": true
+          }
+        }
+      },
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "availabilityType": {
+        "onStart": true
+      }
+    }
+  ],
+  "price": 7000
+}

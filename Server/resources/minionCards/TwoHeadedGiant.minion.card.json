@@ -1,0 +1,42 @@
+{
+  "name": "TwoHeaded Giant",
+  "cardId": "TwoHeadedGiant",
+  "description": "a melee MINION with 4 AP, 10 HP, have a ON_ATTACK spell that removes all positive effects",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "tg_dispel",
+      "action": {
+        "durable": true,
+        "removeBuffs": 1,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onAttack": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 10,
+  "mannaPoint": 4,
+  "price": 550,
+  "attackType": "MELEE"
+}

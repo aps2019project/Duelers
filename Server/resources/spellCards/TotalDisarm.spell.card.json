@@ -1,0 +1,37 @@
+{
+  "name": "Total Disarm",
+  "cardId": "TotalDisarm",
+  "description": "Make an enemy troop DISARM till the end of the game",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "totalDisarm",
+      "action": {
+        "makeDisarm": true,
+        "duration": 2147483647
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "price": 1000
+}

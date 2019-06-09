@@ -1,0 +1,42 @@
+{
+  "name": "Rakhsh",
+  "cardId": "Rakhsh",
+  "description": "a melee HERO with 4 AP, 50 HP, have a STUN BUFF spell for 1 turn",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "rk_stun",
+      "action": {
+        "makeStun": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "specialPower": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "coolDown": 2,
+      "mannaPoint": 1
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Fireball",
+  "cardId": "Fireball",
+  "description": "4 units hit an enemy troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "fireball",
+      "action": {
+        "hpChange": -4,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "mannaPoint": 1,
+  "price": 400
+}

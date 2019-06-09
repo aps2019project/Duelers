@@ -1,0 +1,62 @@
+{
+  "name": "Baptism",
+  "cardId": "Baptism",
+  "description": "TODO",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "bp_add_spell",
+      "action": {
+        "addSpell": true,
+        "durable": true,
+        "duration": 1,
+        "carryingSpell": {
+          "spellId": "bp_holy",
+          "action": {
+            "enemyHitChanges": -1,
+            "duration": 2
+          },
+          "target": {
+            "isRelatedToCardOwnerPosition": true,
+            "dimensions": {
+              "row": 1,
+              "column": 1
+            },
+            "owner": {
+              "own": true
+            },
+            "cardType": {
+              "minion": true
+            },
+            "attackType": {
+              "melee": true,
+              "ranged": true,
+              "hybrid": true
+            }
+          },
+          "availabilityType": {
+            "onPut": true
+          }
+        }
+      },
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "availabilityType": {
+        "onStart": true
+      }
+    }
+  ],
+  "price": 20000
+}

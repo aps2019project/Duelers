@@ -3,12 +3,12 @@ package controller;
 import models.Constants;
 import models.message.Message;
 
-public class AccountMenuController {
-    private static AccountMenuController ourInstanse;
+public class LoginMenuController {
+    private static LoginMenuController ourInstanse;
 
-    public static AccountMenuController getInstance() {
+    public static LoginMenuController getInstance() {
         if (ourInstanse == null) {
-            ourInstanse = new AccountMenuController();
+            ourInstanse = new LoginMenuController();
         }
         return ourInstanse;
     }

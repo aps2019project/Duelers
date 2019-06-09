@@ -1,0 +1,39 @@
+{
+  "name": "Random Damage",
+  "cardId": "RandomDamage",
+  "description": "a collectible ITEM that increases HP of a random Troop 2 units",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "rd_increase_hp",
+      "action": {
+        "apChange": 2,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "isRandom": true,
+        "owner": {
+          "own": true,
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ]
+}

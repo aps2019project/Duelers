@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import models.Constants;
 import models.account.Account;
 import models.account.AccountInfo;
@@ -8,6 +9,7 @@ import models.card.Card;
 import models.card.DeckInfo;
 import models.game.map.Position;
 import models.message.Message;
+import view.MainMenu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class Client {
     private Socket socket;
     private Gson gson = new Gson();
     private Thread sendMessageThread;
-    private Thread recieveMessageThread;
+    private Thread receiveMessageThread;
     private BufferedReader bufferedReader;
 
     private Client() {
@@ -47,7 +49,7 @@ public class Client {
     }
 
     public void connect() throws IOException {
-        Socket socket = getSocketReady();
+        socket = getSocketReady();
         sendClientNameToServer(socket);
         sendMessageThread = new Thread(() -> {
             try {
@@ -56,13 +58,14 @@ public class Client {
                 e.printStackTrace();
             }
         });
-
-        recieveMessageThread = new Thread(this::receiveMessages);
-        //TODO:show AccountMenu
+        sendMessageThread.start();
+        receiveMessages();
     }
 
     private void sendClientNameToServer(Socket socket) throws IOException {
         while (!bufferedReader.readLine().equals("#Listening#")) ;
+        System.out.println("server is listening to me");
+
         clientName = InetAddress.getLocalHost().getHostName();
         socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         int x = 1;
@@ -71,11 +74,15 @@ public class Client {
             x++;
             socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         }
+        System.out.println("server accepted me.");
     }
 
     private Socket getSocketReady() throws IOException {
         Socket socket = new Socket(Constants.SERVER_IP, Constants.PORT);
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        System.out.println("network connected.");
+
         return socket;
     }
 
@@ -87,13 +94,17 @@ public class Client {
     }
 
     private void sendMessages() throws IOException {
+        System.out.println("sending messages started");
         while (true) {
             Message message;
             synchronized (sendingMessages) {
                 message = sendingMessages.poll();
             }
             if (message != null) {
-                socket.getOutputStream().write((message.toJson() + "\n").getBytes());
+                String json = message.toJson();
+                socket.getOutputStream().write((json + "\n").getBytes());
+
+                System.out.println("message sent: " + json);
             } else {
                 try {
                     synchronized (sendingMessages) {
@@ -105,14 +116,15 @@ public class Client {
         }
     }
 
-    private void receiveMessages() {
+    private void receiveMessages() throws IOException {
+        System.out.println("receiving messages started.");
         while (true) {
-            try {
-                Message message = gson.fromJson(bufferedReader.readLine(), Message.class);
-                handleMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String json = bufferedReader.readLine();
+            Message message = gson.fromJson(json, Message.class);
+
+            System.out.println("message received: " + json);
+
+            handleMessage(message);
         }
     }
 
@@ -200,7 +212,7 @@ public class Client {
 
     private void login(Message message) {
         account = new Account(message.getAccountCopyMessage().getAccount());
-        //TODO:change scene from login menu to main
+        Platform.runLater(() -> MainMenu.getInstance().show());
     }
 
     public void disconnected() {
@@ -219,6 +231,8 @@ public class Client {
     public void close() {
         try {
             socket.close();
+
+            System.out.println("socket closed");
 
             System.exit(0);
         } catch (IOException e) {

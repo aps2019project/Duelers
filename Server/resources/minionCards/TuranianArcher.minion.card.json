@@ -1,0 +1,12 @@
+{
+  "name": "Turanian Archer",
+  "cardId": "TuranianArcher",
+  "description": "a ranged MINION with 4 AP, 3 HP",
+  "type": "MINION",
+  "defaultAp": 4,
+  "defaultHp": 3,
+  "mannaPoint": 1,
+  "price": 500,
+  "attackType": "RANGED",
+  "range": 5
+}

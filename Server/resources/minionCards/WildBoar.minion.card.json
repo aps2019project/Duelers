@@ -1,0 +1,40 @@
+{
+  "name": "Wild Boar",
+  "cardId": "WildBoar",
+  "description": "a melee MINION with 14 AP, 10 HP, costs 500, and does not DISARM on DEFEND",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "wb_no_disarm",
+      "action": {
+        "noDisarm": true,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onDefend": true
+      },
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      }
+    }
+  ],
+  "defaultAp": 14,
+  "defaultHp": 10,
+  "mannaPoint": 6,
+  "price": 500,
+  "attackType": "MELEE"
+}
