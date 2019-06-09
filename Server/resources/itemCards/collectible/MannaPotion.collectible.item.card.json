@@ -1,0 +1,24 @@
+{
+  "name": "Manna Potion",
+  "cardId": "MannaPotion",
+  "description": "a collectible ITEM that have a ADD MANNA buff for 1 turn",
+  "type": "COLLECTIBLE_ITEM",
+  "spells": [
+    {
+      "spellId": "mp_add",
+      "action": {
+        "mpChange": 3,
+        "durable": true,
+        "duration": 1,
+        "delay": 1
+      },
+      "target": {
+        "player": true
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "duration": 1
+    }
+  ]
+}

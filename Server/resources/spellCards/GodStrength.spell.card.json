@@ -1,0 +1,38 @@
+{
+  "name": "God Strength",
+  "cardId": "GodStrength",
+  "description": "4 units are added to AP of own HERO",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "god_strength",
+      "action": {
+        "apChange": 4,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 450
+}

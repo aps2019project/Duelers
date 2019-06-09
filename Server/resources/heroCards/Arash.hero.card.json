@@ -1,0 +1,46 @@
+{
+  "name": "Arash",
+  "cardId": "Arash",
+  "description": "a ranged HERO with 2 AP, 30 HP, have a 4-unit ROW-attack spell",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "ar_row_attack",
+      "action": {
+        "hpChange": -4,
+        "durable": true,
+        "duration": 1,
+        "delay": 0
+      },
+      "availabilityType": {
+        "specialPower": true
+      },
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "coolDown": 2,
+      "mannaPoint": 2
+    }
+  ],
+  "defaultAp": 2,
+  "defaultHp": 30,
+  "price": 10000,
+  "attackType": "RANGED",
+  "range": 6
+}

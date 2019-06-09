@@ -1,0 +1,41 @@
+{
+  "name": "Persian Swordsman",
+  "cardId": "PersianSwordsman",
+  "description": "a melee MINION with 4 AP and 6 HP, have an ON_ATTACK STUN BUFF",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "on_attack_stun",
+      "action": {
+        "makeStun": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onAttack": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 6,
+  "mannaPoint": 2,
+  "price": 400,
+  "attackType": "MELEE"
+}

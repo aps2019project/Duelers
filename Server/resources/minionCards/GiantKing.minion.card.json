@@ -1,0 +1,12 @@
+{
+  "name": "Giant King",
+  "cardId": "GiantKing",
+  "description": "a melee MINION with 4 AP, 10 HP, can attack combo",
+  "type": "MINION",
+  "defaultAp": 4,
+  "defaultHp": 10,
+  "mannaPoint": 5,
+  "price": 600,
+  "attackType": "MELEE",
+  "hasCombo": true
+}

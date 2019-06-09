@@ -1,0 +1,43 @@
+{
+  "name": "Persian Gladiator",
+  "cardId": "PersianGladiator",
+  "description": "TODO",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "pg_gladiator_attack",
+      "action": {
+        "hpChange": -5,
+        "isForGladiator": true,
+        "durable": true,
+        "duration": 1
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "availabilityType": {
+        "onAttack": true
+      }
+    }
+  ],
+  "defaultAp": 6,
+  "defaultHp": 24,
+  "mannaPoint": 9,
+  "price": 600,
+  "attackType": "MELEE"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Power Up",
+  "cardId": "PowerUp",
+  "description": "applies a POWER BUFF with 6 units AP increment for an own troop",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "pu_AP_buff",
+      "action": {
+        "apChange": 6,
+        "duration": 2147483647
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 2500
+}

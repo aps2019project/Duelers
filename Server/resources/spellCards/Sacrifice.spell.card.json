@@ -1,0 +1,64 @@
+{
+  "name": "Sacrifice",
+  "cardId": "Sacrifice",
+  "description": "It gives an own MINION a WEAKNESS BUFF with 6 units HP decrement and a POWER BUFF with 8 units AP increment",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "weakness",
+      "action": {
+        "hpChange": -6,
+        "duration": 2147483647
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    },
+    {
+      "spellId": "power_buff",
+      "action": {
+        "apChange": 8,
+        "duration": 2147483647
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "mannaPoint": 2,
+  "price": 1600
+}

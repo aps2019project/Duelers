@@ -1,0 +1,40 @@
+{
+  "name": "Ashkbous",
+  "cardId": "Ashkbous",
+  "description": "a melee MINION with 8 AP, 14 HP, and does not hit from weaker minions",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "a_weaker",
+      "action": {
+        "noAttackFromWeakerOnes": true,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onDefend": true
+      },
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      }
+    }
+  ],
+  "defaultAp": 8,
+  "defaultHp": 14,
+  "mannaPoint": 7,
+  "price": 400,
+  "attackType": "MELEE"
+}

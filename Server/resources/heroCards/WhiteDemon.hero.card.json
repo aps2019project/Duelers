@@ -1,0 +1,40 @@
+{
+  "name": "White Demon",
+  "cardId": "WhiteDemon",
+  "description": "a melee HERO with 4 AP, 50 HP, have a POWER BUFF spell on itself",
+  "type": "HERO",
+  "spells": [
+    {
+      "spellId": "wd_power",
+      "action": {
+        "apChange": 4,
+        "duration": 2147483647
+      },
+      "availabilityType": {
+        "specialPower": true
+      },
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "melee": true
+        }
+      },
+      "coolDown": 2,
+      "mannaPoint": 1
+    }
+  ],
+  "defaultAp": 4,
+  "defaultHp": 50,
+  "price": 8000,
+  "attackType": "MELEE"
+}

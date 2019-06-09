@@ -1,0 +1,33 @@
+{
+  "name": "Super Shield",
+  "cardId": "SuperShield",
+  "description": "a usable ITEM that gives HERO 12 HOLY BUFFs",
+  "type": "USABLE_ITEM",
+  "spells": [
+    {
+      "spellId": "ss_holy_12",
+      "action": {
+        "enemyHitChanges": -12,
+        "duration": 2147483647
+      },
+      "target": {
+        "isForDeckCards": true,
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "hero": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      },
+      "availabilityType": {
+        "onStart": true
+      }
+    }
+  ],
+  "price": 4000
+}

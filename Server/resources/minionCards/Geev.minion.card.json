@@ -1,0 +1,41 @@
+{
+  "name": "Geev",
+  "cardId": "Geev",
+  "description": "a ranged MINION with 7 AP, 5 HP, costs 450, and does not see any negative effect",
+  "type": "MINION",
+  "spells": [
+    {
+      "spellId": "g_no_negative",
+      "action": {
+        "noBadEffect": true,
+        "durable": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onDefend": true
+      },
+      "target": {
+        "isRelatedToCardOwnerPosition": true,
+        "dimensions": {
+          "row": 1,
+          "column": 1
+        },
+        "owner": {
+          "own": true
+        },
+        "cardType": {
+          "minion": true
+        },
+        "attackType": {
+          "ranged": true
+        }
+      }
+    }
+  ],
+  "defaultAp": 7,
+  "defaultHp": 5,
+  "mannaPoint": 4,
+  "price": 450,
+  "attackType": "RANGED",
+  "range": 5
+}

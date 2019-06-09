@@ -1,0 +1,38 @@
+{
+  "name": "All Disarm",
+  "cardId": "AllDisarm",
+  "description": "All of enemy troops will be disarmed for one turn",
+  "type": "SPELL",
+  "spells": [
+    {
+      "spellId": "all_disarm",
+      "action": {
+        "makeDisarm": true,
+        "duration": 1
+      },
+      "availabilityType": {
+        "onPut": true
+      },
+      "target": {
+        "dimensions": {
+          "row": 10,
+          "column": 18
+        },
+        "owner": {
+          "enemy": true
+        },
+        "cardType": {
+          "hero": true,
+          "minion": true
+        },
+        "attackType": {
+          "melee": true,
+          "ranged": true,
+          "hybrid": true
+        }
+      }
+    }
+  ],
+  "mannaPoint": 9,
+  "price": 2000
+}
