@@ -2,14 +2,11 @@ package controller;
 
 import com.google.gson.Gson;
 import models.Constants;
-import models.JsonConverter;
 import models.account.Account;
 import models.account.AccountInfo;
 import models.card.Card;
 import models.card.DeckInfo;
 import models.game.map.Position;
-import models.message.CardPosition;
-import models.message.GameUpdateMessage;
 import models.message.Message;
 
 import java.awt.*;
@@ -62,12 +59,12 @@ public class Client {
     private void sendClientNameToServer(Socket socket) throws IOException {
         while (!bufferedReader.readLine().equals("#Listening#")) ;
         clientName = InetAddress.getLocalHost().getHostName();
-        socket.getOutputStream().write(clientName.getBytes());
+        socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         int x = 1;
         while (!bufferedReader.readLine().equals("#Valid#")) {
             clientName = String.format("%s%d", clientName, x);
             x++;
-            socket.getOutputStream().write(String.format("#%s#", clientName).getBytes());
+            socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         }
     }
 
@@ -86,18 +83,22 @@ public class Client {
 
     private void sendMessages() {
         while (true) {
+            Message message;
             synchronized (sendingMessages) {
-                for (Message message : sendingMessages) {
-                    try {
-                        socket.getOutputStream().write(message.toJson().getBytes());
-                    } catch (IOException e) {
-                        disconnected();
-                    }
-                }
+                message = sendingMessages.poll();
+            }
+            if (message != null) {
                 try {
-                    sendingMessages.wait();
-                } catch (InterruptedException e) {
+                    socket.getOutputStream().write((message.toJson()+"\n").getBytes());
+                } catch (IOException e) {
                     e.printStackTrace();
+                }
+            } else {
+                try {
+                    synchronized (sendingMessages) {
+                        sendingMessages.wait();
+                    }
+                } catch (InterruptedException ignored) {
                 }
             }
         }
