@@ -1,9 +1,8 @@
 package models.message;
 
-import client.models.JsonConverter;
-import client.models.game.GameType;
-import client.models.map.Position;
-import controller.Client;
+
+import models.JsonConverter;
+import models.game.GameType;
 import models.game.map.Position;
 
 public class Message {
@@ -224,7 +223,7 @@ public class Message {
     }
 
     public String toJson() {
-        return Client.clientPortal.models.JsonConverter.toJson(this);
+        return JsonConverter.toJson(this);
     }
 
     public MessageType getMessageType() {

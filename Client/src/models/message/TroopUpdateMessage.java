@@ -1,6 +1,7 @@
 package models.message;
 
-import client.models.comperessedData.CompressedTroop;
+
+import models.comperessedData.CompressedTroop;
 
 public class TroopUpdateMessage {
     CompressedTroop compressedTroop;

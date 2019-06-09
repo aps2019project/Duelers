@@ -1,7 +1,7 @@
 package models.card;
 
-import client.models.game.GameType;
-import client.models.game.Story;
+import models.game.GameType;
+import models.game.Story;
 
 public class DeckInfo {
     private String deckName;

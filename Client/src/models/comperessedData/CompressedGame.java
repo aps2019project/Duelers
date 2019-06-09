@@ -1,7 +1,8 @@
 package models.comperessedData;
 
-import client.models.card.CardType;
-import client.models.game.GameType;
+
+import models.card.CardType;
+import models.game.GameType;
 
 public class  CompressedGame {
     private CompressedPlayer playerOne;

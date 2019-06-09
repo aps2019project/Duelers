@@ -1,7 +1,6 @@
 package models.account;
 
-import client.models.card.Card;
-import client.view.request.InputException;
+import models.card.Card;
 
 import java.util.ArrayList;
 
@@ -27,15 +26,12 @@ public class Collection {
         return this.items;
     }
 
-    public ArrayList<Card> searchCollection(String cardName) throws InputException {
+    public ArrayList<Card> searchCollection(String cardName) {
         ArrayList<Card> results = new ArrayList<>();
         searchInList(heroes, results, cardName);
         searchInList(minions, results, cardName);
         searchInList(spells, results, cardName);
         searchInList(items, results, cardName);
-        if (results.size() == 0) {
-            throw new InputException("Such card not found!");
-        }
         return results;
     }
 

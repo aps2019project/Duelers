@@ -9,7 +9,6 @@ import models.card.DeckInfo;
 import models.game.map.Position;
 import models.message.Message;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +24,6 @@ public class Client {
     private LinkedList<Message> receivingMessages = new LinkedList<>();
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
-    private Menu currentMenu;
     private Card selected;
     private Position[] positions;
     private boolean validation = true;
@@ -51,19 +49,27 @@ public class Client {
     public void connect() throws IOException {
         Socket socket = getSocketReady();
         sendClientNameToServer(socket);
-        //TODO:show AccountMenu
+        sendMessageThread = new Thread(() -> {
+            try {
+                sendMessages();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
+        recieveMessageThread = new Thread(this::receiveMessages);
+        //TODO:show AccountMenu
     }
 
     private void sendClientNameToServer(Socket socket) throws IOException {
         while (!bufferedReader.readLine().equals("#Listening#")) ;
         clientName = InetAddress.getLocalHost().getHostName();
-        socket.getOutputStream().write(clientName.getBytes());
+        socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         int x = 1;
         while (!bufferedReader.readLine().equals("#Valid#")) {
             clientName = String.format("%s%d", clientName, x);
             x++;
-            socket.getOutputStream().write(String.format("#%s#", clientName).getBytes());
+            socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         }
     }
 
@@ -73,41 +79,150 @@ public class Client {
         return socket;
     }
 
-    public void addToSendingMessages(Message message) {
+    public void addToSendingMessagesAndSend(Message message) {
         synchronized (sendingMessages) {
             sendingMessages.add(message);
             sendingMessages.notify();
         }
     }
 
-    private void sendMessages() {
+    private void sendMessages() throws IOException {
         while (true) {
+            Message message;
             synchronized (sendingMessages) {
-                for (Message message : sendingMessages) {
-                    try {
-                        socket.getOutputStream().write(gson.toJson(message).getBytes());
-                    } catch (IOException e) {
-                        disconnected();
-                    }
-                }
+                message = sendingMessages.poll();
+            }
+            if (message != null) {
+                socket.getOutputStream().write((message.toJson() + "\n").getBytes());
+            } else {
                 try {
-                    sendingMessages.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    synchronized (sendingMessages) {
+                        sendingMessages.wait();
+                    }
+                } catch (InterruptedException ignored) {
                 }
             }
         }
+    }
+
+    private void receiveMessages() {
+        while (true) {
+            try {
+                Message message = gson.fromJson(bufferedReader.readLine(), Message.class);
+                handleMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleMessage(Message message) {
+        if (message.getMessageId() > lastReceivedMessageId)
+            lastReceivedMessageId = message.getMessageId();
+        switch (message.getMessageType()) {
+            case SEND_EXCEPTION:
+                showError(message);
+                break;
+            case ACCOUNT_COPY:
+                login(message);
+                break;
+            case GAME_COPY:
+                GameController.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
+                GameController.getInstance().calculateAvailableActions();
+                //TODO:not completed
+                break;
+            case ORIGINAL_CARDS_COPY:
+                ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
+                break;
+            case LEADERBOARD_COPY:
+                leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
+                break;
+            case STORIES_COPY:
+                StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());
+                break;
+//            case OPPONENT_INFO:
+//                MultiPlayerMenu.getInstance().setSecondAccount(message.getOpponentInfoMessage().getOpponentInfo());
+//                break;
+//            case CARD_POSITION://TODO:CHANGE
+//                CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
+//                switch (cardPosition) {
+//                    case MAP:
+//                        gameCommands.getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
+//                        GameCommands.getInstance().calculateAvailableActions();
+//                        break;
+//                    case HAND:
+//                        gameCommands.getCurrentGame().moveCardToHand();
+//                        GameCommands.getInstance().calculateAvailableActions();
+//                        break;
+//                    case NEXT:
+//                        gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
+//                        GameCommands.getInstance().calculateAvailableActions();
+//                        break;
+//                    case GRAVE_YARD:
+//                        gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
+//                        GameCommands.getInstance().calculateAvailableActions();
+//                        break;
+//                    case COLLECTED:
+//                        gameCommands.getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
+//                        GameCommands.getInstance().calculateAvailableActions();
+//                        break;
+//                }
+//                break;
+//            case TROOP_UPDATE:
+//                GameController.getInstance().getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
+//                gameCommands.calculateAvailableActions();
+//                break;
+//            case GAME_UPDATE:
+//                GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
+//                GameController.getInstance().getCurrentGame().gameUpdate(
+//                        gameUpdateMessage.getTurnNumber(),
+//                        gameUpdateMessage.getPlayer1CurrentMP(),
+//                        gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
+//                        gameUpdateMessage.getPlayer2CurrentMP(),
+//                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
+//                GameCommands.getInstance().calculateAvailableActions();
+//                break;
+//            case Game_FINISH:
+//                GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+//                setCurrentMenu(GameResultStatus.getInstance());
+//                break;
+//            case DONE:
+//                nothing/just update last received message id
+//                break;
+        }
+    }
+
+    private void showError(Message message) {
+        validation = false;
+        errorMessage = message.getExceptionMessage().getExceptionString();
+        //TODO: graphic show error
+    }
+
+    private void login(Message message) {
+        account = new Account(message.getAccountCopyMessage().getAccount());
+        //TODO:change scene from login menu to main
     }
 
     public void disconnected() {
     }
 
 
-    private void connectToServer() throws IOException {
-        socket = new Socket(Constants.SERVER_IP, Constants.PORT);
-    }
-
     public String getClientName() {
         return clientName;
+    }
+
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void close() {
+        try {
+            socket.close();
+
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
