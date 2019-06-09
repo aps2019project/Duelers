@@ -15,6 +15,25 @@ public class CompressedTroop {
     private int numberOfCollectedFlags;
     private int playerNumber;
 
+    //just for testing BattleView
+
+
+    public CompressedTroop(CompressedCard card, int currentAp, int currentHp, int enemyHitChanges, Position position,
+                           boolean canMove, boolean canAttack, boolean isDisarm, boolean noAttackFromWeakerOnes,
+                           int numberOfCollectedFlags, int playerNumber) {
+        this.card = card;
+        this.currentAp = currentAp;
+        this.currentHp = currentHp;
+        this.enemyHitChanges = enemyHitChanges;
+        this.position = position;
+        this.canMove = canMove;
+        this.canAttack = canAttack;
+        this.isDisarm = isDisarm;
+        this.noAttackFromWeakerOnes = noAttackFromWeakerOnes;
+        this.numberOfCollectedFlags = numberOfCollectedFlags;
+        this.playerNumber = playerNumber;
+    }
+
     public CompressedCard getCard() {
         return card;
     }

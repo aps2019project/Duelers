@@ -16,6 +16,22 @@ public class CompressedCard {
     private int range;
     private boolean hasCombo;
 
+    //just for testing BattleView
+    public CompressedCard(String name, String description, String cardId, CardType type, CompressedSpell spell,
+                          int defaultAp, int defaultHp, int mannaPoint, AttackType attackType, int range, boolean hasCombo) {
+        this.name = name;
+        this.description = description;
+        this.cardId = cardId;
+        this.type = type;
+        this.spell = spell;
+        this.defaultAp = defaultAp;
+        this.defaultHp = defaultHp;
+        this.mannaPoint = mannaPoint;
+        this.attackType = attackType;
+        this.range = range;
+        this.hasCombo = hasCombo;
+    }
+
     public String getName() {
         return name;
     }

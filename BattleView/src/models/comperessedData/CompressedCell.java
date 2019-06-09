@@ -8,6 +8,16 @@ public class CompressedCell {
     private CompressedCard item;//non flag item
     private int numberOfFlags;
 
+    //just for testing BattleView
+
+
+    public CompressedCell(int row, int column, CompressedCard item, int numberOfFlags) {
+        this.row = row;
+        this.column = column;
+        this.item = item;
+        this.numberOfFlags = numberOfFlags;
+    }
+
     public int getRow() {
         return row;
     }

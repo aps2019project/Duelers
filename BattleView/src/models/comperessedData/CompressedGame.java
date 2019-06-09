@@ -10,6 +10,15 @@ public class  CompressedGame {
     private int turnNumber;
     private GameType gameType;
 
+    //just for testing BattleView
+    public CompressedGame(CompressedPlayer playerOne, CompressedPlayer playerTwo, CompressedGameMap gameMap, int turnNumber, GameType gameType) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.gameMap = gameMap;
+        this.turnNumber = turnNumber;
+        this.gameType = gameType;
+    }
+
     public void moveCardToHand() {
         CompressedPlayer player = getCurrentTurnPlayer();
         player.addNextCardToHand();

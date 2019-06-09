@@ -16,6 +16,22 @@ public class CompressedPlayer {
     private ArrayList<CompressedTroop> troops = new ArrayList<>();
     private CompressedTroop hero;
 
+    //just for testing BattleView
+    public CompressedPlayer(String userName, int currentMP, ArrayList<CompressedCard> hand,
+                            ArrayList<CompressedCard> graveyard, CompressedCard nextCard,
+                            ArrayList<CompressedCard> collectedItems, int playerNumber, int numberOfCollectedFlags,
+                            ArrayList<CompressedTroop> troops, CompressedTroop hero) {
+        this.userName = userName;
+        this.currentMP = currentMP;
+        this.hand = hand;
+        this.graveyard = graveyard;
+        this.nextCard = nextCard;
+        this.collectedItems = collectedItems;
+        this.playerNumber = playerNumber;
+        this.numberOfCollectedFlags = numberOfCollectedFlags;
+        this.troops = troops;
+        this.hero = hero;
+    }
 
     public void addNextCardToHand() {
         hand.add(nextCard);

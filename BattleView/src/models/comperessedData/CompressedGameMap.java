@@ -10,6 +10,12 @@ public class CompressedGameMap {
     private CompressedCell[][] cells;
     private ArrayList<CompressedTroop> troops = new ArrayList<>();
 
+    //just for testing BattleView
+    public CompressedGameMap(CompressedCell[][] cells, ArrayList<CompressedTroop> troops) {
+        this.cells = cells;
+        this.troops = troops;
+    }
+
     public static int getRowNumber() {
         return ROW_NUMBER;
     }
