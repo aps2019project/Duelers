@@ -39,13 +39,13 @@ class MultiPlayerMenu extends PlayMenu {
         DialogText usernameText = new DialogText("Please enter opponent's username");
         NormalField usernameField = new NormalField("opponent username");
         DialogBox dialogBox = new DialogBox(usernameText, usernameField);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             System.out.println(usernameField.getText());
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -55,13 +55,13 @@ class MultiPlayerMenu extends PlayMenu {
         DialogText usernameText = new DialogText("Please enter opponent's username");
         NormalField usernameField = new NormalField("opponent username");
         DialogBox dialogBox = new DialogBox(usernameText, usernameField);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             System.out.println("hello");
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -74,12 +74,12 @@ class MultiPlayerMenu extends PlayMenu {
         NormalSpinner flagNumSpinner = new NormalSpinner(UIConstants.FLAG_NUM_MIN, UIConstants.FLAG_NUM_MAX, UIConstants.FLAG_NUM_DEFAULT);
 
         DialogBox dialogBox = new DialogBox(usernameText, usernameField, flagNumText, flagNumSpinner);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -87,7 +87,7 @@ class MultiPlayerMenu extends PlayMenu {
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
         AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed, root);
+        dialogContainer.makeClosable(shouldBeClosed);
         dialogBox.preventClosingOnClick(shouldBeClosed);
     }
 }

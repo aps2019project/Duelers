@@ -1,8 +1,5 @@
 package view;
 
-import controller.GraphicalUserInterface;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import models.gui.BackgroundMaker;
 import models.gui.MainMenuBox;
@@ -10,10 +7,8 @@ import models.gui.UIConstants;
 
 import java.io.FileNotFoundException;
 
-public class MainMenu {
+public class MainMenu extends Show {
     private static MainMenu menu;
-    private static AnchorPane root = new AnchorPane();
-    private static Scene scene = new Scene(root, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
     private MainMenu() throws FileNotFoundException {
         root.setBackground(UIConstants.ROOT_BACKGROUND);
@@ -33,9 +28,5 @@ public class MainMenu {
             }
         }
         return menu;
-    }
-
-    public void show() {
-        GraphicalUserInterface.getInstance().setScene(scene);
     }
 }

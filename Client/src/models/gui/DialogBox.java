@@ -29,8 +29,8 @@ public class DialogBox extends VBox {
         setEffect(UIConstants.PLAY_MENU_BOX_SHADOW);
     }
 
-    public void setButtonMouseEvent(EventHandler<? super MouseEvent> event) {
-        getChildren().add(new OrangeButton("SELECT", event));
+    public void makeButton(String text, EventHandler<? super MouseEvent> event) {
+        getChildren().add(new OrangeButton(text, event));
     }
 
     public void preventClosingOnClick(AtomicBoolean shouldBeClosed) {

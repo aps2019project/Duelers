@@ -10,6 +10,7 @@ import models.card.DeckInfo;
 import models.game.map.Position;
 import models.message.Message;
 import view.MainMenu;
+import view.Show;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class Client {
     private final LinkedList<Message> sendingMessages = new LinkedList<>();
     private String clientName;
     private Account account;
+    private Show currentShow;
     private LinkedList<Message> receivingMessages = new LinkedList<>();
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
@@ -207,7 +209,7 @@ public class Client {
     private void showError(Message message) {
         validation = false;
         errorMessage = message.getExceptionMessage().getExceptionString();
-        //TODO: graphic show error
+        Platform.runLater(() -> currentShow.showError(message.getExceptionMessage().getExceptionString()));
     }
 
     private void login(Message message) {
@@ -230,13 +232,30 @@ public class Client {
 
     public void close() {
         try {
-            socket.close();
-
-            System.out.println("socket closed");
-
+            if (socket != null) {
+                socket.close();
+                System.out.println("socket closed");
+            }
             System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setShow(Show show) {
+        this.currentShow = show;
+    }
+
+    public void makeConnection() {
+        new Thread(() -> {
+            try {
+                connect();
+            } catch (IOException e) {
+                Platform.runLater(() ->
+                        currentShow.showError("Connection failed", "RETRY", event -> makeConnection())
+                );
+                disconnected();
+            }
+        }).start();
     }
 }

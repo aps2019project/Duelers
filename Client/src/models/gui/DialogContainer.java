@@ -13,24 +13,26 @@ public class DialogContainer extends BorderPane {
     private static final Background BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(0, 0, 0, 0.4), CornerRadii.EMPTY, Insets.EMPTY)
     );
+    private final AnchorPane root;
 
-    public DialogContainer(Node center) {
+    public DialogContainer(AnchorPane root, Node center) {
+        this.root = root;
         setMinSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
         setBackground(BACKGROUND);
         setCenter(center);
     }
 
-    public void makeClosable(AtomicBoolean shouldBeClosed, AnchorPane root) {
+    public void makeClosable(AtomicBoolean shouldBeClosed) {
         setOnMouseClicked(event -> {
             if (!shouldBeClosed.get()) {
                 shouldBeClosed.set(true);
                 return;
             }
-            closeFrom(root);
+            close();
         });
         setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                closeFrom(root);
+                close();
             }
         });
     }
@@ -40,7 +42,7 @@ public class DialogContainer extends BorderPane {
         root.getChildren().add(this);
     }
 
-    public void closeFrom(AnchorPane root) {
+    public void close() {
         root.getChildren().remove(this);
         root.getChildren().get(0).setEffect(null);
     }

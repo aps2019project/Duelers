@@ -43,13 +43,13 @@ class CustomGameMenu extends PlayMenu {
         DialogText text = new DialogText("Please choose one of your decks to be as opponent's deck");
         DeckListView listView = new DeckListView(deckNames);
         DialogBox dialogBox = new DialogBox(text, listView);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton("SELECT", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             System.out.println(listView.getSelectionModel().getSelectedItem());
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -59,13 +59,13 @@ class CustomGameMenu extends PlayMenu {
         DialogText text = new DialogText("Please choose one of your decks to be as opponent's deck");
         DeckListView listView = new DeckListView(deckNames);
         DialogBox dialogBox = new DialogBox(text, listView);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton("SELECT", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             System.out.println("hello");
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -78,12 +78,12 @@ class CustomGameMenu extends PlayMenu {
         NormalSpinner flagNumSpinner = new NormalSpinner(UIConstants.FLAG_NUM_MIN, UIConstants.FLAG_NUM_MAX, UIConstants.FLAG_NUM_DEFAULT);
 
         DialogBox dialogBox = new DialogBox(deckText, listView, flagNumText, flagNumSpinner);
-        DialogContainer dialogContainer = new DialogContainer(dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.setButtonMouseEvent(buttonEvent -> {
+        dialogBox.makeButton("SELECT", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             //TODO send data to server
-            dialogContainer.closeFrom(root);
+            dialogContainer.close();
         });
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
@@ -91,7 +91,7 @@ class CustomGameMenu extends PlayMenu {
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
         AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed, root);
+        dialogContainer.makeClosable(shouldBeClosed);
         dialogBox.preventClosingOnClick(shouldBeClosed);
     }
 }

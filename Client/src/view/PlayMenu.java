@@ -1,9 +1,7 @@
 package view;
 
-import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -11,7 +9,7 @@ import models.gui.*;
 
 import java.io.FileNotFoundException;
 
-public class PlayMenu {
+public class PlayMenu extends Show {
     private static final Background ROOT_BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(40, 43, 53), CornerRadii.EMPTY, Insets.EMPTY
@@ -26,8 +24,6 @@ public class PlayMenu {
                     "Play with your friends and earn money", event -> MultiPlayerMenu.getInstance().show())
     };
     private static PlayMenu menu;
-    final AnchorPane root = new AnchorPane();
-    private Scene scene = new Scene(root, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
     PlayMenu(PlayButtonItem[] items, String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
@@ -49,9 +45,5 @@ public class PlayMenu {
             }
         }
         return menu;
-    }
-
-    public void show() {
-        GraphicalUserInterface.getInstance().setScene(scene);
     }
 }
