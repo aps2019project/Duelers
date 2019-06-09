@@ -1,6 +1,6 @@
 package models.comperessedData;
 
-import client.models.map.Position;
+import models.game.map.Position;
 
 import java.util.ArrayList;
 

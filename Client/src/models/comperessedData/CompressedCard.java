@@ -1,7 +1,7 @@
 package models.comperessedData;
 
-import client.models.card.AttackType;
-import client.models.card.CardType;
+import models.card.AttackType;
+import models.card.CardType;
 
 public class CompressedCard {
     private String name;

@@ -1,6 +1,6 @@
 package models.comperessedData;
 
-import client.models.card.CardType;
+import models.card.CardType;
 
 import java.util.ArrayList;
 
