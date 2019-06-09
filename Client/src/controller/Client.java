@@ -9,7 +9,6 @@ import models.card.DeckInfo;
 import models.game.map.Position;
 import models.message.Message;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +24,6 @@ public class Client {
     private LinkedList<Message> receivingMessages = new LinkedList<>();
     private DeckInfo[] customDecks;
     private AccountInfo[] leaderBoard;
-    private Menu currentMenu;
     private Card selected;
     private Position[] positions;
     private boolean validation = true;
@@ -51,7 +49,14 @@ public class Client {
     public void connect() throws IOException {
         Socket socket = getSocketReady();
         sendClientNameToServer(socket);
-        sendMessageThread = new Thread(this::sendMessages);
+        sendMessageThread = new Thread(() -> {
+            try {
+                sendMessages();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         recieveMessageThread = new Thread(this::receiveMessages);
         //TODO:show AccountMenu
     }
@@ -81,18 +86,14 @@ public class Client {
         }
     }
 
-    private void sendMessages() {
+    private void sendMessages() throws IOException {
         while (true) {
             Message message;
             synchronized (sendingMessages) {
                 message = sendingMessages.poll();
             }
             if (message != null) {
-                try {
-                    socket.getOutputStream().write((message.toJson()+"\n").getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                socket.getOutputStream().write((message.toJson() + "\n").getBytes());
             } else {
                 try {
                     synchronized (sendingMessages) {
@@ -213,5 +214,15 @@ public class Client {
 
     public Account getAccount() {
         return account;
+    }
+
+    public void close() {
+        try {
+            socket.close();
+
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package models.card;
 
-import client.models.account.Collection;
+
+import models.account.Collection;
 
 import java.util.ArrayList;
 

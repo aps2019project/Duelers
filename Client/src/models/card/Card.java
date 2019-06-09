@@ -1,6 +1,7 @@
 package models.card;
 
-import client.models.card.spell.Spell;
+
+import models.card.spell.Spell;
 
 import java.util.ArrayList;
 

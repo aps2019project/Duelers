@@ -25,11 +25,7 @@ public class Account {
                 this.decks.add(new Deck(deck, collection));
             }
         }
-        try {
-            this.mainDeck = getDeck(account.getMainDeckName());
-        } catch (InputException e) {
-            this.mainDeck = null;
-        }
+        this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
         this.wins = account.getWins();
     }
@@ -73,13 +69,13 @@ public class Account {
         return this.money;
     }
 
-    public Deck getDeck(String deckName) throws InputException {
+    public Deck getDeck(String deckName) {
         for (Deck deck : decks) {
             if (deck.areSame(deckName)) {
                 return deck;
             }
         }
-        throw new InputException("Such deck not found");
+        return null;
     }
 
     public boolean isMainDeck(Deck deck) {
