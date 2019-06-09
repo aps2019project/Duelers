@@ -1,3 +1,5 @@
+package BattleView;
+
 import com.google.gson.Gson;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -35,7 +37,10 @@ public class TroopAnimation extends Transition {
     private FramePosition[] currentFramePositions;
     private int currentI, currentJ;
 
-    public TroopAnimation(Group root, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
+    private Group mapGroup;
+
+    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
+        this.mapGroup = mapGroup;
         //file settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
         attackFramePositions = playlist.getAttackFrames();
@@ -58,11 +63,11 @@ public class TroopAnimation extends Transition {
 
         Image image = new Image(new FileInputStream("resources/troopAnimations/" + fileName + ".png"));
         imageView = new ImageView(image);
-        imageView.setScaleX(1.5 * Constants.SCREEN_WIDTH / 1920);//?????
-        imageView.setScaleY(1.5 * Constants.SCREEN_HEIGHT / 1080);
+        imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(cellsX[j][i] - extraX);
         imageView.setY(cellsY[j][i] - extraY);
-        root.getChildren().add(imageView);
+        mapGroup.getChildren().add(imageView);
 
         this.setCycleCount(INDEFINITE);
         setAction(ACTION.BREATHING);
@@ -70,9 +75,9 @@ public class TroopAnimation extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        if (v < 0.5 && !flag)
+        if (!flag && v < 0.5)
             flag = true;
-        if (v > 0.5 && flag) {
+        if (flag && v > 0.5) {
             imageView.setViewport(new Rectangle2D(currentFramePositions[nextIndex].x,
                     currentFramePositions[nextIndex].y, frameWidth, frameHeight));
             generateNextState();
@@ -82,7 +87,9 @@ public class TroopAnimation extends Transition {
 
     private void generateNextState() {
         //has reached to destination
-        if (action == ACTION.RUN && imageView.getX() == cellsX[currentJ][currentI] - extraX && imageView.getY() == cellsY[currentJ][currentI] - extraY) {//may bug
+        if (action == ACTION.RUN
+                && Math.abs(imageView.getX() - cellsX[currentJ][currentI] + extraX) < 2
+                && Math.abs(imageView.getY() - cellsY[currentJ][currentI] + extraY) < 2) {//may bug
             setAction(ACTION.BREATHING);
             return;
         }
@@ -102,52 +109,73 @@ public class TroopAnimation extends Transition {
                 nextIndex = 0;
                 break;
             case DEATH:
-                //do nothing
+                mapGroup.getChildren().remove(imageView);
                 break;
         }
     }
 
-    public void setAction(ACTION action) {
+    private void setAction(ACTION action) {
         this.action = action;
         nextIndex = 0;
         this.stop();
         switch (action) {
             case BREATHING:
-                currentFramePositions=breathingFramePositions;
+                currentFramePositions = breathingFramePositions;
                 break;
             case DEATH:
-                currentFramePositions=deathFramePositions;
+                currentFramePositions = deathFramePositions;
                 break;
             case ATTACK:
-                currentFramePositions=attackFramePositions;
+                currentFramePositions = attackFramePositions;
                 break;
             case IDLE:
-                currentFramePositions=idleFramePositions;
+                currentFramePositions = idleFramePositions;
                 break;
             case RUN:
-                currentFramePositions=runFramePositions;
+                currentFramePositions = runFramePositions;
                 break;
             case HIT:
-                currentFramePositions=hitFramePositions;
+                currentFramePositions = hitFramePositions;
                 break;
         }
         this.play();
     }
 
+    public void breathe() {
+        setAction(ACTION.BREATHING);
+    }
+
+    public void kill() {
+        setAction(ACTION.DEATH);
+    }
+
+    public void attack() {
+        setAction(ACTION.ATTACK);
+    }
+
+    public void idle() {
+        setAction(ACTION.IDLE);
+    }
+
+    public void hit() {
+        setAction(ACTION.HIT);
+    }
+
     public void moveTo(int j, int i) {
-        this.action = ACTION.RUN;
-        nextIndex = 0;
-        this.stop();
-        currentFramePositions=runFramePositions;
-        this.play();
+        setAction(ACTION.RUN);
         KeyValue xValue = new KeyValue(imageView.xProperty(), cellsX[j][i] - extraX);
         KeyValue yValue = new KeyValue(imageView.yProperty(), cellsY[j][i] - extraY);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - i) + Math.abs(currentJ - j)) * 200), xValue, yValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - i)
+                + Math.abs(currentJ - j)) * Constants.MOVE_TIME_PER_CELL), xValue, yValue);
         Timeline timeline = new Timeline(keyFrame);
         timeline.play();
         currentJ = j;
         currentI = i;
     }
+}
+
+enum ACTION {
+    ATTACK, BREATHING, DEATH, HIT, IDLE, RUN
 }
 
 class Playlist {
