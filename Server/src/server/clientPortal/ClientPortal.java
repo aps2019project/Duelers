@@ -2,6 +2,7 @@ package server.clientPortal;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
+import server.detaCenter.DataCenter;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -43,6 +44,7 @@ public class ClientPortal extends Thread {
 
     synchronized void addClient(String name, Formatter formatter) {//TODO:add remove client
         clients.put(name, formatter);
+        DataCenter.getInstance().getClients().put(name, null);
     }
 
     void addMessage(String clientName, String message) {
