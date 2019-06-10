@@ -41,7 +41,7 @@ class MultiPlayerMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(usernameText, usernameField);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             System.out.println(usernameField.getText());
             //TODO send data to server
@@ -57,7 +57,7 @@ class MultiPlayerMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(usernameText, usernameField);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             System.out.println("hello");
             //TODO send data to server
@@ -76,7 +76,7 @@ class MultiPlayerMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(usernameText, usernameField, flagNumText, flagNumSpinner);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton(BACKGROUND_URL, buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
             //TODO send data to server
             dialogContainer.close();

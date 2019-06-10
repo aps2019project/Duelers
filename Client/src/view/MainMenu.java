@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import models.gui.BackgroundMaker;
 import models.gui.MainMenuBox;
@@ -16,7 +17,9 @@ public class MainMenu extends Show {
         BorderPane background = BackgroundMaker.getMenuBackground();
         MainMenuBox menuBox = new MainMenuBox();
 
-        root.getChildren().addAll(background, menuBox);
+        AnchorPane sceneContents = new AnchorPane(background, menuBox);
+
+        root.getChildren().addAll(sceneContents);
     }
 
     public static MainMenu getInstance() {

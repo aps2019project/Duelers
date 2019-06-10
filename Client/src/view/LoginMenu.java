@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import models.gui.BackgroundMaker;
 import models.gui.DefaultContainer;
@@ -18,7 +19,10 @@ public class LoginMenu extends Show {
         BackgroundMaker.makeMenuBackgroundBlur();
         DefaultContainer container = new DefaultContainer(new LoginMenuContainer());
 
-        root.getChildren().addAll(background, container);
+        AnchorPane sceneContents = new AnchorPane(background, container);
+
+
+        root.getChildren().addAll(sceneContents);
     }
 
     public static LoginMenu getInstance() {

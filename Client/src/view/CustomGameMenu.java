@@ -45,7 +45,7 @@ class CustomGameMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(text, listView);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton("SELECT", buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             System.out.println(listView.getSelectionModel().getSelectedItem());
             //TODO send data to server
@@ -61,7 +61,7 @@ class CustomGameMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(text, listView);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton("SELECT", buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             System.out.println("hello");
             //TODO send data to server
@@ -80,7 +80,7 @@ class CustomGameMenu extends PlayMenu {
         DialogBox dialogBox = new DialogBox(deckText, listView, flagNumText, flagNumSpinner);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-        dialogBox.makeButton("SELECT", buttonEvent -> {
+        dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
             //TODO send data to server
             dialogContainer.close();
