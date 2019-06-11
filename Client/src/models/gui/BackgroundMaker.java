@@ -36,9 +36,9 @@ public class BackgroundMaker {
         );
         ImageView vignetteView = ImageLoader.loadImage(VIGNETTE_URL, UIConstants.VIGNETTE_WIDTH, UIConstants.VIGNETTE_HEIGHT);
 
-//        Fog fog = new Fog(UIConstants.SCENE_WIDTH * 0.5, UIConstants.FOREGROUND_HEIGHT * 0.9);
+        Cloud cloud = new Cloud();
 
-        menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, /*fog.getView(),*/ foregroundView, vignetteView);
+        menuBackground.getChildren().addAll(backgroundView, farPillarsView, nearPillarsView, cloud, foregroundView, vignetteView);
     }
 
     private static void makePlayBackground(String url) throws FileNotFoundException {
@@ -64,11 +64,16 @@ public class BackgroundMaker {
         if (menuBackground == null) {
             makeMenuBackground();
         }
-        menuBackground.setEffect(null);
         return menuBackground;
     }
 
     public static void makeMenuBackgroundBlur() {
         menuBackground.setEffect(new GaussianBlur(UIConstants.BACKGROUND_BLUR));
+        menuBackground.getChildren().stream().filter(node -> node instanceof Cloud).forEach(node -> ((Cloud) node).pause());
+    }
+
+    public static void makeMenuBackgroundUnBlur() {
+        menuBackground.setEffect(null);
+        menuBackground.getChildren().stream().filter(node -> node instanceof Cloud).forEach(node -> ((Cloud) node).play());
     }
 }

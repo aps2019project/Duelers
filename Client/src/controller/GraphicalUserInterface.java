@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
 import view.LoginMenu;
+import view.MainMenu;
 
 public class GraphicalUserInterface {
     private static GraphicalUserInterface GUI;
@@ -25,7 +26,7 @@ public class GraphicalUserInterface {
     public void start(Stage stage) {
         this.stage = stage;
 
-        LoginMenu.getInstance().show();
+        MainMenu.getInstance().show();
 
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");

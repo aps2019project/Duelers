@@ -22,6 +22,12 @@ public class MainMenu extends Show {
         root.getChildren().addAll(sceneContents);
     }
 
+    @Override
+    public void show() {
+        super.show();
+        BackgroundMaker.makeMenuBackgroundUnBlur();
+    }
+
     public static MainMenu getInstance() {
         if (menu == null) {
             try {

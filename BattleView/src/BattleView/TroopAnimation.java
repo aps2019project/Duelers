@@ -67,10 +67,13 @@ public class TroopAnimation extends Transition {
         imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(cellsX[j][i] - extraX);
         imageView.setY(cellsY[j][i] - extraY);
+
+        imageView.setViewport(new Rectangle2D(0,0,1,1));
         mapGroup.getChildren().add(imageView);
 
         this.setCycleCount(INDEFINITE);
         setAction(ACTION.BREATHING);
+
     }
 
     @Override

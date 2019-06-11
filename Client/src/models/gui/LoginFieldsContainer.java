@@ -2,6 +2,7 @@ package models.gui;
 
 import controller.LoginMenuController;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -38,6 +39,13 @@ class LoginFieldsContainer extends VBox {
         OrangeButton registerButton = new OrangeButton("REGISTER",
                 event -> LoginMenuController.getInstance().register(usernameField.getText(), passwordField.getText())
         );
+
+        setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                LoginMenuController.getInstance().login(usernameField.getText(), passwordField.getText());
+            }
+        });
+
         return new HBox(UIConstants.DEFAULT_SPACING, loginButton, registerButton);
     }
 }

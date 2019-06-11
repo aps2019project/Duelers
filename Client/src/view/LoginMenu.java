@@ -16,12 +16,17 @@ public class LoginMenu extends Show {
         root.setBackground(UIConstants.ROOT_BACKGROUND);
 
         BorderPane background = BackgroundMaker.getMenuBackground();
-        BackgroundMaker.makeMenuBackgroundBlur();
         DefaultContainer container = new DefaultContainer(new LoginMenuContainer());
 
         AnchorPane sceneContents = new AnchorPane(background, container);
 
         root.getChildren().addAll(sceneContents);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        BackgroundMaker.makeMenuBackgroundBlur();
     }
 
     public static LoginMenu getInstance() {
