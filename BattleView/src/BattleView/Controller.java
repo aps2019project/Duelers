@@ -28,21 +28,42 @@ public class Controller extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CompressedCard card1 = new CompressedCard("neutral_diamondgolem", null, "a1", null,
+                CompressedCard card = new CompressedCard("neutral_diamondgolem", null, "a1", null,
                         null, 0, 0, 0, null, 2, true);
-                CompressedTroop troop1 = new CompressedTroop(card1, 5, 6, 5, new Position(2, 2),
+                CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
-                map.updateTroop(troop1);
+                map.updateTroop(troop);
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                CompressedCard card2 = new CompressedCard("boss_chaosknight", null, "a2", null,
+                card = new CompressedCard("boss_chaosknight", null, "a2", null,
                         null, 0, 0, 0, null, 2, true);
-                CompressedTroop troop2 = new CompressedTroop(card2, 5, 6, 5, new Position(4, 4),
+                troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 4),
                         true, true, false, false, 1, 2);
-                map.updateTroop(troop2);
+                map.updateTroop(troop);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 8),
+                        true, true, false, false, 1, 2);
+                map.updateTroop(troop);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 4),
+                        true, true, false, false, 1, 2);
+                map.killTroop(card.getCardId());
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
         primaryStage.setScene(new BattleScene(this, game).getScene());
