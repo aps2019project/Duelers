@@ -1,10 +1,15 @@
 package view;
 
+import controller.Client;
+import controller.CustomGameMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import models.card.Deck;
+import models.game.GameType;
 import models.gui.*;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class CustomGameMenu extends PlayMenu {
@@ -20,12 +25,11 @@ class CustomGameMenu extends PlayMenu {
                     "You must collect at least half the flags to win", event -> menu.showMultiFlagDialog())
     };
 
-    private String[] deckNames = {
-            "strong deck", "spell deck", "custom deck", "alo", "slm", "sdfa", "gfh", "yth", "pkm", "lskdf", "skdfm", "ljf", "dff"
-    };
+    private String[] deckNames;
 
     private CustomGameMenu() throws FileNotFoundException {
         super(items, BACKGROUND_URL, BACK_EVENT);
+        initializeDecks();
     }
 
     public static CustomGameMenu getInstance() {
@@ -39,6 +43,14 @@ class CustomGameMenu extends PlayMenu {
         return menu;
     }
 
+    private void initializeDecks() {
+        ArrayList<Deck> decks = Client.getInstance().getAccount().getDecks();
+        deckNames = new String[decks.size()];
+        for (int i = 0; i < deckNames.length; i++) {
+            deckNames[i] = decks.get(i).getName();
+        }
+    }
+
     private void showKillHeroDialog() {
         DialogText text = new DialogText("Please choose one of your decks to be as opponent's deck");
         DeckListView listView = new DeckListView(deckNames);
@@ -47,8 +59,9 @@ class CustomGameMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
-            System.out.println(listView.getSelectionModel().getSelectedItem());
-            //TODO send data to server
+            CustomGameMenuController.getInstance().startGame(
+                    listView.getSelectionModel().getSelectedItem(), GameType.KILL_HERO, 0
+            );
             dialogContainer.close();
         });
         dialogContainer.show(root);
@@ -63,8 +76,9 @@ class CustomGameMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
-            System.out.println("hello");
-            //TODO send data to server
+            CustomGameMenuController.getInstance().startGame(
+                    listView.getSelectionModel().getSelectedItem(), GameType.A_FLAG, 1
+            );
             dialogContainer.close();
         });
         dialogContainer.show(root);
@@ -82,7 +96,9 @@ class CustomGameMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (listView.getSelectionModel().getSelectedItem() == null) return;
-            //TODO send data to server
+            CustomGameMenuController.getInstance().startGame(
+                    listView.getSelectionModel().getSelectedItem(), GameType.SOME_FLAG, flagNumSpinner.getValue()
+            );
             dialogContainer.close();
         });
         dialogContainer.show(root);
