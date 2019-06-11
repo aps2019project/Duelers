@@ -21,18 +21,20 @@ public class StoryMenuController {
     private StoryMenuController() {
     }
 
-
-
-    public void startGame(int stage, Client client, String serverName) {
+    public void startGame(int stage) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeNewStoryGameMessage(
-                        client.getClientName(), serverName, stage, 0
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, stage, 0
                 )
         );
     }
 
-    public void setStories(DeckInfo[] stories) {
+    synchronized void setStories(DeckInfo[] stories) {
+        this.notify();
         this.stories = stories;
     }
 
+    public DeckInfo[] getStories() {
+        return stories;
+    }
 }
