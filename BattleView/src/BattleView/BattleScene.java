@@ -23,7 +23,7 @@ public class BattleScene {
         root = new Group();
         scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         addBackGround("battlemap6_middleground@2x");
-        mapBox = new MapBox(controller, game.getGameMap());
+        mapBox = new MapBox(controller, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
         root.getChildren().add(mapBox.getMapGroup());
     }
 

@@ -13,7 +13,11 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
         primaryStage.setFullScreen(true);
+        primaryStage.setScene(new BattleScene(this, generateAGame()).getScene());
+        primaryStage.show();
+    }
 
+    private CompressedGame generateAGame() {
         final CompressedCell[][] cells = new CompressedCell[5][9];
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
@@ -73,8 +77,7 @@ public class Controller extends Application {
                 }
             }
         }).start();
-        primaryStage.setScene(new BattleScene(this, game).getScene());
-        primaryStage.show();
+        return game;
     }
 
     public void sendMessage(String string) {

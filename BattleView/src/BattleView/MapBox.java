@@ -24,15 +24,14 @@ public class MapBox implements PropertyChangeListener {
 
     private final HashMap<CompressedTroop, TroopAnimation> troopAnimationHashMap = new HashMap<>();
 
-    public MapBox(Controller controller, CompressedGameMap gameMap) throws Exception {
+    public MapBox(Controller controller, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.controller = controller;
         this.gameMap = gameMap;
         mapGroup = new Group();
-        mapGroup.setLayoutY(Constants.MAP_Y);
-        mapGroup.setLayoutX(Constants.MAP_X);
+        mapGroup.setLayoutY(x);
+        mapGroup.setLayoutX(y);
         makePolygons();
         addCircles();
-        //addTroops();
         for (CompressedTroop troop : gameMap.getTroops()) {
             updateTroop(null, troop);
         }
@@ -103,11 +102,10 @@ public class MapBox implements PropertyChangeListener {
         } else {
             try {
                 animation = new TroopAnimation(mapGroup, cellsX, cellsY, newTroop.getCard().getName(),
-                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(),newTroop.getPlayerNumber()==1);
+                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(), newTroop.getPlayerNumber() == 1);
                 troopAnimationHashMap.put(newTroop, animation);
             } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Error making animation");
+                System.out.println("Error making animation " + newTroop.getCard().getCardId());
             }
         }
     }
@@ -117,7 +115,6 @@ public class MapBox implements PropertyChangeListener {
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(".");
         if (evt.getPropertyName().equals("troop")) {
             Platform.runLater(new Runnable() {
                 @Override
