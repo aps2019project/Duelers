@@ -30,8 +30,8 @@ public class StoryMenuController {
     }
 
     synchronized void setStories(DeckInfo[] stories) {
-        this.notify();
         this.stories = stories;
+        this.notify();
     }
 
     public DeckInfo[] getStories() {
