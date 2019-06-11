@@ -1,7 +1,9 @@
 package view;
 
+import controller.MultiPlayerMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import models.game.GameType;
 import models.gui.*;
 
 import java.io.FileNotFoundException;
@@ -43,8 +45,7 @@ class MultiPlayerMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
-            System.out.println(usernameField.getText());
-            //TODO send data to server
+            MultiPlayerMenuController.getInstance().startGame(GameType.KILL_HERO, 0, usernameField.getText());
             dialogContainer.close();
         });
         dialogContainer.show(root);
@@ -59,8 +60,7 @@ class MultiPlayerMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
-            System.out.println("hello");
-            //TODO send data to server
+            MultiPlayerMenuController.getInstance().startGame(GameType.A_FLAG, 1, usernameField.getText());
             dialogContainer.close();
         });
         dialogContainer.show(root);
@@ -78,7 +78,7 @@ class MultiPlayerMenu extends PlayMenu {
 
         dialogBox.makeButton("START", buttonEvent -> {
             if (usernameField.getText().equals("")) return;
-            //TODO send data to server
+            MultiPlayerMenuController.getInstance().startGame(GameType.SOME_FLAG, flagNumSpinner.getValue(), usernameField.getText());
             dialogContainer.close();
         });
         dialogContainer.show(root);

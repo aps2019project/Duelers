@@ -14,11 +14,11 @@ public class MultiPlayerMenuController {
         return ourInstance;
     }
 
-    public void startGame(int mode, int numberOfFlags , String opponent) {
+    public void startGame(GameType gameType, int numberOfFlags , String opponent) {
 
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeNewMultiPlayerGameMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, GameType.values()[mode - 1],
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, gameType,
                         numberOfFlags, opponent, 0
                 )
         );
