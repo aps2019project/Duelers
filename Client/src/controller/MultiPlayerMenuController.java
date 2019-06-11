@@ -15,7 +15,6 @@ public class MultiPlayerMenuController {
     }
 
     public void startGame(GameType gameType, int numberOfFlags , String opponent) {
-
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeNewMultiPlayerGameMessage(
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, gameType,
