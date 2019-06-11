@@ -9,7 +9,7 @@ import models.gui.*;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-class MultiPlayerMenu extends PlayMenu {
+public class MultiPlayerMenu extends PlayMenu {
     private static final String BACKGROUND_URL = "resources/menu/background/multiplayer_background.jpg";
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> PlayMenu.getInstance().show();
     private static MultiPlayerMenu menu;
