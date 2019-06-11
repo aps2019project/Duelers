@@ -3,7 +3,6 @@ package BattleView;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -14,7 +13,6 @@ import models.comperessedData.CompressedTroop;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.Random;
 
 public class MapBox implements PropertyChangeListener {
     private final Controller controller;
@@ -105,113 +103,13 @@ public class MapBox implements PropertyChangeListener {
         } else {
             try {
                 animation = new TroopAnimation(mapGroup, cellsX, cellsY, newTroop.getCard().getName(),
-                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn());
+                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(),newTroop.getPlayerNumber()==1);
                 troopAnimationHashMap.put(newTroop, animation);
             } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Error making animation");
             }
         }
-    }
-
-    private void addTroops() throws Exception {
-        TroopAnimation[][] troopAnimations = new TroopAnimation[5][9];
-        for (int j = 0; j < 5; j++) {
-            for (int i = 0; i < 9; i++) {
-                troopAnimations[j][i] = new TroopAnimation(mapGroup, cellsX, cellsY, "boss_andromeda", j, i);
-            }
-        }
-
-        Button button1 = new Button("KILL");
-        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].kill();
-                    }
-                }
-            }
-        });
-        button1.setLayoutX(-20);
-        button1.setLayoutY(20);
-        mapGroup.getChildren().add(button1);
-
-        Button button2 = new Button("IDLE");
-        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].idle();
-                    }
-                }
-            }
-        });
-        button2.setLayoutX(-20);
-        button2.setLayoutY(120);
-        mapGroup.getChildren().add(button2);
-
-        Button button3 = new Button("ATTACK");
-        button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].attack();
-                    }
-                }
-            }
-        });
-        button3.setLayoutX(-20);
-        button3.setLayoutY(220);
-        mapGroup.getChildren().add(button3);
-
-        Button button4 = new Button("BREATHING");
-        button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].breathe();
-                    }
-                }
-            }
-        });
-        button4.setLayoutX(-20);
-        button4.setLayoutY(320);
-        mapGroup.getChildren().add(button4);
-
-        Button button5 = new Button("RUN");
-        button5.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Random random = new Random();
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].moveTo(random.nextInt(5), random.nextInt(8));
-                    }
-                }
-            }
-        });
-        button5.setLayoutX(-20);
-        button5.setLayoutY(420);
-        mapGroup.getChildren().add(button5);
-
-        Button button6 = new Button("HIT");
-        button6.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (int j = 0; j < 5; j++) {
-                    for (int i = 0; i < 9; i++) {
-                        troopAnimations[j][i].hit();
-                    }
-                }
-            }
-        });
-        button6.setLayoutX(-20);
-        button6.setLayoutY(520);
-        mapGroup.getChildren().add(button6);
     }
 
     public Group getMapGroup() {

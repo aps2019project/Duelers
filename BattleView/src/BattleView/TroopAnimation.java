@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TroopAnimation extends Transition {
+    private final boolean isPlayer1Troop;
     private final double[][] cellsX;
     private final double[][] cellsY;
 
@@ -39,8 +40,9 @@ public class TroopAnimation extends Transition {
 
     private Group mapGroup;
 
-    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
+    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop) throws Exception {
         this.mapGroup = mapGroup;
+        this.isPlayer1Troop = isPlayer1Troop;
         //file settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
         attackFramePositions = playlist.getAttackFrames();
@@ -63,12 +65,16 @@ public class TroopAnimation extends Transition {
 
         Image image = new Image(new FileInputStream("resources/troopAnimations/" + fileName + ".png"));
         imageView = new ImageView(image);
-        imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        if (isPlayer1Troop)
+            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        else
+            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(cellsX[j][i] - extraX);
         imageView.setY(cellsY[j][i] - extraY);
 
-        imageView.setViewport(new Rectangle2D(0,0,1,1));
+
+        imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
         mapGroup.getChildren().add(imageView);
 
         this.setCycleCount(INDEFINITE);
@@ -123,6 +129,10 @@ public class TroopAnimation extends Transition {
         this.stop();
         switch (action) {
             case BREATHING:
+                if (isPlayer1Troop)
+                    imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+                else
+                    imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
                 currentFramePositions = breathingFramePositions;
                 break;
             case DEATH:
@@ -152,7 +162,11 @@ public class TroopAnimation extends Transition {
         setAction(ACTION.DEATH);
     }
 
-    public void attack() {
+    public void attack(int i) {
+        if (i > currentI)
+            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        if (i < currentI)
+            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
         setAction(ACTION.ATTACK);
     }
 
@@ -160,11 +174,19 @@ public class TroopAnimation extends Transition {
         setAction(ACTION.IDLE);
     }
 
-    public void hit() {
+    public void hit(int i) {
+        if (i > currentI)
+            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        if (i < currentI)
+            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
         setAction(ACTION.HIT);
     }
 
     public void moveTo(int j, int i) {
+        if (i > currentI)
+            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+        if (i < currentI)
+            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
         setAction(ACTION.RUN);
         KeyValue xValue = new KeyValue(imageView.xProperty(), cellsX[j][i] - extraX);
         KeyValue yValue = new KeyValue(imageView.yProperty(), cellsY[j][i] - extraY);

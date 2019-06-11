@@ -24,17 +24,16 @@ public class Controller extends Application {
         final CompressedGameMap map = new CompressedGameMap(cells, troops);
         final CompressedGame game = new CompressedGame(null, null, map, 0, null);
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CompressedCard card = new CompressedCard("neutral_diamondgolem", null, "a1", null,
+                CompressedCard card = new CompressedCard("neutral_zenrui", null, "a1", null,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -44,7 +43,7 @@ public class Controller extends Application {
                         true, true, false, false, 1, 2);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -52,7 +51,15 @@ public class Controller extends Application {
                         true, true, false, false, 1, 2);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 4),
+                        true, true, false, false, 1, 2);
+                map.updateTroop(troop);
+                try {
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -60,7 +67,7 @@ public class Controller extends Application {
                         true, true, false, false, 1, 2);
                 map.killTroop(card.getCardId());
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
