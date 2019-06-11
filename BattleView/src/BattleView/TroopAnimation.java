@@ -40,6 +40,7 @@ public class TroopAnimation extends Transition {
     private Group mapGroup;
 
     public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
+        System.out.println(fileName);
         this.mapGroup = mapGroup;
         //file settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
