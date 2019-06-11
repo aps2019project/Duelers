@@ -26,6 +26,4 @@ public class LoginMenuController {
                 Message.makeLogInMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, userName, password, 0)
         );
     }
-
-
 }

@@ -23,16 +23,4 @@ public class MultiPlayerMenuController {
                 )
         );
     }
-
-
-    public void selectUser(String userName) {
-        if (Client.getInstance().getAccount().getUsername().equalsIgnoreCase(userName)) {
-            //TODO:Exception
-        }
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeSelectUserMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, userName, 0
-                )
-        );
-    }
 }
