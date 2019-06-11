@@ -21,7 +21,6 @@ public class LoginMenu extends Show {
 
         AnchorPane sceneContents = new AnchorPane(background, container);
 
-
         root.getChildren().addAll(sceneContents);
     }
 

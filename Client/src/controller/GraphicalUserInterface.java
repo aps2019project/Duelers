@@ -21,12 +21,13 @@ public class GraphicalUserInterface {
 
     public void start(Stage stage) {
         this.stage = stage;
+
+        LoginMenu.getInstance().show();
+
         this.stage.setTitle("DUELYST");
         this.stage.setResizable(false);
         this.stage.show();
         this.stage.setOnCloseRequest(event -> Client.getInstance().close());
-
-        LoginMenu.getInstance().show();
     }
 
     public void setScene(Scene scene) {
