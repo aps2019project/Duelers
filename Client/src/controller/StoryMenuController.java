@@ -7,7 +7,7 @@ import models.message.Message;
 
 public class StoryMenuController {
     private static StoryMenuController ourInstance;
-    private DeckInfo[] stories;
+    private DeckInfo[] stories = null;
 
     public static StoryMenuController getInstance() {
         if (ourInstance == null) {
