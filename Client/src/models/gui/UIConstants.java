@@ -13,11 +13,18 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class UIConstants {
+    private static final double DEFAULT_SCENE_WIDTH = 3636;
+    private static final double DEFAULT_SCENE_HEIGHT = 2000;
+    private static final double SCALE = Math.min(
+            Screen.getPrimary().getBounds().getWidth() / DEFAULT_SCENE_WIDTH,
+            Screen.getPrimary().getBounds().getHeight() / DEFAULT_SCENE_HEIGHT
+    );
     public static final Background ROOT_BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(44, 33, 129), CornerRadii.EMPTY, Insets.EMPTY
@@ -28,10 +35,9 @@ public class UIConstants {
     public static final int FLAG_NUM_DEFAULT = 10;
     static final Effect PLAY_MENU_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.05, 0);
     static final Effect BACK_BUTTON_HOVER_EFFECT = new ColorAdjust(0, 0.15, 0.2, 0);
-    private static final double SCALE = 0.8;
     public static final double DEFAULT_SPACING = 10 * SCALE;
-    public static final double SCENE_WIDTH = 3636 * SCALE;
-    public static final double SCENE_HEIGHT = 2000 * SCALE;
+    public static final double SCENE_WIDTH = DEFAULT_SCENE_WIDTH * SCALE;
+    public static final double SCENE_HEIGHT = DEFAULT_SCENE_HEIGHT * SCALE;
     static final double ON_DIALOG_BLUR = 30 * SCALE;
     static final double DIALOG_MAX_WIDTH = 1200 * SCALE;
     static final double DIALOG_MAX_HEIGHT = 700 * SCALE;

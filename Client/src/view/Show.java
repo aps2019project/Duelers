@@ -3,18 +3,14 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import models.gui.UIConstants;
-import models.message.Message;
 
 public abstract class Show {
     final AnchorPane root = new AnchorPane();
-    private Scene scene = new Scene(root, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
     public void show() {
-        GraphicalUserInterface.getInstance().setScene(scene);
+        GraphicalUserInterface.getInstance().changeScene(root);
         Client.getInstance().setShow(this);
     }
 
