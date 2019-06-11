@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
 
 public class UIConstants {
     private static final double DEFAULT_SCENE_WIDTH = 3636;
-    private static final double DEFAULT_SCENE_HEIGHT = 2000;
+    private static final double DEFAULT_SCENE_HEIGHT = 2045;
     private static final double SCALE = Math.min(
             Screen.getPrimary().getBounds().getWidth() / DEFAULT_SCENE_WIDTH,
             Screen.getPrimary().getBounds().getHeight() / DEFAULT_SCENE_HEIGHT
@@ -38,6 +38,9 @@ public class UIConstants {
     public static final double DEFAULT_SPACING = 10 * SCALE;
     public static final double SCENE_WIDTH = DEFAULT_SCENE_WIDTH * SCALE;
     public static final double SCENE_HEIGHT = DEFAULT_SCENE_HEIGHT * SCALE;
+    static final double CLOUD_WIDTH = 1400 * SCALE;
+    static final double CLOUD_HEIGHT = 750 * SCALE;
+    static final double CLOUD_DISTANCE = 800 * SCALE;
     static final double ON_DIALOG_BLUR = 30 * SCALE;
     static final double DIALOG_MAX_WIDTH = 1200 * SCALE;
     static final double DIALOG_MAX_HEIGHT = 700 * SCALE;
@@ -64,7 +67,6 @@ public class UIConstants {
     static final double FAR_PILLARS_HEIGHT = 1342 * SCALE;
     static final double VIGNETTE_WIDTH = 1429 * SCALE;
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
-    static final int FOG_CIRCLE_RADIUS = (int) (100 * SCALE);
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
     static final Effect WHITE_TEXT_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
     static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.BLACK);
