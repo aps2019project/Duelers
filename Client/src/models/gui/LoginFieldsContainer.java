@@ -37,7 +37,7 @@ class LoginFieldsContainer extends VBox {
         );
         OrangeButton registerButton = new OrangeButton("REGISTER",
                 event -> LoginMenuController.getInstance().register(usernameField.getText(), passwordField.getText())
-                );
+        );
         return new HBox(UIConstants.DEFAULT_SPACING, loginButton, registerButton);
     }
 }
