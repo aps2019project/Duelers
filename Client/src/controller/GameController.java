@@ -7,21 +7,20 @@ import models.game.availableActions.AvailableActions;
 
 public class GameController {
     private static GameController ourInstance;
-
-    public static GameController getInstance() {
-        if (ourInstance == null) {
-             ourInstance = new GameController();
-        }
-        return ourInstance;
-    }
-    private GameController() {
-    }
-
     private CompressedGame currentGame;
     private String selectedItemId;
     private boolean isInGraveYard;
     private String selectedCardId;
     private AvailableActions availableActions = new AvailableActions();
+    private GameController() {
+    }
+
+    public static GameController getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new GameController();
+        }
+        return ourInstance;
+    }
 
     public void calculateAvailableActions() {
         availableActions.calculate(currentGame);
@@ -37,7 +36,7 @@ public class GameController {
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
     }
 
-    public void selectCard(String cardId){
+    public void selectCard(String cardId) {
         CompressedTroop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
         if (troop != null && troop.getPlayerNumber() == currentGame.getCurrentTurnPlayer().getPlayerNumber()) {
             selectedCardId = cardId;
