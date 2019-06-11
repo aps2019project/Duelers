@@ -40,7 +40,6 @@ public class TroopAnimation extends Transition {
     private Group mapGroup;
 
     public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i) throws Exception {
-        System.out.println(fileName);
         this.mapGroup = mapGroup;
         //file settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
@@ -68,10 +67,13 @@ public class TroopAnimation extends Transition {
         imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(cellsX[j][i] - extraX);
         imageView.setY(cellsY[j][i] - extraY);
+
+        imageView.setViewport(new Rectangle2D(0,0,1,1));
         mapGroup.getChildren().add(imageView);
 
         this.setCycleCount(INDEFINITE);
         setAction(ACTION.BREATHING);
+
     }
 
     @Override
