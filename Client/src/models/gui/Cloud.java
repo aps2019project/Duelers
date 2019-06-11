@@ -24,7 +24,7 @@ class Cloud extends Pane {
     }
 
     private void moveFog() {
-        relocate(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT - 750 * 0.8);
+        relocate(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT - UIConstants.CLOUD_HEIGHT * 0.8);
         setOpacity(0.95);
         setEffect(new ColorAdjust(1, 0.9, -0.7, 0.6));
         transition = new TranslateTransition(DURATION, this);

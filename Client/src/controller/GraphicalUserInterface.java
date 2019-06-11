@@ -5,7 +5,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
-import view.LoginMenu;
 import view.MainMenu;
 
 public class GraphicalUserInterface {
