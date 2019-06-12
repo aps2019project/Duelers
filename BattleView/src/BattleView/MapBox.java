@@ -28,8 +28,8 @@ public class MapBox implements PropertyChangeListener {
         this.controller = controller;
         this.gameMap = gameMap;
         mapGroup = new Group();
-        mapGroup.setLayoutY(x);
-        mapGroup.setLayoutX(y);
+        mapGroup.setLayoutY(y);
+        mapGroup.setLayoutX(x);
         makePolygons();
         addCircles();
         for (CompressedTroop troop : gameMap.getTroops()) {

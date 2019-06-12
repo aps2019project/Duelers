@@ -15,7 +15,7 @@ public class BattleScene {
     private final Scene scene;
     private final Group root;
     private final MapBox mapBox;
-
+    private final HandBox handBox;
 
     public BattleScene(Controller controller, CompressedGame game) throws Exception {
         this.controller = controller;
@@ -25,6 +25,9 @@ public class BattleScene {
         addBackGround("battlemap6_middleground@2x");
         mapBox = new MapBox(controller, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
         root.getChildren().add(mapBox.getMapGroup());
+        handBox = new HandBox(controller, game.getPlayerOne(), Constants.SCREEN_WIDTH*0.2,
+                Constants.SCREEN_HEIGHT*0.8);
+        root.getChildren().add(handBox.getHandGroup());
     }
 
     private void addBackGround(String address) {
