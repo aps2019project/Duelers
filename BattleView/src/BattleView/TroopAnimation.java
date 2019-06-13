@@ -197,52 +197,52 @@ public class TroopAnimation extends Transition {
         currentJ = j;
         currentI = i;
     }
-}
 
-enum ACTION {
-    ATTACK, BREATHING, DEATH, HIT, IDLE, RUN
-}
-
-class Playlist {
-    int frameWidth;
-    int frameHeight;
-    int frameDuration;
-    double extraX;
-    double extraY;
-    private HashMap<String, ArrayList<FramePosition>> lists = new HashMap<>();
-
-    FramePosition[] getHitFrames() {
-        return lists.get("hit").toArray(new FramePosition[1]);
+    enum ACTION {
+        ATTACK, BREATHING, DEATH, HIT, IDLE, RUN, STOPPED
     }
 
-    FramePosition[] getDeathFrames() {
-        return lists.get("death").toArray(new FramePosition[1]);
+    class Playlist {
+        int frameWidth;
+        int frameHeight;
+        int frameDuration;
+        double extraX;
+        double extraY;
+        private HashMap<String, ArrayList<FramePosition>> lists = new HashMap<>();
+
+        FramePosition[] getHitFrames() {
+            return lists.get("hit").toArray(new FramePosition[1]);
+        }
+
+        FramePosition[] getDeathFrames() {
+            return lists.get("death").toArray(new FramePosition[1]);
+        }
+
+        FramePosition[] getBreathingFrames() {
+            return lists.get("breathing").toArray(new FramePosition[1]);
+        }
+
+        FramePosition[] getIdleFrames() {
+            return lists.get("idle").toArray(new FramePosition[1]);
+        }
+
+        FramePosition[] getAttackFrames() {
+            return lists.get("attack").toArray(new FramePosition[1]);
+        }
+
+        FramePosition[] getRunFrames() {
+            return lists.get("run").toArray(new FramePosition[1]);
+        }
     }
 
-    FramePosition[] getBreathingFrames() {
-        return lists.get("breathing").toArray(new FramePosition[1]);
-    }
+    class FramePosition {
+        final double x;
+        final double y;
 
-    FramePosition[] getIdleFrames() {
-        return lists.get("idle").toArray(new FramePosition[1]);
-    }
-
-    FramePosition[] getAttackFrames() {
-        return lists.get("attack").toArray(new FramePosition[1]);
-    }
-
-    FramePosition[] getRunFrames() {
-        return lists.get("run").toArray(new FramePosition[1]);
-    }
-}
-
-class FramePosition {
-    final double x;
-    final double y;
-
-    FramePosition(double x, double y) {
-        this.x = x;
-        this.y = y;
+        FramePosition(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
 
