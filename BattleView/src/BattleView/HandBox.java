@@ -50,7 +50,7 @@ public class HandBox implements PropertyChangeListener {
         addGraveYardButton();
         addMenuButton();
 
-        //player.addPropertyChangeListener(this);
+        //player.addPropertyChangeListener(this);//TODO
     }
 
     private void updateNext() {

@@ -24,9 +24,13 @@ public class Controller extends Application {
                 cells[j][i] = new CompressedCell(j, i, null, j + i);
             }
         }
+        final CompressedPlayer player1 = new CompressedPlayer("Ali", 2, null, null,
+                null, null, 1, 0, null, null);
+        final CompressedPlayer player2 = new CompressedPlayer("Ali1", 1, null, null,
+                null, null, 1, 0, null, null);
         final ArrayList<CompressedTroop> troops = new ArrayList<>();
         final CompressedGameMap map = new CompressedGameMap(cells, troops);
-        final CompressedGame game = new CompressedGame(null, null, map, 0, null);
+        final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(new Runnable() {
             @Override
