@@ -25,9 +25,9 @@ public class BattleScene {
         addBackGround("battlemap6_middleground@2x");
         mapBox = new MapBox(controller, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
         root.getChildren().add(mapBox.getMapGroup());
-        handBox = new HandBox(controller, game.getPlayerOne(), Constants.SCREEN_WIDTH*0.2,
-                Constants.SCREEN_HEIGHT*0.8);
-        root.getChildren().add(handBox.getHandGroup());
+        handBox = new HandBox(controller, game.getPlayerOne(), Constants.SCREEN_WIDTH * 0.1,
+                Constants.SCREEN_HEIGHT * 0.8);
+        root.getChildren().add(handBox.getGroup());
     }
 
     private void addBackGround(String address) {
