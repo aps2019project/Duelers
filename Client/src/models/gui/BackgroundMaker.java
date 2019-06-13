@@ -67,12 +67,12 @@ public class BackgroundMaker {
         return menuBackground;
     }
 
-    public static void makeMenuBackgroundBlur() {
+    public static void makeMenuBackgroundFrozen() {
         menuBackground.setEffect(new GaussianBlur(UIConstants.BACKGROUND_BLUR));
         menuBackground.getChildren().stream().filter(node -> node instanceof Cloud).forEach(node -> ((Cloud) node).pause());
     }
 
-    public static void makeMenuBackgroundUnBlur() {
+    public static void makeMenuBackgroundUnfrozen() {
         menuBackground.setEffect(null);
         menuBackground.getChildren().stream().filter(node -> node instanceof Cloud).forEach(node -> ((Cloud) node).play());
     }

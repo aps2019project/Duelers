@@ -38,6 +38,10 @@ public class UIConstants {
     public static final double DEFAULT_SPACING = 10 * SCALE;
     public static final double SCENE_WIDTH = DEFAULT_SCENE_WIDTH * SCALE;
     public static final double SCENE_HEIGHT = DEFAULT_SCENE_HEIGHT * SCALE;
+    static final double MATCH_HISTORY_TABLE_WIDTH = 1020 * SCALE;
+    static final double PROFILE_ICON_SIZE = 70 * SCALE;
+    static final double PROFILE_PIC_CORNER_RADIUS = 30 * SCALE;
+    static final double PROFILE_PIC_SIZE = 600 * SCALE;
     static final double CLOUD_WIDTH = 1400 * SCALE;
     static final double CLOUD_HEIGHT = 750 * SCALE;
     static final double CLOUD_DISTANCE = 800 * SCALE;
@@ -53,7 +57,6 @@ public class UIConstants {
     static final double MENU_HINT_WIDTH = 250 * SCALE;
     static final double MENU_ITEM_IMAGE_SIZE = 70 * SCALE;
     static final double BACKGROUND_BLUR = 50 * SCALE;
-    static final double FOG_VELOCITY = 5 * SCALE;
     static final double LOGO_WIDTH = 700 * SCALE;
     static final double LOGO_HEIGHT = 425 * SCALE;
     static final double LOGIN_BOX_SIZE = 800 * SCALE;

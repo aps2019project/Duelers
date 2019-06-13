@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-class ImageLoader {
+public class ImageLoader {
 
-    static ImageView loadImage(String url, double width, double height) throws FileNotFoundException {
+    public static ImageView loadImage(String url, double width, double height) throws FileNotFoundException {
         return makeImageView(new Image(new FileInputStream(url)), width, height);
     }
 

@@ -16,7 +16,7 @@ public class PlayMenu extends Show {
             )
     );
     private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
-    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> MainMenu.getInstance().show();
+    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static final PlayButtonItem[] items = {
             new PlayButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
                     "Story game and custom game, play with AI", event -> SinglePlayerMenu.getInstance().show()),

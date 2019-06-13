@@ -214,7 +214,7 @@ public class Client {
 
     private void login(Message message) {
         account = new Account(message.getAccountCopyMessage().getAccount());
-        Platform.runLater(() -> MainMenu.getInstance().show());
+        Platform.runLater(() -> new MainMenu().show());
     }
 
     public void disconnected() {
@@ -240,6 +240,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Show getCurrentShow() {
+        return currentShow;
     }
 
     public void setShow(Show show) {

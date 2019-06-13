@@ -10,33 +10,25 @@ import models.gui.UIConstants;
 import java.io.FileNotFoundException;
 
 public class LoginMenu extends Show {
-    private static LoginMenu menu;
 
-    private LoginMenu() throws FileNotFoundException {
-        root.setBackground(UIConstants.ROOT_BACKGROUND);
+    public LoginMenu() {
+        try {
+            root.setBackground(UIConstants.ROOT_BACKGROUND);
 
-        BorderPane background = BackgroundMaker.getMenuBackground();
-        DefaultContainer container = new DefaultContainer(new LoginMenuContainer());
+            BorderPane background = BackgroundMaker.getMenuBackground();
+            DefaultContainer container = new DefaultContainer(new LoginMenuContainer());
 
-        AnchorPane sceneContents = new AnchorPane(background, container);
+            AnchorPane sceneContents = new AnchorPane(background, container);
 
-        root.getChildren().addAll(sceneContents);
+            root.getChildren().addAll(sceneContents);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void show() {
         super.show();
-        BackgroundMaker.makeMenuBackgroundBlur();
-    }
-
-    public static LoginMenu getInstance() {
-        if (menu == null) {
-            try {
-                menu = new LoginMenu();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return menu;
+        BackgroundMaker.makeMenuBackgroundFrozen();
     }
 }

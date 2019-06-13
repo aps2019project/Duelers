@@ -7,13 +7,13 @@ import models.message.Message;
 import view.LoginMenu;
 
 public class LoginMenuController {
-    private static LoginMenuController ourInstanse;
+    private static LoginMenuController ourInstance;
 
     public static LoginMenuController getInstance() {
-        if (ourInstanse == null) {
-            ourInstanse = new LoginMenuController();
+        if (ourInstance == null) {
+            ourInstance = new LoginMenuController();
         }
-        return ourInstanse;
+        return ourInstance;
     }
 
     public void register(String userName, String password) {
@@ -24,15 +24,15 @@ public class LoginMenuController {
                             Client.getInstance().getClientName(), Constants.SERVER_NAME, userName, password, 0)
             );
         } catch (InputException e) {
-            Platform.runLater(() -> LoginMenu.getInstance().showError(e.getMessage()));
+            Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }
     }
 
     private void validateUsernameAndPassword(String userName, String password) throws InputException {
         if (userName == null || userName.length() < 2) {
-            throw new InputException("Invalid Username!");
+            throw new InputException("Username is too short!(at least 3 characters)");
         } else if (password == null || password.length() < 4) {
-            throw new InputException("Invalid Password!");
+            throw new InputException("Password is too short!(at least 5 characters)");
         }
     }
 
@@ -43,7 +43,7 @@ public class LoginMenuController {
                     Message.makeLogInMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, userName, password, 0)
             );
         } catch (InputException e) {
-            Platform.runLater(() -> LoginMenu.getInstance().showError(e.getMessage()));
+            Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }
     }
 }

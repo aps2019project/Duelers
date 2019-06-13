@@ -11,7 +11,10 @@ import javafx.scene.text.TextAlignment;
 
 class HintBox extends VBox {
     private static final Background MENU_HINT_BACKGROUND = new Background(
-            new BackgroundFill(Color.rgb(40, 40, 40), new CornerRadii(UIConstants.DEFAULT_SPACING * 3), Insets.EMPTY)
+            new BackgroundFill(
+                    Color.rgb(40, 40, 40, 0.7),
+                    new CornerRadii(UIConstants.DEFAULT_SPACING), new Insets(-UIConstants.DEFAULT_SPACING)
+            )
     );
 
     HintBox(String hintText) {

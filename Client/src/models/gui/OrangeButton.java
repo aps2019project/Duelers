@@ -9,6 +9,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+import java.io.FileNotFoundException;
+
 class OrangeButton extends Button {
     private static final Background DEFAULT_BACKGROUND = new Background(
             new BackgroundFill(
@@ -42,5 +44,10 @@ class OrangeButton extends Button {
         });
 
         setOnMouseClicked(clickEvent);
+    }
+
+    OrangeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {
+        this(text, event);
+        setGraphic(ImageLoader.loadImage(graphicUrl, 50, 50));
     }
 }

@@ -1,5 +1,6 @@
 package models.gui;
 
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -11,7 +12,7 @@ class PlayButtonImageZone extends StackPane {
     PlayButtonImageZone(PlayButtonItem item) {
         Space space = new Space(UIConstants.PLAY_MENU_BUTTON_HEIGHT * 0.75);
         Label title = new PlayButtonTitle(item.title);
-        Separator separator = new HorizontalSeparator();
+        Separator separator = new DefaultSeparator(Orientation.HORIZONTAL);
         Text description = new PlayButtonDescription(item.description);
 
         VBox textBox = new VBox(UIConstants.DEFAULT_SPACING * 2, space, title, separator, description);

@@ -11,18 +11,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 class MainMenuGrid extends GridPane {
-    private static final MenuItem[] items = {
-            new MenuItem(0, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
-            new MenuItem(1, "PROFILE", "See you profile information", event -> {}),
-            new MenuItem(2, "SHOP", "Buy or sell cards", event -> {}),
-            new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> {}),
-            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> {}),
-            new MenuItem(5, "SETTING", "Change game properties", event -> {}),
-    };
     private Image menuItemImage;
     private Image hoverRing;
 
-    MainMenuGrid() throws FileNotFoundException {
+    MainMenuGrid(MenuItem[] items) throws FileNotFoundException {
         setVgap(UIConstants.DEFAULT_SPACING * 3);
         setHgap(UIConstants.DEFAULT_SPACING * 3);
 

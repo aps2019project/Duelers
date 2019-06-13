@@ -25,6 +25,7 @@ public class Account {
                 this.decks.add(new Deck(deck, collection));
             }
         }
+        this.matchHistories = account.getMatchHistories();
         this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
         this.wins = account.getWins();
