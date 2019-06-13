@@ -60,7 +60,7 @@ public class HandBox implements PropertyChangeListener {
         imageView1.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
         imageView1.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
         try {
-            imageView1.setImage(new Image(new FileInputStream("resources/hand/replace_background@2x.png")));
+            imageView1.setImage(new Image(new FileInputStream("resources/ui/replace_background@2x.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -71,7 +71,7 @@ public class HandBox implements PropertyChangeListener {
         imageView2.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
 
         try {
-            imageView2.setImage(new Image(new FileInputStream("resources/hand/replace_outer_ring_smoke@2x.png")));
+            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class HandBox implements PropertyChangeListener {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    imageView2.setImage(new Image(new FileInputStream("resources/hand/replace_outer_ring_shine@2x.png")));
+                    imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -91,7 +91,7 @@ public class HandBox implements PropertyChangeListener {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    imageView2.setImage(new Image(new FileInputStream("resources/hand/replace_outer_ring_smoke@2x.png")));
+                    imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -110,21 +110,21 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
                 imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
 
-                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("artifact_boss_frostarmor"
+                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("artifact_f1_goldenvitriol"
                         , null, null, CardType.SPELL, null, 0, 0, 0, null, 0, false),
                         imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
 
                 if (selectedCard == i)
-                    imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
+                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
                 else
-                    imageView.setImage(new Image(new FileInputStream("resources/hand/card_background@2x.png")));
+                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
 
                 imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cardAnimation.inActive();
+                        cardAnimation.active();
                         try {
-                            imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
+                            imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -136,9 +136,9 @@ public class HandBox implements PropertyChangeListener {
                         cardAnimation.pause();
                         try {
                             if (selectedCard == I)
-                                imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
+                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
                             else
-                                imageView.setImage(new Image(new FileInputStream("resources/hand/card_background@2x.png")));
+                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -159,7 +159,7 @@ public class HandBox implements PropertyChangeListener {
 
     private void addEndTurnButton() {
         try {
-            ImageView endTurnButton = new ImageView(new Image(new FileInputStream("resources/hand/button_end_turn_finished@2x.png")));
+            ImageView endTurnButton = new ImageView(new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")));
             endTurnButton.setFitWidth(endTurnButton.getImage().getWidth() * Constants.SCALE * 0.5);
             endTurnButton.setFitHeight(endTurnButton.getImage().getHeight() * Constants.SCALE * 0.5);
             endTurnButton.setX(1200 * Constants.SCALE);
@@ -169,7 +169,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        endTurnButton.setImage(new Image(new FileInputStream("resources/hand/button_end_turn_finished_glow@2x.png")));
+                        endTurnButton.setImage(new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -179,7 +179,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        endTurnButton.setImage(new Image(new FileInputStream("resources/hand/button_end_turn_finished@2x.png")));
+                        endTurnButton.setImage(new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -198,7 +198,7 @@ public class HandBox implements PropertyChangeListener {
 
     private void addMenuButton() {
         try {
-            ImageView menuButton = new ImageView(new Image(new FileInputStream("resources/hand/button_primary_left@2x.png")));
+            ImageView menuButton = new ImageView(new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")));
             menuButton.setFitWidth(menuButton.getImage().getWidth() * Constants.SCALE * 0.5);
             menuButton.setFitHeight(menuButton.getImage().getHeight() * Constants.SCALE * 0.5);
             menuButton.setX(1160 * Constants.SCALE);
@@ -208,7 +208,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        menuButton.setImage(new Image(new FileInputStream("resources/hand/button_primary_left_glow@2x.png")));
+                        menuButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -218,7 +218,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        menuButton.setImage(new Image(new FileInputStream("resources/hand/button_primary_left@2x.png")));
+                        menuButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -237,7 +237,7 @@ public class HandBox implements PropertyChangeListener {
 
     private void addGraveYardButton() {
         try {
-            ImageView graveYardButton = new ImageView(new Image(new FileInputStream("resources/hand/button_primary_right@2x.png")));
+            ImageView graveYardButton = new ImageView(new Image(new FileInputStream("resources/ui/button_primary_right@2x.png")));
             graveYardButton.setFitWidth(graveYardButton.getImage().getWidth() * Constants.SCALE * 0.5);
             graveYardButton.setFitHeight(graveYardButton.getImage().getHeight() * Constants.SCALE * 0.5);
             graveYardButton.setX(1325 * Constants.SCALE);
@@ -247,7 +247,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        graveYardButton.setImage(new Image(new FileInputStream("resources/hand/button_primary_right_glow@2x.png")));
+                        graveYardButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_right_glow@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -257,7 +257,7 @@ public class HandBox implements PropertyChangeListener {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     try {
-                        graveYardButton.setImage(new Image(new FileInputStream("resources/hand/button_primary_right@2x.png")));
+                        graveYardButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_right@2x.png")));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
