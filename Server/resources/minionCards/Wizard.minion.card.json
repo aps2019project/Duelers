@@ -1,6 +1,7 @@
 {
   "name": "Wizard",
   "cardId": "Wizard",
+  "spriteName": "boss_taskmaster",
   "description": "a ranged MINION with 4 AP, 5 HP, costs 550, have some PASSIVE AP POWER and HP WEAKNESS BUFFs",
   "type": "MINION",
   "spells": [

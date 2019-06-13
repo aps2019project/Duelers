@@ -1,6 +1,7 @@
 {
   "name": "Poisonous Snake",
   "cardId": "PoisonousSnake",
+  "spriteName": "neutral_mageswarm",
   "description": "a ranged MINION with 6 AP, 5 HP, have an ON_ATTACK POISON BUFF",
   "type": "MINION",
   "spells": [

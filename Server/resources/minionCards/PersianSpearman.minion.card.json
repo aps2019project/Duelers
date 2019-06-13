@@ -1,6 +1,7 @@
 {
   "name": "Persian SpearMan",
   "cardId": "PersianSpearMan",
+  "spriteName": "f1_kingsguard",
   "description": "a hybrid MINION with 3 AP, 5 HP",
   "type": "MINION",
   "defaultAp": 3,

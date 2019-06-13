@@ -1,6 +1,7 @@
 {
   "name": "Turanian Spy",
   "cardId": "TuranianSpy",
+  "spriteName": "boss_shinkagezendo",
   "description": "a melee MINION with 6 AP, 6 HP, have ON_ATTACK DISARM SPELL",
   "type": "MINION",
   "spells": [

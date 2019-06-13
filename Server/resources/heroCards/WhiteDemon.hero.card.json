@@ -1,6 +1,7 @@
 {
   "name": "White Demon",
   "cardId": "WhiteDemon",
+  "spriteName": "boss_grym",
   "description": "a melee HERO with 4 AP, 50 HP, have a POWER BUFF spell on itself",
   "type": "HERO",
   "spells": [

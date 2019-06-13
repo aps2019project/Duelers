@@ -1,6 +1,7 @@
 {
   "name": "Afsaaneh",
   "cardId": "Afsaaneh",
+  "spriteName": "boss_andromeda",
   "description": "a ranged HERO with 3 AP, 40 HP, have a DISPEL spell",
   "type": "HERO",
   "spells": [

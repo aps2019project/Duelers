@@ -1,6 +1,7 @@
 {
   "name": "White Wolf",
   "cardId": "WhiteWolf",
+  "spriteName": "f6_spiritwolf",
   "description": "a melee MINION with 2 AP, 8 HP, costs 400, have some ON_ATTACK POISON_BUFFs",
   "type": "MINION",
   "spells": [

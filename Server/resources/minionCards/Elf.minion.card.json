@@ -1,6 +1,7 @@
 {
   "name": "Elf",
   "cardId": "Elf",
+  "spriteName": "boss_spelleater",
   "description": "a ranged MINION with 4 AP, 10 HP, costs 500, have a PASSIVE CONTINUOUS AP POWER BUFF for all own minions",
   "type": "MINION",
   "spells": [

@@ -1,6 +1,7 @@
 {
   "name": "Turanian Prince",
   "cardId": "TuranianPrince",
+  "spriteName": "f1_altgeneraltier2",
   "description": "a melee MINION with 10 AP, 6 HP, can attack combo",
   "type": "MINION",
   "defaultAp": 10,

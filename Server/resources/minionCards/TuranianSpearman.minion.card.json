@@ -1,6 +1,7 @@
 {
   "name": "Turanian SpearMan",
   "cardId": "TuranianSpearMan",
+  "spriteName": "f1_mech",
   "description": "a hybrid MINION with 4 AP, 4 HP",
   "type": "MINION",
   "defaultAp": 4,

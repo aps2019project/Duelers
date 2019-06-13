@@ -1,6 +1,7 @@
 {
   "name": "Piran",
   "cardId": "Piran",
+  "spriteName": "boss_vampire",
   "description": "a melee MINION with 12 AP, 20 HP, costs 400, and does not POISON on DEFEND",
   "type": "MINION",
   "spells": [

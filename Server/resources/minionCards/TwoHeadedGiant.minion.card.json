@@ -1,6 +1,7 @@
 {
   "name": "TwoHeaded Giant",
   "cardId": "TwoHeadedGiant",
+  "spriteName": "f1_gryphinox",
   "description": "a melee MINION with 4 AP, 10 HP, have a ON_ATTACK spell that removes all positive effects",
   "type": "MINION",
   "spells": [

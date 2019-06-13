@@ -1,6 +1,7 @@
 {
   "name": "Esfandiar",
   "cardId": "Esfandiar",
+  "spriteName": "boss_decepticlechassis",
   "description": "a hybrid HERO with 3 AP, 35 HP, with 3 CONTINUOUS HOLY BUFF for itself",
   "type": "HERO",
   "spells": [

@@ -1,6 +1,7 @@
 {
   "name": "Eagle",
   "cardId": "Eagle",
+  "spriteName": "neutral_monsterdragonhawk",
   "description": "a ranged MINION with 2 AP, 0 HP, have a PASSIVE POWER BUFF with 10 units HP increment",
   "type": "MINION",
   "spells": [

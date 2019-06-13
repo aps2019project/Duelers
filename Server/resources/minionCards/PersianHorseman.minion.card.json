@@ -1,6 +1,7 @@
 {
   "name": "Persian Horseman",
   "cardId": "PersianHorseman",
+  "spriteName": "f1_grandmasterzir",
   "description": "a melee MINION with 6 AP, 10 HP",
   "type": "MINION",
   "defaultAp": 6,

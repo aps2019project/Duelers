@@ -1,6 +1,7 @@
 {
   "name": "Turanian Swampy",
   "cardId": "TuranianSwampy",
+  "spriteName": "boss_treatoni",
   "description": "a melee MINION with 10 AP, 3 HP",
   "type": "MINION",
   "defaultAp": 10,

@@ -1,6 +1,7 @@
 {
   "name": "Predator Lion",
   "cardId": "PredatorLion",
+  "spriteName": "f1_azuritelion",
   "description": "a melee MINION with 8 AP, 1 HP, have a ON_ATTACK HOLY BUFF DISABLING",
   "type": "MINION",
   "spells": [

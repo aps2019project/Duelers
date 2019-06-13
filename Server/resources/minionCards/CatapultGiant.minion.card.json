@@ -1,6 +1,7 @@
 {
   "name": "Catapult Giant",
   "cardId": "CatapultGiant",
+  "spriteName": "boss_orias",
   "description": "a ranged MINION with 12 AP, 12 HP",
   "type": "MINION",
   "defaultAp": 12,

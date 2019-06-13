@@ -1,6 +1,7 @@
 {
   "name": "Iraj",
   "cardId": "Iraj",
+  "spriteName": "boss_wujin",
   "description": "a ranged MINION with 20 AP, 6 HP",
   "type": "MINION",
   "defaultAp": 20,

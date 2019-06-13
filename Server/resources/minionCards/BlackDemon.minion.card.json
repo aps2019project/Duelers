@@ -1,6 +1,7 @@
 {
   "name": "Black Demon",
   "cardId": "BlackDemon",
+  "spriteName": "boss_manaman",
   "description": "a hybrid MINION 10 AP, 14 HP",
   "type": "MINION",
   "defaultAp": 10,

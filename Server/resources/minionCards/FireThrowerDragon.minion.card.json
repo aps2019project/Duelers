@@ -1,6 +1,7 @@
 {
   "name": "Fire Thrower Dragon",
   "cardId": "FireThrowerDragon",
+  "spriteName": "boss_treatdrake",
   "description": "a ranged MINION with 5 AP, 9 HP",
   "type": "MINION",
   "defaultAp": 5,

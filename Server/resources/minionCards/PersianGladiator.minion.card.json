@@ -1,6 +1,7 @@
 {
   "name": "Persian Gladiator",
   "cardId": "PersianGladiator",
+  "spriteName": "f1_altgeneral",
   "description": "TODO",
   "type": "MINION",
   "spells": [
