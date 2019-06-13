@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import models.card.CardType;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 
 import java.beans.PropertyChangeEvent;
@@ -101,12 +103,17 @@ public class HandBox implements PropertyChangeListener {
     private void updateCards() {
         try {
             for (int i = 0; i < 5; i++) {
-                final Integer I = i;
+                final int I = i;
                 cards[i].getChildren().clear();
                 final ImageView imageView = new ImageView();
                 cards[i].getChildren().add(imageView);
                 imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
                 imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
+
+                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("artifact_boss_frostarmor"
+                        , null, null, CardType.SPELL, null, 0, 0, 0, null, 0, false),
+                        imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
+
                 if (selectedCard == i)
                     imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
                 else
@@ -115,6 +122,7 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        cardAnimation.inActive();
                         try {
                             imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
                         } catch (FileNotFoundException e) {
@@ -125,6 +133,7 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        cardAnimation.pause();
                         try {
                             if (selectedCard == I)
                                 imageView.setImage(new Image(new FileInputStream("resources/hand/card_background_highlight@2x.png")));
@@ -182,7 +191,7 @@ public class HandBox implements PropertyChangeListener {
                     System.out.println("End Turn");
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -221,7 +230,7 @@ public class HandBox implements PropertyChangeListener {
                     System.out.println("Go To Menu");
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -260,7 +269,7 @@ public class HandBox implements PropertyChangeListener {
                     System.out.println("GraveYard");
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
