@@ -1,14 +1,13 @@
 package BattleView;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import models.card.CardType;
-import models.comperessedData.CompressedCard;
+import javafx.scene.layout.Pane;
 import models.comperessedData.CompressedPlayer;
 
 import java.beans.PropertyChangeEvent;
@@ -20,8 +19,8 @@ public class HandBox implements PropertyChangeListener {
     private final Controller controller;
     private final CompressedPlayer player;
     private final Group group;
-    private final StackPane[] cards = new StackPane[5];
-    private final StackPane next = new StackPane();
+    private final Pane[] cards = new Pane[5];
+    private final Pane next = new Pane();
     private int selectedCard = 1;
 
     public HandBox(Controller controller, CompressedPlayer player, double x, double y) throws Exception {
@@ -36,7 +35,7 @@ public class HandBox implements PropertyChangeListener {
         hBox.setLayoutY(25 * Constants.SCALE);
         group.getChildren().add(hBox);
         for (int i = 0; i < 5; i++) {
-            cards[i] = new StackPane();
+            cards[i] = new Pane();
             hBox.getChildren().add(cards[i]);
         }
         updateCards();
@@ -50,54 +49,71 @@ public class HandBox implements PropertyChangeListener {
         addGraveYardButton();
         addMenuButton();
 
-        //player.addPropertyChangeListener(this);//TODO
+        player.addPropertyChangeListener(this);
     }
 
     private void updateNext() {
-        next.getChildren().clear();
-        final ImageView imageView1 = new ImageView();
-        next.getChildren().add(imageView1);
-        imageView1.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
-        imageView1.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
         try {
-            imageView1.setImage(new Image(new FileInputStream("resources/ui/replace_background@2x.png")));
-        } catch (FileNotFoundException e) {
+            next.getChildren().clear();
+            final ImageView imageView1 = new ImageView();
+            next.getChildren().add(imageView1);
+            imageView1.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
+            imageView1.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
+            try {
+                imageView1.setImage(new Image(new FileInputStream("resources/ui/replace_background@2x.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            final ImageView imageView2 = new ImageView();
+            next.getChildren().add(imageView2);
+            imageView2.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
+            imageView2.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
+
+            final CardAnimation cardAnimation;
+            if (player.getNextCard() != null) {
+                cardAnimation = new CardAnimation(next, player.getNextCard(),
+                        imageView1.getLayoutY() + imageView1.getFitHeight() / 2, imageView1.getLayoutX() + imageView1.getFitWidth() / 2);
+            } else {
+                cardAnimation = null;
+            }
+
+            try {
+                imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            next.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    try {
+                        if (cardAnimation != null)
+                            cardAnimation.inActive();
+                        imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            next.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    try {
+                        if (cardAnimation != null)
+                            cardAnimation.stop();
+                        imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Error showing next");
             e.printStackTrace();
         }
-
-        final ImageView imageView2 = new ImageView();
-        next.getChildren().add(imageView2);
-        imageView2.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
-        imageView2.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
-
-        try {
-            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        next.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        next.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
     }
 
     private void updateCards() {
@@ -110,9 +126,14 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
                 imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
 
-                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("bossspell_livingflame"
-                        , null, null, CardType.SPELL, null, 0, 0, 0, null, 0, false),
-                        imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
+                final CardAnimation cardAnimation;
+                if (player.getHand().size() > i) {
+                    cardAnimation = new CardAnimation(cards[i], player.getHand().get(i),
+                            imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
+                } else {
+                    cardAnimation = null;
+                }
+
 
                 if (selectedCard == i)
                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
@@ -122,32 +143,38 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cardAnimation.inActive();
-                        try {
-                            imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                        if (cardAnimation != null) {
+                            cardAnimation.inActive();
+                            try {
+                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
                 imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cardAnimation.pause();
-                        try {
-                            if (selectedCard == I)
-                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                            else
-                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                        if (cardAnimation != null) {
+                            cardAnimation.pause();
+                            try {
+                                if (selectedCard == I)
+                                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
+                                else
+                                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
                 imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        clickOnCard(I);
+                        if (cardAnimation != null) {
+                            clickOnCard(I);
+                        }
                     }
                 });
             }
@@ -276,7 +303,22 @@ public class HandBox implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("next")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    updateNext();
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("hand")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    updateCards();
+                }
+            });
+        }
     }
 
     private void clickOnCard(int i) {
