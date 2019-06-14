@@ -23,6 +23,7 @@ public class MapBox implements PropertyChangeListener {
     private final double[][] cellsY = new double[5][9];
 
     private final HashMap<CompressedTroop, TroopAnimation> troopAnimationHashMap = new HashMap<>();
+    private CompressedTroop selectedTroop = null;
 
     public MapBox(Controller controller, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.controller = controller;
@@ -31,6 +32,7 @@ public class MapBox implements PropertyChangeListener {
         mapGroup.setLayoutY(y);
         mapGroup.setLayoutX(x);
         makePolygons();
+        resetSelection();
         addCircles();
         for (CompressedTroop troop : gameMap.getTroops()) {
             updateTroop(null, troop);
@@ -62,13 +64,36 @@ public class MapBox implements PropertyChangeListener {
                 cells[j][i].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cells[J][I].setFill(Color.DARKBLUE);
+                        CompressedTroop troop = getTroop(J, I);
+                        if (selectedTroop == null && troop != null && troop.getPlayerNumber() == 1) {
+                            cells[J][I].setFill(Color.DARKGREEN);
+                            return;
+                        }
+                        if (selectedTroop != null && troop != null && troop.getPlayerNumber() == 2) {
+                            cells[J][I].setFill(Color.DARKRED);
+                            return;
+                        }
+                        if (selectedTroop != null && troop == null) {
+                            cells[J][I].setFill(Color.DARKGREEN);
+                            return;
+                        }
                     }
                 });
                 cells[j][i].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cells[J][I].setFill(Color.DARKGREEN);
+                        CompressedTroop troop = getTroop(J, I);
+                        if (selectedTroop != null && troop != null && selectedTroop == troop) {
+                            cells[J][I].setFill(Color.DARKGREEN);
+                            return;
+                        }
+                        cells[J][I].setFill(Color.DARKBLUE);
+                    }
+                });
+                cells[j][i].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        clickCell(J, I);
                     }
                 });
                 mapGroup.getChildren().add(cells[j][i]);
@@ -123,5 +148,42 @@ public class MapBox implements PropertyChangeListener {
                 }
             });
         }
+    }
+
+    private void resetSelection() {
+        selectedTroop = null;
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 9; i++) {
+                cells[j][i].setFill(Color.DARKBLUE);
+            }
+        }
+    }
+
+    private void clickCell(int j, int i) {
+        CompressedTroop troop = getTroop(j, i);
+        if (selectedTroop == null && troop != null && troop.getPlayerNumber() == 1) {
+            selectedTroop = troop;
+
+            return;
+        }
+        if (selectedTroop != null && troop != null && troop.getPlayerNumber() == 2) {
+            System.out.println("Attack");
+            troopAnimationHashMap.get(selectedTroop).attack(i);
+            resetSelection();
+            return;
+        }
+        if (selectedTroop != null && troop == null) {
+            System.out.println("Move");
+            resetSelection();
+            return;
+        }
+    }
+
+    private CompressedTroop getTroop(int j, int i) {
+        for (CompressedTroop troop : troopAnimationHashMap.keySet()) {
+            if (troop.getPosition().getRow() == j && troop.getPosition().getColumn() == i)
+                return troop;
+        }
+        return null;
     }
 }
