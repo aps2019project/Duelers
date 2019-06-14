@@ -1,6 +1,7 @@
 {
   "name": "All Disarm",
   "cardId": "AllDisarm",
+  "spriteName": "icon_f1_skyphalanx",
   "description": "All of enemy troops will be disarmed for one turn",
   "type": "SPELL",
   "spells": [

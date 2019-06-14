@@ -1,6 +1,7 @@
 {
   "name": "Weakening",
   "cardId": "Weakening",
+  "spriteName": "icon_f5_valknusseal",
   "description": "It gives an enemy MINION a WEAKNESS BUFF with 4 units AP decrement",
   "type": "SPELL",
   "spells": [

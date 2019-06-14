@@ -1,6 +1,7 @@
 {
   "name": "Shock",
   "cardId": "Shock",
+  "spriteName": "icon_f1_beamshock",
   "description": "Makes an enemy troop STUN",
   "type": "SPELL",
   "spells": [

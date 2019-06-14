@@ -1,6 +1,7 @@
 {
   "name": "All Power",
   "cardId": "AllPower",
+  "spriteName": "icon_f3_scionsfirstwish",
   "description": "It gives a POWER BUFF with 2 units AP increment to all own troops",
   "type": "SPELL",
   "spells": [

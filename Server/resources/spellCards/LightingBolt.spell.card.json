@@ -1,6 +1,7 @@
 {
   "name": "Lighting Bolt",
   "cardId": "LightingBolt",
+  "spriteName": "icon_f2_kagelightning",
   "description": "8 units hit enemy HERO",
   "type": "SPELL",
   "spells": [

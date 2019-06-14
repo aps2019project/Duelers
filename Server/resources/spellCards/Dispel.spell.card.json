@@ -1,7 +1,8 @@
 {
   "name": "Dispel",
   "cardId": "Dispel",
-  "description": "This card, destroys positive BUFFs of an enemy troop or negative BUFFs of an own troop",
+  "spriteName": "icon_f1_trinityoath",
+  "description": "destroys positive BUFFs of an enemy troop or negative BUFFs of an own troop",
   "type": "SPELL",
   "spells": [
     {

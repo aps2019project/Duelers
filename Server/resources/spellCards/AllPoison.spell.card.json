@@ -1,6 +1,7 @@
 {
   "name": "All Poison",
   "cardId": "AllPoison",
+  "spriteName": "icon_f1_skyburial",
   "description": "All of enemy troops will be poisoned for 4 turns",
   "type": "SPELL",
   "spells": [

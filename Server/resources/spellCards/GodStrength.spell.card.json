@@ -1,6 +1,7 @@
 {
   "name": "God Strength",
   "cardId": "GodStrength",
+  "spriteName": "icon_f6_lucentcharge",
   "description": "4 units are added to AP of own HERO",
   "type": "SPELL",
   "spells": [

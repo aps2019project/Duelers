@@ -1,6 +1,7 @@
 {
   "name": "All Attack",
   "cardId": "AllAttack",
+  "spriteName": "icon_f1_rayoflight",
   "description": "6 units hit all enemy troops",
   "type": "SPELL",
   "spells": [

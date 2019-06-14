@@ -1,6 +1,7 @@
 {
   "name": "Kings Guard",
   "cardId": "KingsGuard",
+  "spriteName": "icon_f6_ninelives",
   "description": "Kills a random enemy MINION around own HERO",
   "type": "SPELL",
   "spells": [

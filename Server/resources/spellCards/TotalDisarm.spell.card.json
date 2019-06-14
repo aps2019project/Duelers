@@ -1,6 +1,7 @@
 {
   "name": "Total Disarm",
   "cardId": "TotalDisarm",
+  "spriteName": "icon_f2_hellskitchen",
   "description": "Make an enemy troop DISARM till the end of the game",
   "type": "SPELL",
   "spells": [

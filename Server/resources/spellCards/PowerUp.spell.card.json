@@ -1,6 +1,7 @@
 {
   "name": "Power Up",
   "cardId": "PowerUp",
+  "spriteName": "icon_f5_cascadingrebirth",
   "description": "applies a POWER BUFF with 6 units AP increment for an own troop",
   "type": "SPELL",
   "spells": [

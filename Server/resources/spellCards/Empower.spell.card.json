@@ -1,6 +1,7 @@
 {
   "name": "Empower",
   "cardId": "Empower",
+  "spriteName": "icon_f6_glacialfissure",
   "description": "2 units are added to AP of an own troop",
   "type": "SPELL",
   "spells": [

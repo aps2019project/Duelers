@@ -1,6 +1,7 @@
 {
   "name": "Sacrifice",
   "cardId": "Sacrifice",
+  "spriteName": "icon_f3_scionssecondwish",
   "description": "It gives an own MINION a WEAKNESS BUFF with 6 units HP decrement and a POWER BUFF with 8 units AP increment",
   "type": "SPELL",
   "spells": [

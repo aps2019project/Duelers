@@ -1,6 +1,7 @@
 {
   "name": "Health With Profit",
   "cardId": "HealthWithProfit",
+  "spriteName": "icon_neutral_brilliantplume",
   "description": "it gives a WEAKNESS BUFF with 6 units HP decrement and two HOLY BUFFs for 3 turns to an own troop",
   "type": "SPELL",
   "spells": [

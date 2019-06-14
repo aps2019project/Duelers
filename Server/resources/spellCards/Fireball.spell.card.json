@@ -1,6 +1,7 @@
 {
   "name": "Fireball",
   "cardId": "Fireball",
+  "spriteName": "icon_f6_frostfire",
   "description": "4 units hit an enemy troop",
   "type": "SPELL",
   "spells": [

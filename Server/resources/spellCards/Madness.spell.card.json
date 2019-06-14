@@ -1,6 +1,7 @@
 {
   "name": "Madness",
   "cardId": "Madness",
+  "spriteName": "icon_f2_inner_focus",
   "description": "For three turns, it increases AP of a troop 4 units, but disarms it",
   "type": "SPELL",
   "spells": [
