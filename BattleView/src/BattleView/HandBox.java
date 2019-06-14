@@ -129,7 +129,7 @@ public class HandBox implements PropertyChangeListener {
                 final CardAnimation cardAnimation;
                 if (player.getHand().size() > i) {
                     cardAnimation = new CardAnimation(cards[i], player.getHand().get(i),
-                            imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
+                            imageView.getLayoutY() + imageView.getFitHeight() / 2*Constants.SCALE, imageView.getLayoutX() + imageView.getFitWidth() / 2);
                 } else {
                     cardAnimation = null;
                 }

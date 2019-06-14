@@ -163,7 +163,7 @@ public class MapBox implements PropertyChangeListener {
         CompressedTroop troop = getTroop(j, i);
         if (selectedTroop == null && troop != null && troop.getPlayerNumber() == 1) {
             selectedTroop = troop;
-
+            troopAnimationHashMap.get(troop).breathe();
             return;
         }
         if (selectedTroop != null && troop != null && troop.getPlayerNumber() == 2) {

@@ -54,8 +54,8 @@ public class TroopAnimation extends Transition {
         frameWidth = playlist.frameWidth;
         frameHeight = playlist.frameHeight;
         setCycleDuration(Duration.millis(playlist.frameDuration));
-        extraX = playlist.extraX;
-        extraY = playlist.extraY;
+        extraX = playlist.extraX * Constants.SCALE;
+        extraY = playlist.extraY * Constants.SCALE;
 
         this.cellsX = cellsX;
         this.cellsY = cellsY;
@@ -66,10 +66,11 @@ public class TroopAnimation extends Transition {
         Image image = new Image(new FileInputStream("resources/troopAnimations/" + fileName + ".png"));
         imageView = new ImageView(image);
         if (isPlayer1Troop)
-            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(1);
         else
-            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
-        imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(-1);
+        imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(cellsX[j][i] - extraX);
         imageView.setY(cellsY[j][i] - extraY);
 
@@ -130,9 +131,9 @@ public class TroopAnimation extends Transition {
         switch (action) {
             case BREATHING:
                 if (isPlayer1Troop)
-                    imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+                    imageView.setScaleX(1);
                 else
-                    imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
+                    imageView.setScaleX(-1);
                 currentFramePositions = breathingFramePositions;
                 break;
             case DEATH:
@@ -164,9 +165,9 @@ public class TroopAnimation extends Transition {
 
     public void attack(int i) {
         if (i > currentI)
-            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(1);
         if (i < currentI)
-            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(-1);
         setAction(ACTION.ATTACK);
     }
 
@@ -176,17 +177,17 @@ public class TroopAnimation extends Transition {
 
     public void hit(int i) {
         if (i > currentI)
-            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(1);
         if (i < currentI)
-            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(-1);
         setAction(ACTION.HIT);
     }
 
     public void moveTo(int j, int i) {
         if (i > currentI)
-            imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(1);
         if (i < currentI)
-            imageView.setScaleX(-Constants.TROOP_SCALE * Constants.SCALE);
+            imageView.setScaleX(-1);
         setAction(ACTION.RUN);
         KeyValue xValue = new KeyValue(imageView.xProperty(), cellsX[j][i] - extraX);
         KeyValue yValue = new KeyValue(imageView.yProperty(), cellsY[j][i] - extraY);

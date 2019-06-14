@@ -2,8 +2,8 @@
   "frameWidth": 34,
   "frameHeight": 34,
   "frameDuration": 100,
-  "extraX": 20.0,
-  "extraY": 20.0,
+  "extraX": 0.0,
+  "extraY": 0.0,
   "lists": {
     "inactive": [
       {

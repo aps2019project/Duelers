@@ -39,15 +39,15 @@ public class CardAnimation extends Transition {
             playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getName() + ".plist.json"), Playlist.class);
             activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
             inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
-            extraX = playlist.extraX;
-            extraY = playlist.extraY;
+            extraX = 28 * Constants.SCALE;
+            extraY = 28 * Constants.SCALE;
         } else {
             image = new Image(new FileInputStream("resources/troopAnimations/" + card.getName() + ".png"));
             playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getName() + ".plist.json"), Playlist.class);
             activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
             inActiveFramePositions = activeFramePositions;
-            extraX = playlist.extraX;
-            extraY = playlist.extraY - Constants.SCALE * 20;
+            extraX = playlist.extraX * Constants.SCALE;
+            extraY = (playlist.extraY - 20) * Constants.SCALE;
             System.out.println("Hell");
         }
 
@@ -57,15 +57,15 @@ public class CardAnimation extends Transition {
 
 
         imageView = new ImageView(image);
-        imageView.setScaleX(Constants.TROOP_SCALE * Constants.SCALE);
-        imageView.setScaleY(Constants.TROOP_SCALE * Constants.SCALE);
+
+        imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(x - extraX);
         imageView.setY(y - extraY);
+
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
         this.pane.getChildren().add(imageView);
         System.out.println(imageView.getY());
-
-
 
 
         this.setCycleCount(INDEFINITE);

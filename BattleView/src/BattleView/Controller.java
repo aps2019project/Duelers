@@ -50,7 +50,7 @@ public class Controller extends Application {
                 player1.removeCardFromNext();
                 player1.setCurrentMP(4,6);
                 player2.setCurrentMP(4,6);
-                card = new CompressedCard("boss_manaman", null, "a1", CardType.MINION,
+                card = new CompressedCard("boss_wujin", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
