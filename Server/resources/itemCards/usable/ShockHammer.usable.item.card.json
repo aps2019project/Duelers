@@ -1,6 +1,7 @@
 {
   "name": "Shock Hammer",
   "cardId": "ShockHammer",
+  "spriteName": "artifact_f2_unboundedenergyamulet",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

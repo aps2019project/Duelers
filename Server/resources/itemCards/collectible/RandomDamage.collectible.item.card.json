@@ -1,6 +1,7 @@
 {
   "name": "Random Damage",
   "cardId": "RandomDamage",
+  "spriteName": "artifact_f1_skywindglaives",
   "description": "a collectible ITEM that increases HP of a random Troop 2 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

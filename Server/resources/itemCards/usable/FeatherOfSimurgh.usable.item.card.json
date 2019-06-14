@@ -1,6 +1,7 @@
 {
   "name": "Feather Of Simurgh",
   "cardId": "FeatherOfSimurgh",
+  "spriteName": "artifact_f2_markgorehorn",
   "description": "a usable ITEM that if enemy HERO is RANGED or HYBRID decreases 2 units AP of it",
   "type": "USABLE_ITEM",
   "spells": [

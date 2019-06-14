@@ -1,6 +1,7 @@
 {
   "name": "Baptism",
   "cardId": "Baptism",
+  "spriteName": "artifact_f2_braceletofblinding",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

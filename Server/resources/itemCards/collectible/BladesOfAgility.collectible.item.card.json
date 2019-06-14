@@ -1,6 +1,7 @@
 {
   "name": "Blades Of Agility",
   "cardId": "BladesOfAgility",
+  "spriteName": "artifact_boss_frostarmor",
   "description": "a collectible ITEM that increases AP of a random troop 6 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

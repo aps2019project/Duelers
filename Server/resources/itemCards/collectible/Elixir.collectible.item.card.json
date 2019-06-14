@@ -1,6 +1,7 @@
 {
   "name": "Elixir",
   "cardId": "Elixir",
+  "spriteName": "artifact_f1_dawnseye",
   "description": "a collectible ITEM that have 3 unit HP increment and 3 hp increment POWER BUFF spells",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

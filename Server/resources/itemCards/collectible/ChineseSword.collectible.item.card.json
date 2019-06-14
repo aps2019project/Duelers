@@ -1,6 +1,7 @@
 {
   "name": "Chinese Sword",
   "cardId": "ChineseSword",
+  "spriteName": "artifact_f1_arclyteregalia",
   "description": "TODO",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

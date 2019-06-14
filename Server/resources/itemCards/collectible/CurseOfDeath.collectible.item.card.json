@@ -1,6 +1,7 @@
 {
   "name": "Curse Of Death",
   "cardId": "CurseOfDeath",
+  "spriteName": "artifact_f1_bigshield",
   "description": "a collectible ITEM that gives a random MINION an ON_DEATH spell that hits a random troop 8 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

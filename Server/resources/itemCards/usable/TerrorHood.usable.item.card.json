@@ -1,6 +1,7 @@
 {
   "name": "Terror Hood",
   "cardId": "TerrorHood",
+  "spriteName": "artifact_f3_sajjreredemption",
   "description": "a usable ITEM that gives all troops an ON_ATTACK WEAKNESS BUFF with 2 AP decrement",
   "type": "USABLE_ITEM",
   "spells": [

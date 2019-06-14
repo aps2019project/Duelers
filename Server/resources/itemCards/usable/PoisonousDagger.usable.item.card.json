@@ -1,6 +1,7 @@
 {
   "name": "Poisonous Dagger",
   "cardId": "PoisonousDagger",
+  "spriteName": "artifact_f2_spellfan",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

@@ -1,6 +1,7 @@
 {
   "name": "Twin Horn",
   "cardId": "TwinHorn",
+  "spriteName": "artifact_f1_sunstonebracers",
   "description": "a collectible ITEM that increases AP of a random RANGED or HYBRID troop 2 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

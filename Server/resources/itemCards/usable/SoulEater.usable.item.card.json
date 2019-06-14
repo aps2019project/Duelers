@@ -1,6 +1,7 @@
 {
   "name": "Soul Eater",
   "cardId": "SoulEater",
+  "spriteName": "artifact_f3_hexblade",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

@@ -1,6 +1,7 @@
 {
   "name": "Crown Of Wisdom",
   "cardId": "CrownOfWisdom",
+  "spriteName": "artifact_f2_crescentspear",
   "description": "a usable ITEM that increases the manna point 1 units in first 3 turns",
   "type": "USABLE_ITEM",
   "spells": [

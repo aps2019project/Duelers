@@ -1,6 +1,7 @@
 {
   "name": "Manna Potion",
   "cardId": "MannaPotion",
+  "spriteName": "artifact_f1_ironbanner",
   "description": "a collectible ITEM that have a ADD MANNA buff for 1 turn",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

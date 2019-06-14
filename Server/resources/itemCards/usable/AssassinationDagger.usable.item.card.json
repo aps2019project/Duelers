@@ -1,6 +1,7 @@
 {
   "name": "Assassination Dagger",
   "cardId": "AssassinationDagger",
+  "spriteName": "artifact_f2_bloodleechmask",
   "description": "TODO",
   "type": "USABLE_ITEM",
   "spells": [

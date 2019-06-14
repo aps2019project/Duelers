@@ -1,6 +1,7 @@
 {
   "name": "Panacea",
   "cardId": "Panacea",
+  "spriteName": "artifact_f1_shieldofphalanx",
   "description": "a collectible ITEM that increases HP of a random Troop 6 units",
   "type": "COLLECTIBLE_ITEM",
   "spells": [

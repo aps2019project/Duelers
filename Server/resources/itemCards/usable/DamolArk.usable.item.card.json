@@ -1,6 +1,7 @@
 {
   "name": "Damol Ark",
   "cardId": "DamolArk",
+  "spriteName": "artifact_f2_cyclonemask",
   "description": "a usable ITEM that if own HERO is RANGED or HYBRID a DISARM spell will be added to HERO",
   "type": "USABLE_ITEM",
   "spells": [
