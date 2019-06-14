@@ -9,6 +9,7 @@ public class Card {
     private String name;
     private String description;
     private String cardId;
+    private String spriteName;
     private CardType type;
     private ArrayList<Spell> spells;
     private int defaultAp;
@@ -40,6 +41,10 @@ public class Card {
 
     public String getCardId() {
         return this.cardId;
+    }
+
+    public String getSpriteName() {
+        return spriteName;
     }
 
     public CardType getType() {

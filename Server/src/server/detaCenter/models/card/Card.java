@@ -9,6 +9,7 @@ public class Card {
     private String name;
     private String description;
     private String cardId;
+    private String spriteName;
     private CardType type;
     private ArrayList<Spell> spells = new ArrayList<>();
     private int defaultAp;
@@ -29,6 +30,7 @@ public class Card {
         this.name = referenceCard.name;
         this.description = referenceCard.description;
         this.cardId = referenceCard.cardId;
+        this.spriteName = referenceCard.spriteName;
         this.type = referenceCard.type;
         if (referenceCard.spells != null) {
             for (Spell spell : referenceCard.spells) {
@@ -44,25 +46,9 @@ public class Card {
         this.range = referenceCard.range;
     }
 
-    //dangerous
-    public Card(String name, String description, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp,
-                int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
-        this.name = name;
-        this.description = description;
-        this.type = type;
-        this.spells = spells;
-        this.defaultAp = defaultAp;
-        this.defaultHp = defaultHp;
-        this.mannaPoint = mannaPoint;
-        this.price = price;
-        this.attackType = attackType;
-        this.range = range;
-        this.hasCombo = hasCombo;
-    }
-
     public CompressedCard toCompressedCard() {
         return new CompressedCard(
-                name, description, cardId, type, spells, defaultAp, defaultHp, mannaPoint, attackType, range, hasCombo);
+                name, description, cardId, spriteName, type, spells, defaultAp, defaultHp, mannaPoint, attackType, range, hasCombo);
     }
 
     @Override

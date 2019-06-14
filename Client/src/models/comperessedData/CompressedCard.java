@@ -7,6 +7,7 @@ public class CompressedCard {
     private String name;
     private String description;
     private String cardId;
+    private String spriteName;
     private CardType type;
     private CompressedSpell spell;//just for hero
     private int defaultAp;
@@ -26,6 +27,10 @@ public class CompressedCard {
 
     public String getCardId() {
         return cardId;
+    }
+
+    public String getSpriteName() {
+        return spriteName;
     }
 
     public CardType getType() {

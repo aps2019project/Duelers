@@ -10,6 +10,7 @@ public class CompressedCard {
     private String name;
     private String description;
     private String cardId;
+    private String spriteName;
     private CardType type;
     private CompressedSpell spell;//just for hero
     private int defaultAp;
@@ -19,13 +20,13 @@ public class CompressedCard {
     private int range;
     private boolean hasCombo;
 
-
-    public CompressedCard(String name, String description, String cardId, CardType type,
+    public CompressedCard(String name, String description, String cardId, String spriteName, CardType type,
                           ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint,
                           AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;
         this.cardId = cardId;
+        this.spriteName = spriteName;
         this.type = type;
         this.defaultAp = defaultAp;
         this.defaultHp = defaultHp;
