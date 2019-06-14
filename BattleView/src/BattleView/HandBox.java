@@ -110,7 +110,7 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
                 imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
 
-                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("artifact_f1_goldenvitriol"
+                final CardAnimation cardAnimation = new CardAnimation(cards[i], new CompressedCard("bossspell_livingflame"
                         , null, null, CardType.SPELL, null, 0, 0, 0, null, 0, false),
                         imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
 
@@ -122,7 +122,7 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        cardAnimation.active();
+                        cardAnimation.inActive();
                         try {
                             imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
                         } catch (FileNotFoundException e) {

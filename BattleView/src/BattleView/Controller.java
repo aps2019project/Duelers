@@ -35,7 +35,7 @@ public class Controller extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CompressedCard card = new CompressedCard("neutral_zenrui", null, "a1", null,
+                CompressedCard card = new CompressedCard("boss_manaman", null, "a1", null,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);

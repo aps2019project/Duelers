@@ -21,7 +21,7 @@ public class PlayerBox {
         addPhotos();
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
-        updateMP(3);
+        updateMP(7);
     }
 
     private void addPhotos() {
@@ -48,10 +48,10 @@ public class PlayerBox {
         for (int i = 1; i <= player1.getCurrentMP(); i++) {
             try {
                 ImageView imageView = new ImageView(new Image(new FileInputStream("resources/ui/icon_mana@2x.png")));
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.3);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.3);
+                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCALE * (250 + i * 40));
-                imageView.setY(Constants.SCALE * (150 - i * 3));
+                imageView.setY(Constants.SCALE * (150 - i * 2));
                 group.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -60,10 +60,10 @@ public class PlayerBox {
         for (int i = player1.getCurrentMP() + 1; i <= maxMP; i++) {
             try {
                 ImageView imageView = new ImageView(new Image(new FileInputStream("resources/ui/icon_mana_inactive@2x.png")));
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.3);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.3);
+                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCALE * (250 + i * 40));
-                imageView.setY(Constants.SCALE * (150 - i * 3));
+                imageView.setY(Constants.SCALE * (150 - i * 2));
                 group.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,10 +72,10 @@ public class PlayerBox {
         for (int i = 1; i <= player2.getCurrentMP(); i++) {
             try {
                 ImageView imageView = new ImageView(new Image(new FileInputStream("resources/ui/icon_mana@2x.png")));
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.3);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.3);
+                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
-                imageView.setY(Constants.SCALE * (150 - i * 3));
+                imageView.setY(Constants.SCALE * (150 - i * 2));
                 group.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -84,10 +84,10 @@ public class PlayerBox {
         for (int i = player2.getCurrentMP() + 1; i <= maxMP; i++) {
             try {
                 ImageView imageView = new ImageView(new Image(new FileInputStream("resources/ui/icon_mana_inactive@2x.png")));
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.3);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.3);
+                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
-                imageView.setY(Constants.SCALE * (150 - i * 3));
+                imageView.setY(Constants.SCALE * (150 - i * 2));
                 group.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
