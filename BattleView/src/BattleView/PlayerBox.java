@@ -1,13 +1,16 @@
 package BattleView;
 
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.comperessedData.CompressedPlayer;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 
-public class PlayerBox {
+public class PlayerBox implements PropertyChangeListener {
     private final Controller controller;
     private final CompressedPlayer player1, player2;
     private final Group group;
@@ -22,6 +25,8 @@ public class PlayerBox {
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
         updateMP(7);
+        player1.addPropertyChangeListener(this);
+        player2.addPropertyChangeListener(this);//no need to 2 times
     }
 
     private void addPhotos() {
@@ -97,5 +102,17 @@ public class PlayerBox {
 
     public Group getGroup() {
         return group;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("mp")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    updateMP((int)evt.getNewValue());
+                }
+            });
+        }
     }
 }

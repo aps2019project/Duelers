@@ -71,9 +71,9 @@ public class  CompressedGame {
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
                            int player2CurrentMP, int player2NumberOfCollectedFlags) {
         this.turnNumber = turnNumber;
-        playerOne.setCurrentMP(player1CurrentMP);
+        playerOne.setCurrentMP(player1CurrentMP,turnNumber);
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
-        playerTwo.setCurrentMP(player2CurrentMP);
+        playerTwo.setCurrentMP(player2CurrentMP,turnNumber);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
     }
 

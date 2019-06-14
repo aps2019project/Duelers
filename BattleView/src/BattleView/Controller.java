@@ -35,6 +35,15 @@ public class Controller extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                player1.setCurrentMP(1,5);
+                player2.setCurrentMP(2,5);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                player1.setCurrentMP(4,6);
+                player2.setCurrentMP(4,6);
                 CompressedCard card = new CompressedCard("boss_manaman", null, "a1", null,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),

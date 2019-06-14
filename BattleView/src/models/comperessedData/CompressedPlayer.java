@@ -55,7 +55,7 @@ public class CompressedPlayer {
     public void addCardToNext(CompressedCard card) {
         if (nextCard != null)
             System.out.println("Client Game Error!");
-        else{
+        else {
             nextCard = card;
             support.firePropertyChange("next", null, null);
         }
@@ -169,9 +169,9 @@ public class CompressedPlayer {
         return currentMP;
     }
 
-    public void setCurrentMP(int currentMP) {
+    public void setCurrentMP(int currentMP, int turnNumber) {
         this.currentMP = currentMP;
-        //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
+        support.firePropertyChange("mp", currentMP, turnNumber / 2 + 3);
     }
 
     public ArrayList<CompressedCard> getHand() {
