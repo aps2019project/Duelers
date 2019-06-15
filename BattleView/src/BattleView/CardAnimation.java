@@ -156,4 +156,8 @@ public class CardAnimation extends Transition {
             this.y = y;
         }
     }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 }

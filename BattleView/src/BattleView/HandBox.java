@@ -86,32 +86,32 @@ public class HandBox implements PropertyChangeListener {
                 e.printStackTrace();
             }
 
-            next.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        if (cardAnimation != null)
+            if (cardAnimation != null) {
+                next.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        try {
                             cardAnimation.inActive();
-                        imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
-
-            next.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        if (cardAnimation != null)
+                });
+                next.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        try {
                             cardAnimation.stop();
-                        imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     }
+                });
+            }
 
-                }
-            });
+
         } catch (Exception e) {
             System.out.println("Error showing next");
             e.printStackTrace();
@@ -142,10 +142,10 @@ public class HandBox implements PropertyChangeListener {
                 else
                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
 
-                imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (cardAnimation != null) {
+                if (cardAnimation != null) {
+                    cards[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
                             cardAnimation.inActive();
                             try {
                                 imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
@@ -153,32 +153,31 @@ public class HandBox implements PropertyChangeListener {
                                 e.printStackTrace();
                             }
                         }
-                    }
-                });
-                imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (cardAnimation != null) {
-                            cardAnimation.pause();
+                    });
+
+                    cards[i].setOnMouseExited(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
                             try {
-                                if (selectedCard == I)
+                                if (selectedCard == I){
                                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                                else
+                                } else{
                                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
+                                    cardAnimation.pause();
+                                }
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
                         }
-                    }
-                });
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (cardAnimation != null) {
+                    });
+
+                    cards[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
                             clickOnCard(I);
                         }
-                    }
-                });
+                    });
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
