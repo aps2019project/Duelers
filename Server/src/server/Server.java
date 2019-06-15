@@ -352,6 +352,6 @@ public class Server {
     }
 
     public void serverPrint(String string) {
-        System.out.println("\u001B[31m" + string.trim() + "\u001B[0m");
+        System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
     }
 }
