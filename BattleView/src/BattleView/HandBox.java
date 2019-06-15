@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 
 import java.beans.PropertyChangeEvent;
@@ -21,7 +22,8 @@ public class HandBox implements PropertyChangeListener {
     private final Group group;
     private final Pane[] cards = new Pane[5];
     private final Pane next = new Pane();
-    private int selectedCard = 1;
+    private int selectedCard = -1;
+
 
     public HandBox(Controller controller, CompressedPlayer player, double x, double y) throws Exception {
         this.controller = controller;
@@ -179,7 +181,7 @@ public class HandBox implements PropertyChangeListener {
                 });
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             System.out.println("Error making hand");
         }
     }
@@ -315,6 +317,7 @@ public class HandBox implements PropertyChangeListener {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    selectedCard = -1;
                     updateCards();
                 }
             });
@@ -322,10 +325,25 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnCard(int i) {
-        //System.out.println(player.getHand().get(i).getCardId());
+        if (selectedCard == i)
+            selectedCard = -1;
+        else
+            selectedCard = i;
+        updateCards();
     }
 
     public Group getGroup() {
         return group;
+    }
+
+    public CompressedCard getSelectedCard() {
+        if (selectedCard >= 0)
+            return player.getHand().get(selectedCard);
+        return null;
+    }
+
+    public void resetSelection() {
+        selectedCard = -1;
+        updateCards();
     }
 }

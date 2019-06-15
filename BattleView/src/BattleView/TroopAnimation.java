@@ -199,6 +199,10 @@ public class TroopAnimation extends Transition {
         currentI = i;
     }
 
+    public ImageView getImageView() {
+        return imageView;
+    }
+
     enum ACTION {
         ATTACK, BREATHING, DEATH, HIT, IDLE, RUN, STOPPED
     }

@@ -88,14 +88,6 @@ public class Controller extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                /*troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 4),
-                        true, true, false, false, 1, 2);
-                map.killTroop(card.getCardId());
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
             }
         }).start();
         return game;

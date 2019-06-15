@@ -48,7 +48,6 @@ public class CardAnimation extends Transition {
             inActiveFramePositions = activeFramePositions;
             extraX = playlist.extraX * Constants.SCALE;
             extraY = (playlist.extraY - 20) * Constants.SCALE;
-            System.out.println("Hell");
         }
 
         frameWidth = playlist.frameWidth;
@@ -65,7 +64,6 @@ public class CardAnimation extends Transition {
 
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
         this.pane.getChildren().add(imageView);
-        System.out.println(imageView.getY());
 
 
         this.setCycleCount(INDEFINITE);
