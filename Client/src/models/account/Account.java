@@ -4,32 +4,20 @@ package models.account;
 import models.card.Deck;
 import models.card.TempDeck;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Account {
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String username;
     private String password;
     private Collection collection;
     private ArrayList<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
-    private ArrayList<MatchHistory> matchHistories = new ArrayList<>();
+    private ArrayList<MatchHistory> matchHistories;
     private int money;
     private int wins;
-
-    public Account(TempAccount account) {
-        this.username = account.getUsername();
-        this.password = account.getPassword();
-        this.collection = account.getCollection();
-        if (account.getDecks() != null) {
-            for (TempDeck deck : account.getDecks()) {
-                this.decks.add(new Deck(deck, collection));
-            }
-        }
-        this.matchHistories = account.getMatchHistories();
-        this.mainDeck = getDeck(account.getMainDeckName());
-        this.money = account.getMoney();
-        this.wins = account.getWins();
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -81,5 +69,39 @@ public class Account {
 
     public boolean isMainDeck(Deck deck) {
         return deck.equals(this.mainDeck);
+    }
+
+    public void update(TempAccount account) {
+        if (!username.equals(account.getUsername())) {
+            support.firePropertyChange("username", username, account.getUsername());
+            username = account.getUsername();
+        }
+        if (!collection.equals(account.getCollection())) {
+            support.firePropertyChange("collection", collection, account.getCollection());
+            collection = account.getCollection();
+        }
+    }
+
+    public Account(TempAccount account) {
+        this.username = account.getUsername();
+        this.password = account.getPassword();
+        this.collection = account.getCollection();
+        if (account.getDecks() != null) {
+            for (TempDeck deck : account.getDecks()) {
+                this.decks.add(new Deck(deck, collection));
+            }
+        }
+        this.matchHistories = account.getMatchHistories();
+        this.mainDeck = getDeck(account.getMainDeckName());
+        this.money = account.getMoney();
+        this.wins = account.getWins();
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 }

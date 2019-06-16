@@ -63,4 +63,35 @@ public class Collection {
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Collection)) return false;
+        Collection other = (Collection) o;
+
+        if (heroes.size() != other.heroes.size() ||
+                minions.size() != other.minions.size() ||
+                spells.size() != other.spells.size() ||
+                items.size() != other.items.size()
+        ) return false;
+
+        for (Card card : heroes) {
+            if (!other.heroes.contains(card)) return false;
+        }
+
+        for (Card card : minions) {
+            if (!other.minions.contains(card)) return false;
+        }
+
+        for (Card card : spells) {
+            if (!other.spells.contains(card)) return false;
+        }
+
+        for (Card card : items) {
+            if (!other.items.contains(card)) return false;
+        }
+
+        return true;
+    }
 }

@@ -213,7 +213,12 @@ public class Client {
     }
 
     private void login(Message message) {
-        account = new Account(message.getAccountCopyMessage().getAccount());
+        if (account == null) {
+            account = new Account(message.getAccountCopyMessage().getAccount());
+        } else {
+            account.update(message.getAccountCopyMessage().getAccount());
+        }
+
         Platform.runLater(() -> new MainMenu().show());
     }
 
