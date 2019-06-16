@@ -1,17 +1,20 @@
 package view;
 
+import controller.Client;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import models.gui.BackButton;
 import models.gui.BackgroundMaker;
 import models.gui.UIConstants;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 
-public class ShopMenu extends Show {
-    private static ShopMenu menu;
+public class CollectionMenu extends Show implements PropertyChangeListener {
+    private static CollectionMenu menu;
 
-    ShopMenu() {
+    CollectionMenu() {
         menu = this;
         try {
             root.setBackground(UIConstants.ROOT_BACKGROUND);
@@ -30,6 +33,14 @@ public class ShopMenu extends Show {
     @Override
     public void show() {
         super.show();
+        Client.getInstance().getAccount().addPropertyChangeListener(this);
         BackgroundMaker.makeMenuBackgroundFrozen();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+//        if (evt.getPropertyName().equals("mp")) {
+//            Platform.runLater(() -> updateCollection((int)evt.getNewValue()));
+//        }
     }
 }

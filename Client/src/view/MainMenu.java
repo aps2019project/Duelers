@@ -13,13 +13,9 @@ public class MainMenu extends Show {
     private static MainMenu menu;
     private static final MenuItem[] items = {
             new MenuItem(0, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
-            new MenuItem(1, "PROFILE", "See you profile information", event -> {
-                menu.showProfileDialog();
-                BackgroundMaker.makeMenuBackgroundFrozen();
-            }),
+            new MenuItem(1, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
             new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
-            new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> {
-            }),
+            new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> {
             }),
             new MenuItem(5, "SETTING", "Change game properties", event -> {
@@ -43,6 +39,7 @@ public class MainMenu extends Show {
     }
 
     private void showProfileDialog() {
+        BackgroundMaker.makeMenuBackgroundFrozen();
         try {
             GridPane profileGrid = new ProfileGrid(Client.getInstance().getAccount());
 
