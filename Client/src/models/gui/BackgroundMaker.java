@@ -8,12 +8,23 @@ import javafx.scene.layout.BorderPane;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
+import static models.gui.UIConstants.SCALE;
+
 public class BackgroundMaker {
     private static final String BACKGROUND_URL = "resources/menu/background/background.jpg";
     private static final String FOREGROUND_URL = "resources/menu/background/foreground.png";
     private static final String FAR_PILLAR_URL = "resources/menu/background/far_pillars.png";
     private static final String NEAR_PILLAR_URL = "resources/menu/background/near_pillars.png";
     private static final String VIGNETTE_URL = "resources/menu/background/vignette.png";
+    private static final double FOREGROUND_WIDTH = 2400 * SCALE;
+    private static final double FOREGROUND_HEIGHT = 726 * SCALE;
+    private static final double NEAR_PILLARS_WIDTH = 2000 * SCALE;
+    private static final double NEAR_PILLARS_HEIGHT = 1700 * SCALE;
+    private static final double FAR_PILLARS_WIDTH = 1772 * SCALE;
+    private static final double FAR_PILLARS_HEIGHT = 1342 * SCALE;
+    private static final double VIGNETTE_WIDTH = 1429 * SCALE;
+    private static final double VIGNETTE_HEIGHT = 1400 * SCALE;
+    private static final double BACKGROUND_BLUR = 50 * SCALE;
     private static final HashMap<String, BorderPane> playBackgroundsByUrl = new HashMap<>();
     private static BorderPane menuBackground;
 
@@ -22,19 +33,19 @@ public class BackgroundMaker {
 
         ImageView backgroundView = ImageLoader.loadImage(BACKGROUND_URL, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
         ImageView foregroundView = ImageLoader.loadImage(
-                FOREGROUND_URL, UIConstants.FOREGROUND_WIDTH, UIConstants.FOREGROUND_HEIGHT,
-                UIConstants.SCENE_WIDTH - UIConstants.FOREGROUND_WIDTH,
-                UIConstants.SCENE_HEIGHT - UIConstants.FOREGROUND_HEIGHT
+                FOREGROUND_URL, FOREGROUND_WIDTH, FOREGROUND_HEIGHT,
+                UIConstants.SCENE_WIDTH - FOREGROUND_WIDTH,
+                UIConstants.SCENE_HEIGHT - FOREGROUND_HEIGHT
         );
         ImageView farPillarsView = ImageLoader.loadImage(
-                FAR_PILLAR_URL, UIConstants.FAR_PILLARS_WIDTH, UIConstants.FAR_PILLARS_HEIGHT,
-                0, UIConstants.SCENE_HEIGHT - UIConstants.FAR_PILLARS_HEIGHT
+                FAR_PILLAR_URL, FAR_PILLARS_WIDTH, FAR_PILLARS_HEIGHT,
+                0, UIConstants.SCENE_HEIGHT - FAR_PILLARS_HEIGHT
         );
         ImageView nearPillarsView = ImageLoader.loadImage(
-                NEAR_PILLAR_URL, UIConstants.NEAR_PILLARS_WIDTH, UIConstants.NEAR_PILLARS_HEIGHT,
-                0, UIConstants.SCENE_HEIGHT - UIConstants.NEAR_PILLARS_HEIGHT
+                NEAR_PILLAR_URL, NEAR_PILLARS_WIDTH, NEAR_PILLARS_HEIGHT,
+                0, UIConstants.SCENE_HEIGHT - NEAR_PILLARS_HEIGHT
         );
-        ImageView vignetteView = ImageLoader.loadImage(VIGNETTE_URL, UIConstants.VIGNETTE_WIDTH, UIConstants.VIGNETTE_HEIGHT);
+        ImageView vignetteView = ImageLoader.loadImage(VIGNETTE_URL, VIGNETTE_WIDTH, VIGNETTE_HEIGHT);
 
         Cloud cloud = new Cloud();
 
@@ -46,7 +57,7 @@ public class BackgroundMaker {
 
         ImageView backgroundView = ImageLoader.loadImage(url, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
-        backgroundView.setEffect(new GaussianBlur(UIConstants.BACKGROUND_BLUR / 3));
+        backgroundView.setEffect(new GaussianBlur(BACKGROUND_BLUR / 3));
         background.setEffect(new ColorAdjust(0, 0, -0.1, 0));
 
         background.getChildren().addAll(backgroundView);
@@ -68,7 +79,7 @@ public class BackgroundMaker {
     }
 
     public static void makeMenuBackgroundFrozen() {
-        menuBackground.setEffect(new GaussianBlur(UIConstants.BACKGROUND_BLUR));
+        menuBackground.setEffect(new GaussianBlur(BACKGROUND_BLUR));
         menuBackground.getChildren().stream().filter(node -> node instanceof Cloud).forEach(node -> ((Cloud) node).pause());
     }
 

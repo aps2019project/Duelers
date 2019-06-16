@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 
+import static models.gui.UIConstants.SCALE;
+
 class OrangeButton extends Button {
     private static final Background DEFAULT_BACKGROUND = new Background(
             new BackgroundFill(
@@ -22,6 +24,7 @@ class OrangeButton extends Button {
                     Color.rgb(227, 55, 60), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    private static final double WIDTH = 400 * SCALE;
 
     OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent) {
         super(text);
@@ -29,7 +32,7 @@ class OrangeButton extends Button {
                 DEFAULT_BACKGROUND
         );
         setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
-        setPrefWidth(UIConstants.LOGIN_BOX_SIZE / 2);
+        setPrefWidth(WIDTH);
         setFont(UIConstants.DEFAULT_FONT);
         setTextFill(Color.WHITE);
 

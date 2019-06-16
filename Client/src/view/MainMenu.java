@@ -25,7 +25,7 @@ public class MainMenu extends Show {
     public MainMenu() {
         menu = this;
         try {
-            root.setBackground(UIConstants.ROOT_BACKGROUND);
+            root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
             MainMenuBox menuBox = new MainMenuBox(items);

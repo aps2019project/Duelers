@@ -13,22 +13,27 @@ import models.account.MatchHistory;
 
 import java.util.ArrayList;
 
+import static models.gui.UIConstants.SCALE;
+
 class MatchHistoryTable extends ScrollPane {
     private static final Insets PADDING = new Insets(UIConstants.DEFAULT_SPACING * 2);
-    private static final String ID = "profile_scroll";
     private static final double SEPARATOR_OPACITY = 0.3;
+    private static final double WIDTH = 1020 * SCALE;
+    private static final double HEIGHT = 700 * SCALE;
+    private static final double BACKGROUND_CORNER = 30 * SCALE;
+    private static final String ID = "profile_scroll";
     private static final Background BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(57, 63, 74, 0.5),
-                    new CornerRadii(UIConstants.PROFILE_PIC_CORNER_RADIUS), Insets.EMPTY
+                    new CornerRadii(BACKGROUND_CORNER), Insets.EMPTY
             )
     );
 
     MatchHistoryTable(ArrayList<MatchHistory> matchHistories) {
-        setMinWidth(UIConstants.MATCH_HISTORY_TABLE_WIDTH * 1.03);
+        setMinWidth(WIDTH * 1.03);
         setId(ID);
         GridPane labelsGrid = new GridPane();
-        labelsGrid.setMinSize(UIConstants.MATCH_HISTORY_TABLE_WIDTH, UIConstants.MATCH_HISTORY_TABLE_HEIGHT);
+        labelsGrid.setMinSize(WIDTH, HEIGHT);
         labelsGrid.setPadding(PADDING);
         labelsGrid.setBackground(BACKGROUND);
         labelsGrid.setAlignment(Pos.CENTER);
@@ -37,20 +42,14 @@ class MatchHistoryTable extends ScrollPane {
 
         for (int i = 0; i < matchHistories.size(); i++) {
             MatchHistory history = matchHistories.get(i);
-            Label opponentLabel = new Label(history.getOppName());
+            Label opponentLabel = new DefaultLabel(history.getOppName(), UIConstants.DEFAULT_FONT, Color.WHITE);
             opponentLabel.setPadding(new Insets(UIConstants.DEFAULT_SPACING));
-            opponentLabel.setFont(UIConstants.DEFAULT_FONT);
-            opponentLabel.setTextFill(Color.WHITE);
 
-            Label dateLabel = new Label(history.getDate());
+            Label dateLabel = new DefaultLabel(history.getDate(), UIConstants.DEFAULT_FONT, Color.WHITE);
             dateLabel.setPadding(new Insets(UIConstants.DEFAULT_SPACING));
-            dateLabel.setFont(UIConstants.DEFAULT_FONT);
-            dateLabel.setTextFill(Color.WHITE);
 
-            Label stateLabel = new Label(history.amIWinner() ? "Win" : "Lose");
+            Label stateLabel = new DefaultLabel(history.amIWinner() ? "Win" : "Lose", UIConstants.DEFAULT_FONT, Color.WHITE);
             stateLabel.setPadding(new Insets(UIConstants.DEFAULT_SPACING));
-            stateLabel.setFont(UIConstants.DEFAULT_FONT);
-            stateLabel.setTextFill(Color.WHITE);
 
             Button showButton = new Button("SHOW GAME");
             showButton.setPadding(new Insets(UIConstants.DEFAULT_SPACING));

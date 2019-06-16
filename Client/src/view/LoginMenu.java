@@ -13,7 +13,7 @@ public class LoginMenu extends Show {
 
     public LoginMenu() {
         try {
-            root.setBackground(UIConstants.ROOT_BACKGROUND);
+            root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
             DefaultContainer container = new DefaultContainer(new LoginMenuContainer());

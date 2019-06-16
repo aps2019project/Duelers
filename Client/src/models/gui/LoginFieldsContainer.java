@@ -6,6 +6,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import static models.gui.UIConstants.SCALE;
+
 class LoginFieldsContainer extends VBox {
     private static final Background LOGIN_BOX_BACKGROUND = new Background(
             new BackgroundFill(
@@ -14,6 +16,8 @@ class LoginFieldsContainer extends VBox {
     );
     private final NormalField usernameField;
     private final NormalPasswordField passwordField;
+    private static final double BOX_SIZE = 800 * SCALE;
+    private static final Insets PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
 
     LoginFieldsContainer() {
         super(UIConstants.DEFAULT_SPACING * 2);
@@ -21,15 +25,15 @@ class LoginFieldsContainer extends VBox {
         passwordField = new NormalPasswordField();
 
         Region space = new Region();
-        space.setMinHeight(UIConstants.LOGIN_BOX_SIZE * 0.5);
+        space.setMinHeight(BOX_SIZE * 0.5);
 
         HBox buttons = makeButtonsBox();
 
         getChildren().addAll(usernameField, passwordField, space, buttons);
-        setPadding(UIConstants.LOGIN_BOX_PADDING);
+        setPadding(PADDING);
         setBackground(LOGIN_BOX_BACKGROUND);
-        setMinSize(UIConstants.LOGIN_BOX_SIZE, UIConstants.LOGIN_BOX_SIZE);
-        setMaxSize(UIConstants.LOGIN_BOX_SIZE, UIConstants.LOGIN_BOX_SIZE);
+        setMinSize(BOX_SIZE, BOX_SIZE);
+        setMaxSize(BOX_SIZE, BOX_SIZE);
     }
 
     private HBox makeButtonsBox() {

@@ -89,7 +89,7 @@ class CustomGameMenu extends PlayMenu {
         DialogText deckText = new DialogText("Please choose one of your decks to be as opponent's deck");
         DeckListView listView = new DeckListView(deckNames);
         DialogText flagNumText = new DialogText("Please set number of flags in the game");
-        NormalSpinner flagNumSpinner = new NormalSpinner(UIConstants.FLAG_NUM_MIN, UIConstants.FLAG_NUM_MAX, UIConstants.FLAG_NUM_DEFAULT);
+        FlagSpinner flagNumSpinner = new FlagSpinner();
 
         DialogBox dialogBox = new DialogBox(deckText, listView, flagNumText, flagNumSpinner);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);

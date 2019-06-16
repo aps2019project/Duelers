@@ -1,18 +1,21 @@
 package models.gui;
 
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import static models.gui.UIConstants.SCALE;
+
 public class DialogText extends Text {
+    private static final Effect SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
+    private static final Font FONT = Font.font("SansSerif", FontWeight.EXTRA_BOLD, 35 * SCALE);
 
     public DialogText(String text) {
         super(text);
-        setFont(UIConstants.DIALOG_TEXT_FONT);
-        setEffect(UIConstants.WHITE_TEXT_SHADOW);
-    }
-
-    public DialogText(String text, Color fill) {
-        this(text);
-        this.setFill(fill);
+        setFont(FONT);
+        setEffect(SHADOW);
     }
 }

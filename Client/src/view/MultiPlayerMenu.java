@@ -71,7 +71,7 @@ public class MultiPlayerMenu extends PlayMenu {
         DialogText usernameText = new DialogText("Please enter opponent's username");
         NormalField usernameField = new NormalField("opponent username");
         DialogText flagNumText = new DialogText("Please set number of flags in the game");
-        NormalSpinner flagNumSpinner = new NormalSpinner(UIConstants.FLAG_NUM_MIN, UIConstants.FLAG_NUM_MAX, UIConstants.FLAG_NUM_DEFAULT);
+        FlagSpinner flagNumSpinner = new FlagSpinner();
 
         DialogBox dialogBox = new DialogBox(usernameText, usernameField, flagNumText, flagNumSpinner);
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);

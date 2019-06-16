@@ -6,8 +6,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+
+import static models.gui.UIConstants.SCALE;
 
 class HintBox extends VBox {
     private static final Background MENU_HINT_BACKGROUND = new Background(
@@ -16,6 +19,8 @@ class HintBox extends VBox {
                     new CornerRadii(UIConstants.DEFAULT_SPACING), new Insets(-UIConstants.DEFAULT_SPACING)
             )
     );
+    private static final Font FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
+    private static final double WIDTH = 250 * SCALE;
 
     HintBox(String hintText) {
         getChildren().add(makeHintText(hintText));
@@ -25,11 +30,8 @@ class HintBox extends VBox {
     }
 
     private Text makeHintText(String text) {
-        Text hint = new Text(text);
-        hint.setWrappingWidth(UIConstants.MENU_HINT_WIDTH);
-        hint.setTextAlignment(TextAlignment.CENTER);
-        hint.setFont(UIConstants.MENU_HINT_FONT);
-        hint.setFill(Color.WHITE);
-        return hint;
+        return new DefaultText(
+                text, WIDTH, FONT, Color.WHITE
+        );
     }
 }

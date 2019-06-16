@@ -17,7 +17,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     CollectionMenu() {
         menu = this;
         try {
-            root.setBackground(UIConstants.ROOT_BACKGROUND);
+            root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(event -> new MainMenu().show());

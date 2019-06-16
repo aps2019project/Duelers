@@ -6,12 +6,15 @@ import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 
+import static models.gui.UIConstants.SCALE;
+
 public class LoginMenuContainer extends VBox {
     private static final String DUELYST_LOGO_URL = "resources/ui/brand_duelyst.png";
+    private static final double WIDTH = 1600 * SCALE;
 
     public LoginMenuContainer() throws FileNotFoundException {
         super(UIConstants.DEFAULT_SPACING);
-        setMaxWidth(UIConstants.LOGIN_BOX_SIZE * 2);
+        setMaxWidth(WIDTH);
         setAlignment(Pos.CENTER);
 
         ImageView brandView = ImageLoader.loadImage(

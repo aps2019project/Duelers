@@ -1,16 +1,26 @@
 package models.gui;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import view.PlayMenu;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import static models.gui.UIConstants.SCALE;
+
 class MainMenuGrid extends GridPane {
+    private static final double ITEM_IMAGE_SIZE = 70 * SCALE;
+    private static final Font FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 55 * SCALE);
+    private static final Effect SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
     private Image menuItemImage;
     private Image hoverRing;
 
@@ -30,14 +40,14 @@ class MainMenuGrid extends GridPane {
     private Node[] makeRow(MenuItem item) {
         HintBox textWrapper = new HintBox(item.hint);
         ImageView menuView = ImageLoader.makeImageView(
-                menuItemImage, UIConstants.MENU_ITEM_IMAGE_SIZE, UIConstants.MENU_ITEM_IMAGE_SIZE
+                menuItemImage, ITEM_IMAGE_SIZE, ITEM_IMAGE_SIZE
         );
         ImageView ringView = ImageLoader.makeImageView(
-                hoverRing, UIConstants.MENU_ITEM_IMAGE_SIZE, UIConstants.MENU_ITEM_IMAGE_SIZE
+                hoverRing, ITEM_IMAGE_SIZE, ITEM_IMAGE_SIZE
         );
         ringView.setVisible(false);
         RotateAnimation rotate = new RotateAnimation(ringView);
-        MenuLabel label = new MenuLabel(item.title);
+        Label label = new DefaultLabel(item.title, FONT, Color.WHITE);
 
         label.setOnMouseClicked(item.event);
 
@@ -45,7 +55,7 @@ class MainMenuGrid extends GridPane {
             menuView.setOpacity(0.6);
             ringView.setVisible(true);
             label.setCursor(UIConstants.SELECT_CURSOR);
-            label.setEffect(UIConstants.WHITE_TEXT_SHADOW);
+            label.setEffect(SHADOW);
             rotate.play();
             textWrapper.setVisible(true);
         });

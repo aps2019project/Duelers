@@ -1,11 +1,12 @@
 package models.card;
 
 
+import models.ICard;
 import models.card.spell.Spell;
 
 import java.util.ArrayList;
 
-public class Card {
+public class Card implements ICard {
     private String name;
     private String description;
     private String cardId;
@@ -31,6 +32,7 @@ public class Card {
         return this.cardId.equalsIgnoreCase(card.cardId);
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
@@ -47,6 +49,7 @@ public class Card {
         return spriteName;
     }
 
+    @Override
     public CardType getType() {
         return this.type;
     }
@@ -55,10 +58,12 @@ public class Card {
         return this.spells;
     }
 
+    @Override
     public int getDefaultAp() {
         return this.defaultAp;
     }
 
+    @Override
     public int getDefaultHp() {
         return this.defaultHp;
     }
@@ -75,6 +80,7 @@ public class Card {
         return this.range;
     }
 
+    @Override
     public int getPrice() {
         return price;
     }

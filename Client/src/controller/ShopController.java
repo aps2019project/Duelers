@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ShopController {
     private static ShopController ourInstance;
-    private Collection originalCards = new Collection();
+    private Collection originalCards;
 
     private ShopController() {
     }
@@ -41,6 +41,10 @@ public class ShopController {
         );
     }
 
+    public Collection getOriginalCards() {
+        return originalCards;
+    }
+
     public Card searchInShop(String cardName) {
         return originalCards.searchCollection(cardName).get(0);
     }
@@ -49,7 +53,8 @@ public class ShopController {
         return Client.getInstance().getAccount().getCollection().searchCollection(cardName);
     }
 
-    void setOriginalCards(Collection originalCards) {
+    synchronized void setOriginalCards(Collection originalCards) {
         this.originalCards = originalCards;
+        this.notify();
     }
 }

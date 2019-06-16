@@ -7,8 +7,12 @@ import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
 
+import static models.gui.UIConstants.SCALE;
+
 public class MainMenuBox extends VBox {
     private static final String DUELYST_LOGO_URL = "resources/ui/brand_duelyst.png";
+    private static final double X = 100 * SCALE;
+    private static final double Y = 400 * SCALE;
 
     public MainMenuBox(MenuItem[] items) throws FileNotFoundException {
         super(UIConstants.DEFAULT_SPACING * 5);
@@ -19,7 +23,7 @@ public class MainMenuBox extends VBox {
 
         getChildren().addAll(brandView, menuGrid);
         setAlignment(Pos.CENTER);
-        relocate(UIConstants.MAIN_MENU_BOX_X, UIConstants.MAIN_MENU_BOX_Y);
+        relocate(X, Y);
         setPadding(new Insets(UIConstants.DEFAULT_SPACING * 6));
     }
 }
