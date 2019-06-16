@@ -12,7 +12,6 @@ public class ShopController {
     private static ShopController ourInstance;
     private Collection originalCards = new Collection();
 
-
     private ShopController() {
     }
 
@@ -24,10 +23,6 @@ public class ShopController {
             );
         }
         return ourInstance;
-    }
-
-    public void exit() {
-        //TODO:change scene
     }
 
     public void buy(String cardName) {
@@ -54,8 +49,7 @@ public class ShopController {
         return Client.getInstance().getAccount().getCollection().searchCollection(cardName);
     }
 
-
-    public void setOriginalCards(Collection originalCards) {
+    void setOriginalCards(Collection originalCards) {
         this.originalCards = originalCards;
     }
 }

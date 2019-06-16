@@ -17,8 +17,7 @@ public class MainMenu extends Show {
                 menu.showProfileDialog();
                 BackgroundMaker.makeMenuBackgroundFrozen();
             }),
-            new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> {
-            }),
+            new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
             new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> {
             }),
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> {
