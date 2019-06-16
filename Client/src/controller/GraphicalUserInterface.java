@@ -6,7 +6,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
 import view.LoginMenu;
-import view.MainMenu;
 
 public class GraphicalUserInterface {
     private static GraphicalUserInterface GUI;
@@ -25,9 +24,19 @@ public class GraphicalUserInterface {
 
     public void start(Stage stage) {
         this.stage = stage;
-
         new LoginMenu().show();
+        setStageProperties(stage);
+    }
 
+    public void changeScene(AnchorPane root) {
+        if (scene == null) {
+            makeScene(root);
+        } else {
+            scene.setRoot(root);
+        }
+    }
+
+    private void setStageProperties(Stage stage) {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -37,13 +46,10 @@ public class GraphicalUserInterface {
         stage.setOnCloseRequest(event -> Client.getInstance().close());
     }
 
-    public void changeScene(AnchorPane root) {
-        if (scene == null) {
-            scene = new Scene(root, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
-            scene.setCursor(UIConstants.DEFAULT_CURSOR);
-            stage.setScene(scene);
-        } else {
-            scene.setRoot(root);
-        }
+    private void makeScene(AnchorPane root) {
+        scene = new Scene(root, UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
+        scene.getStylesheets().add(this.getClass().getResource("/styles/scroll_pane.css").toExternalForm());
+        scene.setCursor(UIConstants.DEFAULT_CURSOR);
+        stage.setScene(scene);
     }
 }

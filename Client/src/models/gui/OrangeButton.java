@@ -19,7 +19,7 @@ class OrangeButton extends Button {
     );
     private static final Background HOVER_BACKGROUND = new Background(
             new BackgroundFill(
-                    Color.rgb(250, 106, 54), CornerRadii.EMPTY, Insets.EMPTY
+                    Color.rgb(227, 55, 60), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
 

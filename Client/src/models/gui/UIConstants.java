@@ -39,8 +39,9 @@ public class UIConstants {
     public static final double SCENE_WIDTH = DEFAULT_SCENE_WIDTH * SCALE;
     public static final double SCENE_HEIGHT = DEFAULT_SCENE_HEIGHT * SCALE;
     static final double MATCH_HISTORY_TABLE_WIDTH = 1020 * SCALE;
-    static final double PROFILE_ICON_SIZE = 70 * SCALE;
+    static final double MATCH_HISTORY_TABLE_HEIGHT = 700 * SCALE;
     static final double PROFILE_PIC_CORNER_RADIUS = 30 * SCALE;
+    static final double PROFILE_ICON_SIZE = 70 * SCALE;
     static final double PROFILE_PIC_SIZE = 600 * SCALE;
     static final double CLOUD_WIDTH = 1400 * SCALE;
     static final double CLOUD_HEIGHT = 750 * SCALE;
@@ -71,6 +72,7 @@ public class UIConstants {
     static final double VIGNETTE_WIDTH = 1429 * SCALE;
     static final double VIGNETTE_HEIGHT = 1400 * SCALE;
     static final Insets LOGIN_BOX_PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
+    static final Effect PROFILE_PIC_SHADOW = new DropShadow(30 * SCALE, Color.BLACK);
     static final Effect WHITE_TEXT_SHADOW = new DropShadow(20 * SCALE, Color.WHITE);
     static final Effect PLAY_MENU_BOX_SHADOW = new DropShadow(40 * SCALE, Color.BLACK);
     static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
