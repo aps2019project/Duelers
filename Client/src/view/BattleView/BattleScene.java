@@ -1,4 +1,4 @@
-package BattleView;
+package view.BattleView;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;

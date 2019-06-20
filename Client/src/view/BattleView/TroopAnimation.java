@@ -1,4 +1,4 @@
-package BattleView;
+package view.BattleView;
 
 import com.google.gson.Gson;
 import javafx.animation.KeyFrame;

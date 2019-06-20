@@ -1,4 +1,4 @@
-package BattleView;
+package view.BattleView;
 
 import javafx.stage.Screen;
 

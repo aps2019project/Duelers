@@ -1,6 +1,5 @@
 package models.game.map;
 
-
 import models.comperessedData.CompressedCell;
 
 public class Position {

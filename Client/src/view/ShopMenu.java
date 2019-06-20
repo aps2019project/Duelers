@@ -3,17 +3,8 @@ package view;
 import controller.ShopController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import models.account.Collection;
-import models.gui.BackButton;
 import models.gui.BackgroundMaker;
-import models.gui.CardPane;
-import models.gui.UIConstants;
-
-import java.io.FileNotFoundException;
-
-import static models.gui.UIConstants.SCALE;
 
 public class ShopMenu extends Show {
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
@@ -24,7 +15,7 @@ public class ShopMenu extends Show {
         menu = this;
         setOriginalCards();
 
-        try {
+        /*try {
             root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
@@ -48,7 +39,7 @@ public class ShopMenu extends Show {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void setOriginalCards() {

@@ -1,6 +1,5 @@
 package models.comperessedData;
 
-
 import models.card.CardType;
 import models.game.GameType;
 
@@ -10,6 +9,15 @@ public class  CompressedGame {
     private CompressedGameMap gameMap;
     private int turnNumber;
     private GameType gameType;
+
+    //just for testing BattleView
+    public CompressedGame(CompressedPlayer playerOne, CompressedPlayer playerTwo, CompressedGameMap gameMap, int turnNumber, GameType gameType) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.gameMap = gameMap;
+        this.turnNumber = turnNumber;
+        this.gameType = gameType;
+    }
 
     public void moveCardToHand() {
         CompressedPlayer player = getCurrentTurnPlayer();
@@ -63,9 +71,9 @@ public class  CompressedGame {
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
                            int player2CurrentMP, int player2NumberOfCollectedFlags) {
         this.turnNumber = turnNumber;
-        playerOne.setCurrentMP(player1CurrentMP);
+        playerOne.setCurrentMP(player1CurrentMP,turnNumber);
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
-        playerTwo.setCurrentMP(player2CurrentMP);
+        playerTwo.setCurrentMP(player2CurrentMP,turnNumber);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
     }
 

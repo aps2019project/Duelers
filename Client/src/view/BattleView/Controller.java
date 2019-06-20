@@ -1,10 +1,10 @@
-package BattleView;
+package view.BattleView;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import models.card.CardType;
 import models.comperessedData.*;
-import models.map.Position;
+import models.game.map.Position;
 
 import java.util.ArrayList;
 

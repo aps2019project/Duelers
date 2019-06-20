@@ -1,14 +1,12 @@
 package models.comperessedData;
 
-import models.ICard;
 import models.card.AttackType;
 import models.card.CardType;
 
-public class CompressedCard implements ICard {
+public class CompressedCard {
     private String name;
     private String description;
     private String cardId;
-    private String spriteName;
     private CardType type;
     private CompressedSpell spell;//just for hero
     private int defaultAp;
@@ -18,7 +16,22 @@ public class CompressedCard implements ICard {
     private int range;
     private boolean hasCombo;
 
-    @Override
+    //just for testing BattleView
+    public CompressedCard(String name, String description, String cardId, CardType type, CompressedSpell spell,
+                          int defaultAp, int defaultHp, int mannaPoint, AttackType attackType, int range, boolean hasCombo) {
+        this.name = name;
+        this.description = description;
+        this.cardId = cardId;
+        this.type = type;
+        this.spell = spell;
+        this.defaultAp = defaultAp;
+        this.defaultHp = defaultHp;
+        this.mannaPoint = mannaPoint;
+        this.attackType = attackType;
+        this.range = range;
+        this.hasCombo = hasCombo;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,11 +44,6 @@ public class CompressedCard implements ICard {
         return cardId;
     }
 
-    public String getSpriteName() {
-        return spriteName;
-    }
-
-    @Override
     public CardType getType() {
         return type;
     }
@@ -44,19 +52,12 @@ public class CompressedCard implements ICard {
         return spell;
     }
 
-    @Override
     public int getDefaultAp() {
         return defaultAp;
     }
 
-    @Override
     public int getDefaultHp() {
         return defaultHp;
-    }
-
-    @Override
-    public int getPrice() {
-        return 0;
     }
 
     public int getMannaPoint() {
