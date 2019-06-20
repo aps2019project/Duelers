@@ -1,12 +1,14 @@
 package models.comperessedData;
 
+import models.ICard;
 import models.card.AttackType;
 import models.card.CardType;
 
-public class CompressedCard {
+public class CompressedCard implements ICard {
     private String name;
     private String description;
     private String cardId;
+    private String spriteName;
     private CardType type;
     private CompressedSpell spell;//just for hero
     private int defaultAp;
@@ -32,6 +34,8 @@ public class CompressedCard {
         this.hasCombo = hasCombo;
     }
 
+
+    @Override
     public String getName() {
         return name;
     }
@@ -44,6 +48,11 @@ public class CompressedCard {
         return cardId;
     }
 
+    public String getSpriteName() {
+        return spriteName;
+    }
+
+    @Override
     public CardType getType() {
         return type;
     }
@@ -52,12 +61,19 @@ public class CompressedCard {
         return spell;
     }
 
+    @Override
     public int getDefaultAp() {
         return defaultAp;
     }
 
+    @Override
     public int getDefaultHp() {
         return defaultHp;
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
     }
 
     public int getMannaPoint() {
