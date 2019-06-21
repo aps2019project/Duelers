@@ -123,7 +123,13 @@ public class PlayerBox implements PropertyChangeListener {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-
+                    if ((int) evt.getNewValue() % 2 == 1) {
+                        imageView1.setOpacity(1);
+                        imageView2.setOpacity(0.7);
+                    } else {
+                        imageView1.setOpacity(0.7);
+                        imageView2.setOpacity(1);
+                    }
                 }
             });
         }
