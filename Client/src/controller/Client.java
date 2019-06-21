@@ -53,7 +53,7 @@ public class Client {
         return client;
     }
 
-    public void connect() throws IOException {
+    void connect() throws IOException {
         socket = getSocketReady();
         sendClientNameToServer(socket);
         sendMessageThread = new Thread(() -> {
@@ -91,7 +91,7 @@ public class Client {
         return socket;
     }
 
-    public void addToSendingMessagesAndSend(Message message) {
+    void addToSendingMessagesAndSend(Message message) {
         synchronized (sendingMessages) {
             sendingMessages.add(message);
             sendingMessages.notify();
@@ -225,20 +225,18 @@ public class Client {
         Platform.runLater(() -> new MainMenu().show());
     }
 
-    public void disconnected() {
+    private void disconnected() {
     }
 
-
-    public String getClientName() {
+    String getClientName() {
         return clientName;
     }
-
 
     public Account getAccount() {
         return account;
     }
 
-    public void close() {
+    void close() {
         try {
             if (socket != null) {
                 socket.close();
@@ -271,6 +269,7 @@ public class Client {
             try {
                 connect();
             } catch (IOException e) {
+                getCurrentShow();
                 Platform.runLater(() ->
                         getCurrentShow().showError("Connection failed", "RETRY", event -> makeConnection())
                 );
