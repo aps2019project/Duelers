@@ -109,7 +109,7 @@ public class Account {
             decks = newDecks;
             mainDeck = getDeck(account.getMainDeckName());
             support.firePropertyChange("decks", old, decks);
-        } else if (mainDeck == null && account.getMainDeckName() != null || !mainDeck.getName().equals(account.getMainDeckName())) {
+        } else if ((mainDeck != null || account.getMainDeckName() != null) && (mainDeck == null ^ account.getMainDeckName() == null || !mainDeck.getName().equals(account.getMainDeckName()))) {
             Deck old = mainDeck;
             mainDeck = getDeck(account.getMainDeckName());
             support.firePropertyChange("main_deck", old, mainDeck);
