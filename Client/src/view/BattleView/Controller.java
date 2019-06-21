@@ -3,6 +3,7 @@ package view.BattleView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.card.Card;
 import models.card.CardType;
 import models.comperessedData.*;
 import models.game.GameActions;
@@ -141,7 +142,7 @@ public class Controller extends Application implements GameActions {
     }
 
     @Override
-    public void insert(String cardID, int row, int column) {
+    public void insert(CompressedCard card, int row, int column) {
 
     }
 

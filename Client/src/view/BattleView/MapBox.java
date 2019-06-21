@@ -278,7 +278,7 @@ public class MapBox implements PropertyChangeListener {
             }
         } else {
             if (troop == null) {
-                GameController.getInstance().insert(card.getCardId(), i, j);
+                GameController.getInstance().insert(card , i, j);
                 resetSelection();
             }
             battleScene.getHandBox().resetSelection();

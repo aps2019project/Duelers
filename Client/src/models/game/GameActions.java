@@ -1,5 +1,7 @@
 package models.game;
 
+import models.card.Card;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedTroop;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public interface GameActions {
 
     public void endTurn();
 
-    public void insert(String cardID, int row, int column);
+    public void insert(CompressedCard card, int row, int column);
 
     public void useSpecialPower(int row, int column);
 }
