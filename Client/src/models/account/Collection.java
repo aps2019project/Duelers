@@ -94,4 +94,15 @@ public class Collection {
 
         return true;
     }
+
+    public Card findOne(String cardName) {
+        ArrayList<Card> result = new ArrayList<>();
+        searchInList(heroes, result, cardName);
+        searchInList(minions, result, cardName);
+        searchInList(spells, result, cardName);
+        searchInList(items, result, cardName);
+
+        if (result.size() == 0) return null;
+        return result.get(0);
+    }
 }

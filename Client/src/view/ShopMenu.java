@@ -24,15 +24,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final double SCROLL_WIDTH = 2350 * SCALE;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
-    private DefaultLabel itemsLabel;
-    private DefaultLabel spellsLabel;
-    private DefaultLabel minionsLabel;
-    private DefaultLabel heroesLabel;
     private VBox cardsBox;
-    private CardsGrid heroesGrid;
-    private CardsGrid minionsGrid;
-    private CardsGrid spellsGrid;
-    private CardsGrid itemsGrid;
     private Collection showingCards;
 
     ShopMenu() {
@@ -52,17 +44,17 @@ public class ShopMenu extends Show implements PropertyChangeListener {
 
             HBox searchBox = new SearchBox();
 
-            heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
-            heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
+            DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
+            CardsGrid heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
 
-            minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
-            minionsGrid = new CardsGrid(showingCards.getMinions(), true);
+            DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
+            CardsGrid minionsGrid = new CardsGrid(showingCards.getMinions(), true);
 
-            spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
-            spellsGrid = new CardsGrid(showingCards.getSpells(), true);
+            DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
+            CardsGrid spellsGrid = new CardsGrid(showingCards.getSpells(), true);
 
-            itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
-            itemsGrid = new CardsGrid(showingCards.getItems(), true);
+            DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
+            CardsGrid itemsGrid = new CardsGrid(showingCards.getItems(), true);
 
             cardsBox = new VBox(UIConstants.DEFAULT_SPACING * 4,
                     heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
@@ -111,13 +103,10 @@ public class ShopMenu extends Show implements PropertyChangeListener {
         if (evt.getPropertyName().equals("search_result")) {
             showingCards = (Collection) evt.getNewValue();
             try {
-                heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
-                minionsGrid = new CardsGrid(showingCards.getMinions(), true);
-                spellsGrid = new CardsGrid(showingCards.getSpells(), true);
-                itemsGrid = new CardsGrid(showingCards.getItems(), true);
-
-                cardsBox.getChildren().clear();
-                cardsBox.getChildren().addAll(heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid);
+                cardsBox.getChildren().set(1, new CardsGrid(showingCards.getHeroes(), true));
+                cardsBox.getChildren().set(3, new CardsGrid(showingCards.getMinions(), true));
+                cardsBox.getChildren().set(5, new CardsGrid(showingCards.getSpells(), true));
+                cardsBox.getChildren().set(7, new CardsGrid(showingCards.getItems(), true));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

@@ -11,10 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.GameResultMenu;
-import view.MainMenu;
-import view.MultiPlayerMenu;
-import view.Show;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -142,7 +139,7 @@ public class Client {
                 showError(message);
                 break;
             case ACCOUNT_COPY:
-                login(message);
+                updateAccount(message);
                 break;
             case GAME_COPY:
                 GameController.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
@@ -212,14 +209,16 @@ public class Client {
         Platform.runLater(() -> currentShow.showError(message.getExceptionMessage().getExceptionString()));
     }
 
-    private void login(Message message) {
+    private void updateAccount(Message message) {
         if (account == null) {
             account = new Account(message.getAccountCopyMessage().getAccount());
         } else {
             account.update(message.getAccountCopyMessage().getAccount());
         }
 
-        Platform.runLater(() -> new MainMenu().show());
+        if (currentShow instanceof LoginMenu) {
+            Platform.runLater(() -> new MainMenu().show());
+        }
     }
 
     private void disconnected() {

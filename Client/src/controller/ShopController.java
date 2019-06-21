@@ -2,6 +2,7 @@ package controller;
 
 import models.Constants;
 import models.account.Collection;
+import models.card.Card;
 import models.message.DataName;
 import models.message.Message;
 
@@ -35,10 +36,16 @@ public class ShopController {
         );
     }
 
-    public void sell(String cardId) {
+    public void sell(String cardName) {
+        Card card = Client.getInstance().getAccount().getCollection().findOne(cardName);
+
+        if (card == null) {
+            Client.getInstance().getCurrentShow().showError("You don't have such card");
+            return;
+        }
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeSellCardMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, cardId, 0
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), 0
                 )
         );
     }
