@@ -3,12 +3,25 @@ package models.comperessedData;
 import models.card.CardType;
 import models.game.GameType;
 
-public class  CompressedGame {
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class CompressedGame {
     private CompressedPlayer playerOne;
     private CompressedPlayer playerTwo;
     private CompressedGameMap gameMap;
     private int turnNumber;
     private GameType gameType;
+
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
+    }
 
     //just for testing BattleView
     public CompressedGame(CompressedPlayer playerOne, CompressedPlayer playerTwo, CompressedGameMap gameMap, int turnNumber, GameType gameType) {
@@ -70,10 +83,20 @@ public class  CompressedGame {
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
                            int player2CurrentMP, int player2NumberOfCollectedFlags) {
-        this.turnNumber = turnNumber;
-        playerOne.setCurrentMP(player1CurrentMP,turnNumber);
+        if (this.turnNumber != turnNumber) {
+            support.firePropertyChange("turn", this.turnNumber, turnNumber);
+            this.turnNumber = turnNumber;
+        }
+        if (playerOne.getCurrentMP() != player1CurrentMP) {
+            support.firePropertyChange("mp1", player1CurrentMP, turnNumber / 2 + 3);
+            playerOne.setCurrentMP(player1CurrentMP, turnNumber);
+        }
+
+        if (playerTwo.getCurrentMP() != player2CurrentMP) {
+            support.firePropertyChange("mp2", player2CurrentMP, turnNumber / 2 + 3);
+            playerTwo.setCurrentMP(player2CurrentMP, turnNumber);
+        }
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
-        playerTwo.setCurrentMP(player2CurrentMP,turnNumber);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
     }
 

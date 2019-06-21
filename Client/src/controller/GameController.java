@@ -34,6 +34,8 @@ public class GameController {
         this.currentGame = currentGame;
         currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
+
+        //TODO: create battleScene and listener
     }
 
     public void selectCard(String cardId) {
@@ -44,6 +46,4 @@ public class GameController {
             selectedItemId = cardId;
         }
     }
-
-
 }

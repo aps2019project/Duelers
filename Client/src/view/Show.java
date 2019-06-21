@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public abstract class Show {
-    final AnchorPane root = new AnchorPane();
+    final public AnchorPane root = new AnchorPane();
 
     public void show() {
         GraphicalUserInterface.getInstance().changeScene(root);
