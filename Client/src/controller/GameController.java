@@ -1,11 +1,18 @@
 package controller;
 
+import models.Constants;
+import models.card.Card;
+import models.card.CardType;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedTroop;
 import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
+import models.game.map.Position;
+import models.message.Message;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class GameController implements GameActions {
@@ -58,8 +65,17 @@ public class GameController implements GameActions {
     }
 
     @Override
-    public void insert(String cardID, int row, int column) {
+    public void insert(CompressedCard card, int row, int column) {
+        if (validatePositionForInsert(card, row, column))
+            Client.getInstance().addToSendingMessagesAndSend(
+                    Message.makeInsertMessage(
+                            Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), new Position(row, column), 0
+                    )
+            );
+    }
 
+    private boolean validatePositionForInsert(CompressedCard card, int row, int column) {
+        return (card.getType() == CardType.SPELL || card.getType() == CardType.COLLECTIBLE_ITEM) || (currentGame.getGameMap().getTroop(new Position(row, column)) == null);
     }
 
     @Override
