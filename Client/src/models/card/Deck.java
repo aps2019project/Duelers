@@ -23,9 +23,39 @@ public class Deck {
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
-        if (!obj.getClass().getName().equals(Deck.class.getName())) return false;
-        Deck deck = (Deck) obj;
-        return deck.getName().equalsIgnoreCase(deckName);
+        if (obj instanceof Deck) {
+            Deck deck = (Deck) obj;
+            if (hero == null ^ deck.hero == null) return false;
+            if (hero != null && !hero.equals(deck.hero)) return false;
+
+            if (item == null ^ deck.item == null) return false;
+            if (item != null && !item.equals(deck.item)) return false;
+
+            if (others.size() != deck.others.size()) return false;
+            for (Card other : others) {
+                if (!deck.others.contains(other)) return false;
+            }
+            return true;
+        }
+        if (obj instanceof TempDeck) {
+            TempDeck deck = (TempDeck) obj;
+            if (hero == null ^ deck.getHeroId() == null) return false;
+            if (hero != null && !hero.getCardId().equalsIgnoreCase(deck.getHeroId())) return false;
+
+            if (item == null ^ deck.getItemId() == null) return false;
+            if (item != null && !item.getCardId().equalsIgnoreCase(deck.getItemId())) return false;
+
+            if (others.size() != deck.getOthersIds().size()) return false;
+            Outer:
+            for (String otherId : deck.getOthersIds()) {
+                for (Card other : others) {
+                    if (other.getCardId().equalsIgnoreCase(otherId)) continue Outer;
+                }
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public String getName() {
@@ -36,12 +66,8 @@ public class Deck {
         return this.hero;
     }
 
-    public ArrayList<Card> getOthers() {
+    ArrayList<Card> getOthers() {
         return this.others;
-    }
-
-    public int getPopulation() {
-        return 0;
     }
 
     public Card getItem() {

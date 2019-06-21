@@ -65,6 +65,7 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
 
     private ICard card;
     private DefaultLabel countLabel;
+    private int oldCount;
 
     //TODO: This code will be cleaned
     CardPane(ICard card, boolean showPrice, boolean showCount) throws FileNotFoundException {
@@ -132,8 +133,9 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
 
         if (showCount) {
             Client.getInstance().getAccount().addPropertyChangeListener(this);
+            oldCount = Client.getInstance().getAccount().getCollection().count(card.getName());
             countLabel = new DefaultLabel(
-                    "X " + Client.getInstance().getAccount().getCollection().count(card.getName()),
+                    "X " + oldCount,
                     DESCRIPTION_FONT, DESCRIPTION_COLOR
             );
 
@@ -146,9 +148,13 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("collection")) {
-            Platform.runLater(() ->
-                    countLabel.setText("X " + Client.getInstance().getAccount().getCollection().count(card.getName()))
-            );
+            int newCount = Client.getInstance().getAccount().getCollection().count(card.getName());
+            if (newCount != oldCount) {
+                oldCount = newCount;
+                Platform.runLater(() ->
+                        countLabel.setText("X " + newCount)
+                );
+            }
         }
     }
 }

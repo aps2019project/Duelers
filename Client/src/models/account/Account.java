@@ -17,7 +17,20 @@ public class Account {
     private Deck mainDeck;
     private ArrayList<MatchHistory> matchHistories;
     private int money;
-    private int wins;
+
+    public Account(TempAccount account) {
+        this.username = account.getUsername();
+        this.password = account.getPassword();
+        this.collection = account.getCollection();
+        if (account.getDecks() != null) {
+            for (TempDeck deck : account.getDecks()) {
+                this.decks.add(new Deck(deck, collection));
+            }
+        }
+        this.matchHistories = account.getMatchHistories();
+        this.mainDeck = getDeck(account.getMainDeckName());
+        this.money = account.getMoney();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -28,10 +41,6 @@ public class Account {
         if (!obj.getClass().getName().equals(Account.class.getName())) return false;
         Account account = (Account) obj;
         return this.username.equals(account.username);
-    }
-
-    public int getWins() {
-        return wins;
     }
 
     public String getUsername() {
@@ -58,7 +67,7 @@ public class Account {
         return this.money;
     }
 
-    public Deck getDeck(String deckName) {
+    private Deck getDeck(String deckName) {
         for (Deck deck : decks) {
             if (deck.areSame(deckName)) {
                 return deck;
@@ -73,28 +82,48 @@ public class Account {
 
     public void update(TempAccount account) {
         if (!username.equals(account.getUsername())) {
-            support.firePropertyChange("username", username, account.getUsername());
+            String old = username;
             username = account.getUsername();
+            support.firePropertyChange("username", old, username);
+        }
+        if (!password.equals(account.getPassword())) {
+            password = account.getPassword();
         }
         if (!collection.equals(account.getCollection())) {
-            support.firePropertyChange("collection", collection, account.getCollection());
+            Collection old = collection;
             collection = account.getCollection();
+            support.firePropertyChange("collection", old, collection);
         }
+        if (money != account.getMoney()) {
+            int old = money;
+            money = account.getMoney();
+            support.firePropertyChange("money", old, money);
+        }
+        if (!decksEqual(account.getDecks())) {
+            ArrayList<Deck> newDecks = new ArrayList<>();
+
+            for (TempDeck deck : account.getDecks()) {
+                newDecks.add(new Deck(deck, collection));
+            }
+            ArrayList<Deck> old = decks;
+            decks = newDecks;
+            mainDeck = getDeck(account.getMainDeckName());
+            support.firePropertyChange("decks", old, decks);
+        } else if (mainDeck == null && account.getMainDeckName() != null || !mainDeck.getName().equals(account.getMainDeckName())) {
+            Deck old = mainDeck;
+            mainDeck = getDeck(account.getMainDeckName());
+            support.firePropertyChange("main_deck", old, mainDeck);
+        }
+        matchHistories = account.getMatchHistories();
     }
 
-    public Account(TempAccount account) {
-        this.username = account.getUsername();
-        this.password = account.getPassword();
-        this.collection = account.getCollection();
-        if (account.getDecks() != null) {
-            for (TempDeck deck : account.getDecks()) {
-                this.decks.add(new Deck(deck, collection));
-            }
+    private boolean decksEqual(ArrayList<TempDeck> decks) {
+        if (this.decks.size() != decks.size()) return false;
+
+        for (TempDeck deck : decks) {
+            if (!this.decks.contains(deck)) return false;
         }
-        this.matchHistories = account.getMatchHistories();
-        this.mainDeck = getDeck(account.getMainDeckName());
-        this.money = account.getMoney();
-        this.wins = account.getWins();
+        return true;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
