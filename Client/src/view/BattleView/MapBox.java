@@ -1,6 +1,5 @@
 package view.BattleView;
 
-import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -187,6 +186,8 @@ public class MapBox implements PropertyChangeListener {
     private void hoverCell(int j, int i) {
         CompressedTroop troop = getTroop(j, i);
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
+        if (!battleScene.isMyTurn())
+            return;
         if (card == null) {
             if (troop == null) {
                 if (selectedTroop != null)
@@ -197,8 +198,7 @@ public class MapBox implements PropertyChangeListener {
                         cells[j][i].setFill(Color.DARKGREEN);
                 } else {
                     if (troop == selectedTroop) {
-                        selectedTroop = null;
-                        System.out.println("diSelect Troop");
+                        cells[j][i].setFill(Color.DARKGREEN);
                     } else {
                         if (spellSelected) {
                             if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber())
@@ -223,7 +223,7 @@ public class MapBox implements PropertyChangeListener {
             }
         } else {
             if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                cells[j][i].setFill(Color.HOTPINK);
+                cells[j][i].setFill(Color.PINK);
             } else {
                 if (troop == null)
                     cells[j][i].setFill(Color.DARKGREEN);
@@ -234,10 +234,11 @@ public class MapBox implements PropertyChangeListener {
     private void clickCell(int j, int i) {
         CompressedTroop troop = getTroop(j, i);
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
+        if (!battleScene.isMyTurn())
+            return;
         if (card == null) {
             if (troop == null) {
                 if (selectedTroop != null) {
-                    System.out.println("Move");
                     battleScene.getController().move(selectedTroop, j, i);
                     resetSelection();
                 }
@@ -249,7 +250,7 @@ public class MapBox implements PropertyChangeListener {
                     }
                 } else {
                     if (troop == selectedTroop) {
-                        selectedTroop = null;
+                        resetSelection();
                         System.out.println("diSelect Troop");
                     } else {
                         if (spellSelected) {
@@ -277,9 +278,14 @@ public class MapBox implements PropertyChangeListener {
                 }
             }
         } else {
-            if (troop == null) {
-                GameController.getInstance().insert(card.getCardId(), i, j);
+            if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
+                battleScene.getController().insert(card.getCardId(), i, j);
                 resetSelection();
+            } else {
+                if (troop == null) {
+                    battleScene.getController().insert(card.getCardId(), i, j);
+                    resetSelection();
+                }
             }
             battleScene.getHandBox().resetSelection();
         }
@@ -316,5 +322,9 @@ public class MapBox implements PropertyChangeListener {
 
     public HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
         return troopAnimationHashMap;
+    }
+
+    public CompressedGameMap getGameMap() {
+        return gameMap;
     }
 }

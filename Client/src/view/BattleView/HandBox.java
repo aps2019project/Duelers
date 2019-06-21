@@ -86,7 +86,7 @@ public class HandBox implements PropertyChangeListener {
                 e.printStackTrace();
             }
 
-            if (cardAnimation != null) {
+            if (cardAnimation != null && battleScene.isMyTurn()) {
                 next.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -141,7 +141,7 @@ public class HandBox implements PropertyChangeListener {
                 else
                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
 
-                if (cardAnimation != null) {
+                if (cardAnimation != null && battleScene.isMyTurn()) {
                     cards[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
@@ -158,9 +158,9 @@ public class HandBox implements PropertyChangeListener {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
                             try {
-                                if (selectedCard == I){
+                                if (selectedCard == I) {
                                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                                } else{
+                                } else {
                                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
                                     cardAnimation.pause();
                                 }
@@ -215,7 +215,7 @@ public class HandBox implements PropertyChangeListener {
             endTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("End Turn");
+                    battleScene.getController().endTurn();
                 }
             });
         } catch (Exception e) {
@@ -325,7 +325,7 @@ public class HandBox implements PropertyChangeListener {
     private void clickOnCard(int i) {
         if (selectedCard == i)
             selectedCard = -1;
-        else{
+        else {
             battleScene.getMapBox().resetSelection();
             selectedCard = i;
         }

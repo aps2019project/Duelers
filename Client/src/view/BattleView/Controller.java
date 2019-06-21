@@ -14,6 +14,7 @@ public class Controller extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
     private BattleScene battleScene;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
@@ -63,7 +64,7 @@ public class Controller extends Application implements GameActions {
                 }
                 myPlayer.addNextCardToHand();
                 myPlayer.removeCardFromNext();
-                game.gameUpdate(11,4,0,4,0);
+                game.gameUpdate(11, 4, 0, 4, 0);
                 card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
@@ -122,31 +123,36 @@ public class Controller extends Application implements GameActions {
 
     @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
-       battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
+        battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
+        System.out.println("Attack");
     }
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
-
+        for (CompressedTroop comboAttacker : comboTroops)
+            battleScene.getMapBox().getTroopAnimationHashMap().get(comboAttacker).attack(troop.getPosition().getColumn());
+        System.out.println("Attack Combo");
     }
 
     @Override
     public void move(CompressedTroop selectedTroop, int j, int i) {
-
+        battleScene.getMapBox().getGameMap().updateTroop(new CompressedTroop(selectedTroop, j, i));
     }
 
     @Override
     public void endTurn() {
-
+        battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber()+1,3,
+                0,3,0);
+        System.out.println("end turn");
     }
 
     @Override
     public void insert(String cardID, int row, int column) {
-
+        System.out.println("insert");
     }
 
     @Override
     public void useSpecialPower(int row, int column) {
-
+        System.out.println("use spell");
     }
 }

@@ -86,6 +86,10 @@ public class CompressedGame {
         if (this.turnNumber != turnNumber) {
             support.firePropertyChange("turn", this.turnNumber, turnNumber);
             this.turnNumber = turnNumber;
+            support.firePropertyChange("mp1", player1CurrentMP, turnNumber / 2 + 3);
+            playerOne.setCurrentMP(player1CurrentMP, turnNumber);
+            support.firePropertyChange("mp2", player2CurrentMP, turnNumber / 2 + 3);
+            playerTwo.setCurrentMP(player2CurrentMP, turnNumber);
         }
         if (playerOne.getCurrentMP() != player1CurrentMP) {
             support.firePropertyChange("mp1", player1CurrentMP, turnNumber / 2 + 3);

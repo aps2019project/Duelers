@@ -117,7 +117,7 @@ public class PlayerBox implements PropertyChangeListener {
             if (battleScene.isMyTurn() && battleScene.getMapBox().getSelectedTroop() != null &&
                     battleScene.getMapBox().getSelectedTroop().getCard().isHasCombo()) {
                 if (battleScene.getMapBox().isComboSelected()) {
-                    battleScene.getMapBox().setComboSelected(false);
+                    battleScene.getMapBox().resetSelection();
                     comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
                 } else {
                     battleScene.getMapBox().setComboSelected(true);
@@ -138,7 +138,7 @@ public class PlayerBox implements PropertyChangeListener {
                 imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCALE * (250 + i * 40));
                 imageView.setY(Constants.SCALE * (150 - i * 2));
-                group.getChildren().add(imageView);
+                mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -150,7 +150,7 @@ public class PlayerBox implements PropertyChangeListener {
                 imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCALE * (250 + i * 40));
                 imageView.setY(Constants.SCALE * (150 - i * 2));
-                group.getChildren().add(imageView);
+                mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -162,7 +162,7 @@ public class PlayerBox implements PropertyChangeListener {
                 imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
                 imageView.setY(Constants.SCALE * (150 - i * 2));
-                group.getChildren().add(imageView);
+                mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -174,7 +174,7 @@ public class PlayerBox implements PropertyChangeListener {
                 imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
                 imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
                 imageView.setY(Constants.SCALE * (150 - i * 2));
-                group.getChildren().add(imageView);
+                mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -207,6 +207,8 @@ public class PlayerBox implements PropertyChangeListener {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    battleScene.getMapBox().resetSelection();
+                    battleScene.getHandBox().resetSelection();
                     if ((int) evt.getNewValue() % 2 == 1) {
                         player1Image.setOpacity(1);
                         player2Image.setOpacity(0.7);

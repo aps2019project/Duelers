@@ -98,4 +98,8 @@ public class BattleScene extends Show {
     public boolean isMyTurn() {
         return (game.getTurnNumber() % 2 == 1 && myPlayerNumber == 1) || (game.getTurnNumber() % 2 == 0 && myPlayerNumber == 2);
     }
+
+    public CompressedGame getGame() {
+        return game;
+    }
 }
