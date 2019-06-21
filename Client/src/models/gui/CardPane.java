@@ -85,7 +85,7 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
         spriteBox.setMinWidth(GLOW_WIDTH);
         spriteBox.setAlignment(Pos.CENTER);
 
-        // TODO: ADD SPRITE ANIMATION INSTEAD:)  :
+        final CardAnimation cardAnimation = new CardAnimation(spriteBox, card, 0, 0);
 
         Label name = new DefaultLabel(card.getName(), NAME_FONT, NAME_COLOR);
         name.setAlignment(Pos.CENTER_LEFT);
@@ -138,24 +138,15 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
         }
 
 
-        CardAnimation temp = null;
-        try {
-            temp = new CardAnimation(spriteBox, card, 0, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        final CardAnimation cardAnimation = temp;
         spriteBox.getChildren().add(new Circle(0, 0, 5, Color.RED));
 
         setOnMouseEntered(event -> {
-            if (cardAnimation != null)
-                cardAnimation.inActive();
+            cardAnimation.inActive();
             glowView.setVisible(true);
             setCursor(UIConstants.SELECT_CURSOR);
         });
         setOnMouseExited(event -> {
-            if (cardAnimation != null)
-                cardAnimation.stop();
+            cardAnimation.stop();
             glowView.setVisible(false);
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
