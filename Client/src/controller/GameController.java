@@ -1,8 +1,11 @@
 package controller;
 
+import models.card.Card;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedTroop;
 import models.game.availableActions.AvailableActions;
+
+import java.util.ArrayList;
 
 
 public class GameController {
@@ -34,8 +37,6 @@ public class GameController {
         this.currentGame = currentGame;
         currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
-
-        //TODO: create battleScene and listener
     }
 
     public void selectCard(String cardId) {
@@ -46,4 +47,29 @@ public class GameController {
             selectedItemId = cardId;
         }
     }
+
+    public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
+
+    }
+
+    public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
+
+    }
+
+    public void move(CompressedTroop selectedTroop, int j, int i) {
+
+    }
+
+    public void endTurn(){
+
+    }
+
+    public void insert(String cardID , int row , int column){
+
+    }
+
+    public void useSpecialPower (int row , int column){
+
+    }
+
 }

@@ -51,7 +51,7 @@ public class Client {
         return client;
     }
 
-    void connect() throws IOException {
+    void connect() throws IOException, NullPointerException {
         socket = getSocketReady();
         sendClientNameToServer(socket);
         sendMessageThread = new Thread(() -> {
@@ -198,7 +198,6 @@ public class Client {
                 Platform.runLater(() -> new GameResultMenu().show());
                 break;
             case DONE:
-//                nothing/just update last received message id
                 break;
         }
     }
@@ -264,7 +263,7 @@ public class Client {
         new Thread(() -> {
             try {
                 connect();
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 getCurrentShow();
                 Platform.runLater(() ->
                         getCurrentShow().showError("Connection failed", "RETRY", event -> makeConnection())
