@@ -28,9 +28,7 @@ class OrangeButton extends Button {
 
     OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent) {
         super(text);
-        setBackground(
-                DEFAULT_BACKGROUND
-        );
+        setBackground(DEFAULT_BACKGROUND);
         setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
         setPrefWidth(WIDTH);
         setFont(UIConstants.DEFAULT_FONT);

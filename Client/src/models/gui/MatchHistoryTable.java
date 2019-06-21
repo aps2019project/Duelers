@@ -21,7 +21,7 @@ class MatchHistoryTable extends ScrollPane {
     private static final double WIDTH = 1020 * SCALE;
     private static final double HEIGHT = 700 * SCALE;
     private static final double BACKGROUND_CORNER = 30 * SCALE;
-    private static final String ID = "profile_scroll";
+    private static final String ID = "background_transparent";
     private static final Background BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(57, 63, 74, 0.5),

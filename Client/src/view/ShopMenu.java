@@ -2,26 +2,40 @@ package view;
 
 import controller.ShopController;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import models.account.Collection;
-import models.gui.BackButton;
-import models.gui.BackgroundMaker;
-import models.gui.CardPane;
-import models.gui.UIConstants;
+import models.gui.*;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 
-import static models.gui.UIConstants.SCALE;
+import static models.gui.UIConstants.*;
 
-public class ShopMenu extends Show {
+public class ShopMenu extends Show implements PropertyChangeListener {
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
-    private static ShopMenu menu;
-    private Collection originalCards;
+    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
+    private static final double SCROLL_WIDTH = 2350 * SCALE;
+    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
+    private DefaultLabel itemsLabel;
+    private DefaultLabel spellsLabel;
+    private DefaultLabel minionsLabel;
+    private DefaultLabel heroesLabel;
+    private VBox cardsBox;
+    private CardsGrid heroesGrid;
+    private CardsGrid minionsGrid;
+    private CardsGrid spellsGrid;
+    private CardsGrid itemsGrid;
+    private Collection showingCards;
 
     ShopMenu() {
-        menu = this;
         setOriginalCards();
 
         try {
@@ -30,19 +44,40 @@ public class ShopMenu extends Show {
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(BACK_EVENT);
 
-            CardPane hero = new CardPane(originalCards.getHeroes().get(0), true);
-            hero.relocate(500 * SCALE, 500 * SCALE);
+            VBox shopPane = new VBox(UIConstants.DEFAULT_SPACING * 4);
+            shopPane.setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
+            shopPane.setAlignment(Pos.CENTER);
+            shopPane.setMinSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
+            shopPane.setMaxSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
-            CardPane minion = new CardPane(originalCards.getMinions().get(0), true);
-            minion.relocate(1100 * SCALE, 500 * SCALE);
+            HBox searchBox = new SearchBox();
 
-            CardPane spell = new CardPane(originalCards.getSpells().get(0), true);
-            spell.relocate(1700 * SCALE, 500 * SCALE);
+            heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
+            heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
 
-            CardPane item = new CardPane(originalCards.getItems().get(0), true);
-            item.relocate(2300 * SCALE, 500 * SCALE);
+            minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
+            minionsGrid = new CardsGrid(showingCards.getMinions(), true);
 
-            AnchorPane sceneContents = new AnchorPane(background, backButton, hero, minion, spell, item);
+            spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
+            spellsGrid = new CardsGrid(showingCards.getSpells(), true);
+
+            itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
+            itemsGrid = new CardsGrid(showingCards.getItems(), true);
+
+            cardsBox = new VBox(UIConstants.DEFAULT_SPACING * 4,
+                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+            );
+            cardsBox.setMinSize(SCROLL_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
+            cardsBox.setAlignment(Pos.TOP_CENTER);
+
+            ScrollPane cardsScroll = new ScrollPane(cardsBox);
+            cardsScroll.setMinSize(SCROLL_WIDTH, SCROLL_HEIGHT);
+            cardsScroll.setMaxWidth(SCROLL_WIDTH);
+            cardsScroll.setId("background_transparent");
+
+            shopPane.getChildren().addAll(searchBox, cardsScroll);
+
+            AnchorPane sceneContents = new AnchorPane(background, shopPane, backButton);
 
             root.getChildren().addAll(sceneContents);
 
@@ -52,8 +87,9 @@ public class ShopMenu extends Show {
     }
 
     private void setOriginalCards() {
+        ShopController.getInstance().addPropertyChangeListener(this);
         synchronized (ShopController.getInstance()) {
-            if (ShopController.getInstance().getOriginalCards() == null) {
+            if (ShopController.getInstance().getShowingCards() == null) {
                 try {
                     ShopController.getInstance().wait();
                 } catch (InterruptedException e) {
@@ -61,12 +97,30 @@ public class ShopMenu extends Show {
                 }
             }
         }
-        originalCards = ShopController.getInstance().getOriginalCards();
+        showingCards = ShopController.getInstance().getShowingCards();
     }
 
     @Override
     public void show() {
         super.show();
         BackgroundMaker.makeMenuBackgroundFrozen();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("search_result")) {
+            showingCards = (Collection) evt.getNewValue();
+            try {
+                heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
+                minionsGrid = new CardsGrid(showingCards.getMinions(), true);
+                spellsGrid = new CardsGrid(showingCards.getSpells(), true);
+                itemsGrid = new CardsGrid(showingCards.getItems(), true);
+
+                cardsBox.getChildren().clear();
+                cardsBox.getChildren().addAll(heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

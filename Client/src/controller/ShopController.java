@@ -2,15 +2,17 @@ package controller;
 
 import models.Constants;
 import models.account.Collection;
-import models.card.Card;
 import models.message.DataName;
 import models.message.Message;
 
-import java.util.ArrayList;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class ShopController {
     private static ShopController ourInstance;
     private Collection originalCards;
+    private Collection showingCards;
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private ShopController() {
     }
@@ -45,16 +47,27 @@ public class ShopController {
         return originalCards;
     }
 
-    public Card searchInShop(String cardName) {
-        return originalCards.searchCollection(cardName).get(0);
+    public Collection getShowingCards() {
+        return showingCards;
     }
 
-    public ArrayList<Card> searchInCollection(String cardName) {
-        return Client.getInstance().getAccount().getCollection().searchCollection(cardName);
+    public void searchInShop(String cardName) {
+        Collection result = originalCards.searchCollection(cardName);
+        support.firePropertyChange("search_result", showingCards, result);
+        showingCards = result;
     }
 
     synchronized void setOriginalCards(Collection originalCards) {
         this.originalCards = originalCards;
+        this.showingCards = originalCards;
         this.notify();
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 }

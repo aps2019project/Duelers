@@ -5,10 +5,10 @@ import models.card.Card;
 import java.util.ArrayList;
 
 public class Collection {
-    private ArrayList<Card> heroes;
-    private ArrayList<Card> minions;
-    private ArrayList<Card> spells;
-    private ArrayList<Card> items;
+    private ArrayList<Card> heroes = new ArrayList<>();
+    private ArrayList<Card> minions = new ArrayList<>();
+    private ArrayList<Card> spells = new ArrayList<>();
+    private ArrayList<Card> items = new ArrayList<>();
 
     public ArrayList<Card> getHeroes() {
         return this.heroes;
@@ -26,18 +26,18 @@ public class Collection {
         return this.items;
     }
 
-    public ArrayList<Card> searchCollection(String cardName) {
-        ArrayList<Card> results = new ArrayList<>();
-        searchInList(heroes, results, cardName);
-        searchInList(minions, results, cardName);
-        searchInList(spells, results, cardName);
-        searchInList(items, results, cardName);
-        return results;
+    public Collection searchCollection(String cardName) {
+        Collection result = new Collection();
+        searchInList(heroes, result.heroes, cardName);
+        searchInList(minions, result.minions, cardName);
+        searchInList(spells, result.spells, cardName);
+        searchInList(items, result.items, cardName);
+        return result;
     }
 
     private void searchInList(ArrayList<Card> list, ArrayList<Card> results, String cardName) {
         for (Card card : list) {
-            if (card.areSame(cardName)) {
+            if (card.nameContains(cardName)) {
                 results.add(card);
             }
         }

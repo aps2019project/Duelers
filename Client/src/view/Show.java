@@ -15,22 +15,19 @@ public abstract class Show {
     }
 
     public void showError(String message, EventHandler<? super MouseEvent> event) {
-        ErrorView errorView = new ErrorView(root);
-        errorView.show(message, "OK", event);
+        showError(message, "OK", event);
+    }
+
+    public void showError(String message, String buttonText) {
+        showError(message, buttonText, event -> {});
     }
 
     public void showError(String message) {
-        ErrorView errorView = new ErrorView(root);
-        errorView.show(message, "OK", event -> {});
+        showError(message, "OK", event -> {});
     }
 
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
         ErrorView errorView = new ErrorView(root);
         errorView.show(message, buttonText, event);
-    }
-
-    public void showError(String message, String buttonText) {
-        ErrorView errorView = new ErrorView(root);
-        errorView.show(message, buttonText, event -> {});
     }
 }

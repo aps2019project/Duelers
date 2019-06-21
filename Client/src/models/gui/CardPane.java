@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 import static models.gui.UIConstants.SCALE;
 
-public class CardPane extends AnchorPane {
+class CardPane extends AnchorPane {
     private static final double CARD_WIDTH = 452 * SCALE;
     private static final double CARD_HEIGHT = 592 * SCALE;
     private static final double GLOW_WIDTH = 506 * SCALE;
@@ -60,7 +60,7 @@ public class CardPane extends AnchorPane {
     }
 
     //TODO: This code will be cleaned
-    public CardPane(ICard card, boolean showPrice) throws FileNotFoundException {
+    CardPane(ICard card, boolean showPrice) throws FileNotFoundException {
         setPrefSize(GLOW_WIDTH, GLOW_HEIGHT);
 
         ImageView backgroundView = ImageLoader.makeImageView(background.get(card.getType()), CARD_WIDTH, CARD_HEIGHT);

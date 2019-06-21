@@ -21,10 +21,6 @@ public class Card implements ICard {
     private int range;
     private boolean hasCombo;
 
-    public boolean areSame(String cardName) {
-        return this.name.equalsIgnoreCase(cardName);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (!this.getClass().getName().equals(obj.getClass().getName())) return false;
@@ -87,5 +83,9 @@ public class Card implements ICard {
 
     public boolean hasCombo() {
         return hasCombo;
+    }
+
+    public boolean nameContains(String cardName) {
+        return name.toLowerCase().contains(cardName.toLowerCase());
     }
 }
