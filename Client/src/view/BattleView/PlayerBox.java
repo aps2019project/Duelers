@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 
 import java.beans.PropertyChangeEvent;
@@ -11,41 +12,37 @@ import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 
 public class PlayerBox implements PropertyChangeListener {
-    private final Controller controller;
+    private final BattleScene battleScene;
     private final CompressedPlayer player1, player2;
     private final Group group;
     private final Group mpGroup;
+    private final ImageView imageView1 = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f5@2x.png")));
+    private final ImageView imageView2 = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f6-third@2x.png")));
 
-    public PlayerBox(Controller controller, CompressedPlayer player1, CompressedPlayer player2) {
-        this.controller = controller;
-        this.player1 = player1;
-        this.player2 = player2;
+    public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
+        this.battleScene = battleScene;
+        this.player1 = game.getPlayerOne();
+        this.player2 = game.getPlayerTwo();
         group = new Group();
         addPhotos();
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
         updateMP(7);
-        player1.addPropertyChangeListener(this);
-        player2.addPropertyChangeListener(this);//no need to 2 times
+
+        game.addPropertyChangeListener(this);
     }
 
     private void addPhotos() {
-        try {
-            ImageView imageView1 = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f5@2x.png")));
-            ImageView imageView2 = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f6-third@2x.png")));
-            imageView1.setFitWidth(imageView1.getImage().getWidth() * Constants.SCALE * 0.3);
-            imageView1.setFitHeight(imageView1.getImage().getHeight() * Constants.SCALE * 0.3);
-            imageView2.setFitWidth(imageView2.getImage().getWidth() * Constants.SCALE * 0.3);
-            imageView2.setFitHeight(imageView2.getImage().getHeight() * Constants.SCALE * 0.3);
-            imageView1.setX(Constants.SCREEN_WIDTH * 0.01);
-            imageView1.setY(-Constants.SCREEN_HEIGHT * 0.02);
-            imageView2.setX(Constants.SCREEN_WIDTH * 0.85);
-            imageView2.setY(-Constants.SCREEN_HEIGHT * 0.02);
-            group.getChildren().addAll(imageView1, imageView2);
-            //TODO:NAMES
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        imageView1.setFitWidth(imageView1.getImage().getWidth() * Constants.SCALE * 0.3);
+        imageView1.setFitHeight(imageView1.getImage().getHeight() * Constants.SCALE * 0.3);
+        imageView2.setFitWidth(imageView2.getImage().getWidth() * Constants.SCALE * 0.3);
+        imageView2.setFitHeight(imageView2.getImage().getHeight() * Constants.SCALE * 0.3);
+        imageView1.setX(Constants.SCREEN_WIDTH * 0.01);
+        imageView1.setY(-Constants.SCREEN_HEIGHT * 0.02);
+        imageView2.setX(Constants.SCREEN_WIDTH * 0.85);
+        imageView2.setY(-Constants.SCREEN_HEIGHT * 0.02);
+        group.getChildren().addAll(imageView1, imageView2);
+        //TODO:NAMES
     }
 
     private void updateMP(int maxMP) {
@@ -106,11 +103,27 @@ public class PlayerBox implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("mp")) {
+        if (evt.getPropertyName().equals("mp1")) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    updateMP((int)evt.getNewValue());
+                    updateMP((int) evt.getNewValue());
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("mp2")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    updateMP((int) evt.getNewValue());
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("turn")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
                 }
             });
         }

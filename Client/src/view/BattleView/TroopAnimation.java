@@ -249,5 +249,13 @@ public class TroopAnimation extends Transition {
             this.y = y;
         }
     }
+
+    public int getColumn() {
+        return currentI;
+    }
+
+    public int getRow() {
+        return currentJ;
+    }
 }
 

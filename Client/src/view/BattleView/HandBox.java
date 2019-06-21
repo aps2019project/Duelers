@@ -17,7 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class HandBox implements PropertyChangeListener {
-    private final Controller controller;
+    private final BattleScene battleScene;
     private final CompressedPlayer player;
     private final Group group;
     private final Pane[] cards = new Pane[5];
@@ -25,8 +25,8 @@ public class HandBox implements PropertyChangeListener {
     private int selectedCard = -1;
 
 
-    public HandBox(Controller controller, CompressedPlayer player, double x, double y) throws Exception {
-        this.controller = controller;
+    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
+        this.battleScene = battleScene;
         this.player = player;
         group = new Group();
         group.setLayoutX(x);
@@ -326,8 +326,11 @@ public class HandBox implements PropertyChangeListener {
     private void clickOnCard(int i) {
         if (selectedCard == i)
             selectedCard = -1;
-        else
+        else{
+            battleScene.getMapBox().resetSelection();
             selectedCard = i;
+        }
+
         updateCards();
     }
 
