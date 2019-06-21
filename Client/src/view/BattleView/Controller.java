@@ -5,19 +5,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
 import models.comperessedData.*;
+import models.game.GameActions;
 import models.game.map.Position;
 
 import java.util.ArrayList;
 
-public class Controller extends Application {
+public class Controller extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
-
+    private BattleScene battleScene;
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
         primaryStage.setFullScreen(true);
-        Scene scene = new Scene(new BattleScene(this, generateAGame(), playerNumber).root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        battleScene = new BattleScene(this, generateAGame(), playerNumber);
+        Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -53,7 +55,7 @@ public class Controller extends Application {
                 CompressedCard card = new CompressedCard("generalspell_f5_overload", null, "a1", CardType.SPELL,
                         null, 0, 0, 0, null, 2, true);
                 myPlayer.addCardToNext(card);
-                game.gameUpdate(10,1,0,2,0);
+                game.gameUpdate(10, 1, 0, 2, 0);
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -61,7 +63,7 @@ public class Controller extends Application {
                 }
                 myPlayer.addNextCardToHand();
                 myPlayer.removeCardFromNext();
-                game.gameUpdate(11,4,0,4,0);
+                game.gameUpdate(11, 4, 0, 4, 0);
                 card = new CompressedCard("boss_wujin", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
@@ -116,5 +118,35 @@ public class Controller extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
+       battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
+    }
+
+    @Override
+    public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
+
+    }
+
+    @Override
+    public void move(CompressedTroop selectedTroop, int j, int i) {
+
+    }
+
+    @Override
+    public void endTurn() {
+
+    }
+
+    @Override
+    public void insert(String cardID, int row, int column) {
+
+    }
+
+    @Override
+    public void useSpecialPower(int row, int column) {
+
     }
 }
