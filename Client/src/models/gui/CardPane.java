@@ -1,5 +1,7 @@
 package models.gui;
 
+import controller.Client;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,13 +15,15 @@ import javafx.scene.text.Text;
 import models.ICard;
 import models.card.CardType;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import static models.gui.UIConstants.SCALE;
 
-class CardPane extends AnchorPane {
+class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final double CARD_WIDTH = 452 * SCALE;
     private static final double CARD_HEIGHT = 592 * SCALE;
     private static final double GLOW_WIDTH = 506 * SCALE;
@@ -59,8 +63,12 @@ class CardPane extends AnchorPane {
         }
     }
 
+    private ICard card;
+    private DefaultLabel countLabel;
+
     //TODO: This code will be cleaned
-    CardPane(ICard card, boolean showPrice) throws FileNotFoundException {
+    CardPane(ICard card, boolean showPrice, boolean showCount) throws FileNotFoundException {
+        this.card = card;
         setPrefSize(GLOW_WIDTH, GLOW_HEIGHT);
 
         ImageView backgroundView = ImageLoader.makeImageView(background.get(card.getType()), CARD_WIDTH, CARD_HEIGHT);
@@ -120,6 +128,27 @@ class CardPane extends AnchorPane {
             priceBox.setLayoutY(PRICE_Y);
 
             getChildren().add(priceBox);
+        }
+
+        if (showCount) {
+            Client.getInstance().getAccount().addPropertyChangeListener(this);
+            countLabel = new DefaultLabel(
+                    "X " + Client.getInstance().getAccount().getCollection().count(card.getName()),
+                    DESCRIPTION_FONT, DESCRIPTION_COLOR
+            );
+
+            countLabel.relocate(CARD_WIDTH * 0.53, CARD_HEIGHT * 0.98);
+
+            getChildren().add(countLabel);
+        }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("collection")) {
+            Platform.runLater(() ->
+                    countLabel.setText("X " + Client.getInstance().getAccount().getCollection().count(card.getName()))
+            );
         }
     }
 }

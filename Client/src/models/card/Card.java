@@ -88,4 +88,8 @@ public class Card implements ICard {
     public boolean nameContains(String cardName) {
         return name.toLowerCase().contains(cardName.toLowerCase());
     }
+
+    public boolean isSameAs(String cardName) {
+        return name.equalsIgnoreCase(cardName);
+    }
 }

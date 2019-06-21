@@ -97,12 +97,29 @@ public class Collection {
 
     public Card findOne(String cardName) {
         ArrayList<Card> result = new ArrayList<>();
-        searchInList(heroes, result, cardName);
-        searchInList(minions, result, cardName);
-        searchInList(spells, result, cardName);
-        searchInList(items, result, cardName);
+        findInList(heroes, result, cardName);
+        findInList(minions, result, cardName);
+        findInList(spells, result, cardName);
+        findInList(items, result, cardName);
 
         if (result.size() == 0) return null;
         return result.get(0);
+    }
+
+    private void findInList(ArrayList<Card> list, ArrayList<Card> result, String cardName) {
+        for (Card card : list) {
+            if (card.isSameAs(cardName)) {
+                result.add(card);
+            }
+        }
+    }
+
+    public int count(String cardName) {
+        ArrayList<Card> result = new ArrayList<>();
+        findInList(heroes, result, cardName);
+        findInList(minions, result, cardName);
+        findInList(spells, result, cardName);
+        findInList(items, result, cardName);
+        return result.size();
     }
 }

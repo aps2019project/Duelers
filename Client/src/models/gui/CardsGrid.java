@@ -25,7 +25,7 @@ public class CardsGrid extends GridPane {
             VBox shopCardBox = new VBox(-UIConstants.DEFAULT_SPACING);
             shopCardBox.setAlignment(Pos.CENTER);
 
-            CardPane cardPane = new CardPane(card, showPrice);
+            CardPane cardPane = new CardPane(card, showPrice, true);
 
             HBox buttonsBox = new HBox(UIConstants.DEFAULT_SPACING,
                     new OrangeButton("BUY", event -> ShopController.getInstance().buy(card.getName())),
