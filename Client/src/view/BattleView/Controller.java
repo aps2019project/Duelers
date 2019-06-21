@@ -15,6 +15,7 @@ public class Controller extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
     private BattleScene battleScene;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
@@ -64,7 +65,7 @@ public class Controller extends Application implements GameActions {
                 }
                 myPlayer.addNextCardToHand();
                 myPlayer.removeCardFromNext();
-                game.gameUpdate(11,4,0,4,0);
+                game.gameUpdate(11, 4, 0, 4, 0);
                 card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
@@ -123,12 +124,15 @@ public class Controller extends Application implements GameActions {
 
     @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
-       battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
+        battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
     }
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
-
+        for (CompressedTroop compressedTroop :
+                comboTroops) {
+            battleScene.getMapBox().getTroopAnimationHashMap().get(compressedTroop).attack(troop.getPosition().getColumn());
+        }
     }
 
     @Override

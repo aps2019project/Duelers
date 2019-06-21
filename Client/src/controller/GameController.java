@@ -2,6 +2,7 @@ package controller;
 
 import models.Constants;
 import models.card.Card;
+import models.card.CardType;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedTroop;
@@ -65,11 +66,16 @@ public class GameController implements GameActions {
 
     @Override
     public void insert(CompressedCard card, int row, int column) {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeInsertMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), new Position(row, column), 0
-                )
-        );
+        if (validatePositionForInsert(card, row, column))
+            Client.getInstance().addToSendingMessagesAndSend(
+                    Message.makeInsertMessage(
+                            Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), new Position(row, column), 0
+                    )
+            );
+    }
+
+    private boolean validatePositionForInsert(CompressedCard card, int row, int column) {
+        return (card.getType() == CardType.SPELL || card.getType() == CardType.COLLECTIBLE_ITEM) || (currentGame.getGameMap().getTroop(new Position(row, column)) == null);
     }
 
     @Override
