@@ -171,7 +171,6 @@ public class CompressedPlayer {
 
     public void setCurrentMP(int currentMP, int turnNumber) {
         this.currentMP = currentMP;
-        support.firePropertyChange("mp", currentMP, turnNumber / 2 + 3);
     }
 
     public ArrayList<CompressedCard> getHand() {
