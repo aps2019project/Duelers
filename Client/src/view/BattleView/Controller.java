@@ -141,13 +141,13 @@ public class Controller extends Application implements GameActions {
 
     @Override
     public void endTurn() {
-        battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber()+1,3,
-                0,3,0);
+        battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber() + 1, 3,
+                0, 3, 0);
         System.out.println("end turn");
     }
 
     @Override
-    public void insert(String cardID, int row, int column) {
+    public void insert(CompressedCard compressedCard, int row, int column) {
         System.out.println("insert");
     }
 

@@ -279,11 +279,11 @@ public class MapBox implements PropertyChangeListener {
             }
         } else {
             if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                battleScene.getController().insert(card.getCardId(), i, j);
+                battleScene.getController().insert(card, i, j);
                 resetSelection();
             } else {
                 if (troop == null) {
-                    battleScene.getController().insert(card.getCardId(), i, j);
+                    battleScene.getController().insert(card, i, j);
                     resetSelection();
                 }
             }
