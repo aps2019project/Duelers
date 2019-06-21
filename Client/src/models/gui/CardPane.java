@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -136,9 +135,6 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
             countLabel.relocate(CARD_WIDTH * 0.53, CARD_HEIGHT * 0.98);
             getChildren().add(countLabel);
         }
-
-
-        spriteBox.getChildren().add(new Circle(0, 0, 5, Color.RED));
 
         setOnMouseEntered(event -> {
             cardAnimation.inActive();
