@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -48,6 +47,8 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final Color DESCRIPTION_COLOR = Color.rgb(133, 199, 202, 0.7);
     private static final Insets BOX_PADDING = new Insets(85 * SCALE, 0, 0, 0);
     private static final HashMap<CardType, Image> background = new HashMap<>();
+    private static final double SPRITE_CENTER_X = GLOW_WIDTH / 2;
+    private static final double SPRITE_CENTER_Y = 180 * SCALE;
     private static Image glow;
 
     static {
@@ -80,12 +81,13 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
         ImageView glowView = ImageLoader.makeImageView(glow, GLOW_WIDTH, GLOW_HEIGHT);
         glowView.setVisible(false);
 
+
         VBox spriteBox = new VBox(UIConstants.DEFAULT_SPACING);
         spriteBox.setPadding(BOX_PADDING);
         spriteBox.setMinWidth(GLOW_WIDTH);
         spriteBox.setAlignment(Pos.CENTER);
 
-        final CardAnimation cardAnimation = new CardAnimation(spriteBox, card, 0, 0);
+        Space space = new Space(SPRITE_SIZE);
 
         Label name = new DefaultLabel(card.getName(), NAME_FONT, NAME_COLOR);
         name.setAlignment(Pos.CENTER_LEFT);
@@ -98,7 +100,7 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
                 card.getDescription(), DESCRIPTION_WIDTH, DESCRIPTION_FONT, DESCRIPTION_COLOR
         );
 
-        spriteBox.getChildren().addAll(name, type, new Space(SPACE_HEIGHT), description);
+        spriteBox.getChildren().addAll(space, name, type, new Space(SPACE_HEIGHT), description);
 
         getChildren().addAll(new StackPane(backgroundView, glowView), spriteBox);
 
@@ -137,8 +139,7 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
             getChildren().add(countLabel);
         }
 
-
-        spriteBox.getChildren().add(new Circle(0, 0, 5, Color.RED));
+        final CardAnimation cardAnimation = new CardAnimation(this, card, SPRITE_CENTER_Y, SPRITE_CENTER_X);
 
         setOnMouseEntered(event -> {
             cardAnimation.inActive();

@@ -63,14 +63,14 @@ public class Controller extends Application implements GameActions {
                 }
                 myPlayer.addNextCardToHand();
                 myPlayer.removeCardFromNext();
-                game.gameUpdate(11, 4, 0, 4, 0);
-                card = new CompressedCard("boss_wujin", null, "a1", CardType.MINION,
+                game.gameUpdate(11,4,0,4,0);
+                card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
                 myPlayer.addCardToNext(card);
                 map.updateTroop(troop);
-                card = new CompressedCard("boss_wujin", null, "a3", CardType.MINION,
+                card = new CompressedCard("boss_andromeda", null, "a3", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 3),
                         true, true, false, false, 1, 1);
