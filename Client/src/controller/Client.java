@@ -250,12 +250,20 @@ public class Client {
         }
     }
 
-    public Show getCurrentShow() {
+    synchronized Show getCurrentShow() {
+        if (currentShow == null) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return currentShow;
     }
 
-    public void setShow(Show show) {
+    public synchronized void setShow(Show show) {
         this.currentShow = show;
+        notifyAll();
     }
 
     public void makeConnection() {
@@ -264,7 +272,7 @@ public class Client {
                 connect();
             } catch (IOException e) {
                 Platform.runLater(() ->
-                        currentShow.showError("Connection failed", "RETRY", event -> makeConnection())
+                        getCurrentShow().showError("Connection failed", "RETRY", event -> makeConnection())
                 );
                 disconnected();
             }
