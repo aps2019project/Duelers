@@ -23,7 +23,7 @@ import static models.gui.CardDetailBox.DESCRIPTION_COLOR;
 import static models.gui.CardDetailBox.DESCRIPTION_FONT;
 import static models.gui.UIConstants.SCALE;
 
-class CardPane extends AnchorPane implements PropertyChangeListener {
+public class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final double AP_X = 120 * SCALE;
     private static final double HP_X = 360 * SCALE;
     private static final double AP_HP_Y = 360 * SCALE;
@@ -35,11 +35,12 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
     private DefaultLabel countLabel;
     private int oldCount;
 
-    CardPane(ICard card, boolean showPrice, boolean showCount) throws FileNotFoundException {
+    public CardPane(ICard card, boolean showPrice, boolean showCount) throws FileNotFoundException {
         this.card = card;
         setPrefSize(GLOW_WIDTH, GLOW_HEIGHT);
 
         CardBackground background = new CardBackground(card);
+
         CardDetailBox detailBox = new CardDetailBox(card);
         getChildren().addAll(background, detailBox);
 

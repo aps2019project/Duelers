@@ -35,7 +35,7 @@ public class BattleScene extends Show {
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
 
-        root.getChildren().addAll(handBox.getGroup(), mapBox.getMapGroup(), playerBox.getGroup());
+        root.getChildren().addAll(mapBox.getMapGroup(), playerBox.getGroup(), handBox.getGroup());
     }
 
     private void addBackGround(String address) {

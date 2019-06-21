@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
+import models.gui.CardPane;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,6 +24,7 @@ public class HandBox implements PropertyChangeListener {
     private final Pane[] cards = new Pane[5];
     private final Pane next = new Pane();
     private int selectedCard = -1;
+    private CardPane cardPane = null;
 
 
     public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
@@ -145,9 +147,15 @@ public class HandBox implements PropertyChangeListener {
                     cards[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
+                            if (cardPane != null)
+                                group.getChildren().remove(cardPane);
                             cardAnimation.inActive();
                             try {
                                 imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
+                                cardPane = new CardPane(player.getHand().get(I), false, false);
+                                cardPane.setLayoutY(-300 * Constants.SCALE);
+                                cardPane.setLayoutX(300 * Constants.SCALE);
+                                group.getChildren().add(cardPane);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -157,6 +165,10 @@ public class HandBox implements PropertyChangeListener {
                     cards[i].setOnMouseExited(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
+                            if (cardPane != null) {
+                                group.getChildren().remove(cardPane);
+                                cardPane = null;
+                            }
                             try {
                                 if (selectedCard == I) {
                                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));

@@ -21,6 +21,7 @@ public class CompressedCard implements ICard {
     //just for testing BattleView
     public CompressedCard(String spriteName, String description, String cardId, CardType type, CompressedSpell spell,
                           int defaultAp, int defaultHp, int mannaPoint, AttackType attackType, int range, boolean hasCombo) {
+        name = "Fuck";
         this.spriteName = spriteName;
         this.description = description;
         this.cardId = cardId;
