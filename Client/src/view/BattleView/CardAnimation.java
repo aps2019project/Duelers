@@ -7,10 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import models.ICard;
 import models.card.CardType;
-import models.comperessedData.CompressedCard;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,21 +30,21 @@ public class CardAnimation extends Transition {
     private ACTION action;
     private FramePosition[] currentFramePositions;
 
-    public CardAnimation(Pane pane, CompressedCard card, double y, double x) throws Exception {
+    public CardAnimation(Pane pane, ICard card, double y, double x) throws FileNotFoundException {
         this.pane = pane;
         //file settings
         Playlist playlist;
         Image image;
         if (card.getType() == CardType.SPELL) {
-            image = new Image(new FileInputStream("resources/icons/" + card.getName() + ".png"));
-            playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getName() + ".plist.json"), Playlist.class);
+            image = new Image(new FileInputStream("resources/icons/" + card.getSpriteName() + ".png"));
+            playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
             activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
             inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
             extraX = 28 * Constants.SCALE;
             extraY = 28 * Constants.SCALE;
         } else {
-            image = new Image(new FileInputStream("resources/troopAnimations/" + card.getName() + ".png"));
-            playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getName() + ".plist.json"), Playlist.class);
+            image = new Image(new FileInputStream("resources/troopAnimations/" + card.getSpriteName() + ".png"));
+            playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
             activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
             inActiveFramePositions = activeFramePositions;
             extraX = playlist.extraX * Constants.SCALE;

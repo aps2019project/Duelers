@@ -7,13 +7,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import models.ICard;
 import models.card.CardType;
+import view.BattleView.CardAnimation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -76,22 +80,12 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
         ImageView glowView = ImageLoader.makeImageView(glow, GLOW_WIDTH, GLOW_HEIGHT);
         glowView.setVisible(false);
 
-        setOnMouseEntered(event -> {
-            glowView.setVisible(true);
-            setCursor(UIConstants.SELECT_CURSOR);
-        });
-        setOnMouseExited(event -> {
-            glowView.setVisible(false);
-            setCursor(UIConstants.DEFAULT_CURSOR);
-        });
-
         VBox spriteBox = new VBox(UIConstants.DEFAULT_SPACING);
         spriteBox.setPadding(BOX_PADDING);
         spriteBox.setMinWidth(GLOW_WIDTH);
         spriteBox.setAlignment(Pos.CENTER);
 
         // TODO: ADD SPRITE ANIMATION INSTEAD:)  :
-        ImageView tempImage = ImageLoader.loadImage("resources/ui/menu_item.png", SPRITE_SIZE, SPRITE_SIZE);
 
         Label name = new DefaultLabel(card.getName(), NAME_FONT, NAME_COLOR);
         name.setAlignment(Pos.CENTER_LEFT);
@@ -104,7 +98,7 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
                 card.getDescription(), DESCRIPTION_WIDTH, DESCRIPTION_FONT, DESCRIPTION_COLOR
         );
 
-        spriteBox.getChildren().addAll(tempImage, name, type, new Space(SPACE_HEIGHT), description);
+        spriteBox.getChildren().addAll(name, type, new Space(SPACE_HEIGHT), description);
 
         getChildren().addAll(new StackPane(backgroundView, glowView), spriteBox);
 
@@ -140,9 +134,31 @@ class CardPane extends AnchorPane implements PropertyChangeListener {
             );
 
             countLabel.relocate(CARD_WIDTH * 0.53, CARD_HEIGHT * 0.98);
-
             getChildren().add(countLabel);
         }
+
+
+        CardAnimation temp = null;
+        try {
+            temp = new CardAnimation(spriteBox, card, 0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        final CardAnimation cardAnimation = temp;
+        spriteBox.getChildren().add(new Circle(0, 0, 5, Color.RED));
+
+        setOnMouseEntered(event -> {
+            if (cardAnimation != null)
+                cardAnimation.inActive();
+            glowView.setVisible(true);
+            setCursor(UIConstants.SELECT_CURSOR);
+        });
+        setOnMouseExited(event -> {
+            if (cardAnimation != null)
+                cardAnimation.stop();
+            glowView.setVisible(false);
+            setCursor(UIConstants.DEFAULT_CURSOR);
+        });
     }
 
     @Override

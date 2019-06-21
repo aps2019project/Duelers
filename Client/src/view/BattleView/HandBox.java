@@ -136,7 +136,6 @@ public class HandBox implements PropertyChangeListener {
                     cardAnimation = null;
                 }
 
-
                 if (selectedCard == i)
                     imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
                 else
