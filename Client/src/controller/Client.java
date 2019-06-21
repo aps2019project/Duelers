@@ -8,8 +8,11 @@ import models.account.AccountInfo;
 import models.card.Card;
 import models.card.DeckInfo;
 import models.game.map.Position;
+import models.message.CardPosition;
+import models.message.GameUpdateMessage;
 import models.message.Message;
 import view.MainMenu;
+import view.MultiPlayerMenu;
 import view.Show;
 
 import java.io.BufferedReader;
@@ -154,48 +157,48 @@ public class Client {
             case STORIES_COPY:
                 StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());
                 break;
-//            case OPPONENT_INFO:
+            case OPPONENT_INFO:
 //                MultiPlayerMenu.getInstance().setSecondAccount(message.getOpponentInfoMessage().getOpponentInfo());
-//                break;
-//            case CARD_POSITION://TODO:CHANGE
-//                CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
-//                switch (cardPosition) {
-//                    case MAP:
-//                        gameCommands.getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
-//                        GameCommands.getInstance().calculateAvailableActions();
-//                        break;
-//                    case HAND:
-//                        gameCommands.getCurrentGame().moveCardToHand();
-//                        GameCommands.getInstance().calculateAvailableActions();
-//                        break;
-//                    case NEXT:
-//                        gameCommands.getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
-//                        GameCommands.getInstance().calculateAvailableActions();
-//                        break;
-//                    case GRAVE_YARD:
-//                        gameCommands.getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
-//                        GameCommands.getInstance().calculateAvailableActions();
-//                        break;
-//                    case COLLECTED:
-//                        gameCommands.getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
-//                        GameCommands.getInstance().calculateAvailableActions();
-//                        break;
-//                }
-//                break;
-//            case TROOP_UPDATE:
-//                GameController.getInstance().getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
-//                gameCommands.calculateAvailableActions();
-//                break;
-//            case GAME_UPDATE:
-//                GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
-//                GameController.getInstance().getCurrentGame().gameUpdate(
-//                        gameUpdateMessage.getTurnNumber(),
-//                        gameUpdateMessage.getPlayer1CurrentMP(),
-//                        gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
-//                        gameUpdateMessage.getPlayer2CurrentMP(),
-//                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
-//                GameCommands.getInstance().calculateAvailableActions();
-//                break;
+                break;
+            case CARD_POSITION://TODO:CHANGE
+                CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
+                switch (cardPosition) {
+                    case MAP:
+                        GameController.getInstance().getCurrentGame().moveCardToMap(message.getCardPositionMessage().getCompressedCard());
+                        GameController.getInstance().calculateAvailableActions();
+                        break;
+                    case HAND:
+                        GameController.getInstance().getCurrentGame().moveCardToHand();
+                        GameController.getInstance().calculateAvailableActions();
+                        break;
+                    case NEXT:
+                        GameController.getInstance().getCurrentGame().moveCardToNext(message.getCardPositionMessage().getCompressedCard());
+                        GameController.getInstance().calculateAvailableActions();
+                        break;
+                    case GRAVE_YARD:
+                        GameController.getInstance().getCurrentGame().moveCardToGraveYard(message.getCardPositionMessage().getCompressedCard());
+                        GameController.getInstance().calculateAvailableActions();
+                        break;
+                    case COLLECTED:
+                        GameController.getInstance().getCurrentGame().moveCardToCollectedItems(message.getCardPositionMessage().getCompressedCard());
+                        GameController.getInstance().calculateAvailableActions();
+                        break;
+                }
+                break;
+            case TROOP_UPDATE:
+                GameController.getInstance().getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
+                GameController.getInstance().calculateAvailableActions();
+                break;
+            case GAME_UPDATE:
+                GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
+                GameController.getInstance().getCurrentGame().gameUpdate(
+                        gameUpdateMessage.getTurnNumber(),
+                        gameUpdateMessage.getPlayer1CurrentMP(),
+                        gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
+                        gameUpdateMessage.getPlayer2CurrentMP(),
+                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
+                GameController.getInstance().calculateAvailableActions();
+                break;
 //            case Game_FINISH:
 //                GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
 //                setCurrentMenu(GameResultStatus.getInstance());
