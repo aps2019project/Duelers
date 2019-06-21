@@ -1,20 +1,24 @@
 package controller;
 
+import models.Constants;
 import models.card.Card;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedTroop;
+import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
+import models.game.map.Position;
+import models.message.Message;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
-public class GameController {
+public class GameController implements GameActions {
     private static GameController ourInstance;
     private CompressedGame currentGame;
-    private String selectedItemId;
-    private boolean isInGraveYard;
-    private String selectedCardId;
     private AvailableActions availableActions = new AvailableActions();
+
     private GameController() {
     }
 
@@ -39,36 +43,37 @@ public class GameController {
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
     }
 
-    public void selectCard(String cardId) {
-        CompressedTroop troop = currentGame.getCurrentTurnPlayer().searchTroop(cardId);
-        if (troop != null && troop.getPlayerNumber() == currentGame.getCurrentTurnPlayer().getPlayerNumber()) {
-            selectedCardId = cardId;
-        } else if (currentGame.getCurrentTurnPlayer().searchCollectedItems(cardId) != null) {
-            selectedItemId = cardId;
-        }
-    }
-
+    @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
 
     }
 
+    @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
 
     }
 
+    @Override
     public void move(CompressedTroop selectedTroop, int j, int i) {
 
     }
 
-    public void endTurn(){
+    @Override
+    public void endTurn() {
 
     }
 
-    public void insert(String cardID , int row , int column){
-
+    @Override
+    public void insert(CompressedCard card, int row, int column) {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeInsertMessage(
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), new Position(row, column), 0
+                )
+        );
     }
 
-    public void useSpecialPower (int row , int column){
+    @Override
+    public void useSpecialPower(int row, int column) {
 
     }
 

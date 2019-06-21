@@ -6,20 +6,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
+import models.game.GameActions;
 import view.Show;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BattleScene extends Show {
-    private final Controller controller;
+    private final GameActions controller;
     private final CompressedGame game;
     private final MapBox mapBox;
     private final HandBox handBox;
     private final PlayerBox playerBox;
     private final int myPlayerNumber;
 
-    public BattleScene(Controller controller, CompressedGame game, int myPlayerNumber) throws Exception {
+    public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber) throws Exception {
         this.controller = controller;
         this.game = game;
         this.myPlayerNumber = myPlayerNumber;
@@ -86,7 +87,7 @@ public class BattleScene extends Show {
         return playerBox;
     }
 
-    public Controller getController() {
+    public GameActions getController() {
         return controller;
     }
 

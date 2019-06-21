@@ -25,7 +25,6 @@ public class MapBox implements PropertyChangeListener {
     private final Polygon[][] cells = new Polygon[5][9];
     private final double[][] cellsX = new double[5][9];
     private final double[][] cellsY = new double[5][9];
-
     private final HashMap<CompressedTroop, TroopAnimation> troopAnimationHashMap = new HashMap<>();
     private CompressedTroop selectedTroop = null;
     private ArrayList<CompressedTroop> comboTroops = new ArrayList<>();
@@ -239,8 +238,7 @@ public class MapBox implements PropertyChangeListener {
             if (troop == null) {
                 if (selectedTroop != null) {
                     System.out.println("Move");
-                    GameController.getInstance().move(selectedTroop, j, i);
-                    gameMap.updateTroop(new CompressedTroop(selectedTroop, j, i));
+                    battleScene.getController().move(selectedTroop, j, i);
                     resetSelection();
                 }
             } else {
@@ -256,28 +254,21 @@ public class MapBox implements PropertyChangeListener {
                     } else {
                         if (spellSelected) {
                             if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                System.out.println("Spell");
+                                battleScene.getController().useSpecialPower(i, j);
                                 resetSelection();
                             }
                         } else {
                             if (comboSelected) {
                                 if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo()) {
                                     comboTroops.add(troop);
-                                    System.out.println("Add Combo");
                                 } else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-//                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
-//                                    for (CompressedTroop comboAttacker : comboTroops)
-//                                        troopAnimationHashMap.get(comboAttacker).attack(troop.getPosition().getColumn());
-//                                    System.out.println("Attack Combo");
                                     comboTroops.add(selectedTroop);
-                                    GameController.getInstance().comboAttack(comboTroops , troop);
+                                    battleScene.getController().comboAttack(comboTroops, troop);
                                     resetSelection();
                                 }
                             } else {
                                 if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    System.out.println("Attack");
-                                    GameController.getInstance().attack(selectedTroop , troop);
-//                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
+                                    battleScene.getController().attack(selectedTroop, troop);
                                     resetSelection();
                                 }
                             }
@@ -286,16 +277,9 @@ public class MapBox implements PropertyChangeListener {
                 }
             }
         } else {
-            if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                System.out.println("Insert Spell");
+            if (troop == null) {
+                GameController.getInstance().insert(card , i, j);
                 resetSelection();
-            } else {
-                if (troop == null) {
-//                    System.out.println(card.getCardId());
-//                    System.out.println("Insert Troop");
-                    GameController.getInstance().insert(card.getCardId(),i,j);
-                    resetSelection();
-                }
             }
             battleScene.getHandBox().resetSelection();
         }
@@ -327,5 +311,10 @@ public class MapBox implements PropertyChangeListener {
 
     public boolean isComboSelected() {
         return comboSelected;
+    }
+
+
+    public HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
+        return troopAnimationHashMap;
     }
 }
