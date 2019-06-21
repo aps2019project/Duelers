@@ -16,4 +16,6 @@ public interface ICard {
     int getPrice();
 
     String getDescription();
+
+    int getMannaPoint();
 }
