@@ -1,5 +1,6 @@
 package view.BattleView;
 
+import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -238,6 +239,7 @@ public class MapBox implements PropertyChangeListener {
             if (troop == null) {
                 if (selectedTroop != null) {
                     System.out.println("Move");
+                    GameController.getInstance().move(selectedTroop, j, i);
                     gameMap.updateTroop(new CompressedTroop(selectedTroop, j, i));
                     resetSelection();
                 }
@@ -263,16 +265,19 @@ public class MapBox implements PropertyChangeListener {
                                     comboTroops.add(troop);
                                     System.out.println("Add Combo");
                                 } else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
-                                    for (CompressedTroop comboAttacker : comboTroops)
-                                        troopAnimationHashMap.get(comboAttacker).attack(troop.getPosition().getColumn());
-                                    System.out.println("Attack Combo");
+//                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
+//                                    for (CompressedTroop comboAttacker : comboTroops)
+//                                        troopAnimationHashMap.get(comboAttacker).attack(troop.getPosition().getColumn());
+//                                    System.out.println("Attack Combo");
+                                    comboTroops.add(selectedTroop);
+                                    GameController.getInstance().comboAttack(comboTroops , troop);
                                     resetSelection();
                                 }
                             } else {
                                 if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
                                     System.out.println("Attack");
-                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
+                                    GameController.getInstance().attack(selectedTroop , troop);
+//                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
                                     resetSelection();
                                 }
                             }
@@ -286,7 +291,9 @@ public class MapBox implements PropertyChangeListener {
                 resetSelection();
             } else {
                 if (troop == null) {
-                    System.out.println("Insert Troop");
+//                    System.out.println(card.getCardId());
+//                    System.out.println("Insert Troop");
+                    GameController.getInstance().insert(card.getCardId(),i,j);
                     resetSelection();
                 }
             }
