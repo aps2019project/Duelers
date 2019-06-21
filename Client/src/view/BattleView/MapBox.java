@@ -140,6 +140,7 @@ public class MapBox implements PropertyChangeListener {
                 System.out.println("Error making animation " + newTroop.getCard().getCardId());
             }
         }
+        resetSelection();
     }
 
     public Group getMapGroup() {
@@ -167,6 +168,7 @@ public class MapBox implements PropertyChangeListener {
                 cells[j][i].setFill(Color.DARKBLUE);
             }
         }
+        battleScene.getPlayerBox().refreshComboAndSpell();
     }
 
     private void exitCell(int j, int i) {
@@ -194,16 +196,26 @@ public class MapBox implements PropertyChangeListener {
                     if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber())
                         cells[j][i].setFill(Color.DARKGREEN);
                 } else {
-                    if (spellSelected) {
-                        if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber())
-                            cells[j][i].setFill(Color.DARKRED);
+                    if (troop == selectedTroop) {
+                        selectedTroop = null;
+                        System.out.println("diSelect Troop");
                     } else {
-                        if (comboSelected) {
-                            if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber())
-                                cells[j][i].setFill(Color.DARKGREEN);
-                        } else {
-                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                        if (spellSelected) {
+                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber())
                                 cells[j][i].setFill(Color.DARKRED);
+                        } else {
+                            if (comboSelected) {
+                                if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo())
+                                    cells[j][i].setFill(Color.DARKGREEN);
+                                else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                                    cells[j][i].setFill(Color.DARKRED);
+                                } else {
+                                    cells[j][i].setFill(Color.DARKBLUE);
+                                }
+                            } else {
+                                if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                                    cells[j][i].setFill(Color.DARKRED);
+                                }
                             }
                         }
                     }
@@ -236,22 +248,33 @@ public class MapBox implements PropertyChangeListener {
                         System.out.println("Select Troop");
                     }
                 } else {
-                    if (spellSelected) {
-                        if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                            System.out.println("Spell");
-                            resetSelection();
-                        }
+                    if (troop == selectedTroop) {
+                        selectedTroop = null;
+                        System.out.println("diSelect Troop");
                     } else {
-                        if (comboSelected) {
-                            if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
-                                comboTroops.add(troop);
-                                System.out.println("Add Combo");
+                        if (spellSelected) {
+                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                                System.out.println("Spell");
+                                resetSelection();
                             }
                         } else {
-                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                System.out.println("Attack");
-                                troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
-                                resetSelection();
+                            if (comboSelected) {
+                                if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo()) {
+                                    comboTroops.add(troop);
+                                    System.out.println("Add Combo");
+                                } else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
+                                    for (CompressedTroop comboAttacker : comboTroops)
+                                        troopAnimationHashMap.get(comboAttacker).attack(troop.getPosition().getColumn());
+                                    System.out.println("Attack Combo");
+                                    resetSelection();
+                                }
+                            } else {
+                                if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
+                                    System.out.println("Attack");
+                                    troopAnimationHashMap.get(selectedTroop).attack(troop.getPosition().getColumn());
+                                    resetSelection();
+                                }
                             }
                         }
                     }
@@ -277,5 +300,25 @@ public class MapBox implements PropertyChangeListener {
                 return troop;
         }
         return null;
+    }
+
+    public CompressedTroop getSelectedTroop() {
+        return selectedTroop;
+    }
+
+    public void setSpellSelected(boolean spellSelected) {
+        this.spellSelected = spellSelected;
+    }
+
+    public void setComboSelected(boolean comboSelected) {
+        this.comboSelected = comboSelected;
+    }
+
+    public boolean isSpellSelected() {
+        return spellSelected;
+    }
+
+    public boolean isComboSelected() {
+        return comboSelected;
     }
 }

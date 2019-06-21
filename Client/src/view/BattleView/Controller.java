@@ -10,8 +10,8 @@ import models.game.map.Position;
 import java.util.ArrayList;
 
 public class Controller extends Application {
-    private final int playerNumber = 2;
-    private final int oppPlayerNumber = 1;
+    private final int playerNumber = 1;
+    private final int oppPlayerNumber = 2;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -67,6 +67,11 @@ public class Controller extends Application {
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
                 myPlayer.addCardToNext(card);
+                map.updateTroop(troop);
+                card = new CompressedCard("boss_wujin", null, "a3", CardType.MINION,
+                        null, 0, 0, 0, null, 2, true);
+                troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 3),
+                        true, true, false, false, 1, 1);
                 map.updateTroop(troop);
                 try {
                     Thread.sleep(3000);

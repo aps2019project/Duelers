@@ -31,8 +31,9 @@ public class BattleScene extends Show {
             myPlayer = game.getPlayerTwo();
         handBox = new HandBox(this, myPlayer, Constants.SCREEN_WIDTH * 0.1,
                 Constants.SCREEN_HEIGHT * 0.8);
-        mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
         playerBox = new PlayerBox(this, game);
+        mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
+
         root.getChildren().addAll(handBox.getGroup(), mapBox.getMapGroup(), playerBox.getGroup());
     }
 
@@ -93,5 +94,7 @@ public class BattleScene extends Show {
         return myPlayerNumber;
     }
 
-
+    public boolean isMyTurn() {
+        return (game.getTurnNumber() % 2 == 1 && myPlayerNumber == 1) || (game.getTurnNumber() % 2 == 0 && myPlayerNumber == 2);
+    }
 }
