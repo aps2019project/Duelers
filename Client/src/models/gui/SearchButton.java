@@ -1,9 +1,9 @@
 package models.gui;
 
-import controller.ShopController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -23,7 +23,7 @@ class SearchButton extends Button {
     );
     private static final Insets PADDING = new Insets(UIConstants.DEFAULT_SPACING);
 
-    SearchButton(TextField searchField) {
+    SearchButton(EventHandler<? super MouseEvent> MouseEvent) {
         super("search");
         setBackground(DEFAULT_BACKGROUND);
         setBorder(BORDER);
@@ -42,9 +42,6 @@ class SearchButton extends Button {
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
 
-        setOnMouseClicked(event -> {
-            ShopController.getInstance().searchInShop(searchField.getText());
-            searchField.clear();
-        });
+        setOnMouseClicked(MouseEvent);
     }
 }
