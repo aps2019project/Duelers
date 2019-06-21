@@ -11,6 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
+import view.GameResultMenu;
 import view.MainMenu;
 import view.MultiPlayerMenu;
 import view.Show;
@@ -146,7 +147,6 @@ public class Client {
             case GAME_COPY:
                 GameController.getInstance().setCurrentGame(message.getGameCopyMessage().getCompressedGame());
                 GameController.getInstance().calculateAvailableActions();
-                //TODO:not completed
                 break;
             case ORIGINAL_CARDS_COPY:
                 ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
@@ -156,9 +156,6 @@ public class Client {
                 break;
             case STORIES_COPY:
                 StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());
-                break;
-            case OPPONENT_INFO:
-//                MultiPlayerMenu.getInstance().setSecondAccount(message.getOpponentInfoMessage().getOpponentInfo());
                 break;
             case CARD_POSITION://TODO:CHANGE
                 CardPosition cardPosition = message.getCardPositionMessage().getCardPosition();
@@ -199,13 +196,13 @@ public class Client {
                         gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
                 GameController.getInstance().calculateAvailableActions();
                 break;
-//            case Game_FINISH:
-//                GameResultStatus.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
-//                setCurrentMenu(GameResultStatus.getInstance());
-//                break;
-//            case DONE:
+            case Game_FINISH:
+                GameResultController.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+                Platform.runLater(() -> new GameResultMenu().show());
+                break;
+            case DONE:
 //                nothing/just update last received message id
-//                break;
+                break;
         }
     }
 
