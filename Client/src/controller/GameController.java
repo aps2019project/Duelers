@@ -37,27 +37,32 @@ public class GameController implements GameActions {
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
     }
 
-
+    @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
 
     }
 
+    @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
 
     }
 
+    @Override
     public void move(CompressedTroop selectedTroop, int j, int i) {
 
     }
 
+    @Override
     public void endTurn() {
 
     }
 
+    @Override
     public void insert(String cardID, int row, int column) {
 
     }
 
+    @Override
     public void useSpecialPower(int row, int column) {
 
     }
