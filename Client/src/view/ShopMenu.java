@@ -36,46 +36,55 @@ public class ShopMenu extends Show implements PropertyChangeListener {
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(BACK_EVENT);
 
-            VBox shopPane = new VBox(UIConstants.DEFAULT_SPACING * 4);
-            shopPane.setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
-            shopPane.setAlignment(Pos.CENTER);
-            shopPane.setMinSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
-            shopPane.setMaxSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
+            ShopSearchBox searchBox = new ShopSearchBox();
+            ScrollPane cardsScroll = makeCardsScroll();
 
-            HBox searchBox = new ShopSearchBox();
-
-            DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
-            ShopCardsGrid heroesGrid = new ShopCardsGrid(showingCards.getHeroes());
-
-            DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
-            ShopCardsGrid minionsGrid = new ShopCardsGrid(showingCards.getMinions());
-
-            DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
-            ShopCardsGrid spellsGrid = new ShopCardsGrid(showingCards.getSpells());
-
-            DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
-            ShopCardsGrid itemsGrid = new ShopCardsGrid(showingCards.getItems());
-
-            cardsBox = new VBox(UIConstants.DEFAULT_SPACING * 4,
-                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
-            );
-            cardsBox.setMinSize(SCROLL_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
-            cardsBox.setAlignment(Pos.TOP_CENTER);
-
-            ScrollPane cardsScroll = new ScrollPane(cardsBox);
-            cardsScroll.setMinSize(SCROLL_WIDTH, SCROLL_HEIGHT);
-            cardsScroll.setMaxWidth(SCROLL_WIDTH);
-            cardsScroll.setId("background_transparent");
-
-            shopPane.getChildren().addAll(searchBox, cardsScroll);
+            VBox shopPane = makeShopPane(searchBox, cardsScroll);
 
             AnchorPane sceneContents = new AnchorPane(background, shopPane, backButton);
 
             root.getChildren().addAll(sceneContents);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private ScrollPane makeCardsScroll() throws FileNotFoundException {
+        makeCardGrids();
+        ScrollPane cardsScroll = new ScrollPane(cardsBox);
+        cardsScroll.setMinSize(SCROLL_WIDTH, SCROLL_HEIGHT);
+        cardsScroll.setMaxWidth(SCROLL_WIDTH);
+        cardsScroll.setId("background_transparent");
+        return cardsScroll;
+    }
+
+    private void makeCardGrids() throws FileNotFoundException {
+        DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
+        ShopCardsGrid heroesGrid = new ShopCardsGrid(showingCards.getHeroes());
+
+        DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
+        ShopCardsGrid minionsGrid = new ShopCardsGrid(showingCards.getMinions());
+
+        DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
+        ShopCardsGrid spellsGrid = new ShopCardsGrid(showingCards.getSpells());
+
+        DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
+        ShopCardsGrid itemsGrid = new ShopCardsGrid(showingCards.getItems());
+
+        cardsBox = new VBox(UIConstants.DEFAULT_SPACING * 4,
+                heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+        );
+        cardsBox.setMinSize(SCROLL_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
+        cardsBox.setAlignment(Pos.TOP_CENTER);
+    }
+
+    private VBox makeShopPane(ShopSearchBox searchBox, ScrollPane cardsScroll) {
+        VBox shopPane = new VBox(UIConstants.DEFAULT_SPACING * 4, searchBox, cardsScroll);
+        shopPane.setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
+        shopPane.setAlignment(Pos.CENTER);
+        shopPane.setMinSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
+        shopPane.setMaxSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
+        return shopPane;
     }
 
     private void setOriginalCards() {
