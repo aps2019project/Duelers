@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 
 public class TroopAnimation extends Transition {
     private final boolean isPlayer1Troop;
+    private final boolean isMyTroop;
     private final double[][] cellsX;
     private final double[][] cellsY;
 
@@ -30,7 +32,6 @@ public class TroopAnimation extends Transition {
 
     private final ImageView imageView;
     private final int frameWidth, frameHeight;
-    private final double extraX, extraY;
 
     private boolean flag = false;
     private int nextIndex;
@@ -38,11 +39,18 @@ public class TroopAnimation extends Transition {
     private FramePosition[] currentFramePositions;
     private int currentI, currentJ;
 
-    private Group mapGroup;
+    private Label apLabel;
+    private Label hpLabel;
+    private ImageView ap;
+    private ImageView hp;
 
-    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop) throws Exception {
+    private Group mapGroup;
+    private Group troopGroup;
+
+    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
         this.mapGroup = mapGroup;
         this.isPlayer1Troop = isPlayer1Troop;
+        this.isMyTroop = isMyTroop;
         //file settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
         attackFramePositions = playlist.getAttackFrames();
@@ -54,8 +62,6 @@ public class TroopAnimation extends Transition {
         frameWidth = playlist.frameWidth;
         frameHeight = playlist.frameHeight;
         setCycleDuration(Duration.millis(playlist.frameDuration));
-        extraX = playlist.extraX * Constants.SCALE;
-        extraY = playlist.extraY * Constants.SCALE;
 
         this.cellsX = cellsX;
         this.cellsY = cellsY;
@@ -71,16 +77,52 @@ public class TroopAnimation extends Transition {
             imageView.setScaleX(-1);
         imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
-        imageView.setX(cellsX[j][i] - extraX);
-        imageView.setY(cellsY[j][i] - extraY);
-
-
+        imageView.setX(-playlist.extraX * Constants.SCALE);
+        imageView.setY(-playlist.extraY * Constants.SCALE);
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
-        mapGroup.getChildren().add(imageView);
+
+        troopGroup = new Group();
+        troopGroup.setLayoutX(cellsX[j][i]);
+        troopGroup.setLayoutY(cellsY[j][i]);
+        troopGroup.getChildren().add(imageView);
+
+        mapGroup.getChildren().add(troopGroup);
 
         this.setCycleCount(INDEFINITE);
         setAction(ACTION.BREATHING);
 
+        addApHp();
+    }
+
+    private void addApHp() throws Exception {
+        if (isMyTroop) {
+            ap = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk@2x.png")));
+            hp = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp@2x.png")));
+        } else {
+            ap = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk_bw@2x.png")));
+            hp = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp_bw@2x.png")));
+        }
+        ap.setFitHeight(ap.getImage().getHeight() * Constants.SCALE * 0.4);
+        ap.setFitWidth(ap.getImage().getWidth() * Constants.SCALE * 0.4);
+        ap.setX(-Constants.SCALE * 55);
+        ap.setY(Constants.SCALE * 5);
+        hp.setFitHeight(hp.getImage().getHeight() * Constants.SCALE * 0.4);
+        hp.setFitWidth(hp.getImage().getWidth() * Constants.SCALE * 0.4);
+        hp.setX(Constants.SCALE * 5);
+        hp.setY(Constants.SCALE * 5);
+        troopGroup.getChildren().addAll(ap, hp);
+        ap.setVisible(false);
+        hp.setVisible(false);
+    }
+
+    public void showDetail(){
+        ap.setVisible(true);
+        hp.setVisible(true);
+    }
+
+    public void removeDetail(){
+        ap.setVisible(false);
+        hp.setVisible(false);
     }
 
     @Override
@@ -98,8 +140,8 @@ public class TroopAnimation extends Transition {
     private void generateNextState() {
         //has reached to destination
         if (action == ACTION.RUN
-                && Math.abs(imageView.getX() - cellsX[currentJ][currentI] + extraX) < 2
-                && Math.abs(imageView.getY() - cellsY[currentJ][currentI] + extraY) < 2) {//may bug
+                && Math.abs(troopGroup.getLayoutX() - cellsX[currentJ][currentI]) < 2
+                && Math.abs(troopGroup.getLayoutY() - cellsY[currentJ][currentI]) < 2) {//may bug
             setAction(ACTION.BREATHING);
             return;
         }
@@ -119,7 +161,7 @@ public class TroopAnimation extends Transition {
                 nextIndex = 0;
                 break;
             case DEATH:
-                mapGroup.getChildren().remove(imageView);
+                mapGroup.getChildren().remove(troopGroup);
                 break;
         }
     }
@@ -189,18 +231,15 @@ public class TroopAnimation extends Transition {
         if (i < currentI)
             imageView.setScaleX(-1);
         setAction(ACTION.RUN);
-        KeyValue xValue = new KeyValue(imageView.xProperty(), cellsX[j][i] - extraX);
-        KeyValue yValue = new KeyValue(imageView.yProperty(), cellsY[j][i] - extraY);
+        KeyValue xValue = new KeyValue(troopGroup.layoutXProperty(), cellsX[j][i]);
+        KeyValue yValue = new KeyValue(troopGroup.layoutYProperty(), cellsY[j][i]);
         KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - i)
                 + Math.abs(currentJ - j)) * Constants.MOVE_TIME_PER_CELL), xValue, yValue);
         Timeline timeline = new Timeline(keyFrame);
         timeline.play();
+
         currentJ = j;
         currentI = i;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
     }
 
     enum ACTION {
@@ -256,6 +295,15 @@ public class TroopAnimation extends Transition {
 
     public int getRow() {
         return currentJ;
+    }
+
+    public Group getTroopGroup() {
+        return troopGroup;
+    }
+
+    public void diSelect(){
+        if(action==ACTION.IDLE)
+            setAction(ACTION.BREATHING);
     }
 }
 
