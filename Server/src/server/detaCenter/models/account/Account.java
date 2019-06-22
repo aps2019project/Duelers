@@ -83,9 +83,6 @@ public class Account {
         if (price > money) {
             throw new ClientException("account's money isn't enough.");
         }
-        if (collection.getItems().size() >= 3) {
-            throw new ClientException("you can't have more than 3 items");
-        }
         collection.addCard(cardName, originalCards, username);
         money -= price;
     }

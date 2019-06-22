@@ -3,6 +3,7 @@ package server.detaCenter.models.account;
 import server.Server;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
+import server.exceptions.ClientException;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class Collection {
         return null;
     }
 
-    public void addCard(String cardName, Collection originalCards, String username) {//for account collections
+    void addCard(String cardName, Collection originalCards, String username) throws ClientException {//for account collections
         if (!originalCards.hasCard(cardName) || originalCards.getCard(cardName).getType() == CardType.COLLECTIBLE_ITEM) {
             Server.getInstance().serverPrint("Invalid CardName!");
             return;
@@ -56,6 +57,9 @@ public class Collection {
         while (hasCard(cardId + number))
             number++;
         Card newCard = new Card(originalCards.getCard(cardName), username, number);
+        if (newCard.getType() == CardType.USABLE_ITEM && items.size() >= 3) {
+            throw new ClientException("you can't have more than 3 items");
+        }
         addCard(newCard);
     }
 
