@@ -107,14 +107,25 @@ public class Account {
             }
             ArrayList<Deck> old = decks;
             decks = newDecks;
-            mainDeck = getDeck(account.getMainDeckName());
             support.firePropertyChange("decks", old, decks);
-        } else if ((mainDeck != null || account.getMainDeckName() != null) && (mainDeck == null ^ account.getMainDeckName() == null || !mainDeck.getName().equals(account.getMainDeckName()))) {
+            if (!mainDecksEqual(account)) {
+                Deck oldMain = mainDeck;
+                mainDeck = getDeck(account.getMainDeckName());
+                support.firePropertyChange("main_deck", oldMain, mainDeck);
+            }
+        } else if (!mainDecksEqual(account)) {
             Deck old = mainDeck;
             mainDeck = getDeck(account.getMainDeckName());
             support.firePropertyChange("main_deck", old, mainDeck);
         }
         matchHistories = account.getMatchHistories();
+    }
+
+    private boolean mainDecksEqual(TempAccount account) {
+        return (
+                (mainDeck == null && account.getMainDeckName() == null) ||
+                        (mainDeck != null && account.getMainDeckName() != null && mainDeck.getName().equals(account.getMainDeckName()))
+        );
     }
 
     private boolean decksEqual(ArrayList<TempDeck> decks) {

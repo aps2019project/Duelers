@@ -33,6 +33,7 @@ public class DeckBox extends GridPane {
             )
     );
     private static final double ICON_SIZE = 50 * SCALE;
+    private static final double WIDTH = SCENE_WIDTH * 0.18;
     private static final Insets PADDING = new Insets(30 * SCALE);
     private static final Font NAME_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final Font DETAILS_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 20 * SCALE);
@@ -62,10 +63,9 @@ public class DeckBox extends GridPane {
         setVgap(DEFAULT_SPACING * 2);
         setHgap(DEFAULT_SPACING * 2);
         setBackground(DEFAULT_BACKGROUND);
-        setMinWidth(SCENE_WIDTH * 0.18);
+        setMinWidth(WIDTH);
 
         DefaultLabel deckName = new DefaultLabel(deck.getName().toUpperCase(), NAME_FONT, Color.WHITE);
-        deckName.setMinWidth(200 * SCALE);
         ImageView modify = ImageLoader.makeImageView(modifyIcon, ICON_SIZE, ICON_SIZE);
         ImageView remove = ImageLoader.makeImageView(removeIcon, ICON_SIZE, ICON_SIZE);
         ImageView export = ImageLoader.makeImageView(saveIcon, ICON_SIZE, ICON_SIZE);

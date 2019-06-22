@@ -2,6 +2,7 @@ package view;
 
 import controller.Client;
 import controller.CollectionMenuController;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +17,7 @@ import models.gui.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static models.gui.UIConstants.*;
@@ -28,7 +30,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
     private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
-    private static final Insets DECKS_PADDING = new Insets(20, 40, 0, 40);
+    private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 40 * SCALE, 0, 40 * SCALE);
     private VBox cardsBox;
     private VBox decksBox;
     private Collection showingCards;
@@ -130,6 +132,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     }
 
     private void setCollectionCards() {
+        Client.getInstance().getAccount().addPropertyChangeListener(this);
         CollectionMenuController.getInstance().addPropertyChangeListener(this);
         showingCards = CollectionMenuController.getInstance().getCurrentShowingCards();
     }
@@ -145,14 +148,27 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("search_result")) {
             showingCards = (Collection) evt.getNewValue();
-            try {
-                cardsBox.getChildren().set(1, new CollectionCardsGrid(showingCards.getHeroes()));
-                cardsBox.getChildren().set(3, new CollectionCardsGrid(showingCards.getMinions()));
-                cardsBox.getChildren().set(5, new CollectionCardsGrid(showingCards.getSpells()));
-                cardsBox.getChildren().set(7, new CollectionCardsGrid(showingCards.getItems()));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    cardsBox.getChildren().set(1, new CollectionCardsGrid(showingCards.getHeroes()));
+                    cardsBox.getChildren().set(3, new CollectionCardsGrid(showingCards.getMinions()));
+                    cardsBox.getChildren().set(5, new CollectionCardsGrid(showingCards.getSpells()));
+                    cardsBox.getChildren().set(7, new CollectionCardsGrid(showingCards.getItems()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        }
+
+        if (evt.getPropertyName().equals("decks") || evt.getPropertyName().equals("main_deck")) {
+            Platform.runLater(() -> {
+                decksBox.getChildren().clear();
+
+                for (Deck deck : Client.getInstance().getAccount().getDecks()) {
+                    decksBox.getChildren().add(new DeckBox(deck));
+                }
+            });
         }
     }
 }
