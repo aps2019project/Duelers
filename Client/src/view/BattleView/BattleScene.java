@@ -52,7 +52,7 @@ public class BattleScene extends Show {
 
     @Override
     public void show() {
-
+        super.show();
     }
 
     @Override

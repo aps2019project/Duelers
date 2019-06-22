@@ -15,15 +15,15 @@ public class ClientListener extends Thread {
 
     @Override
     public void run() {
-        Scanner scanner = null;
-        Formatter formatter = null;
+        Scanner scanner;
+        Formatter formatter;
+        String name = null;
         try {
             Server.getInstance().serverPrint("New Socket Is Accepted!");
             scanner = new Scanner(socket.getInputStream());
             formatter = new Formatter(socket.getOutputStream());
             formatter.format("#Listening#\n");
             formatter.flush();
-            String name;
             while (true) {
                 name = scanner.nextLine().split("#")[1];
                 if (name.length() >= 3 && !ClientPortal.getInstance().hasThisClient(name)) {
@@ -43,6 +43,7 @@ public class ClientListener extends Thread {
             }
         } catch (Exception e) {
             Server.getInstance().serverPrint("Error ClientListener!");
+            ClientPortal.getInstance().removeClient(name);
         }
     }
 }
