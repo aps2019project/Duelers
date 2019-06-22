@@ -114,7 +114,8 @@ public class GameController implements GameActions {
             Message message = Message.makeMoveTroopMessage(
                     Client.getInstance().getClientName(), Constants.SERVER_NAME, selectedTroop.getCard().getCardId(), target, 0);
             Client.getInstance().addToSendingMessagesAndSend(message);
-        } catch (InputException ignored) {
+        } catch (InputException e) {
+            System.out.println(e.getMessage());
         }
     }
 

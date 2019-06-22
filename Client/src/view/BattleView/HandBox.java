@@ -27,7 +27,7 @@ public class HandBox implements PropertyChangeListener {
     private CardPane cardPane = null;
 
 
-    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
+    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y){
         this.battleScene = battleScene;
         this.player = player;
         group = new Group();

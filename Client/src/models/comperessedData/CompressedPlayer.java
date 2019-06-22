@@ -21,6 +21,9 @@ public class CompressedPlayer {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.addPropertyChangeListener(pcl);
     }
 
@@ -47,6 +50,9 @@ public class CompressedPlayer {
 
     public void addNextCardToHand() {
         hand.add(nextCard);
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.firePropertyChange("hand", null, null);
         if (hand.size() > 5)
             System.out.println("Client Game Error!");
@@ -57,6 +63,9 @@ public class CompressedPlayer {
             System.out.println("Client Game Error!");
         else {
             nextCard = card;
+            if (support == null) {
+                support = new PropertyChangeSupport(this);
+            }
             support.firePropertyChange("next", null, null);
         }
     }
@@ -86,11 +95,17 @@ public class CompressedPlayer {
 
     public void removeCardFromHand(String cardId) {
         hand.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.firePropertyChange("hand", null, null);
     }
 
     public void removeCardFromNext() {
         nextCard = null;
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.firePropertyChange("next", null, null);
     }
 
