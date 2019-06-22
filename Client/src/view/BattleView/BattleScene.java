@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.game.GameActions;
+import models.game.map.Position;
 import view.Show;
 
 import java.io.FileInputStream;
@@ -50,6 +51,18 @@ public class BattleScene extends Show {
         }
     }
 
+    public void attack(String cardId, Position position) {
+        mapBox.showAttack(cardId, position.getColumn());
+    }
+
+    public void defend(String cardId, Position position) {
+        mapBox.showDefend(cardId, position.getColumn());
+    }
+
+    public void spell(String spriteName, Position position) {
+        mapBox.showSpell(spriteName, position.getRow(), position.getColumn());
+    }
+
     @Override
     public void show() {
         super.show();
@@ -75,15 +88,15 @@ public class BattleScene extends Show {
 
     }
 
-    public MapBox getMapBox() {
+    MapBox getMapBox() {
         return mapBox;
     }
 
-    public HandBox getHandBox() {
+    HandBox getHandBox() {
         return handBox;
     }
 
-    public PlayerBox getPlayerBox() {
+    PlayerBox getPlayerBox() {
         return playerBox;
     }
 
@@ -91,11 +104,11 @@ public class BattleScene extends Show {
         return controller;
     }
 
-    public int getMyPlayerNumber() {
+    int getMyPlayerNumber() {
         return myPlayerNumber;
     }
 
-    public boolean isMyTurn() {
+    boolean isMyTurn() {
         return (game.getTurnNumber() % 2 == 1 && myPlayerNumber == 1) || (game.getTurnNumber() % 2 == 0 && myPlayerNumber == 2);
     }
 
