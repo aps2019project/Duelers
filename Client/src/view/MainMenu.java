@@ -54,7 +54,6 @@ public class MainMenu extends Show {
                 new LoginMenu().show();
 
             }, LOGOUT_ICON_URL);
-
             makeDialogClosable(dialogBox, dialogContainer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

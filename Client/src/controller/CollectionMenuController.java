@@ -25,6 +25,12 @@ public class CollectionMenuController {
         return ourInstance;
     }
 
+    public void newDeck(String deckName) {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeCreateDeckMessage(
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, deckName, 0));
+    }
+
     public void addCardToDeck(String deckName, String cardID) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeAddCardToDeckMessage(
