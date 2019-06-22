@@ -35,7 +35,6 @@ public class DeckBox extends GridPane {
     private static final double ICON_SIZE = 50 * SCALE;
     private static final double WIDTH = SCENE_WIDTH * 0.18;
     private static final Insets PADDING = new Insets(30 * SCALE);
-    private static final Font NAME_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final Font DETAILS_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 20 * SCALE);
     private static final Effect ICON_SHADOW = new DropShadow(10 * SCALE, Color.WHITE);
     private static Image checkIcon;
@@ -65,7 +64,7 @@ public class DeckBox extends GridPane {
         setBackground(DEFAULT_BACKGROUND);
         setMinWidth(WIDTH);
 
-        DefaultLabel deckName = new DefaultLabel(deck.getName().toUpperCase(), NAME_FONT, Color.WHITE);
+        DefaultLabel deckName = new DefaultLabel(deck.getName().toUpperCase(), getFont(deck.getName()), Color.WHITE);
         ImageView modify = ImageLoader.makeImageView(modifyIcon, ICON_SIZE, ICON_SIZE);
         ImageView remove = ImageLoader.makeImageView(removeIcon, ICON_SIZE, ICON_SIZE);
         ImageView export = ImageLoader.makeImageView(saveIcon, ICON_SIZE, ICON_SIZE);
@@ -90,6 +89,7 @@ public class DeckBox extends GridPane {
             remove.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
+        remove.setOnMouseClicked(event -> CollectionMenuController.getInstance().removeDeck(deck.getName()));
 
         export.setOnMouseEntered(event -> {
             export.setEffect(ICON_SHADOW);
@@ -135,5 +135,10 @@ public class DeckBox extends GridPane {
 
         setOnMouseEntered(event -> setBackground(HOVER_BACKGROUND));
         setOnMouseExited(event -> setBackground(DEFAULT_BACKGROUND));
+    }
+
+    private Font getFont(String name) {
+        double size = 45 * SCALE;
+        return Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, size);
     }
 }

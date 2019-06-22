@@ -17,7 +17,6 @@ import models.gui.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static models.gui.UIConstants.*;
