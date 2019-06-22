@@ -72,10 +72,13 @@ public class Client {
         clientName = InetAddress.getLocalHost().getHostName();
         socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         int x = 1;
+        String finalClientName = clientName;
         while (!bufferedReader.readLine().equals("#Valid#")) {
             x++;
-            socket.getOutputStream().write(("#" + clientName + x + "#\n").getBytes());
+            finalClientName = clientName + x;
+            socket.getOutputStream().write(("#" + finalClientName + "#\n").getBytes());
         }
+        clientName = finalClientName;
         System.out.println("server accepted me.");
     }
 
