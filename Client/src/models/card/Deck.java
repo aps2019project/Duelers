@@ -1,6 +1,7 @@
 package models.card;
 
 
+import controller.Client;
 import models.account.Collection;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class Deck {
         return this.hero;
     }
 
-    ArrayList<Card> getOthers() {
+    public ArrayList<Card> getOthers() {
         return this.others;
     }
 
@@ -81,5 +82,9 @@ public class Deck {
     public boolean isValid() {
         if (hero == null || item == null) return false;
         return others.size() == 20;
+    }
+
+    public boolean isMain() {
+        return Client.getInstance().getAccount().isMainDeck(this);
     }
 }
