@@ -139,11 +139,11 @@ public class GameController implements GameActions {
 
     @Override
     public void useSpecialPower(int row, int column) {
-//        Client.getInstance().addToSendingMessagesAndSend(
-//                Message.makeUseSpecialPowerMessage(
-//                        Client.getInstance().getClientName(), Constants.SERVER_NAME, selectedItemId, new Position(row, column), 0
-//                )
-//        );
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeUseSpecialPowerMessage(
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, currentGame.getCurrentTurnPlayer().getHero().getCard().getCardId(), new Position(row, column), 0
+                )
+        );
     }
 
 }
