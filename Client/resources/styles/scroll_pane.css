@@ -8,7 +8,6 @@
 
 .scroll-bar {
     -fx-background-color: transparent;
-    -fx-min-width: 60px;
 }
 
 .scroll-bar .track {
@@ -16,7 +15,6 @@
     -fx-border-color: transparent;
     -fx-background-radius: 0.0em;
     -fx-border-radius: 2.0em;
-    -fx-min-width: 100%;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -41,15 +39,11 @@
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: derive(black, 90.0%);
-    -fx-background-insets: 2.0, 0.0, 0.0;
     -fx-background-radius: 2.0em;
-    -fx-min-width: 100%;
 }
 
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:vertical .thumb:hover {
     -fx-background-color: white;
-    -fx-background-insets: 2.0, 0.0, 0.0;
     -fx-background-radius: 2.0em;
-    -fx-min-width: 100%;
 }
