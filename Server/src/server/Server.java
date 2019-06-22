@@ -49,6 +49,7 @@ public class Server {
                 }
                 if (message != null) {
                     ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
+                    System.out.println(message.getReceiver()+":\n"+message.toJson());
                 } else {
                     try {
                         synchronized (sendingMessages) {

@@ -183,7 +183,7 @@ public class Client {
                 break;
             case TROOP_UPDATE:
                 GameController.getInstance().getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
-                GameController.getInstance().calculateAvailableActions();
+//                GameController.getInstance().calculateAvailableActions();
                 break;
             case GAME_UPDATE:
                 GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
@@ -265,7 +265,8 @@ public class Client {
         new Thread(() -> {
             try {
                 connect();
-            } catch (IOException | NullPointerException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
                 getCurrentShow();
                 Platform.runLater(() ->
                         getCurrentShow().showError("Connection failed", "RETRY", event -> makeConnection())
