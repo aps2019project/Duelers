@@ -49,7 +49,7 @@ public class Controller extends Application implements GameActions {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -58,7 +58,7 @@ public class Controller extends Application implements GameActions {
                 myPlayer.addCardToNext(card);
                 game.gameUpdate(10, 1, 0, 2, 0);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -77,7 +77,7 @@ public class Controller extends Application implements GameActions {
                         true, true, false, false, 1, 1);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -88,7 +88,7 @@ public class Controller extends Application implements GameActions {
                         true, true, false, false, 1, 2);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +96,7 @@ public class Controller extends Application implements GameActions {
                         true, true, false, false, 1, 2);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -104,7 +104,7 @@ public class Controller extends Application implements GameActions {
                         true, true, false, false, 1, 2);
                 map.updateTroop(troop);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

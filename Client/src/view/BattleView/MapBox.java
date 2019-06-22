@@ -115,20 +115,22 @@ public class MapBox implements PropertyChangeListener {
         } else {
             try {
                 animation = new TroopAnimation(mapGroup, cellsX, cellsY, newTroop.getCard().getSpriteName(),
-                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(), newTroop.getPlayerNumber() == 1);
-                animation.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(),
+                        newTroop.getPlayerNumber() == 1,
+                        newTroop.getPlayerNumber() == battleScene.getMyPlayerNumber());
+                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         clickCell(animation.getRow(), animation.getColumn());
                     }
                 });
-                animation.getImageView().setOnMouseEntered(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         hoverCell(animation.getRow(), animation.getColumn());
                     }
                 });
-                animation.getImageView().setOnMouseExited(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         exitCell(animation.getRow(), animation.getColumn());
@@ -167,6 +169,10 @@ public class MapBox implements PropertyChangeListener {
                 cells[j][i].setFill(Color.DARKBLUE);
             }
         }
+        for (TroopAnimation animation : troopAnimationHashMap.values()) {
+            animation.removeDetail();
+            animation.diSelect();
+        }
         battleScene.getPlayerBox().refreshComboAndSpell();
     }
 
@@ -176,9 +182,13 @@ public class MapBox implements PropertyChangeListener {
             cells[j][i].setFill(Color.DARKBLUE);
             return;
         }
+        TroopAnimation animation = troopAnimationHashMap.get(troop);
         if (selectedTroop == troop || comboTroops.contains(troop)) {
             cells[j][i].setFill(Color.DARKGREEN);
             return;
+        } else {
+            animation.breathe();
+            animation.removeDetail();
         }
         cells[j][i].setFill(Color.DARKBLUE);
     }
@@ -186,6 +196,11 @@ public class MapBox implements PropertyChangeListener {
     private void hoverCell(int j, int i) {
         CompressedTroop troop = getTroop(j, i);
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
+        if (troop != null) {
+            TroopAnimation animation = troopAnimationHashMap.get(troop);
+            animation.showDetail();
+            animation.idle();
+        }
         if (!battleScene.isMyTurn())
             return;
         if (card == null) {
@@ -318,7 +333,6 @@ public class MapBox implements PropertyChangeListener {
     public boolean isComboSelected() {
         return comboSelected;
     }
-
 
     public HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
         return troopAnimationHashMap;
