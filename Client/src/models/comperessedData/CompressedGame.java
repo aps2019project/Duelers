@@ -16,6 +16,9 @@ public class CompressedGame {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.addPropertyChangeListener(pcl);
     }
 
