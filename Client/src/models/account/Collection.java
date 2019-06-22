@@ -122,4 +122,23 @@ public class Collection {
         findInList(items, result, cardName);
         return result.size();
     }
+
+    public Collection toShowing() {
+        Collection collection = new Collection();
+        convertListToShowing(collection.heroes, heroes);
+        convertListToShowing(collection.spells, spells);
+        convertListToShowing(collection.minions, minions);
+        convertListToShowing(collection.items, items);
+        return collection;
+    }
+
+    private void convertListToShowing(ArrayList<Card> newList, ArrayList<Card> mainList) {
+        Outer:
+        for (Card hero : mainList) {
+            for (Card other : newList) {
+                if (hero.isSameAs(other.getName())) continue Outer;
+            }
+            newList.add(hero);
+        }
+    }
 }

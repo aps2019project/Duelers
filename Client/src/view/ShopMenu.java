@@ -42,19 +42,19 @@ public class ShopMenu extends Show implements PropertyChangeListener {
             shopPane.setMinSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
             shopPane.setMaxSize(UIConstants.SCENE_WIDTH, UIConstants.SCENE_HEIGHT);
 
-            HBox searchBox = new SearchBox();
+            HBox searchBox = new ShopSearchBox();
 
             DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
-            CardsGrid heroesGrid = new CardsGrid(showingCards.getHeroes(), true);
+            ShopCardsGrid heroesGrid = new ShopCardsGrid(showingCards.getHeroes());
 
             DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
-            CardsGrid minionsGrid = new CardsGrid(showingCards.getMinions(), true);
+            ShopCardsGrid minionsGrid = new ShopCardsGrid(showingCards.getMinions());
 
             DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
-            CardsGrid spellsGrid = new CardsGrid(showingCards.getSpells(), true);
+            ShopCardsGrid spellsGrid = new ShopCardsGrid(showingCards.getSpells());
 
             DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
-            CardsGrid itemsGrid = new CardsGrid(showingCards.getItems(), true);
+            ShopCardsGrid itemsGrid = new ShopCardsGrid(showingCards.getItems());
 
             cardsBox = new VBox(UIConstants.DEFAULT_SPACING * 4,
                     heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
@@ -103,10 +103,10 @@ public class ShopMenu extends Show implements PropertyChangeListener {
         if (evt.getPropertyName().equals("search_result")) {
             showingCards = (Collection) evt.getNewValue();
             try {
-                cardsBox.getChildren().set(1, new CardsGrid(showingCards.getHeroes(), true));
-                cardsBox.getChildren().set(3, new CardsGrid(showingCards.getMinions(), true));
-                cardsBox.getChildren().set(5, new CardsGrid(showingCards.getSpells(), true));
-                cardsBox.getChildren().set(7, new CardsGrid(showingCards.getItems(), true));
+                cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
+                cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
+                cardsBox.getChildren().set(5, new ShopCardsGrid(showingCards.getSpells()));
+                cardsBox.getChildren().set(7, new ShopCardsGrid(showingCards.getItems()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

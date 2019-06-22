@@ -1,12 +1,21 @@
 package controller;
 
 import models.Constants;
+import models.account.Collection;
 import models.message.Message;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class CollectionMenuController {
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private static CollectionMenuController ourInstance;
+    private Collection allShowingCards;
+    private Collection currentShowingCards;
 
     private CollectionMenuController() {
+        allShowingCards = Client.getInstance().getAccount().getCollection().toShowing();
+        currentShowingCards = allShowingCards;
     }
 
     public static CollectionMenuController getInstance() {
@@ -40,6 +49,21 @@ public class CollectionMenuController {
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, deckName, 0));
     }
 
+    public void search(String cardName) {
+        Collection result = allShowingCards.searchCollection(cardName);
+        support.firePropertyChange("search_result", currentShowingCards, result);
+        currentShowingCards = result;
+    }
 
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
 
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
+    }
+
+    public Collection getCurrentShowingCards() {
+        return currentShowingCards;
+    }
 }

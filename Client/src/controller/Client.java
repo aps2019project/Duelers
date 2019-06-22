@@ -73,9 +73,8 @@ public class Client {
         socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
         int x = 1;
         while (!bufferedReader.readLine().equals("#Valid#")) {
-            clientName = String.format("%s%d", clientName, x);
             x++;
-            socket.getOutputStream().write(("#" + clientName + "#\n").getBytes());
+            socket.getOutputStream().write(("#" + clientName + x + "#\n").getBytes());
         }
         System.out.println("server accepted me.");
     }

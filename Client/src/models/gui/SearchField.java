@@ -1,8 +1,6 @@
 package models.gui;
 
-import controller.ShopController;
 import javafx.geometry.Insets;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -22,12 +20,5 @@ class SearchField extends NormalField {
     SearchField() {
         super("search cards", BACKGROUND, BORDER, PADDING);
         setMaxWidth(WIDTH);
-
-        setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                ShopController.getInstance().searchInShop(getText());
-                clear();
-            }
-        });
     }
 }

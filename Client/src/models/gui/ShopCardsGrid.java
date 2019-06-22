@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 import static models.gui.UIConstants.SCALE;
 
-public class CardsGrid extends GridPane {
+public class ShopCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;
     private static final int COLUMN_NUMBER = 4;
 
-    public CardsGrid(ArrayList<Card> cards, boolean showPrice) throws FileNotFoundException {
+    public ShopCardsGrid(ArrayList<Card> cards) throws FileNotFoundException {
         setHgap(UIConstants.DEFAULT_SPACING * 5);
         setVgap(UIConstants.DEFAULT_SPACING * 5);
 
@@ -25,7 +25,7 @@ public class CardsGrid extends GridPane {
             VBox shopCardBox = new VBox(-UIConstants.DEFAULT_SPACING);
             shopCardBox.setAlignment(Pos.CENTER);
 
-            CardPane cardPane = new CardPane(card, showPrice, true);
+            CardPane cardPane = new CardPane(card, true, true);
 
             HBox buttonsBox = new HBox(UIConstants.DEFAULT_SPACING,
                     new OrangeButton("BUY", event -> ShopController.getInstance().buy(card.getName())),
