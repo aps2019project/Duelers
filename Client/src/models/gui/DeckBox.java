@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import models.card.DeckExporter;
 import models.card.Deck;
 
 import java.io.FileInputStream;
@@ -99,6 +100,7 @@ public class DeckBox extends GridPane {
             export.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
+        export.setOnMouseClicked(event -> new DeckExporter(deck).export());
 
         add(deckName, 5, 0, 4, 2);
         if (deck.isValid()) {
