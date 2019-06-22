@@ -5,6 +5,7 @@ import models.game.GameType;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.ObjectInputStream;
 
 public class CompressedGame {
     private CompressedPlayer playerOne;
