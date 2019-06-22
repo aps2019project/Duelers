@@ -59,4 +59,8 @@ public class ClientPortal extends Thread {
             Server.getInstance().serverPrint("Client Not Found!");
         }
     }
+
+    public void removeClient(String clientName) {
+        clients.remove(clientName);
+    }
 }
