@@ -2,7 +2,6 @@ package view;
 
 import controller.Client;
 import controller.CollectionMenuController;
-import controller.MultiPlayerMenuController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -11,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import models.account.Collection;
-import models.game.GameType;
+import models.card.Deck;
 import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
@@ -29,8 +28,9 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
     private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
-    private static final Insets DECKS_PADDING = new Insets(20, 0, 0, 0);
+    private static final Insets DECKS_PADDING = new Insets(20, 40, 0, 40);
     private VBox cardsBox;
+    private VBox decksBox;
     private Collection showingCards;
 
     CollectionMenu() {
@@ -52,7 +52,17 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
 
             StackPane newDeckButton = new ImageButton("NEW DECK", event -> showNewDeckDialog());
 
-            decksPane.getChildren().addAll(newDeckButton);
+            decksBox = new VBox(DEFAULT_SPACING);
+            decksBox.setAlignment(Pos.TOP_CENTER);
+
+            for (Deck deck : Client.getInstance().getAccount().getDecks()) {
+                decksBox.getChildren().addAll(new DeckBox(deck));
+            }
+
+            ScrollPane decksScroll = new ScrollPane(decksBox);
+            decksScroll.setId("background_transparent");
+
+            decksPane.getChildren().addAll(newDeckButton, decksScroll);
 
             VBox collectionBox = new VBox(DEFAULT_SPACING * 4);
             collectionBox.setPadding(new Insets(DEFAULT_SPACING * 3));
@@ -98,7 +108,19 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     }
 
     private void showNewDeckDialog() {
+        DialogText name = new DialogText("Please enter deck's name");
+        NormalField nameField = new NormalField("deck name");
+        DialogBox dialogBox = new DialogBox(name, nameField);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
+        dialogBox.makeButton("CREATE", buttonEvent -> {
+            if (nameField.getText().equals("")) return;
+            CollectionMenuController.getInstance().newDeck(nameField.getText());
+            dialogContainer.close();
+        });
+
+        dialogContainer.show(root);
+        makeDialogClosable(dialogBox, dialogContainer);
     }
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
