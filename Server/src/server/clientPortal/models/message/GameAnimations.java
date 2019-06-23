@@ -1,25 +1,25 @@
 package server.clientPortal.models.message;
 
 
-import server.detaCenter.models.card.Card;
+import server.gameCenter.models.map.Position;
 
 import java.util.ArrayList;
 
 public class GameAnimations {
-    private ArrayList<String> attackers = new ArrayList<>();
-    private ArrayList<String> defenders = new ArrayList<>();
-    private ArrayList<SpellAnimation> spellAnimations = new ArrayList<>();
+    private ArrayList<CardAnimation> attackers = new ArrayList<>();
+    private ArrayList<CardAnimation> defenders = new ArrayList<>();
+    private ArrayList<CardAnimation> spellAnimations = new ArrayList<>();
 
-    public void addAtteacker(String cardID){
-        attackers.add(cardID);
+    public void addAtteacker(String cardID , Position position){
+        spellAnimations.add(new CardAnimation(cardID , position));
     }
 
-    public void addDefender(String cardID){
-        defenders.add(cardID);
+    public void addDefender(String cardID , Position position){
+        spellAnimations.add(new CardAnimation(cardID , position));
     }
 
-    public void addSpellAnime(SpellAnimation spellAnimations){
-
+    public void addSpellAnime(String spellID , Position position){
+        spellAnimations.add(new CardAnimation(spellID , position));
     }
 
 }

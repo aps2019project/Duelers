@@ -10,6 +10,7 @@ import models.exceptions.InputException;
 import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
 import models.game.map.Position;
+import models.message.CardAnimation;
 import models.message.GameAnimations;
 import models.message.Message;
 import view.BattleView.BattleScene;
@@ -148,7 +149,18 @@ public class GameController implements GameActions {
         );
     }
 
-    public void showAnimation(GameAnimations gameAnimations){
-
+    public void showAnimation(GameAnimations gameAnimations) {
+        for (CardAnimation cardAnimation :
+                gameAnimations.getAttackers()) {
+            battleScene.attack(cardAnimation.getID(), cardAnimation.getPosition());
+        }
+        for (CardAnimation cardAnimation :
+                gameAnimations.getDefenders()) {
+            battleScene.defend(cardAnimation.getID(), cardAnimation.getPosition());
+        }
+        for (CardAnimation cardAnimation :
+                gameAnimations.getSpellAnimations()) {
+            battleScene.spell(cardAnimation.getID(), cardAnimation.getPosition());
+        }
     }
 }
