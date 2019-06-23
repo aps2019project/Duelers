@@ -2,6 +2,7 @@ package models.card;
 
 
 import controller.Client;
+import models.ICard;
 import models.account.Collection;
 
 import java.util.ArrayList;
@@ -86,5 +87,25 @@ public class Deck {
 
     public boolean isMain() {
         return Client.getInstance().getAccount().isMainDeck(this);
+    }
+
+    public int count(ICard card) {
+        switch (card.getType()) {
+            case HERO:
+                if (hero != null && hero.isSameAs(card.getName())) return 1;
+                return 0;
+            case USABLE_ITEM:
+                if (item != null && item.isSameAs(card.getName())) return 1;
+                return 0;
+            case MINION:
+            case SPELL:
+                int count = 0;
+                for (Card other : others) {
+                    if (other.isSameAs(card.getName())) count++;
+                }
+                return count;
+            default:
+                return 0;
+        }
     }
 }

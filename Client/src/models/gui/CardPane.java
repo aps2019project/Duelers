@@ -12,6 +12,7 @@ import javafx.scene.text.FontWeight;
 import models.ICard;
 import models.account.Collection;
 import models.card.CardType;
+import models.card.Deck;
 import view.BattleView.CardAnimation;
 
 import java.beans.PropertyChangeEvent;
@@ -31,12 +32,14 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final double SPRITE_CENTER_X = GLOW_WIDTH / 2;
     private static final double SPRITE_CENTER_Y = 180 * SCALE;
 
-    private ICard card;
-    private DefaultLabel countLabel;
-    private int oldCount;
+    Deck deck;
+    ICard card;
+    DefaultLabel countLabel;
+    int oldCount;
 
-    public CardPane(ICard card, boolean showPrice, boolean showCount) throws FileNotFoundException {
+    public CardPane(ICard card, boolean showPrice, boolean showCount, Deck deck) throws FileNotFoundException {
         this.card = card;
+        this.deck = deck;
         setPrefSize(GLOW_WIDTH, GLOW_HEIGHT);
 
         CardBackground background = new CardBackground(card);
@@ -65,15 +68,8 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         }
 
         if (showCount) {
-            Client.getInstance().getAccount().addPropertyChangeListener(this);
-            oldCount = Client.getInstance().getAccount().getCollection().count(card.getName());
-            countLabel = new DefaultLabel(
-                    "X " + oldCount,
-                    DESCRIPTION_FONT, DESCRIPTION_COLOR
-            );
-
-            countLabel.relocate(CARD_WIDTH * 0.53, CARD_HEIGHT * 0.98);
-            getChildren().add(countLabel);
+            count(card);
+            showCount();
         }
 
         final CardAnimation cardAnimation = new CardAnimation(this, card, SPRITE_CENTER_Y, SPRITE_CENTER_X);
@@ -88,6 +84,21 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
             background.hideGlow();
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
+    }
+
+    void count(ICard card) {
+        Client.getInstance().getAccount().addPropertyChangeListener(this);
+        oldCount = Client.getInstance().getAccount().getCollection().count(card.getName());
+    }
+
+    private void showCount() {
+        countLabel = new DefaultLabel(
+                "X " + oldCount,
+                DESCRIPTION_FONT, DESCRIPTION_COLOR
+        );
+
+        countLabel.relocate(CARD_WIDTH * 0.53, CARD_HEIGHT * 0.98);
+        getChildren().add(countLabel);
     }
 
     @Override

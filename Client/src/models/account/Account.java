@@ -67,7 +67,7 @@ public class Account {
         return this.money;
     }
 
-    private Deck getDeck(String deckName) {
+    public Deck getDeck(String deckName) {
         for (Deck deck : decks) {
             if (deck.areSame(deckName)) {
                 return deck;

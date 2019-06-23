@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import models.card.DeckExporter;
 import models.card.Deck;
+import view.CollectionMenu;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,6 +82,7 @@ public class DeckBox extends GridPane {
             modify.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
+        modify.setOnMouseClicked(event -> CollectionMenu.getInstance().modify(deck));
 
         remove.setOnMouseEntered(event -> {
             remove.setEffect(ICON_SHADOW);

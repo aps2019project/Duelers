@@ -30,11 +30,18 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 40 * SCALE, 0, 40 * SCALE);
+    private static CollectionMenu menu;
+    private Mode mode = Mode.COLLECTION;
     private VBox cardsBox;
     private VBox decksBox;
     private Collection showingCards;
 
+    enum Mode {
+        COLLECTION, MODIFYING
+    }
+
     CollectionMenu() {
+        menu = this;
         setCollectionCards();
 
         try {
@@ -108,6 +115,10 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         }
     }
 
+    public static CollectionMenu getInstance() {
+        return menu;
+    }
+
     private void showNewDeckDialog() {
         DialogText name = new DialogText("Please enter deck's name");
         NormalField nameField = new NormalField("deck name");
@@ -168,6 +179,30 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
                     decksBox.getChildren().add(new DeckBox(deck));
                 }
             });
+        }
+    }
+
+    public void modify(Deck deck) {
+        try {
+            cardsBox.getChildren().clear();
+            mode = Mode.MODIFYING;
+            CollectionMenuController.getInstance().search("");
+            DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
+            DeckCardsGrid heroesGrid = new DeckCardsGrid(showingCards.getHeroes(), deck);
+
+            DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
+            DeckCardsGrid minionsGrid = new DeckCardsGrid(showingCards.getMinions(), deck);
+
+            DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
+            DeckCardsGrid spellsGrid = new DeckCardsGrid(showingCards.getSpells(), deck);
+
+            DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
+            DeckCardsGrid itemsGrid = new DeckCardsGrid(showingCards.getItems(), deck);
+            cardsBox.getChildren().addAll(
+                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+            );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
