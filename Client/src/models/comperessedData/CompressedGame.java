@@ -87,6 +87,9 @@ public class CompressedGame {
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
                            int player2CurrentMP, int player2NumberOfCollectedFlags) {
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         if (this.turnNumber != turnNumber) {
             support.firePropertyChange("turn", this.turnNumber, turnNumber);
             this.turnNumber = turnNumber;
