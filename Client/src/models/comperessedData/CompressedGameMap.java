@@ -112,6 +112,9 @@ public class CompressedGameMap{
     }
 
     public void updateTroop(CompressedTroop troop) {//flag
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
         removeTroop(troop.getCard().getCardId());
         troops.add(troop);
@@ -119,6 +122,9 @@ public class CompressedGameMap{
     }
 
     public void killTroop(String cardId) {//flag
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
         for (CompressedTroop troop : troops) {
             if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 addFlagNum(troop.getPosition(), troop.getNumberOfCollectedFlags());
