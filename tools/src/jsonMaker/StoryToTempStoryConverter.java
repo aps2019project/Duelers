@@ -1,4 +1,3 @@
-/*
 package jsonMaker;
 
 import com.google.gson.Gson;
@@ -44,4 +43,3 @@ public class StoryToTempStoryConverter {
         }
     }
 }
-*/
