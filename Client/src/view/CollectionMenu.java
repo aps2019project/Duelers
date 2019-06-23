@@ -29,7 +29,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
     private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
-    private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 40 * SCALE, 0, 40 * SCALE);
+    private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 5 * SCALE, 0, 40 * SCALE);
     private static CollectionMenu menu;
     private VBox collectionBox;
     private ImageButton showCollectionButton;
@@ -61,6 +61,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             decksPane.setBackground(DECKS_BACKGROUND);
 
             StackPane newDeckButton = new ImageButton("NEW DECK", event -> showNewDeckDialog());
+            StackPane importDeckButton = new ImageButton("IMPORT DECK", event -> importDeck());
 
             decksBox = new VBox(DEFAULT_SPACING);
             decksBox.setAlignment(Pos.TOP_CENTER);
@@ -71,8 +72,9 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
 
             ScrollPane decksScroll = new ScrollPane(decksBox);
             decksScroll.setId("background_transparent");
+            decksScroll.setMaxHeight(SCENE_HEIGHT * 0.86);
 
-            decksPane.getChildren().addAll(newDeckButton, decksScroll);
+            decksPane.getChildren().addAll(newDeckButton, importDeckButton, decksScroll);
 
             collectionBox = new VBox(DEFAULT_SPACING * 4);
             collectionBox.setPadding(new Insets(DEFAULT_SPACING * 3));
@@ -85,7 +87,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             showCollectionCards();
 
             ScrollPane cardsScroll = new ScrollPane(cardsBox);
-            cardsScroll.setMinWidth(COLLECTION_WIDTH/*, SCROLL_HEIGHT*/);
+            cardsScroll.setMinWidth(COLLECTION_WIDTH);
             cardsScroll.setMaxWidth(COLLECTION_WIDTH);
             cardsScroll.setId("background_transparent");
 
@@ -107,6 +109,9 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void importDeck() {
     }
 
     public void showCollectionCards() throws FileNotFoundException {
