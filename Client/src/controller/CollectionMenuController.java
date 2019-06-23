@@ -2,6 +2,7 @@ package controller;
 
 import models.Constants;
 import models.account.Collection;
+import models.card.Deck;
 import models.message.Message;
 
 import java.beans.PropertyChangeListener;
@@ -31,16 +32,26 @@ public class CollectionMenuController {
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, deckName, 0));
     }
 
-    public void addCardToDeck(String deckName, String cardID) {
+    public void addCardToDeck(Deck deck, String cardName) {
+        String cardID = allShowingCards.canAddCardTo(cardName, deck);
+        if (cardID == null) {
+            Client.getInstance().getCurrentShow().showError("Can not add this card");
+            return;
+        }
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeAddCardToDeckMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, deckName, cardID, 0));
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, deck.getName(), cardID, 0));
     }
 
-    public void removeCardFromDeck(String deckName, String cardID) {
+    public void removeCardFromDeck(Deck deck, String cardName) {
+        String cardID = deck.getCard(cardName).getCardId();
+        if (cardID == null) {
+            Client.getInstance().getCurrentShow().showError("This card is not in this deck");
+            return;
+        }
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeRemoveCardFromDeckMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, deckName, cardID, 0));
+                        Client.getInstance().getClientName(), Constants.SERVER_NAME, deck.getName(), cardID, 0));
     }
 
     public void removeDeck(String deckName) {

@@ -32,6 +32,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 40 * SCALE, 0, 40 * SCALE);
     private static CollectionMenu menu;
     private Mode mode = Mode.COLLECTION;
+    private CollectionSearchBox searchBox;
     private VBox cardsBox;
     private VBox decksBox;
     private Collection showingCards;
@@ -78,25 +79,9 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             collectionBox.setMinSize(COLLECTION_WIDTH, SCENE_HEIGHT);
             collectionBox.setMaxSize(COLLECTION_WIDTH, SCENE_HEIGHT);
 
-            HBox searchBox = new CollectionSearchBox();
-
-            DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
-            CollectionCardsGrid heroesGrid = new CollectionCardsGrid(showingCards.getHeroes());
-
-            DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
-            CollectionCardsGrid minionsGrid = new CollectionCardsGrid(showingCards.getMinions());
-
-            DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
-            CollectionCardsGrid spellsGrid = new CollectionCardsGrid(showingCards.getSpells());
-
-            DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
-            CollectionCardsGrid itemsGrid = new CollectionCardsGrid(showingCards.getItems());
-
-            cardsBox = new VBox(DEFAULT_SPACING * 4,
-                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
-            );
-            cardsBox.setMinSize(COLLECTION_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
-            cardsBox.setAlignment(Pos.TOP_CENTER);
+            searchBox = new CollectionSearchBox();
+            cardsBox = new VBox(DEFAULT_SPACING * 4);
+            showCollectionCards();
 
             ScrollPane cardsScroll = new ScrollPane(cardsBox);
             cardsScroll.setMinSize(COLLECTION_WIDTH, SCROLL_HEIGHT);
@@ -113,6 +98,29 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showCollectionCards() throws FileNotFoundException {
+        searchBox.setVisible(true);
+        cardsBox.getChildren().clear();
+
+        DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
+        CollectionCardsGrid heroesGrid = new CollectionCardsGrid(showingCards.getHeroes());
+
+        DefaultLabel minionsLabel = new DefaultLabel("MINIONS", TITLE_FONT, Color.WHITE);
+        CollectionCardsGrid minionsGrid = new CollectionCardsGrid(showingCards.getMinions());
+
+        DefaultLabel spellsLabel = new DefaultLabel("SPELLS", TITLE_FONT, Color.WHITE);
+        CollectionCardsGrid spellsGrid = new CollectionCardsGrid(showingCards.getSpells());
+
+        DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
+        CollectionCardsGrid itemsGrid = new CollectionCardsGrid(showingCards.getItems());
+
+        cardsBox.getChildren().addAll(
+                heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+        );
+        cardsBox.setMinSize(COLLECTION_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
+        cardsBox.setAlignment(Pos.TOP_CENTER);
     }
 
     public static CollectionMenu getInstance() {
@@ -185,8 +193,19 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     public void modify(Deck deck) {
         try {
             cardsBox.getChildren().clear();
+            searchBox.setVisible(false);
             mode = Mode.MODIFYING;
             CollectionMenuController.getInstance().search("");
+
+            ImageButton backButton = new ImageButton("BACK", event -> {
+                try {
+                    showCollectionCards();
+                    mode = Mode.COLLECTION;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+
             DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
             DeckCardsGrid heroesGrid = new DeckCardsGrid(showingCards.getHeroes(), deck);
 
@@ -199,7 +218,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
             DeckCardsGrid itemsGrid = new DeckCardsGrid(showingCards.getItems(), deck);
             cardsBox.getChildren().addAll(
-                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+                    backButton, heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
             );
         } catch (FileNotFoundException e) {
             e.printStackTrace();

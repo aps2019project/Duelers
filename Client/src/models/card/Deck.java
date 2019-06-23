@@ -108,4 +108,33 @@ public class Deck {
                 return 0;
         }
     }
+
+    public boolean hasHero(Card hero) {
+        if (this.hero == null) return false;
+        return this.hero.equals(hero);
+    }
+
+    public boolean hasItem(Card item) {
+        if (this.item == null) return false;
+        return this.item.equals(item);
+    }
+
+    public boolean hasCard(Card other) {
+        for (Card card : others) {
+            if (card.equals(other)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Card getCard(String cardName) {
+        if (hero != null && hero.isSameAs(cardName)) return hero;
+        if (item != null && item.isSameAs(cardName)) return item;
+
+        for (Card other : others) {
+            if (other.isSameAs(cardName)) return other;
+        }
+        return null;
+    }
 }

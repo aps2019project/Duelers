@@ -10,6 +10,7 @@ import models.card.Card;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
 
 public class ShopCardsGrid extends GridPane {
@@ -17,17 +18,17 @@ public class ShopCardsGrid extends GridPane {
     private static final int COLUMN_NUMBER = 4;
 
     public ShopCardsGrid(ArrayList<Card> cards) throws FileNotFoundException {
-        setHgap(UIConstants.DEFAULT_SPACING * 5);
-        setVgap(UIConstants.DEFAULT_SPACING * 5);
+        setHgap(DEFAULT_SPACING * 5);
+        setVgap(DEFAULT_SPACING * 5);
 
         for (int i = 0; i < cards.size(); i++) {
             final Card card = cards.get(i);
-            VBox shopCardBox = new VBox(-UIConstants.DEFAULT_SPACING);
+            VBox shopCardBox = new VBox(-DEFAULT_SPACING);
             shopCardBox.setAlignment(Pos.CENTER);
 
             CardPane cardPane = new CardPane(card, true, true, null);
 
-            HBox buttonsBox = new HBox(UIConstants.DEFAULT_SPACING,
+            HBox buttonsBox = new HBox(DEFAULT_SPACING,
                     new OrangeButton("BUY", event -> ShopController.getInstance().buy(card.getName())),
                     new OrangeButton("SELL", event -> ShopController.getInstance().sell(card.getName()))
             );

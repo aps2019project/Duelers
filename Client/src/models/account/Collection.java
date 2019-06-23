@@ -1,6 +1,7 @@
 package models.account;
 
 import models.card.Card;
+import models.card.Deck;
 
 import java.util.ArrayList;
 
@@ -140,5 +141,29 @@ public class Collection {
             }
             newList.add(hero);
         }
+    }
+
+    public String canAddCardTo(String cardName, Deck deck) {
+        for (Card hero : heroes) {
+            if (hero.isSameAs(cardName) && !deck.hasHero(hero)) {
+                return hero.getCardId();
+            }
+        }
+        for (Card item : items) {
+            if (item.isSameAs(cardName) && !deck.hasItem(item)) {
+                return item.getCardId();
+            }
+        }
+        for (Card minion : minions) {
+            if (minion.isSameAs(cardName) && !deck.hasCard(minion)) {
+                return minion.getCardId();
+            }
+        }
+        for (Card spell : spells) {
+            if (spell.isSameAs(cardName) && !deck.hasCard(spell)) {
+                return spell.getCardId();
+            }
+        }
+        return null;
     }
 }

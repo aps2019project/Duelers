@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 
 public class DeckCardPane extends CardPane {
 
-    DeckCardPane(Card card, Deck deck) throws FileNotFoundException {
+    DeckCardPane(ICard card, Deck deck) throws FileNotFoundException {
         super(card, false, true, deck);
     }
 
@@ -33,5 +33,9 @@ public class DeckCardPane extends CardPane {
                 );
             }
         }
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 }
