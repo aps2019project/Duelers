@@ -33,7 +33,7 @@ public class CollectionMenuController {
     }
 
     public void addCardToDeck(Deck deck, String cardName) {
-        String cardID = allShowingCards.canAddCardTo(cardName, deck);
+        String cardID = Client.getInstance().getAccount().getCollection().canAddCardTo(cardName, deck);
         if (cardID == null) {
             Client.getInstance().getCurrentShow().showError("Can not add this card");
             return;
