@@ -6,19 +6,20 @@ import server.detaCenter.models.card.Card;
 import java.util.ArrayList;
 
 public class GameAnimations {
-    private ArrayList<Card> attackers;
-    private ArrayList<Card> defenders;
-    private ArrayList<SpellAnimation> spellAnimations;
+    private ArrayList<String> attackers = new ArrayList<>();
+    private ArrayList<String> defenders = new ArrayList<>();
+    private ArrayList<SpellAnimation> spellAnimations = new ArrayList<>();
 
-    public ArrayList<Card> getAttackers() {
-        return attackers;
+    public void addAtteacker(String cardID){
+        attackers.add(cardID);
     }
 
-    public ArrayList<Card> getDefenders() {
-        return defenders;
+    public void addDefender(String cardID){
+        defenders.add(cardID);
     }
 
-    public ArrayList<SpellAnimation> getSpellAnimations() {
-        return spellAnimations;
+    public void addSpellAnime(SpellAnimation spellAnimations){
+
     }
+
 }
