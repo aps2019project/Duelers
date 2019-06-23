@@ -1,6 +1,7 @@
 package server.clientPortal;
 
 import server.Server;
+import server.detaCenter.DataCenter;
 
 import java.net.Socket;
 import java.util.Formatter;
@@ -42,8 +43,9 @@ public class ClientListener extends Thread {
                 ClientPortal.getInstance().addMessage(name, message);
             }
         } catch (Exception e) {
-            Server.getInstance().serverPrint("Error ClientListener!");
+            DataCenter.getInstance().deleteClient(name);
             ClientPortal.getInstance().removeClient(name);
+            Server.getInstance().serverPrint("Client disConnected!");
         }
     }
 }

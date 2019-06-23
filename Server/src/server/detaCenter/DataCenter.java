@@ -130,6 +130,13 @@ public class DataCenter extends Thread {
         }
     }
 
+    public void deleteClient(String clientName){
+        if(clients.get(clientName)!=null)
+            accounts.replace(clients.get(clientName),null);
+        clients.remove(clientName);
+        //TODO(do with logout)
+    }
+
     public void logout(Message message) throws LogicException {
         loginCheck(message);
         accounts.replace(clients.get(message.getSender()), null);
