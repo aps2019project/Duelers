@@ -149,6 +149,9 @@ public class GameController implements GameActions {
     }
 
     public void showAnimation(GameAnimations gameAnimations){
-
+        for (:
+             ) {
+            
+        }
     }
 }
