@@ -295,6 +295,28 @@ public class Server {
         }
     }
 
+    public void sendAttackMessage(Game game, Troop attacker , Troop defender) {
+        String clientName;
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
+                serverPrint("player one has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeAttackMessage(
+                        serverName, clientName, attacker , defender, 0));
+            }
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
+                serverPrint("player two has logged out during game!");
+            }  else {
+                addToSendingMessages(Message.makeAttackMessage(
+                        serverName, clientName, attacker , defender, 0));
+            }
+        }
+    }
+
     public void sendGameUpdateMessage(Game game) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
