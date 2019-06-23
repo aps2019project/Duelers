@@ -5,19 +5,19 @@ import models.card.Card;
 import java.util.ArrayList;
 
 public class GameAnimations {
-    private ArrayList<Card> attackers;
-    private ArrayList<Card> defenders;
-    private ArrayList<SpellAnimation> spellAnimations;
+    private ArrayList<CardAnimation> attackers;
+    private ArrayList<CardAnimation> defenders;
+    private ArrayList<CardAnimation> spellAnimations;
 
-    public ArrayList<Card> getAttackers() {
+    public ArrayList<CardAnimation> getAttackers() {
         return attackers;
     }
 
-    public ArrayList<Card> getDefenders() {
+    public ArrayList<CardAnimation> getDefenders() {
         return defenders;
     }
 
-    public ArrayList<SpellAnimation> getSpellAnimations() {
+    public ArrayList<CardAnimation> getSpellAnimations() {
         return spellAnimations;
     }
 }
