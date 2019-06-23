@@ -2,6 +2,7 @@ package models.comperessedData;
 
 import models.card.CardType;
 import models.game.GameType;
+import models.message.GameAnimations;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -146,4 +147,5 @@ public class CompressedGame {
             return playerTwo;
         }
     }
+
 }

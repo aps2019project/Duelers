@@ -24,7 +24,7 @@ public class Message {
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
-
+    private GameAnimations gameAnimations;
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
@@ -280,6 +280,10 @@ public class Message {
 
     public ExceptionMessage getExceptionMessage() {
         return exceptionMessage;
+    }
+
+    public GameAnimations getGameAnimations() {
+        return gameAnimations;
     }
 
     public OpponentInfoMessage getOpponentInfoMessage() {

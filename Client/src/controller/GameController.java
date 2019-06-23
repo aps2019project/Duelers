@@ -2,7 +2,6 @@ package controller;
 
 import models.Constants;
 import models.card.AttackType;
-import models.card.Card;
 import models.card.CardType;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGame;
@@ -11,6 +10,7 @@ import models.exceptions.InputException;
 import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
 import models.game.map.Position;
+import models.message.GameAnimations;
 import models.message.Message;
 import view.BattleView.BattleScene;
 
@@ -21,6 +21,7 @@ public class GameController implements GameActions {
     private static GameController ourInstance;
     private CompressedGame currentGame;
     private AvailableActions availableActions = new AvailableActions();
+    BattleScene battleScene;
 
     private GameController() {
     }
@@ -46,9 +47,9 @@ public class GameController implements GameActions {
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
         int playerNumber = getPlayerNumber(currentGame);
         try {
-            BattleScene battleScene = new BattleScene(this, currentGame ,playerNumber);
+            battleScene = new BattleScene(this, currentGame, playerNumber);
             battleScene.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -147,4 +148,7 @@ public class GameController implements GameActions {
         );
     }
 
+    public void showAnimation(GameAnimations gameAnimations){
+
+    }
 }
