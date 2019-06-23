@@ -27,6 +27,7 @@ public class Deck {
         if (obj == null) return false;
         if (obj instanceof Deck) {
             Deck deck = (Deck) obj;
+            if (!deckName.equals(deck.getName())) return false;
             if (hero == null ^ deck.hero == null) return false;
             if (hero != null && !hero.equals(deck.hero)) return false;
 
@@ -41,6 +42,7 @@ public class Deck {
         }
         if (obj instanceof TempDeck) {
             TempDeck deck = (TempDeck) obj;
+            if (!deckName.equals(deck.getDeckName())) return false;
             if (hero == null ^ deck.getHeroId() == null) return false;
             if (hero != null && !hero.getCardId().equalsIgnoreCase(deck.getHeroId())) return false;
 
@@ -48,12 +50,8 @@ public class Deck {
             if (item != null && !item.getCardId().equalsIgnoreCase(deck.getItemId())) return false;
 
             if (others.size() != deck.getOthersIds().size()) return false;
-            Outer:
-            for (String otherId : deck.getOthersIds()) {
-                for (Card other : others) {
-                    if (other.getCardId().equalsIgnoreCase(otherId)) continue Outer;
-                }
-                return false;
+            for (Card other : others) {
+                if (!deck.getOthersIds().contains(other.getCardId())) return false;
             }
             return true;
         }
