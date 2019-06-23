@@ -4,7 +4,7 @@ import models.game.map.Position;
 
 import java.util.Observable;
 
-public class CompressedCell/* extends Observable */{
+public class CompressedCell{
     private int row;
     private int column;
     private CompressedCard item;//non flag item
@@ -38,20 +38,14 @@ public class CompressedCell/* extends Observable */{
 
     public void addNumberOfFlags(int addition) {
         this.numberOfFlags += addition;
-//        setChanged();
-//        notifyObservers();
     }
 
     public void removeFlags() {
         this.numberOfFlags = 0;
-//        setChanged();
-//        notifyObservers();
     }
 
     public void removeItem() {
         item = null;
-//        setChanged();
-//        notifyObservers();
     }
 
     public int manhattanDistance(CompressedCell cell) {

@@ -10,7 +10,7 @@ import models.game.map.Position;
 
 import java.util.ArrayList;
 
-public class Controller extends Application implements GameActions {
+public class BattleSceneTester extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
     private BattleScene battleScene;
@@ -71,8 +71,9 @@ public class Controller extends Application implements GameActions {
                         true, true, false, false, 1, 1);
                 myPlayer.addCardToNext(card);
                 map.updateTroop(troop);
-                card = new CompressedCard("boss_andromeda", null, "a3", CardType.MINION,
-                        null, 0, 0, 0, null, 2, true);
+                card = new CompressedCard("boss_andromeda", null, "a3", CardType.HERO,
+                        new CompressedSpell("a", null, null, 0, 2, 3),
+                        0, 0, 0, null, 2, true);
                 troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 3),
                         true, true, false, false, 1, 1);
                 map.updateTroop(troop);
@@ -144,6 +145,7 @@ public class Controller extends Application implements GameActions {
         battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber() + 1, 3,
                 0, 3, 0);
         System.out.println("end turn");
+        System.out.println("new turn:" + battleScene.getGame().getTurnNumber());
     }
 
     @Override

@@ -205,8 +205,12 @@ public class MapBox implements PropertyChangeListener {
             return;
         if (card == null) {
             if (troop == null) {
-                if (selectedTroop != null)
-                    cells[j][i].setFill(Color.DARKGREEN);
+                if (selectedTroop != null){
+                    if (spellSelected) {
+                        cells[j][i].setFill(Color.DEEPPINK);//spell
+                    }else
+                        cells[j][i].setFill(Color.DARKGREEN);//move
+                }
             } else {
                 if (selectedTroop == null) {
                     if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber())
@@ -216,8 +220,7 @@ public class MapBox implements PropertyChangeListener {
                         cells[j][i].setFill(Color.DARKGREEN);
                     } else {
                         if (spellSelected) {
-                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber())
-                                cells[j][i].setFill(Color.DARKRED);
+                                cells[j][i].setFill(Color.DEEPPINK);
                         } else {
                             if (comboSelected) {
                                 if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo())
@@ -238,7 +241,7 @@ public class MapBox implements PropertyChangeListener {
             }
         } else {
             if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                cells[j][i].setFill(Color.PINK);
+                cells[j][i].setFill(Color.DEEPPINK);
             } else {
                 if (troop == null)
                     cells[j][i].setFill(Color.DARKGREEN);
@@ -253,9 +256,14 @@ public class MapBox implements PropertyChangeListener {
             return;
         if (card == null) {
             if (troop == null) {
-                if (selectedTroop != null) {
-                    battleScene.getController().move(selectedTroop, j, i);
-                    resetSelection();
+                if (selectedTroop != null){
+                    if (spellSelected) {
+                        battleScene.getController().useSpecialPower(i, j);
+                        resetSelection();
+                    }else{
+                        battleScene.getController().move(selectedTroop, j, i);
+                        resetSelection();
+                    }
                 }
             } else {
                 if (selectedTroop == null) {
@@ -269,10 +277,8 @@ public class MapBox implements PropertyChangeListener {
                         System.out.println("diSelect Troop");
                     } else {
                         if (spellSelected) {
-                            if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
                                 battleScene.getController().useSpecialPower(i, j);
                                 resetSelection();
-                            }
                         } else {
                             if (comboSelected) {
                                 if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo()) {

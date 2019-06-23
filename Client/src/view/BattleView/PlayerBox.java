@@ -6,8 +6,10 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import models.card.CardType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
+import models.comperessedData.CompressedTroop;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,7 +22,8 @@ public class PlayerBox implements PropertyChangeListener {
     private final Group mpGroup;
     private ImageView player1Image;
     private ImageView player2Image;
-    private ImageView comboImage;
+    private ImageView comboButton;
+    private ImageView spellButton;
 
     public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
@@ -32,6 +35,7 @@ public class PlayerBox implements PropertyChangeListener {
         group.getChildren().add(mpGroup);
         updateMP(7);
         addComboButton();
+        addSpellButton();
         game.addPropertyChangeListener(this);
     }
 
@@ -52,35 +56,112 @@ public class PlayerBox implements PropertyChangeListener {
 
     public void refreshComboAndSpell() {
         try {
-            comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+            comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+            spellButton.setImage(new Image(new FileInputStream("resources/ui/quests@2x.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addSpellButton() throws Exception {
+        spellButton = new ImageView(new Image(new FileInputStream("resources/ui/quests@2x.png")));
+        spellButton.setFitWidth(spellButton.getImage().getWidth() * Constants.SCALE * 0.75);
+        spellButton.setFitHeight(spellButton.getImage().getHeight() * Constants.SCALE * 0.75);
+        spellButton.setY(Constants.SCALE * (325));
+        if (battleScene.getMyPlayerNumber() == 1)
+            spellButton.setX(Constants.SCALE * (180));
+        else
+            spellButton.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (180) - spellButton.getFitWidth());
+        group.getChildren().add(spellButton);
+        spellButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverSpellButton();
+            }
+        });
+        spellButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                exitSpellButton();
+            }
+        });
+        spellButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                clickSpellButton();
+            }
+        });
+    }
+
+    private void exitSpellButton() {
+        try {
+            if (battleScene.getMapBox().isSpellSelected())
+                spellButton.setImage(new Image(new FileInputStream("resources/ui/quests_glow@2x.png")));
+            else
+                spellButton.setImage(new Image(new FileInputStream("resources/ui/quests@2x.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void hoverSpellButton() {
+        try {
+            CompressedTroop troop = battleScene.getMapBox().getSelectedTroop();
+            if (battleScene.isMyTurn() && troop != null && troop.getCard().getType() == CardType.HERO
+                    && troop.getCard().getSpell() != null &&
+                    troop.getCard().getSpell().getCoolDown() + troop.getCard().getSpell().getLastTurnUsed() <=
+                            battleScene.getGame().getTurnNumber())
+                spellButton.setImage(new Image(new FileInputStream("resources/ui/quests_glow@2x.png")));
+            else
+                spellButton.setImage(new Image(new FileInputStream("resources/ui/quests@2x.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clickSpellButton() {
+        try {
+            CompressedTroop troop = battleScene.getMapBox().getSelectedTroop();
+            if (battleScene.isMyTurn() && troop != null && troop.getCard().getType() == CardType.HERO
+                    && troop.getCard().getSpell() != null &&
+                    troop.getCard().getSpell().getCoolDown() + troop.getCard().getSpell().getLastTurnUsed() <=
+                            battleScene.getGame().getTurnNumber()) {
+                if (battleScene.getMapBox().isSpellSelected()) {
+                    battleScene.getMapBox().resetSelection();
+                    spellButton.setImage(new Image(new FileInputStream("resources/ui/quests@2x.png")));
+                } else {
+                    battleScene.getMapBox().setSpellSelected(true);
+                    spellButton.setImage(new Image(new FileInputStream("resources/ui/quests_glow@2x.png")));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void addComboButton() throws Exception {
-        comboImage = new ImageView(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
-        comboImage.setFitWidth(comboImage.getImage().getWidth() * Constants.SCALE * 0.3);
-        comboImage.setFitHeight(comboImage.getImage().getHeight() * Constants.SCALE * 0.3);
-        comboImage.setY(Constants.SCALE * (260));
+        comboButton = new ImageView(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+        comboButton.setFitWidth(comboButton.getImage().getWidth() * Constants.SCALE * 0.3);
+        comboButton.setFitHeight(comboButton.getImage().getHeight() * Constants.SCALE * 0.3);
+        comboButton.setY(Constants.SCALE * (260));
         if (battleScene.getMyPlayerNumber() == 1)
-            comboImage.setX(Constants.SCALE * (230));
+            comboButton.setX(Constants.SCALE * (230));
         else
-            comboImage.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (230) - comboImage.getFitWidth());
-        group.getChildren().add(comboImage);
-        comboImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            comboButton.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (230) - comboButton.getFitWidth());
+        group.getChildren().add(comboButton);
+        comboButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 hoverComboButton();
             }
         });
-        comboImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+        comboButton.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 exitComboButton();
             }
         });
-        comboImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        comboButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 clickComboButton();
@@ -91,22 +172,21 @@ public class PlayerBox implements PropertyChangeListener {
     private void exitComboButton() {
         try {
             if (battleScene.getMapBox().isComboSelected())
-                comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
+                comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
             else
-                comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+                comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(battleScene.getMapBox().isComboSelected());
     }
 
     private void hoverComboButton() {
         try {
             if (battleScene.isMyTurn() && battleScene.getMapBox().getSelectedTroop() != null &&
                     battleScene.getMapBox().getSelectedTroop().getCard().isHasCombo())
-                comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
+                comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
             else
-                comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+                comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,10 +198,10 @@ public class PlayerBox implements PropertyChangeListener {
                     battleScene.getMapBox().getSelectedTroop().getCard().isHasCombo()) {
                 if (battleScene.getMapBox().isComboSelected()) {
                     battleScene.getMapBox().resetSelection();
-                    comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+                    comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
                 } else {
                     battleScene.getMapBox().setComboSelected(true);
-                    comboImage.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
+                    comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
                 }
             }
         } catch (Exception e) {
