@@ -2,15 +2,15 @@ package models.message;
 
 import models.game.map.Position;
 
-public class SpellAnimation {
+public class CardAnimation {
     private Position position;
-    private String spriteName;
+    private String id;
 
     public Position getPosition() {
         return position;
     }
 
-    public String getSpriteName() {
-        return spriteName;
+    public String getID() {
+        return id;
     }
 }
