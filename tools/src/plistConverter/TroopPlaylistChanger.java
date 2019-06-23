@@ -18,6 +18,7 @@ public class TroopPlaylistChanger {
                 if (!file.getName().contains(".json")) continue;
                 if (file.getName().contains("boss_andromeda")) continue;
                 if (file.getName().contains("boss_decepticlechassis")) continue;
+                if (file.getName().contains("boss_chaosknight")) continue;
                 Playlist playlist = gson.fromJson(new FileReader(file), Playlist.class);
                 playlist.extraX = 75;
                 playlist.extraY = 75;

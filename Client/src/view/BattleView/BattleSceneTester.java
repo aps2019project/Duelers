@@ -65,13 +65,13 @@ public class BattleSceneTester extends Application implements GameActions {
                 myPlayer.addNextCardToHand();
                 myPlayer.removeCardFromNext();
                 game.gameUpdate(11, 4, 0, 4, 0);
-                card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
+                card = new CompressedCard("boss_chaosknight", null, "a1", CardType.MINION,
                         null, 0, 0, 0, null, 2, true);
                 CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
                         true, true, false, false, 1, 1);
                 myPlayer.addCardToNext(card);
                 map.updateTroop(troop);
-                card = new CompressedCard("boss_andromeda", null, "a3", CardType.HERO,
+                card = new CompressedCard("boss_chaosknight", null, "a3", CardType.HERO,
                         new CompressedSpell("a", null, null, 0, 2, 3),
                         0, 0, 0, null, 2, true);
                 troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 3),
@@ -83,7 +83,7 @@ public class BattleSceneTester extends Application implements GameActions {
                     e.printStackTrace();
                 }
                 myPlayer.addNextCardToHand();
-                card = new CompressedCard("boss_chaosknight", null, "a2", null,
+                card = new CompressedCard("boss_andromeda", null, "a2", null,
                         null, 0, 0, 0, null, 2, true);
                 troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 4),
                         true, true, false, false, 1, 2);
@@ -124,15 +124,16 @@ public class BattleSceneTester extends Application implements GameActions {
 
     @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
-        battleScene.getMapBox().getTroopAnimationHashMap().get(selectedTroop).attack(troop.getPosition().getColumn());
-        System.out.println("Attack");
+        battleScene.attack(selectedTroop.getCard().getCardId(), troop.getPosition());
+        battleScene.defend(troop.getCard().getCardId(), selectedTroop.getPosition());
     }
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
-        for (CompressedTroop comboAttacker : comboTroops)
-            battleScene.getMapBox().getTroopAnimationHashMap().get(comboAttacker).attack(troop.getPosition().getColumn());
-        System.out.println("Attack Combo");
+        for (CompressedTroop comboAttacker : comboTroops) {
+            battleScene.attack(comboAttacker.getCard().getCardId(), troop.getPosition());
+        }
+        battleScene.defend(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getPosition());
     }
 
     @Override

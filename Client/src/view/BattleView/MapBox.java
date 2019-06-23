@@ -30,7 +30,7 @@ public class MapBox implements PropertyChangeListener {
     private boolean spellSelected = false;
     private boolean comboSelected = false;
 
-    public MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
+    MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
         this.gameMap = gameMap;
         mapGroup = new Group();
@@ -144,7 +144,7 @@ public class MapBox implements PropertyChangeListener {
         resetSelection();
     }
 
-    public Group getMapGroup() {
+    Group getMapGroup() {
         return mapGroup;
     }
 
@@ -159,7 +159,7 @@ public class MapBox implements PropertyChangeListener {
         }
     }
 
-    public void resetSelection() {
+    void resetSelection() {
         selectedTroop = null;
         comboTroops.clear();
         spellSelected = false;
@@ -320,31 +320,55 @@ public class MapBox implements PropertyChangeListener {
         return null;
     }
 
-    public CompressedTroop getSelectedTroop() {
+    CompressedTroop getSelectedTroop() {
         return selectedTroop;
     }
 
-    public void setSpellSelected(boolean spellSelected) {
+    void setSpellSelected(boolean spellSelected) {
         this.spellSelected = spellSelected;
     }
 
-    public void setComboSelected(boolean comboSelected) {
+    void setComboSelected(boolean comboSelected) {
         this.comboSelected = comboSelected;
     }
 
-    public boolean isSpellSelected() {
+    boolean isSpellSelected() {
         return spellSelected;
     }
 
-    public boolean isComboSelected() {
+    boolean isComboSelected() {
         return comboSelected;
     }
 
-    public HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
+    HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
         return troopAnimationHashMap;
     }
 
-    public CompressedGameMap getGameMap() {
+    CompressedGameMap getGameMap() {
         return gameMap;
+    }
+
+    void showAttack(String cardId, int i) {
+        CompressedTroop troop = gameMap.getTroop(cardId);
+        if (troop == null)
+            System.out.println("Error");
+        TroopAnimation animation = troopAnimationHashMap.get(troop);
+        if (animation == null)
+            System.out.println("Error");
+        animation.attack(i);
+    }
+
+    void showDefend(String cardId, int i) {
+        CompressedTroop troop = gameMap.getTroop(cardId);
+        if (troop == null)
+            System.out.println("Error");
+        TroopAnimation animation = troopAnimationHashMap.get(troop);
+        if (animation == null)
+            System.out.println("Error");
+        animation.hit(i);
+    }
+
+    void showSpell(String spriteName, int j, int i) {
+        //TODO
     }
 }

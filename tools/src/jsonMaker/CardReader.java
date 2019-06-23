@@ -1,4 +1,3 @@
-/*
 package jsonMaker;
 
 import com.google.gson.GsonBuilder;
@@ -65,4 +64,3 @@ public class CardReader {
         }
     }
 }
-*/
