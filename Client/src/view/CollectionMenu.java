@@ -31,7 +31,8 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 40 * SCALE, 0, 40 * SCALE);
     private static CollectionMenu menu;
-    private Mode mode = Mode.COLLECTION;
+    private VBox collectionBox;
+    private ImageButton showCollectionButton;
     private CollectionSearchBox searchBox;
     private VBox cardsBox;
     private VBox decksBox;
@@ -73,7 +74,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
 
             decksPane.getChildren().addAll(newDeckButton, decksScroll);
 
-            VBox collectionBox = new VBox(DEFAULT_SPACING * 4);
+            collectionBox = new VBox(DEFAULT_SPACING * 4);
             collectionBox.setPadding(new Insets(DEFAULT_SPACING * 3));
             collectionBox.setAlignment(Pos.CENTER);
             collectionBox.setMinSize(COLLECTION_WIDTH, SCENE_HEIGHT);
@@ -84,9 +85,17 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             showCollectionCards();
 
             ScrollPane cardsScroll = new ScrollPane(cardsBox);
-            cardsScroll.setMinSize(COLLECTION_WIDTH, SCROLL_HEIGHT);
+            cardsScroll.setMinWidth(COLLECTION_WIDTH/*, SCROLL_HEIGHT*/);
             cardsScroll.setMaxWidth(COLLECTION_WIDTH);
             cardsScroll.setId("background_transparent");
+
+            showCollectionButton = new ImageButton("BACK", event -> {
+                try {
+                    showCollectionCards();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
 
             collectionBox.getChildren().addAll(searchBox, cardsScroll);
 
@@ -100,8 +109,9 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         }
     }
 
-    private void showCollectionCards() throws FileNotFoundException {
+    public void showCollectionCards() throws FileNotFoundException {
         searchBox.setVisible(true);
+        collectionBox.getChildren().remove(showCollectionButton);
         cardsBox.getChildren().clear();
 
         DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
@@ -193,18 +203,10 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     public void modify(Deck deck) {
         try {
             cardsBox.getChildren().clear();
+            collectionBox.getChildren().remove(showCollectionButton);
+            collectionBox.getChildren().add(0, showCollectionButton);
             searchBox.setVisible(false);
-            mode = Mode.MODIFYING;
             CollectionMenuController.getInstance().search("");
-
-            ImageButton backButton = new ImageButton("BACK", event -> {
-                try {
-                    showCollectionCards();
-                    mode = Mode.COLLECTION;
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            });
 
             DefaultLabel heroesLabel = new DefaultLabel("HEROES", TITLE_FONT, Color.WHITE);
             DeckCardsGrid heroesGrid = new DeckCardsGrid(showingCards.getHeroes(), deck);
@@ -218,7 +220,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             DefaultLabel itemsLabel = new DefaultLabel("ITEMS", TITLE_FONT, Color.WHITE);
             DeckCardsGrid itemsGrid = new DeckCardsGrid(showingCards.getItems(), deck);
             cardsBox.getChildren().addAll(
-                    backButton, heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
+                    heroesLabel, heroesGrid, minionsLabel, minionsGrid, spellsLabel, spellsGrid, itemsLabel, itemsGrid
             );
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -25,6 +25,10 @@ public class DeckCardPane extends CardPane {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("decks")) {
             deck = Client.getInstance().getAccount().getDeck(deck.getName());
+            if (deck == null) {
+                Client.getInstance().getAccount().removePropertyChangeListener(this);
+                return;
+            }
             int newCount = deck.count(card);
             if (newCount != oldCount) {
                 oldCount = newCount;

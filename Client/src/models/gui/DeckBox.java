@@ -92,7 +92,14 @@ public class DeckBox extends GridPane {
             remove.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
-        remove.setOnMouseClicked(event -> CollectionMenuController.getInstance().removeDeck(deck.getName()));
+        remove.setOnMouseClicked(event -> {
+            CollectionMenuController.getInstance().removeDeck(deck.getName());
+            try {
+                CollectionMenu.getInstance().showCollectionCards();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
 
         export.setOnMouseEntered(event -> {
             export.setEffect(ICON_SHADOW);
