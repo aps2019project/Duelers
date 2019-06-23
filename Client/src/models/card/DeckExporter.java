@@ -9,10 +9,10 @@ import java.io.IOException;
 public class DeckExporter {
     private static final String DIRECTORY_NAME = "exported_decks";
     private static final String FORMAT = ".deck.json";
-    private TempDeck deck;
+    private ExportedDeck deck;
 
     public DeckExporter(Deck deck) {
-        this.deck = new TempDeck(deck);
+        this.deck = new ExportedDeck(deck);
     }
 
     public void export() {
@@ -23,13 +23,13 @@ public class DeckExporter {
         File[] files = directory.listFiles();
         if (files != null) {
             int counter = 1;
-            String name = deck.getDeckName();
+            String name = deck.getName();
             outer:
             while (files.length > 0) {
                 for (File file : files) {
                     if (file.getName().equals(name + FORMAT)) {
                         counter++;
-                        name = deck.getDeckName() + counter;
+                        name = deck.getName() + counter;
                         continue outer;
                     }
                 }

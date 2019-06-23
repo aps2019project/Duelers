@@ -38,10 +38,6 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private VBox decksBox;
     private Collection showingCards;
 
-    enum Mode {
-        COLLECTION, MODIFYING
-    }
-
     CollectionMenu() {
         menu = this;
         setCollectionCards();
