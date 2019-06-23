@@ -7,6 +7,7 @@ import server.detaCenter.models.card.Card;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
+import server.gameCenter.models.map.Position;
 
 public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private MessageType messageType;
@@ -27,7 +28,7 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private ExceptionMessage exceptionMessage;
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
-
+    private GameAnimations gameAnimations;
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
@@ -92,6 +93,16 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         message.messageType = MessageType.CARD_POSITION;
         return message;
     }
+
+    public static Message makeAttackMessage(String sender, String receiver, Troop attacker, Troop defender, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.gameAnimations = new GameAnimations();
+        message.gameAnimations.addAtteacker(attacker.getCard().getCardId(), new Position(defender.getCell()));
+        message.gameAnimations.addDefender(defender.getCard().getCardId(), new Position(attacker.getCell()));
+        message.messageType = MessageType.ANIMATION;
+        return message;
+    }
+
 
     public static Message makeTroopUpdateMessage(String sender, String receiver, Troop troop, int messageId) {
         Message message = new Message(sender, receiver, messageId);

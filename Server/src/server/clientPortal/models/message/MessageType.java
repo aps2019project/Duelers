@@ -14,7 +14,7 @@ public enum MessageType {
     GAME_UPDATE,
     Game_FINISH,
     DONE,
-
+    ANIMATION,
     //SENDER:CLIENT
     GET_DATA,
     MOVE_TROOP,
