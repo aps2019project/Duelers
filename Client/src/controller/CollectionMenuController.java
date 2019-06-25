@@ -2,19 +2,22 @@ package controller;
 
 import models.Constants;
 import models.account.Collection;
+import models.card.Card;
 import models.card.Deck;
 import models.message.Message;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CollectionMenuController {
+public class CollectionMenuController implements PropertyChangeListener {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private static CollectionMenuController ourInstance;
     private Collection allShowingCards;
     private Collection currentShowingCards;
 
     private CollectionMenuController() {
+        Client.getInstance().getAccount().addPropertyChangeListener(this);
         allShowingCards = Client.getInstance().getAccount().getCollection().toShowing();
         currentShowingCards = allShowingCards;
     }
@@ -44,11 +47,12 @@ public class CollectionMenuController {
     }
 
     public void removeCardFromDeck(Deck deck, String cardName) {
-        String cardID = deck.getCard(cardName).getCardId();
-        if (cardID == null) {
+        Card card = deck.getCard(cardName);
+        if (card == null) {
             Client.getInstance().getCurrentShow().showError("This card is not in this deck");
             return;
         }
+        String cardID = card.getCardId();
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeRemoveCardFromDeckMessage(
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, deck.getName(), cardID, 0));
@@ -82,5 +86,13 @@ public class CollectionMenuController {
 
     public Collection getCurrentShowingCards() {
         return currentShowingCards;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("collection")) {
+            this.allShowingCards = ((Collection) evt.getNewValue()).toShowing();
+            this.currentShowingCards = allShowingCards;
+        }
     }
 }
