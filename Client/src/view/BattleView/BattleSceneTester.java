@@ -69,7 +69,7 @@ public class BattleSceneTester extends Application implements GameActions {
                     true, true, false, false, 1, 1);
             myPlayer.addCardToNext(card);
             map.updateTroop(troop);
-            String s = "boss_umbra";
+            String s = "boss_wolfpunch";
             card = new CompressedCard(s, null, "a3", CardType.HERO,
                     new CompressedSpell("a", null, null, 0, 2, 3),
                     0, 0, 0, null, 2, true);
