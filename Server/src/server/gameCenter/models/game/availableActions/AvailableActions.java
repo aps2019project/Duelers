@@ -99,6 +99,7 @@ public class AvailableActions {
         Troop hero = ownPlayer.getHero();
 
         if (hero != null) {
+            if (hero.getCard().getSpells().isEmpty()) return;
             Spell spell = hero.getCard().getSpells().get(0);
 
             if (spell != null && !spell.isCoolDown(game.getTurnNumber()) && spell.getMannaPoint() <= ownPlayer.getCurrentMP()) {
