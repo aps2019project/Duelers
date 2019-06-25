@@ -58,7 +58,7 @@ public class CompressedGame {
         if (card.getType() == CardType.HERO || card.getType() == CardType.MINION) {
             CompressedTroop troop = gameMap.getTroop(card.getCardId());
             if (troop == null) {
-                System.out.println("Client Game Error!");
+                System.out.println("Client Game Error!!");
             } else {
                 player = getPlayer(troop.getPlayerNumber());
                 player.removeTroop(card.getCardId());

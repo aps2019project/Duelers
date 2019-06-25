@@ -87,7 +87,8 @@ public class GameController implements GameActions {
             );
             Client.getInstance().addToSendingMessagesAndSend(message);
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
     }
