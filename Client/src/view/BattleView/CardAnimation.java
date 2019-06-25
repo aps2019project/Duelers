@@ -42,8 +42,8 @@ public class CardAnimation extends Transition {
                 playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
                 activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
                 inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
-                extraX = 28 * Constants.SCALE;
-                extraY = 28 * Constants.SCALE;
+                extraX = 38  * Constants.SCALE;
+                extraY = 31 * Constants.SCALE;
                 break;
             default:
                 image = new Image(new FileInputStream("resources/troopAnimations/" + card.getSpriteName() + ".png"));
