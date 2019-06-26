@@ -94,11 +94,12 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
-    public static Message makeAttackMessage(String sender, String receiver, Troop attacker, Troop defender, int messageId) {
+    public static Message makeAttackMessage(String sender, String receiver, Troop attacker, Troop defender, boolean counterAttack, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.gameAnimations = new GameAnimations();
-        message.gameAnimations.addAtteacker(attacker.getCard().getCardId(), new Position(defender.getCell()));
-        message.gameAnimations.addDefender(defender.getCard().getCardId(), new Position(attacker.getCell()));
+        message.gameAnimations.addAttacker(attacker.getCard().getCardId(), new Position(defender.getCell()));
+        if (counterAttack)
+            message.gameAnimations.addAttacker(defender.getCard().getCardId(), new Position(attacker.getCell()));
         message.messageType = MessageType.ANIMATION;
         return message;
     }

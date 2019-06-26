@@ -349,23 +349,29 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showAttack(String cardId, int i) {
+        if (cardId == null)
+            System.out.println("EEEE");
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error");
+            System.out.println("Error1  "+ cardId);
         TroopAnimation animation = troopAnimationHashMap.get(troop);
         if (animation == null)
-            System.out.println("Error");
-        animation.attack(i);
+            System.out.println("Error2");
+        else
+            animation.attack(i);
     }
 
     void showDefend(String cardId, int i) {
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error");
-        TroopAnimation animation = troopAnimationHashMap.get(troop);
-        if (animation == null)
-            System.out.println("Error");
-        animation.hit(i);
+            System.out.println("Error3");
+        else {
+            TroopAnimation animation = troopAnimationHashMap.get(troop);
+            if (animation == null)
+                System.out.println("Error4");
+            else
+                animation.hit(i);
+        }
     }
 
     void showSpell(String spriteName, int j, int i) {

@@ -4,13 +4,13 @@ import models.game.map.Position;
 
 public class CardAnimation {
     private Position position;
-    private String id;
+    private String name;
 
     public Position getPosition() {
         return position;
     }
 
     public String getID() {
-        return id;
+        return name;
     }
 }

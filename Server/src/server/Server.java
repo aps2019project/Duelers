@@ -49,7 +49,7 @@ public class Server {
                 }
                 if (message != null) {
                     ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    System.out.println(message.getReceiver()+":\n"+message.toJson());
+                    System.out.println(message.getReceiver() + ":\n" + message.toJson());
                 } else {
                     try {
                         synchronized (sendingMessages) {
@@ -273,6 +273,7 @@ public class Server {
         }
     }
 
+
     public void sendTroopUpdateMessage(Game game, Troop troop) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
@@ -295,7 +296,7 @@ public class Server {
         }
     }
 
-    public void sendAttackMessage(Game game, Troop attacker , Troop defender) {
+    public void sendAttackMessage(Game game, Troop attacker, Troop defender, boolean counterAttack) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
@@ -303,19 +304,20 @@ public class Server {
                 serverPrint("player one has logged out during game!");
             } else {
                 addToSendingMessages(Message.makeAttackMessage(
-                        serverName, clientName, attacker , defender, 0));
+                        serverName, clientName, attacker, defender, counterAttack, 0));
             }
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
             clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
             if (clientName == null) {
                 serverPrint("player two has logged out during game!");
-            }  else {
+            } else {
                 addToSendingMessages(Message.makeAttackMessage(
-                        serverName, clientName, attacker , defender, 0));
+                        serverName, clientName, attacker, defender, counterAttack, 0));
             }
         }
     }
+
 
     public void sendGameUpdateMessage(Game game) {
         String clientName;

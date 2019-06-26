@@ -1,6 +1,7 @@
 package server.gameCenter.models.game;
 
 import server.Server;
+import server.clientPortal.models.message.Message;
 import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.MatchHistory;
 import server.detaCenter.models.card.AttackType;
@@ -380,10 +381,15 @@ public abstract class Game {
             attackerTroop.setCanAttack(false);
             attackerTroop.setCanMove(false);
             Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
-
             applyOnAttackSpells(attackerTroop, defenderTroop);
             applyOnDefendSpells(defenderTroop, attackerTroop);
-            counterAttack(defenderTroop, attackerTroop);
+            try {
+                counterAttack(defenderTroop, attackerTroop);
+            }catch (LogicException e){
+                Server.getInstance().sendAttackMessage(this,attackerTroop,defenderTroop,false);
+                throw e;
+            }
+            Server.getInstance().sendAttackMessage(this,attackerTroop,defenderTroop,true);
         }
     }
 
