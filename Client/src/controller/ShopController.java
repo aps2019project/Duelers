@@ -77,4 +77,9 @@ public class ShopController {
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
     }
+
+    public synchronized void addCard(Card customCard) {
+        this.getOriginalCards().addCard(customCard);
+        this.notify();
+    }
 }

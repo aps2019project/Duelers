@@ -203,7 +203,7 @@ public class Client {
                 GameController.getInstance().showAnimation(message.getGameAnimations());
                 break;
             case ADD_CARD:
-                ShopController.getInstance().getOriginalCards().addCard(message.getCustomCard());
+                ShopController.getInstance().addCard(message.getCustomCard());
                 break;
             case DONE:
                 break;
