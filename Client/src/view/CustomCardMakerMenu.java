@@ -4,6 +4,7 @@ import controller.CustomCardController;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
@@ -22,6 +23,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static models.gui.UIConstants.SCALE;
+
 public class CustomCardMakerMenu extends Show {
     private static final Background ROOT_BACKGROUND = new Background(
             new BackgroundFill(
@@ -29,6 +32,7 @@ public class CustomCardMakerMenu extends Show {
             )
     );
     private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
+    private static final double WIDTH = 1600 * SCALE;
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static CustomCardMakerMenu menu;
 
@@ -98,7 +102,7 @@ public class CustomCardMakerMenu extends Show {
         CheckBox specialPower = new CheckBox("specialPower");
         CheckBox onStart = new CheckBox("onStart");
 
-        NormalField collDown = new NormalField("collDown");
+        NormalField collDown = new NormalField("coolDown");
         NormalField manaPoint = new NormalField("mana point");
         dialogBox.getChildren().addAll(dialogText, spellId,
                 spellAction, new ScrollPane(new VBox(enemyHitChange, apChange, hpChange, mpChange, isPoison, makeStun, disarm, noDisarm, noPoison, noStun, noBadEffect, noAttackFromWeakerOnes, killsTarget, durable, duration, delay))
@@ -106,6 +110,7 @@ public class CustomCardMakerMenu extends Show {
                 availab, new ScrollPane(new VBox(onPut, onAttack, onDeath, continuous, specialPower, onStart)),
                 collDown, manaPoint
         );
+        dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(100));
         dialogBox.makeButton("add", event1 -> {
             SpellAction spellAction1 = new SpellAction(Integer.parseInt(enemyHitChange.getText()), Integer.parseInt(apChange.getText()), Integer.parseInt(hpChange.getText()), Integer.parseInt(mpChange.getText()), isPoison.isSelected(), makeStun.isSelected(), disarm.isSelected(), noDisarm.isSelected(), noPoison.isSelected(), noStun.isSelected(), noBadEffect.isSelected(), noAttackFromWeakerOnes.isSelected(), killsTarget.isSelected(), durable.isSelected(), Integer.parseInt(duration.getText()), Integer.parseInt(delay.getText()));
 
@@ -119,8 +124,6 @@ public class CustomCardMakerMenu extends Show {
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
         dialogContainer.show(root);
         makeDialogClosable(dialogBox, dialogContainer);
-
-
     }
 
     private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
@@ -141,10 +144,19 @@ public class CustomCardMakerMenu extends Show {
         BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
         BackButton backButton = new BackButton(backEvent);
         addCard = new OrangeButton("addCard", CREATE);
-        VBox vBox = new VBox(name,description,cardTypeSpinner,attackTypeSpinner,defualtHP,defualtAP,range,manaPoint,hasCombo,addSpell,spriteName, price , addCard);
-        AnchorPane sceneContents = new AnchorPane(background, backButton, new BorderPane(vBox));
 
+        VBox vBox = getvBox();
+
+        AnchorPane sceneContents = new AnchorPane(background, new DefaultContainer(vBox),backButton);
         root.getChildren().addAll(sceneContents);
+    }
+
+    private VBox getvBox() {
+        VBox vBox = new VBox(UIConstants.DEFAULT_SPACING);
+        vBox.setMaxWidth(WIDTH);
+        vBox.getChildren().addAll(name,description,cardTypeSpinner,attackTypeSpinner,defualtHP,defualtAP,range,manaPoint,hasCombo,addSpell,spriteName, price , addCard);
+        vBox.setAlignment(Pos.CENTER);
+        return vBox;
     }
 
     public static CustomCardMakerMenu getInstance() {
