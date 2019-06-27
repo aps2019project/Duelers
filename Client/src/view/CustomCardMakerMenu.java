@@ -111,7 +111,9 @@ public class CustomCardMakerMenu extends Show {
                     new Position(Integer.parseInt(row.getText()), Integer.parseInt(column.getText())),
                             isRandom.isSelected(), new Owner(own.isSelected(), enemy.isSelected()),new TargetCardType(cell.isSelected(), hero.isSelected(), minion.isSelected(), false), new CardAttackType(melee.isSelected(), ranged.isSelected(), hybrid.isSelected()), isForDeckCards.isSelected());
 
-            AvailabilityType availabilityType = new AvailabilityType(onPut.isSelected(), onAttack.isSelected(), onDeath.isSelected(), continuous.isSelected(), specialPower.isSelected(), onStart.isSelected());        });
+            AvailabilityType availabilityType = new AvailabilityType(onPut.isSelected(), onAttack.isSelected(), onDeath.isSelected(), continuous.isSelected(), specialPower.isSelected(), onStart.isSelected());
+            spells.add(new Spell(spellId.getText(),spellAction1,target,availabilityType, Integer.parseInt(collDown.getText()),Integer.parseInt(manaPoint.getText())));
+        });
 
 
     }
