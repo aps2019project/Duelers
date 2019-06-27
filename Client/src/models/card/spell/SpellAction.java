@@ -51,6 +51,25 @@ public class SpellAction {
         this.duration = duration;
     }
 
+    public SpellAction(int enemyHitChanges, int apChange, int hpChange, int mpChange, boolean poison, boolean makeStun, boolean makeDisarm, boolean noDisarm, boolean noPoison, boolean noStun, boolean noBadEffect, boolean noAttackFromWeakerOnes, boolean killsTarget, boolean durable, int duration, int delay) {
+        this.enemyHitChanges = enemyHitChanges;
+        this.apChange = apChange;
+        this.hpChange = hpChange;
+        this.mpChange = mpChange;
+        this.poison = poison;
+        this.makeStun = makeStun;
+        this.makeDisarm = makeDisarm;
+        this.noDisarm = noDisarm;
+        this.noPoison = noPoison;
+        this.noStun = noStun;
+        this.noBadEffect = noBadEffect;
+        this.noAttackFromWeakerOnes = noAttackFromWeakerOnes;
+        this.killsTarget = killsTarget;
+        this.durable = durable;
+        this.duration = duration;
+        this.delay = delay;
+    }
+
     public int getEnemyHitChanges() {
         return enemyHitChanges;
     }

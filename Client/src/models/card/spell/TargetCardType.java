@@ -13,6 +13,14 @@ public class TargetCardType {
         this.player = targetCardType.player;
     }
 
+    public TargetCardType(boolean cell, boolean hero, boolean minion, boolean player) {
+        this.cell = cell;
+        this.hero = hero;
+        this.minion = minion;
+        this.player = player;
+    }
+
+
     public boolean isCell() {
         return cell;
     }

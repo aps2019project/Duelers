@@ -13,7 +13,8 @@ import javafx.scene.paint.Color;
 import models.card.AttackType;
 import models.card.Card;
 import models.card.CardType;
-import models.card.spell.Spell;
+import models.card.spell.*;
+import models.game.map.Position;
 import models.gui.*;
 
 import java.io.FileNotFoundException;
@@ -59,7 +60,6 @@ public class CustomCardMakerMenu extends Show {
         CheckBox isPoison = new CheckBox("poison");
         CheckBox makeStun = new CheckBox("make stun");
         CheckBox disarm = new CheckBox("disarm");
-        CheckBox actionAtTheEndOfTurn = new CheckBox("actionAtTheEndOfTurn");
         CheckBox noDisarm = new CheckBox("noDisarm");
         CheckBox noPoison = new CheckBox("noPoison");
         CheckBox noStun = new CheckBox("noStun");
@@ -67,29 +67,49 @@ public class CustomCardMakerMenu extends Show {
         CheckBox noAttackFromWeakerOnes = new CheckBox( "noAttackFromWeakerOnes");
         CheckBox killsTarget = new CheckBox("killsTarget");
         CheckBox durable = new CheckBox("durable");
+        NormalField duration = new NormalField("duration");
         NormalField delay = new NormalField("delay");
 
         DialogText spellTarget = new DialogText("target : ");
-        CheckBox isRelatedToCardOwnerPosition = new CheckBox("isRelatedToCardOwnerPosition");
-        CheckBox isForAroundOwnHero= new CheckBox("isForAroundOwnHero");
-        NormalField row = new NormalField("dimension(row)");
-        NormalField column = new NormalField("dimension(column)");
-        CheckBox isRandom = new CheckBox("isRandom");
-        CheckBox own = new CheckBox("is for own");
-        CheckBox enemy = new CheckBox("is for enemy");
-        CheckBox cell = new CheckBox("is for cell");
-        CheckBox hero = new CheckBox("is for hero");
-        CheckBox minion = new CheckBox("is for minion");
+        CheckBox isRelatedToCardOwnerPosition = new CheckBox("is Related To Card Owner Position?");
+        CheckBox isForAroundOwnHero= new CheckBox("is For Around Own Hero?");
+        NormalField row = new NormalField("dimension(row)?");
+        NormalField column = new NormalField("dimension(column)?");
+        CheckBox isRandom = new CheckBox("isRandom?");
+        CheckBox own = new CheckBox("is for own?");
+        CheckBox enemy = new CheckBox("is for enemy?");
+        CheckBox cell = new CheckBox("is for cell?");
+        CheckBox hero = new CheckBox("is for hero?");
+        CheckBox minion = new CheckBox("is for minion?");
+        CheckBox melee = new CheckBox("is for melee?");
+        CheckBox ranged = new CheckBox("is for ranged?");
+        CheckBox hybrid = new CheckBox("is for hybrid?");
+        CheckBox isForDeckCards = new CheckBox("is for isForDeckCards?");
 
+        DialogText availab = new DialogText("availability Type : ");
+        CheckBox onPut = new CheckBox("onPut");
+        CheckBox onAttack = new CheckBox("onAttack");
+        CheckBox onDeath = new CheckBox("onDeath");
+        CheckBox continuous = new CheckBox("continuous");
+        CheckBox specialPower = new CheckBox("specialPower");
+        CheckBox onStart = new CheckBox("onStart");
 
+        NormalField collDown = new NormalField()
+        dialogBox.getChildren().addAll(dialogText,spellId , new ScrollPane(
+                new VBox(spellAction,enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm)),
 
-        dialogBox.getChildren().add(new ScrollPane(
-                new VBox(dialogText,spellId,spellAction,enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm))
         );
         DialogContainer dialogContainer = new DialogContainer(root,dialogBox);
         dialogBox.makeButton("add",event1 -> {
+            SpellAction spellAction1 = new SpellAction(Integer.parseInt(enemyHitChange.getText()), Integer.parseInt(apChange.getText()), Integer.parseInt(hpChange.getText()), Integer.parseInt(mpChange.getText()), isPoison.isSelected(), makeStun.isSelected(), disarm.isSelected(), noDisarm.isSelected(), noPoison.isSelected(), noStun.isSelected(), noBadEffect.isSelected(), noAttackFromWeakerOnes.isSelected(), killsTarget.isSelected(),  durable.isSelected(), Integer.parseInt(duration.getText()), Integer.parseInt(delay.getText()));
 
-        });
+            Target target = new Target(isRelatedToCardOwnerPosition.isSelected(), isForAroundOwnHero.isSelected(),
+                    new Position(Integer.parseInt(row.getText()), Integer.parseInt(column.getText())),
+                            isRandom.isSelected(), new Owner(own.isSelected(), enemy.isSelected()),new TargetCardType(cell.isSelected(), hero.isSelected(), minion.isSelected(), false), new CardAttackType(melee.isSelected(), ranged.isSelected(), hybrid.isSelected()), isForDeckCards.isSelected());
+
+            AvailabilityType availabilityType = new AvailabilityType(onPut.isSelected(), onAttack.isSelected(), onDeath.isSelected(), continuous.isSelected(), specialPower.isSelected(), onStart.isSelected());        });
+
+
     }
 
     private  final EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(
