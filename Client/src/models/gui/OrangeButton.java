@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 
 import static models.gui.UIConstants.SCALE;
 
-class OrangeButton extends Button {
+public class OrangeButton extends Button {
     private static final Background DEFAULT_BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(250, 106, 54, 0.8), CornerRadii.EMPTY, Insets.EMPTY
@@ -26,7 +26,7 @@ class OrangeButton extends Button {
     );
     private static final double WIDTH = 400 * SCALE;
 
-    OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent) {
+    public OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent) {
         super(text);
         setBackground(DEFAULT_BACKGROUND);
         setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
