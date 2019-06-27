@@ -95,8 +95,12 @@ public class CustomCardMakerMenu extends Show {
         CheckBox onStart = new CheckBox("onStart");
 
         NormalField collDown = new NormalField("collDown");
-        dialogBox.getChildren().addAll(dialogText,spellId , new ScrollPane(
-                new VBox(spellAction,enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm))
+        NormalField manaPoint = new NormalField("mana point");
+        dialogBox.getChildren().addAll(dialogText,spellId,
+                spellAction , new ScrollPane(new VBox(enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm,noDisarm,noPoison,noStun,noBadEffect,noAttackFromWeakerOnes,killsTarget,durable,duration,delay))
+                ,spellTarget,new ScrollPane(new VBox(isRelatedToCardOwnerPosition,isForAroundOwnHero,row,column,isRandom,own,enemy,cell,hero,minion,melee,ranged,hybrid,isForDeckCards)),
+                availab , new ScrollPane(new VBox(onPut,onAttack,onDeath,continuous,specialPower,onStart)),
+                collDown , manaPoint
 
         );
         DialogContainer dialogContainer = new DialogContainer(root,dialogBox);
