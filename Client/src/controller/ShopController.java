@@ -80,6 +80,8 @@ public class ShopController {
 
     public synchronized void addCard(Card customCard) {
         this.getOriginalCards().addCard(customCard);
+        support.firePropertyChange("search_result", showingCards, originalCards);
+        this.showingCards.addCard(customCard);
         this.notify();
     }
 }
