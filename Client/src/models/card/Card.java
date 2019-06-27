@@ -104,6 +104,5 @@ public class Card implements ICard {
         if ((type == CardType.SPELL || type == CardType.HERO )&& spells.isEmpty()){
             throw new InputException("Spell is empty");
         }
-
     }
 }

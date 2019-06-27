@@ -16,7 +16,7 @@ public class CustomCardController {
         return customCardController;
     }
 
-    public void createMinion(Card card) {
+    public void createCard(Card card) {
         try {
             card.checkValidation();
             Client.getInstance().addToSendingMessagesAndSend(
