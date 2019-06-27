@@ -3,6 +3,7 @@ package models.card;
 
 import models.ICard;
 import models.card.spell.Spell;
+import models.exceptions.InputException;
 
 import java.util.ArrayList;
 
@@ -91,5 +92,18 @@ public class Card implements ICard {
 
     public boolean isSameAs(String cardName) {
         return name.equalsIgnoreCase(cardName);
+    }
+
+    public void checkValidation() throws InputException {
+        if (name == null || name.isEmpty())
+            throw new InputException("name is empty");
+        if (description == null || description.isEmpty())
+            throw new InputException("description is empty");
+        if (spriteName== null || spriteName.isEmpty())
+            throw new InputException("sprite is empty");
+        if ((type == CardType.SPELL || type == CardType.HERO )&& spells.isEmpty()){
+            throw new InputException("Spell is empty");
+        }
+
     }
 }

@@ -38,5 +38,6 @@ public enum MessageType {
     NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
-    ANIMATION
+    ANIMATION,
+    ADD_CARD
 }

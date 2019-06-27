@@ -6,7 +6,7 @@ import models.gui.PlayButtonItem;
 
 import java.io.FileNotFoundException;
 
-class SinglePlayerMenu extends PlayMenu {
+public class SinglePlayerMenu extends PlayMenu {
     private static final String BACKGROUND_URL = "resources/menu/background/single_player_background.jpg";
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> PlayMenu.getInstance().show();
     private static final PlayButtonItem[] items = {

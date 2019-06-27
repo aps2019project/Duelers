@@ -2,6 +2,7 @@ package models.message;
 
 
 import models.JsonConverter;
+import models.card.Card;
 import models.game.GameType;
 import models.game.map.Position;
 
@@ -25,6 +26,7 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private Card customCard;
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
@@ -211,6 +213,12 @@ public class Message {
         message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUserName);
         message.messageType = MessageType.SELECT_USER;
+        return message;
+    }
+
+    public static Message makeCustomCardMessage(String sender, String receiver , Card customCard , int messageId){
+        Message message = new Message(sender,receiver,messageId);
+        message.customCard = customCard;
         return message;
     }
 
