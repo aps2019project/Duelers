@@ -12,10 +12,8 @@ import models.card.AttackType;
 import models.card.Card;
 import models.card.CardType;
 import models.gui.*;
-import view.MainMenu;
 import view.Show;
 
-import java.io.FileNotFoundException;
 
 public class CustomMinionMenu extends Show {
     private static final Background ROOT_BACKGROUND = new Background(
@@ -26,7 +24,7 @@ public class CustomMinionMenu extends Show {
     private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> CustomCardMainMenu.getInstance().show();
 
-    private static CustomCardMainMenu menu;
+    private static CustomMinionMenu menu;
 
     private static NormalField name;
     private static NormalField description;
@@ -40,26 +38,16 @@ public class CustomMinionMenu extends Show {
     private static CheckBox hasCombo;
     private static NormalField spriteName;
 
-    private static final EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(new Card());
+    private static final EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(
+            new Card(name.getText(),description.getText(),spriteName.getText(),cardTypeSpinner.getValue(),
+                    defualtAP.getValue(),defualtHP.getValue(),manaPoint.getValue(),Integer.parseInt(price.getText()),
+                    attackTypeSpinner.getValue(),range.getValue(),hasCombo.isSelected())
+    );
 
-    private CustomMinionMenu(String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
-        root.setBackground(ROOT_BACKGROUND);
-        GridPane background = new GridPane(backgroundUrl);
-        DefaultContainer container = new DefaultContainer(new HorizontalButtonsBox(items));
-        BackButton backButton = new BackButton(backEvent);
 
-        AnchorPane sceneContents = new AnchorPane(background, container, backButton);
-
-        root.getChildren().addAll(sceneContents);
-    }
-
-    public static CustomCardMainMenu getInstance() {
+    public static CustomMinionMenu getInstance() {
         if (menu == null) {
-            try {
-                menu = new CustomCardMainMenu(items, BACKGROUND_URL, BACK_EVENT);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+                menu = new CustomMinionMenu();
         }
         return menu;
     }
