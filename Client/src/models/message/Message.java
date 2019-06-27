@@ -302,4 +302,8 @@ public class Message {
     public GameFinishMessage getGameFinishMessage() {
         return gameFinishMessage;
     }
+
+    public Card getCustomCard() {
+        return customCard;
+    }
 }

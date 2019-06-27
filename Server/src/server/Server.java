@@ -149,6 +149,7 @@ public class Server {
                     break;
                 case ADD_CARD:
                     DataCenter.getInstance().addCard(message);
+                    break;
                 case NEW_MULTIPLAYER_GAME:
                     GameCenter.getInstance().newMultiplayerGame(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));

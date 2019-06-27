@@ -44,6 +44,46 @@ public class Collection {
         }
     }
 
+    public void addCard(Card card) {//for shop
+        if (card == null) {
+            return;
+        }
+        if (hasCard(card.getCardId())) {
+            return;
+        }
+        switch (card.getType()) {
+            case HERO:
+                heroes.add(card);
+                break;
+            case MINION:
+                minions.add(card);
+                break;
+            case SPELL:
+                spells.add(card);
+                break;
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                items.add(card);
+                break;
+            case FLAG:
+                break;
+        }
+    }
+
+    private boolean hasCard(String cardId) {
+        return hasCard(cardId, heroes) || hasCard(cardId, minions) || hasCard(cardId, spells) || hasCard(cardId, items);
+    }
+
+    private boolean hasCard(String cardId, ArrayList<Card> cards) {
+        if (cardId == null || cards==null)
+            return false;
+        for (Card card : cards) {
+            if (card.getCardId().equalsIgnoreCase(cardId))
+                return true;
+        }
+        return false;
+    }
+
     public Card findHero(String heroId) {
         return findCardInList(heroId, heroes);
     }
