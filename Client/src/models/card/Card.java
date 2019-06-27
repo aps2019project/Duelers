@@ -22,12 +22,13 @@ public class Card implements ICard {
     private int range;
     private boolean hasCombo;
 
-    public Card(String name, String description,  String spriteName, CardType type,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+    public Card(String name, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;
         this.cardId = name;
         this.spriteName = spriteName;
         this.type = type;
+        this.spells = spells;
         this.defaultAp = defaultAp;
         this.defaultHp = defaultHp;
         this.mannaPoint = mannaPoint;

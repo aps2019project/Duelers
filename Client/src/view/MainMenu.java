@@ -4,7 +4,6 @@ import controller.Client;
 import controller.MainMenuController;
 import javafx.scene.layout.*;
 import models.gui.*;
-import view.customCard.CustomCardMainMenu;
 
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
