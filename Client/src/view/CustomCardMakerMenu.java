@@ -94,9 +94,9 @@ public class CustomCardMakerMenu extends Show {
         CheckBox specialPower = new CheckBox("specialPower");
         CheckBox onStart = new CheckBox("onStart");
 
-        NormalField collDown = new NormalField()
+        NormalField collDown = new NormalField("collDown");
         dialogBox.getChildren().addAll(dialogText,spellId , new ScrollPane(
-                new VBox(spellAction,enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm)),
+                new VBox(spellAction,enemyHitChange,apChange,hpChange,mpChange,isPoison,makeStun,disarm))
 
         );
         DialogContainer dialogContainer = new DialogContainer(root,dialogBox);
