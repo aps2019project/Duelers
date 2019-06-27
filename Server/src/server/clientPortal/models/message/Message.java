@@ -29,6 +29,7 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private Card customCard;
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
@@ -143,6 +144,13 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
+    public static Message makeAddCustomCardMessage(String serverName, String key, Card customCard, int i) {
+        Message message = new Message(serverName,key,i);
+        message.customCard = customCard;
+        message.messageType = MessageType.ADD_CARD;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
@@ -177,5 +185,8 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
 
     public NewGameFields getNewGameFields() {
         return newGameFields;
+    }
+
+    public Card getCustomCard() {return customCard;
     }
 }

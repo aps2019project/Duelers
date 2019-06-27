@@ -147,6 +147,8 @@ public class Server {
                 case SELECT_DECK:
                     DataCenter.getInstance().selectDeck(message);
                     break;
+                case ADD_CARD:
+                    DataCenter.getInstance().addCard(message);
                 case NEW_MULTIPLAYER_GAME:
                     GameCenter.getInstance().newMultiplayerGame(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
@@ -378,5 +380,13 @@ public class Server {
 
     public void serverPrint(String string) {
         System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
+    }
+
+    public void sendAddedCartMessage(Card customCard) {
+        for (Map.Entry<String , Formatter> formatter :
+                ClientPortal.getInstance().getClients()) {
+            Message message = Message.makeAddCustomCardMessage(serverName, formatter.getKey(), customCard, 0);
+            addToSendingMessages(message);
+        }
     }
 }

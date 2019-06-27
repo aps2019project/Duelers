@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Formatter;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class ClientPortal extends Thread {
     private static ClientPortal ourInstance = new ClientPortal();
@@ -58,6 +60,10 @@ public class ClientPortal extends Thread {
         } else {
             Server.getInstance().serverPrint("Client Not Found!");
         }
+    }
+
+    public Set<Map.Entry<String, Formatter>> getClients() {
+        return clients.entrySet();
     }
 
     public void removeClient(String clientName) {

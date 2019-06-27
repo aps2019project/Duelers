@@ -1,5 +1,6 @@
 package server.detaCenter;
 
+import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
@@ -28,7 +29,8 @@ public class DataCenter extends Thread {
             "resources/minionCards",
             "resources/spellCards",
             "resources/itemCards/collectible",
-            "resources/itemCards/usable"};
+            "resources/itemCards/usable",
+            "resources/customCards"};
     private static final String FLAG_PATH = "resources/itemCards/flag/Flag.item.card.json";
     private static final String STORIES_PATH = "resources/stories";
 
@@ -130,9 +132,9 @@ public class DataCenter extends Thread {
         }
     }
 
-    public void deleteClient(String clientName){
-        if(clients.get(clientName)!=null)
-            accounts.replace(clients.get(clientName),null);
+    public void deleteClient(String clientName) {
+        if (clients.get(clientName) != null)
+            accounts.replace(clients.get(clientName), null);
         clients.remove(clientName);
         //TODO(do with logout)
     }
@@ -312,5 +314,34 @@ public class DataCenter extends Thread {
         Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         return leaderBoard;
+    }
+
+    public void addCard(Message message) {
+        try {
+            validateCustomCard(message.getCustomCard());
+            originalCards.addCard(message.getCustomCard());
+            saveCustomCard(message.getCustomCard());
+            Server.getInstance().sendAddedCartMessage(message.getCustomCard());
+
+        } catch (LogicException e) {
+            Server.getInstance().addToSendingMessages(Message.makeExceptionMessage(Server.getInstance().serverName, message.getSender(), e.getMessage(), 0));
+        }
+    }
+
+    private void saveCustomCard(Card customCard) {
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
+        System.out.println(json);
+
+        try {
+            FileWriter writer = new FileWriter("resources/customCards/" + customCard.getName() + ".card.json");
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validateCustomCard(Card customCard) throws LogicException {
+        //TODO
     }
 }
