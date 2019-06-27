@@ -28,6 +28,9 @@ public class ShopController {
         return ourInstance;
     }
 
+    public static boolean isLoaded(){
+        return ourInstance!= null;
+    }
     public void buy(String cardName) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeBuyCardMessage(
@@ -79,6 +82,7 @@ public class ShopController {
     }
 
     public synchronized void addCard(Card customCard) {
+
         this.getOriginalCards().addCard(customCard);
         support.firePropertyChange("search_result", showingCards, originalCards);
         this.showingCards.addCard(customCard);
