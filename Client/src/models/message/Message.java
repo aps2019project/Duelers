@@ -217,8 +217,9 @@ public class Message {
     }
 
     public static Message makeCustomCardMessage(String sender, String receiver , Card customCard , int messageId){
-        Message message = new Message(sender,receiver,messageId);
+        Message message = new Message(sender, receiver,messageId);
         message.customCard = customCard;
+        message.messageType = MessageType.ADD_CARD;
         return message;
     }
 
