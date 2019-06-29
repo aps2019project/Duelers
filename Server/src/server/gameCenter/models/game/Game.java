@@ -291,8 +291,6 @@ public abstract class Game {
             }
             Server.getInstance().sendTroopUpdateMessage(this, troop);
             gameMap.getCell(position).clearItems();
-        } else {
-            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
         if (card.getType() == CardType.SPELL) {
             player.addToGraveYard(card);
