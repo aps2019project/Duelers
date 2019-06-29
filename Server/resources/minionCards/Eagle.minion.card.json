@@ -8,7 +8,7 @@
     {
       "spellId": "e_power_buff",
       "action": {
-        "apChange": 10,
+        "hpChange": 10,
         "duration": -1
       },
       "availabilityType": {

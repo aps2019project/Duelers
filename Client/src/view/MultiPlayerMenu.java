@@ -48,8 +48,8 @@ public class MultiPlayerMenu extends PlayMenu {
             MultiPlayerMenuController.getInstance().startGame(GameType.KILL_HERO, 0, usernameField.getText());
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private void showSingleFlagDialog() {
@@ -63,8 +63,8 @@ public class MultiPlayerMenu extends PlayMenu {
             MultiPlayerMenuController.getInstance().startGame(GameType.A_FLAG, 1, usernameField.getText());
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private void showMultiFlagDialog() {
@@ -81,13 +81,7 @@ public class MultiPlayerMenu extends PlayMenu {
             MultiPlayerMenuController.getInstance().startGame(GameType.SOME_FLAG, flagNumSpinner.getValue(), usernameField.getText());
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
-    }
-
-    private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
-        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed);
-        dialogBox.preventClosingOnClick(shouldBeClosed);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 }

@@ -3,15 +3,13 @@ package view.BattleView;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 import models.gui.*;
@@ -20,13 +18,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import static models.gui.UIConstants.SCALE;
 
 public class HandBox implements PropertyChangeListener {
-    private static final Font SMALL_BUTTON_FONT = Font.font("SansSerif", FontWeight.BOLD, 35 * SCALE);
-    private static final double SMALL_BUTTON_WIDTH = 348 * Constants.SCALE * 0.5;
-    private static final double SMALL_BUTTON_HEIGHT = 108 * Constants.SCALE * 0.5;
     private final BattleScene battleScene;
     private final CompressedPlayer player;
     private final Group group;
@@ -207,38 +203,15 @@ public class HandBox implements PropertyChangeListener {
 
     private void addEndTurnButton() {
         try {
-            ImageView endTurnButton = new ImageView(new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")));
-            endTurnButton.setFitWidth(endTurnButton.getImage().getWidth() * Constants.SCALE * 0.5);
-            endTurnButton.setFitHeight(endTurnButton.getImage().getHeight() * Constants.SCALE * 0.5);
-            endTurnButton.setX(1200 * Constants.SCALE);
-            endTurnButton.setY(5 * Constants.SCALE);
-            group.getChildren().add(endTurnButton);
-            endTurnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        endTurnButton.setImage(new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            endTurnButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        endTurnButton.setImage(new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            endTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    battleScene.getController().endTurn();
-                }
-            });
+            ImageButton imageButton = new ImageButton(
+                    "END TURN", event -> battleScene.getController().endTurn(),
+                    new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")),
+                    new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"))
+            );
+            imageButton.setLayoutX(1200 * Constants.SCALE);
+            imageButton.setLayoutY(5 * Constants.SCALE);
+
+            group.getChildren().add(imageButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,7 +220,7 @@ public class HandBox implements PropertyChangeListener {
     private void addMenuButton() {
         try {
             ImageButton imageButton = new ImageButton(
-                    "MENU", event -> showGraveyard(),
+                    "MENU", event -> {},
                     new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                     new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
             );
@@ -277,7 +250,28 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void showGraveyard() {
+        ScrollPane scrollPane = new ScrollPane();
+        GridPane cardsPane = new GridPane();
+        cardsPane.setVgap(UIConstants.DEFAULT_SPACING * 2);
+        cardsPane.setHgap(UIConstants.DEFAULT_SPACING * 2);
 
+        ArrayList<CompressedCard> graveyard = player.getGraveyard();
+        for (int i = 0; i < graveyard.size(); i++) {
+            CompressedCard card = graveyard.get(i);
+            try {
+                CardPane cardPane = new CardPane(card, false, false, null);
+                cardsPane.add(cardPane, i % 3, i / 3);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        scrollPane.setContent(cardsPane);
+        scrollPane.setId("background_transparent");
+        scrollPane.setMinSize(1600 * SCALE, 1000 * SCALE);
+        DialogBox dialogBox = new DialogBox(scrollPane);
+        DialogContainer dialogContainer = new DialogContainer(battleScene.root, dialogBox);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     @Override

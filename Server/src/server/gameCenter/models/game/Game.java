@@ -205,6 +205,15 @@ public abstract class Game {
         }
         buffs.addAll(tempBuffs);
         tempBuffs.clear();
+        checkKills();
+    }
+
+    private void checkKills() throws ServerException {
+        for (Troop troop : gameMap.getTroops()) {
+            if (troop.getCurrentHp() <= 0) {
+                killTroop(troop);
+            }
+        }
     }
 
     private void revertNotDurableBuffs() throws ServerException {
@@ -225,9 +234,6 @@ public abstract class Game {
             troop.changeCurrentAp(-action.getApChange());
             if (!action.isPoison() || troop.canGetPoison()) {
                 troop.changeCurrentHp(-action.getHpChange());
-                if (troop.getCurrentHp() <= 0) {
-                    killTroop(troop);
-                }
             }
             if (action.isMakeStun() && troop.canGetStun()) {
                 troop.setCanMove(true);

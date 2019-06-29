@@ -47,7 +47,7 @@ public class MainMenu extends Show {
             DialogBox dialogBox = new DialogBox(profileGrid);
             DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-            dialogContainer.show(root);
+            dialogContainer.show();
 
             dialogBox.makeButton("LOGOUT", event -> {
                 dialogContainer.close();
@@ -55,7 +55,7 @@ public class MainMenu extends Show {
                 new LoginMenu().show();
 
             }, LOGOUT_ICON_URL);
-            makeDialogClosable(dialogBox, dialogContainer);
+            dialogBox.makeClosable(dialogContainer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -65,11 +65,5 @@ public class MainMenu extends Show {
     public void show() {
         super.show();
         BackgroundMaker.makeMenuBackgroundUnfrozen();
-    }
-
-    private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
-        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed, event -> BackgroundMaker.makeMenuBackgroundUnfrozen());
-        dialogBox.preventClosingOnClick(shouldBeClosed);
     }
 }

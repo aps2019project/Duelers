@@ -54,4 +54,10 @@ public class DialogBox extends VBox {
     public void makeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {
         getChildren().add(new OrangeButton(text, event, graphicUrl));
     }
+
+    public void makeClosable(DialogContainer dialogContainer) {
+        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
+        dialogContainer.makeClosable(shouldBeClosed);
+        preventClosingOnClick(shouldBeClosed);
+    }
 }

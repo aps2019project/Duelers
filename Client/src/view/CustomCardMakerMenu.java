@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
@@ -122,14 +121,8 @@ public class CustomCardMakerMenu extends Show {
             spells.add(new Spell(spellId.getText(), spellAction1, target, availabilityType, Integer.parseInt(collDown.getText()), Integer.parseInt(manaPoint.getText())));
         });
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
-    }
-
-    private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
-        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed);
-        dialogBox.preventClosingOnClick(shouldBeClosed);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private final EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(

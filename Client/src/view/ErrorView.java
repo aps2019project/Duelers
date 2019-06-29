@@ -27,6 +27,6 @@ public class ErrorView {
             dialogContainer.close();
         });
 
-        dialogContainer.show(root);
+        dialogContainer.show();
     }
 }

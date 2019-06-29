@@ -64,8 +64,8 @@ class CustomGameMenu extends PlayMenu {
             );
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private void showSingleFlagDialog() {
@@ -81,8 +81,8 @@ class CustomGameMenu extends PlayMenu {
             );
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private void showMultiFlagDialog() {
@@ -101,13 +101,7 @@ class CustomGameMenu extends PlayMenu {
             );
             dialogContainer.close();
         });
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
-    }
-
-    private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
-        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed);
-        dialogBox.preventClosingOnClick(shouldBeClosed);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 }

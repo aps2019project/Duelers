@@ -15,27 +15,25 @@ import java.io.FileNotFoundException;
 import static models.gui.UIConstants.SCALE;
 
 public class ImageButton extends StackPane {
-    private static final double WIDTH = 348 * SCALE;
-    private static final double HEIGHT = 108 * SCALE;
     private static final Font FONT = Font.font("SansSerif", FontWeight.BOLD, 35 * SCALE);
-    private static Image defaultImage;
-    private static Image hoverImage;
+    private static Image primaryDefault;
+    private static Image primaryHover;
 
     static {
         try {
-            defaultImage = new Image(new FileInputStream("resources/ui/button_primary@2x.png"));
-            hoverImage= new Image(new FileInputStream("resources/ui/button_primary_glow@2x.png"));
+            primaryDefault = new Image(new FileInputStream("resources/ui/button_primary@2x.png"));
+            primaryHover = new Image(new FileInputStream("resources/ui/button_primary_glow@2x.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public ImageButton(String text, EventHandler<? super MouseEvent> mouseEvent) {
-        this(text, mouseEvent, defaultImage, hoverImage);
+        this(text, mouseEvent, primaryDefault, primaryHover);
     }
 
     public ImageButton(String text, EventHandler<? super MouseEvent> mouseEvent, Image defaultImage, Image hoverImage) {
-        ImageView imageView = ImageLoader.makeImageView(defaultImage, WIDTH, HEIGHT);
+        ImageView imageView = ImageLoader.makeImageView(defaultImage, defaultImage.getWidth() * SCALE, defaultImage.getHeight() * SCALE);
         DefaultLabel label = new DefaultLabel(text, FONT, Color.WHITE);
 
         setOnMouseEntered(event -> {

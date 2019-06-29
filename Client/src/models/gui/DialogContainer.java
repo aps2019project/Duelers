@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -50,7 +49,7 @@ public class DialogContainer extends BorderPane {
         });
     }
 
-    public void show(AnchorPane root) {
+    public void show() {
         root.getChildren().get(0).setEffect(BACKGROUND_BLUR);
         root.getChildren().add(this);
     }

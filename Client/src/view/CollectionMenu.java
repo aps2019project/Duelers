@@ -150,14 +150,8 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             dialogContainer.close();
         });
 
-        dialogContainer.show(root);
-        makeDialogClosable(dialogBox, dialogContainer);
-    }
-
-    private void makeDialogClosable(DialogBox dialogBox, DialogContainer dialogContainer) {
-        AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed);
-        dialogBox.preventClosingOnClick(shouldBeClosed);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer);
     }
 
     private void setCollectionCards() {
