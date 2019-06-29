@@ -18,7 +18,7 @@ public class BattleSceneTester extends Application implements GameActions {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
-        battleScene = new BattleScene(this, generateAGame(), playerNumber);
+        battleScene = new BattleScene(this, generateAGame(), playerNumber,"battlemap6_middleground@2x");
         Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH - 100, Constants.SCREEN_HEIGHT - 100);
         primaryStage.setScene(scene);
         primaryStage.show();

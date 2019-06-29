@@ -50,7 +50,7 @@ public class GameController implements GameActions {
         int playerNumber = getPlayerNumber(currentGame);
         Platform.runLater(() -> {
             try {
-                battleScene = new BattleScene(this, currentGame, playerNumber);
+                battleScene = new BattleScene(this, currentGame, playerNumber,"battlemap6_middleground@2x");
                 battleScene.show();
             } catch (Exception e) {
                 e.printStackTrace();

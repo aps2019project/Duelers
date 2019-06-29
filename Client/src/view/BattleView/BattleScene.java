@@ -21,18 +21,17 @@ public class BattleScene extends Show {
     private final PlayerBox playerBox;
     private final int myPlayerNumber;
 
-    public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber) throws Exception {
+    public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber, String mapName) throws Exception {
         this.controller = controller;
         this.game = game;
         this.myPlayerNumber = myPlayerNumber;
-        addBackGround("battlemap6_middleground@2x");
+        addBackGround(mapName);
         CompressedPlayer myPlayer;
         if (myPlayerNumber == 1)
             myPlayer = game.getPlayerOne();
         else
             myPlayer = game.getPlayerTwo();
-        handBox = new HandBox(this, myPlayer, Constants.SCREEN_WIDTH * 0.1,
-                Constants.SCREEN_HEIGHT * 0.8);
+        handBox = new HandBox(this, myPlayer, Constants.HAND_X, Constants.HAND_Y);
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
 
