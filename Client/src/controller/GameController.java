@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import models.Constants;
 import models.card.AttackType;
 import models.card.CardType;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 public class GameController implements GameActions {
     private static GameController ourInstance;
+    BattleScene battleScene;
     private CompressedGame currentGame;
     private AvailableActions availableActions = new AvailableActions();
-    BattleScene battleScene;
 
     private GameController() {
     }
@@ -47,12 +48,15 @@ public class GameController implements GameActions {
         currentGame.getPlayerOne().setTroops(currentGame.getGameMap().getPlayerTroop(1));
         currentGame.getPlayerTwo().setTroops(currentGame.getGameMap().getPlayerTroop(2));
         int playerNumber = getPlayerNumber(currentGame);
-        try {
-            battleScene = new BattleScene(this, currentGame, playerNumber);
-            battleScene.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(() -> {
+            try {
+                battleScene = new BattleScene(this, currentGame, playerNumber);
+                battleScene.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     private int getPlayerNumber(CompressedGame currentGame) {
