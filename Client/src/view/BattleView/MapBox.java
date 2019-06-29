@@ -11,6 +11,7 @@ import models.card.CardType;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
+import models.gui.CardPane;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -29,6 +30,7 @@ public class MapBox implements PropertyChangeListener {
     private ArrayList<CompressedTroop> comboTroops = new ArrayList<>();
     private boolean spellSelected = false;
     private boolean comboSelected = false;
+    private CardPane cardPane = null;
 
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
@@ -178,6 +180,10 @@ public class MapBox implements PropertyChangeListener {
 
     private void exitCell(int j, int i) {
         CompressedTroop troop = getTroop(j, i);
+        if (cardPane != null) {
+            mapGroup.getChildren().remove(cardPane);
+            cardPane = null;
+        }
         if (troop == null) {
             cells[j][i].setFill(Color.DARKBLUE);
             return;
@@ -200,6 +206,19 @@ public class MapBox implements PropertyChangeListener {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
             animation.showDetail();
             animation.idle();
+            if (cardPane != null) {
+                mapGroup.getChildren().remove(cardPane);
+                cardPane = null;
+            }
+            try {
+                cardPane = new CardPane(troop.getCard(), false, false, null);
+                cardPane.setLayoutY(-150 * Constants.SCALE + cellsY[row][column]);
+                cardPane.setLayoutX(80 * Constants.SCALE + cellsX[row][column]);
+                mapGroup.getChildren().add(cardPane);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
         if (!battleScene.isMyTurn())
             return;
@@ -353,7 +372,7 @@ public class MapBox implements PropertyChangeListener {
             System.out.println("EEEE");
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error1  "+ cardId);
+            System.out.println("Error1  " + cardId);
         TroopAnimation animation = troopAnimationHashMap.get(troop);
         if (animation == null)
             System.out.println("Error2");

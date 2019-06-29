@@ -138,7 +138,7 @@ public class HandBox implements PropertyChangeListener {
                 final CardAnimation cardAnimation;
                 if (player.getHand().size() > i) {
                     cardAnimation = new CardAnimation(cards[i], player.getHand().get(i),
-                            imageView.getLayoutY() + imageView.getFitHeight() / 2, imageView.getLayoutX() + imageView.getFitWidth() / 2);
+                            imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
                 } else {
                     cardAnimation = null;
                 }
@@ -157,10 +157,10 @@ public class HandBox implements PropertyChangeListener {
                             cardAnimation.inActive();
                             try {
                                 imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-//                                cardPane = new CardPane(player.getHand().get(I), false, false);
-//                                cardPane.setLayoutY(-300 * Constants.SCALE);
-//                                cardPane.setLayoutX(300 * Constants.SCALE);
-//                                group.getChildren().add(cardPane);
+                                cardPane = new CardPane(player.getHand().get(I), false, false, null);
+                                cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
+                                cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
+                                group.getChildren().add(cardPane);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -220,7 +220,8 @@ public class HandBox implements PropertyChangeListener {
     private void addMenuButton() {
         try {
             ImageButton imageButton = new ImageButton(
-                    "MENU", event -> {},
+                    "MENU", event -> {
+            },
                     new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                     new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
             );

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import models.gui.CardPane;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -46,6 +47,8 @@ public class TroopAnimation extends Transition {
 
     private Group mapGroup;
     private Group troopGroup;
+
+    private CardPane cardPane;
 
     public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
         this.mapGroup = mapGroup;
