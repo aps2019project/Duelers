@@ -19,7 +19,7 @@ public class BattleSceneTester extends Application implements GameActions {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
         battleScene = new BattleScene(this, generateAGame(), playerNumber,"battlemap6_middleground@2x");
-        Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH - 100, Constants.SCREEN_HEIGHT - 100);
+        Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -45,21 +45,20 @@ public class BattleSceneTester extends Application implements GameActions {
         final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(() -> {
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-            String spriteName = "";
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             CompressedCard card = new CompressedCard("generalspell_f5_overload", null, "a1", CardType.SPELL,
                     null, 0, 0, 0, null, 2, true);
             myPlayer.addCardToNext(card);
             game.gameUpdate(10, 1, 0, 2, 0);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             myPlayer.addNextCardToHand();
             myPlayer.removeCardFromNext();
             game.gameUpdate(11, 4, 0, 4, 0);
@@ -76,44 +75,40 @@ public class BattleSceneTester extends Application implements GameActions {
             troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 3),
                     true, true, false, false, 1, 1);
             map.updateTroop(troop);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             myPlayer.addNextCardToHand();
-            card = new CompressedCard(s, null, "a2", null,
+            card = new CompressedCard(s, null, "a2", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
             troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 4),
                     true, true, false, false, 1, 2);
             map.updateTroop(troop);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             troop = new CompressedTroop(card, 5, 6, 5, new Position(4, 8),
                     true, true, false, false, 1, 2);
             map.updateTroop(troop);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             troop = new CompressedTroop(card, 5, 6, 5, new Position(1, 4),
                     true, true, false, false, 1, 2);
             map.updateTroop(troop);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
         }).start();
         return game;
-    }
-
-    public void sendMessage(String string) {
-        System.out.println(string);
     }
 
     public static void main(String[] args) {
