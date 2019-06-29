@@ -185,7 +185,7 @@ public class Player {
 
     public void killTroop(Game game, Troop troop) throws ServerException {
         addToGraveYard(troop.getCard());
-        Server.getInstance().sendChangeCardPositionMessage(game, troop.getCard(), CardPosition.GRAVE_YARD);
+//        Server.getInstance().sendChangeCardPositionMessage(game, troop.getCard(), CardPosition.GRAVE_YARD);
         troops.remove(troop);
         if (troop.getCard().getType() == CardType.HERO) {
             hero = null;
