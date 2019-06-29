@@ -31,23 +31,23 @@ public class ImageButton extends StackPane {
     }
 
     public ImageButton(String text, EventHandler<? super MouseEvent> mouseEvent) {
-        ImageView defaultView = ImageLoader.makeImageView(defaultImage, WIDTH, HEIGHT);
-        ImageView hoverView = ImageLoader.makeImageView(hoverImage, WIDTH, HEIGHT);
+        this(text, mouseEvent, defaultImage, hoverImage);
+    }
+
+    public ImageButton(String text, EventHandler<? super MouseEvent> mouseEvent, Image defaultImage, Image hoverImage) {
+        ImageView imageView = ImageLoader.makeImageView(defaultImage, WIDTH, HEIGHT);
         DefaultLabel label = new DefaultLabel(text, FONT, Color.WHITE);
 
-        hoverView.setVisible(false);
         setOnMouseEntered(event -> {
-            defaultView.setVisible(false);
-            hoverView.setVisible(true);
+            imageView.setImage(hoverImage);
             setCursor(UIConstants.SELECT_CURSOR);
         });
         setOnMouseExited(event -> {
-            defaultView.setVisible(true);
-            hoverView.setVisible(false);
+            imageView.setImage(defaultImage);
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
         setOnMouseClicked(mouseEvent);
 
-        getChildren().addAll(defaultView, hoverView, label);
+        getChildren().addAll(imageView, label);
     }
 }

@@ -34,7 +34,7 @@ public class UIConstants {
     static final double DUELYST_LOGO_HEIGHT = 108 * SCALE;
     static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     public static Cursor DEFAULT_CURSOR;
-    static Cursor SELECT_CURSOR;
+    public static Cursor SELECT_CURSOR;
 
     static {
         try {

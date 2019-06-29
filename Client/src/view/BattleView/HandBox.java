@@ -8,16 +8,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
-import models.gui.CardPane;
+import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import static models.gui.UIConstants.SCALE;
+
 public class HandBox implements PropertyChangeListener {
+    private static final Font SMALL_BUTTON_FONT = Font.font("SansSerif", FontWeight.BOLD, 35 * SCALE);
+    private static final double SMALL_BUTTON_WIDTH = 348 * Constants.SCALE * 0.5;
+    private static final double SMALL_BUTTON_HEIGHT = 108 * Constants.SCALE * 0.5;
     private final BattleScene battleScene;
     private final CompressedPlayer player;
     private final Group group;
@@ -27,7 +36,7 @@ public class HandBox implements PropertyChangeListener {
     private CardPane cardPane = null;
 
 
-    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y){
+    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) {
         this.battleScene = battleScene;
         this.player = player;
         group = new Group();
@@ -237,38 +246,15 @@ public class HandBox implements PropertyChangeListener {
 
     private void addMenuButton() {
         try {
-            ImageView menuButton = new ImageView(new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")));
-            menuButton.setFitWidth(menuButton.getImage().getWidth() * Constants.SCALE * 0.5);
-            menuButton.setFitHeight(menuButton.getImage().getHeight() * Constants.SCALE * 0.5);
-            menuButton.setX(1160 * Constants.SCALE);
-            menuButton.setY(110 * Constants.SCALE);
-            group.getChildren().add(menuButton);
-            menuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        menuButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            menuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        menuButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            menuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    System.out.println("Go To Menu");
-                }
-            });
+            ImageButton imageButton = new ImageButton(
+                    "MENU", event -> showGraveyard(),
+                    new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
+                    new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
+            );
+            imageButton.setLayoutX(1160 * Constants.SCALE);
+            imageButton.setLayoutY(110 * Constants.SCALE);
+
+            group.getChildren().add(imageButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -276,41 +262,22 @@ public class HandBox implements PropertyChangeListener {
 
     private void addGraveYardButton() {
         try {
-            ImageView graveYardButton = new ImageView(new Image(new FileInputStream("resources/ui/button_primary_right@2x.png")));
-            graveYardButton.setFitWidth(graveYardButton.getImage().getWidth() * Constants.SCALE * 0.5);
-            graveYardButton.setFitHeight(graveYardButton.getImage().getHeight() * Constants.SCALE * 0.5);
-            graveYardButton.setX(1325 * Constants.SCALE);
-            graveYardButton.setY(110 * Constants.SCALE);
-            group.getChildren().add(graveYardButton);
-            graveYardButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        graveYardButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_right_glow@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            graveYardButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        graveYardButton.setImage(new Image(new FileInputStream("resources/ui/button_primary_right@2x.png")));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            graveYardButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    System.out.println("GraveYard");
-                }
-            });
+            ImageButton imageButton = new ImageButton(
+                    "GRAVEYARD", event -> showGraveyard(),
+                    new Image(new FileInputStream("resources/ui/button_primary_right@2x.png")),
+                    new Image(new FileInputStream("resources/ui/button_primary_right_glow@2x.png"))
+            );
+            imageButton.setLayoutX(1330 * Constants.SCALE);
+            imageButton.setLayoutY(110 * Constants.SCALE);
+
+            group.getChildren().add(imageButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showGraveyard() {
+
     }
 
     @Override
