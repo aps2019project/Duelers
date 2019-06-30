@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -47,11 +48,13 @@ public class DialogContainer extends BorderPane {
 
     public void show() {
         root.getChildren().get(0).setEffect(BACKGROUND_BLUR);
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.open_dialog);
         root.getChildren().add(this);
     }
 
     public void close() {
         root.getChildren().remove(this);
         root.getChildren().get(0).setEffect(null);
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.close_dialog);
     }
 }

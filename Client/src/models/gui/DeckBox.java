@@ -1,6 +1,7 @@
 package models.gui;
 
 import controller.CollectionMenuController;
+import controller.SoundEffectPlayer;
 import javafx.geometry.Insets;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
@@ -76,6 +77,7 @@ public class DeckBox extends GridPane {
 
         modify.setOnMouseEntered(event -> {
             modify.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         modify.setOnMouseExited(event -> {
@@ -86,6 +88,7 @@ public class DeckBox extends GridPane {
 
         remove.setOnMouseEntered(event -> {
             remove.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         remove.setOnMouseExited(event -> {
@@ -103,6 +106,7 @@ public class DeckBox extends GridPane {
 
         export.setOnMouseEntered(event -> {
             export.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         export.setOnMouseExited(event -> {
@@ -126,6 +130,7 @@ public class DeckBox extends GridPane {
 
             disableMain.setOnMouseEntered(event -> {
                         disableMain.setEffect(new ColorAdjust(0, 0.5, 0, 0));
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
                         setCursor(SELECT_CURSOR);
                     }
             );
@@ -149,7 +154,7 @@ public class DeckBox extends GridPane {
     }
 
     private Font getFont(String name) {
-        double size = Math.min(45 * SCALE,  45 * SCALE * 8 / name.length());
+        double size = Math.min(45 * SCALE, 45 * SCALE * 8 / name.length());
         return Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, size);
     }
 }

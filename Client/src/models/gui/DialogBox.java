@@ -48,7 +48,7 @@ public class DialogBox extends VBox {
         getChildren().add(new OrangeButton(text, event));
     }
 
-    public void preventClosingOnClick(AtomicBoolean shouldBeClosed) {
+    private void preventClosingOnClick(AtomicBoolean shouldBeClosed) {
         setOnMouseClicked(event -> shouldBeClosed.set(false));
     }
 

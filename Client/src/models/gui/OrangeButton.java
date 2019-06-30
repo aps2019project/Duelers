@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -36,6 +37,7 @@ public class OrangeButton extends Button {
 
         setOnMouseEntered(event -> {
             setBackground(HOVER_BACKGROUND);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(UIConstants.SELECT_CURSOR);
         });
 

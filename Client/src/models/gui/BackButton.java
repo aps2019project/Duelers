@@ -1,11 +1,14 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+
+import static controller.SoundEffectPlayer.SoundName;
 
 import java.io.FileNotFoundException;
 
@@ -32,6 +35,7 @@ public class BackButton extends AnchorPane {
 
         setOnMouseEntered(event -> {
             setEffect(HOVER_EFFECT);
+            SoundEffectPlayer.getInstance().playSound(SoundName.hover);
             setCursor(UIConstants.SELECT_CURSOR);
         });
 
