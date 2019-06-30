@@ -1,24 +1,28 @@
 package view;
 
 import controller.Client;
+import controller.GraphicalUserInterface;
 import controller.MainMenuController;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import models.gui.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainMenu extends Show {
     private static final String LOGOUT_ICON_URL = "resources/ui/icon_logout.png";
     private static MainMenu menu;
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/main_menu.m4a").toURI().toString()
+    );
+
     private static final MenuItem[] items = {
             new MenuItem(0, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
             new MenuItem(1, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
             new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
             new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
-            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> {
-                    CustomCardMakerMenu.getInstance().show();
-            }),
+            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> CustomCardMakerMenu.getInstance().show()),
             new MenuItem(5, "SETTING", "Change game properties", event -> {
             }),
     };
@@ -27,6 +31,8 @@ public class MainMenu extends Show {
         menu = this;
         try {
             root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
+
+            GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
             MainMenuBox menuBox = new MainMenuBox(items);

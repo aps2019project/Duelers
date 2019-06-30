@@ -3,6 +3,8 @@ package controller;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
 import view.LoginMenu;
@@ -11,6 +13,7 @@ public class GraphicalUserInterface {
     private static GraphicalUserInterface GUI;
     private Stage stage;
     private Scene scene;
+    private MediaPlayer backgroundMusicPlayer;
 
     public static GraphicalUserInterface getInstance() {
         if (GUI == null) {
@@ -34,6 +37,15 @@ public class GraphicalUserInterface {
         } else {
             scene.setRoot(root);
         }
+    }
+
+    public void setBackgroundMusic(Media media) {
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.stop();
+        }
+        backgroundMusicPlayer = new MediaPlayer(media);
+        backgroundMusicPlayer.setCycleCount(-1);
+        backgroundMusicPlayer.setAutoPlay(true);
     }
 
     private void setStageProperties(Stage stage) {
