@@ -77,6 +77,7 @@ public class GraphicalUserInterface {
     public void stopBackgroundMusic() {
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.stop();
+            currentMedia = null;
         }
     }
 }
