@@ -1,11 +1,14 @@
 package view;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.gui.DialogBox;
 import models.gui.DialogContainer;
 import models.gui.DialogText;
+
+import static controller.SoundEffectPlayer.SoundName;
 
 public class ErrorView {
     private final AnchorPane root;
@@ -16,6 +19,7 @@ public class ErrorView {
     }
 
     public void show(String error, String buttonText, EventHandler<? super MouseEvent> event) {
+        SoundEffectPlayer.getInstance().playSound(SoundName.error);
         DialogText errorLabel = new DialogText("Error!");
         DialogText errorMessage = new DialogText(error);
 
