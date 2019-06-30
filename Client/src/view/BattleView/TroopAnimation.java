@@ -34,7 +34,7 @@ public class TroopAnimation extends Transition {
     private final ImageView imageView;
     private final int frameWidth, frameHeight;
 
-    private boolean flag = false;
+    private boolean frameShowFlag = false;
     private int nextIndex;
     private ACTION action;
     private FramePosition[] currentFramePositions;
@@ -48,11 +48,12 @@ public class TroopAnimation extends Transition {
     private Group mapGroup;
     private Group troopGroup;
 
-    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
+    TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
         this.mapGroup = mapGroup;
         this.isPlayer1Troop = isPlayer1Troop;
         this.isMyTroop = isMyTroop;
-        //file settings
+
+        //read settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
         attackFramePositions = playlist.getAttackFrames();
         breathingFramePositions = playlist.getBreathingFrames();
@@ -87,13 +88,14 @@ public class TroopAnimation extends Transition {
         troopGroup.setLayoutY(cellsY[j][i]);
         troopGroup.getChildren().add(imageView);
 
-        mapGroup.getChildren().add(troopGroup);
-
         this.setCycleCount(INDEFINITE);
+
         action = ACTION.IDLE;
         setAction(ACTION.BREATHING);
 
         addApHp();
+
+        mapGroup.getChildren().add(troopGroup);
     }
 
     private void addApHp() throws Exception {
@@ -117,20 +119,20 @@ public class TroopAnimation extends Transition {
         troopGroup.getChildren().addAll(apImage, hpImage, apLabel, hpLabel);
     }
 
-    public void updateApHp(int ap,int hp){
+    void updateApHp(int ap,int hp){
         apLabel.setText(Integer.toString(ap));
         hpLabel.setText(Integer.toString(hp));
     }
 
     @Override
     protected void interpolate(double v) {
-        if (!flag && v < 0.5)
-            flag = true;
-        if (flag && v > 0.5) {
+        if (!frameShowFlag && v < 0.5)
+            frameShowFlag = true;
+        if (frameShowFlag && v > 0.5) {
             imageView.setViewport(new Rectangle2D(currentFramePositions[nextIndex].x,
                     currentFramePositions[nextIndex].y, frameWidth, frameHeight));
             generateNextState();
-            flag = false;
+            frameShowFlag = false;
         }
     }
 
@@ -194,10 +196,6 @@ public class TroopAnimation extends Transition {
         this.play();
     }
 
-    public void breathe() {
-        setAction(ACTION.BREATHING);
-    }
-
     public void kill() {
         setAction(ACTION.DEATH);
     }
@@ -208,10 +206,6 @@ public class TroopAnimation extends Transition {
         if (i < currentI)
             imageView.setScaleX(-1);
         setAction(ACTION.ATTACK);
-    }
-
-    public void idle() {
-        setAction(ACTION.IDLE);
     }
 
     public void hit(int i) {
@@ -296,6 +290,11 @@ public class TroopAnimation extends Transition {
 
     public Group getTroopGroup() {
         return troopGroup;
+    }
+
+    void select(){
+        if (action == ACTION.BREATHING)
+            setAction(ACTION.IDLE);
     }
 
     public void diSelect() {
