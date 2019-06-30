@@ -1,19 +1,25 @@
 package view.BattleView;
 
+import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.game.GameActions;
 import models.game.map.Position;
 import view.Show;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BattleScene extends Show {
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/battle.m4a").toURI().toString()
+    );
     private final GameActions controller;
     private final CompressedGame game;
     private final MapBox mapBox;
@@ -65,6 +71,7 @@ public class BattleScene extends Show {
     @Override
     public void show() {
         super.show();
+        GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
     }
 
     @Override
