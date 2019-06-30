@@ -2,11 +2,13 @@ package view;
 
 import controller.Client;
 import controller.CollectionMenuController;
+import controller.GraphicalUserInterface;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -16,6 +18,7 @@ import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,6 +27,9 @@ import static models.gui.UIConstants.*;
 public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final Background DECKS_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(39, 35, 40), CornerRadii.EMPTY, Insets.EMPTY)
+    );
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/collection_menu.m4a").toURI().toString()
     );
     private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
@@ -165,6 +171,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         super.show();
         Client.getInstance().getAccount().addPropertyChangeListener(this);
         BackgroundMaker.makeMenuBackgroundFrozen();
+        GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
     }
 
     @Override

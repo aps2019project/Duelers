@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.media.jfxmedia.MediaException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
@@ -41,15 +42,19 @@ public class GraphicalUserInterface {
     }
 
     public void setBackgroundMusic(Media media) {
-        if (media.equals(currentMedia)) return;
-        currentMedia = media;
-        System.out.println("currentMedia:" + media.getSource());
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.stop();
+        try {
+            if (media.equals(currentMedia)) return;
+            currentMedia = media;
+            System.out.println("currentMedia:" + media.getSource());
+            if (backgroundMusicPlayer != null) {
+                backgroundMusicPlayer.stop();
+            }
+            backgroundMusicPlayer = new MediaPlayer(media);
+            backgroundMusicPlayer.setCycleCount(-1);
+            backgroundMusicPlayer.setAutoPlay(true);
+        } catch (MediaException e) {
+            e.printStackTrace();
         }
-        backgroundMusicPlayer = new MediaPlayer(media);
-        backgroundMusicPlayer.setCycleCount(-1);
-        backgroundMusicPlayer.setAutoPlay(true);
     }
 
     private void setStageProperties(Stage stage) {
