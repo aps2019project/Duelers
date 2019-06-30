@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import models.gui.BackgroundMaker;
 import models.gui.ImageLoader;
 
-import javax.sound.midi.ControllerEventListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -49,6 +48,10 @@ public class GameResultMenu extends Show {
         try {
             root.setBackground(ROOT_BACKGROUND);
             BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
+
+            ImageView resultBackground = ImageLoader.makeImageView(
+                    status.get(CONTROLLER.amInWinner()).background, SCENE_WIDTH, SCENE_HEIGHT
+            );
 
             AnchorPane sceneContents = new AnchorPane(background);
             root.getChildren().addAll(sceneContents);
