@@ -1,5 +1,6 @@
 package view;
 
+import controller.GraphicalUserInterface;
 import controller.ShopController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -15,11 +17,15 @@ import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import static models.gui.UIConstants.*;
 
 public class ShopMenu extends Show implements PropertyChangeListener {
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/shop_menu.m4a").toURI().toString()
+    );
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final double SCROLL_WIDTH = 2350 * SCALE;
@@ -105,6 +111,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     public void show() {
         super.show();
         BackgroundMaker.makeMenuBackgroundFrozen();
+        GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
     }
 
     @Override

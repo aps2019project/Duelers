@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import static controller.SoundEffectPlayer.SoundName;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,6 +41,7 @@ public class ImageButton extends StackPane {
 
         setOnMouseEntered(event -> {
             imageView.setImage(hoverImage);
+            SoundEffectPlayer.getInstance().playSound(SoundName.hover);
             setCursor(UIConstants.SELECT_CURSOR);
         });
         setOnMouseExited(event -> {

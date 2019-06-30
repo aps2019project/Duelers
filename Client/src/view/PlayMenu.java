@@ -1,12 +1,15 @@
 package view;
 
+import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import models.gui.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class PlayMenu extends Show {
@@ -14,6 +17,9 @@ public class PlayMenu extends Show {
             new BackgroundFill(
                     Color.rgb(40, 43, 53), CornerRadii.EMPTY, Insets.EMPTY
             )
+    );
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/play_menu.m4a").toURI().toString()
     );
     private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
@@ -27,6 +33,7 @@ public class PlayMenu extends Show {
 
     PlayMenu(PlayButtonItem[] items, String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
+
         BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
         DefaultContainer container = new DefaultContainer(new HorizontalButtonsBox(items));
         BackButton backButton = new BackButton(backEvent);
@@ -34,6 +41,12 @@ public class PlayMenu extends Show {
         AnchorPane sceneContents = new AnchorPane(background, container, backButton);
 
         root.getChildren().addAll(sceneContents);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
     }
 
     public static PlayMenu getInstance() {

@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -37,6 +38,7 @@ class PlayButtonImageZone extends StackPane {
 
         setOnMouseEntered(event -> {
             item.imageView.setEffect(HOVER_EFFECT);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(UIConstants.SELECT_CURSOR);
             title.setEffect(TEXT_SHADOW);
         });

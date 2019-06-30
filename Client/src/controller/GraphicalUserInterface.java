@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.media.jfxmedia.MediaException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +15,7 @@ public class GraphicalUserInterface {
     private Stage stage;
     private Scene scene;
     private MediaPlayer backgroundMusicPlayer;
+    private Media currentMedia;
 
     public static GraphicalUserInterface getInstance() {
         if (GUI == null) {
@@ -40,12 +42,20 @@ public class GraphicalUserInterface {
     }
 
     public void setBackgroundMusic(Media media) {
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.stop();
+        try {
+            if (media.equals(currentMedia)) return;
+            currentMedia = media;
+            System.out.println("currentMedia:" + media.getSource());
+            if (backgroundMusicPlayer != null) {
+                backgroundMusicPlayer.stop();
+            }
+            backgroundMusicPlayer = new MediaPlayer(media);
+            backgroundMusicPlayer.setVolume(0.2);
+            backgroundMusicPlayer.setCycleCount(-1);
+            backgroundMusicPlayer.setAutoPlay(true);
+        } catch (MediaException e) {
+            e.printStackTrace();
         }
-        backgroundMusicPlayer = new MediaPlayer(media);
-        backgroundMusicPlayer.setCycleCount(-1);
-        backgroundMusicPlayer.setAutoPlay(true);
     }
 
     private void setStageProperties(Stage stage) {
@@ -63,5 +73,12 @@ public class GraphicalUserInterface {
         scene.getStylesheets().add(this.getClass().getResource("/styles/scroll_pane.css").toExternalForm());
         scene.setCursor(UIConstants.DEFAULT_CURSOR);
         stage.setScene(scene);
+    }
+
+    public void stopBackgroundMusic() {
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.stop();
+            currentMedia = null;
+        }
     }
 }
