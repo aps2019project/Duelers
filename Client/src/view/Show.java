@@ -2,6 +2,7 @@ package view;
 
 import controller.Client;
 import controller.GraphicalUserInterface;
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -11,6 +12,7 @@ public abstract class Show {
 
     public void show() {
         GraphicalUserInterface.getInstance().changeScene(root);
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.enter_page);
         Client.getInstance().setShow(this);
     }
 

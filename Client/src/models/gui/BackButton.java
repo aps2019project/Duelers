@@ -44,6 +44,9 @@ public class BackButton extends AnchorPane {
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
 
-        setOnMouseClicked(clickEvent);
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundName.exit_page);
+            clickEvent.handle(event);
+        });
     }
 }

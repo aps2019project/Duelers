@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -49,7 +50,10 @@ public class DialogBox extends VBox {
     }
 
     private void preventClosingOnClick(AtomicBoolean shouldBeClosed) {
-        setOnMouseClicked(event -> shouldBeClosed.set(false));
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            shouldBeClosed.set(false);
+        });
     }
 
     public void makeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {

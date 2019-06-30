@@ -46,7 +46,10 @@ public class OrangeButton extends Button {
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
 
-        setOnMouseClicked(clickEvent);
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            clickEvent.handle(event);
+        });
     }
 
     OrangeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {

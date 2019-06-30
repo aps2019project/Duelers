@@ -50,7 +50,10 @@ class MainMenuGrid extends GridPane {
         RotateAnimation rotate = new RotateAnimation(ringView);
         Label label = new DefaultLabel(item.title, FONT, Color.WHITE);
 
-        label.setOnMouseClicked(item.event);
+        label.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            item.event.handle(event);
+        });
 
         label.setOnMouseEntered(event -> {
             menuView.setOpacity(0.6);

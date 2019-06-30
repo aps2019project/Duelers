@@ -48,7 +48,10 @@ public class ImageButton extends StackPane {
             imageView.setImage(defaultImage);
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
-        setOnMouseClicked(mouseEvent);
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            mouseEvent.handle(event);
+        });
 
         getChildren().addAll(imageView, label);
     }

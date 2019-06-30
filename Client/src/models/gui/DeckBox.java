@@ -84,7 +84,10 @@ public class DeckBox extends GridPane {
             modify.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
-        modify.setOnMouseClicked(event -> CollectionMenu.getInstance().modify(deck));
+        modify.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            CollectionMenu.getInstance().modify(deck);
+        });
 
         remove.setOnMouseEntered(event -> {
             remove.setEffect(ICON_SHADOW);
@@ -96,6 +99,7 @@ public class DeckBox extends GridPane {
             setCursor(DEFAULT_CURSOR);
         });
         remove.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
             CollectionMenuController.getInstance().removeDeck(deck.getName());
             try {
                 CollectionMenu.getInstance().showCollectionCards();
@@ -113,7 +117,10 @@ public class DeckBox extends GridPane {
             export.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
-        export.setOnMouseClicked(event -> new DeckExporter(deck).export());
+        export.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            new DeckExporter(deck).export();
+        });
 
         add(deckName, 5, 0, 4, 2);
         if (deck.isValid()) {
@@ -138,7 +145,10 @@ public class DeckBox extends GridPane {
                 disableMain.setEffect(null);
                 setCursor(DEFAULT_CURSOR);
             });
-            disableMain.setOnMouseClicked(event -> CollectionMenuController.getInstance().selectDeck(deck.getName()));
+            disableMain.setOnMouseClicked(event -> {
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+                CollectionMenuController.getInstance().selectDeck(deck.getName());
+            });
         }
 
         add(heroNumber, 5, 2, 2, 1);

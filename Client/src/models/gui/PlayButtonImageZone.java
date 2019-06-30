@@ -43,12 +43,16 @@ class PlayButtonImageZone extends StackPane {
             title.setEffect(TEXT_SHADOW);
         });
 
+
         setOnMouseExited(event -> {
             item.imageView.setEffect(null);
             setCursor(UIConstants.DEFAULT_CURSOR);
             title.setEffect(null);
         });
 
-        setOnMouseClicked(item.event);
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            item.event.handle(event);
+        });
     }
 }
