@@ -18,7 +18,7 @@ public class ImageLoader {
         return view;
     }
 
-    static ImageView makeImageView(Image image, double width, double height) {
+    public static ImageView makeImageView(Image image, double width, double height) {
         ImageView menuView = new ImageView(image);
         menuView.setFitWidth(width);
         menuView.setFitHeight(height);
