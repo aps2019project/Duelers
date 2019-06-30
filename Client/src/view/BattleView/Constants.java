@@ -1,5 +1,7 @@
 package view.BattleView;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 
 public class Constants {
@@ -16,4 +18,5 @@ public class Constants {
     static final double CELLS_OPACITY = 0.4;
     static final double SPACE_BETWEEN_CELLS = 2;
     static final double MOVE_TIME_PER_CELL = 200;
+    static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 22 * SCALE);
 }

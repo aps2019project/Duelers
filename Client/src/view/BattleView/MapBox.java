@@ -40,7 +40,6 @@ public class MapBox implements PropertyChangeListener {
         mapGroup.setLayoutX(x);
         makePolygons();
         resetSelection();
-        //addCircles();
         for (CompressedTroop troop : gameMap.getTroops()) {
             updateTroop(null, troop);
         }
@@ -106,6 +105,22 @@ public class MapBox implements PropertyChangeListener {
         if (newTroop == null) {
             animation = troopAnimationHashMap.get(oldTroop);
             if (animation != null) {
+                animation.updateApHp(oldTroop.getCurrentAp(), 0);
+                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                    }
+                });
+                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                    }
+                });
+                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                    }
+                });
                 animation.kill();
                 troopAnimationHashMap.remove(oldTroop);
             }
@@ -113,6 +128,7 @@ public class MapBox implements PropertyChangeListener {
             animation = troopAnimationHashMap.get(oldTroop);
             troopAnimationHashMap.remove(oldTroop);
             troopAnimationHashMap.put(newTroop, animation);
+            animation.updateApHp(newTroop.getCurrentAp(), newTroop.getCurrentHp());
             animation.moveTo(newTroop.getPosition().getRow(), newTroop.getPosition().getColumn());
         } else {
             try {
@@ -120,6 +136,7 @@ public class MapBox implements PropertyChangeListener {
                         newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(),
                         newTroop.getPlayerNumber() == 1,
                         newTroop.getPlayerNumber() == battleScene.getMyPlayerNumber());
+                animation.updateApHp(newTroop.getCurrentAp(), newTroop.getCurrentHp());
                 animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
@@ -172,7 +189,6 @@ public class MapBox implements PropertyChangeListener {
             }
         }
         for (TroopAnimation animation : troopAnimationHashMap.values()) {
-            animation.removeDetail();
             animation.diSelect();
         }
         battleScene.getPlayerBox().refreshComboAndSpell();
@@ -194,7 +210,6 @@ public class MapBox implements PropertyChangeListener {
             return;
         } else {
             animation.breathe();
-            animation.removeDetail();
         }
         cells[j][i].setFill(Color.DARKBLUE);
     }
@@ -204,7 +219,6 @@ public class MapBox implements PropertyChangeListener {
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.showDetail();
             animation.idle();
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);

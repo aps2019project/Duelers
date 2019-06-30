@@ -9,7 +9,7 @@ public class DefaultLabel extends Label {
         this(title, font, color, 0, 0);
     }
 
-    DefaultLabel(String title, Font font, Color color, double x, double y) {
+    public DefaultLabel(String title, Font font, Color color, double x, double y) {
         super(title);
         setFont(font);
         setTextFill(color);

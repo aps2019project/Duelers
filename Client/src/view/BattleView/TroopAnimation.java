@@ -7,11 +7,11 @@ import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import models.gui.CardPane;
+import models.gui.DefaultLabel;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -40,15 +40,13 @@ public class TroopAnimation extends Transition {
     private FramePosition[] currentFramePositions;
     private int currentI, currentJ;
 
-    private Label apLabel;
-    private Label hpLabel;
-    private ImageView ap;
-    private ImageView hp;
+    private DefaultLabel apLabel;
+    private DefaultLabel hpLabel;
+    private ImageView apImage;
+    private ImageView hpImage;
 
     private Group mapGroup;
     private Group troopGroup;
-
-    private CardPane cardPane;
 
     public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
         this.mapGroup = mapGroup;
@@ -92,40 +90,36 @@ public class TroopAnimation extends Transition {
         mapGroup.getChildren().add(troopGroup);
 
         this.setCycleCount(INDEFINITE);
+        action = ACTION.IDLE;
         setAction(ACTION.BREATHING);
 
         addApHp();
     }
 
     private void addApHp() throws Exception {
+        apLabel = new DefaultLabel("", Constants.AP_FONT, Color.WHITE, -Constants.SCALE * 29, Constants.SCALE * 15);
+        hpLabel = new DefaultLabel("", Constants.AP_FONT, Color.WHITE, Constants.SCALE * 14, Constants.SCALE * 15);
         if (isMyTroop) {
-            ap = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk@2x.png")));
-            hp = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp@2x.png")));
+            apImage = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk@2x.png")));
+            hpImage = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp@2x.png")));
         } else {
-            ap = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk_bw@2x.png")));
-            hp = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp_bw@2x.png")));
+            apImage = new ImageView(new Image(new FileInputStream("resources/ui/icon_atk_bw@2x.png")));
+            hpImage = new ImageView(new Image(new FileInputStream("resources/ui/icon_hp_bw@2x.png")));
         }
-        ap.setFitHeight(ap.getImage().getHeight() * Constants.SCALE * 0.4);
-        ap.setFitWidth(ap.getImage().getWidth() * Constants.SCALE * 0.4);
-        ap.setX(-Constants.SCALE * 55);
-        ap.setY(Constants.SCALE * 5);
-        hp.setFitHeight(hp.getImage().getHeight() * Constants.SCALE * 0.4);
-        hp.setFitWidth(hp.getImage().getWidth() * Constants.SCALE * 0.4);
-        hp.setX(Constants.SCALE * 5);
-        hp.setY(Constants.SCALE * 5);
-        troopGroup.getChildren().addAll(ap, hp);
-        ap.setVisible(false);
-        hp.setVisible(false);
+        apImage.setFitHeight(apImage.getImage().getHeight() * Constants.SCALE * 0.4);
+        apImage.setFitWidth(apImage.getImage().getWidth() * Constants.SCALE * 0.4);
+        apImage.setX(-Constants.SCALE * 50);
+        apImage.setY(Constants.SCALE * 0);
+        hpImage.setFitHeight(hpImage.getImage().getHeight() * Constants.SCALE * 0.4);
+        hpImage.setFitWidth(hpImage.getImage().getWidth() * Constants.SCALE * 0.4);
+        hpImage.setX(-Constants.SCALE * 6);
+        hpImage.setY(Constants.SCALE * 0);
+        troopGroup.getChildren().addAll(apImage, hpImage, apLabel, hpLabel);
     }
 
-    public void showDetail(){
-        ap.setVisible(true);
-        hp.setVisible(true);
-    }
-
-    public void removeDetail(){
-        ap.setVisible(false);
-        hp.setVisible(false);
+    public void updateApHp(int ap,int hp){
+        apLabel.setText(Integer.toString(ap));
+        hpLabel.setText(Integer.toString(hp));
     }
 
     @Override
@@ -304,8 +298,8 @@ public class TroopAnimation extends Transition {
         return troopGroup;
     }
 
-    public void diSelect(){
-        if(action==ACTION.IDLE)
+    public void diSelect() {
+        if (action == ACTION.IDLE)
             setAction(ACTION.BREATHING);
     }
 }

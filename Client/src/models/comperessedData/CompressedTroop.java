@@ -2,8 +2,6 @@ package models.comperessedData;
 
 import models.game.map.Position;
 
-import java.util.Objects;
-
 public class CompressedTroop {
     private CompressedCard card;
     private int currentAp;
@@ -48,14 +46,6 @@ public class CompressedTroop {
         this.noAttackFromWeakerOnes = noAttackFromWeakerOnes;
         this.numberOfCollectedFlags = numberOfCollectedFlags;
         this.playerNumber = playerNumber;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CompressedTroop)) return false;
-        CompressedTroop that = (CompressedTroop) o;
-        return Objects.equals(card, that.card);
     }
 
     public CompressedCard getCard() {
