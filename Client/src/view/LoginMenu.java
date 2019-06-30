@@ -1,5 +1,6 @@
 package view;
 
+import controller.GraphicalUserInterface;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import models.gui.BackgroundMaker;
@@ -30,5 +31,6 @@ public class LoginMenu extends Show {
     public void show() {
         super.show();
         BackgroundMaker.makeMenuBackgroundFrozen();
+        GraphicalUserInterface.getInstance().stopBackgroundMusic();
     }
 }

@@ -14,6 +14,7 @@ public class GraphicalUserInterface {
     private Stage stage;
     private Scene scene;
     private MediaPlayer backgroundMusicPlayer;
+    private Media currentMedia;
 
     public static GraphicalUserInterface getInstance() {
         if (GUI == null) {
@@ -40,6 +41,9 @@ public class GraphicalUserInterface {
     }
 
     public void setBackgroundMusic(Media media) {
+        if (media.equals(currentMedia)) return;
+        currentMedia = media;
+        System.out.println("currentMedia:" + media.getSource());
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.stop();
         }
@@ -63,5 +67,11 @@ public class GraphicalUserInterface {
         scene.getStylesheets().add(this.getClass().getResource("/styles/scroll_pane.css").toExternalForm());
         scene.setCursor(UIConstants.DEFAULT_CURSOR);
         stage.setScene(scene);
+    }
+
+    public void stopBackgroundMusic() {
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.stop();
+        }
     }
 }

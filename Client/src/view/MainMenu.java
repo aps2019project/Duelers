@@ -31,9 +31,6 @@ public class MainMenu extends Show {
         menu = this;
         try {
             root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
-
-            GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
-
             BorderPane background = BackgroundMaker.getMenuBackground();
             MainMenuBox menuBox = new MainMenuBox(items);
 
@@ -61,7 +58,7 @@ public class MainMenu extends Show {
                 new LoginMenu().show();
 
             }, LOGOUT_ICON_URL);
-            dialogBox.makeClosable(dialogContainer);
+            dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -71,5 +68,6 @@ public class MainMenu extends Show {
     public void show() {
         super.show();
         BackgroundMaker.makeMenuBackgroundUnfrozen();
+        GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
     }
 }

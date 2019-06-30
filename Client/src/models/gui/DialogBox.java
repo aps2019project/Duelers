@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -56,8 +57,12 @@ public class DialogBox extends VBox {
     }
 
     public void makeClosable(DialogContainer dialogContainer) {
+        makeClosable(dialogContainer, closeEvent -> {});
+    }
+
+    public void makeClosable(DialogContainer dialogContainer, EventHandler<InputEvent> closeEvent) {
         AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
-        dialogContainer.makeClosable(shouldBeClosed);
+        dialogContainer.makeClosable(shouldBeClosed, closeEvent);
         preventClosingOnClick(shouldBeClosed);
     }
 }
