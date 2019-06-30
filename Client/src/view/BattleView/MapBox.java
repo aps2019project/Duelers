@@ -209,7 +209,7 @@ public class MapBox implements PropertyChangeListener {
             cells[j][i].setFill(Color.DARKGREEN);
             return;
         } else {
-            animation.breathe();
+            animation.diSelect();
         }
         cells[j][i].setFill(Color.DARKBLUE);
     }
@@ -219,7 +219,7 @@ public class MapBox implements PropertyChangeListener {
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.idle();
+            animation.select();
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
