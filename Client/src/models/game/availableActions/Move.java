@@ -4,6 +4,8 @@ import models.comperessedData.CompressedTroop;
 import models.game.map.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Move {
     private CompressedTroop troop;
@@ -18,7 +20,7 @@ public class Move {
         return troop;
     }
 
-    public ArrayList<Position> getTargets() {
-        return targets;
+    public List<Position> getTargets() {
+        return Collections.unmodifiableList(targets);
     }
 }

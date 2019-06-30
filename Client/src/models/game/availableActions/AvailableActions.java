@@ -6,6 +6,8 @@ import models.comperessedData.*;
 import models.game.map.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AvailableActions {
     private ArrayList<Insert> handInserts = new ArrayList<>();
@@ -174,5 +176,14 @@ public class AvailableActions {
             if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
         }
         return false;
+    }
+
+    public List<Position> getMove(CompressedTroop troop) {
+        for (Move move : moves) {
+            if (move.getTroop().equals(troop)) {
+                return move.getTargets();
+            }
+        }
+        return Collections.emptyList();
     }
 }

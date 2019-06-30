@@ -39,6 +39,10 @@ public class GameController implements GameActions {
         availableActions.calculate(currentGame);
     }
 
+    public AvailableActions getAvailableActions() {
+        return availableActions;
+    }
+
     public CompressedGame getCurrentGame() {
         return currentGame;
     }

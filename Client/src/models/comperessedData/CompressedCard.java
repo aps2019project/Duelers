@@ -4,6 +4,8 @@ import models.ICard;
 import models.card.AttackType;
 import models.card.CardType;
 
+import java.util.Objects;
+
 public class CompressedCard implements ICard {
     private String name;
     private String description;
@@ -35,6 +37,13 @@ public class CompressedCard implements ICard {
         this.hasCombo = hasCombo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompressedCard)) return false;
+        CompressedCard that = (CompressedCard) o;
+        return Objects.equals(cardId, that.cardId);
+    }
 
     @Override
     public String getName() {
