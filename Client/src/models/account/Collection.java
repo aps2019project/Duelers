@@ -4,27 +4,29 @@ import models.card.Card;
 import models.card.Deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Collection {
-    private ArrayList<Card> heroes = new ArrayList<>();
-    private ArrayList<Card> minions = new ArrayList<>();
-    private ArrayList<Card> spells = new ArrayList<>();
-    private ArrayList<Card> items = new ArrayList<>();
+    private List<Card> heroes = new ArrayList<>();
+    private List<Card> minions = new ArrayList<>();
+    private List<Card> spells = new ArrayList<>();
+    private List<Card> items = new ArrayList<>();
 
-    public ArrayList<Card> getHeroes() {
-        return this.heroes;
+    public List<Card> getHeroes() {
+        return Collections.unmodifiableList(heroes);
     }
 
-    public ArrayList<Card> getMinions() {
-        return this.minions;
+    public List<Card> getMinions() {
+        return Collections.unmodifiableList(minions);
     }
 
-    public ArrayList<Card> getSpells() {
-        return this.spells;
+    public List<Card> getSpells() {
+        return Collections.unmodifiableList(spells);
     }
 
-    public ArrayList<Card> getItems() {
-        return this.items;
+    public List<Card> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public Collection searchCollection(String cardName) {
@@ -36,7 +38,7 @@ public class Collection {
         return result;
     }
 
-    private void searchInList(ArrayList<Card> list, ArrayList<Card> results, String cardName) {
+    private void searchInList(List<Card> list, List<Card> results, String cardName) {
         for (Card card : list) {
             if (card.nameContains(cardName)) {
                 results.add(card);
@@ -74,7 +76,7 @@ public class Collection {
         return hasCard(cardId, heroes) || hasCard(cardId, minions) || hasCard(cardId, spells) || hasCard(cardId, items);
     }
 
-    private boolean hasCard(String cardId, ArrayList<Card> cards) {
+    private boolean hasCard(String cardId, List<Card> cards) {
         if (cardId == null || cards==null)
             return false;
         for (Card card : cards) {
@@ -98,7 +100,7 @@ public class Collection {
         return findCardInList(cardId, spells);
     }
 
-    private Card findCardInList(String cardId, ArrayList<Card> minions) {
+    private Card findCardInList(String cardId, List<Card> minions) {
         for (Card card : minions) {
             if (card.getCardId().equalsIgnoreCase(cardId)) return card;
         }
@@ -137,19 +139,13 @@ public class Collection {
     }
 
     public Card findLast(String cardName) {
-        ArrayList<Card> result = find(cardName);
+        List<Card> result = find(cardName);
         if (result.size() == 0) return null;
         return result.get(result.size() - 1);
     }
 
-    public Card findFirst(String cardName) {
-        ArrayList<Card> result = find(cardName);
-        if (result.size() == 0) return null;
-        return result.get(0);
-    }
-
-    private ArrayList<Card> find(String cardName) {
-        ArrayList<Card> result = new ArrayList<>();
+    private List<Card> find(String cardName) {
+        List<Card> result = new ArrayList<>();
         findInList(heroes, result, cardName);
         findInList(minions, result, cardName);
         findInList(spells, result, cardName);
@@ -157,7 +153,7 @@ public class Collection {
         return result;
     }
 
-    private void findInList(ArrayList<Card> list, ArrayList<Card> result, String cardName) {
+    private void findInList(List<Card> list, List<Card> result, String cardName) {
         for (Card card : list) {
             if (card.isSameAs(cardName)) {
                 result.add(card);
@@ -178,7 +174,7 @@ public class Collection {
         return collection;
     }
 
-    private void convertListToShowing(ArrayList<Card> newList, ArrayList<Card> mainList) {
+    private void convertListToShowing(List<Card> newList, List<Card> mainList) {
         Outer:
         for (Card hero : mainList) {
             for (Card other : newList) {

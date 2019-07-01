@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import models.account.MatchHistory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static models.gui.UIConstants.SCALE;
 
@@ -29,7 +30,7 @@ class MatchHistoryTable extends ScrollPane {
             )
     );
 
-    MatchHistoryTable(ArrayList<MatchHistory> matchHistories) {
+    MatchHistoryTable(List<MatchHistory> matchHistories) {
         setMinWidth(WIDTH * 1.03);
         setId(ID);
         GridPane labelsGrid = new GridPane();

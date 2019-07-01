@@ -1,21 +1,22 @@
 package models.account;
 
-
 import models.card.Deck;
 import models.card.TempDeck;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Account {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String username;
     private String password;
     private Collection collection;
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
-    private ArrayList<MatchHistory> matchHistories;
+    private List<MatchHistory> matchHistories;
     private int money;
 
     public Account(TempAccount account) {
@@ -51,16 +52,12 @@ public class Account {
         return this.collection;
     }
 
-    public ArrayList<Deck> getDecks() {
-        return this.decks;
+    public List<Deck> getDecks() {
+        return Collections.unmodifiableList(decks);
     }
 
-    public Deck getMainDeck() {
-        return this.mainDeck;
-    }
-
-    public ArrayList<MatchHistory> getMatchHistories() {
-        return this.matchHistories;
+    public List<MatchHistory> getMatchHistories() {
+        return Collections.unmodifiableList(matchHistories);
     }
 
     public int getMoney() {
@@ -105,7 +102,7 @@ public class Account {
             for (TempDeck deck : account.getDecks()) {
                 newDecks.add(new Deck(deck, collection));
             }
-            ArrayList<Deck> old = decks;
+            List<Deck> old = decks;
             decks = newDecks;
             support.firePropertyChange("decks", old, decks);
             if (!mainDecksEqual(account)) {
@@ -128,7 +125,7 @@ public class Account {
         );
     }
 
-    private boolean decksEqual(ArrayList<TempDeck> decks) {
+    private boolean decksEqual(List<TempDeck> decks) {
         if (this.decks.size() != decks.size()) return false;
 
         for (TempDeck deck : decks) {

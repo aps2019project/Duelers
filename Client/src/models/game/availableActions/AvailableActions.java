@@ -10,12 +10,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class AvailableActions {
-    private ArrayList<Insert> handInserts = new ArrayList<>();
-    private ArrayList<Insert> collectibleInserts = new ArrayList<>();
-    private ArrayList<Attack> attacks = new ArrayList<>();
-    private ArrayList<Combo> combos = new ArrayList<>();
+    private List<Insert> handInserts = new ArrayList<>();
+    private List<Insert> collectibleInserts = new ArrayList<>();
+    private List<Attack> attacks = new ArrayList<>();
+    private List<Combo> combos = new ArrayList<>();
     private SpecialPower specialPower;
-    private ArrayList<Move> moves = new ArrayList<>();
+    private List<Move> moves = new ArrayList<>();
 
     public void calculate(CompressedGame game) {
         clearEverything();
@@ -146,28 +146,28 @@ public class AvailableActions {
         }
     }
 
-    public ArrayList<Insert> getHandInserts() {
-        return handInserts;
+    public List<Insert> getHandInserts() {
+        return Collections.unmodifiableList(handInserts);
     }
 
-    public ArrayList<Insert> getCollectibleInserts() {
-        return collectibleInserts;
+    public List<Insert> getCollectibleInserts() {
+        return Collections.unmodifiableList(collectibleInserts);
     }
 
-    public ArrayList<Attack> getAttacks() {
-        return attacks;
+    public List<Attack> getAttacks() {
+        return Collections.unmodifiableList(attacks);
     }
 
-    public ArrayList<Combo> getCombos() {
-        return combos;
+    public List<Combo> getCombos() {
+        return Collections.unmodifiableList(combos);
     }
 
     public SpecialPower getSpecialPower() {
         return specialPower;
     }
 
-    public ArrayList<Move> getMoves() {
-        return moves;
+    public List<Move> getMoves() {
+        return Collections.unmodifiableList(moves);
     }
 
     public boolean canInsertCard(String cardId, int row, int column, CompressedGameMap map) {

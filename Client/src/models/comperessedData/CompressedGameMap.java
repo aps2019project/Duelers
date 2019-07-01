@@ -5,6 +5,8 @@ import models.game.map.Position;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CompressedGameMap{
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
@@ -43,8 +45,8 @@ public class CompressedGameMap{
         return cells;
     }
 
-    public ArrayList<CompressedTroop> getTroops() {
-        return new ArrayList<>(troops);
+    public List<CompressedTroop> getTroops() {
+        return Collections.unmodifiableList(troops);
     }
 
     public CompressedTroop searchTroop(String cardID) {
@@ -60,7 +62,7 @@ public class CompressedGameMap{
         troops.add(troop);
     }
 
-    public ArrayList<CompressedTroop> getPlayerTroop(int playerNumber) {
+    public List<CompressedTroop> getPlayerTroop(int playerNumber) {
         ArrayList<CompressedTroop> compressedTroops = new ArrayList<>();
         for (CompressedTroop troop : troops) {
             if (troop.getPlayerNumber() == playerNumber)
@@ -147,7 +149,7 @@ public class CompressedGameMap{
         return null;
     }
 
-    public ArrayList<CompressedCell> getFlagCells() {
+    public List<CompressedCell> getFlagCells() {
         ArrayList<CompressedCell> flagCells = new ArrayList<>();
         for (CompressedCell[] row : cells) {
             for (CompressedCell cell : row) {
@@ -157,6 +159,6 @@ public class CompressedGameMap{
                 }
             }
         }
-        return flagCells;
+        return Collections.unmodifiableList(flagCells);
     }
 }

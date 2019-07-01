@@ -4,11 +4,13 @@ package models.game.map;
 import models.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Cell {
     private int row;
     private int column;
-    private ArrayList<Card> items = new ArrayList<>();
+    private List<Card> items = new ArrayList<>();
 
     public Cell(int row, int column) {
         this.row = row;
@@ -31,8 +33,8 @@ public class Cell {
     }
 
 
-    public ArrayList<Card> getItems() {
-        return items;
+    public List<Card> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public void clearItems() {
@@ -57,6 +59,5 @@ public class Cell {
 
     public int manhattanDistance(Position position) {
         return Math.abs(position.getRow() - this.row) + Math.abs(position.getColumn() - this.column);
-
     }
 }

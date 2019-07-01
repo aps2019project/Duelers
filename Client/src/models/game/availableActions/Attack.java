@@ -4,12 +4,14 @@ package models.game.availableActions;
 import models.comperessedData.CompressedTroop;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Attack {
     private CompressedTroop attackerTroop;
-    private ArrayList<CompressedTroop> defenders = new ArrayList<>();
+    private List<CompressedTroop> defenders;
 
-    public Attack(CompressedTroop attackerTroop, ArrayList<CompressedTroop> defenders) {
+    Attack(CompressedTroop attackerTroop, ArrayList<CompressedTroop> defenders) {
         this.attackerTroop = attackerTroop;
         this.defenders = defenders;
     }
@@ -18,7 +20,7 @@ public class Attack {
         return attackerTroop;
     }
 
-    public ArrayList<CompressedTroop> getDefenders() {
-        return defenders;
+    public List<CompressedTroop> getDefenders() {
+        return Collections.unmodifiableList(defenders);
     }
 }

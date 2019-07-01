@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import models.card.Card;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.List;
 
 import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
@@ -18,7 +18,7 @@ public class ShopCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;
     private static final int COLUMN_NUMBER = 4;
 
-    public ShopCardsGrid(ArrayList<Card> cards) throws FileNotFoundException {
+    public ShopCardsGrid(List<Card> cards) throws FileNotFoundException {
         setHgap(DEFAULT_SPACING * 5);
         setVgap(DEFAULT_SPACING * 5);
 
