@@ -26,7 +26,11 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     private static Media backgroundMusic = new Media(
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
-    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
+    private static ShopMenu menu;
+    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
+        ShopController.getInstance().removePropertyChangeListener(menu);
+        new MainMenu().show();
+    };
     private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final double SCROLL_WIDTH = 2350 * SCALE;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
@@ -34,6 +38,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     private Collection showingCards;
 
     ShopMenu() {
+        menu = this;
         setOriginalCards();
 
         try {
