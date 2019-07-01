@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
+import static controller.SoundEffectPlayer.SoundName.*;
 
 public class ShopCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;
@@ -29,8 +30,8 @@ public class ShopCardsGrid extends GridPane {
             CardPane cardPane = new CardPane(card, true, true, null);
 
             HBox buttonsBox = new HBox(DEFAULT_SPACING,
-                    new OrangeButton("BUY", event -> ShopController.getInstance().buy(card.getName())),
-                    new OrangeButton("SELL", event -> ShopController.getInstance().sell(card.getName()))
+                    new OrangeButton("BUY", event -> ShopController.getInstance().buy(card.getName()), select),
+                    new OrangeButton("SELL", event -> ShopController.getInstance().sell(card.getName()), select)
             );
             buttonsBox.setMaxWidth(BUTTONS_WIDTH);
 

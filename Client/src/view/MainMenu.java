@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class MainMenu extends Show {
-    private static final String LOGOUT_ICON_URL = "resources/ui/icon_logout.png";
     private static MainMenu menu;
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
@@ -57,7 +56,7 @@ public class MainMenu extends Show {
                 MainMenuController.getInstance().logout();
                 new LoginMenu().show();
 
-            }, LOGOUT_ICON_URL);
+            });
             dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
         } catch (FileNotFoundException e) {
             e.printStackTrace();

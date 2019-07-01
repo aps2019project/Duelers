@@ -35,7 +35,6 @@ public class DialogContainer extends BorderPane {
                 shouldBeClosed.set(true);
                 return;
             }
-            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
             e.handle(event);
             close();
         });

@@ -51,7 +51,7 @@ class MainMenuGrid extends GridPane {
         Label label = new DefaultLabel(item.title, FONT, Color.WHITE);
 
         label.setOnMouseClicked(event -> {
-            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
             item.event.handle(event);
         });
 
