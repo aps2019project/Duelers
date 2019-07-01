@@ -136,15 +136,25 @@ public class Collection {
         return true;
     }
 
-    public Card findOne(String cardName) {
+    public Card findLast(String cardName) {
+        ArrayList<Card> result = find(cardName);
+        if (result.size() == 0) return null;
+        return result.get(result.size() - 1);
+    }
+
+    public Card findFirst(String cardName) {
+        ArrayList<Card> result = find(cardName);
+        if (result.size() == 0) return null;
+        return result.get(0);
+    }
+
+    private ArrayList<Card> find(String cardName) {
         ArrayList<Card> result = new ArrayList<>();
         findInList(heroes, result, cardName);
         findInList(minions, result, cardName);
         findInList(spells, result, cardName);
         findInList(items, result, cardName);
-
-        if (result.size() == 0) return null;
-        return result.get(0);
+        return result;
     }
 
     private void findInList(ArrayList<Card> list, ArrayList<Card> result, String cardName) {
@@ -156,12 +166,7 @@ public class Collection {
     }
 
     public int count(String cardName) {
-        ArrayList<Card> result = new ArrayList<>();
-        findInList(heroes, result, cardName);
-        findInList(minions, result, cardName);
-        findInList(spells, result, cardName);
-        findInList(items, result, cardName);
-        return result.size();
+        return find(cardName).size();
     }
 
     public Collection toShowing() {

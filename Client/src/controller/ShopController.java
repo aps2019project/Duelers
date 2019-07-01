@@ -28,9 +28,10 @@ public class ShopController {
         return ourInstance;
     }
 
-    public static boolean isLoaded(){
+    static boolean isLoaded(){
         return ourInstance!= null;
     }
+
     public void buy(String cardName) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeBuyCardMessage(
@@ -40,7 +41,7 @@ public class ShopController {
     }
 
     public void sell(String cardName) {
-        Card card = Client.getInstance().getAccount().getCollection().findOne(cardName);
+        Card card = Client.getInstance().getAccount().getCollection().findLast(cardName);
 
         if (card == null) {
             Client.getInstance().getCurrentShow().showError("You don't have such card");
@@ -51,10 +52,6 @@ public class ShopController {
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, card.getCardId(), 0
                 )
         );
-    }
-
-    public Collection getOriginalCards() {
-        return originalCards;
     }
 
     public Collection getShowingCards() {
@@ -81,11 +78,10 @@ public class ShopController {
         support.removePropertyChangeListener(pcl);
     }
 
-    public synchronized void addCard(Card customCard) {
-
-        this.getOriginalCards().addCard(customCard);
+    synchronized void addCard(Card customCard) {
+        originalCards.addCard(customCard);
         support.firePropertyChange("search_result", showingCards, originalCards);
-        this.showingCards.addCard(customCard);
+        showingCards.addCard(customCard);
         this.notify();
     }
 }
