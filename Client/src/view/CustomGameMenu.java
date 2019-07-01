@@ -9,8 +9,7 @@ import models.game.GameType;
 import models.gui.*;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.List;
 
 class CustomGameMenu extends PlayMenu {
     private static final String BACKGROUND_URL = "resources/menu/background/custom_game_background.jpg";
@@ -44,7 +43,7 @@ class CustomGameMenu extends PlayMenu {
     }
 
     private void initializeDecks() {
-        ArrayList<Deck> decks = Client.getInstance().getAccount().getDecks();
+        List<Deck> decks = Client.getInstance().getAccount().getDecks();
         deckNames = new String[decks.size()];
         for (int i = 0; i < deckNames.length; i++) {
             deckNames[i] = decks.get(i).getName();

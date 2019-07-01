@@ -10,25 +10,22 @@ import server.gameCenter.models.map.Cell;
 import server.gameCenter.models.map.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AvailableActions {
-    private ArrayList<Insert> handInserts = new ArrayList<>();
-    private ArrayList<Insert> collectibleInserts = new ArrayList<>();
-    private ArrayList<Attack> attacks = new ArrayList<>();
-    private ArrayList<Combo> combos = new ArrayList<>();
+    private List<Insert> handInserts = new ArrayList<>();
+    private List<Insert> collectibleInserts = new ArrayList<>();
+    private List<Attack> attacks = new ArrayList<>();
+    private List<Combo> combos = new ArrayList<>();
     private SpecialPower specialPower;
-    private ArrayList<Move> moves = new ArrayList<>();
+    private List<Move> moves = new ArrayList<>();
 
     public void calculateAvailableActions(Game game) {
-
         calculateAvailableInsets(game);
-
         calculateAvailableAttacks(game);
-
         calculateAvailableCombos(game);
-
         calculateAvailableSpecialPower(game);
-
         calculateAvailableMoves(game);
     }
 
@@ -71,7 +68,7 @@ public class AvailableActions {
         }
     }
 
-    public void calculateAvailableCombos(Game game) {
+    private void calculateAvailableCombos(Game game) {
         Player ownPlayer = game.getCurrentTurnPlayer();
         Player otherPlayer = game.getOtherTurnPlayer();
         combos.clear();
@@ -94,7 +91,7 @@ public class AvailableActions {
         }
     }
 
-    public void calculateAvailableSpecialPower(Game game) {
+    private void calculateAvailableSpecialPower(Game game) {
         Player ownPlayer = game.getCurrentTurnPlayer();
         Troop hero = ownPlayer.getHero();
 
@@ -150,27 +147,27 @@ public class AvailableActions {
         }
     }
 
-    public ArrayList<Insert> getHandInserts() {
-        return handInserts;
+    public List<Insert> getHandInserts() {
+        return Collections.unmodifiableList(handInserts);
     }
 
-    public ArrayList<Insert> getCollectibleInserts() {
-        return collectibleInserts;
+    public List<Insert> getCollectibleInserts() {
+        return Collections.unmodifiableList(collectibleInserts);
     }
 
-    public ArrayList<Attack> getAttacks() {
-        return attacks;
+    public List<Attack> getAttacks() {
+        return Collections.unmodifiableList(attacks);
     }
 
-    public ArrayList<Combo> getCombos() {
-        return combos;
+    public List<Combo> getCombos() {
+        return Collections.unmodifiableList(combos);
     }
 
     public SpecialPower getSpecialPower() {
         return specialPower;
     }
 
-    public ArrayList<Move> getMoves() {
-        return moves;
+    public List<Move> getMoves() {
+        return Collections.unmodifiableList(moves);
     }
 }

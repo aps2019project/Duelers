@@ -2,10 +2,10 @@ package server.clientPortal.models.message;
 
 import server.detaCenter.models.account.Collection;
 
-public class OriginalCardsCopyMessage {
+class OriginalCardsCopyMessage {
     private Collection originalCards;
 
-    public OriginalCardsCopyMessage(Collection originalCards) {
+    OriginalCardsCopyMessage(Collection originalCards) {
         this.originalCards = originalCards;
     }
 }

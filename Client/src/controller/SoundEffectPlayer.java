@@ -24,8 +24,13 @@ public class SoundEffectPlayer {
     public enum SoundName {
         error("sfx_ui_error"),
         hover("sfx_ui_menu_hover"),
-        open_dialog("sfx_ui_modalwindow_swoosh_enter"),
-        close_dialog("sfx_ui_modalwindow_swoosh_exit"),
+        open_dialog("sfx_ui_panel_swoosh_enter"),
+        close_dialog("sfx_ui_panel_swoosh_exit"),
+        select("sfx_ui_select"),
+        enter_page("sfx_ui_modalwindow_swoosh_enter"),
+        exit_page("sfx_ui_modalwindow_swoosh_exit"),
+        your_turn("sfx_ui_yourturn"),
+        click("sfx_unit_onclick"),
         ;
 
         private final String path;
@@ -45,7 +50,6 @@ public class SoundEffectPlayer {
     public void playSound(SoundName soundName) {
         try {
             Media media = mediaFiles.get(soundName);
-            System.out.println("currentMedia:" + media.getSource());
             new MediaPlayer(media).play();
         } catch (MediaException ignored) {
         }

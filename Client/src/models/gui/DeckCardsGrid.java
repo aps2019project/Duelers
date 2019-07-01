@@ -13,6 +13,7 @@ import java.util.List;
 
 import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
+import static controller.SoundEffectPlayer.SoundName.*;
 
 public class DeckCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;
@@ -33,10 +34,12 @@ public class DeckCardsGrid extends GridPane {
 
             HBox buttonsBox = new HBox(UIConstants.DEFAULT_SPACING,
                     new OrangeButton("ADD", event ->
-                            CollectionMenuController.getInstance().addCardToDeck(cardPane.getDeck(), card.getName())
+                            CollectionMenuController.getInstance().addCardToDeck(cardPane.getDeck(), card.getName()),
+                            select
                     ),
                     new OrangeButton("REMOVE", event ->
-                            CollectionMenuController.getInstance().removeCardFromDeck(cardPane.getDeck(), card.getName())
+                            CollectionMenuController.getInstance().removeCardFromDeck(cardPane.getDeck(), card.getName()),
+                            select
                     )
             );
 

@@ -6,10 +6,7 @@ import server.detaCenter.DataCenter;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ClientPortal extends Thread {
     private static ClientPortal ourInstance = new ClientPortal();
@@ -35,6 +32,7 @@ public class ClientPortal extends Thread {
                 clientListener.start();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Server.getInstance().serverPrint("Error Making ServerSocket!");
             System.exit(-1);
         }
@@ -46,7 +44,7 @@ public class ClientPortal extends Thread {
 
     synchronized void addClient(String name, Formatter formatter) {//TODO:add remove client
         clients.put(name, formatter);
-        DataCenter.getInstance().getClients().put(name, null);
+        DataCenter.getInstance().putClient(name, null);
     }
 
     void addMessage(String clientName, String message) {
@@ -63,10 +61,10 @@ public class ClientPortal extends Thread {
     }
 
     public Set<Map.Entry<String, Formatter>> getClients() {
-        return clients.entrySet();
+        return Collections.unmodifiableSet(clients.entrySet());
     }
 
-    public void removeClient(String clientName) {
+    void removeClient(String clientName) {
         clients.remove(clientName);
     }
 }

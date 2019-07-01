@@ -4,9 +4,11 @@ import controller.Client;
 import controller.CollectionMenuController;
 import controller.GraphicalUserInterface;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
@@ -28,6 +30,12 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final Background DECKS_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(39, 35, 40), CornerRadii.EMPTY, Insets.EMPTY)
     );
+    private static CollectionMenu menu;
+    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
+        Client.getInstance().getAccount().removePropertyChangeListener(menu);
+        CollectionMenuController.getInstance().removePropertyChangeListener(menu);
+        new MainMenu().show();
+    };
     private static Media backgroundMusic = new Media(
             new File("resources/music/collection_menu.m4a").toURI().toString()
     );
@@ -36,7 +44,6 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 5 * SCALE, 0, 40 * SCALE);
-    private static CollectionMenu menu;
     private VBox collectionBox;
     private ImageButton showCollectionButton;
     private CollectionSearchBox searchBox;
@@ -52,7 +59,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
             root.setBackground(DEFAULT_ROOT_BACKGROUND);
 
             BorderPane background = BackgroundMaker.getMenuBackground();
-            BackButton backButton = new BackButton(event -> new MainMenu().show());
+            BackButton backButton = new BackButton(BACK_EVENT);
 
             HBox collectionPane = new HBox();
 

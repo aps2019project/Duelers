@@ -5,17 +5,19 @@ import models.card.CardType;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CompressedPlayer {
     private String userName;
     private int currentMP;
-    private ArrayList<CompressedCard> hand = new ArrayList<>();
-    private ArrayList<CompressedCard> graveyard = new ArrayList<>();
+    private List<CompressedCard> hand;
+    private List<CompressedCard> graveyard;
     private CompressedCard nextCard;
-    private ArrayList<CompressedCard> collectedItems = new ArrayList<>();
+    private List<CompressedCard> collectedItems;
     private int playerNumber;
     private int numberOfCollectedFlags;
-    private ArrayList<CompressedTroop> troops = new ArrayList<>();
+    private List<CompressedTroop> troops;
     private CompressedTroop hero;
 
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -70,17 +72,17 @@ public class CompressedPlayer {
         }
     }
 
-    public void addCardToCollectedItems(CompressedCard card) {
+    void addCardToCollectedItems(CompressedCard card) {
         collectedItems.add(card);
         //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
     }
 
-    public void addCardToGraveYard(CompressedCard card) {
+    void addCardToGraveYard(CompressedCard card) {
         graveyard.add(card);
         //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
     }
 
-    public void troopUpdate(CompressedTroop troop) {
+    void troopUpdate(CompressedTroop troop) {
         if (troops == null)
             troops = new ArrayList<>();
         removeTroop(troop.getCard().getCardId());
@@ -93,7 +95,7 @@ public class CompressedPlayer {
         troops.add(troop);
     }
 
-    public void removeCardFromHand(String cardId) {
+    void removeCardFromHand(String cardId) {
         hand.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
         if (support == null) {
             support = new PropertyChangeSupport(this);
@@ -109,12 +111,12 @@ public class CompressedPlayer {
         support.firePropertyChange("next", null, null);
     }
 
-    public void removeCardFromCollectedItems(String cardId) {
+    void removeCardFromCollectedItems(String cardId) {
         collectedItems.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
         //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
     }
 
-    public void removeTroop(String cardId) {
+    void removeTroop(String cardId) {
         if (troops == null)
             troops = new ArrayList<>();
         troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equalsIgnoreCase(cardId));
@@ -149,11 +151,11 @@ public class CompressedPlayer {
         return null;
     }
 
-    public ArrayList<CompressedTroop> getTroops() {
-        return troops;
+    public List<CompressedTroop> getTroops() {
+        return Collections.unmodifiableList(troops);
     }
 
-    public void setTroops(ArrayList<CompressedTroop> troops) {
+    public void setTroops(List<CompressedTroop> troops) {
         this.troops = troops;
 
         for (CompressedTroop troop : troops) {
@@ -184,24 +186,24 @@ public class CompressedPlayer {
         return currentMP;
     }
 
-    public void setCurrentMP(int currentMP, int turnNumber) {
+    void setCurrentMP(int currentMP, int turnNumber) {
         this.currentMP = currentMP;
     }
 
-    public ArrayList<CompressedCard> getHand() {
-        return hand;
+    public List<CompressedCard> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
-    public ArrayList<CompressedCard> getGraveyard() {
-        return graveyard;
+    public List<CompressedCard> getGraveyard() {
+        return Collections.unmodifiableList(graveyard);
     }
 
     public CompressedCard getNextCard() {
         return nextCard;
     }
 
-    public ArrayList<CompressedCard> getCollectedItems() {
-        return collectedItems;
+    public List<CompressedCard> getCollectedItems() {
+        return Collections.unmodifiableList(collectedItems);
     }
 
     public int getPlayerNumber() {
@@ -212,12 +214,12 @@ public class CompressedPlayer {
         return numberOfCollectedFlags;
     }
 
-    public void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
+    void setNumberOfCollectedFlags(int numberOfCollectedFlags) {
         this.numberOfCollectedFlags = numberOfCollectedFlags;
         //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
     }
 
-    public ArrayList<CompressedTroop> getFlagCarriers() {
+    public List<CompressedTroop> getFlagCarriers() {
         ArrayList<CompressedTroop> flagCarriers = new ArrayList<>();
 
         for (CompressedTroop troop : troops) {
@@ -226,6 +228,6 @@ public class CompressedPlayer {
             }
         }
 
-        return flagCarriers;
+        return Collections.unmodifiableList(flagCarriers);
     }
 }

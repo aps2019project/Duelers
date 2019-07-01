@@ -4,6 +4,8 @@ import server.detaCenter.models.card.spell.Spell;
 import server.clientPortal.models.comperessedData.CompressedCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Card {
     private String name;
@@ -11,7 +13,7 @@ public class Card {
     private String cardId;
     private String spriteName;
     private CardType type;
-    private ArrayList<Spell> spells = new ArrayList<>();
+    private List<Spell> spells = new ArrayList<>();
     private int defaultAp;
     private int defaultHp;
     private int mannaPoint;
@@ -78,8 +80,8 @@ public class Card {
         return this.type;
     }
 
-    public ArrayList<Spell> getSpells() {
-        return this.spells;
+    public List<Spell> getSpells() {
+        return Collections.unmodifiableList(spells);
     }
 
     public int getDefaultAp() {

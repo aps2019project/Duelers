@@ -3,13 +3,14 @@ package server.gameCenter.models.game.availableActions;
 import server.gameCenter.models.game.Troop;
 import server.gameCenter.models.map.Position;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Move {
     private Troop troop;
-    private ArrayList<Position> targets;
+    private List<Position> targets;
 
-    public Move(Troop troop, ArrayList<Position> targets) {
+    Move(Troop troop, List<Position> targets) {
         this.troop = troop;
         this.targets = targets;
     }
@@ -18,7 +19,7 @@ public class Move {
         return troop;
     }
 
-    public ArrayList<Position> getTargets() {
-        return targets;
+    public List<Position> getTargets() {
+        return Collections.unmodifiableList(targets);
     }
 }

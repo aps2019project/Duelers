@@ -14,10 +14,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static models.gui.UIConstants.SCALE;
+import static controller.SoundEffectPlayer.SoundName.*;
 
 public class DialogBox extends VBox {
     private static final CornerRadii DEFAULT_CORNER_RADIUS = new CornerRadii(UIConstants.DEFAULT_SPACING * 3);
@@ -39,21 +39,12 @@ public class DialogBox extends VBox {
         setEffect(BOX_SHADOW);
     }
 
-    public DialogBox(Color backgroundColor, Node... children) {
-        this(children);
-        setBackground(new Background(new BackgroundFill(backgroundColor, DEFAULT_CORNER_RADIUS, Insets.EMPTY)));
-    }
-
     public void makeButton(String text, EventHandler<? super MouseEvent> event) {
-        getChildren().add(new OrangeButton(text, event));
+        getChildren().add(new OrangeButton(text, event, click));
     }
 
     private void preventClosingOnClick(AtomicBoolean shouldBeClosed) {
         setOnMouseClicked(event -> shouldBeClosed.set(false));
-    }
-
-    public void makeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {
-        getChildren().add(new OrangeButton(text, event, graphicUrl));
     }
 
     public void makeClosable(DialogContainer dialogContainer) {

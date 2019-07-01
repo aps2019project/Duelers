@@ -45,7 +45,6 @@ public class GraphicalUserInterface {
         try {
             if (media.equals(currentMedia)) return;
             currentMedia = media;
-            System.out.println("currentMedia:" + media.getSource());
             if (backgroundMusicPlayer != null) {
                 backgroundMusicPlayer.stop();
             }

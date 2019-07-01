@@ -1,9 +1,9 @@
 package models.message;
 
-public class GetDataMessage {
+class GetDataMessage {
     private DataName dataName;
 
-    public GetDataMessage(DataName dataName) {
+    GetDataMessage(DataName dataName) {
         this.dataName = dataName;
     }
 }

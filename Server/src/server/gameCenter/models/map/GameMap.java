@@ -6,15 +6,16 @@ import server.gameCenter.models.game.Player;
 import server.gameCenter.models.game.Troop;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class GameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
-
     private Cell[][] cells;
-    private ArrayList<Troop> troops = new ArrayList<>();
+    private List<Troop> troops = new ArrayList<>();
 
-    public GameMap(ArrayList<Card> items, int numberOfFlags, Card originalFlag) {
+    public GameMap(List<Card> items, int numberOfFlags, Card originalFlag) {
         cells = new Cell[ROW_NUMBER][COLUMN_NUMBER];
         for (int i = 0; i < ROW_NUMBER; i++) {
             for (int j = 0; j < COLUMN_NUMBER; j++) {
@@ -77,7 +78,7 @@ public class GameMap {
         this.troops.add(troop);
     }
 
-    public Troop getTroop(int row, int column) {
+    private Troop getTroop(int row, int column) {
         for (Troop troop : troops) {
             if (troop.getCell().getColumn() == column && troop.getCell().getRow() == row) {
                 return troop;
@@ -87,21 +88,11 @@ public class GameMap {
     }
 
     public Troop getTroop(Cell cell) {
-        for (Troop troop : troops) {
-            if (troop.getCell().getColumn() == cell.getColumn() && troop.getCell().getRow() == cell.getRow()) {
-                return troop;
-            }
-        }
-        return null;
+        return getTroop(cell.getRow(), cell.getColumn());
     }
 
     public Troop getTroop(Position cell) {
-        for (Troop troop : troops) {
-            if (troop.getCell().getColumn() == cell.getColumn() && troop.getCell().getRow() == cell.getRow()) {
-                return troop;
-            }
-        }
-        return null;
+        return getTroop(cell.getRow(), cell.getColumn());
     }
 
     public Troop getTroop(String cardId) {
@@ -126,7 +117,7 @@ public class GameMap {
         }
     }
 
-    public ArrayList<Troop> getTroops() {
-        return troops;
+    public List<Troop> getTroops() {
+        return Collections.unmodifiableList(troops);
     }
 }

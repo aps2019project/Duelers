@@ -4,7 +4,7 @@ import server.detaCenter.models.card.AttackType;
 import server.detaCenter.models.card.CardType;
 import server.detaCenter.models.card.spell.Spell;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CompressedCard {
     private String name;
@@ -21,7 +21,7 @@ public class CompressedCard {
     private boolean hasCombo;
 
     public CompressedCard(String name, String description, String cardId, String spriteName, CardType type,
-                          ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint,
+                          List<Spell> spells, int defaultAp, int defaultHp, int mannaPoint,
                           AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.description = description;

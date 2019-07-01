@@ -6,6 +6,8 @@ import models.ICard;
 import models.account.Collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
     private String deckName;
@@ -66,8 +68,8 @@ public class Deck {
         return this.hero;
     }
 
-    public ArrayList<Card> getOthers() {
-        return this.others;
+    public List<Card> getOthers() {
+        return Collections.unmodifiableList(this.others);
     }
 
     public Card getItem() {

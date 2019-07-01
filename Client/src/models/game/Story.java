@@ -22,7 +22,7 @@ public class Story {
         return gameType;
     }
 
-    public int getReward() {
+    int getReward() {
         return reward;
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import static models.gui.UIConstants.SCALE;
+import static controller.SoundEffectPlayer.SoundName.*;
 
 class LoginFieldsContainer extends VBox {
     private static final Background LOGIN_BOX_BACKGROUND = new Background(
@@ -38,10 +39,12 @@ class LoginFieldsContainer extends VBox {
 
     private HBox makeButtonsBox() {
         OrangeButton loginButton = new OrangeButton("LOG IN",
-                event -> LoginMenuController.getInstance().login(usernameField.getText(), passwordField.getText())
+                event -> LoginMenuController.getInstance().login(usernameField.getText(), passwordField.getText()),
+                select
         );
         OrangeButton registerButton = new OrangeButton("REGISTER",
-                event -> LoginMenuController.getInstance().register(usernameField.getText(), passwordField.getText())
+                event -> LoginMenuController.getInstance().register(usernameField.getText(), passwordField.getText()),
+                select
         );
 
         setOnKeyPressed(event -> {

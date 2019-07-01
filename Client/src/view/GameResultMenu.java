@@ -25,7 +25,6 @@ public class GameResultMenu extends Show {
             )
     );
     private static final Map<Boolean, StatusImages> status = new HashMap<>();
-    private static final GameResultController CONTROLLER = GameResultController.getInstance();
 
     static {
         try {
@@ -50,7 +49,7 @@ public class GameResultMenu extends Show {
             BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
 
             ImageView resultBackground = ImageLoader.makeImageView(
-                    status.get(CONTROLLER.amInWinner()).background, SCENE_WIDTH, SCENE_HEIGHT
+                    status.get(GameResultController.getInstance().amInWinner()).background, SCENE_WIDTH, SCENE_HEIGHT
             );
 
             AnchorPane sceneContents = new AnchorPane(background);
