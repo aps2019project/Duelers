@@ -382,6 +382,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showAttack(String cardId, int i) {
+        System.out.println("ShowAttack:" + cardId + i);
         if (cardId == null)
             System.out.println("EEEE");
         CompressedTroop troop = gameMap.getTroop(cardId);
@@ -395,6 +396,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showDefend(String cardId, int i) {
+        System.out.println("ShowAttack:" + cardId + i);
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
             System.out.println("Error3");
