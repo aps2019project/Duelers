@@ -4,33 +4,34 @@ import server.detaCenter.models.card.Card;
 import server.gameCenter.models.map.Cell;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TargetData {
-    private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Troop> troops = new ArrayList<>();
-    private ArrayList<Cell> cells = new ArrayList<>();
-    private ArrayList<Player> players = new ArrayList<>();
+class TargetData {
+    private List<Card> cards = new ArrayList<>();
+    private List<Troop> troops = new ArrayList<>();
+    private List<Cell> cells = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
-    TargetData(ArrayList<Troop> troops) {
+    TargetData(List<Troop> troops) {
         this.troops = troops;
     }
 
     TargetData() {
     }
 
-    public ArrayList<Card> getCards() {
+    List<Card> getCards() {
         return cards;
     }
 
-    public ArrayList<Troop> getTroops() {
+    List<Troop> getTroops() {
         return troops;
     }
 
-    public ArrayList<Cell> getCells() {
+    List<Cell> getCells() {
         return cells;
     }
 
-    public ArrayList<Player> getPlayers() {
+    List<Player> getPlayers() {
         return players;
     }
 }

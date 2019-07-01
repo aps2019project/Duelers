@@ -5,6 +5,8 @@ import server.clientPortal.models.comperessedData.CompressedTroop;
 import server.gameCenter.models.map.Cell;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Troop {
     private Card card;
@@ -21,7 +23,7 @@ public class Troop {
     private boolean dontGiveBadEffect;
     private boolean noAttackFromWeakerOnes;
     private boolean disableHolyBuff;
-    private ArrayList<Card> flags = new ArrayList<>();
+    private List<Card> flags = new ArrayList<>();
     private int playerNumber;
 
     public Troop(Card card, int playerNumber) {
@@ -42,7 +44,7 @@ public class Troop {
                 flags.size(), playerNumber);
     }
 
-    public void addFlag(Card card) {
+    void addFlag(Card card) {
         this.flags.add(card);
     }
 
@@ -54,7 +56,7 @@ public class Troop {
         return this.currentAp;
     }
 
-    public int getCurrentHp() {
+    int getCurrentHp() {
         return this.currentHp;
     }
 
@@ -66,19 +68,15 @@ public class Troop {
         this.cell = cell;
     }
 
-    public void moveTo(Cell cell) {
-
-    }
-
     public boolean canMove() {
         return this.canMove;
     }
 
-    public ArrayList<Card> getFlags() {
-        return flags;
+    public List<Card> getFlags() {
+        return Collections.unmodifiableList(flags);
     }
 
-    public void setCanMove(boolean can) {
+    void setCanMove(boolean can) {
         this.canMove = can;
         //TODO:Send Message
     }
@@ -87,7 +85,7 @@ public class Troop {
         return this.canAttack;
     }
 
-    public void setCanAttack(boolean can) {
+    void setCanAttack(boolean can) {
         this.canAttack = can;
         //TODO:Send Message
     }
@@ -101,19 +99,19 @@ public class Troop {
         //TODO:Send Message
     }
 
-    public boolean canGetPoison() {
+    boolean canGetPoison() {
         return !cantGetPoison;
     }
 
-    public boolean canGetDisarm() {
+    boolean canGetDisarm() {
         return !cantGetDisarm;
     }
 
-    public boolean canGetStun() {
+    boolean canGetStun() {
         return !cantGetStun;
     }
 
-    public boolean canGiveBadEffect() {
+    boolean canGiveBadEffect() {
         return !dontGiveBadEffect;
     }
 
@@ -121,11 +119,11 @@ public class Troop {
         return !noAttackFromWeakerOnes;
     }
 
-    public boolean isHolyBuffDisabling() {
+    boolean isHolyBuffDisabling() {
         return disableHolyBuff;
     }
 
-    public int getPlayerNumber() {
+    int getPlayerNumber() {
         return playerNumber;
     }
 
@@ -137,42 +135,42 @@ public class Troop {
         this.flags.add(flag);
     }
 
-    public void changeCurrentAp(int change) {
+    void changeCurrentAp(int change) {
         currentAp += change;
         if (currentAp < 0) {
             currentAp = 0;
         }
     }
 
-    public void changeCurrentHp(int change) {
+    void changeCurrentHp(int change) {
         currentHp += change;
     }
 
-    public void changeEnemyHit(int change) {
+    void changeEnemyHit(int change) {
         enemyHitChanges += change;
     }
 
-    public void setCantGetPoison(boolean cantGetPoison) {
+    void setCantGetPoison(boolean cantGetPoison) {
         this.cantGetPoison = cantGetPoison;
     }
 
-    public void setCantGetDisarm(boolean cantGetDisarm) {
+    void setCantGetDisarm(boolean cantGetDisarm) {
         this.cantGetDisarm = cantGetDisarm;
     }
 
-    public void setCantGetStun(boolean cantGetStun) {
+    void setCantGetStun(boolean cantGetStun) {
         this.cantGetStun = cantGetStun;
     }
 
-    public void setDontGiveBadEffect(boolean dontGiveBadEffect) {
+    void setDontGiveBadEffect(boolean dontGiveBadEffect) {
         this.dontGiveBadEffect = dontGiveBadEffect;
     }
 
-    public void setNoAttackFromWeakerOnes(boolean noAttackFromWeakerOnes) {
+    void setNoAttackFromWeakerOnes(boolean noAttackFromWeakerOnes) {
         this.noAttackFromWeakerOnes = noAttackFromWeakerOnes;
     }
 
-    public void setDisableHolyBuff(boolean disableHolyBuff) {
+    void setDisableHolyBuff(boolean disableHolyBuff) {
         this.disableHolyBuff = disableHolyBuff;
     }
 }

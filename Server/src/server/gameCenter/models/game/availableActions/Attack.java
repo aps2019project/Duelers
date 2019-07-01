@@ -2,13 +2,14 @@ package server.gameCenter.models.game.availableActions;
 
 import server.gameCenter.models.game.Troop;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Attack {
     private Troop attackerTroop;
-    private ArrayList<Troop> defenders = new ArrayList<>();
+    private List<Troop> defenders;
 
-    public Attack(Troop attackerTroop, ArrayList<Troop> defenders) {
+    Attack(Troop attackerTroop, List<Troop> defenders) {
         this.attackerTroop = attackerTroop;
         this.defenders = defenders;
     }
@@ -17,7 +18,7 @@ public class Attack {
         return attackerTroop;
     }
 
-    public ArrayList<Troop> getDefenders() {
-        return defenders;
+    public List<Troop> getDefenders() {
+        return Collections.unmodifiableList(defenders);
     }
 }

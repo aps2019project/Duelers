@@ -6,13 +6,14 @@ import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
     private String deckName;
     private Card hero;
     private Card item;
-    private ArrayList<Card> others = new ArrayList<>();
-
+    private List<Card> others = new ArrayList<>();
 
     public Deck(String deckName, Card hero, Card item, ArrayList<Card> others) {
         this.deckName = deckName;
@@ -92,7 +93,7 @@ public class Deck {
         }
     }
 
-    public void removeCard(Card card) throws LogicException {
+    public void removeCard(Card card) throws ClientException {
         if (!hasCard(card.getCardId())) {
             throw new ClientException("deck doesn't have this card.");
         }
@@ -118,7 +119,7 @@ public class Deck {
             this.item.setCardId(makeId(item, 1));
         }
 
-        ArrayList<Card> oldOthers = this.others;
+        List<Card> oldOthers = this.others;
         this.others = new ArrayList<>();
         for (Card other : oldOthers) {
             Card card = new Card(other);
@@ -150,8 +151,8 @@ public class Deck {
         return hero;
     }
 
-    public ArrayList<Card> getOthers() {
-        return others;
+    public List<Card> getOthers() {
+        return Collections.unmodifiableList(others);
     }
 
     public Card getItem() {

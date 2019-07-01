@@ -38,7 +38,7 @@ public class Buff {
         return target;
     }
 
-    public boolean isPositive() {
+    boolean isPositive() {
         return positive;
     }
 }

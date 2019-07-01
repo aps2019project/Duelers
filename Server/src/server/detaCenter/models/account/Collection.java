@@ -6,18 +6,20 @@ import server.detaCenter.models.card.CardType;
 import server.exceptions.ClientException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Collection {
-    private ArrayList<Card> heroes = new ArrayList<>();
-    private ArrayList<Card> minions = new ArrayList<>();
-    private ArrayList<Card> spells = new ArrayList<>();
-    private ArrayList<Card> items = new ArrayList<>();
+    private List<Card> heroes = new ArrayList<>();
+    private List<Card> minions = new ArrayList<>();
+    private List<Card> spells = new ArrayList<>();
+    private List<Card> items = new ArrayList<>();
 
-    public boolean hasCard(String cardId) {
+    boolean hasCard(String cardId) {
         return hasCard(cardId, heroes) || hasCard(cardId, minions) || hasCard(cardId, spells) || hasCard(cardId, items);
     }
 
-    private boolean hasCard(String cardId, ArrayList<Card> cards) {
+    private boolean hasCard(String cardId, List<Card> cards) {
         if (cardId == null || cards==null)
             return false;
         for (Card card : cards) {
@@ -39,7 +41,7 @@ public class Collection {
         return null;
     }
 
-    private Card getCard(String cardId, ArrayList<Card> cards) {
+    private Card getCard(String cardId, List<Card> cards) {
         for (Card card : cards) {
             if (card.getCardId().equalsIgnoreCase(cardId))
                 return card;
@@ -92,26 +94,26 @@ public class Collection {
         }
     }
 
-    public void removeCard(Card card) {
+    void removeCard(Card card) {
         heroes.remove(card);
         minions.remove(card);
         spells.remove(card);
         items.remove(card);
     }
 
-    public ArrayList<Card> getHeroes() {
-        return heroes;
+    public List<Card> getHeroes() {
+        return Collections.unmodifiableList(heroes);
     }
 
-    public ArrayList<Card> getMinions() {
-        return minions;
+    public List<Card> getMinions() {
+        return Collections.unmodifiableList(minions);
     }
 
-    public ArrayList<Card> getSpells() {
-        return spells;
+    public List<Card> getSpells() {
+        return Collections.unmodifiableList(spells);
     }
 
-    public ArrayList<Card> getItems() {
-        return items;
+    public List<Card> getItems() {
+        return Collections.unmodifiableList(items);
     }
 }

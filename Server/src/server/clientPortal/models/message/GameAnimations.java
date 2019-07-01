@@ -10,12 +10,11 @@ public class GameAnimations {
     private ArrayList<CardAnimation> defenders = new ArrayList<>();
     private ArrayList<CardAnimation> spellAnimations = new ArrayList<>();
 
-    public void addAttacker(String cardID , Position position){
+    void addAttacker(String cardID , Position position){
         attackers.add(new CardAnimation(cardID , position));
     }
 
     public void addSpellAnime(String spellID , Position position){
         spellAnimations.add(new CardAnimation(spellID , position));
     }
-
 }

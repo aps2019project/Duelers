@@ -1,7 +1,6 @@
 package server.gameCenter.models.game;
 
 import server.Server;
-import server.clientPortal.models.message.Message;
 import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.MatchHistory;
 import server.detaCenter.models.card.AttackType;
@@ -24,6 +23,7 @@ import server.gameCenter.models.map.Position;
 import server.clientPortal.models.message.CardPosition;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Game {
@@ -151,7 +151,7 @@ public abstract class Game {
         }
     }
 
-    private void addNextCardToHand() throws ServerException {
+    private void addNextCardToHand() {
         Card nextCard = getCurrentTurnPlayer().getNextCard();
         if (getCurrentTurnPlayer().addNextCardToHand()) {
             Server.getInstance().sendChangeCardPositionMessage(this, nextCard, CardPosition.HAND);
@@ -190,7 +190,7 @@ public abstract class Game {
         buffs.removeIf(buff -> (buff.getAction().getDuration() == 0));
     }
 
-    private void setAllTroopsCanAttackAndCanMove() throws ServerException {
+    private void setAllTroopsCanAttackAndCanMove() {
         for (Troop troop : gameMap.getTroops()) {
             troop.setCanAttack(true);
             troop.setCanMove(true);
@@ -216,7 +216,7 @@ public abstract class Game {
         }
     }
 
-    private void revertNotDurableBuffs() throws ServerException {
+    private void revertNotDurableBuffs() {
         for (Buff buff : buffs) {
             if (!buff.getAction().isDurable()) {
                 revertBuff(buff);
@@ -224,7 +224,7 @@ public abstract class Game {
         }
     }
 
-    private void revertBuff(Buff buff) throws ServerException {
+    private void revertBuff(Buff buff) {
         SpellAction action = buff.getAction();
 
         for (Troop troop : buff.getTarget().getTroops()) {
@@ -305,7 +305,7 @@ public abstract class Game {
         applyOnPutSpells(card, gameMap.getCell(position));
     }
 
-    private void putMinion(int playerNumber, Troop troop, Cell cell) throws ServerException {
+    private void putMinion(int playerNumber, Troop troop, Cell cell) {
         troop.setCell(cell);
         gameMap.addTroop(playerNumber, troop);
         Server.getInstance().sendTroopUpdateMessage(this, troop);
@@ -361,7 +361,7 @@ public abstract class Game {
         Server.getInstance().sendGameUpdateMessage(this);
     }
 
-    private void catchItem(Card item) throws ServerException {
+    private void catchItem(Card item) {
         getCurrentTurnPlayer().collectItem(item);
         Server.getInstance().sendChangeCardPositionMessage(this, item, CardPosition.COLLECTED);
     }
@@ -581,7 +581,7 @@ public abstract class Game {
         decreaseDuration(buff);
     }
 
-    private void applyBuffOnPlayers(Buff buff, ArrayList<Player> players) throws ServerException {
+    private void applyBuffOnPlayers(Buff buff, List<Player> players) {
         SpellAction action = buff.getAction();
         for (Player player : players) {
             player.changeCurrentMP(action.getMpChange());
@@ -605,7 +605,7 @@ public abstract class Game {
         return false;
     }
 
-    private void applyBuffOnCards(Buff buff, ArrayList<Card> cards) {
+    private void applyBuffOnCards(Buff buff, List<Card> cards) {
         SpellAction action = buff.getAction();
         for (Card card : cards) {
             if (action.isAddSpell()) {
@@ -614,7 +614,7 @@ public abstract class Game {
         }
     }
 
-    private void applyBuffOnCellTroops(Buff buff, ArrayList<Cell> cells) throws ServerException {
+    private void applyBuffOnCellTroops(Buff buff, List<Cell> cells) throws ServerException {
         ArrayList<Troop> inCellTroops = getInCellTargetTroops(cells);
         Buff troopBuff = new Buff(
                 buff.getAction().makeCopyAction(1, 0), new TargetData(inCellTroops)
@@ -623,7 +623,7 @@ public abstract class Game {
         applyBuffOnTroops(troopBuff, inCellTroops);
     }
 
-    private void applyBuffOnTroops(Buff buff, ArrayList<Troop> targetTroops) throws ServerException {
+    private void applyBuffOnTroops(Buff buff, List<Troop> targetTroops) throws ServerException {
         SpellAction action = buff.getAction();
         for (Troop troop : targetTroops) {
             if (!(buff.isPositive() || troop.canGiveBadEffect())) continue;
@@ -712,7 +712,7 @@ public abstract class Game {
         }
     }
 
-    private ArrayList<Troop> getInCellTargetTroops(ArrayList<Cell> cells) {
+    private ArrayList<Troop> getInCellTargetTroops(List<Cell> cells) {
         ArrayList<Troop> inCellTroops = new ArrayList<>();
         for (Cell cell : cells) {
             Troop troop = playerOne.getTroop(cell);
@@ -781,7 +781,7 @@ public abstract class Game {
         return centerPosition;
     }
 
-    private <T> void randomizeList(ArrayList<T> list) {
+    private <T> void randomizeList(List<T> list) {
         if (list.size() == 0) return;
 
         int random = new Random().nextInt(list.size());

@@ -4,14 +4,16 @@ import server.detaCenter.models.card.Deck;
 import server.detaCenter.models.card.TempDeck;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TempAccount {
     private String username;
     private String password;
     private Collection collection;
-    private ArrayList<TempDeck> decks = new ArrayList<>();
+    private List<TempDeck> decks = new ArrayList<>();
     private String mainDeckName;
-    private ArrayList<MatchHistory> matchHistories;
+    private List<MatchHistory> matchHistories;
     private int money;
     private int wins;
 
@@ -34,7 +36,7 @@ public class TempAccount {
         return username;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
@@ -42,23 +44,23 @@ public class TempAccount {
         return collection;
     }
 
-    public ArrayList<TempDeck> getDecks() {
-        return decks;
+    List<TempDeck> getDecks() {
+        return Collections.unmodifiableList(decks);
     }
 
-    public String getMainDeckName() {
+    String getMainDeckName() {
         return mainDeckName;
     }
 
-    public ArrayList<MatchHistory> getMatchHistories() {
+    List<MatchHistory> getMatchHistories() {
         return matchHistories;
     }
 
-    public int getMoney() {
+    int getMoney() {
         return money;
     }
 
-    public int getWins() {
+    int getWins() {
         return wins;
     }
 }
