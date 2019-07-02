@@ -14,6 +14,7 @@ public enum MessageType {
     GAME_UPDATE,
     Game_FINISH,
     DONE,
+    ANIMATION,
 
     //SENDER:CLIENT
     GET_DATA,
@@ -38,6 +39,6 @@ public enum MessageType {
     NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
-    ANIMATION,
-    ADD_CARD
+    ADD_CARD,
+    IMPORT_DECK
 }

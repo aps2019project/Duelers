@@ -4,6 +4,7 @@ import models.Constants;
 import models.account.Collection;
 import models.card.Card;
 import models.card.Deck;
+import models.card.ExportedDeck;
 import models.message.Message;
 
 import java.beans.PropertyChangeEvent;
@@ -94,5 +95,11 @@ public class CollectionMenuController implements PropertyChangeListener {
             this.allShowingCards = ((Collection) evt.getNewValue()).toShowing();
             this.currentShowingCards = allShowingCards;
         }
+    }
+
+    public void importDeck(ExportedDeck exportedDeck) {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeImportDeckMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, exportedDeck, 0)
+        );
     }
 }

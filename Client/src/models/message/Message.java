@@ -3,6 +3,7 @@ package models.message;
 
 import models.JsonConverter;
 import models.card.Card;
+import models.card.ExportedDeck;
 import models.game.GameType;
 import models.game.map.Position;
 
@@ -26,8 +27,9 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
-    private Card customCard;
     //SENDER:CLIENT
+    private Card customCard;
+    private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
@@ -55,6 +57,13 @@ public class Message {
         Message message = new Message(sender, receiver, messageId);
         message.accountFields = new AccountFields(userName, passWord);
         message.messageType = MessageType.REGISTER;
+        return message;
+    }
+
+    public static Message makeImportDeckMessage(String sender, String receiver, ExportedDeck exportedDeck, int messageId){
+        Message message = new Message(sender, receiver, messageId);
+        message.exportedDeck = exportedDeck;
+        message.messageType = MessageType.IMPORT_DECK;
         return message;
     }
 
