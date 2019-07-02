@@ -288,11 +288,12 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnCard(int i) {
-        if (selectedCard == i)
+        if (selectedCard == i) {
             selectedCard = -1;
-        else {
-            battleScene.getMapBox().resetSelection();
+            battleScene.getMapBox().updateMapColors();
+        } else {
             selectedCard = i;
+            battleScene.getMapBox().resetSelection();
         }
         updateCards();
     }
