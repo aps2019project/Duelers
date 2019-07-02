@@ -18,16 +18,11 @@ class ProfilePicture extends Rectangle {
     private static final Effect SHADOW = new DropShadow(30 * SCALE, Color.BLACK);
 
 
-    ProfilePicture(String url) throws FileNotFoundException {
+    ProfilePicture(Image image) {
         super(SIZE, SIZE);
         setArcWidth(CORNER_RADIUS);
         setArcHeight(CORNER_RADIUS);
-
-        ImagePattern pattern = new ImagePattern(
-                new Image(new FileInputStream(url))
-        );
-
-        setFill(pattern);
+        setFill(new ImagePattern(image));
         setEffect(SHADOW);
     }
 }

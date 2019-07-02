@@ -43,24 +43,20 @@ public class MainMenu extends Show {
 
     private void showProfileDialog() {
         BackgroundMaker.makeMenuBackgroundFrozen();
-        try {
-            GridPane profileGrid = new ProfileGrid(Client.getInstance().getAccount());
+        GridPane profileGrid = new ProfileGrid(Client.getInstance().getAccount());
 
-            DialogBox dialogBox = new DialogBox(profileGrid);
-            DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        DialogBox dialogBox = new DialogBox(profileGrid);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
 
-            dialogContainer.show();
+        dialogContainer.show();
 
-            dialogBox.makeButton("LOGOUT", event -> {
-                dialogContainer.close();
-                MainMenuController.getInstance().logout();
-                new LoginMenu().show();
+        dialogBox.makeButton("LOGOUT", event -> {
+            dialogContainer.close();
+            MainMenuController.getInstance().logout();
+            new LoginMenu().show();
 
-            });
-            dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        });
+        dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
     }
 
     @Override

@@ -51,7 +51,7 @@ public class Client {
         return client;
     }
 
-    void connect() throws IOException, NullPointerException {
+    private void connect() throws IOException, NullPointerException {
         socket = getSocketReady();
         sendClientNameToServer(socket);
         sendMessageThread = new Thread(() -> {
@@ -196,7 +196,7 @@ public class Client {
                 GameController.getInstance().calculateAvailableActions();
                 break;
             case Game_FINISH:
-                GameResultController.getInstance().setWinner(message.getGameFinishMessage().amIWinner());
+                GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), 1000);
                 Platform.runLater(() -> new GameResultMenu().show());
                 break;
             case ANIMATION:

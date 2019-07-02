@@ -1,5 +1,6 @@
 package view;
 
+import com.google.gson.Gson;
 import controller.Client;
 import controller.CollectionMenuController;
 import controller.GraphicalUserInterface;
@@ -16,12 +17,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import models.account.Collection;
 import models.card.Deck;
+import models.card.ExportedDeck;
 import models.gui.*;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static models.gui.UIConstants.*;
@@ -121,6 +125,28 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     }
 
     private void importDeck() {
+        String deckJson = showJFileChooserDialog();
+        CollectionMenuController.getInstance().importDeck(new Gson().fromJson(deckJson,ExportedDeck.class));
+    }
+
+    private String showJFileChooserDialog() {
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        jfc.setAcceptAllFileFilterUsed(true);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and GIF images", "json");
+        jfc.addChoosableFileFilter(filter);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            System.out.println(selectedFile.getAbsolutePath());
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(selectedFile)));
+                return bufferedReader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public void showCollectionCards() throws FileNotFoundException {
