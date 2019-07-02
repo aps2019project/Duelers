@@ -346,4 +346,8 @@ public class DataCenter extends Thread {
     private void validateCustomCard(Card customCard) throws ClientException {
         //TODO
     }
+
+    public void importDeck(Message message) {
+
+    }
 }

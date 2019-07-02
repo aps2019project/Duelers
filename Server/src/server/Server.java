@@ -139,7 +139,7 @@ public class Server {
                     DataCenter.getInstance().removeDeck(message);
                     break;
                 case IMPORT_DECK:
-
+                    DataCenter.getInstance().importDeck(message);
                     break;
                 case ADD_TO_DECK:
                     DataCenter.getInstance().addToDeck(message);

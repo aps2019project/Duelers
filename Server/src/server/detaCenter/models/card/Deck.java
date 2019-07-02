@@ -168,4 +168,8 @@ public class Deck {
             card.setCardId("customGame_" + card.getCardId());
         }
     }
+
+    public String getName() {
+        return deckName;
+    }
 }

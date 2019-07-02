@@ -33,6 +33,7 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
+    private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     private NewGameFields newGameFields;
 
