@@ -137,6 +137,7 @@ public class PlayerBox implements PropertyChangeListener {
                     spellButton.setImage(spellNotSelectedImage);
                 } else {
                     battleScene.getMapBox().setSpellSelected();
+                    battleScene.getMapBox().updateMapColors();
                     spellButton.setImage(spellSelectedImage);
                 }
             }
@@ -207,6 +208,7 @@ public class PlayerBox implements PropertyChangeListener {
                     comboButton.setImage(comboNotSelectedImage);
                 } else {
                     battleScene.getMapBox().setComboSelected();
+                    battleScene.getMapBox().updateMapColors();
                     comboButton.setImage(comboSelectedImage);
                 }
             }

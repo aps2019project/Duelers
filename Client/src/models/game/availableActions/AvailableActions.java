@@ -181,10 +181,6 @@ public class AvailableActions {
 
     //*****
     public boolean canInsertCard(String cardId, int row, int column) {
-        if (!CompressedGameMap.isInMap(row, column)) return false;
-        for (Insert insert : handInserts) {
-            if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
-        }
         return false;
     }
 
