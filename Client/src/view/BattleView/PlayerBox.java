@@ -24,6 +24,8 @@ public class PlayerBox implements PropertyChangeListener {
     private ImageView player2Image;
     private ImageView comboButton;
     private ImageView spellButton;
+    private Image comboNotSelected = new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png"));
+    private Image comboSelected = new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png"));
 
     public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
@@ -198,10 +200,10 @@ public class PlayerBox implements PropertyChangeListener {
                     battleScene.getMapBox().getSelectedTroop().getCard().isHasCombo()) {
                 if (battleScene.getMapBox().isComboSelected()) {
                     battleScene.getMapBox().resetSelection();
-                    comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png")));
+                    comboButton.setImage(comboNotSelected);
                 } else {
                     battleScene.getMapBox().setComboSelected(true);
-                    comboButton.setImage(new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png")));
+                    comboButton.setImage(comboSelected);
                 }
             }
         } catch (Exception e) {
