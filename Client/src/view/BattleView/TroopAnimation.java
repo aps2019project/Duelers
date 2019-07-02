@@ -34,25 +34,36 @@ public class TroopAnimation extends Transition {
     private final ImageView imageView;
     private final int frameWidth, frameHeight;
 
-    private boolean flag = false;
+    private boolean frameShowFlag = false;
     private int nextIndex;
-    private ACTION action;
     private FramePosition[] currentFramePositions;
     private int currentI, currentJ;
 
+    private ACTION action;
+    private boolean shouldMove = false;
+    private int nextI, nextJ;
+    private boolean shouldKill = false;
+    private boolean shouldAttack = false;
+    private int attackColumn = 0;
+    private boolean shouldHit = false;
+    private int hitColumn;
+    private boolean isSelected = false;
+
+
     private DefaultLabel apLabel;
     private DefaultLabel hpLabel;
-    private ImageView apImage;
-    private ImageView hpImage;
+
 
     private Group mapGroup;
     private Group troopGroup;
 
-    public TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i, boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
+    TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i,
+                   boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
         this.mapGroup = mapGroup;
         this.isPlayer1Troop = isPlayer1Troop;
         this.isMyTroop = isMyTroop;
-        //file settings
+
+        //read settings
         Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
         attackFramePositions = playlist.getAttackFrames();
         breathingFramePositions = playlist.getBreathingFrames();
@@ -87,16 +98,19 @@ public class TroopAnimation extends Transition {
         troopGroup.setLayoutY(cellsY[j][i]);
         troopGroup.getChildren().add(imageView);
 
-        mapGroup.getChildren().add(troopGroup);
-
         this.setCycleCount(INDEFINITE);
+
         action = ACTION.IDLE;
         setAction(ACTION.BREATHING);
 
         addApHp();
+
+        mapGroup.getChildren().add(troopGroup);
     }
 
     private void addApHp() throws Exception {
+        ImageView apImage;
+        ImageView hpImage;
         apLabel = new DefaultLabel("", Constants.AP_FONT, Color.WHITE, -Constants.SCALE * 29, Constants.SCALE * 15);
         hpLabel = new DefaultLabel("", Constants.AP_FONT, Color.WHITE, Constants.SCALE * 14, Constants.SCALE * 15);
         if (isMyTroop) {
@@ -117,20 +131,20 @@ public class TroopAnimation extends Transition {
         troopGroup.getChildren().addAll(apImage, hpImage, apLabel, hpLabel);
     }
 
-    public void updateApHp(int ap,int hp){
+    void updateApHp(int ap, int hp) {
         apLabel.setText(Integer.toString(ap));
         hpLabel.setText(Integer.toString(hp));
     }
 
     @Override
     protected void interpolate(double v) {
-        if (!flag && v < 0.5)
-            flag = true;
-        if (flag && v > 0.5) {
+        if (!frameShowFlag && v < 0.5)
+            frameShowFlag = true;
+        if (frameShowFlag && v > 0.5) {
             imageView.setViewport(new Rectangle2D(currentFramePositions[nextIndex].x,
                     currentFramePositions[nextIndex].y, frameWidth, frameHeight));
             generateNextState();
-            flag = false;
+            frameShowFlag = false;
         }
     }
 
@@ -139,23 +153,24 @@ public class TroopAnimation extends Transition {
         if (action == ACTION.RUN
                 && Math.abs(troopGroup.getLayoutX() - cellsX[currentJ][currentI]) < 2
                 && Math.abs(troopGroup.getLayoutY() - cellsY[currentJ][currentI]) < 2) {//may bug
-            setAction(ACTION.BREATHING);
+            generateNextAction();
             return;
         }
+        //hasn't reached to last frame
         if (nextIndex != (currentFramePositions.length - 1)) {
             nextIndex++;
+            if (action == ACTION.BREATHING || action == ACTION.IDLE)
+                generateNextAction();
             return;
         }
         //has reached to last frame
+        nextIndex = 0;
         switch (action) {
             case HIT:
             case ATTACK:
-                setAction(ACTION.BREATHING);
-                break;
-            case RUN:
             case IDLE:
             case BREATHING:
-                nextIndex = 0;
+                generateNextAction();
                 break;
             case DEATH:
                 mapGroup.getChildren().remove(troopGroup);
@@ -163,7 +178,56 @@ public class TroopAnimation extends Transition {
         }
     }
 
+    private void generateNextAction() {
+        if (shouldMove) {
+            shouldMove = false;
+            if (nextI > currentI)
+                imageView.setScaleX(1);
+            if (nextI < currentI)
+                imageView.setScaleX(-1);
+            setAction(ACTION.RUN);
+            KeyValue xValue = new KeyValue(troopGroup.layoutXProperty(), cellsX[nextJ][nextI]);
+            KeyValue yValue = new KeyValue(troopGroup.layoutYProperty(), cellsY[nextJ][nextI]);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - nextI)
+                    + Math.abs(currentJ - nextJ)) * Constants.MOVE_TIME_PER_CELL), xValue, yValue);
+            Timeline timeline = new Timeline(keyFrame);
+            timeline.play();
+            currentJ = nextJ;
+            currentI = nextI;
+            return;
+        }
+        if (shouldHit) {
+            shouldHit = false;
+            if (hitColumn > currentI)
+                imageView.setScaleX(1);
+            if (hitColumn < currentI)
+                imageView.setScaleX(-1);
+            setAction(ACTION.HIT);
+            return;
+        }
+        if (shouldAttack) {
+            shouldAttack = false;
+            if (attackColumn > currentI)
+                imageView.setScaleX(1);
+            if (attackColumn < currentI)
+                imageView.setScaleX(-1);
+            setAction(ACTION.ATTACK);
+            return;
+        }
+        if (shouldKill) {
+            shouldKill = false;
+            setAction(ACTION.DEATH);
+            return;
+        }
+        if (isSelected)
+            setAction(ACTION.IDLE);
+        else
+            setAction(ACTION.BREATHING);
+    }
+
     private void setAction(ACTION action) {
+        if (this.action == action)
+            return;
         this.action = action;
         nextIndex = 0;
         this.stop();
@@ -194,49 +258,44 @@ public class TroopAnimation extends Transition {
         this.play();
     }
 
-    public void breathe() {
-        setAction(ACTION.BREATHING);
-    }
-
-    public void kill() {
-        setAction(ACTION.DEATH);
+    void kill() {
+        shouldKill = true;
     }
 
     public void attack(int i) {
-        if (i > currentI)
-            imageView.setScaleX(1);
-        if (i < currentI)
-            imageView.setScaleX(-1);
-        setAction(ACTION.ATTACK);
-    }
-
-    public void idle() {
-        setAction(ACTION.IDLE);
+        shouldAttack = true;
+        attackColumn = i;
     }
 
     public void hit(int i) {
-        if (i > currentI)
-            imageView.setScaleX(1);
-        if (i < currentI)
-            imageView.setScaleX(-1);
-        setAction(ACTION.HIT);
+        shouldHit = true;
+        hitColumn = i;
     }
 
-    public void moveTo(int j, int i) {
-        if (i > currentI)
-            imageView.setScaleX(1);
-        if (i < currentI)
-            imageView.setScaleX(-1);
-        setAction(ACTION.RUN);
-        KeyValue xValue = new KeyValue(troopGroup.layoutXProperty(), cellsX[j][i]);
-        KeyValue yValue = new KeyValue(troopGroup.layoutYProperty(), cellsY[j][i]);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - i)
-                + Math.abs(currentJ - j)) * Constants.MOVE_TIME_PER_CELL), xValue, yValue);
-        Timeline timeline = new Timeline(keyFrame);
-        timeline.play();
+    void moveTo(int j, int i) {
+        nextI = i;
+        nextJ = j;
+        shouldMove = true;
+    }
 
-        currentJ = j;
-        currentI = i;
+    void select() {
+        isSelected = true;
+    }
+
+    void diSelect() {
+        isSelected = false;
+    }
+
+    public int getColumn() {
+        return currentI;
+    }
+
+    public int getRow() {
+        return currentJ;
+    }
+
+    Group getTroopGroup() {
+        return troopGroup;
     }
 
     enum ACTION {
@@ -284,23 +343,6 @@ public class TroopAnimation extends Transition {
             this.x = x;
             this.y = y;
         }
-    }
-
-    public int getColumn() {
-        return currentI;
-    }
-
-    public int getRow() {
-        return currentJ;
-    }
-
-    public Group getTroopGroup() {
-        return troopGroup;
-    }
-
-    public void diSelect() {
-        if (action == ACTION.IDLE)
-            setAction(ACTION.BREATHING);
     }
 }
 

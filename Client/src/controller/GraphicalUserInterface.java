@@ -45,11 +45,11 @@ public class GraphicalUserInterface {
         try {
             if (media.equals(currentMedia)) return;
             currentMedia = media;
-            System.out.println("currentMedia:" + media.getSource());
             if (backgroundMusicPlayer != null) {
                 backgroundMusicPlayer.stop();
             }
             backgroundMusicPlayer = new MediaPlayer(media);
+            backgroundMusicPlayer.setVolume(0.2);
             backgroundMusicPlayer.setCycleCount(-1);
             backgroundMusicPlayer.setAutoPlay(true);
         } catch (MediaException e) {
@@ -77,6 +77,7 @@ public class GraphicalUserInterface {
     public void stopBackgroundMusic() {
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.stop();
+            currentMedia = null;
         }
     }
 }

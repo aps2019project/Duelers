@@ -18,9 +18,7 @@ import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.TempStory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class DataCenter extends Thread {
     private static final String ACCOUNTS_PATH = "resources/accounts";
@@ -36,12 +34,12 @@ public class DataCenter extends Thread {
 
     private static DataCenter ourInstance = new DataCenter();
 
-    private HashMap<Account, String> accounts = new HashMap<>();//Account -> ClientName
-    private HashMap<String, Account> clients = new HashMap<>();//clientName -> Account
+    private Map<Account, String> accounts = new HashMap<>();//Account -> ClientName
+    private Map<String, Account> clients = new HashMap<>();//clientName -> Account
     private Collection originalCards = new Collection();
-    private ArrayList<Card> collectibleItems = new ArrayList<>();
+    private List<Card> collectibleItems = new ArrayList<>();
     private Card originalFlag;
-    private ArrayList<Story> stories = new ArrayList<>();
+    private List<Story> stories = new ArrayList<>();
 
     public static DataCenter getInstance() {
         return ourInstance;
@@ -277,24 +275,28 @@ public class DataCenter extends Thread {
         }
     }
 
-    public ArrayList<Story> getStories() {
-        return stories;
+    public List<Story> getStories() {
+        return Collections.unmodifiableList(stories);
     }
 
-    public HashMap<Account, String> getAccounts() {
-        return accounts;
+    public Map<Account, String> getAccounts() {
+        return Collections.unmodifiableMap(accounts);
     }
 
-    public HashMap<String, Account> getClients() {
-        return clients;
+    public Map<String, Account> getClients() {
+        return Collections.unmodifiableMap(clients);
+    }
+
+    public void putClient(String name, Account account) {
+        clients.put(name, account);
     }
 
     public Collection getOriginalCards() {
         return originalCards;
     }
 
-    public ArrayList<Card> getCollectibleItems() {
-        return collectibleItems;
+    public List<Card> getCollectibleItems() {
+        return Collections.unmodifiableList(collectibleItems);
     }
 
     public Card getOriginalFlag() {
@@ -323,7 +325,7 @@ public class DataCenter extends Thread {
             saveCustomCard(message.getCustomCard());
             Server.getInstance().sendAddedCartMessage(message.getCustomCard());
 
-        } catch (LogicException e) {
+        } catch (ClientException e) {
             Server.getInstance().addToSendingMessages(Message.makeExceptionMessage(Server.getInstance().serverName, message.getSender(), e.getMessage(), 0));
         }
     }
@@ -341,7 +343,7 @@ public class DataCenter extends Thread {
         }
     }
 
-    private void validateCustomCard(Card customCard) throws LogicException {
+    private void validateCustomCard(Card customCard) throws ClientException {
         //TODO
     }
 }

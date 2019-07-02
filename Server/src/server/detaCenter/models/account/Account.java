@@ -7,14 +7,16 @@ import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Account {
     private String username;
     private String password;
     private Collection collection;
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
-    private ArrayList<MatchHistory> matchHistories = new ArrayList<>();
+    private List<MatchHistory> matchHistories = new ArrayList<>();
     private int money;
     private int wins;
 
@@ -41,7 +43,7 @@ public class Account {
         this.matchHistories = account.getMatchHistories();
     }
 
-    public boolean hasDeck(String deckName) {
+    private boolean hasDeck(String deckName) {
         if (deckName == null)
             return false;
         for (Deck deck : decks) {
@@ -154,11 +156,11 @@ public class Account {
         return mainDeck != null && mainDeck.isValid();
     }
 
-    public ArrayList<MatchHistory> getMatchHistories() {
-        return matchHistories;
+    List<MatchHistory> getMatchHistories() {
+        return Collections.unmodifiableList(matchHistories);
     }
 
-    public int getMoney() {
+    int getMoney() {
         return money;
     }
 
@@ -166,7 +168,7 @@ public class Account {
         return wins;
     }
 
-    public ArrayList<Deck> getDecks() {
-        return decks;
+    List<Deck> getDecks() {
+        return Collections.unmodifiableList(decks);
     }
 }

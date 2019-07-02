@@ -1,36 +1,31 @@
 package server.gameCenter.models.game;
 
-import server.Server;
 import server.detaCenter.models.account.MatchHistory;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
 import server.detaCenter.models.card.Deck;
 import server.clientPortal.models.comperessedData.CompressedPlayer;
 import server.exceptions.ClientException;
-import server.exceptions.ServerException;
 import server.gameCenter.models.map.Cell;
-import server.clientPortal.models.message.CardPosition;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 public class Player {
     private String userName;
     private int currentMP;
     private Deck deck;
     private Troop hero;
-    private ArrayList<Card> hand = new ArrayList<>();
-    private ArrayList<Troop> troops = new ArrayList<>();
-    private ArrayList<Card> graveyard = new ArrayList<>();
+    private List<Card> hand = new ArrayList<>();
+    private List<Troop> troops = new ArrayList<>();
+    private List<Card> graveyard = new ArrayList<>();
     private Card nextCard;
-    private ArrayList<Card> collectedItems = new ArrayList<>();
-    private ArrayList<Troop> flagCarriers = new ArrayList<>();
+    private List<Card> collectedItems = new ArrayList<>();
+    private List<Troop> flagCarriers = new ArrayList<>();
     private int playerNumber;
     private int numberOfCollectedFlags;
     private MatchHistory matchHistory;
 
-    public Player(Deck mainDeck, String userName, int playerNumber) {
+    Player(Deck mainDeck, String userName, int playerNumber) {
         this.playerNumber = playerNumber;
         this.userName = userName;
         deck = new Deck(mainDeck);
@@ -45,11 +40,11 @@ public class Player {
                 userName, currentMP, hand, graveyard, nextCard, collectedItems, playerNumber, numberOfCollectedFlags);
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
-    public Card insert(String cardId) throws ClientException {
+    Card insert(String cardId) throws ClientException {
         Card card = null;
         Iterator iterator = hand.iterator();
         while (iterator.hasNext()) {
@@ -83,13 +78,16 @@ public class Player {
         return card;
     }
 
-    public void setNextCard() {
+    private void setNextCard() {
         int index = new Random().nextInt(deck.getOthers().size());
         nextCard = deck.getOthers().get(index);
-        deck.getOthers().remove(nextCard);
+        try {
+            deck.removeCard(nextCard);
+        } catch (ClientException ignored) {
+        }
     }
 
-    public boolean addNextCardToHand() {
+    boolean addNextCardToHand() {
         if (hand.size() < 5) {
             hand.add(nextCard);
             setNextCard();
@@ -106,11 +104,11 @@ public class Player {
         return this.currentMP;
     }
 
-    public void setCurrentMP(int currentMP) {
+    void setCurrentMP(int currentMP) {
         this.currentMP = currentMP;
     }
 
-    public void addFlagCarrier(Troop troop) {
+    void addFlagCarrier(Troop troop) {
         if (!this.flagCarriers.contains(troop))
             this.flagCarriers.add(troop);
     }
@@ -119,11 +117,11 @@ public class Player {
         flagCarriers.remove(troop);
     }
 
-    public void changeCurrentMP(int change) {
+    void changeCurrentMP(int change) {
         currentMP += change;
     }
 
-    public int getPlayerNumber() {
+    int getPlayerNumber() {
         return playerNumber;
     }
 
@@ -131,27 +129,27 @@ public class Player {
         return this.deck;
     }
 
-    public ArrayList<Troop> getTroops() {
-        return this.troops;
+    public List<Troop> getTroops() {
+        return Collections.unmodifiableList(troops);
     }
 
-    public void addToGraveYard(Card card) {
+    void addToGraveYard(Card card) {
         graveyard.add(card);
     }
 
-    public Card getNextCard() {
+    Card getNextCard() {
         return this.nextCard;
     }
 
-    public ArrayList<Card> getCollectedItems() {
-        return this.collectedItems;
+    public List<Card> getCollectedItems() {
+        return Collections.unmodifiableList(collectedItems);
     }
 
-    public void collectItem(Card card) {
+    void collectItem(Card card) {
         collectedItems.add(card);
     }
 
-    public Troop getTroop(Cell cell) {
+    Troop getTroop(Cell cell) {
         for (Troop troop : troops) {
             if (troop.getCell().equals(cell)) {
                 return troop;
@@ -160,7 +158,7 @@ public class Player {
         return null;
     }
 
-    public Troop getTroop(String cardId) {
+    Troop getTroop(String cardId) {
         for (Troop troop : troops) {
             if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
                 return troop;
@@ -183,7 +181,7 @@ public class Player {
         this.hero = hero;
     }
 
-    public void killTroop(Game game, Troop troop) throws ServerException {
+    void killTroop(Game game, Troop troop) {
         addToGraveYard(troop.getCard());
 //        Server.getInstance().sendChangeCardPositionMessage(game, troop.getCard(), CardPosition.GRAVE_YARD);
         troops.remove(troop);
@@ -196,7 +194,7 @@ public class Player {
         return numberOfCollectedFlags;
     }
 
-    public void increaseNumberOfCollectedFlags() {
+    void increaseNumberOfCollectedFlags() {
         this.numberOfCollectedFlags++;
     }
 
@@ -208,11 +206,11 @@ public class Player {
         return matchHistory;
     }
 
-    public void setMatchHistory(MatchHistory matchHistory) {
+    void setMatchHistory(MatchHistory matchHistory) {
         this.matchHistory = matchHistory;
     }
 
-    public void addTroop(Troop troop) {
+    void addTroop(Troop troop) {
         troops.add(troop);
     }
 }

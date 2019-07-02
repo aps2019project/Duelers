@@ -9,9 +9,9 @@ import java.util.List;
 
 public class Move {
     private CompressedTroop troop;
-    private ArrayList<Position> targets;
+    private List<Position> targets;
 
-    public Move(CompressedTroop troop, ArrayList<Position> targets) {
+    Move(CompressedTroop troop, ArrayList<Position> targets) {
         this.troop = troop;
         this.targets = targets;
     }
@@ -20,7 +20,7 @@ public class Move {
         return troop;
     }
 
-    public List<Position> getTargets() {
+    List<Position> getTargets() {
         return Collections.unmodifiableList(targets);
     }
 }

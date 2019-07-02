@@ -209,7 +209,7 @@ public class MapBox implements PropertyChangeListener {
             cells[j][i].setFill(Color.DARKGREEN);
             return;
         } else {
-            animation.breathe();
+            animation.diSelect();
         }
         cells[j][i].setFill(Color.DARKBLUE);
     }
@@ -219,7 +219,7 @@ public class MapBox implements PropertyChangeListener {
         CompressedCard card = battleScene.getHandBox().getSelectedCard();
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.idle();
+            animation.select();
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
@@ -382,6 +382,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showAttack(String cardId, int i) {
+        System.out.println("ShowAttack:" + cardId + i);
         if (cardId == null)
             System.out.println("EEEE");
         CompressedTroop troop = gameMap.getTroop(cardId);
@@ -395,6 +396,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showDefend(String cardId, int i) {
+        System.out.println("ShowAttack:" + cardId + i);
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
             System.out.println("Error3");

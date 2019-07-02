@@ -119,6 +119,7 @@ public class BattleSceneTester extends Application implements GameActions {
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
         battleScene.attack(selectedTroop.getCard().getCardId(), troop.getPosition());
         battleScene.defend(troop.getCard().getCardId(), selectedTroop.getPosition());
+        battleScene.attack(troop.getCard().getCardId(), selectedTroop.getPosition());
     }
 
     @Override
@@ -127,6 +128,7 @@ public class BattleSceneTester extends Application implements GameActions {
             battleScene.attack(comboAttacker.getCard().getCardId(), troop.getPosition());
         }
         battleScene.defend(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getPosition());
+        battleScene.attack(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getPosition());
     }
 
     @Override

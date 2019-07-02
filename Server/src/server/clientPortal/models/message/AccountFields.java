@@ -1,8 +1,8 @@
 package server.clientPortal.models.message;
 
 public class AccountFields {
-    String username;
-    String password;
+    private String username;
+    private String password;
 
     public String getUsername() {
         return username;

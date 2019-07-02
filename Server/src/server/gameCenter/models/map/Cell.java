@@ -4,11 +4,13 @@ import server.detaCenter.models.card.Card;
 import server.clientPortal.models.comperessedData.CompressedCell;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Cell {
     private int row;
     private int column;
-    private ArrayList<Card> items = new ArrayList<>();
+    private List<Card> items = new ArrayList<>();
 
     public Cell(int row, int column) {
         this.row = row;
@@ -35,15 +37,15 @@ public class Cell {
     }
 
 
-    public ArrayList<Card> getItems() {
-        return items;
+    public List<Card> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public void clearItems() {
         items.clear();
     }
 
-    public void addItem(Card item) {
+    void addItem(Card item) {
         this.items.add(item);
     }
 
@@ -53,10 +55,6 @@ public class Cell {
 
     public int manhattanDistance(Cell cell) {
         return Math.abs(cell.row - row) + Math.abs(cell.column - column);
-    }
-
-    public int manhattanDistance(int selectedRow, int selectedColumn) {
-        return Math.abs(selectedRow - this.row) + Math.abs(selectedColumn - this.column);
     }
 
     public int manhattanDistance(Position position) {

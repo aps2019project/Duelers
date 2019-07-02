@@ -2,42 +2,57 @@ package view;
 
 import controller.GameResultController;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import models.gui.BackgroundMaker;
-import models.gui.ImageLoader;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import models.gui.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static models.gui.UIConstants.SCENE_HEIGHT;
-import static models.gui.UIConstants.SCENE_WIDTH;
+import static models.gui.UIConstants.*;
 
 public class GameResultMenu extends Show {
+    private static final double ICON_SIZE = 100 * SCALE;
     private static final String backgroundUrl = "resources/backGrounds/battlemap6_middleground@2x.png";
     private static final Background ROOT_BACKGROUND = new Background(
             new BackgroundFill(
                     Color.rgb(40, 43, 53), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private static final Map<Boolean, StatusImages> status = new HashMap<>();
-    private static final GameResultController CONTROLLER = GameResultController.getInstance();
+    private static final Map<Boolean, ResultData> results = new HashMap<>();
+    private static final String directory = "resources/result_menu/";
+    private static final String format = ".png";
+    private static final double HERO_WIDTH = 3800 * SCALE;
+    private static final double HERO_HEIGHT = 2875 * SCALE;
+    private static final double MIDDLEGROUND_WIDTH = SCENE_WIDTH * 0.8;
+    private static final double MIDDLEGROUND_HEIGHT = SCENE_HEIGHT * 0.5;
+    private static final Font RESULT_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 100 * SCALE);
+    private static final Font MIDDLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 70 * SCALE);
 
     static {
         try {
-            status.put(true, new StatusImages(
+            results.put(true, new ResultData(
                     "scene_diamonds_background_victory@2x",
                     "scene_diamonds_middleground_victory@2x",
-                    "scene_diamonds_foreground_friendly@2x"
+                    "scene_diamonds_foreground_friendly@2x",
+                    "general_winner", ProfileGrid.goldIcon, "VICTORY",
+                    Color.rgb(115, 210, 255)
             ));
-            status.put(false, new StatusImages(
+            results.put(false, new ResultData(
                     "scene_diamonds_background_defeat@2x",
                     "scene_diamonds_middleground_defeat@2x",
-                    "scene_diamonds_foreground_enemy@2x"
+                    "scene_diamonds_foreground_enemy@2x",
+                    "general_loser", ProfileGrid.generalIcon, "FAILURE",
+                    Color.rgb(255, 100, 115)
             ));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -45,15 +60,57 @@ public class GameResultMenu extends Show {
     }
 
     public GameResultMenu() {
+        ResultData data = results.get(GameResultController.getInstance().amInWinner());
         try {
             root.setBackground(ROOT_BACKGROUND);
             BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
 
-            ImageView resultBackground = ImageLoader.makeImageView(
-                    status.get(CONTROLLER.amInWinner()).background, SCENE_WIDTH, SCENE_HEIGHT
+            ImageView resultBackground = ImageLoader.makeImageView(data.background, SCENE_WIDTH, SCENE_HEIGHT);
+            ImageView resultMiddleground = ImageLoader.makeImageView(data.middleground, MIDDLEGROUND_WIDTH, MIDDLEGROUND_HEIGHT);
+            resultMiddleground.relocate(SCENE_WIDTH * 0.1, SCENE_HEIGHT * 0.25);
+
+            ImageView heroView = ImageLoader.makeImageView(data.hero, HERO_WIDTH, HERO_HEIGHT);
+            heroView.relocate((SCENE_WIDTH - HERO_WIDTH) * 0.5, (SCENE_HEIGHT - HERO_HEIGHT) * 0.25);
+
+            VBox resultBox = new VBox(DEFAULT_SPACING * 3);
+            resultBox.setAlignment(Pos.CENTER);
+
+            if (GameResultController.getInstance().amInWinner()) {
+                data.middleText = GameResultController.getInstance().getReward() + "$";
+            } else {
+                data.middleText = "TRY AGAIN";
+            }
+
+            DefaultLabel resultLabel = new DefaultLabel(data.message, RESULT_FONT, Color.WHITE);
+            resultLabel.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, data.color, 100 * SCALE, 0.7, 0, 0));
+
+            HBox rewardBox = new HBox(DEFAULT_SPACING * 2);
+
+            rewardBox.setAlignment(Pos.CENTER);
+            ImageView icon = ImageLoader.makeImageView(data.middleIcon, ICON_SIZE, ICON_SIZE);
+            DefaultLabel reward = new DefaultLabel(data.middleText, MIDDLE_FONT, Color.WHITE);
+
+            rewardBox.getChildren().addAll(icon, reward);
+
+            ImageButton playMenuButton = new ImageButton("PLAY MENU", event -> PlayMenu.getInstance().show());
+            resultBox.getChildren().addAll(resultLabel, rewardBox, playMenuButton);
+
+
+            VBox resultContainer = new VBox(resultBox);
+            resultContainer.setAlignment(Pos.BOTTOM_CENTER);
+            resultContainer.setMinSize(SCENE_WIDTH, SCENE_HEIGHT * 0.9);
+
+            RadialVignette vignette = new RadialVignette(SCENE_WIDTH, SCENE_HEIGHT);
+
+            ImageView resultForeground = ImageLoader.makeImageView(
+                    results.get(GameResultController.getInstance().amInWinner()).foreground,
+                    SCENE_WIDTH, SCENE_HEIGHT
             );
 
-            AnchorPane sceneContents = new AnchorPane(background);
+            AnchorPane sceneContents = new AnchorPane(
+                    background, resultBackground, resultMiddleground,
+                    heroView, vignette, resultContainer, resultForeground
+            );
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -65,19 +122,28 @@ public class GameResultMenu extends Show {
         super.show();
     }
 
-    private static class StatusImages {
+    private static class ResultData {
         private final Image background;
         private final Image middleground;
         private final Image foreground;
+        private final Image hero;
+        private final Image middleIcon;
+        private final String message;
+        public final Color color;
+        private String middleText;
 
-        private StatusImages(String backName, String middleName, String foreName) throws FileNotFoundException {
+        private ResultData(String backName, String middleName, String foreName, String heroName, Image middleIcon, String message, Color color) throws FileNotFoundException {
             background = new Image(new FileInputStream(getUrl(backName)));
             middleground = new Image(new FileInputStream(getUrl(middleName)));
             foreground = new Image(new FileInputStream(getUrl(foreName)));
+            hero = new Image(new FileInputStream(getUrl(heroName)));
+            this.middleIcon = middleIcon;
+            this.message = message;
+            this.color = color;
         }
 
         private String getUrl(String name) {
-            return "resources/result_menu/" + name + ".png";
+            return directory + name + format;
         }
     }
 }

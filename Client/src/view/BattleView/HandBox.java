@@ -19,6 +19,7 @@ import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static models.gui.UIConstants.SCALE;
 
@@ -256,7 +257,7 @@ public class HandBox implements PropertyChangeListener {
         cardsPane.setVgap(UIConstants.DEFAULT_SPACING * 2);
         cardsPane.setHgap(UIConstants.DEFAULT_SPACING * 2);
 
-        ArrayList<CompressedCard> graveyard = player.getGraveyard();
+        List<CompressedCard> graveyard = player.getGraveyard();
         for (int i = 0; i < graveyard.size(); i++) {
             CompressedCard card = graveyard.get(i);
             try {

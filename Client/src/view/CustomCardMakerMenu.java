@@ -18,10 +18,11 @@ import models.card.spell.*;
 import models.game.map.Position;
 import models.gui.*;
 
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+import static controller.SoundEffectPlayer.SoundName.*;
 import static models.gui.UIConstants.SCALE;
 
 public class CustomCardMakerMenu extends Show {
@@ -40,17 +41,15 @@ public class CustomCardMakerMenu extends Show {
     private Spinner<CardType> cardTypeSpinner = new Spinner<>(FXCollections.observableArrayList(CardType.values()));
     private ArrayList<Spell> spells = new ArrayList<>();
     private Spinner<AttackType> attackTypeSpinner = new Spinner<>(FXCollections.observableArrayList(AttackType.values()));
-    private Spinner<Integer> defualtHP = new Spinner<>(1,30,3);
-    private Spinner<Integer> range = new Spinner<>(0,8 , 2);
-    private Spinner<Integer> defualtAP = new Spinner<>(0,30,3);
-    private Spinner<Integer> manaPoint = new Spinner<>(0,8,3);
+    private Spinner<Integer> defaultHP = new Spinner<>(1, 30, 3);
+    private Spinner<Integer> range = new Spinner<>(0, 8, 2);
+    private Spinner<Integer> defaultAP = new Spinner<>(0, 30, 3);
+    private Spinner<Integer> mannaPoint = new Spinner<>(0, 8, 3);
     private NormalField price = new NormalField("price");
     private CheckBox hasCombo = new CheckBox("has combo?");
     private NormalField spriteName = new NormalField("spriteName");
 
-    private OrangeButton addSpell = new OrangeButton("add spell", event -> {
-        addSpell();
-    });
+    private OrangeButton addSpell = new OrangeButton("add spell", event -> addSpell(), click);
 
     private OrangeButton addCard;
 
@@ -125,29 +124,30 @@ public class CustomCardMakerMenu extends Show {
         dialogBox.makeClosable(dialogContainer);
     }
 
-    private final EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(
-            new Card(name.getText(), description.getText(), spriteName.getText(), cardTypeSpinner.getValue(), spells,
-                    defualtAP.getValue(), defualtHP.getValue(), manaPoint.getValue(), Integer.parseInt(price.getText()),
-                    attackTypeSpinner.getValue(), range.getValue(), hasCombo.isSelected())
-    );
-
 
     private CustomCardMakerMenu(String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
         BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
         BackButton backButton = new BackButton(backEvent);
-        addCard = new OrangeButton("addCard", CREATE);
+
+        EventHandler<? super MouseEvent> CREATE = event -> CustomCardController.getInstance().createCard(
+                new Card(name.getText(), description.getText(), spriteName.getText(), cardTypeSpinner.getValue(), spells,
+                        defaultAP.getValue(), defaultHP.getValue(), mannaPoint.getValue(), Integer.parseInt(price.getText()),
+                        attackTypeSpinner.getValue(), range.getValue(), hasCombo.isSelected())
+        );
+
+        addCard = new OrangeButton("addCard", CREATE, click);
 
         VBox vBox = getvBox();
 
-        AnchorPane sceneContents = new AnchorPane(background, new DefaultContainer(vBox),backButton);
+        AnchorPane sceneContents = new AnchorPane(background, new DefaultContainer(vBox), backButton);
         root.getChildren().addAll(sceneContents);
     }
 
     private VBox getvBox() {
         VBox vBox = new VBox(UIConstants.DEFAULT_SPACING);
         vBox.setMaxWidth(WIDTH);
-        vBox.getChildren().addAll(name,description,cardTypeSpinner,attackTypeSpinner,defualtHP,defualtAP,range,manaPoint,hasCombo,addSpell,spriteName, price , addCard);
+        vBox.getChildren().addAll(name, description, cardTypeSpinner, attackTypeSpinner, defaultHP, defaultAP, range, mannaPoint, hasCombo, addSpell, spriteName, price, addCard);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }

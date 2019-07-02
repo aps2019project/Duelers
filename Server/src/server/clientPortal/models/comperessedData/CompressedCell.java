@@ -3,7 +3,7 @@ package server.clientPortal.models.comperessedData;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CompressedCell {
     private int row;
@@ -11,7 +11,7 @@ public class CompressedCell {
     private CompressedCard item;//non flag item
     private int numberOfFlags;
 
-    public CompressedCell(int row, int column, ArrayList<Card> items) {
+    public CompressedCell(int row, int column, List<Card> items) {
         this.row = row;
         this.column = column;
         this.numberOfFlags = 0;

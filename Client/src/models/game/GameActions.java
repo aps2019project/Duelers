@@ -1,6 +1,5 @@
 package models.game;
 
-import models.card.Card;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedTroop;
 
@@ -8,15 +7,15 @@ import java.util.ArrayList;
 
 public interface GameActions {
 
-    public void attack(CompressedTroop selectedTroop, CompressedTroop troop);
+    void attack(CompressedTroop selectedTroop, CompressedTroop troop);
 
-    public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop);
+    void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop);
 
-    public void move(CompressedTroop selectedTroop, int j, int i);
+    void move(CompressedTroop selectedTroop, int j, int i);
 
-    public void endTurn();
+    void endTurn();
 
-    public void insert(CompressedCard card, int row, int column);
+    void insert(CompressedCard card, int row, int column);
 
-    public void useSpecialPower(int row, int column);
+    void useSpecialPower(int row, int column);
 }

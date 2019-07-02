@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ class SearchButton extends Button {
     );
     private static final Insets PADDING = new Insets(UIConstants.DEFAULT_SPACING);
 
-    SearchButton(EventHandler<? super MouseEvent> MouseEvent) {
+    SearchButton(EventHandler<? super MouseEvent> mouseEvent) {
         super("search");
         setBackground(DEFAULT_BACKGROUND);
         setBorder(BORDER);
@@ -33,15 +34,18 @@ class SearchButton extends Button {
 
         setOnMouseEntered(event -> {
             setBackground(HOVER_BACKGROUND);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(UIConstants.SELECT_CURSOR);
         });
-
 
         setOnMouseExited(event -> {
             setBackground(DEFAULT_BACKGROUND);
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
 
-        setOnMouseClicked(MouseEvent);
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            mouseEvent.handle(event);
+        });
     }
 }

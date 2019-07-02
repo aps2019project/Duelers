@@ -1,6 +1,7 @@
 package models.gui;
 
 import controller.CollectionMenuController;
+import controller.SoundEffectPlayer;
 import javafx.geometry.Insets;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
@@ -76,16 +77,21 @@ public class DeckBox extends GridPane {
 
         modify.setOnMouseEntered(event -> {
             modify.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         modify.setOnMouseExited(event -> {
             modify.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
-        modify.setOnMouseClicked(event -> CollectionMenu.getInstance().modify(deck));
+        modify.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            CollectionMenu.getInstance().modify(deck);
+        });
 
         remove.setOnMouseEntered(event -> {
             remove.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         remove.setOnMouseExited(event -> {
@@ -93,6 +99,7 @@ public class DeckBox extends GridPane {
             setCursor(DEFAULT_CURSOR);
         });
         remove.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
             CollectionMenuController.getInstance().removeDeck(deck.getName());
             try {
                 CollectionMenu.getInstance().showCollectionCards();
@@ -103,13 +110,17 @@ public class DeckBox extends GridPane {
 
         export.setOnMouseEntered(event -> {
             export.setEffect(ICON_SHADOW);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             setCursor(SELECT_CURSOR);
         });
         export.setOnMouseExited(event -> {
             export.setEffect(null);
             setCursor(DEFAULT_CURSOR);
         });
-        export.setOnMouseClicked(event -> new DeckExporter(deck).export());
+        export.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+            new DeckExporter(deck).export();
+        });
 
         add(deckName, 5, 0, 4, 2);
         if (deck.isValid()) {
@@ -126,6 +137,7 @@ public class DeckBox extends GridPane {
 
             disableMain.setOnMouseEntered(event -> {
                         disableMain.setEffect(new ColorAdjust(0, 0.5, 0, 0));
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
                         setCursor(SELECT_CURSOR);
                     }
             );
@@ -133,7 +145,10 @@ public class DeckBox extends GridPane {
                 disableMain.setEffect(null);
                 setCursor(DEFAULT_CURSOR);
             });
-            disableMain.setOnMouseClicked(event -> CollectionMenuController.getInstance().selectDeck(deck.getName()));
+            disableMain.setOnMouseClicked(event -> {
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.click);
+                CollectionMenuController.getInstance().selectDeck(deck.getName());
+            });
         }
 
         add(heroNumber, 5, 2, 2, 1);
@@ -149,7 +164,7 @@ public class DeckBox extends GridPane {
     }
 
     private Font getFont(String name) {
-        double size = Math.min(45 * SCALE,  45 * SCALE * 8 / name.length());
+        double size = Math.min(45 * SCALE, 45 * SCALE * 8 / name.length());
         return Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, size);
     }
 }

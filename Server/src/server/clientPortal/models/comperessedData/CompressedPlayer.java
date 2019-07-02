@@ -3,6 +3,7 @@ package server.clientPortal.models.comperessedData;
 import server.detaCenter.models.card.Card;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompressedPlayer {
     private String userName;
@@ -14,8 +15,8 @@ public class CompressedPlayer {
     private int playerNumber;
     private int numberOfCollectedFlags;
 
-    public CompressedPlayer(String userName, int currentMP, ArrayList<Card> hand, ArrayList<Card> graveyard,
-                            Card nextCard, ArrayList<Card> collectedItems, int playerNumber, int numberOfCollectedFlags) {
+    public CompressedPlayer(String userName, int currentMP, List<Card> hand, List<Card> graveyard,
+                            Card nextCard, List<Card> collectedItems, int playerNumber, int numberOfCollectedFlags) {
         this.userName = userName;
         this.currentMP = currentMP;
         for (Card card : hand)

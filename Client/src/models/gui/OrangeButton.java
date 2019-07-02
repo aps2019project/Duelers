@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -9,8 +10,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
-
+import static controller.SoundEffectPlayer.SoundName;
+import static controller.SoundEffectPlayer.SoundName.*;
 import static models.gui.UIConstants.SCALE;
 
 public class OrangeButton extends Button {
@@ -26,7 +27,7 @@ public class OrangeButton extends Button {
     );
     private static final double WIDTH = 400 * SCALE;
 
-    public OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent) {
+    public OrangeButton(String text, EventHandler<? super MouseEvent> clickEvent, SoundName soundName) {
         super(text);
         setBackground(DEFAULT_BACKGROUND);
         setPadding(new Insets(UIConstants.DEFAULT_SPACING * 3));
@@ -36,6 +37,7 @@ public class OrangeButton extends Button {
 
         setOnMouseEntered(event -> {
             setBackground(HOVER_BACKGROUND);
+            SoundEffectPlayer.getInstance().playSound(hover);
             setCursor(UIConstants.SELECT_CURSOR);
         });
 
@@ -44,11 +46,9 @@ public class OrangeButton extends Button {
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
 
-        setOnMouseClicked(clickEvent);
-    }
-
-    OrangeButton(String text, EventHandler<? super MouseEvent> event, String graphicUrl) throws FileNotFoundException {
-        this(text, event);
-        setGraphic(ImageLoader.loadImage(graphicUrl, 50, 50));
+        setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(soundName);
+            clickEvent.handle(event);
+        });
     }
 }

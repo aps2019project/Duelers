@@ -1,5 +1,6 @@
 package models.gui;
 
+import controller.SoundEffectPlayer;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -49,10 +50,14 @@ class MainMenuGrid extends GridPane {
         RotateAnimation rotate = new RotateAnimation(ringView);
         Label label = new DefaultLabel(item.title, FONT, Color.WHITE);
 
-        label.setOnMouseClicked(item.event);
+        label.setOnMouseClicked(event -> {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
+            item.event.handle(event);
+        });
 
         label.setOnMouseEntered(event -> {
             menuView.setOpacity(0.6);
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
             ringView.setVisible(true);
             label.setCursor(UIConstants.SELECT_CURSOR);
             label.setEffect(SHADOW);

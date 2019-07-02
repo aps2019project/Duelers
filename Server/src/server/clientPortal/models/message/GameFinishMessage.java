@@ -1,9 +1,9 @@
 package server.clientPortal.models.message;
 
-public class GameFinishMessage {
-    boolean youWon;
+class GameFinishMessage {
+    private boolean youWon;
 
-    public GameFinishMessage(boolean youWon) {
+    GameFinishMessage(boolean youWon) {
         this.youWon = youWon;
     }
 }
