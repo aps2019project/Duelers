@@ -109,7 +109,7 @@ public class AvailableActions {
                 int rowUp = currentPosition.getRow() - (2 - Math.abs(column - currentPosition.getColumn()));
 
                 for (int row = rowUp; row <= rowDown; row++) {
-                    if (!game.getGameMap().isInMap(row, column)) continue;
+                    if (!CompressedGameMap.isInMap(row, column)) continue;
 
                     Position cell = game.getGameMap().getCell(row, column).toPosition();
                     if (currentPosition.equals(cell)) continue;
@@ -170,14 +170,6 @@ public class AvailableActions {
         return Collections.unmodifiableList(moves);
     }
 
-    public boolean canInsertCard(String cardId, int row, int column, CompressedGameMap map) {
-        if (!map.isInMap(row, column)) return false;
-        for (Insert insert : handInserts) {
-            if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
-        }
-        return false;
-    }
-
     public List<Position> getMove(CompressedTroop troop) {
         for (Move move : moves) {
             if (move.getTroop().equals(troop)) {
@@ -185,5 +177,26 @@ public class AvailableActions {
             }
         }
         return Collections.emptyList();
+    }
+
+    //*****
+    public boolean canInsertCard(String cardId, int row, int column) {
+        if (!CompressedGameMap.isInMap(row, column)) return false;
+        for (Insert insert : handInserts) {
+            if (insert.getCard().getCardId().equalsIgnoreCase(cardId)) return true;
+        }
+        return false;
+    }
+
+    public boolean canMove(String cardId, int row, int column) {
+        return false;
+    }
+
+    public boolean canAttack(String cardId, int row, int column) {
+        return false;
+    }
+
+    public boolean canUseSpecialAction(String cardId, int row, int column) {
+        return false;
     }
 }

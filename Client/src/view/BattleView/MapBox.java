@@ -1,5 +1,6 @@
 package view.BattleView;
 
+import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -348,7 +349,70 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void updateMapColors() {
-
+        updateSelectionType();
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                if (!battleScene.isMyTurn()) {
+                    cells[row][column].setFill(Constants.defaultColor);
+                }
+                CompressedTroop currentTroop = getTroop(column, row);
+                if (selectionType == SelectionType.INSERTION) {
+                    if (GameController.getInstance().getAvailableActions().canInsertCard(
+                            battleScene.getHandBox().getSelectedCard().getCardId(), row, column)) {
+                        if (battleScene.getHandBox().getSelectedCard().getType() == CardType.HERO ||
+                                battleScene.getHandBox().getSelectedCard().getType() == CardType.MINION) {
+                            cells[row][column].setFill(Constants.SpellColor);
+                        } else {
+                            cells[row][column].setFill(Constants.MoveColor);
+                        }
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    break;
+                }
+                if (selectionType == SelectionType.SELECTION) {
+                    if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
+                        cells[row][column].setFill(Constants.SelectedColor);
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    break;
+                }
+                if (selectedTroop != null && selectedTroop.getPosition().getRow() == row &&
+                        selectedTroop.getPosition().getColumn() == column) {
+                    cells[row][column].setFill(Constants.SelectedColor);//not important
+                    break;
+                }
+                if (selectionType == SelectionType.SPELL) {
+                    if (GameController.getInstance().getAvailableActions().canUseSpecialAction(
+                            selectedTroop.getCard().getCardId(), row, column)) {
+                        cells[row][column].setFill(Constants.SpellColor);
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    break;
+                }
+                if (selectionType == SelectionType.COMBO) {
+                    if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()
+                            && currentTroop.getCard().isHasCombo())
+                        cells[row][column].setFill(Constants.CanSelectColor);
+                    else if (GameController.getInstance().getAvailableActions().canAttack(
+                            selectedTroop.getCard().getCardId(), row, column))
+                        cells[row][column].setFill(Constants.attackColor);
+                    else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    break;
+                }
+                if (selectionType == SelectionType.NORMAL) {
+                    if (GameController.getInstance().getAvailableActions().canAttack(
+                            selectedTroop.getCard().getCardId(), row, column))
+                        cells[row][column].setFill(Constants.attackColor);
+                    else if (GameController.getInstance().getAvailableActions().canMove(
+                            selectedTroop.getCard().getCardId(), row, column))
+                        cells[row][column].setFill(Constants.MoveColor);
+                    else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    break;
+                }
+            }
+        }
     }
 
     private void updateSelectionType() {
