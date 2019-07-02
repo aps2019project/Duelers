@@ -396,14 +396,13 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showDefend(String cardId, int i) {
-        System.out.println("ShowAttack:" + cardId + i);
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error3");
+            System.out.println("Error3 MapBox");
         else {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
             if (animation == null)
-                System.out.println("Error4");
+                System.out.println("Error4 MapBox");
             else
                 animation.hit(i);
         }
