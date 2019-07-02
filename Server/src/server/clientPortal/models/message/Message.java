@@ -4,6 +4,7 @@ import server.clientPortal.models.JsonConverter;
 import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.Collection;
 import server.detaCenter.models.card.Card;
+import server.detaCenter.models.card.ExportedDeck;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
