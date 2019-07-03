@@ -355,7 +355,7 @@ public class DataCenter extends Thread {
         ExportedDeck exportedDeck = message.getExportedDeck();
         Collection collection = account.getCollection();
         Deck deck = collection.extractDeck(exportedDeck);
-
+        account.addDeck(deck);
         Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
                 Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
         saveAccount(account);
