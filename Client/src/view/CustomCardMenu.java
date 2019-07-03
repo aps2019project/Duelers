@@ -2,10 +2,12 @@ package view;
 
 import controller.GraphicalUserInterface;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,11 +36,11 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private static final List<CardType> cardTypes = Arrays.asList(HERO, CardType.MINION, CardType.SPELL, CardType.USABLE_ITEM);
     private static final String ICON_PATH = "resources/icons";
     private static final String TROOPS_PATH = "resources/troopAnimations";
-    private static final Map<CardType, ArrayList<String>> sprites = new HashMap<>();
+    private static final Map<CardType, ObservableList<String>> sprites = new HashMap<>();
 
     static {
-        ArrayList<String> iconSprites = new ArrayList<>();
-        ArrayList<String> troopSprites = new ArrayList<>();
+        ObservableList<String> iconSprites = FXCollections.observableArrayList();
+        ObservableList<String> troopSprites = FXCollections.observableArrayList();
         loadFiles(ICON_PATH, iconSprites);
         loadFiles(TROOPS_PATH, troopSprites);
         sprites.put(HERO, troopSprites);
@@ -54,7 +56,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private DefaultLabel mannaPointLabel = new DefaultLabel("MANNA", DEFAULT_FONT, Color.WHITE);
     private DefaultLabel rangeLabel = new DefaultLabel("RANGE", DEFAULT_FONT, Color.WHITE);
 
-    private static void loadFiles(String path, ArrayList<String> target) {
+    private static void loadFiles(String path, ObservableList<String> target) {
         File directory = new File(path);
         File[] files = directory.listFiles();
         if (files != null) {
@@ -115,9 +117,9 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             cardMakerGrid.add(cardTypeSpinner, 1, 2);
             cardMakerGrid.add(priceField, 0, 3, 2, 1);
             cardMakerGrid.add(new DefaultSeparator(Orientation.HORIZONTAL), 0, 4, 2, 1);
-            setType(cardTypeSpinner.getValue());
+            setType(cardTypeSpinner.getValue(), cardTypeSpinner.getValue());
 
-            cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 9);
+            cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 10);
 
             cardMakerGrid.add(cardPane, 3, 0, 2, 9);
             cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 3, 9);
@@ -159,12 +161,15 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case "type":
-                setType((CardType) evt.getNewValue());
+                setType((CardType) evt.getOldValue(), (CardType) evt.getNewValue());
                 break;
         }
     }
 
-    private void setType(CardType newValue) {
+    private void setType(CardType oldValue, CardType newValue) {
+        if (!sprites.get(oldValue).equals(sprites.get(newValue))) {
+            spriteSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(sprites.get(newValue)));
+        }
         switch (newValue) {
             case HERO:
                 cardMakerGrid.getChildren().removeAll(
