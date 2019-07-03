@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import static models.card.CardType.*;
 import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
@@ -30,7 +31,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
-    private static final List<CardType> cardTypes = Arrays.asList(CardType.HERO, CardType.MINION, CardType.SPELL, CardType.USABLE_ITEM);
+    private static final List<CardType> cardTypes = Arrays.asList(HERO, CardType.MINION, CardType.SPELL, CardType.USABLE_ITEM);
     private static final String ICON_PATH = "resources/icons";
     private static final String TROOPS_PATH = "resources/troopAnimations";
     private static final Map<CardType, ArrayList<String>> sprites = new HashMap<>();
@@ -40,7 +41,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         ArrayList<String> troopSprites = new ArrayList<>();
         loadFiles(ICON_PATH, iconSprites);
         loadFiles(TROOPS_PATH, troopSprites);
-        sprites.put(CardType.HERO, troopSprites);
+        sprites.put(HERO, troopSprites);
         sprites.put(CardType.MINION, troopSprites);
         sprites.put(CardType.USABLE_ITEM, iconSprites);
         sprites.put(CardType.SPELL, iconSprites);
@@ -51,6 +52,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private DefaultLabel defaultHpLabel = new DefaultLabel("HP", DEFAULT_FONT, Color.WHITE);
     private DefaultLabel attackTypeLabel = new DefaultLabel("ATTACK", DEFAULT_FONT, Color.WHITE);
     private DefaultLabel mannaPointLabel = new DefaultLabel("MANNA", DEFAULT_FONT, Color.WHITE);
+    private DefaultLabel rangeLabel = new DefaultLabel("RANGE", DEFAULT_FONT, Color.WHITE);
 
     private static void loadFiles(String path, ArrayList<String> target) {
         File directory = new File(path);
@@ -117,7 +119,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
             cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 9);
 
-            cardMakerGrid.add(cardPane, 3, 0, 2, 8);
+            cardMakerGrid.add(cardPane, 3, 0, 2, 9);
             cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 3, 9);
             cardMakerGrid.add(spriteSpinner, 4, 9);
 
@@ -223,10 +225,11 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private void setAttackType(AttackType newValue) {
         switch (newValue) {
             case MELEE:
-
+                cardMakerGrid.getChildren().removeAll(rangeLabel, rangeSpinner);
                 break;
             case RANGED: case HYBRID:
-
+                    cardMakerGrid.add(rangeLabel, 0, 9);
+                    cardMakerGrid.add(rangeSpinner, 1, 9);
                 break;
         }
     }
