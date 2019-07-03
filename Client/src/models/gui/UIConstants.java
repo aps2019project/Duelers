@@ -30,9 +30,9 @@ public class UIConstants {
     public static final double DEFAULT_SPACING = 10 * SCALE;
     public static final double SCENE_WIDTH = DEFAULT_SCENE_WIDTH * SCALE;
     public static final double SCENE_HEIGHT = DEFAULT_SCENE_HEIGHT * SCALE;
+    public static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     static final double DUELYST_LOGO_WIDTH = 500 * SCALE;
     static final double DUELYST_LOGO_HEIGHT = 108 * SCALE;
-    static final Font DEFAULT_FONT = Font.font("SansSerif", FontWeight.BOLD, 25 * SCALE);
     public static Cursor DEFAULT_CURSOR;
     static Cursor SELECT_CURSOR;
 

@@ -33,6 +33,7 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final double SPRITE_CENTER_Y = 180 * SCALE;
     private final CardBackground background;
     private final CardDetailBox detailBox;
+    private final CardAnimation cardAnimation;
 
     Deck deck;
     ICard card;
@@ -74,7 +75,7 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
             showCount();
         }
 
-        final CardAnimation cardAnimation = new CardAnimation(this, card, SPRITE_CENTER_Y, SPRITE_CENTER_X);
+        cardAnimation = new CardAnimation(this, card, SPRITE_CENTER_Y, SPRITE_CENTER_X);
 
         setOnMouseEntered(event -> {
             cardAnimation.inActive();
@@ -125,7 +126,11 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         detailBox.setType(newValue);
     }
 
-    public void setDescription(String newValue) {
+    void setDescription(String newValue) {
         detailBox.setDescription(newValue);
+    }
+
+    void setSprite(String spriteName) {
+        cardAnimation.setSprite(spriteName);
     }
 }

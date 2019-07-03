@@ -12,6 +12,16 @@ public class EditableCardPane extends CardPane {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        switch (evt.getPropertyName()) {
+            case "name":
+                setName((String) evt.getNewValue());
+                break;
+            case "description":
+                setDescription((String) evt.getNewValue());
+                break;
+            case "spriteName":
+                setSprite((String) evt.getNewValue());
+                break;
+        }
     }
 }

@@ -142,6 +142,10 @@ public class CardAnimation extends Transition {
         return imageView;
     }
 
+    public void setSprite(String spriteName) {
+
+    }
+
     enum ACTION {
         ACTIVE, IN_ACTIVE, STOPPED
     }

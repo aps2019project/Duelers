@@ -24,53 +24,62 @@ public class EditableCard implements ICard {
     private boolean hasCombo;
 
     public void setName(String name) {
+        String old = this.name;
         this.name = name;
         this.cardId = name.replaceAll(" ", "");
+        support.firePropertyChange("name", old, name);
     }
 
     public void setDescription(String description) {
-        support.firePropertyChange("description", this.description, description);
+        String old = this.description;
         this.description = description;
+        support.firePropertyChange("description", old, description);
     }
 
     public void setSpriteName(String spriteName) {
-        support.firePropertyChange("spriteName", this.spriteName, spriteName);
+        String old = this.spriteName;
         this.spriteName = spriteName;
+        support.firePropertyChange("spriteName", old, spriteName);
     }
 
     public void setType(CardType type) {
-        support.firePropertyChange("type", this.type, type);
+        CardType old = this.type;
         this.type = type;
+        support.firePropertyChange("type", old, type);
     }
 
     public void addSpell(Spell spell) {
-        support.firePropertyChange("spells", null, spells);
         spells.add(spell);
+        support.firePropertyChange("spells", null, spells);
     }
 
     public void removeSpell(Spell spell) {
-        support.firePropertyChange("spells", null, spells);
         spells.remove(spell);
+        support.firePropertyChange("spells", null, spells);
     }
 
     public void setDefaultAp(int defaultAp) {
-        support.firePropertyChange("defaultAp", this.defaultAp, defaultAp);
+        int old = this.defaultAp;
         this.defaultAp = defaultAp;
+        support.firePropertyChange("defaultAp", old, defaultAp);
     }
 
     public void setDefaultHp(int defaultHp) {
-        support.firePropertyChange("defaultHp", this.defaultHp, defaultHp);
+        int old = this.defaultHp;
         this.defaultHp = defaultHp;
+        support.firePropertyChange("defaultHp", old, defaultHp);
     }
 
     public void setMannaPoint(int mannaPoint) {
-        support.firePropertyChange("mannaPoint", this.mannaPoint, mannaPoint);
+        int old = this.mannaPoint;
         this.mannaPoint = mannaPoint;
+        support.firePropertyChange("mannaPoint", old, mannaPoint);
     }
 
     public void setPrice(int price) {
-        support.firePropertyChange("price", this.price, price);
+        int old = this.price;
         this.price = price;
+        support.firePropertyChange("price", old, price);
     }
 
     public void setAttackType(AttackType attackType) {

@@ -3,11 +3,13 @@ package view;
 import controller.GraphicalUserInterface;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
 import models.card.AttackType;
 import models.card.CardType;
 import models.card.EditableCard;
@@ -19,8 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import static models.gui.UIConstants.DEFAULT_SPACING;
-import static models.gui.UIConstants.SCALE;
+import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
     private static Media backgroundMusic = new Media( // TODO: Change music
@@ -85,7 +86,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         }
     }
 
-    CustomCardMenu() {
+    public CustomCardMenu() {
         preProcess();
         try {
             root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);
@@ -99,9 +100,15 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
             cardMakerGrid.add(name, 0, 0, 2, 1);
             cardMakerGrid.add(description, 0, 1, 2, 1);
-            cardMakerGrid.add(cardTypeSpinner, 0, 1, 2, 1);
+            cardMakerGrid.add(cardTypeSpinner, 0, 2, 2, 1);
+            cardMakerGrid.add(priceField, 0, 3, 2, 1);
+            cardMakerGrid.add(new DefaultSeparator(Orientation.HORIZONTAL), 0, 4, 2, 1);
 
-            cardMakerGrid.add(cardPane, 2, 0, 1, 8);
+            cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 9);
+
+            cardMakerGrid.add(cardPane, 3, 0, 2, 8);
+            cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 3, 8);
+            cardMakerGrid.add(spriteSpinner, 4, 8);
 
             DefaultContainer container = new DefaultContainer(cardMakerGrid);
 
@@ -115,11 +122,9 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private void preProcess() {
         currentCard.addListener(this);
         currentCard.addListener(cardPane);
-        name.textProperty().addListener((observable, oldValue, newValue) -> cardPane.setName(newValue));
-        description.textProperty().addListener((observable, oldValue, newValue) -> cardPane.setDescription(newValue));
-        cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            cardPane.setType(newValue);
-        });
+        name.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setName(newValue));
+        description.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setDescription(newValue));
+        cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> currentCard.setType(newValue));
     }
 
     @Override

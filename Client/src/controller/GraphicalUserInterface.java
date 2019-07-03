@@ -8,6 +8,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
+import view.CustomCardMenu;
 import view.LoginMenu;
 
 public class GraphicalUserInterface {
@@ -29,7 +30,8 @@ public class GraphicalUserInterface {
 
     public void start(Stage stage) {
         this.stage = stage;
-        new LoginMenu().show();
+//        new LoginMenu().show();
+        new CustomCardMenu().show();;
         setStageProperties(stage);
     }
 
