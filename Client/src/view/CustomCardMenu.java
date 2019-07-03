@@ -107,7 +107,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             cardMakerGrid.setAlignment(Pos.CENTER);
             cardMakerGrid.setHgap(DEFAULT_SPACING * 2);
             cardMakerGrid.setVgap(DEFAULT_SPACING * 2);
-            cardMakerGrid.setMaxSize(1000 * SCALE, 1000 * SCALE);
+            cardMakerGrid.setMaxSize(2000 * SCALE, 1000 * SCALE);
 
             cardMakerGrid.add(name, 0, 0, 2, 1);
             cardMakerGrid.add(description, 0, 1, 2, 1);
