@@ -19,20 +19,24 @@ import java.util.Map;
 public class CardAnimation extends Transition {
     static final Map<String, Image> cachedImages = new HashMap<>();
     private final Pane pane;
-    private final FramePosition[] activeFramePositions;
-    private final FramePosition[] inActiveFramePositions;
+    private FramePosition[] activeFramePositions;
+    private FramePosition[] inActiveFramePositions;
 
     private final ImageView imageView;
-    private final int frameWidth, frameHeight;
-    private final double extraX, extraY;
+    private int frameWidth, frameHeight;
+    private double extraX, extraY;
 
     private boolean flag = false;
     private int nextIndex;
     private ACTION action;
     private FramePosition[] currentFramePositions;
 
+    private double x,y;
+
     public CardAnimation(Pane pane, ICard card, double y, double x) throws FileNotFoundException {
         this.pane = pane;
+        this.x=x;
+        this.y=y;
         //file settings
         Playlist playlist;
         Image image;
@@ -142,8 +146,43 @@ public class CardAnimation extends Transition {
         return imageView;
     }
 
-    public void setSprite(String spriteName) {
+    public void setSprite(ICard card) throws Exception{
+        this.stop();
+        Playlist playlist;
+        Image image;
+        switch (card.getType()) {
+            case SPELL:
+            case USABLE_ITEM:
+            case COLLECTIBLE_ITEM:
+                image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/icons/" + card.getSpriteName() + ".png"));
+                playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
+                inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
+                extraX = 38 * Constants.SCALE;
+                extraY = 31 * Constants.SCALE;
+                break;
+            default:
+                image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/troopAnimations/" + card.getSpriteName() + ".png"));
+                playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
+                inActiveFramePositions = activeFramePositions;
+                extraX = playlist.extraX * Constants.SCALE;
+                extraY = (playlist.extraY - 20) * Constants.SCALE;
+        }
 
+        frameWidth = playlist.frameWidth;
+        frameHeight = playlist.frameHeight;
+
+        imageView.setImage(image);
+
+        imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setX(x - extraX);
+        imageView.setY(y - extraY);
+
+        imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
+
+        setAction(ACTION.STOPPED);
     }
 
     enum ACTION {
