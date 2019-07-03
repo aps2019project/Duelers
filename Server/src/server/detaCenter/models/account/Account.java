@@ -71,6 +71,13 @@ public class Account {
         decks.add(new Deck(deckName));
     }
 
+    public void addDeck(Deck deck) throws ClientException {
+        if (hasDeck(deck.getDeckName())) {
+            throw new ClientException("new deck's name was duplicate.");
+        }
+        decks.add(deck);
+    }
+
     public void deleteDeck(String deckName) throws LogicException {
         if (!hasDeck(deckName)) {
             throw new ClientException("deck was not found.");

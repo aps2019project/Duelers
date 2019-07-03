@@ -69,7 +69,9 @@ public class Deck {
         addCard(collection.getCard(cardId));
     }
 
-    private void addCard(Card card) throws LogicException{
+
+
+    public void addCard(Card card) throws LogicException{
         if(card==null)
             throw new ClientException("this card isn't in your collection!");
         switch (card.getType()) {
@@ -167,5 +169,9 @@ public class Deck {
         for (Card card : others) {
             card.setCardId("customGame_" + card.getCardId());
         }
+    }
+
+    public String getName() {
+        return deckName;
     }
 }

@@ -12,7 +12,10 @@ public abstract class Show {
 
     public void show() {
         GraphicalUserInterface.getInstance().changeScene(root);
-        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.enter_page);
+        try {
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.enter_page);
+        }catch (Exception ignored){
+        }
         Client.getInstance().setShow(this);
     }
 

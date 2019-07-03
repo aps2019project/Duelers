@@ -126,7 +126,8 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
 
     private void importDeck() {
         String deckJson = showJFileChooserDialog();
-        CollectionMenuController.getInstance().importDeck(new Gson().fromJson(deckJson,ExportedDeck.class));
+        if (deckJson != null && !deckJson.isEmpty())
+            CollectionMenuController.getInstance().importDeck(new Gson().fromJson(deckJson, ExportedDeck.class));
     }
 
     private String showJFileChooserDialog() {

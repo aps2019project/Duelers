@@ -4,6 +4,7 @@ import server.clientPortal.models.JsonConverter;
 import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.Collection;
 import server.detaCenter.models.card.Card;
+import server.detaCenter.models.card.ExportedDeck;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
@@ -33,6 +34,7 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     //SENDER:CLIENT
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
+    private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     private NewGameFields newGameFields;
 
@@ -188,5 +190,9 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     }
 
     public Card getCustomCard() {return customCard;
+    }
+
+    public ExportedDeck getExportedDeck() {
+        return exportedDeck;
     }
 }

@@ -38,6 +38,7 @@ public enum MessageType {
     NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
+    IMPORT_DECK,
 
 
     ADD_CARD

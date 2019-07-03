@@ -51,7 +51,7 @@ public class SoundEffectPlayer {
         try {
             Media media = mediaFiles.get(soundName);
             new MediaPlayer(media).play();
-        } catch (MediaException ignored) {
+        } catch (Exception ignored) {
         }
     }
 }
