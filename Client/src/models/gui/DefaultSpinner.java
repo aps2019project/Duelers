@@ -5,7 +5,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import models.card.CardType;
 
 public class DefaultSpinner<T> extends Spinner<T> {
     private static final Background DEFAULT_BACKGROUND = new Background(
@@ -18,9 +17,18 @@ public class DefaultSpinner<T> extends Spinner<T> {
 
     public DefaultSpinner(ObservableList<T> list) {
         super(list);
+        setGraphic();
+    }
+
+    public DefaultSpinner(int min, int max, int initialValue) {
+        super(min, max, initialValue);
+        setGraphic();
+    }
+
+    private void setGraphic() {
         getEditor().setFont(UIConstants.DEFAULT_FONT);
         getEditor().setPadding(DEFAULT_PADDING);
-        getEditor().setStyle("-fx-text-inner-color: #fffbfd;");
+        getEditor().setStyle("-fx-text-inner-color: #fffbfd; -fx-background-color: rgb(70, 70, 70)");
         setBackground(DEFAULT_BACKGROUND);
         setBorder(DEFAULT_BORDER);
     }
