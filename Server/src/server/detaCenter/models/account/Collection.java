@@ -116,7 +116,7 @@ public class Collection {
         items.remove(card);
     }
 
-    private Deck extractDeck(ExportedDeck exportedDeck) throws LogicException {
+    public Deck extractDeck(ExportedDeck exportedDeck) throws LogicException {
         Deck deck = new Deck(exportedDeck.getName());
         ArrayList<Card> hero = getCardsWithName(exportedDeck.getHeroName(), heroes);
         if (hero.isEmpty())
