@@ -37,10 +37,11 @@ class CardBackground extends StackPane {
         }
     }
 
+    private final ImageView backgroundView;
     private final ImageView glowView;
 
     CardBackground(ICard card) {
-        ImageView backgroundView = ImageLoader.makeImageView(background.get(card.getType()), CARD_WIDTH, CARD_HEIGHT);
+        backgroundView = ImageLoader.makeImageView(background.get(card.getType()), CARD_WIDTH, CARD_HEIGHT);
         glowView = ImageLoader.makeImageView(glow, GLOW_WIDTH, GLOW_HEIGHT);
         glowView.setVisible(false);
 
@@ -53,5 +54,9 @@ class CardBackground extends StackPane {
 
     void hideGlow() {
         glowView.setVisible(false);
+    }
+
+    void changeType(CardType newValue) {
+        backgroundView.setImage(background.get(newValue));
     }
 }

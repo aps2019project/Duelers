@@ -21,7 +21,7 @@ public class MainMenu extends Show {
             new MenuItem(1, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
             new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
             new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
-            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> CustomCardMakerMenu.getInstance().show()),
+            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
             new MenuItem(5, "SETTING", "Change game properties", event -> {
             }),
     };

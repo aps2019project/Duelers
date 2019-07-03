@@ -31,6 +31,8 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
     private static final Font AP_HP_FONT = Font.font("SansSerif", FontWeight.SEMI_BOLD, 30 * SCALE);
     private static final double SPRITE_CENTER_X = GLOW_WIDTH / 2;
     private static final double SPRITE_CENTER_Y = 180 * SCALE;
+    private final CardBackground background;
+    private final CardDetailBox detailBox;
 
     Deck deck;
     ICard card;
@@ -42,9 +44,9 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         this.deck = deck;
         setPrefSize(GLOW_WIDTH, GLOW_HEIGHT);
 
-        CardBackground background = new CardBackground(card);
+        background = new CardBackground(card);
 
-        CardDetailBox detailBox = new CardDetailBox(card);
+        detailBox = new CardDetailBox(card);
         getChildren().addAll(background, detailBox);
 
         if (card.getType() == CardType.HERO || card.getType() == CardType.MINION) {
@@ -112,5 +114,18 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
                 );
             }
         }
+    }
+
+    public void setName(String newValue) {
+        detailBox.setName(newValue);
+    }
+
+    public void setType(CardType newValue) {
+        background.changeType(newValue);
+        detailBox.setType(newValue);
+    }
+
+    public void setDescription(String newValue) {
+        detailBox.setDescription(newValue);
     }
 }

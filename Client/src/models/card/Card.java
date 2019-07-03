@@ -5,6 +5,8 @@ import models.ICard;
 import models.card.spell.Spell;
 import models.exceptions.InputException;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Card implements ICard {
@@ -36,6 +38,9 @@ public class Card implements ICard {
         this.attackType = attackType;
         this.range = range;
         this.hasCombo = hasCombo;
+    }
+
+    public Card() {
     }
 
     @Override

@@ -124,7 +124,6 @@ public class CustomCardMakerMenu extends Show {
         dialogBox.makeClosable(dialogContainer);
     }
 
-
     private CustomCardMakerMenu(String backgroundUrl, EventHandler<? super MouseEvent> backEvent) throws FileNotFoundException {
         root.setBackground(ROOT_BACKGROUND);
         BorderPane background = BackgroundMaker.getPlayBackground(backgroundUrl);
