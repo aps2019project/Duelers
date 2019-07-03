@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.media.jfxmedia.MediaException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
@@ -8,7 +7,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import models.gui.UIConstants;
-import view.CustomCardMenu;
 import view.LoginMenu;
 
 public class GraphicalUserInterface {
@@ -30,8 +28,7 @@ public class GraphicalUserInterface {
 
     public void start(Stage stage) {
         this.stage = stage;
-//        new LoginMenu().show();
-        new CustomCardMenu().show();;
+        new LoginMenu().show();
         setStageProperties(stage);
     }
 
@@ -54,8 +51,7 @@ public class GraphicalUserInterface {
             backgroundMusicPlayer.setVolume(0.2);
             backgroundMusicPlayer.setCycleCount(-1);
             backgroundMusicPlayer.setAutoPlay(true);
-        } catch (Exception e) {
-//            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 

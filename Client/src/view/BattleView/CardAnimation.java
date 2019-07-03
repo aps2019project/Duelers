@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class CardAnimation extends Transition {
     static final Map<String, Image> cachedImages = new HashMap<>();
+    static final Map<String, Playlist> cachedPlaylists = new HashMap<>();
     private final Pane pane;
     private FramePosition[] activeFramePositions;
     private FramePosition[] inActiveFramePositions;
@@ -33,7 +34,7 @@ public class CardAnimation extends Transition {
 
     private double x,y;
 
-    public CardAnimation(Pane pane, ICard card, double y, double x) throws FileNotFoundException {
+    public CardAnimation(Pane pane, ICard card, double y, double x) {
         this.pane = pane;
         this.x=x;
         this.y=y;
@@ -45,7 +46,13 @@ public class CardAnimation extends Transition {
             case USABLE_ITEM:
             case COLLECTIBLE_ITEM:
                 image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/icons/" + card.getSpriteName() + ".png"));
-                playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                playlist = cachedPlaylists.computeIfAbsent(card.getSpriteName(), key -> {
+                    try {
+                        return new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                    } catch (FileNotFoundException e) {
+                        return new Playlist();
+                    }
+                });
                 activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
                 inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
                 extraX = 38 * Constants.SCALE;
@@ -53,7 +60,13 @@ public class CardAnimation extends Transition {
                 break;
             default:
                 image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/troopAnimations/" + card.getSpriteName() + ".png"));
-                playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                playlist = cachedPlaylists.computeIfAbsent(card.getSpriteName(), key -> {
+                    try {
+                        return new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                    } catch (FileNotFoundException e) {
+                        return new Playlist();
+                    }
+                });
                 activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
                 inActiveFramePositions = activeFramePositions;
                 extraX = playlist.extraX * Constants.SCALE;
@@ -146,7 +159,7 @@ public class CardAnimation extends Transition {
         return imageView;
     }
 
-    public void setSprite(ICard card) throws Exception{
+    public void setSprite(ICard card) {
         this.stop();
         Playlist playlist;
         Image image;
@@ -155,16 +168,26 @@ public class CardAnimation extends Transition {
             case USABLE_ITEM:
             case COLLECTIBLE_ITEM:
                 image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/icons/" + card.getSpriteName() + ".png"));
-                playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
-                activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
+                playlist = cachedPlaylists.computeIfAbsent(card.getSpriteName(), key -> {
+                    try {
+                        return new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                    } catch (FileNotFoundException e) {
+                        return new Playlist();
+                    }
+                });                activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
                 inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
                 extraX = 38 * Constants.SCALE;
                 extraY = 31 * Constants.SCALE;
                 break;
             default:
                 image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/troopAnimations/" + card.getSpriteName() + ".png"));
-                playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
-                activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
+                playlist = cachedPlaylists.computeIfAbsent(card.getSpriteName(), key -> {
+                    try {
+                        return new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
+                    } catch (FileNotFoundException e) {
+                        return new Playlist();
+                    }
+                });                activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
                 inActiveFramePositions = activeFramePositions;
                 extraX = playlist.extraX * Constants.SCALE;
                 extraY = (playlist.extraY - 20) * Constants.SCALE;

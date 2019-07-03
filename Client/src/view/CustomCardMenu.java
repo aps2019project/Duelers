@@ -125,6 +125,10 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         name.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setName(newValue));
         description.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setDescription(newValue));
         cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> currentCard.setType(newValue));
+        spriteSpinner.valueProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+            currentCard.setSpriteName(newValue);
+        }));
     }
 
     @Override

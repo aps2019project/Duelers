@@ -11,14 +11,19 @@ import static models.gui.UIConstants.SCALE;
 
 class PriceBox extends VBox {
     private static final double PRICE_Y = 430 * SCALE;
+    private final DefaultLabel priceLabel;
 
     PriceBox(int price) {
-        Label priceLabel = new DefaultLabel(
+        priceLabel = new DefaultLabel(
                 "PRICE: " + price, DESCRIPTION_FONT, DESCRIPTION_COLOR
         );
         setMinWidth(GLOW_WIDTH);
         setAlignment(Pos.CENTER);
         setLayoutY(PRICE_Y);
         getChildren().add(priceLabel);
+    }
+
+    void setPrice(int newValue) {
+        priceLabel.setText(String.valueOf(newValue));
     }
 }

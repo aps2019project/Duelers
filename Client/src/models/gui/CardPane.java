@@ -2,10 +2,7 @@ package models.gui;
 
 import controller.Client;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -158,23 +155,25 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         detailBox.setDescription(newValue);
     }
 
-    void setSprite(String newValue) {
-        cardAnimation.setSprite(newValue);
+    void updateSprite() {
+        System.out.println("starting " + System.currentTimeMillis() % 10000);
+        cardAnimation.setSprite(card);
+        System.out.println("finished " + System.currentTimeMillis() % 10000);
     }
 
     void setDefaultAp(int newValue) {
-
+        apLabel.setText(String.valueOf(newValue));
     }
 
     void setDefaultHp(int newValue) {
-
+        hpLabel.setText(String.valueOf(newValue));
     }
 
     void setMannaPoint(int newValue) {
-
+        mannaPane.setManna(newValue);
     }
 
     void setPrice(int newValue) {
-
+        priceBox.setPrice(newValue);
     }
 }

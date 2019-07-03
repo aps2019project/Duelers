@@ -21,7 +21,7 @@ public class EditableCardPane extends CardPane {
                 setDescription((String) evt.getNewValue());
                 break;
             case "spriteName":
-                setSprite((String) evt.getNewValue());
+                updateSprite();
                 break;
             case "type":
                 setType((CardType) evt.getNewValue());
