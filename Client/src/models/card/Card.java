@@ -24,10 +24,10 @@ public class Card implements ICard {
     private int range;
     private boolean hasCombo;
 
-    public Card(String name, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+    public Card(String name, String cardId, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
+        this.cardId = cardId;
         this.description = description;
-        this.cardId = name;
         this.spriteName = spriteName;
         this.type = type;
         this.spells = spells;
@@ -113,17 +113,5 @@ public class Card implements ICard {
 
     public boolean isSameAs(String cardName) {
         return name.equalsIgnoreCase(cardName);
-    }
-
-    public void checkValidation() throws InputException {
-        if (name == null || name.isEmpty())
-            throw new InputException("name is empty");
-        if (description == null || description.isEmpty())
-            throw new InputException("description is empty");
-        if (spriteName== null || spriteName.isEmpty())
-            throw new InputException("sprite is empty");
-        if ((type == CardType.SPELL || type == CardType.HERO )&& spells.isEmpty()){
-            throw new InputException("Spell is empty");
-        }
     }
 }
