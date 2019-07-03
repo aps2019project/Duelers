@@ -4,6 +4,7 @@ import controller.GraphicalUserInterface;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -48,6 +49,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private GridPane cardMakerGrid;
     private DefaultLabel defaultApLabel = new DefaultLabel("AP", DEFAULT_FONT, Color.WHITE);
     private DefaultLabel defaultHpLabel = new DefaultLabel("HP", DEFAULT_FONT, Color.WHITE);
+    private DefaultLabel attackTypeLabel = new DefaultLabel("ATTACK", DEFAULT_FONT, Color.WHITE);
+    private DefaultLabel mannaPointLabel = new DefaultLabel("MANNA", DEFAULT_FONT, Color.WHITE);
 
     private static void loadFiles(String path, ArrayList<String> target) {
         File directory = new File(path);
@@ -66,26 +69,26 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private DefaultSpinner<AttackType> attackTypeSpinner = new DefaultSpinner<>(FXCollections.observableArrayList(AttackType.values()));
     private DefaultSpinner<ComboState> hasComboSpinner = new DefaultSpinner<>(FXCollections.observableArrayList(ComboState.values()));
     private DefaultSpinner<Integer> defaultHpSpinner = new DefaultSpinner<>(1, 50, 1);
-    private DefaultSpinner<Integer> rangeSpinner = new DefaultSpinner<>(2, 4, 2);
     private DefaultSpinner<Integer> defaultApSpinner = new DefaultSpinner<>(0, 15, 0);
+    private DefaultSpinner<Integer> rangeSpinner = new DefaultSpinner<>(2, 4, 2);
     private DefaultSpinner<Integer> mannaPointSpinner = new DefaultSpinner<>(0, 9, 0);
     private DefaultSpinner<String> spriteSpinner = new DefaultSpinner<>(FXCollections.observableArrayList(sprites.get(cardTypeSpinner.getValue())));
     private NumberField priceField = new NumberField("price");
-    private EditableCard currentCard = new EditableCard();
+    private EditableCard card = new EditableCard();
     private EditableCardPane cardPane;
 
     {
-        currentCard.setSpriteName(spriteSpinner.getValue());
-        currentCard.setType(cardTypeSpinner.getValue());
-        currentCard.setAttackType(attackTypeSpinner.getValue());
-        currentCard.setDefaultAp(defaultApSpinner.getValue());
-        currentCard.setDefaultHp(defaultHpSpinner.getValue());
-        currentCard.setHasCombo(hasComboSpinner.getValue().hasCombo);
-        currentCard.setMannaPoint(mannaPointSpinner.getValue());
-        currentCard.setPrice(priceField.getValue());
-        currentCard.setRange(rangeSpinner.getValue());
+        card.setSpriteName(spriteSpinner.getValue());
+        card.setType(cardTypeSpinner.getValue());
+        card.setAttackType(attackTypeSpinner.getValue());
+        card.setDefaultAp(defaultApSpinner.getValue());
+        card.setDefaultHp(defaultHpSpinner.getValue());
+        card.setHasCombo(hasComboSpinner.getValue().hasCombo);
+        card.setMannaPoint(mannaPointSpinner.getValue());
+        card.setPrice(priceField.getValue());
+        card.setRange(rangeSpinner.getValue());
         try {
-            cardPane = new EditableCardPane(currentCard);
+            cardPane = new EditableCardPane(card);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -99,13 +102,15 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             BackButton backButton = new BackButton(BACK_EVENT);
 
             cardMakerGrid = new GridPane();
+            cardMakerGrid.setAlignment(Pos.CENTER);
             cardMakerGrid.setHgap(DEFAULT_SPACING * 2);
             cardMakerGrid.setVgap(DEFAULT_SPACING * 2);
             cardMakerGrid.setMaxSize(1000 * SCALE, 1000 * SCALE);
 
             cardMakerGrid.add(name, 0, 0, 2, 1);
             cardMakerGrid.add(description, 0, 1, 2, 1);
-            cardMakerGrid.add(cardTypeSpinner, 0, 2, 2, 1);
+            cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 0, 2);
+            cardMakerGrid.add(cardTypeSpinner, 1, 2);
             cardMakerGrid.add(priceField, 0, 3, 2, 1);
             cardMakerGrid.add(new DefaultSeparator(Orientation.HORIZONTAL), 0, 4, 2, 1);
             setType(cardTypeSpinner.getValue());
@@ -113,8 +118,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 9);
 
             cardMakerGrid.add(cardPane, 3, 0, 2, 8);
-            cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 3, 8);
-            cardMakerGrid.add(spriteSpinner, 4, 8);
+            cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 3, 9);
+            cardMakerGrid.add(spriteSpinner, 4, 9);
 
             DefaultContainer container = new DefaultContainer(cardMakerGrid);
 
@@ -126,13 +131,19 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     }
 
     private void preProcess() {
-        currentCard.addListener(this);
-        currentCard.addListener(cardPane);
-        name.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setName(newValue));
-        description.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setDescription(newValue));
-        cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> currentCard.setType(newValue));
-        spriteSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> currentCard.setSpriteName(newValue)));
+        card.addListener(this);
+        card.addListener(cardPane);
+        name.textProperty().addListener((observable, oldValue, newValue) -> card.setName(newValue));
+        description.textProperty().addListener((observable, oldValue, newValue) -> card.setDescription(newValue));
+        cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> card.setType(newValue));
+        spriteSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setSpriteName(newValue)));
         attackTypeSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> setAttackType(newValue)));
+        defaultApSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setDefaultAp(newValue)));
+        defaultHpSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setDefaultHp(newValue)));
+        mannaPointSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setMannaPoint(newValue)));
+        rangeSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setRange(newValue)));
+        hasComboSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setHasCombo(newValue.hasCombo)));
+        priceField.textProperty().addListener(((observable, oldValue, newValue) -> card.setPrice(newValue.length() == 0 ? 0 : Integer.parseInt(newValue))));
     }
 
     @Override
@@ -154,13 +165,58 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private void setType(CardType newValue) {
         switch (newValue) {
             case HERO:
+                cardMakerGrid.getChildren().removeAll(
+                        defaultApLabel, defaultApSpinner,
+                        defaultHpLabel, defaultHpSpinner,
+                        attackTypeLabel, attackTypeSpinner,
+                        mannaPointLabel, mannaPointSpinner
+                );
                 cardMakerGrid.add(defaultApLabel, 0, 5);
                 cardMakerGrid.add(defaultApSpinner, 1, 5);
 
                 cardMakerGrid.add(defaultHpLabel, 0, 6);
                 cardMakerGrid.add(defaultHpSpinner, 1, 6);
 
-                cardMakerGrid.add(attackTypeSpinner, 0, 7, 2, 1);
+                cardMakerGrid.add(attackTypeLabel, 0, 7);
+                cardMakerGrid.add(attackTypeSpinner, 1, 7);
+                break;
+            case MINION:
+                cardMakerGrid.getChildren().removeAll(
+                        defaultApLabel, defaultApSpinner,
+                        defaultHpLabel, defaultHpSpinner,
+                        attackTypeLabel, attackTypeSpinner,
+                        mannaPointLabel, mannaPointSpinner
+                );
+                cardMakerGrid.add(defaultApLabel, 0, 5);
+                cardMakerGrid.add(defaultApSpinner, 1, 5);
+
+                cardMakerGrid.add(defaultHpLabel, 0, 6);
+                cardMakerGrid.add(defaultHpSpinner, 1, 6);
+
+                cardMakerGrid.add(attackTypeLabel, 0, 7);
+                cardMakerGrid.add(attackTypeSpinner, 1, 7);
+
+                cardMakerGrid.add(mannaPointLabel, 0, 8);
+                cardMakerGrid.add(mannaPointSpinner, 1, 8);
+                break;
+            case SPELL:
+                cardMakerGrid.getChildren().removeAll(
+                        defaultApLabel, defaultApSpinner,
+                        defaultHpLabel, defaultHpSpinner,
+                        attackTypeLabel, attackTypeSpinner,
+                        mannaPointLabel, mannaPointSpinner
+                );
+                cardMakerGrid.add(mannaPointLabel, 0, 5);
+                cardMakerGrid.add(mannaPointSpinner, 1, 5);
+                break;
+            case USABLE_ITEM:
+                cardMakerGrid.getChildren().removeAll(
+                        defaultApLabel, defaultApSpinner,
+                        defaultHpLabel, defaultHpSpinner,
+                        attackTypeLabel, attackTypeSpinner,
+                        mannaPointLabel, mannaPointSpinner
+                );
+                break;
         }
     }
 

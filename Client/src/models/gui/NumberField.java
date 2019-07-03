@@ -5,7 +5,8 @@ public class NumberField extends NormalField {
     public NumberField(String text) {
         super(text);
         textProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (newValue.isEmpty()) return;
+            if (!newValue.matches("\\d+") || Integer.parseInt(newValue) > 10000) {
                 setText(oldValue);
             }
         }));

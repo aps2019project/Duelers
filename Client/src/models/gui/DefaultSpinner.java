@@ -6,6 +6,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import static models.gui.UIConstants.SCALE;
+
 public class DefaultSpinner<T> extends Spinner<T> {
     private static final Background DEFAULT_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(70, 70, 70), CornerRadii.EMPTY, Insets.EMPTY)
@@ -31,6 +33,5 @@ public class DefaultSpinner<T> extends Spinner<T> {
         getEditor().setStyle("-fx-text-inner-color: #fffbfd; -fx-background-color: rgb(70, 70, 70)");
         setBackground(DEFAULT_BACKGROUND);
         setBorder(DEFAULT_BORDER);
-        autosize();
     }
 }

@@ -24,6 +24,6 @@ class PriceBox extends VBox {
     }
 
     void setPrice(int newValue) {
-        priceLabel.setText(String.valueOf(newValue));
+        priceLabel.setText("PRICE: " + newValue);
     }
 }
