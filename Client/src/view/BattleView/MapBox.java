@@ -236,7 +236,7 @@ public class MapBox implements PropertyChangeListener {
         CompressedTroop currentTroop = getTroop(row,column);
         if (selectionType == SelectionType.INSERTION) {
             if (GameController.getInstance().getAvailableActions().canInsertCard(
-                    battleScene.getHandBox().getSelectedCard().getCardId(), row, column)) {
+                    battleScene.getHandBox().getSelectedCard())) {
                 battleScene.getController().insert(battleScene.getHandBox().getSelectedCard(), row, column);
                 System.out.println("Insert " + battleScene.getHandBox().getSelectedCard().getCardId());
                 battleScene.getHandBox().resetSelection();//TODO:remove
@@ -260,8 +260,7 @@ public class MapBox implements PropertyChangeListener {
             return;
         }
         if (selectionType == SelectionType.SPELL) {
-            if (GameController.getInstance().getAvailableActions().canUseSpecialAction(
-                    selectedTroop.getCard().getCardId(), row, column)) {
+            if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
                 battleScene.getController().useSpecialPower(row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + " SpecialPower");
                 battleScene.getHandBox().resetSelection();//TODO:remove
@@ -281,7 +280,7 @@ public class MapBox implements PropertyChangeListener {
                 }
                 updateMapColors();
             } else if (GameController.getInstance().getAvailableActions().canAttack(
-                    selectedTroop.getCard().getCardId(), row, column)) {
+                    selectedTroop, row, column)) {
                 comboTroops.add(selectedTroop);
                 battleScene.getController().comboAttack(comboTroops, currentTroop);
                 battleScene.getHandBox().resetSelection();//TODO:remove
@@ -292,13 +291,13 @@ public class MapBox implements PropertyChangeListener {
         }
         if (selectionType == SelectionType.NORMAL) {
             if (GameController.getInstance().getAvailableActions().canAttack(
-                    selectedTroop.getCard().getCardId(), row, column)) {
+                    selectedTroop, row, column)) {
                 battleScene.getController().attack(selectedTroop, currentTroop);
                 System.out.println(selectedTroop + " attacked to " + currentTroop);
                 battleScene.getHandBox().resetSelection();//TODO:remove
                 resetSelection();
             } else if (GameController.getInstance().getAvailableActions().canMove(
-                    selectedTroop.getCard().getCardId(), row, column)) {
+                    selectedTroop, row, column)) {
                 battleScene.getController().move(selectedTroop, row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + "moved");
                 battleScene.getHandBox().resetSelection();//TODO:remove
@@ -318,7 +317,7 @@ public class MapBox implements PropertyChangeListener {
                 CompressedTroop currentTroop = getTroop(row,column);
                 if (selectionType == SelectionType.INSERTION) {
                     if (GameController.getInstance().getAvailableActions().canInsertCard(
-                            battleScene.getHandBox().getSelectedCard().getCardId(), row, column)) {
+                            battleScene.getHandBox().getSelectedCard())) {
                         if (battleScene.getHandBox().getSelectedCard().getType() == CardType.HERO ||
                                 battleScene.getHandBox().getSelectedCard().getType() == CardType.MINION) {
                             cells[row][column].setFill(Constants.MoveColor);
@@ -342,8 +341,7 @@ public class MapBox implements PropertyChangeListener {
                     continue;
                 }
                 if (selectionType == SelectionType.SPELL) {
-                    if (GameController.getInstance().getAvailableActions().canUseSpecialAction(
-                            selectedTroop.getCard().getCardId(), row, column)) {
+                    if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
                         cells[row][column].setFill(Constants.SpellColor);
                     } else
                         cells[row][column].setFill(Constants.defaultColor);
@@ -357,7 +355,7 @@ public class MapBox implements PropertyChangeListener {
                         else
                             cells[row][column].setFill(Constants.CanSelectColor);
                     } else if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop.getCard().getCardId(), row, column))
+                            selectedTroop, row, column))
                         cells[row][column].setFill(Constants.attackColor);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
@@ -365,10 +363,10 @@ public class MapBox implements PropertyChangeListener {
                 }
                 if (selectionType == SelectionType.NORMAL) {
                     if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop.getCard().getCardId(), row, column))
+                            selectedTroop, row, column))
                         cells[row][column].setFill(Constants.attackColor);
                     else if (GameController.getInstance().getAvailableActions().canMove(
-                            selectedTroop.getCard().getCardId(), row, column))
+                            selectedTroop, row, column))
                         cells[row][column].setFill(Constants.MoveColor);
                     else
                         cells[row][column].setFill(Constants.defaultColor);

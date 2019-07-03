@@ -8,6 +8,7 @@ import models.game.map.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AvailableActions {
     private List<Insert> handInserts = new ArrayList<>();
@@ -170,7 +171,7 @@ public class AvailableActions {
         return Collections.unmodifiableList(moves);
     }
 
-    public List<Position> getMove(CompressedTroop troop) {
+    private List<Position> getMovePositions(CompressedTroop troop) {
         for (Move move : moves) {
             if (move.getTroop().equals(troop)) {
                 return move.getTargets();
@@ -179,20 +180,28 @@ public class AvailableActions {
         return Collections.emptyList();
     }
 
-    //*****
-    public boolean canInsertCard(String cardId, int row, int column) {
-        return false;
+    private List<Position> getAttackPositions(CompressedTroop troop) {
+        for (Attack attack : attacks) {
+            if (attack.getAttackerTroop().equals(troop)) {
+                return attack.getDefenders().stream().map(CompressedTroop::getPosition).collect(Collectors.toList());
+            }
+        }
+        return Collections.emptyList();
     }
 
-    public boolean canMove(String cardId, int row, int column) {
-        return false;
+    public boolean canInsertCard(CompressedCard card) {
+        return handInserts.stream().map(Insert::getCard).collect(Collectors.toList()).contains(card);
     }
 
-    public boolean canAttack(String cardId, int row, int column) {
-        return false;
+    public boolean canMove(CompressedTroop troop, int row, int column) {
+        return getMovePositions(troop).contains(new Position(row, column));
     }
 
-    public boolean canUseSpecialAction(String cardId, int row, int column) {
-        return false;
+    public boolean canAttack(CompressedTroop troop, int row, int column) {
+        return getAttackPositions(troop).contains(new Position(row, column));
+    }
+
+    public boolean canUseSpecialAction(CompressedTroop troop) {
+        return specialPower != null && specialPower.getHero().equals(troop);
     }
 }
