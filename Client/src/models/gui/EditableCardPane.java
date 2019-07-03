@@ -1,12 +1,13 @@
 package models.gui;
 
-import models.ICard;
+import models.card.CardType;
+import models.card.EditableCard;
 
 import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 
 public class EditableCardPane extends CardPane {
-    public EditableCardPane(ICard card) throws FileNotFoundException {
+    public EditableCardPane(EditableCard card) throws FileNotFoundException {
         super(card, true, false, null);
     }
 
@@ -21,6 +22,21 @@ public class EditableCardPane extends CardPane {
                 break;
             case "spriteName":
                 setSprite((String) evt.getNewValue());
+                break;
+            case "type":
+                setType((CardType) evt.getNewValue());
+                break;
+            case "defaultAp":
+                setDefaultAp((Integer) evt.getNewValue());
+                break;
+            case "defaultHp":
+                setDefaultHp((Integer) evt.getNewValue());
+                break;
+            case "mannaPoint":
+                setMannaPoint((Integer) evt.getNewValue());
+                break;
+            case "price":
+                setPrice((Integer) evt.getNewValue());
                 break;
         }
     }

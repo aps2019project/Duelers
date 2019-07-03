@@ -130,7 +130,23 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         detailBox.setDescription(newValue);
     }
 
-    void setSprite(String spriteName) {
-        cardAnimation.setSprite(spriteName);
+    void setSprite(String newValue) {
+        cardAnimation.setSprite(newValue);
+    }
+
+    void setDefaultAp(int newValue) {
+
+    }
+
+    void setDefaultHp(int newValue) {
+
+    }
+
+    void setMannaPoint(int newValue) {
+
+    }
+
+    void setPrice(int newValue) {
+
     }
 }
