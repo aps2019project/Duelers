@@ -113,7 +113,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
             cardMakerGrid.add(name, 0, 0, 2, 1);
             cardMakerGrid.add(description, 0, 1, 2, 1);
-            cardMakerGrid.add(new DefaultLabel("SPRITE", DEFAULT_FONT, Color.WHITE), 0, 2);
+            cardMakerGrid.add(new DefaultLabel("TYPE", DEFAULT_FONT, Color.WHITE), 0, 2);
             cardMakerGrid.add(cardTypeSpinner, 1, 2);
             cardMakerGrid.add(priceField, 0, 3, 2, 1);
             cardMakerGrid.add(new DefaultSeparator(Orientation.HORIZONTAL), 0, 4, 2, 1);
@@ -141,7 +141,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         description.textProperty().addListener((observable, oldValue, newValue) -> card.setDescription(newValue));
         cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> card.setType(newValue));
         spriteSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setSpriteName(newValue)));
-        attackTypeSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> setAttackType(newValue)));
+        attackTypeSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setAttackType(newValue)));
         defaultApSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setDefaultAp(newValue)));
         defaultHpSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setDefaultHp(newValue)));
         mannaPointSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> card.setMannaPoint(newValue)));
@@ -163,6 +163,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             case "type":
                 setType((CardType) evt.getOldValue(), (CardType) evt.getNewValue());
                 break;
+            case "attackType":
+                setAttackType((AttackType) evt.getNewValue());
         }
     }
 

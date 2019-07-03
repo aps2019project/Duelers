@@ -83,7 +83,9 @@ public class EditableCard implements ICard {
     }
 
     public void setAttackType(AttackType attackType) {
+        AttackType old = this.attackType;
         this.attackType = attackType;
+        support.firePropertyChange("attackType", old, attackType);
     }
 
     public void setRange(int range) {
