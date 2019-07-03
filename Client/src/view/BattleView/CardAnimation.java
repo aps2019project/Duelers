@@ -174,7 +174,8 @@ public class CardAnimation extends Transition {
                     } catch (FileNotFoundException e) {
                         return new Playlist();
                     }
-                });                activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
+                });
+                activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
                 inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
                 extraX = 38 * Constants.SCALE;
                 extraY = 31 * Constants.SCALE;
@@ -187,7 +188,8 @@ public class CardAnimation extends Transition {
                     } catch (FileNotFoundException e) {
                         return new Playlist();
                     }
-                });                activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
+                });
+                activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
                 inActiveFramePositions = activeFramePositions;
                 extraX = playlist.extraX * Constants.SCALE;
                 extraY = (playlist.extraY - 20) * Constants.SCALE;
@@ -204,7 +206,7 @@ public class CardAnimation extends Transition {
         imageView.setY(y - extraY);
 
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
-
+        setAction(ACTION.IN_ACTIVE);
         setAction(ACTION.STOPPED);
     }
 

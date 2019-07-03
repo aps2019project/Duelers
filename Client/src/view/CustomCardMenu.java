@@ -4,6 +4,7 @@ import controller.GraphicalUserInterface;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -43,6 +44,10 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         sprites.put(CardType.USABLE_ITEM, iconSprites);
         sprites.put(CardType.SPELL, iconSprites);
     }
+
+    private GridPane cardMakerGrid;
+    private DefaultLabel defaultApLabel = new DefaultLabel("AP", DEFAULT_FONT, Color.WHITE);
+    private DefaultLabel defaultHpLabel = new DefaultLabel("HP", DEFAULT_FONT, Color.WHITE);
 
     private static void loadFiles(String path, ArrayList<String> target) {
         File directory = new File(path);
@@ -93,7 +98,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(BACK_EVENT);
 
-            GridPane cardMakerGrid = new GridPane();
+            cardMakerGrid = new GridPane();
             cardMakerGrid.setHgap(DEFAULT_SPACING * 2);
             cardMakerGrid.setVgap(DEFAULT_SPACING * 2);
             cardMakerGrid.setMaxSize(1000 * SCALE, 1000 * SCALE);
@@ -103,6 +108,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             cardMakerGrid.add(cardTypeSpinner, 0, 2, 2, 1);
             cardMakerGrid.add(priceField, 0, 3, 2, 1);
             cardMakerGrid.add(new DefaultSeparator(Orientation.HORIZONTAL), 0, 4, 2, 1);
+            setType(cardTypeSpinner.getValue());
 
             cardMakerGrid.add(new DefaultSeparator(Orientation.VERTICAL), 2, 0, 1, 9);
 
@@ -125,10 +131,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         name.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setName(newValue));
         description.textProperty().addListener((observable, oldValue, newValue) -> currentCard.setDescription(newValue));
         cardTypeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> currentCard.setType(newValue));
-        spriteSpinner.valueProperty().addListener(
-                ((observable, oldValue, newValue) -> {
-            currentCard.setSpriteName(newValue);
-        }));
+        spriteSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> currentCard.setSpriteName(newValue)));
+        attackTypeSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> setAttackType(newValue)));
     }
 
     @Override
@@ -140,7 +144,35 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "type":
+                setType((CardType) evt.getNewValue());
+                break;
+        }
+    }
 
+    private void setType(CardType newValue) {
+        switch (newValue) {
+            case HERO:
+                cardMakerGrid.add(defaultApLabel, 0, 5);
+                cardMakerGrid.add(defaultApSpinner, 1, 5);
+
+                cardMakerGrid.add(defaultHpLabel, 0, 6);
+                cardMakerGrid.add(defaultHpSpinner, 1, 6);
+
+                cardMakerGrid.add(attackTypeSpinner, 0, 7, 2, 1);
+        }
+    }
+
+    private void setAttackType(AttackType newValue) {
+        switch (newValue) {
+            case MELEE:
+
+                break;
+            case RANGED: case HYBRID:
+
+                break;
+        }
     }
 
     enum ComboState {

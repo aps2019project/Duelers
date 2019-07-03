@@ -84,7 +84,7 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
             setCursor(UIConstants.SELECT_CURSOR);
         });
         setOnMouseExited(event -> {
-            cardAnimation.stop();
+            cardAnimation.pause();
             background.hideGlow();
             setCursor(UIConstants.DEFAULT_CURSOR);
         });
@@ -156,9 +156,7 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
     }
 
     void updateSprite() {
-        System.out.println("starting " + System.currentTimeMillis() % 10000);
         cardAnimation.setSprite(card);
-        System.out.println("finished " + System.currentTimeMillis() % 10000);
     }
 
     void setDefaultAp(int newValue) {

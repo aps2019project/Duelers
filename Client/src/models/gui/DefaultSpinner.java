@@ -31,5 +31,6 @@ public class DefaultSpinner<T> extends Spinner<T> {
         getEditor().setStyle("-fx-text-inner-color: #fffbfd; -fx-background-color: rgb(70, 70, 70)");
         setBackground(DEFAULT_BACKGROUND);
         setBorder(DEFAULT_BORDER);
+        autosize();
     }
 }
