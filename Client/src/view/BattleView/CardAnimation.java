@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardAnimation extends Transition {
-    private static final Map<String, Image> cachedImages = new HashMap<>();
+    static final Map<String, Image> cachedImages = new HashMap<>();
     private final Pane pane;
     private final FramePosition[] activeFramePositions;
     private final FramePosition[] inActiveFramePositions;

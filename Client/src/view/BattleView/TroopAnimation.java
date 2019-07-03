@@ -12,11 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import models.gui.DefaultLabel;
+import models.gui.ImageLoader;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static view.BattleView.CardAnimation.cachedImages;
 
 public class TroopAnimation extends Transition {
     private final boolean isPlayer1Troop;
@@ -81,7 +84,7 @@ public class TroopAnimation extends Transition {
         currentI = i;
         currentJ = j;
 
-        Image image = new Image(new FileInputStream("resources/troopAnimations/" + fileName + ".png"));
+        Image image = cachedImages.computeIfAbsent(fileName, key -> ImageLoader.load("resources/troopAnimations/" + fileName + ".png"));
         imageView = new ImageView(image);
         if (isPlayer1Troop)
             imageView.setScaleX(1);
