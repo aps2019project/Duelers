@@ -80,4 +80,12 @@ public class GraphicalUserInterface {
             currentMedia = null;
         }
     }
+
+    public void closeFullscreen() {
+        stage.setFullScreen(false);
+    }
+
+    public void makeFullScreen() {
+        stage.setFullScreen(true);
+    }
 }

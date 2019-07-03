@@ -15,6 +15,8 @@ import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import models.account.Collection;
 import models.card.Deck;
 import models.card.ExportedDeck;
@@ -133,10 +135,13 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private String showJFileChooserDialog() {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
+        GraphicalUserInterface.getInstance().closeFullscreen();
+
         jfc.setAcceptAllFileFilterUsed(true);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and GIF images", "json");
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
+        GraphicalUserInterface.getInstance().makeFullScreen();
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             System.out.println(selectedFile.getAbsolutePath());
