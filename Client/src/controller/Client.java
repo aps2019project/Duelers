@@ -183,7 +183,7 @@ public class Client {
                 break;
             case TROOP_UPDATE:
                 GameController.getInstance().getCurrentGame().troopUpdate(message.getTroopUpdateMessage().getCompressedTroop());
-//                GameController.getInstance().calculateAvailableActions();
+                GameController.getInstance().calculateAvailableActions();
                 break;
             case GAME_UPDATE:
                 GameUpdateMessage gameUpdateMessage = message.getGameUpdateMessage();
