@@ -1,5 +1,6 @@
 package view.BattleView;
 
+import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -8,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import models.card.CardType;
-import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
 import models.gui.CardPane;
@@ -31,6 +31,7 @@ public class MapBox implements PropertyChangeListener {
     private boolean spellSelected = false;
     private boolean comboSelected = false;
     private CardPane cardPane = null;
+    private SelectionType selectionType;
 
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
@@ -65,7 +66,7 @@ public class MapBox implements PropertyChangeListener {
                         downerY - Constants.SPACE_BETWEEN_CELLS / 2, x4 + Constants.SPACE_BETWEEN_CELLS / 2,
                         downerY - Constants.SPACE_BETWEEN_CELLS / 2);
                 cells[j][i].setFill(Color.DARKBLUE);
-                cells[j][i].setOpacity(Constants.CELLS_OPACITY);
+                cells[j][i].setOpacity(Constants.CELLS_DEFAULT_OPACITY);
                 final int I = i, J = j;
                 cells[j][i].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
@@ -183,43 +184,35 @@ public class MapBox implements PropertyChangeListener {
         comboTroops.clear();
         spellSelected = false;
         comboSelected = false;
-        for (int j = 0; j < 5; j++) {
-            for (int i = 0; i < 9; i++) {
-                cells[j][i].setFill(Color.DARKBLUE);
-            }
-        }
         for (TroopAnimation animation : troopAnimationHashMap.values()) {
             animation.diSelect();
         }
         battleScene.getPlayerBox().refreshComboAndSpell();
+        updateMapColors();
     }
 
     private void exitCell(int j, int i) {
-        CompressedTroop troop = getTroop(j, i);
+        cells[j][i].setOpacity(Constants.CELLS_DEFAULT_OPACITY);
         if (cardPane != null) {
             mapGroup.getChildren().remove(cardPane);
             cardPane = null;
         }
-        if (troop == null) {
-            cells[j][i].setFill(Color.DARKBLUE);
+        CompressedTroop troop = getTroop(j, i);
+        if (troop == null)
             return;
-        }
         TroopAnimation animation = troopAnimationHashMap.get(troop);
-        if (selectedTroop == troop || comboTroops.contains(troop)) {
-            cells[j][i].setFill(Color.DARKGREEN);
+        if (animation == null)
             return;
-        } else {
+        if (!(selectedTroop == troop || comboTroops.contains(troop))) {
             animation.diSelect();
         }
-        cells[j][i].setFill(Color.DARKBLUE);
     }
 
     private void hoverCell(int row, int column) {
         CompressedTroop troop = getTroop(row, column);
-        CompressedCard card = battleScene.getHandBox().getSelectedCard();
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.select();
+            animation.select();//TODO:Think about animation starts
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
@@ -232,117 +225,175 @@ public class MapBox implements PropertyChangeListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-        if (!battleScene.isMyTurn())
+        cells[row][column].setOpacity(Constants.CELLS_DEFAULT_OPACITY * 1.5);//TODO
+    }
+
+    private void clickCell(int row, int column) {
+        if (!battleScene.isMyTurn()) {
             return;
-        if (card == null) {
-            if (troop == null) {
-                if (selectedTroop != null) {
-                    if (spellSelected) {
-                        cells[row][column].setFill(Color.DEEPPINK);//spell
-                    } else
-                        cells[row][column].setFill(Color.DARKGREEN);//move
-                }
-            } else {
-                if (selectedTroop == null) {
-                    if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber())
-                        cells[row][column].setFill(Color.DARKGREEN);
-                } else {
-                    if (troop == selectedTroop) {
-                        cells[row][column].setFill(Color.DARKGREEN);
-                    } else {
-                        if (spellSelected) {
-                            cells[row][column].setFill(Color.DEEPPINK);
-                        } else {
-                            if (comboSelected) {
-                                if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo())
-                                    cells[row][column].setFill(Color.DARKGREEN);
-                                else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    cells[row][column].setFill(Color.DARKRED);
-                                } else {
-                                    cells[row][column].setFill(Color.DARKBLUE);
-                                }
-                            } else {
-                                if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    cells[row][column].setFill(Color.DARKRED);
-                                }
-                            }
-                        }
-                    }
-                }
+        }
+        CompressedTroop currentTroop = getTroop(row,column);
+        if (selectionType == SelectionType.INSERTION) {
+            if (GameController.getInstance().getAvailableActions().canInsertCard(
+                    battleScene.getHandBox().getSelectedCard())) {
+                battleScene.getController().insert(battleScene.getHandBox().getSelectedCard(), row, column);
+                System.out.println("Insert " + battleScene.getHandBox().getSelectedCard().getCardId());
+                battleScene.getHandBox().resetSelection();//TODO:remove
+                resetSelection();
             }
-        } else {
-            if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                cells[row][column].setFill(Color.DEEPPINK);
-            } else {
-                if (troop == null)
-                    cells[row][column].setFill(Color.DARKGREEN);
+            return;
+        }
+        if (selectionType == SelectionType.SELECTION) {
+            if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
+                selectedTroop = currentTroop;
+                updateMapColors();
+                System.out.println("Select " + currentTroop.getCard().getCardId());
+            }
+            return;
+        }
+        if (selectedTroop != null && selectedTroop.getPosition().getRow() == row &&
+                selectedTroop.getPosition().getColumn() == column) {
+            System.out.println("DiSelect");
+            battleScene.getHandBox().resetSelection();//TODO:remove
+            resetSelection();
+            return;
+        }
+        if (selectionType == SelectionType.SPELL) {
+            if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
+                battleScene.getController().useSpecialPower(row, column);
+                System.out.println(selectedTroop.getCard().getCardId() + " SpecialPower");
+                battleScene.getHandBox().resetSelection();//TODO:remove
+                resetSelection();
+            }
+            return;
+        }
+        if (selectionType == SelectionType.COMBO) {
+            if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()
+                    && currentTroop.getCard().isHasCombo()) {
+                if (comboTroops.contains(currentTroop)) {
+                    comboTroops.remove(currentTroop);
+                    System.out.println("remove " + currentTroop.getCard().getCardId() + " from combos");
+                } else {
+                    comboTroops.add(currentTroop);
+                    System.out.println("add " + currentTroop.getCard().getCardId() + " to combos");
+                }
+                updateMapColors();
+            } else if (GameController.getInstance().getAvailableActions().canAttack(
+                    selectedTroop, row, column)) {
+                comboTroops.add(selectedTroop);
+                battleScene.getController().comboAttack(comboTroops, currentTroop);
+                battleScene.getHandBox().resetSelection();//TODO:remove
+                resetSelection();
+                System.out.println("combo attack");
+            }
+            return;
+        }
+        if (selectionType == SelectionType.NORMAL) {
+            if (GameController.getInstance().getAvailableActions().canAttack(
+                    selectedTroop, row, column)) {
+                battleScene.getController().attack(selectedTroop, currentTroop);
+                System.out.println(selectedTroop + " attacked to " + currentTroop);
+                battleScene.getHandBox().resetSelection();//TODO:remove
+                resetSelection();
+            } else if (GameController.getInstance().getAvailableActions().canMove(
+                    selectedTroop, row, column)) {
+                battleScene.getController().move(selectedTroop, row, column);
+                System.out.println(selectedTroop.getCard().getCardId() + "moved");
+                battleScene.getHandBox().resetSelection();//TODO:remove
+                resetSelection();
+            }
+            return;
+        }
+    }
+
+    void updateMapColors() {
+        updateSelectionType();
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                if (!battleScene.isMyTurn()) {
+                    cells[row][column].setFill(Constants.defaultColor);
+                }
+                CompressedTroop currentTroop = getTroop(row,column);
+                if (selectionType == SelectionType.INSERTION) {
+                    if (GameController.getInstance().getAvailableActions().canInsertCard(
+                            battleScene.getHandBox().getSelectedCard())) {
+                        if (battleScene.getHandBox().getSelectedCard().getType() == CardType.HERO ||
+                                battleScene.getHandBox().getSelectedCard().getType() == CardType.MINION) {
+                            cells[row][column].setFill(Constants.MoveColor);
+                        } else {
+                            cells[row][column].setFill(Constants.SpellColor);
+                        }
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    continue;
+                }
+                if (selectionType == SelectionType.SELECTION) {
+                    if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
+                        cells[row][column].setFill(Constants.CanSelectColor);
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    continue;
+                }
+                if (selectedTroop != null && selectedTroop.getPosition().getRow() == row &&
+                        selectedTroop.getPosition().getColumn() == column) {
+                    cells[row][column].setFill(Constants.SelectedColor);//not important
+                    continue;
+                }
+                if (selectionType == SelectionType.SPELL) {
+                    if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
+                        cells[row][column].setFill(Constants.SpellColor);
+                    } else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    continue;
+                }
+                if (selectionType == SelectionType.COMBO) {
+                    if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()
+                            && currentTroop.getCard().isHasCombo()) {
+                        if (comboTroops.contains(currentTroop))
+                            cells[row][column].setFill(Constants.SelectedColor);
+                        else
+                            cells[row][column].setFill(Constants.CanSelectColor);
+                    } else if (GameController.getInstance().getAvailableActions().canAttack(
+                            selectedTroop, row, column))
+                        cells[row][column].setFill(Constants.attackColor);
+                    else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    continue;
+                }
+                if (selectionType == SelectionType.NORMAL) {
+                    if (GameController.getInstance().getAvailableActions().canAttack(
+                            selectedTroop, row, column))
+                        cells[row][column].setFill(Constants.attackColor);
+                    else if (GameController.getInstance().getAvailableActions().canMove(
+                            selectedTroop, row, column))
+                        cells[row][column].setFill(Constants.MoveColor);
+                    else
+                        cells[row][column].setFill(Constants.defaultColor);
+                    continue;
+                }
             }
         }
     }
 
-    private void clickCell(int row, int column) {
-        CompressedTroop troop = getTroop(row, column);
-        CompressedCard card = battleScene.getHandBox().getSelectedCard();
-        if (!battleScene.isMyTurn())
+    private void updateSelectionType() {
+        if (battleScene.getHandBox().getSelectedCard() != null) {
+            selectionType = SelectionType.INSERTION;
             return;
-        if (card == null) {
-            if (troop == null) {
-                if (selectedTroop != null) {
-                    if (spellSelected) {
-                        battleScene.getController().useSpecialPower(row, column);
-                        resetSelection();
-                    } else {
-                        battleScene.getController().move(selectedTroop, row, column);
-                        resetSelection();
-                    }
-                }
-            } else {
-                if (selectedTroop == null) {
-                    if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
-                        selectedTroop = troop;
-                        System.out.println("Select Troop");
-                    }
-                } else {
-                    if (troop == selectedTroop) {
-                        resetSelection();
-                        System.out.println("diSelect Troop");
-                    } else {
-                        if (spellSelected) {
-                            battleScene.getController().useSpecialPower(row, column);
-                            resetSelection();
-                        } else {
-                            if (comboSelected) {
-                                if (troop.getPlayerNumber() == battleScene.getMyPlayerNumber() && troop.getCard().isHasCombo()) {
-                                    comboTroops.add(troop);
-                                } else if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    comboTroops.add(selectedTroop);
-                                    battleScene.getController().comboAttack(comboTroops, troop);
-                                    resetSelection();
-                                }
-                            } else {
-                                if (troop.getPlayerNumber() != battleScene.getMyPlayerNumber()) {
-                                    battleScene.getController().attack(selectedTroop, troop);
-                                    resetSelection();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            if (card.getType() == CardType.SPELL || card.getType() == CardType.USABLE_ITEM) {
-                battleScene.getController().insert(card, row, column);
-                resetSelection();
-            } else {
-                if (troop == null) {
-                    battleScene.getController().insert(card, row, column);
-                    resetSelection();
-                }
-            }
-            battleScene.getHandBox().resetSelection();
         }
+        if (selectedTroop == null) {
+            selectionType = SelectionType.SELECTION;
+            return;
+        }
+        if (isComboSelected()) {
+            selectionType = SelectionType.COMBO;
+            return;
+        }
+        if (isSpellSelected()) {
+            selectionType = SelectionType.SPELL;
+            return;
+        }
+        selectionType = SelectionType.NORMAL;
     }
 
     private CompressedTroop getTroop(int j, int i) {
@@ -357,12 +408,12 @@ public class MapBox implements PropertyChangeListener {
         return selectedTroop;
     }
 
-    void setSpellSelected(boolean spellSelected) {
-        this.spellSelected = spellSelected;
+    void setSpellSelected() {
+        this.spellSelected = true;
     }
 
-    void setComboSelected(boolean comboSelected) {
-        this.comboSelected = comboSelected;
+    void setComboSelected() {
+        this.comboSelected = true;
     }
 
     boolean isSpellSelected() {
@@ -373,37 +424,31 @@ public class MapBox implements PropertyChangeListener {
         return comboSelected;
     }
 
-    HashMap<CompressedTroop, TroopAnimation> getTroopAnimationHashMap() {
-        return troopAnimationHashMap;
-    }
-
     CompressedGameMap getGameMap() {
         return gameMap;
     }
 
     void showAttack(String cardId, int i) {
-        System.out.println("ShowAttack:" + cardId + i);
         if (cardId == null)
-            System.out.println("EEEE");
+            System.out.println("Error0 MapBox");
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error1  " + cardId);
+            System.out.println("Error1 MapBox");
         TroopAnimation animation = troopAnimationHashMap.get(troop);
         if (animation == null)
-            System.out.println("Error2");
+            System.out.println("Error2 MapBox");
         else
             animation.attack(i);
     }
 
     void showDefend(String cardId, int i) {
-        System.out.println("ShowAttack:" + cardId + i);
         CompressedTroop troop = gameMap.getTroop(cardId);
         if (troop == null)
-            System.out.println("Error3");
+            System.out.println("Error3 MapBox");
         else {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
             if (animation == null)
-                System.out.println("Error4");
+                System.out.println("Error4 MapBox");
             else
                 animation.hit(i);
         }
@@ -411,5 +456,9 @@ public class MapBox implements PropertyChangeListener {
 
     void showSpell(String spriteName, int j, int i) {
         //TODO
+    }
+
+    enum SelectionType {
+        INSERTION, SELECTION, COMBO, SPELL, NORMAL
     }
 }

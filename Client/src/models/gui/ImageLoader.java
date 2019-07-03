@@ -24,4 +24,13 @@ public class ImageLoader {
         menuView.setFitHeight(height);
         return menuView;
     }
+
+    public static Image load(String url) {
+        try {
+            return new Image(new FileInputStream(url));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

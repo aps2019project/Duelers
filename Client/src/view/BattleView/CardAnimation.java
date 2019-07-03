@@ -8,14 +8,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import models.ICard;
+import models.gui.ImageLoader;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CardAnimation extends Transition {
+    private static final Map<String, Image> cachedImages = new HashMap<>();
     private final Pane pane;
     private final FramePosition[] activeFramePositions;
     private final FramePosition[] inActiveFramePositions;
@@ -38,15 +40,15 @@ public class CardAnimation extends Transition {
             case SPELL:
             case USABLE_ITEM:
             case COLLECTIBLE_ITEM:
-                image = new Image(new FileInputStream("resources/icons/" + card.getSpriteName() + ".png"));
+                image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/icons/" + card.getSpriteName() + ".png"));
                 playlist = new Gson().fromJson(new FileReader("resources/icons/" + card.getSpriteName() + ".plist.json"), Playlist.class);
                 activeFramePositions = playlist.getLists().get("active").toArray(new FramePosition[1]);
                 inActiveFramePositions = playlist.getLists().get("inactive").toArray(new FramePosition[1]);
-                extraX = 38  * Constants.SCALE;
+                extraX = 38 * Constants.SCALE;
                 extraY = 31 * Constants.SCALE;
                 break;
             default:
-                image = new Image(new FileInputStream("resources/troopAnimations/" + card.getSpriteName() + ".png"));
+                image = cachedImages.computeIfAbsent(card.getSpriteName(), key -> ImageLoader.load("resources/troopAnimations/" + card.getSpriteName() + ".png"));
                 playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + card.getSpriteName() + ".plist.json"), Playlist.class);
                 activeFramePositions = playlist.getLists().get("idle").toArray(new FramePosition[1]);
                 inActiveFramePositions = activeFramePositions;
@@ -107,6 +109,8 @@ public class CardAnimation extends Transition {
     }
 
     private void setAction(ACTION action) {
+        if (this.action == action)
+            return;
         this.action = action;
         nextIndex = 0;
         this.stop();

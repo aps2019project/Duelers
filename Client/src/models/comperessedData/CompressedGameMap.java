@@ -79,7 +79,7 @@ public class CompressedGameMap{
         return null;
     }
 
-    public boolean isInMap(int row, int column) {
+    public static boolean isInMap(int row, int column) {
         return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
 
     }

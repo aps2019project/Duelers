@@ -18,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static models.gui.UIConstants.SCALE;
@@ -31,9 +30,11 @@ public class HandBox implements PropertyChangeListener {
     private final Pane next = new Pane();
     private int selectedCard = -1;
     private CardPane cardPane = null;
+    private Image backGround = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
+    private Image highlightedBackGround = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
 
 
-    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) {
+    public HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
         this.battleScene = battleScene;
         this.player = player;
         group = new Group();
@@ -144,10 +145,11 @@ public class HandBox implements PropertyChangeListener {
                     cardAnimation = null;
                 }
 
-                if (selectedCard == i)
-                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                else
-                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
+                if (selectedCard == i) {
+                    imageView.setImage(highlightedBackGround);
+                    cardAnimation.inActive();
+                } else
+                    imageView.setImage(backGround);
 
                 if (cardAnimation != null && battleScene.isMyTurn()) {
                     cards[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -157,7 +159,7 @@ public class HandBox implements PropertyChangeListener {
                                 group.getChildren().remove(cardPane);
                             cardAnimation.inActive();
                             try {
-                                imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
+                                imageView.setImage(highlightedBackGround);
                                 cardPane = new CardPane(player.getHand().get(I), false, false, null);
                                 cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
                                 cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
@@ -175,15 +177,11 @@ public class HandBox implements PropertyChangeListener {
                                 group.getChildren().remove(cardPane);
                                 cardPane = null;
                             }
-                            try {
-                                if (selectedCard == I) {
-                                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png")));
-                                } else {
-                                    imageView.setImage(new Image(new FileInputStream("resources/ui/card_background@2x.png")));
-                                    cardAnimation.pause();
-                                }
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                            if (selectedCard == I) {
+                                imageView.setImage(highlightedBackGround);
+                            } else {
+                                imageView.setImage(backGround);
+                                cardAnimation.pause();
                             }
                         }
                     });
@@ -290,21 +288,21 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnCard(int i) {
-        if (selectedCard == i)
+        if (selectedCard == i) {
             selectedCard = -1;
-        else {
-            battleScene.getMapBox().resetSelection();
+            battleScene.getMapBox().updateMapColors();
+        } else {
             selectedCard = i;
+            battleScene.getMapBox().resetSelection();
         }
-
         updateCards();
     }
 
-    public Group getGroup() {
+    Group getGroup() {
         return group;
     }
 
-    public CompressedCard getSelectedCard() {
+    CompressedCard getSelectedCard() {
         if (selectedCard >= 0)
             return player.getHand().get(selectedCard);
         return null;
