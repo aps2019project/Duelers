@@ -34,6 +34,10 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
     private final CardBackground background;
     private final CardDetailBox detailBox;
     private final CardAnimation cardAnimation;
+    private final DefaultLabel apLabel;
+    private final DefaultLabel hpLabel;
+    private final MannaIcon mannaPane;
+    private final PriceBox priceBox;
 
     Deck deck;
     ICard card;
@@ -50,23 +54,23 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         detailBox = new CardDetailBox(card);
         getChildren().addAll(background, detailBox);
 
+        apLabel = new DefaultLabel(
+                String.valueOf(card.getDefaultAp()), AP_HP_FONT, Color.WHITE, AP_X, AP_HP_Y
+        );
+        hpLabel = new DefaultLabel(
+                String.valueOf(card.getDefaultHp()), AP_HP_FONT, Color.WHITE, HP_X, AP_HP_Y
+        );
         if (card.getType() == CardType.HERO || card.getType() == CardType.MINION) {
-            Label apLabel = new DefaultLabel(
-                    String.valueOf(card.getDefaultAp()), AP_HP_FONT, Color.WHITE, AP_X, AP_HP_Y
-            );
-            Label hpLabel = new DefaultLabel(
-                    String.valueOf(card.getDefaultHp()), AP_HP_FONT, Color.WHITE, HP_X, AP_HP_Y
-            );
             getChildren().addAll(apLabel, hpLabel);
         }
 
+        mannaPane = new MannaIcon(card.getMannaPoint());
         if (card.getType() == CardType.SPELL || card.getType() == CardType.MINION) {
-            StackPane mannaPane = new MannaIcon(card.getMannaPoint());
             getChildren().add(mannaPane);
         }
 
+        priceBox = new PriceBox(card.getPrice());
         if (showPrice) {
-            VBox priceBox = new PriceBox(card.getPrice());
             getChildren().add(priceBox);
         }
 
@@ -117,13 +121,37 @@ public class CardPane extends AnchorPane implements PropertyChangeListener {
         }
     }
 
-    public void setName(String newValue) {
+    void setName(String newValue) {
         detailBox.setName(newValue);
     }
 
-    public void setType(CardType newValue) {
+    void setType(CardType newValue) {
         background.changeType(newValue);
         detailBox.setType(newValue);
+        switch (newValue) {
+            case HERO:
+                getChildren().remove(mannaPane);
+                if (!getChildren().contains(apLabel)) {
+                    getChildren().addAll(apLabel, hpLabel);
+                }
+                break;
+            case USABLE_ITEM:
+                getChildren().removeAll(mannaPane, apLabel, hpLabel);
+                break;
+            case SPELL:
+                getChildren().removeAll(apLabel, hpLabel);
+                if (!getChildren().contains(mannaPane)) {
+                    getChildren().add(mannaPane);
+                }
+                break;
+            case MINION:
+                if (!getChildren().contains(apLabel)) {
+                    getChildren().addAll(apLabel, hpLabel);
+                }
+                if (!getChildren().contains(mannaPane)) {
+                    getChildren().add(mannaPane);
+                }
+        }
     }
 
     void setDescription(String newValue) {
