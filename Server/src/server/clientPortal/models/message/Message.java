@@ -191,4 +191,8 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
 
     public Card getCustomCard() {return customCard;
     }
+
+    public ExportedDeck getExportedDeck() {
+        return exportedDeck;
+    }
 }

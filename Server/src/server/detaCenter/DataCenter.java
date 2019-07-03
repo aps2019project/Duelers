@@ -10,6 +10,7 @@ import server.detaCenter.models.account.Collection;
 import server.detaCenter.models.account.TempAccount;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
+import server.detaCenter.models.card.ExportedDeck;
 import server.detaCenter.models.sorter.LeaderBoardSorter;
 import server.detaCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
@@ -347,7 +348,11 @@ public class DataCenter extends Thread {
         //TODO
     }
 
-    public void importDeck(Message message) {
+    public void importDeck(Message message) throws LogicException {
+        loginCheck(message);
+        Account account = clients.get(message.getSender());
+        ExportedDeck exportedDeck = message.getExportedDeck();
+        Collection collection = account.getCollection();
 
     }
 }

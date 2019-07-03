@@ -3,11 +3,15 @@ package server.detaCenter.models.account;
 import server.Server;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
+import server.detaCenter.models.card.Deck;
+import server.detaCenter.models.card.ExportedDeck;
 import server.exceptions.ClientException;
+import server.exceptions.LogicException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Collection {
     private List<Card> heroes = new ArrayList<>();
@@ -20,13 +24,24 @@ public class Collection {
     }
 
     private boolean hasCard(String cardId, List<Card> cards) {
-        if (cardId == null || cards==null)
+        if (cardId == null || cards == null)
             return false;
         for (Card card : cards) {
             if (card.getCardId().equalsIgnoreCase(cardId))
                 return true;
         }
         return false;
+    }
+
+    private ArrayList<Card> getCardsWithName(String cardName, List<Card> cards) {
+        ArrayList<Card>cards1 = new ArrayList<>();
+        if (cardName == null || cards == null)
+            return cards1;
+        for (Card card : cards) {
+            if (card.getName().equalsIgnoreCase(cardName))
+                cards1.add(card);
+        }
+        return cards1;
     }
 
     public Card getCard(String cardId) {
@@ -99,6 +114,29 @@ public class Collection {
         minions.remove(card);
         spells.remove(card);
         items.remove(card);
+    }
+
+    private Deck extractDeck(ExportedDeck exportedDeck) throws LogicException {
+        Deck deck = new Deck(exportedDeck.getName());
+        ArrayList<Card> hero = getCardsWithName(exportedDeck.getHeroName(), heroes);
+        if (hero.isEmpty())
+            throw new ClientException("you have not the hero");
+        deck.addCard(hero.get(0));
+        ArrayList<Card> item = getCardsWithName(exportedDeck.getItemName(),items);
+        if (item.isEmpty())
+            throw new ClientException("you have not the item");
+        deck.addCard(item.get(0));
+        for (Map.Entry<String,Integer> entry:
+             exportedDeck.getOtherCards().entrySet()) {
+            ArrayList<Card> cards = getCardsWithName(entry.getKey(),minions);
+            cards.addAll(getCardsWithName(entry.getKey(),spells));
+            if (cards.size()<entry.getValue())
+                throw new ClientException("you have not enough cards (buy "+entry.getKey()+" from shop");
+            for (int i = 0; i < entry.getValue(); i++) {
+                deck.addCard(cards.get(i));
+            }
+        }
+        return deck;
     }
 
     public List<Card> getHeroes() {
