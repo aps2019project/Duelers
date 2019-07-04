@@ -1,12 +1,14 @@
 package view;
 
 import controller.GameResultController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -145,5 +147,22 @@ public class GameResultMenu extends Show {
         private String getUrl(String name) {
             return directory + name + format;
         }
+    }
+
+    @Override
+    public void showError(String message, EventHandler<? super MouseEvent> event) {
+
+    }
+
+    @Override
+    public void showError(String message, String buttonText) {
+    }
+
+    @Override
+    public void showError(String message) {
+    }
+
+    @Override
+    public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
     }
 }
