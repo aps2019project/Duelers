@@ -3,9 +3,9 @@ package view.BattleView;
 import com.google.gson.Gson;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import models.gui.ImageLoader;
 
@@ -23,9 +23,9 @@ public class SpellAnimation extends Transition {
 
     private boolean frameShowFlag = false;
     private int nextIndex=0;
-    private Group mapGroup;
+    private Pane mapPane;
 
-    SpellAnimation(Group mapGroup, String fileName, double x, double y) throws Exception {
+    SpellAnimation(Pane mapPane, String fileName, double x, double y) throws Exception {
         Playlist playlist = new Gson().fromJson(new FileReader("resources/fx/" + fileName + ".plist.json"), Playlist.class);
         framePositions = playlist.getFrames();
 
@@ -44,8 +44,8 @@ public class SpellAnimation extends Transition {
 
         this.setCycleCount(INDEFINITE);
 
-        this.mapGroup = mapGroup;
-        mapGroup.getChildren().add(imageView);
+        this.mapPane = mapPane;
+        mapPane.getChildren().add(imageView);
         this.play();
     }
 
@@ -59,7 +59,7 @@ public class SpellAnimation extends Transition {
             nextIndex++;
             if (nextIndex == framePositions.length) {
                 nextIndex = 0;
-                mapGroup.getChildren().remove(imageView);
+                mapPane.getChildren().remove(imageView);
             }
             frameShowFlag = false;
         }
