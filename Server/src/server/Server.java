@@ -327,6 +327,7 @@ public class Server {
 
     public void sendGameUpdateMessage(Game game) {
         String clientName;
+        List<CellEffect> cellEffects = game.getCellEffects();
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
@@ -335,7 +336,7 @@ public class Server {
                 addToSendingMessages(Message.makeGameUpdateMessage(
                         serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
                         game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                        game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
+                        game.getPlayerTwo().getNumberOfCollectedFlags(), cellEffects, 0));
             }
         }
         if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
@@ -346,7 +347,7 @@ public class Server {
                 addToSendingMessages(Message.makeGameUpdateMessage(
                         serverName, clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
                         game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                        game.getPlayerTwo().getNumberOfCollectedFlags(), 0));
+                        game.getPlayerTwo().getNumberOfCollectedFlags(), cellEffects, 0));
             }
         }
     }

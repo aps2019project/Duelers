@@ -1,11 +1,15 @@
 package models.message;
 
+import models.game.CellEffect;
+
+
 public class GameUpdateMessage {
     private int turnNumber;
     private int player1CurrentMP;
     private int player1NumberOfCollectedFlags;
     private int player2CurrentMP;
     private int player2NumberOfCollectedFlags;
+    private CellEffect[] cellEffects;
 
     public int getTurnNumber() {
         return turnNumber;
@@ -25,5 +29,9 @@ public class GameUpdateMessage {
 
     public int getPlayer2NumberOfCollectedFlags() {
         return player2NumberOfCollectedFlags;
+    }
+
+    public CellEffect[] getCellEffects() {
+        return cellEffects;
     }
 }

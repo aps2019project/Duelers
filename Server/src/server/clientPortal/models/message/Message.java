@@ -5,10 +5,13 @@ import server.detaCenter.models.account.Account;
 import server.detaCenter.models.account.Collection;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.ExportedDeck;
+import server.gameCenter.models.game.CellEffect;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
 import server.gameCenter.models.map.Position;
+
+import java.util.List;
 
 public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private MessageType messageType;
@@ -117,10 +120,10 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
 
     public static Message makeGameUpdateMessage(String sender, String receiver, int turnNumber, int player1CurrentMP,
                                                 int player1NumberOfCollectedFlags, int player2CurrentMP,
-                                                int player2NumberOfCollectedFlags, int messageId) {
+                                                int player2NumberOfCollectedFlags, List<CellEffect> cellEffects, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.gameUpdateMessage = new GameUpdateMessage(turnNumber, player1CurrentMP, player1NumberOfCollectedFlags,
-                player2CurrentMP, player2NumberOfCollectedFlags);
+                player2CurrentMP, player2NumberOfCollectedFlags, cellEffects);
         message.messageType = MessageType.GAME_UPDATE;
         return message;
     }
