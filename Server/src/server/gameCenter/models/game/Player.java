@@ -169,13 +169,17 @@ public class Player {
         return null;
     }
 
-    public Troop getHero() {
+    public Troop createHero() {
         if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
             hero.setCanMove(true);
             hero.setCanAttack(true);
             troops.add(hero);
         }
+        return hero;
+    }
+
+    public Troop getHero(){
         return hero;
     }
 

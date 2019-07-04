@@ -82,10 +82,8 @@ public class CompressedGame {
     public void troopUpdate(CompressedTroop troop) {
         CompressedPlayer player;
         player = getPlayer(troop.getPlayerNumber());
-        if (player.existTroop(troop.getCard().getCardId())) {
-            player.troopUpdate(troop);
-            gameMap.updateTroop(troop);
-        }
+        player.troopUpdate(troop);
+        gameMap.updateTroop(troop);
     }
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,

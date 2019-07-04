@@ -1,8 +1,11 @@
 package view.BattleView;
 
+import com.sun.javafx.UnmodifiableArrayList;
 import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;

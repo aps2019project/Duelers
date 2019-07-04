@@ -60,11 +60,11 @@ public abstract class Game {
 
     public void startGame() throws ServerException {
         applyOnStartSpells(playerOne.getDeck());
-        putMinion(1, playerOne.getHero(), gameMap.getCell(2, 0));
+        putMinion(1, playerOne.createHero(), gameMap.getCell(2, 0));
 
         this.turnNumber = 2;
         applyOnStartSpells(playerTwo.getDeck());
-        putMinion(2, playerTwo.getHero(), gameMap.getCell(2, 8));
+        putMinion(2, playerTwo.createHero(), gameMap.getCell(2, 8));
 
         this.turnNumber = 1;
 
@@ -315,7 +315,7 @@ public abstract class Game {
     private void applyOnPutSpells(Card card, Cell cell) throws ServerException {
         for (Spell spell : card.getSpells()) {
             if (spell.getAvailabilityType().isOnPut()) {
-                applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
+                applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().createHero().getCell()));
             }
         }
     }
@@ -406,7 +406,7 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnAttack())
                 applySpell(
                         spell,
-                        detectTarget(spell, defenderTroop.getCell(), defenderTroop.getCell(), getCurrentTurnPlayer().getHero().getCell())
+                        detectTarget(spell, defenderTroop.getCell(), defenderTroop.getCell(), getCurrentTurnPlayer().createHero().getCell())
                 );
         }
     }
@@ -416,7 +416,7 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(
                         spell,
-                        detectTarget(spell, attackerTroop.getCell(), attackerTroop.getCell(), getOtherTurnPlayer().getHero().getCell())
+                        detectTarget(spell, attackerTroop.getCell(), attackerTroop.getCell(), getOtherTurnPlayer().createHero().getCell())
                 );
         }
     }
@@ -470,7 +470,7 @@ public abstract class Game {
     }
 
     private Troop getAndValidateHero(String cardId) throws ClientException {
-        Troop hero = getCurrentTurnPlayer().getHero();
+        Troop hero = getCurrentTurnPlayer().createHero();
         if (hero == null || !hero.getCard().getCardId().equalsIgnoreCase(cardId)) {
             throw new ClientException("hero id is not valid");
         }
@@ -708,7 +708,7 @@ public abstract class Game {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(
                         spell,
-                        detectTarget(spell, troop.getCell(), gameMap.getCell(0, 0), getOtherTurnPlayer().getHero().getCell())
+                        detectTarget(spell, troop.getCell(), gameMap.getCell(0, 0), getOtherTurnPlayer().createHero().getCell())
                 );
         }
     }
