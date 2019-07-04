@@ -158,10 +158,12 @@ public class HandBox implements PropertyChangeListener {
                         cardAnimation.inActive();
                         try {
                             imageView.setImage(highlightedBackGround);
-                            cardPane = new CardPane(player.getHand().get(I), false, false, null);
-                            cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
-                            cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
-                            group.getChildren().add(cardPane);
+                            if (player.getHand().size() > I) {
+                                cardPane = new CardPane(player.getHand().get(I), false, false, null);
+                                cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
+                                cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
+                                group.getChildren().add(cardPane);
+                            }
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
