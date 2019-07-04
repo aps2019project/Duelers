@@ -4,6 +4,8 @@ import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -11,11 +13,13 @@ import javafx.scene.shape.Polygon;
 import models.card.CardType;
 import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
+import models.game.map.Position;
 import models.gui.CardPane;
 import models.gui.DefaultLabel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,6 +38,8 @@ public class MapBox implements PropertyChangeListener {
     private CardPane cardPane = null;
     private SelectionType selectionType;
     private DefaultLabel[][] flagLabels = new DefaultLabel[5][9];
+    private ImageView[][] flagImages = new ImageView[5][9];
+    private Image flag = new Image(new FileInputStream("resources/ui/flag.png"));
 
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
@@ -107,11 +113,22 @@ public class MapBox implements PropertyChangeListener {
     private void addFlagLabels() {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
+                //TODO:Ahmad design this:)
+                flagImages[j][i] = new ImageView(flag);
+                flagImages[j][i].setFitHeight(Constants.FLAG_HEIGHT);
+                flagImages[j][i].setFitWidth(Constants.FLAG_WIDTH);
+                flagImages[j][i].setX(cellsX[j][i]);
+                flagImages[j][i].setY(cellsY[j][i]);
                 flagLabels[j][i] = new DefaultLabel(Integer.toString(gameMap.getCell(j, i).getNumberOfFlags()),
-                        Constants.FLAG_FONT, Color.BLACK);
-                System.out.println(gameMap.getCell(j, i).getNumberOfFlags());
-                flagLabels[j][i].setVisible(true);
-                mapGroup.getChildren().add(flagLabels[j][i]);
+                        Constants.FLAG_FONT, Color.BLACK, cellsX[j][i], cellsY[j][i]);
+                if (gameMap.getCell(j, i).getNumberOfFlags() == 0) {
+                    flagLabels[j][i].setVisible(false);
+                    flagImages[j][i].setVisible(false);
+                } else {
+                    flagLabels[j][i].setVisible(true);
+                    flagImages[j][i].setVisible(true);
+                }
+                mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
             }
         }
     }
@@ -189,6 +206,23 @@ public class MapBox implements PropertyChangeListener {
                 @Override
                 public void run() {
                     updateTroop((CompressedTroop) evt.getOldValue(), (CompressedTroop) evt.getNewValue());
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("flag")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Position position = (Position) evt.getOldValue();
+                    Integer newValue = (Integer) evt.getNewValue();
+                    flagLabels[position.getRow()][position.getColumn()].setText(Integer.toString(newValue));
+                    if (gameMap.getCell(position.getRow(), position.getColumn()).getNumberOfFlags() == 0) {
+                        flagLabels[position.getRow()][position.getColumn()].setVisible(false);
+                        flagImages[position.getRow()][position.getColumn()].setVisible(false);
+                    } else {
+                        flagLabels[position.getRow()][position.getColumn()].setVisible(true);
+                        flagImages[position.getRow()][position.getColumn()].setVisible(true);
+                    }
                 }
             });
         }
@@ -335,9 +369,9 @@ public class MapBox implements PropertyChangeListener {
                             battleScene.getHandBox().getSelectedCard())) {
                         if (battleScene.getHandBox().getSelectedCard().getType() == CardType.HERO ||
                                 battleScene.getHandBox().getSelectedCard().getType() == CardType.MINION) {
-                            cells[row][column].setFill(Constants.MoveColor);
+                            cells[row][column].setFill(Constants.MOVE_COLOR);
                         } else {
-                            cells[row][column].setFill(Constants.SpellColor);
+                            cells[row][column].setFill(Constants.SPELL_COLOR);
                         }
                     } else
                         cells[row][column].setFill(Constants.defaultColor);
@@ -345,19 +379,19 @@ public class MapBox implements PropertyChangeListener {
                 }
                 if (selectionType == SelectionType.SELECTION) {
                     if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
-                        cells[row][column].setFill(Constants.CanSelectColor);
+                        cells[row][column].setFill(Constants.CAN_SELECT_COLOR);
                     } else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
                 }
                 if (selectedTroop != null && selectedTroop.getPosition().getRow() == row &&
                         selectedTroop.getPosition().getColumn() == column) {
-                    cells[row][column].setFill(Constants.SelectedColor);//not important
+                    cells[row][column].setFill(Constants.SELECTED_COLOR);//not important
                     continue;
                 }
                 if (selectionType == SelectionType.SPELL) {
                     if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
-                        cells[row][column].setFill(Constants.SpellColor);
+                        cells[row][column].setFill(Constants.SPELL_COLOR);
                     } else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
@@ -366,12 +400,12 @@ public class MapBox implements PropertyChangeListener {
                     if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()
                             && currentTroop.getCard().isHasCombo()) {
                         if (comboTroops.contains(currentTroop))
-                            cells[row][column].setFill(Constants.SelectedColor);
+                            cells[row][column].setFill(Constants.SELECTED_COLOR);
                         else
-                            cells[row][column].setFill(Constants.CanSelectColor);
+                            cells[row][column].setFill(Constants.CAN_SELECT_COLOR);
                     } else if (GameController.getInstance().getAvailableActions().canAttack(
                             selectedTroop, row, column))
-                        cells[row][column].setFill(Constants.attackColor);
+                        cells[row][column].setFill(Constants.ATTACK_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
@@ -379,10 +413,10 @@ public class MapBox implements PropertyChangeListener {
                 if (selectionType == SelectionType.NORMAL) {
                     if (GameController.getInstance().getAvailableActions().canAttack(
                             selectedTroop, row, column))
-                        cells[row][column].setFill(Constants.attackColor);
+                        cells[row][column].setFill(Constants.ATTACK_COLOR);
                     else if (GameController.getInstance().getAvailableActions().canMove(
                             selectedTroop, row, column))
-                        cells[row][column].setFill(Constants.MoveColor);
+                        cells[row][column].setFill(Constants.MOVE_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;

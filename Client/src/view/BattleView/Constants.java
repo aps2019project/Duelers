@@ -22,11 +22,14 @@ public class Constants {
     static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 20 * SCALE);
     static final Font FLAG_FONT = Font.font("SansSerif", FontWeight.LIGHT, 15 * SCALE);
 
-    static final Color SpellColor = Color.DEEPPINK;
-    static final Color MoveColor = Color.GREEN;
-    static final Color SelectedColor = Color.DARKGREEN;
-    static final Color CanSelectColor = Color.GREEN;
-    static final Color attackColor = Color.RED;
+    static final Color SPELL_COLOR = Color.DEEPPINK;
+    static final Color MOVE_COLOR = Color.GREEN;
+    static final Color SELECTED_COLOR = Color.DARKGREEN;
+    static final Color CAN_SELECT_COLOR = Color.GREEN;
+    static final Color ATTACK_COLOR = Color.RED;
     //TODO:Death Color
     static final Color defaultColor = Color.DARKBLUE;
+
+    static final double FLAG_HEIGHT = 45 * SCALE;
+    static final double FLAG_WIDTH = 45 * SCALE;
 }
