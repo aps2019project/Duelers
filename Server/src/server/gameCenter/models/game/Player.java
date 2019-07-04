@@ -1,5 +1,7 @@
 package server.gameCenter.models.game;
 
+import server.Server;
+import server.clientPortal.models.message.CardPosition;
 import server.detaCenter.models.account.MatchHistory;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;
@@ -167,13 +169,17 @@ public class Player {
         return null;
     }
 
-    public Troop getHero() {
+    public Troop createHero() {
         if (hero == null) {
             hero = new Troop(deck.getHero(), playerNumber);
             hero.setCanMove(true);
             hero.setCanAttack(true);
             troops.add(hero);
         }
+        return hero;
+    }
+
+    public Troop getHero(){
         return hero;
     }
 

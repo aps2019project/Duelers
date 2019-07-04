@@ -11,7 +11,10 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.*;
+import view.GameResultMenu;
+import view.LoginMenu;
+import view.MainMenu;
+import view.Show;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -196,7 +199,7 @@ public class Client {
                 GameController.getInstance().calculateAvailableActions();
                 break;
             case Game_FINISH:
-                GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), 1000);
+                GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
                 Platform.runLater(() -> new GameResultMenu().show());
                 break;
             case ANIMATION:

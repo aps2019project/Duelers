@@ -152,37 +152,33 @@ public class HandBox implements PropertyChangeListener {
                     imageView.setImage(backGround);
 
                 if (cardAnimation != null && battleScene.isMyTurn()) {
-                    cards[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            if (cardPane != null)
-                                group.getChildren().remove(cardPane);
-                            cardAnimation.inActive();
-                            try {
-                                imageView.setImage(highlightedBackGround);
+                    cards[i].setOnMouseEntered(mouseEvent -> {
+                        if (cardPane != null)
+                            group.getChildren().remove(cardPane);
+                        cardAnimation.inActive();
+                        try {
+                            imageView.setImage(highlightedBackGround);
+                            if (player.getHand().size() > I) {
                                 cardPane = new CardPane(player.getHand().get(I), false, false, null);
                                 cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
                                 cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
                                 group.getChildren().add(cardPane);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
                             }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
                     });
 
-                    cards[i].setOnMouseExited(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            if (cardPane != null) {
-                                group.getChildren().remove(cardPane);
-                                cardPane = null;
-                            }
-                            if (selectedCard == I) {
-                                imageView.setImage(highlightedBackGround);
-                            } else {
-                                imageView.setImage(backGround);
-                                cardAnimation.pause();
-                            }
+                    cards[i].setOnMouseExited(mouseEvent -> {
+                        if (cardPane != null) {
+                            group.getChildren().remove(cardPane);
+                            cardPane = null;
+                        }
+                        if (selectedCard == I) {
+                            imageView.setImage(highlightedBackGround);
+                        } else {
+                            imageView.setImage(backGround);
+                            cardAnimation.pause();
                         }
                     });
 

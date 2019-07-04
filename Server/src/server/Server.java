@@ -360,7 +360,7 @@ public class Server {
                 serverPrint("player one has logged out during game!");
             } else {
                 addToSendingMessages(Message.makeGameFinishMessage(
-                        serverName, clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), 0));
+                        serverName, clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward(), 0));
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName()), 0));
             }
@@ -371,7 +371,7 @@ public class Server {
                 serverPrint("player two has logged out during game!");
             } else {
                 addToSendingMessages(Message.makeGameFinishMessage(
-                        serverName, clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), 0));
+                        serverName, clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), game.getReward(), 0));
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         serverName, clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName()), 0));
             }
@@ -388,7 +388,7 @@ public class Server {
     }
 
     public void sendAddedCartMessage(Card customCard) {
-        for (Map.Entry<String , Formatter> formatter :
+        for (Map.Entry<String, Formatter> formatter :
                 ClientPortal.getInstance().getClients()) {
             Message message = Message.makeAddCustomCardMessage(serverName, formatter.getKey(), customCard, 0);
             addToSendingMessages(message);

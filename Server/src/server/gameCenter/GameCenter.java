@@ -188,38 +188,64 @@ public class GameCenter extends Thread {
 
     public void insertCard(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.insert(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-        checkGameFinish(game);
+        try {
+            game.insert(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+        }finally {
+            checkGameFinish(game);
+        }
     }
 
     public void attack(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.attack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
-        checkGameFinish(game);
+        try {
+            game.attack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
+        }finally {
+            checkGameFinish(game);
+        }
     }
 
     public void combo(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.comboAttack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
-        checkGameFinish(game);
+        try {
+            game.comboAttack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
+
+        }finally {
+            checkGameFinish(game);
+
+        }
     }
 
     public void useSpecialPower(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.useSpecialPower(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-        checkGameFinish(game);
+        try {
+            game.useSpecialPower(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+
+        }finally {
+            checkGameFinish(game);
+
+        }
     }
 
     public void moveTroop(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.moveTroop(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-        checkGameFinish(game);
+        try {
+            game.moveTroop(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
+
+        }finally {
+            checkGameFinish(game);
+
+        }
     }
 
     public void endTurn(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        game.changeTurn(DataCenter.getInstance().getClients().get(message.getSender()).getUsername());
-        checkGameFinish(game);
+        try {
+            game.changeTurn(DataCenter.getInstance().getClients().get(message.getSender()).getUsername());
+
+        }finally {
+            checkGameFinish(game);
+
+        }
     }
 
     private void checkGameFinish(Game game) {
