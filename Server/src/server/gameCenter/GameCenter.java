@@ -54,7 +54,7 @@ public class GameCenter extends Thread {
         if (DataCenter.getInstance().getAccounts().get(opponentAccount) == null) {
             throw new ClientException("opponentAccount has not logged in!");
         }
-        if(onlineGames.get(opponentAccount)!=null){
+        if (onlineGames.get(opponentAccount) != null) {
             throw new ClientException("opponentAccount has online game!");
         }
         //TODO:Validation
@@ -247,5 +247,17 @@ public class GameCenter extends Thread {
             Server.getInstance().sendGameFinishMessages(game);
             removeGame(game);
         }
+    }
+
+    public void forceFinishGame(Account account) {
+        //TODO:Hadi
+        Game game=onlineGames.get(account);
+        if(game==null){
+            Server.getInstance().serverPrint("Error forceGameFinish!");
+            return;
+        }
+        onlineGames.remove(DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName()));
+        onlineGames.remove(DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName()));
+        //TODO:game.forceFinish(account);
     }
 }

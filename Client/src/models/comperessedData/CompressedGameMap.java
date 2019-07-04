@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CompressedGameMap{
+public class CompressedGameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
 
     private final CompressedCell[][] cells;
@@ -106,21 +106,22 @@ public class CompressedGameMap{
 
     public void addFlagNum(Position position, int addition) {
         cells[position.getRow()][position.getColumn()].addNumberOfFlags(addition);
-        //TODO:fire
+        support.firePropertyChange("flag", position, cells[position.getRow()][position.getColumn()].getNumberOfFlags());
     }
 
     public int getFlagNum(Position position) {
         return cells[position.getRow()][position.getColumn()].getNumberOfFlags();//TODO:Ahmad Check
     }
 
-    public void updateTroop(CompressedTroop troop) {//flag
+    public void updateTroop(CompressedTroop troop) {
         if (support == null) {
             support = new PropertyChangeSupport(this);
         }
+        cells[troop.getPosition().getRow()][troop.getPosition().getColumn()].removeFlags();
+        support.firePropertyChange("flag", troop.getPosition(), 0);
         support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
         removeTroop(troop.getCard().getCardId());
         troops.add(troop);
-//        cells[troop.getPosition().getRow()][troop.getPosition().getColumn()].removeFlags();
     }
 
     public void killTroop(String cardId) {//flag
@@ -129,8 +130,8 @@ public class CompressedGameMap{
         }
         for (CompressedTroop troop : troops) {
             if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
-                addFlagNum(troop.getPosition(), troop.getNumberOfCollectedFlags());
                 support.firePropertyChange("troop", troop, null);
+                addFlagNum(troop.getPosition(), troop.getNumberOfCollectedFlags());
             }
         }
         removeTroop(cardId);

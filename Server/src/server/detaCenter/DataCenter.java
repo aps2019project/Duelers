@@ -16,6 +16,7 @@ import server.detaCenter.models.sorter.LeaderBoardSorter;
 import server.detaCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
+import server.gameCenter.GameCenter;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.TempStory;
 
@@ -132,15 +133,18 @@ public class DataCenter extends Thread {
         }
     }
 
-    public void deleteClient(String clientName) {
-        if (clients.get(clientName) != null)
+    public void forceLogout(String clientName) {
+        if (clients.get(clientName) != null) {
+            GameCenter.getInstance().forceFinishGame(clients.get(clientName));
             accounts.replace(clients.get(clientName), null);
+        }
         clients.remove(clientName);
         //TODO(do with logout)
     }
 
     public void logout(Message message) throws LogicException {
         loginCheck(message);
+        GameCenter.getInstance().forceFinishGame(clients.get(message.getSender()));
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");

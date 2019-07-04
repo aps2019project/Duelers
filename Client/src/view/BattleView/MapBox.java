@@ -12,6 +12,7 @@ import models.card.CardType;
 import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
 import models.gui.CardPane;
+import models.gui.DefaultLabel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,6 +33,7 @@ public class MapBox implements PropertyChangeListener {
     private boolean comboSelected = false;
     private CardPane cardPane = null;
     private SelectionType selectionType;
+    private DefaultLabel[][] flagLabels = new DefaultLabel[5][9];
 
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
@@ -40,6 +42,7 @@ public class MapBox implements PropertyChangeListener {
         mapGroup.setLayoutY(y);
         mapGroup.setLayoutX(x);
         makePolygons();
+        addFlagLabels();
         resetSelection();
         for (CompressedTroop troop : gameMap.getTroops()) {
             updateTroop(null, troop);
@@ -97,6 +100,18 @@ public class MapBox implements PropertyChangeListener {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
                 mapGroup.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 2));
+            }
+        }
+    }
+
+    private void addFlagLabels() {
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 9; i++) {
+                flagLabels[j][i] = new DefaultLabel(Integer.toString(gameMap.getCell(j, i).getNumberOfFlags()),
+                        Constants.FLAG_FONT, Color.BLACK);
+                System.out.println(gameMap.getCell(j, i).getNumberOfFlags());
+                flagLabels[j][i].setVisible(true);
+                mapGroup.getChildren().add(flagLabels[j][i]);
             }
         }
     }
@@ -233,7 +248,7 @@ public class MapBox implements PropertyChangeListener {
         if (!battleScene.isMyTurn()) {
             return;
         }
-        CompressedTroop currentTroop = getTroop(row,column);
+        CompressedTroop currentTroop = getTroop(row, column);
         if (selectionType == SelectionType.INSERTION) {
             if (GameController.getInstance().getAvailableActions().canInsertCard(
                     battleScene.getHandBox().getSelectedCard())) {
@@ -314,7 +329,7 @@ public class MapBox implements PropertyChangeListener {
                 if (!battleScene.isMyTurn()) {
                     cells[row][column].setFill(Constants.defaultColor);
                 }
-                CompressedTroop currentTroop = getTroop(row,column);
+                CompressedTroop currentTroop = getTroop(row, column);
                 if (selectionType == SelectionType.INSERTION) {
                     if (GameController.getInstance().getAvailableActions().canInsertCard(
                             battleScene.getHandBox().getSelectedCard())) {
