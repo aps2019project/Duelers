@@ -121,7 +121,8 @@ public class CompressedGameMap {
         support.firePropertyChange("flag", troop.getPosition(), 0);
         support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
         removeTroop(troop.getCard().getCardId());
-        troops.add(troop);
+        if (troop.getCurrentHp() > 0)
+            troops.add(troop);
     }
 
     public void killTroop(String cardId) {//flag

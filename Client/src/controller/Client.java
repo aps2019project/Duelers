@@ -200,7 +200,14 @@ public class Client {
                 break;
             case Game_FINISH:
                 GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
-                Platform.runLater(() -> new GameResultMenu().show());
+                new Thread(() ->{
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ignored) {
+                    }
+                    Platform.runLater(() -> new GameResultMenu().show());
+                }).start();
+
                 break;
             case ANIMATION:
                 GameController.getInstance().showAnimation(message.getGameAnimations());
