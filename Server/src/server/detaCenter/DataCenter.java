@@ -25,13 +25,14 @@ import java.util.*;
 
 public class DataCenter extends Thread {
     private static final String ACCOUNTS_PATH = "resources/accounts";
+    private static final String CUSTOM_CARD_PATH = "resources/customCards";
     private static final String[] CARDS_PATHS = {
             "resources/heroCards",
             "resources/minionCards",
             "resources/spellCards",
             "resources/itemCards/collectible",
             "resources/itemCards/usable",
-            "resources/customCards"};
+            CUSTOM_CARD_PATH};
     private static final String FLAG_PATH = "resources/itemCards/flag/Flag.item.card.json";
     private static final String STORIES_PATH = "resources/stories";
 
@@ -341,7 +342,7 @@ public class DataCenter extends Thread {
         System.out.println(json);
 
         try {
-            FileWriter writer = new FileWriter("resources/customCards/" + customCard.getName() + ".card.json");
+            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + customCard.getCardId() + ".custom.card.json");
             writer.write(json);
             writer.close();
         } catch (IOException e) {

@@ -1,8 +1,7 @@
 package controller;
 
 import models.Constants;
-import models.account.Collection;
-import models.card.Card;
+import models.card.EditableCard;
 import models.exceptions.InputException;
 import models.message.Message;
 
@@ -16,11 +15,11 @@ public class CustomCardController {
         return customCardController;
     }
 
-    public void createCard(Card card) {
+    public void createCard(EditableCard card) {
         try {
             card.checkValidation();
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeCustomCardMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, card, 0)
+                    Message.makeCustomCardMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, card.toImmutableCard(), 0)
             );
         } catch (InputException e) {
             Client.getInstance().getCurrentShow().showError(e.getMessage());

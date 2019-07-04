@@ -2,13 +2,14 @@ package models.card;
 
 import models.ICard;
 import models.card.spell.Spell;
+import models.exceptions.InputException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class EditableCard implements ICard {
-    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private transient PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String name;
     private String description;
     private String cardId;
@@ -76,10 +77,10 @@ public class EditableCard implements ICard {
         support.firePropertyChange("mannaPoint", old, mannaPoint);
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         int old = this.price;
-        this.price = price;
-        support.firePropertyChange("price", old, price);
+        this.price = (price.length() == 0 || price.equals("-")) ? 0 : Integer.parseInt(price);
+        support.firePropertyChange("price", old, this.price);
     }
 
     public void setAttackType(AttackType attackType) {
@@ -136,7 +137,27 @@ public class EditableCard implements ICard {
         return mannaPoint;
     }
 
+    public void checkValidation() throws InputException {
+        if (name == null || name.isEmpty())
+            throw new InputException("name is empty");
+        if (description == null || description.isEmpty())
+            throw new InputException("description is empty");
+        if (spriteName== null || spriteName.isEmpty())
+            throw new InputException("sprite is empty");
+        if ((type == CardType.SPELL || type == CardType.USABLE_ITEM)&& spells.isEmpty()){
+            throw new InputException("Spell is empty");
+        }
+    }
+
     public void addListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
+    }
+
+    public Card toImmutableCard() {
+        return new Card(
+                name, cardId, description, spriteName, type,
+                spells, defaultAp, defaultHp, mannaPoint,
+                price, attackType, range, hasCombo
+        );
     }
 }
