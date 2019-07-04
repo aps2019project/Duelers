@@ -1,5 +1,7 @@
 package server.gameCenter.models.game;
 
+import server.Server;
+import server.clientPortal.models.message.CardPosition;
 import server.detaCenter.models.account.MatchHistory;
 import server.detaCenter.models.card.Card;
 import server.detaCenter.models.card.CardType;

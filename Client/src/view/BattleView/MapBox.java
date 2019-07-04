@@ -504,14 +504,11 @@ public class MapBox implements PropertyChangeListener {
     }
 
     void showSpell(String spriteName, int j, int i) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new SpellAnimation(mapGroup, spriteName, cellsX[j][i], cellsY[j][i]);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        Platform.runLater(() -> {
+            try {
+                new SpellAnimation(mapGroup, spriteName, cellsX[j][i], cellsY[j][i]);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
