@@ -3,6 +3,7 @@ package view.BattleView;
 import com.google.gson.Gson;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class CardAnimation extends Transition {
     static final Map<String, Image> cachedImages = new HashMap<>();
     static final Map<String, Playlist> cachedPlaylists = new HashMap<>();
-    private final Pane pane;
+    private final Group group;
     private FramePosition[] activeFramePositions;
     private FramePosition[] inActiveFramePositions;
 
@@ -32,12 +33,12 @@ public class CardAnimation extends Transition {
     private ACTION action;
     private FramePosition[] currentFramePositions;
 
-    private double x,y;
+    private double x, y;
 
-    public CardAnimation(Pane pane, ICard card, double y, double x) {
-        this.pane = pane;
-        this.x=x;
-        this.y=y;
+    public CardAnimation(Group group, ICard card, double y, double x) {
+        this.group = group;
+        this.x = x;
+        this.y = y;
         //file settings
         Playlist playlist;
         Image image;
@@ -86,11 +87,16 @@ public class CardAnimation extends Transition {
         imageView.setY(y - extraY);
 
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
-        this.pane.getChildren().add(imageView);
+        this.group.getChildren().add(imageView);
 
 
         this.setCycleCount(INDEFINITE);
         setAction(ACTION.STOPPED);
+    }
+
+    public CardAnimation(Pane pane, ICard card, double y, double x) {//TODO:Change
+        this(new Group(), card, y, x);
+        pane.getChildren().add(group);
     }
 
     @Override
@@ -117,7 +123,7 @@ public class CardAnimation extends Transition {
         //has reached to last frame
         switch (action) {
             case ACTIVE:
-                pane.getChildren().remove(imageView);
+                group.getChildren().remove(imageView);
                 break;
             case IN_ACTIVE:
                 nextIndex = 0;

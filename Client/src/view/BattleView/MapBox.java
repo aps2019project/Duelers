@@ -3,10 +3,10 @@ package view.BattleView;
 import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class MapBox implements PropertyChangeListener {
     private final BattleScene battleScene;
     private final CompressedGameMap gameMap;
-    private final Pane mapPane;
+    private final Group mapGroup;
     private final Polygon[][] cells = new Polygon[5][9];
     private final double[][] cellsX = new double[5][9];
     private final double[][] cellsY = new double[5][9];
@@ -45,9 +45,9 @@ public class MapBox implements PropertyChangeListener {
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
         this.gameMap = gameMap;
-        mapPane = new Pane();
-        mapPane.setLayoutY(y);
-        mapPane.setLayoutX(x);
+        mapGroup = new Group();
+        mapGroup.setLayoutY(y);
+        mapGroup.setLayoutX(x);
         makePolygons();
         addFlagLabels();
         addCollectibleItems();
@@ -97,7 +97,7 @@ public class MapBox implements PropertyChangeListener {
                         clickCell(J, I);
                     }
                 });
-                mapPane.getChildren().add(cells[j][i]);
+                mapGroup.getChildren().add(cells[j][i]);
                 cellsX[j][i] = (x1 + x2 + x3 + x4) / 4;
                 cellsY[j][i] = (upperY + downerY) / 2;
             }
@@ -107,7 +107,7 @@ public class MapBox implements PropertyChangeListener {
     public void addCircles() {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
-                mapPane.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 2));
+                mapGroup.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 2));
             }
         }
     }
@@ -116,7 +116,7 @@ public class MapBox implements PropertyChangeListener {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
                 if (gameMap.getCells()[j][i].getItem() != null) {
-                    CardAnimation cardAnimation = new CardAnimation(mapPane, gameMap.getCells()[j][i].getItem(),
+                    CardAnimation cardAnimation = new CardAnimation(mapGroup, gameMap.getCells()[j][i].getItem(),
                             cellsY[j][i], cellsX[j][i]);
                     collectibleItems.put(gameMap.getCells()[j][i].getItem().getCardId(), cardAnimation);
                     //TODO:Ahmad:Design
@@ -143,7 +143,7 @@ public class MapBox implements PropertyChangeListener {
                     flagLabels[j][i].setVisible(true);
                     flagImages[j][i].setVisible(true);
                 }
-                mapPane.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
+                mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
             }
         }
     }
@@ -154,17 +154,17 @@ public class MapBox implements PropertyChangeListener {
             animation = troopAnimationHashMap.get(oldTroop);
             if (animation != null) {
                 animation.updateApHp(oldTroop.getCurrentAp(), 0);
-                animation.getTroopPane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                     }
                 });
-                animation.getTroopPane().setOnMouseEntered(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                     }
                 });
-                animation.getTroopPane().setOnMouseExited(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                     }
@@ -180,24 +180,24 @@ public class MapBox implements PropertyChangeListener {
             animation.moveTo(newTroop.getPosition().getRow(), newTroop.getPosition().getColumn());
         } else {
             try {
-                animation = new TroopAnimation(mapPane, cellsX, cellsY, newTroop.getCard().getSpriteName(),
+                animation = new TroopAnimation(mapGroup, cellsX, cellsY, newTroop.getCard().getSpriteName(),
                         newTroop.getPosition().getRow(), newTroop.getPosition().getColumn(),
                         newTroop.getPlayerNumber() == 1,
                         newTroop.getPlayerNumber() == battleScene.getMyPlayerNumber());
                 animation.updateApHp(newTroop.getCurrentAp(), newTroop.getCurrentHp());
-                animation.getTroopPane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         clickCell(animation.getRow(), animation.getColumn());
                     }
                 });
-                animation.getTroopPane().setOnMouseEntered(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         hoverCell(animation.getRow(), animation.getColumn());
                     }
                 });
-                animation.getTroopPane().setOnMouseExited(new EventHandler<MouseEvent>() {
+                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         exitCell(animation.getRow(), animation.getColumn());
@@ -211,8 +211,8 @@ public class MapBox implements PropertyChangeListener {
         resetSelection();
     }
 
-    Pane getMapPane() {
-        return mapPane;
+    Group getMapGroup() {
+        return mapGroup;
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
@@ -270,7 +270,7 @@ public class MapBox implements PropertyChangeListener {
     private void exitCell(int j, int i) {
         cells[j][i].setOpacity(Constants.CELLS_DEFAULT_OPACITY);
         if (cardPane != null) {
-            mapPane.getChildren().remove(cardPane);
+            mapGroup.getChildren().remove(cardPane);
             cardPane = null;
         }
         CompressedTroop troop = getTroop(j, i);
@@ -290,14 +290,14 @@ public class MapBox implements PropertyChangeListener {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
             animation.select();//TODO:Think about animation starts
             if (cardPane != null) {
-                mapPane.getChildren().remove(cardPane);
+                mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
             }
             try {
                 cardPane = new CardPane(troop.getCard(), false, false, null);
                 cardPane.setLayoutY(-150 * Constants.SCALE + cellsY[row][column]);
                 cardPane.setLayoutX(80 * Constants.SCALE + cellsX[row][column]);
-                mapPane.getChildren().add(cardPane);
+                mapGroup.getChildren().add(cardPane);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -535,7 +535,7 @@ public class MapBox implements PropertyChangeListener {
             @Override
             public void run() {
                 try {
-                    new SpellAnimation(mapPane, spriteName, cellsX[j][i], cellsY[j][i]);
+                    new SpellAnimation(mapGroup, spriteName, cellsX[j][i], cellsY[j][i]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -6,9 +6,9 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import models.gui.DefaultLabel;
@@ -57,12 +57,12 @@ public class TroopAnimation extends Transition {
     private DefaultLabel hpLabel;
 
 
-    private Pane mapGroup;
-    private Pane troopPane;
+    private Group mapGroup;
+    private Group troopGroup;
 
-    TroopAnimation(Pane mapPane, double[][] cellsX, double[][] cellsY, String fileName, int j, int i,
+    TroopAnimation(Group mapGroup, double[][] cellsX, double[][] cellsY, String fileName, int j, int i,
                    boolean isPlayer1Troop, boolean isMyTroop) throws Exception {
-        this.mapGroup = mapPane;
+        this.mapGroup = mapGroup;
         this.isPlayer1Troop = isPlayer1Troop;
         this.isMyTroop = isMyTroop;
 
@@ -96,10 +96,10 @@ public class TroopAnimation extends Transition {
         imageView.setY(-playlist.extraY * Constants.SCALE);
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
 
-        troopPane = new Pane();
-        troopPane.setLayoutX(cellsX[j][i]);
-        troopPane.setLayoutY(cellsY[j][i]);
-        troopPane.getChildren().add(imageView);
+        troopGroup = new Group();
+        troopGroup.setLayoutX(cellsX[j][i]);
+        troopGroup.setLayoutY(cellsY[j][i]);
+        troopGroup.getChildren().add(imageView);
 
         this.setCycleCount(INDEFINITE);
 
@@ -108,7 +108,7 @@ public class TroopAnimation extends Transition {
 
         addApHp();
 
-        mapPane.getChildren().add(troopPane);
+        mapGroup.getChildren().add(troopGroup);
     }
 
     private void addApHp() throws Exception {
@@ -131,7 +131,7 @@ public class TroopAnimation extends Transition {
         hpImage.setFitWidth(hpImage.getImage().getWidth() * Constants.SCALE * 0.4);
         hpImage.setX(-Constants.SCALE * 6);
         hpImage.setY(Constants.SCALE * 0);
-        troopPane.getChildren().addAll(apImage, hpImage, apLabel, hpLabel);
+        troopGroup.getChildren().addAll(apImage, hpImage, apLabel, hpLabel);
     }
 
     void updateApHp(int ap, int hp) {
@@ -154,8 +154,8 @@ public class TroopAnimation extends Transition {
     private void generateNextState() {
         //has reached to destination
         if (action == ACTION.RUN
-                && Math.abs(troopPane.getLayoutX() - cellsX[currentJ][currentI]) < 2
-                && Math.abs(troopPane.getLayoutY() - cellsY[currentJ][currentI]) < 2) {//may bug
+                && Math.abs(troopGroup.getLayoutX() - cellsX[currentJ][currentI]) < 2
+                && Math.abs(troopGroup.getLayoutY() - cellsY[currentJ][currentI]) < 2) {//may bug
             generateNextAction();
             return;
         }
@@ -176,7 +176,7 @@ public class TroopAnimation extends Transition {
                 generateNextAction();
                 break;
             case DEATH:
-                mapGroup.getChildren().remove(troopPane);
+                mapGroup.getChildren().remove(troopGroup);
                 break;
         }
     }
@@ -189,8 +189,8 @@ public class TroopAnimation extends Transition {
             if (nextI < currentI)
                 imageView.setScaleX(-1);
             setAction(ACTION.RUN);
-            KeyValue xValue = new KeyValue(troopPane.layoutXProperty(), cellsX[nextJ][nextI]);
-            KeyValue yValue = new KeyValue(troopPane.layoutYProperty(), cellsY[nextJ][nextI]);
+            KeyValue xValue = new KeyValue(troopGroup.layoutXProperty(), cellsX[nextJ][nextI]);
+            KeyValue yValue = new KeyValue(troopGroup.layoutYProperty(), cellsY[nextJ][nextI]);
             KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - nextI)
                     + Math.abs(currentJ - nextJ)) * Constants.MOVE_TIME_PER_CELL), xValue, yValue);
             Timeline timeline = new Timeline(keyFrame);
@@ -297,8 +297,8 @@ public class TroopAnimation extends Transition {
         return currentJ;
     }
 
-    Pane getTroopPane() {
-        return troopPane;
+    Group getTroopGroup() {
+        return troopGroup;
     }
 
     enum ACTION {
