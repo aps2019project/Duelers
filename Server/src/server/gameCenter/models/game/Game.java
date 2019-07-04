@@ -23,6 +23,7 @@ import server.gameCenter.models.map.Position;
 import server.clientPortal.models.message.CardPosition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -877,5 +878,14 @@ public abstract class Game {
 
     public void setReward(int reward) {
         this.reward = reward;
+    }
+
+    public List<CellEffect> getCellEffects() {
+        List<CellEffect> result = new ArrayList<>();
+
+        buffs.forEach(buff -> buff.getTarget().getCells()
+                        .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
+                );
+        return Collections.unmodifiableList(result);
     }
 }
