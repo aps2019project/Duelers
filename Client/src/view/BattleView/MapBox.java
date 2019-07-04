@@ -39,7 +39,9 @@ public class MapBox implements PropertyChangeListener {
     private SelectionType selectionType;
     private DefaultLabel[][] flagLabels = new DefaultLabel[5][9];
     private ImageView[][] flagImages = new ImageView[5][9];
+    private HashMap<String, ImageView> collectibleItems = new HashMap<>();
     private Image flag = new Image(new FileInputStream("resources/ui/flag.png"));
+    private Image collectibleItem = new Image(new FileInputStream("resources/ui/item.png"));
 
     MapBox(BattleScene battleScene, CompressedGameMap gameMap, double x, double y) throws Exception {
         this.battleScene = battleScene;
@@ -49,6 +51,7 @@ public class MapBox implements PropertyChangeListener {
         mapGroup.setLayoutX(x);
         makePolygons();
         addFlagLabels();
+        addCollectibleItems();
         resetSelection();
         for (CompressedTroop troop : gameMap.getTroops()) {
             updateTroop(null, troop);
@@ -106,6 +109,23 @@ public class MapBox implements PropertyChangeListener {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
                 mapGroup.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 2));
+            }
+        }
+    }
+
+    private void addCollectibleItems() {
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 9; i++) {
+                if (gameMap.getCells()[j][i].getItem() != null) {
+                    ImageView imageView = new ImageView(collectibleItem);
+                    imageView.setFitWidth(Constants.ITEM_WIDTH);
+                    imageView.setFitHeight(Constants.ITEM_HEIGHT);
+                    imageView.setX(cellsX[j][i]);
+                    imageView.setY(cellsY[j][i]);
+                    mapGroup.getChildren().add(imageView);
+                    collectibleItems.put(gameMap.getCells()[j][i].getItem().getCardId(), imageView);
+                    //TODO:Ahmad:Design
+                }
             }
         }
     }
@@ -222,6 +242,18 @@ public class MapBox implements PropertyChangeListener {
                     } else {
                         flagLabels[position.getRow()][position.getColumn()].setVisible(true);
                         flagImages[position.getRow()][position.getColumn()].setVisible(true);
+                    }
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("item")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ImageView imageView = collectibleItems.get(evt.getOldValue());
+                    if (imageView != null) {
+                        mapGroup.getChildren().remove(imageView);
+                        collectibleItems.remove(evt.getOldValue());
                     }
                 }
             });
@@ -509,7 +541,7 @@ public class MapBox implements PropertyChangeListener {
             public void run() {
                 try {
                     new SpellAnimation(mapGroup, spriteName, cellsX[j][i], cellsY[j][i]);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

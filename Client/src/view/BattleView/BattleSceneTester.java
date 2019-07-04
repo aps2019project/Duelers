@@ -107,7 +107,7 @@ public class BattleSceneTester extends Application implements GameActions {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            battleScene.spell("f3_fx_entropicdecay",new Position(1,1));
+            battleScene.spell("fx_f1_aurynnexus",new Position(1,1));
         }).start();
         return game;
     }

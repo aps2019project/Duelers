@@ -32,4 +32,6 @@ public class Constants {
 
     static final double FLAG_HEIGHT = 45 * SCALE;
     static final double FLAG_WIDTH = 45 * SCALE;
+    static final double ITEM_HEIGHT = 45 * SCALE;
+    static final double ITEM_WIDTH = 45 * SCALE;
 }

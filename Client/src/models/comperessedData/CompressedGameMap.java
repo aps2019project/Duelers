@@ -93,10 +93,10 @@ public class CompressedGameMap {
         return null;
     }
 
-    public void removeItem(String cardId) {
+    void removeItem(String cardId) {
         for (CompressedCell[] row : cells) {
             for (CompressedCell cell : row) {
-                //TODO:fire
+                support.firePropertyChange("item", cardId, null);
                 if (cell.getItem() == null) continue;
                 if (cell.getItem().getCardId().equalsIgnoreCase(cardId))
                     cell.removeItem();
