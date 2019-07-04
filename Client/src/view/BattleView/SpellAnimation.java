@@ -36,8 +36,8 @@ public class SpellAnimation extends Transition {
         Image image = cachedImages.computeIfAbsent(fileName, key -> ImageLoader.load("resources/fx/" + fileName + ".png"));
         imageView = new ImageView(image);
 
-        imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
-        imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
+        imageView.setFitWidth(frameWidth * Constants.SPELL_SCALE * Constants.SCALE);
+        imageView.setFitHeight(frameHeight * Constants.SPELL_SCALE * Constants.SCALE);
         imageView.setX(x - playlist.extraX * Constants.SCALE);
         imageView.setY(y - playlist.extraY * Constants.SCALE);
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));

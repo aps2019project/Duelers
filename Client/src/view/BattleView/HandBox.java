@@ -95,7 +95,7 @@ public class HandBox implements PropertyChangeListener {
                 e.printStackTrace();
             }
 
-            if (cardAnimation != null && battleScene.isMyTurn()) {
+            if (cardAnimation != null) {
                 next.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
