@@ -196,7 +196,7 @@ public class Client {
                 GameController.getInstance().calculateAvailableActions();
                 break;
             case Game_FINISH:
-                GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), 1000);
+                GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
                 Platform.runLater(() -> new GameResultMenu().show());
                 break;
             case ANIMATION:
