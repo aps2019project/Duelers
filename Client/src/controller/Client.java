@@ -202,7 +202,7 @@ public class Client {
                 GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
                 new Thread(() ->{
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException ignored) {
                     }
                     Platform.runLater(() -> new GameResultMenu().show());
