@@ -167,21 +167,25 @@ public abstract class Game {
             while (actions.getMoves().size() > 0) {
                 Move move = actions.getMoves().get(new Random().nextInt(actions.getMoves().size()));
                 moveTroop("AI", move.getTroop().getCard().getCardId(), move.getTargets().get(new Random().nextInt(move.getTargets().size())));
+                Thread.sleep(500);
                 actions.calculateAvailableMoves(this);
             }
             actions.calculateAvailableAttacks(this);
             while (actions.getAttacks().size() > 0) {
                 Attack attack = actions.getAttacks().get(new Random().nextInt(actions.getAttacks().size()));
                 attack("AI", attack.getAttackerTroop().getCard().getCardId(), attack.getDefenders().get(new Random().nextInt(attack.getDefenders().size())).getCard().getCardId());
+                Thread.sleep(500);
                 actions.calculateAvailableAttacks(this);
             }
             actions.calculateAvailableInsets(this);
             while (actions.getHandInserts().size() > 0) {
                 Insert insert = actions.getHandInserts().get(new Random().nextInt(actions.getHandInserts().size()));
                 insert("AI", insert.getCard().getCardId(), new Position(new Random().nextInt(5), new Random().nextInt(9)));
+                Thread.sleep(500);
                 actions.calculateAvailableInsets(this);
             }
-        } finally {
+        }catch (InterruptedException ignored){
+        }finally {
             changeTurn("AI");
         }
 
