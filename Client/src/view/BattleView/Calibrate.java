@@ -75,18 +75,18 @@ public class Calibrate  extends Application implements GameActions {
 
     @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
-        battleScene.attack(selectedTroop.getCard().getCardId(), troop.getPosition());
-        battleScene.defend(troop.getCard().getCardId(), selectedTroop.getPosition());
-        battleScene.attack(troop.getCard().getCardId(), selectedTroop.getPosition());
+        battleScene.attack(selectedTroop.getCard().getCardId(), troop.getCard().getCardId());
+        battleScene.defend(troop.getCard().getCardId(), selectedTroop.getCard().getCardId());
+        battleScene.attack(troop.getCard().getCardId(), selectedTroop.getCard().getCardId());
     }
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
         for (CompressedTroop comboAttacker : comboTroops) {
-            battleScene.attack(comboAttacker.getCard().getCardId(), troop.getPosition());
+            battleScene.attack(comboAttacker.getCard().getCardId(), troop.getCard().getCardId());
         }
-        battleScene.defend(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getPosition());
-        battleScene.attack(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getPosition());
+        battleScene.defend(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getCard().getCardId());
+        battleScene.attack(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getCard().getCardId());
     }
 
     @Override

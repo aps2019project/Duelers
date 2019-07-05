@@ -163,7 +163,7 @@ public class GameController implements GameActions {
         new Thread(() -> {
             for (SpellAnimation cardAnimation :
                     gameAnimations.getSpellAnimations()) {
-                battleScene.spell(cardAnimation.getID(), cardAnimation.getPosition());
+                battleScene.spell(cardAnimation.getSpellID(), cardAnimation.getPosition());
             }
             for (CardAnimation cardAnimation :
                     gameAnimations.getAttacks()) {
