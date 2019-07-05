@@ -9,7 +9,6 @@ import server.gameCenter.models.game.CellEffect;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
-import server.gameCenter.models.map.Position;
 
 import java.util.List;
 
@@ -103,9 +102,9 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     public static Message makeAttackMessage(String sender, String receiver, Troop attacker, Troop defender, boolean counterAttack, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.gameAnimations = new GameAnimations();
-        message.gameAnimations.addAttacker(attacker.getCard().getCardId(), new Position(defender.getCell()));
+        message.gameAnimations.addAttacks(attacker.getCard().getCardId(), defender.getCard().getCardId());
         if (counterAttack)
-            message.gameAnimations.addAttacker(defender.getCard().getCardId(), new Position(attacker.getCell()));
+            message.gameAnimations.addCounterAttacks(defender.getCard().getCardId(), attacker.getCard().getCardId());
         message.messageType = MessageType.ANIMATION;
         return message;
     }
