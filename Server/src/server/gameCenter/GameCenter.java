@@ -190,7 +190,8 @@ public class GameCenter extends Thread {
         Game game = getGame(message.getSender());
         try {
             game.insert(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-        }finally {
+            Server.getInstance().sendGameUpdateMessage(game);
+        } finally {
             checkGameFinish(game);
         }
     }
@@ -199,7 +200,7 @@ public class GameCenter extends Thread {
         Game game = getGame(message.getSender());
         try {
             game.attack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
-        }finally {
+        } finally {
             checkGameFinish(game);
         }
     }
@@ -209,7 +210,7 @@ public class GameCenter extends Thread {
         try {
             game.comboAttack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
 
-        }finally {
+        } finally {
             checkGameFinish(game);
 
         }
@@ -219,8 +220,8 @@ public class GameCenter extends Thread {
         Game game = getGame(message.getSender());
         try {
             game.useSpecialPower(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-
-        }finally {
+            Server.getInstance().sendGameUpdateMessage(game);
+        } finally {
             checkGameFinish(game);
 
         }
@@ -231,7 +232,7 @@ public class GameCenter extends Thread {
         try {
             game.moveTroop(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
 
-        }finally {
+        } finally {
             checkGameFinish(game);
 
         }
@@ -242,7 +243,7 @@ public class GameCenter extends Thread {
         try {
             game.changeTurn(DataCenter.getInstance().getClients().get(message.getSender()).getUsername());
 
-        }finally {
+        } finally {
             checkGameFinish(game);
 
         }
@@ -277,8 +278,8 @@ public class GameCenter extends Thread {
 
     public void forceFinishGame(Account account) {
         //TODO:Hadi
-        Game game=onlineGames.get(account);
-        if(game==null){
+        Game game = onlineGames.get(account);
+        if (game == null) {
             Server.getInstance().serverPrint("Error forceGameFinish!");
             return;
         }

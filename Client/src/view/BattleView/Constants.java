@@ -1,5 +1,6 @@
 package view.BattleView;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,13 +24,16 @@ public class Constants {
     static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 20 * SCALE);
     static final Font FLAG_FONT = Font.font("SansSerif", FontWeight.LIGHT, 15 * SCALE);
 
-    static final Color SPELL_COLOR = Color.DEEPPINK;
-    static final Color MOVE_COLOR = Color.GREEN;
-    static final Color SELECTED_COLOR = Color.DARKGREEN;
-    static final Color CAN_SELECT_COLOR = Color.GREEN;
-    static final Color ATTACK_COLOR = Color.RED;
+    static final Color SPELL_COLOR = Color.rgb(181, 255, 0, 0.8);
+    static final Color MOVE_COLOR = Color.rgb(255, 255, 255, 0.7);
+    static final Color SELECTED_COLOR = Color.WHITE;
+    static final Color CAN_SELECT_COLOR = Color.rgb(255, 255, 255, 0.7);
+    static final Color ATTACK_COLOR = Color.rgb(255, 157, 0);
     //TODO:Death Color
-    static final Color defaultColor = Color.DARKBLUE;
+    static final Color defaultColor = Color.rgb(255, 255, 255, 0.5);
+
+    static final ColorAdjust POSITIVE_BUFF_EFFECT = new ColorAdjust(-0.5, 1, -0.5, 0);
+    static final ColorAdjust NEGATIVE_BUFF_EFFECT = new ColorAdjust(0.5, 1, -0.5, 0);
 
     static final double FLAG_HEIGHT = 45 * SCALE;
     static final double FLAG_WIDTH = 45 * SCALE;

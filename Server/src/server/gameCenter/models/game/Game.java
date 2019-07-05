@@ -279,7 +279,6 @@ public abstract class Game {
 
         Player player = getCurrentTurnPlayer();
         Card card = player.insert(cardId);
-        Server.getInstance().sendGameUpdateMessage(this);
 
         if (card.getType() == CardType.MINION) {
             if (gameMap.getTroop(position) != null) {
@@ -466,6 +465,7 @@ public abstract class Game {
 
         Troop hero = getAndValidateHero(cardId);
         Spell specialPower = getAndValidateSpecialPower(hero);
+        getCurrentTurnPlayer().changeCurrentMP(-specialPower.getMannaPoint());
 
         applySpell(
                 specialPower,
@@ -734,13 +734,17 @@ public abstract class Game {
     private TargetData detectTarget(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
         TargetData targetData = new TargetData();
         Player player;
-        if (spell.getTarget().getOwner().isOwn()) {
-            player = getCurrentTurnPlayer();
-            setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
-        }
-        if (spell.getTarget().getOwner().isEnemy()) {
-            player = getOtherTurnPlayer();
-            setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
+        if (spell.getTarget().getOwner() != null) {
+            if (spell.getTarget().getOwner().isOwn()) {
+                player = getCurrentTurnPlayer();
+                setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
+            }
+            if (spell.getTarget().getOwner().isEnemy()) {
+                player = getOtherTurnPlayer();
+                setTargetData(spell, cardCell, clickCell, heroCell, player, targetData);
+            }
+        } else {
+            setTargetData(spell, cardCell, clickCell, heroCell, null, targetData);
         }
         if (spell.getTarget().isRandom()) {
             randomizeList(targetData.getTroops());
@@ -807,16 +811,18 @@ public abstract class Game {
             if (spell.getTarget().getCardType().isCell()) {
                 targetData.getCells().add(cell);
             }
-            Troop troop = player.getTroop(cell);
-            if (troop != null) {
-                if (spell.getTarget().getAttackType().isHybrid() && troop.getCard().getAttackType() == AttackType.HYBRID) {
-                    addTroopToTargetData(spell, targetData, troop);
-                }
-                if (spell.getTarget().getAttackType().isMelee() && troop.getCard().getAttackType() == AttackType.MELEE) {
-                    addTroopToTargetData(spell, targetData, troop);
-                }
-                if (spell.getTarget().getAttackType().isRanged() && troop.getCard().getAttackType() == AttackType.RANGED) {
-                    addTroopToTargetData(spell, targetData, troop);
+            if (player != null) {
+                Troop troop = player.getTroop(cell);
+                if (troop != null) {
+                    if (spell.getTarget().getAttackType().isHybrid() && troop.getCard().getAttackType() == AttackType.HYBRID) {
+                        addTroopToTargetData(spell, targetData, troop);
+                    }
+                    if (spell.getTarget().getAttackType().isMelee() && troop.getCard().getAttackType() == AttackType.MELEE) {
+                        addTroopToTargetData(spell, targetData, troop);
+                    }
+                    if (spell.getTarget().getAttackType().isRanged() && troop.getCard().getAttackType() == AttackType.RANGED) {
+                        addTroopToTargetData(spell, targetData, troop);
+                    }
                 }
             }
             if (spell.getTarget().getCardType().isCell()) {
