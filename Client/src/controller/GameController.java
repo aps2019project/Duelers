@@ -14,6 +14,7 @@ import models.game.map.Position;
 import models.message.CardAnimation;
 import models.message.GameAnimations;
 import models.message.Message;
+import models.message.SpellAnimation;
 import view.BattleView.BattleScene;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GameController implements GameActions {
         int playerNumber = getPlayerNumber(currentGame);
         Platform.runLater(() -> {
             try {
-                battleScene = new BattleScene(this, currentGame, playerNumber,"battlemap6_middleground@2x");
+                battleScene = new BattleScene(this, currentGame, playerNumber, "battlemap6_middleground@2x");
                 battleScene.show();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -159,17 +160,23 @@ public class GameController implements GameActions {
     }
 
     public void showAnimation(GameAnimations gameAnimations) {
-        for (CardAnimation cardAnimation :
-                gameAnimations.getAttacks()) {
-            battleScene.attack(cardAnimation.getAttacker(), cardAnimation.getDefender());
-        }
-        for (CardAnimation cardAnimation :
-                gameAnimations.getDefenders()) {
-            battleScene.defend(cardAnimation.getID(), cardAnimation.getPosition());
-        }
-        for (CardAnimation cardAnimation :
-                gameAnimations.getSpellAnimations()) {
-            battleScene.spell(cardAnimation.getID(), cardAnimation.getPosition());
-        }
+        new Thread(() -> {
+            for (SpellAnimation cardAnimation :
+                    gameAnimations.getSpellAnimations()) {
+                battleScene.spell(cardAnimation.getID(), cardAnimation.getPosition());
+            }
+            for (CardAnimation cardAnimation :
+                    gameAnimations.getAttacks()) {
+                battleScene.attack(cardAnimation.getAttacker(), cardAnimation.getDefender());
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ignored) {
+            }
+            for (CardAnimation cardAnimation :
+                    gameAnimations.getCounterAttacks()) {
+                battleScene.attack(cardAnimation.getDefender(), cardAnimation.getAttacker());
+            }
+        }).start();
     }
 }
