@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
 import models.comperessedData.*;
+import models.game.CellEffect;
 import models.game.GameActions;
 import models.game.map.Position;
 
@@ -14,6 +15,14 @@ public class BattleSceneTester extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
     private BattleScene battleScene;
+
+    CellEffect[] cellEffects = {
+            new CellEffect(1, 2, true),
+            new CellEffect(1, 3, true),
+            new CellEffect(1, 4, false),
+            new CellEffect(1, 5, false),
+
+    };
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -53,7 +62,7 @@ public class BattleSceneTester extends Application implements GameActions {
             CompressedCard card = new CompressedCard("generalspell_f5_overload", null, "a1", CardType.SPELL,
                     null, 0, 0, 0, null, 2, true);
             myPlayer.addCardToNext(card);
-            game.gameUpdate(10, 1, 0, 2, 0);
+            game.gameUpdate(10, 1, 0, 2, 0, cellEffects);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -61,7 +70,7 @@ public class BattleSceneTester extends Application implements GameActions {
             }
             myPlayer.addNextCardToHand();
             myPlayer.removeCardFromNext();
-            game.gameUpdate(11, 4, 0, 4, 0);
+            game.gameUpdate(11, 4, 0, 4, 0, cellEffects);
             card = new CompressedCard("boss_christmas", null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
             CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(2, 2),
@@ -140,7 +149,7 @@ public class BattleSceneTester extends Application implements GameActions {
     @Override
     public void endTurn() {
         battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber() + 1, 3,
-                0, 3, 0);
+                0, 3, 0, cellEffects);
         System.out.println("end turn");
         System.out.println("new turn:" + battleScene.getGame().getTurnNumber());
     }

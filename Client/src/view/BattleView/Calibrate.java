@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
 import models.comperessedData.*;
+import models.game.CellEffect;
 import models.game.GameActions;
 import models.game.map.Position;
 
@@ -97,7 +98,7 @@ public class Calibrate  extends Application implements GameActions {
     @Override
     public void endTurn() {
         battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber() + 1, 3,
-                0, 3, 0);
+                0, 3, 0, new CellEffect[]{});
         System.out.println("end turn");
         System.out.println("new turn:" + battleScene.getGame().getTurnNumber());
     }
