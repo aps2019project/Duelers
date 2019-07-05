@@ -836,7 +836,6 @@ public abstract class Game {
 
         int lastRow = calculateLastCoordinate(firstRow, dimensions.getRow(), GameMap.getRowNumber());
         int lastColumn = calculateLastCoordinate(firstColumn, dimensions.getColumn(), GameMap.getColumnNumber());
-
         ArrayList<Cell> targetCells = new ArrayList<>();
         for (int i = firstRow; i < lastRow; i++) {
             for (int j = firstColumn; j < lastColumn; j++) {

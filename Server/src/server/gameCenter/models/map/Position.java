@@ -27,6 +27,11 @@ public class Position {//TODO:Change class name
         return row;
     }
 
+    @Override
+    public String toString() {
+        return "row: " +row+" column: "+column;
+    }
+
     public int getColumn() {
         return column;
     }
