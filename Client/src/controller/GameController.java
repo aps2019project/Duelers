@@ -103,8 +103,37 @@ public class GameController implements GameActions {
     }
 
     @Override
-    public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
+    public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop defenderTroop) {
+        String[] cardIDs= new String[comboTroops.size()];
+        int i = 0;
+        try {
+            for (CompressedTroop attackerTroop:
+                 comboTroops) {
+                if (!attackerTroop.canAttack())
+                    throw new InputException("you can not attack");
+                if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
+                    if (!attackerTroop.getPosition().isNextTo(defenderTroop.getPosition())) {
+                        throw new InputException("you can not attack to this target");
+                    }
+                } else if (attackerTroop.getCard().getAttackType() == AttackType.RANGED) {
+                    if (attackerTroop.getPosition().isNextTo(defenderTroop.getPosition()) ||
+                            attackerTroop.getPosition().manhattanDistance(defenderTroop.getPosition()) > attackerTroop.getCard().getRange()) {
+                        throw new InputException("you can not attack to this target");
+                    }
+                } else { // HYBRID
+                    if (attackerTroop.getPosition().manhattanDistance(defenderTroop.getPosition()) > attackerTroop.getCard().getRange()) {
+                        throw new InputException("you can not attack to this target");
+                    }
+                }
+                cardIDs[i] = attackerTroop.getCard().getCardId();
+                i++;
+            }
 
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeComboAttackMessage(
+                    Client.getInstance().getClientName(),Constants.SERVER_NAME,defenderTroop.getCard().getCardId(),cardIDs,0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -175,7 +204,7 @@ public class GameController implements GameActions {
             }
             for (CardAnimation cardAnimation :
                     gameAnimations.getCounterAttacks()) {
-                battleScene.attack(cardAnimation.getDefender(), cardAnimation.getAttacker());
+                battleScene.attack(cardAnimation.getAttacker(), cardAnimation.getDefender());
             }
         }).start();
     }
