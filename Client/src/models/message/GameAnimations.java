@@ -1,22 +1,23 @@
 package models.message;
 
-import java.util.Collections;
-import java.util.List;
+
+
+import java.util.ArrayList;
 
 public class GameAnimations {
-    private List<CardAnimation> attackers;
-    private List<CardAnimation> defenders;
-    private List<CardAnimation> spellAnimations;
+    private ArrayList<CardAnimation> attacks = new ArrayList<>();
+    private ArrayList<CardAnimation> counterAttacks = new ArrayList<>();
+    private ArrayList<SpellAnimation> spellAnimations = new ArrayList<>();
 
-    public List<CardAnimation> getAttackers() {
-        return Collections.unmodifiableList(attackers);
+    public ArrayList<CardAnimation> getAttacks() {
+        return attacks;
     }
 
-    public List<CardAnimation> getDefenders() {
-        return Collections.unmodifiableList(defenders);
+    public ArrayList<CardAnimation> getCounterAttacks() {
+        return counterAttacks;
     }
 
-    public List<CardAnimation> getSpellAnimations() {
-        return Collections.unmodifiableList(spellAnimations);
+    public ArrayList<SpellAnimation> getSpellAnimations() {
+        return spellAnimations;
     }
 }

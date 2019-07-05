@@ -160,8 +160,8 @@ public class GameController implements GameActions {
 
     public void showAnimation(GameAnimations gameAnimations) {
         for (CardAnimation cardAnimation :
-                gameAnimations.getAttackers()) {
-            battleScene.attack(cardAnimation.getID(), cardAnimation.getPosition());
+                gameAnimations.getAttacks()) {
+            battleScene.attack(cardAnimation.getAttacker(), cardAnimation.getDefender());
         }
         for (CardAnimation cardAnimation :
                 gameAnimations.getDefenders()) {

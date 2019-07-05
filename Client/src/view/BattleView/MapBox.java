@@ -504,29 +504,33 @@ public class MapBox implements PropertyChangeListener {
         return gameMap;
     }
 
-    void showAttack(String cardId, int i) {
-        if (cardId == null)
+    void showAttack(String cardId, String defender) {
+        if (cardId == null || defender == null)
             System.out.println("Error0 MapBox");
         CompressedTroop troop = gameMap.getTroop(cardId);
-        if (troop == null)
+        CompressedTroop defenderTroop = gameMap.getTroop(defender);
+        if (troop == null || defenderTroop == null)
             System.out.println("Error1 MapBox");
-        TroopAnimation animation = troopAnimationHashMap.get(troop);
-        if (animation == null)
-            System.out.println("Error2 MapBox");
-        else
-            animation.attack(i);
+        else {
+            TroopAnimation animation = troopAnimationHashMap.get(troop);
+            if (animation == null)
+                System.out.println("Error2 MapBox");
+            else
+                animation.attack(defenderTroop.getPosition().getColumn());
+        }
     }
 
-    void showDefend(String cardId, int i) {
-        CompressedTroop troop = gameMap.getTroop(cardId);
-        if (troop == null)
+    void showDefend(String defender, String attacker) {
+        CompressedTroop troop = gameMap.getTroop(defender);
+        CompressedTroop attackerTroop = gameMap.getTroop(attacker);
+        if (troop == null || attackerTroop == null)
             System.out.println("Error3 MapBox");
         else {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
             if (animation == null)
                 System.out.println("Error4 MapBox");
             else
-                animation.hit(i);
+                animation.hit(attackerTroop.getPosition().getColumn());
         }
     }
 

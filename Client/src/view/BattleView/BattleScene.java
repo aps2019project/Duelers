@@ -56,12 +56,19 @@ public class BattleScene extends Show {
         }
     }
 
-    public void attack(String cardId, Position position) {
-        mapBox.showAttack(cardId, position.getColumn());
+    public void attack(String cardId, String defender) {
+        mapBox.showAttack(cardId, defender);
+        new Thread(() -> {
+            try {
+                Thread.sleep(200);
+                defend(defender,cardId);
+            } catch (InterruptedException ignored) {
+            }
+        }).start();
     }
 
-    public void defend(String cardId, Position position) {
-        mapBox.showDefend(cardId, position.getColumn());
+    public void defend(String defender, String attacker) {
+        mapBox.showDefend(defender, attacker);
     }
 
     public void spell(String spriteName, Position position) {

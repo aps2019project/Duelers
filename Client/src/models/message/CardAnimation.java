@@ -1,16 +1,14 @@
 package models.message;
 
-import models.game.map.Position;
-
 public class CardAnimation {
-    private Position position;
-    private String name;
+    private String defender;
+    private String attacker;
 
-    public Position getPosition() {
-        return position;
+    public String getDefender() {
+        return defender;
     }
 
-    public String getID() {
-        return name;
+    public String getAttacker() {
+        return attacker;
     }
 }
