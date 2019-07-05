@@ -81,12 +81,15 @@ public class Player {
     }
 
     private void setNextCard() {
-        int index = new Random().nextInt(deck.getOthers().size());
-        nextCard = deck.getOthers().get(index);
-        try {
-            deck.removeCard(nextCard);
-        } catch (ClientException ignored) {
+        if (!deck.getOthers().isEmpty()) {
+            int index = new Random().nextInt(deck.getOthers().size());
+            nextCard = deck.getOthers().get(index);
+            try {
+                deck.removeCard(nextCard);
+            } catch (ClientException ignored) {
+            }
         }
+
     }
 
     boolean addNextCardToHand() {
@@ -179,7 +182,7 @@ public class Player {
         return hero;
     }
 
-    public Troop getHero(){
+    public Troop getHero() {
         return hero;
     }
 

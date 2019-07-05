@@ -93,7 +93,7 @@ public class AvailableActions {
 
     private void calculateAvailableSpecialPower(Game game) {
         Player ownPlayer = game.getCurrentTurnPlayer();
-        Troop hero = ownPlayer.createHero();
+        Troop hero = ownPlayer.getHero();
 
         if (hero != null) {
             if (hero.getCard().getSpells().isEmpty()) return;
