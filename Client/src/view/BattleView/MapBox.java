@@ -253,6 +253,14 @@ public class MapBox implements PropertyChangeListener {
                 }
             });
         }
+        if (evt.getPropertyName().equals("cellEffect")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    updateCellEffects();
+                }
+            });
+        }
     }
 
     void resetSelection() {
@@ -447,6 +455,25 @@ public class MapBox implements PropertyChangeListener {
                     else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
+                }
+            }
+        }
+    }
+
+    void updateCellEffects() {
+        for (int row = 0; row < 5; row++) {
+            for (int column = 0; column < 9; column++) {
+                int effect = gameMap.getCellEffect(row, column);
+                if (effect == +1) {
+
+                    continue;
+                }
+                if (effect == -1) {
+
+                    continue;
+                }
+                if (effect == 0) {
+
                 }
             }
         }

@@ -1,12 +1,11 @@
 package models.comperessedData;
 
 import models.card.CardType;
+import models.game.CellEffect;
 import models.game.GameType;
-import models.message.GameAnimations;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.ObjectInputStream;
 
 public class CompressedGame {
     private CompressedPlayer playerOne;
@@ -87,7 +86,7 @@ public class CompressedGame {
     }
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
-                           int player2CurrentMP, int player2NumberOfCollectedFlags) {
+                           int player2CurrentMP, int player2NumberOfCollectedFlags, CellEffect[] cellEffects) {
         if (support == null) {
             support = new PropertyChangeSupport(this);
         }
@@ -110,6 +109,7 @@ public class CompressedGame {
         }
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
+        gameMap.updateCellEffects(cellEffects);
     }
 
     public CompressedPlayer getPlayerOne() {

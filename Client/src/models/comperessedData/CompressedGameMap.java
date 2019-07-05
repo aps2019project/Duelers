@@ -1,5 +1,6 @@
 package models.comperessedData;
 
+import models.game.CellEffect;
 import models.game.map.Position;
 
 import java.beans.PropertyChangeListener;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class CompressedGameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
+    private CellEffect[] cellEffects;
 
     private final CompressedCell[][] cells;
     private final ArrayList<CompressedTroop> troops;
@@ -93,6 +95,11 @@ public class CompressedGameMap {
         return null;
     }
 
+    public void updateCellEffects(CellEffect[] cellEffects) {
+        this.cellEffects = cellEffects;
+        support.firePropertyChange("cellEffect", null, null);
+    }
+
     void removeItem(String cardId) {
         for (CompressedCell[] row : cells) {
             for (CompressedCell cell : row) {
@@ -162,5 +169,19 @@ public class CompressedGameMap {
             }
         }
         return Collections.unmodifiableList(flagCells);
+    }
+
+    public int getCellEffect(int j, int i) {
+        if (cellEffects == null)
+            return 0;
+        for (CellEffect cellEffect : cellEffects) {
+            if (cellEffect.getPosition().getRow() == j && cellEffect.getPosition().getColumn() == i) {
+                if (cellEffect.isPositive())
+                    return +1;
+                else
+                    return -1;
+            }
+        }
+        return 0;
     }
 }

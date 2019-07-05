@@ -195,12 +195,13 @@ public class Client {
                         gameUpdateMessage.getPlayer1CurrentMP(),
                         gameUpdateMessage.getPlayer1NumberOfCollectedFlags(),
                         gameUpdateMessage.getPlayer2CurrentMP(),
-                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags());
+                        gameUpdateMessage.getPlayer2NumberOfCollectedFlags(),
+                        gameUpdateMessage.getCellEffects());
                 GameController.getInstance().calculateAvailableActions();
                 break;
             case Game_FINISH:
                 GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
-                new Thread(() ->{
+                new Thread(() -> {
                     try {
                         Thread.sleep(10000);
                     } catch (InterruptedException ignored) {
