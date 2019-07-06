@@ -280,15 +280,15 @@ public class GameCenter extends Thread {
         removeGame(game);
     }
 
-    public void forceFinishGame(Message message) throws LogicException {
-        Game game = getGame(message.getSender());
+    public void forceFinishGame(String sender) throws LogicException {
+        Game game = getGame(sender);
 
         if (game == null) {
             Server.getInstance().serverPrint("Error forceGameFinish!");
             return;
         }
-        DataCenter.getInstance().loginCheck(message);
-        String username = DataCenter.getInstance().getClients().get(message.getSender()).getUsername();
+        DataCenter.getInstance().loginCheck(sender);
+        String username = DataCenter.getInstance().getClients().get(sender).getUsername();
 
         game.forceFinish(username);
         finish(game);

@@ -194,7 +194,7 @@ public class Server {
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case FORCE_FINISH:
-                    GameCenter.getInstance().forceFinishGame(message);
+                    GameCenter.getInstance().forceFinishGame(message.getSender());
                     break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);

@@ -123,20 +123,24 @@ public class DataCenter extends Thread {
     }
 
     public void loginCheck(Message message) throws LogicException {
-        if (message.getSender() == null) {
+        loginCheck(message.getSender());
+    }
+
+    public void loginCheck(String sender) throws LogicException {
+        if (sender == null) {
             throw new ClientException("invalid message!");
         }
-        if (!clients.containsKey(message.getSender())) {
+        if (!clients.containsKey(sender)) {
             throw new LogicException("Client Wasn't Added!");
         }
-        if (clients.get(message.getSender()) == null) {
+        if (clients.get(sender) == null) {
             throw new ClientException("Client Was Not LoggedIn");
         }
     }
 
-    public void forceLogout(String clientName) {
+    public void forceLogout(String clientName) throws LogicException {
         if (clients.get(clientName) != null) {
-            GameCenter.getInstance().forceFinishGame(clients.get(clientName));
+            GameCenter.getInstance().forceFinishGame(clientName);
             accounts.replace(clients.get(clientName), null);
         }
         clients.remove(clientName);
@@ -145,7 +149,7 @@ public class DataCenter extends Thread {
 
     public void logout(Message message) throws LogicException {
         loginCheck(message);
-        GameCenter.getInstance().forceFinishGame(clients.get(message.getSender()));
+        GameCenter.getInstance().forceFinishGame(message.getSender());
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");

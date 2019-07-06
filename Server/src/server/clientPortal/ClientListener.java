@@ -2,6 +2,7 @@ package server.clientPortal;
 
 import server.Server;
 import server.dataCenter.DataCenter;
+import server.exceptions.LogicException;
 
 import java.net.Socket;
 import java.util.Formatter;
@@ -43,7 +44,10 @@ public class ClientListener extends Thread {
                 ClientPortal.getInstance().addMessage(name, message);
             }
         } catch (Exception e) {
-            DataCenter.getInstance().forceLogout(name);
+            try {
+                DataCenter.getInstance().forceLogout(name);
+            } catch (LogicException ex) {
+            }
             ClientPortal.getInstance().removeClient(name);
             Server.getInstance().serverPrint("Client disConnected!");
         }
