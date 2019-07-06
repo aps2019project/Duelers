@@ -1,23 +1,23 @@
 package server.clientPortal.models.message;
 
 public class ChatMessage {
-    private String messageSender,messageReceiver,textMessage;
+    private String senderUsername, receiverUsername, text;
 
-    public ChatMessage(String messageSender, String messageReceiver, String textMessage) {
-        this.messageSender = messageSender;
-        this.messageReceiver = messageReceiver;
-        this.textMessage = textMessage;
+    ChatMessage(String senderUsername, String receiverUsername, String text) {
+        this.senderUsername = senderUsername;
+        this.receiverUsername = receiverUsername;
+        this.text = text;
     }
 
-    public String getMessageSender() {
-        return messageSender;
+    public String getSenderUsername() {
+        return senderUsername;
     }
 
-    public String getMessageReceiver() {
-        return messageReceiver;
+    public String getReceiverUsername() {
+        return receiverUsername;
     }
 
-    public String getTextMessage() {
-        return textMessage;
+    public String getText() {
+        return text;
     }
 }
