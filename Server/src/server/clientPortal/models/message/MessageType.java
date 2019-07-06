@@ -39,6 +39,8 @@ public enum MessageType {
     SELECT_USER,
     SUDO,
     IMPORT_DECK,
+    //SENDER:DUAL
+    CHAT,
 
 
     ADD_CARD
