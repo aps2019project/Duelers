@@ -41,5 +41,6 @@ public enum MessageType {
     IMPORT_DECK,
 
 
-    ADD_CARD
+    ADD_CARD,
+     FORCE_FINISH
 }

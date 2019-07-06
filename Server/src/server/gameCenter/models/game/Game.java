@@ -871,7 +871,7 @@ public abstract class Game {
         return lastRow;
     }
 
-    void setMatchHistories(boolean resultOne, boolean resultTwo) {
+    public void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(
                 new MatchHistory(playerTwo, resultOne)
         );
@@ -896,5 +896,9 @@ public abstract class Game {
                         .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
                 );
         return Collections.unmodifiableList(result);
+    }
+
+    public void forceFinish(String username) {
+        setMatchHistories(!playerOne.getUserName().equals(username),!playerTwo.getUserName().equals(username));
     }
 }

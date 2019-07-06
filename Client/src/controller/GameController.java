@@ -165,10 +165,8 @@ public class GameController implements GameActions {
         Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, 0));
     }
 
-    @Override
     public void forceFinish() {
-        //TODO:Hadi
-        System.out.println("Finish");
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage(Client.getInstance().getClientName(),Constants.SERVER_NAME,0));
     }
 
     @Override

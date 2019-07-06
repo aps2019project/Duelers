@@ -95,7 +95,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {//TODO:add fast finish game message
+    private void receiveMessage(Message message) {//TODO:add fast forceFinish game message
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
@@ -188,6 +188,9 @@ public class Server {
                 case MOVE_TROOP:
                     GameCenter.getInstance().moveTroop(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    break;
+                case FORCE_FINISH:
+                    GameCenter.getInstance().forceFinishGame(message);
                     break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
