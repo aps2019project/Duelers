@@ -40,5 +40,6 @@ public enum MessageType {
     SELECT_USER,
     SUDO,
     ADD_CARD,
-    IMPORT_DECK
+    IMPORT_DECK,
+    FORCE_FINISH
 }
