@@ -23,9 +23,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private LinkedList<Account> waitingList=new LinkedList<>();
-    private LinkedList<Invitation> invitationList=new LinkedList<>();
-
+    private LinkedList<Account> waitingList = new LinkedList<>();
+    private LinkedList<Invitation> invitationList = new LinkedList<>();
 
     private GameCenter() {
     }
