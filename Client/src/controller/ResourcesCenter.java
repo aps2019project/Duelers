@@ -1,18 +1,19 @@
-package view;
+package controller;
 
 import com.google.gson.Gson;
-import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import models.gui.ImageLoader;
+import view.PlayList;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 public class ResourcesCenter {
     private final static ResourcesCenter ourInstance = new ResourcesCenter();
-    private HashMap<String, Image> imageHashMap = new HashMap<>();
+    private HashMap<String, byte[]> imageHashMap = new HashMap<>();
     private HashMap<String, PlayList> playListHashMap = new HashMap<>();
-    private HashMap<String, Media> mediaHashMap = new HashMap<>();
+    private HashMap<String, byte[]> stringMediaHashMap = new HashMap<String, byte[]>();
+
+
 
     private static final String PATH = "resources";
 
@@ -25,8 +26,6 @@ public class ResourcesCenter {
     }
 
     private static void readFile(File file) throws IOException {
-        if (file.getName().contains("troop"))
-            return;
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             if (files == null)
@@ -40,12 +39,12 @@ public class ResourcesCenter {
                 readPlayList(file);
             }
             if (file.getName().contains(".png")) {
-                Image image = ImageLoader.load(file.getPath());
-                ourInstance.imageHashMap.put(file.getPath(), image);
+                byte[] x = Files.readAllBytes(file.toPath());
+                ourInstance.imageHashMap.put(file.getPath(), x);
             }
             if (file.getName().contains(".m4a")) {
-//                Media media = new Media(file.getPath());
-//                ourInstance.mediaHashMap.put(file.getPath(), media);
+                byte[] x = Files.readAllBytes(file.toPath());
+                ourInstance.stringMediaHashMap.put(file.getPath(), x);
             }
         }
     }
@@ -62,10 +61,10 @@ public class ResourcesCenter {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (OutOfMemoryError e) {
-            System.out.println(Runtime.getRuntime().totalMemory()/1000000);
             System.out.println("ho");
-
         }
+        System.out.println(Runtime.getRuntime().totalMemory()/1000000);
+
         System.out.println("x");
     }
 
