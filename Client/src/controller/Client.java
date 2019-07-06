@@ -220,9 +220,13 @@ public class Client {
             case DONE:
                 break;
             case CHAT:
-
+                showOrSaveMessage(message);
                 break;
         }
+    }
+
+    private void showOrSaveMessage(Message message) {
+
     }
 
     private void showError(Message message) {

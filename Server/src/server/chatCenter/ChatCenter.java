@@ -19,7 +19,7 @@ public class ChatCenter {
     private ChatCenter() {
     }
 
-    public void getMessage(Message message) throws ClientException {
+    public void getMessage(Message message){
         if (message.getChatMessage().getReceiverUsername().equals("GLOBAL")) {
             for(Account account:DataCenter.getInstance().getAccounts().keySet()){//TODO:can has much more performance
                 if(DataCenter.getInstance().isOnline(account.getUsername())){
