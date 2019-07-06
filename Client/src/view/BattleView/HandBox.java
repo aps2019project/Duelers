@@ -58,7 +58,7 @@ public class HandBox implements PropertyChangeListener {
 
         addEndTurnButton();
         addGraveYardButton();
-        addMenuButton();
+        addFinishButton();
 
         player.addPropertyChangeListener(this);
     }
@@ -212,11 +212,10 @@ public class HandBox implements PropertyChangeListener {
         }
     }
 
-    private void addMenuButton() {
+    private void addFinishButton() {
         try {
             ImageButton imageButton = new ImageButton(
-                    "MENU", event -> {
-            },
+                    "Finish", event -> battleScene.getController().forceFinish(),
                     new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                     new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
             );

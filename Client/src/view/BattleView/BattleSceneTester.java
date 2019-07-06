@@ -163,4 +163,9 @@ public class BattleSceneTester extends Application implements GameActions {
     public void useSpecialPower(int row, int column) {
         System.out.println("use spell");
     }
+
+    @Override
+    public void forceFinish() {
+
+    }
 }

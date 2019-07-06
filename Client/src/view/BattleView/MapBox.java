@@ -4,6 +4,9 @@ import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +18,7 @@ import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
 import models.game.map.Position;
 import models.gui.CardPane;
+import models.gui.CombinedColor;
 import models.gui.DefaultLabel;
 
 import java.beans.PropertyChangeEvent;
@@ -22,6 +26,8 @@ import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static view.BattleView.Constants.*;
 
 public class MapBox implements PropertyChangeListener {
     private final BattleScene battleScene;
@@ -460,20 +466,16 @@ public class MapBox implements PropertyChangeListener {
         }
     }
 
-    void updateCellEffects() {
+    private void updateCellEffects() {
         for (int row = 0; row < 5; row++) {
             for (int column = 0; column < 9; column++) {
                 int effect = gameMap.getCellEffect(row, column);
-                if (effect == +1) {
-
-                    continue;
-                }
-                if (effect == -1) {
-
-                    continue;
-                }
-                if (effect == 0) {
-
+                if (effect > 0) {
+                    cells[row][column].setEffect(POSITIVE_BUFF_EFFECT);
+                } else if (effect < 0) {
+                    cells[row][column].setEffect(NEGATIVE_BUFF_EFFECT);
+                } else {
+                    cells[row][column].setEffect(null);
                 }
             }
         }

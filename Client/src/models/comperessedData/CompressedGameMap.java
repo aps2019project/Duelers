@@ -96,8 +96,10 @@ public class CompressedGameMap {
     }
 
     public void updateCellEffects(CellEffect[] cellEffects) {
+        CellEffect[] old = this.cellEffects;
         this.cellEffects = cellEffects;
-        support.firePropertyChange("cellEffect", null, null);
+        if (support == null) support = new PropertyChangeSupport(this);
+        support.firePropertyChange("cellEffect", old, cellEffects);
     }
 
     void removeItem(String cardId) {
