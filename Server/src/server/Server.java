@@ -163,7 +163,7 @@ public class Server {
                     break;
                 case NEW_STORY_GAME:
                     GameCenter.getInstance().newStoryGame(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));//TODO:can be removed
                     break;
                 case NEW_DECK_GAME:
                     GameCenter.getInstance().newDeckGame(message);
@@ -264,7 +264,6 @@ public class Server {
         addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
     }
 
-
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
@@ -286,7 +285,6 @@ public class Server {
             }
         }
     }
-
 
     public void sendTroopUpdateMessage(Game game, Troop troop) {
         String clientName;
@@ -331,7 +329,6 @@ public class Server {
             }
         }
     }
-
 
     public void sendGameUpdateMessage(Game game) {
         String clientName;
@@ -384,11 +381,6 @@ public class Server {
                         serverName, clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName()), 0));
             }
         }
-    }
-
-
-    public String getServerName() {
-        return serverName;
     }
 
     public void serverPrint(String string) {

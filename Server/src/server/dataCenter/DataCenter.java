@@ -151,7 +151,7 @@ public class DataCenter extends Thread {
             accounts.replace(clients.get(clientName), null);
         }
         clients.remove(clientName);
-        //TODO(do with logout)
+        //TODO(do with logout)+remove invitations
     }
 
     public void logout(Message message) throws LogicException {
@@ -160,7 +160,7 @@ public class DataCenter extends Thread {
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
-        //TODO:Check online games
+        //TODO:Check online games+remove invitations
         Server.getInstance().addToSendingMessages(Message.makeDoneMessage(Server.getInstance().serverName, message.getSender(), message.getMessageId()));
     }
 

@@ -8,10 +8,12 @@ import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
+import server.gameCenter.models.Invitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class GameCenter extends Thread {
     private static GameCenter ourInstance = new GameCenter();
@@ -21,6 +23,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
+    private LinkedList<Account> waitingList=new LinkedList<>();
+    private LinkedList<Invitation> invitationList=new LinkedList<>();
 
     private GameCenter() {
     }
