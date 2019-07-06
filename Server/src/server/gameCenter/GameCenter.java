@@ -26,6 +26,7 @@ public class GameCenter extends Thread {
     private LinkedList<Account> waitingList=new LinkedList<>();
     private LinkedList<Invitation> invitationList=new LinkedList<>();
 
+
     private GameCenter() {
     }
 
