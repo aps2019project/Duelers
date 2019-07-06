@@ -1,6 +1,6 @@
-package server.detaCenter.models.card.spell;
+package server.dataCenter.models.card.spell;
 
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.models.card.Deck;
 import server.gameCenter.models.game.GameType;
 import server.gameCenter.models.game.Story;
 

@@ -1,4 +1,4 @@
-package server.detaCenter.models.card.spell;
+package server.dataCenter.models.card.spell;
 
 public class TargetCardType {
     private boolean cell;

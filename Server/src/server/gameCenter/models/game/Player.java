@@ -1,12 +1,10 @@
 package server.gameCenter.models.game;
 
-import server.Server;
-import server.clientPortal.models.message.CardPosition;
-import server.detaCenter.models.account.MatchHistory;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.CardType;
-import server.detaCenter.models.card.Deck;
 import server.clientPortal.models.comperessedData.CompressedPlayer;
+import server.dataCenter.models.account.MatchHistory;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.gameCenter.models.map.Cell;
 

@@ -1,8 +1,8 @@
 package server.gameCenter.models.game.availableActions;
 
-import server.detaCenter.models.card.AttackType;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.spell.Spell;
+import server.dataCenter.models.card.AttackType;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.spell.Spell;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Player;
 import server.gameCenter.models.game.Troop;

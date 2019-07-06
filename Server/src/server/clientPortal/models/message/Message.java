@@ -1,10 +1,10 @@
 package server.clientPortal.models.message;
 
 import server.clientPortal.models.JsonConverter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.Collection;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.ExportedDeck;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.Collection;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.ExportedDeck;
 import server.gameCenter.models.game.CellEffect;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
@@ -39,6 +39,8 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     private NewGameFields newGameFields;
+    //SENDER:DUAL
+    private ChatMessage chatMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -134,6 +136,14 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
+    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
+                                          String textMessage, int messageId){
+        Message message=new Message(sender,receiver,messageId);
+        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
+        message.messageType=MessageType.CHAT;
+        return message;
+    }
+
     public static Message makeAccountInfoMessage(String sender, String receiver, Account opponent, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.opponentInfoMessage = new OpponentInfoMessage(opponent);
@@ -196,5 +206,9 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
 
     public ExportedDeck getExportedDeck() {
         return exportedDeck;
+    }
+
+    public ChatMessage getChatMessage() {
+        return chatMessage;
     }
 }

@@ -1,8 +1,8 @@
 package server.clientPortal.models.comperessedData;
 
-import server.detaCenter.models.card.AttackType;
-import server.detaCenter.models.card.CardType;
-import server.detaCenter.models.card.spell.Spell;
+import server.dataCenter.models.card.AttackType;
+import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.card.spell.Spell;
 
 import java.util.List;
 

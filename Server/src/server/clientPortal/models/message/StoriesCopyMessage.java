@@ -1,6 +1,6 @@
 package server.clientPortal.models.message;
 
-import server.detaCenter.models.card.spell.DeckInfo;
+import server.dataCenter.models.card.spell.DeckInfo;
 import server.gameCenter.models.game.Story;
 
 class StoriesCopyMessage {//TODO:send reward and game type

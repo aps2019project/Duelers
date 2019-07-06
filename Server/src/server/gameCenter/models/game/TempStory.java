@@ -1,6 +1,6 @@
 package server.gameCenter.models.game;
 
-import server.detaCenter.models.card.TempDeck;
+import server.dataCenter.models.card.TempDeck;
 
 public class TempStory {
     private TempDeck deck;

@@ -1,7 +1,7 @@
 package server.clientPortal.models.message;
 
-import server.detaCenter.models.card.Card;
 import server.clientPortal.models.comperessedData.CompressedCard;
+import server.dataCenter.models.card.Card;
 
 class CardPositionMessage {
     private CompressedCard compressedCard;

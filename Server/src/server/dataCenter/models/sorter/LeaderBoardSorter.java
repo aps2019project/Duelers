@@ -1,6 +1,6 @@
-package server.detaCenter.models.sorter;
+package server.dataCenter.models.sorter;
 
-import server.detaCenter.models.account.Account;
+import server.dataCenter.models.account.Account;
 
 import java.util.Comparator;
 

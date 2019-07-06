@@ -2,10 +2,10 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
-import server.detaCenter.DataCenter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.MatchHistory;
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.DataCenter;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.MatchHistory;
+import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.gameCenter.models.game.*;

@@ -1,8 +1,8 @@
-package server.detaCenter.models.account;
+package server.dataCenter.models.account;
 
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.Deck;
-import server.detaCenter.models.card.TempDeck;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.Deck;
+import server.dataCenter.models.card.TempDeck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 

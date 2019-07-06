@@ -2,7 +2,7 @@ package server.clientPortal;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
-import server.detaCenter.DataCenter;
+import server.dataCenter.DataCenter;
 
 import java.net.ServerSocket;
 import java.net.Socket;

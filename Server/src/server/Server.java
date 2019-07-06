@@ -1,16 +1,20 @@
 package server;
 
+import server.chatCenter.ChatCenter;
 import server.clientPortal.ClientPortal;
-import server.detaCenter.DataCenter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.card.Card;
+import server.clientPortal.models.message.CardPosition;
+import server.clientPortal.models.message.Message;
+import server.dataCenter.DataCenter;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.card.Card;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
 import server.gameCenter.GameCenter;
-import server.gameCenter.models.game.*;
-import server.clientPortal.models.message.CardPosition;
-import server.clientPortal.models.message.Message;
+import server.gameCenter.models.game.CellEffect;
+import server.gameCenter.models.game.Game;
+import server.gameCenter.models.game.Story;
+import server.gameCenter.models.game.Troop;
 
 import java.util.*;
 
@@ -49,7 +53,7 @@ public class Server {
                 }
                 if (message != null) {
                     ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    System.out.println(message.getReceiver() + ":\n" + message.toJson());
+                    System.out.println(message.getReceiver() + ":\n" + message.toJson());//TODO:remove
                 } else {
                     try {
                         synchronized (sendingMessages) {
@@ -195,6 +199,9 @@ public class Server {
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
                     break;
+                case CHAT:
+                    ChatCenter.getInstance().getMessage(message);
+                    break;
                 case SUDO:
                     sudo(message);
                     break;
@@ -214,11 +221,9 @@ public class Server {
         }
     }
 
-
     private void sendException(String exceptionString, String receiver, int messageId) {
         addToSendingMessages(Message.makeExceptionMessage(serverName, receiver, exceptionString, messageId));
     }
-
 
     private void sendStories(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message);

@@ -1,7 +1,7 @@
 package server.gameCenter.models.game;
 
-import server.detaCenter.models.account.Collection;
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.models.account.Collection;
+import server.dataCenter.models.card.Deck;
 
 public class Story {
     private Deck deck;

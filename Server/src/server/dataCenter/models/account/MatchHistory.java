@@ -1,4 +1,4 @@
-package server.detaCenter.models.account;
+package server.dataCenter.models.account;
 
 import server.gameCenter.models.game.Player;
 
