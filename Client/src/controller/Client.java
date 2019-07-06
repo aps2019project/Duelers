@@ -219,6 +219,9 @@ public class Client {
                 break;
             case DONE:
                 break;
+            case CHAT:
+
+                break;
         }
     }
 

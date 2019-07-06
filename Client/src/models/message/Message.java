@@ -34,6 +34,8 @@ public class Message {
     private OtherFields otherFields;
     private AccountFields accountFields;
     private NewGameFields newGameFields;
+    //SENDER:DUAL
+    private ChatMessage chatMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -238,6 +240,14 @@ public class Message {
         return message;
     }
 
+    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
+                                          String textMessage, int messageId){
+        Message message=new Message(sender,receiver,messageId);
+        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
+        message.messageType=MessageType.CHAT;
+        return message;
+    }
+
     public static Message makeSudoMessage(String sender, String receiver, String sudoCommand, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.otherFields = new OtherFields();
@@ -320,5 +330,9 @@ public class Message {
 
     public Card getCustomCard() {
         return customCard;
+    }
+
+    public ChatMessage getChatMessage() {
+        return chatMessage;
     }
 }
