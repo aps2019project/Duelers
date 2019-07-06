@@ -76,6 +76,13 @@ public class DataCenter extends Thread {
         return null;
     }
 
+    public boolean isOnline(String username) {
+        Account account = getAccount(username);
+        if (account == null)
+            return false;
+        return accounts.get(account) != null;
+    }
+
     public String getClientName(String username) {
         Account account = getAccount(username);
         if (account == null)
