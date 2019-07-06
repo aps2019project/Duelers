@@ -166,6 +166,12 @@ public class GameController implements GameActions {
     }
 
     @Override
+    public void forceFinish() {
+        //TODO:Hadi
+        System.out.println("Finish");
+    }
+
+    @Override
     public void insert(CompressedCard card, int row, int column) {
         if (validatePositionForInsert(card, row, column))
             Client.getInstance().addToSendingMessagesAndSend(

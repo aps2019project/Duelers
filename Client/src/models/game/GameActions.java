@@ -15,6 +15,8 @@ public interface GameActions {
 
     void endTurn();
 
+    void forceFinish();
+
     void insert(CompressedCard card, int row, int column);
 
     void useSpecialPower(int row, int column);
