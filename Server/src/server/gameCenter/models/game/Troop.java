@@ -1,7 +1,7 @@
 package server.gameCenter.models.game;
 
-import server.detaCenter.models.card.Card;
 import server.clientPortal.models.comperessedData.CompressedTroop;
+import server.dataCenter.models.card.Card;
 import server.gameCenter.models.map.Cell;
 
 import java.util.ArrayList;

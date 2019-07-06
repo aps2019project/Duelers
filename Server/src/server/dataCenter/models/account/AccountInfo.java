@@ -1,4 +1,4 @@
-package server.detaCenter.models.account;
+package server.dataCenter.models.account;
 
 public class AccountInfo {
     private String username;

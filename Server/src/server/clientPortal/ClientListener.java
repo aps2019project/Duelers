@@ -1,7 +1,7 @@
 package server.clientPortal;
 
 import server.Server;
-import server.detaCenter.DataCenter;
+import server.dataCenter.DataCenter;
 
 import java.net.Socket;
 import java.util.Formatter;

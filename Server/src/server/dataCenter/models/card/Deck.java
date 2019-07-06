@@ -1,7 +1,7 @@
-package server.detaCenter.models.card;
+package server.dataCenter.models.card;
 
 import server.Server;
-import server.detaCenter.models.account.Collection;
+import server.dataCenter.models.account.Collection;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 

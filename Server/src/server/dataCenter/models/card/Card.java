@@ -1,7 +1,7 @@
-package server.detaCenter.models.card;
+package server.dataCenter.models.card;
 
-import server.detaCenter.models.card.spell.Spell;
 import server.clientPortal.models.comperessedData.CompressedCard;
+import server.dataCenter.models.card.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.Collections;

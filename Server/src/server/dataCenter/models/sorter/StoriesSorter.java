@@ -1,4 +1,4 @@
-package server.detaCenter.models.sorter;
+package server.dataCenter.models.sorter;
 
 import server.gameCenter.models.game.Story;
 

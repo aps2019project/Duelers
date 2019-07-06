@@ -1,10 +1,10 @@
 package server.clientPortal.models.message;
 
 import server.clientPortal.models.JsonConverter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.Collection;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.ExportedDeck;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.Collection;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.ExportedDeck;
 import server.gameCenter.models.game.CellEffect;
 import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;

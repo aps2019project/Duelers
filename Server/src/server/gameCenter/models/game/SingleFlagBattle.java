@@ -1,8 +1,8 @@
 package server.gameCenter.models.game;
 
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.Deck;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
 import server.gameCenter.models.map.GameMap;
