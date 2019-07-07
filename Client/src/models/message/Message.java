@@ -33,9 +33,9 @@ public class Message {
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
-    private NewGameFields newGameFields;
     //SENDER:DUAL
     private ChatMessage chatMessage;
+    private NewGameFields newGameFields;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -62,7 +62,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeImportDeckMessage(String sender, String receiver, ExportedDeck exportedDeck, int messageId){
+    public static Message makeImportDeckMessage(String sender, String receiver, ExportedDeck exportedDeck, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.exportedDeck = exportedDeck;
         message.messageType = MessageType.IMPORT_DECK;
@@ -182,8 +182,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeForceFinishGameMessage(String sender, String receiver,int messageId){
-        Message message = new Message(sender,receiver,messageId);
+    public static Message makeForceFinishGameMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.FORCE_FINISH;
         return message;
     }
@@ -197,13 +197,35 @@ public class Message {
         return message;
     }
 
-    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentUsername, int messageId) {
+    public static Message makeMultiPlayerGameReQuestMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentUsername, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUsername);
         message.newGameFields.setNumberOfFlags(numberOfFlags);
         message.newGameFields.setGameType(gameType);
-        message.messageType = MessageType.NEW_MULTIPLAYER_GAME;
+        message.messageType = MessageType.MULTIPLAYER_GAME_REQUEST;
+        return message;
+    }
+
+    public static Message makeCancelRequestMessage(String sender, String receiver) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.CANCEL_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptRequestMessage(String sender, String receiver, String opponentUsername) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.ACCEPT_REQUEST;
+        message.newGameFields=new NewGameFields();
+        message.newGameFields.setOpponentUsername(opponentUsername);
+        return message;
+    }
+
+    public static Message makeDeclineRequestMessage(String sender, String receiver, String opponentUsername) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.DECLINE_REQUEST;
+        message.newGameFields=new NewGameFields();
+        message.newGameFields.setOpponentUsername(opponentUsername);
         return message;
     }
 
@@ -233,18 +255,18 @@ public class Message {
         return message;
     }
 
-    public static Message makeCustomCardMessage(String sender, String receiver , Card customCard , int messageId){
-        Message message = new Message(sender, receiver,messageId);
+    public static Message makeCustomCardMessage(String sender, String receiver, Card customCard, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
         message.customCard = customCard;
         message.messageType = MessageType.ADD_CARD;
         return message;
     }
 
-    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
-                                          String textMessage, int messageId){
-        Message message=new Message(sender,receiver,messageId);
-        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
-        message.messageType=MessageType.CHAT;
+    public static Message makeChatMessage(String sender, String receiver, String messageSender, String messageReceiver,
+                                          String textMessage, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.chatMessage = new ChatMessage(messageSender, messageReceiver, textMessage);
+        message.messageType = MessageType.CHAT;
         return message;
     }
 
@@ -334,5 +356,9 @@ public class Message {
 
     public ChatMessage getChatMessage() {
         return chatMessage;
+    }
+
+    public NewGameFields getNewGameFields() {
+        return newGameFields;
     }
 }

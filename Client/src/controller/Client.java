@@ -11,10 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.GameResultMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.Show;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -221,6 +218,17 @@ public class Client {
                 break;
             case CHAT:
 
+                break;
+            case INVITATION:
+                Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
+                break;
+            case ACCEPT_REQUEST:
+                //think...
+                break;
+            case DECLINE_REQUEST:
+                if (currentShow instanceof WaitingMenu) {
+                    ((WaitingMenu) currentShow).close();
+                }
                 break;
         }
     }

@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.media.jfxmedia.MediaException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 

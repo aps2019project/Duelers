@@ -5,14 +5,11 @@ import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.ExportedDeck;
-import server.gameCenter.models.game.CellEffect;
-import server.gameCenter.models.game.Game;
-import server.gameCenter.models.game.Story;
-import server.gameCenter.models.game.Troop;
+import server.gameCenter.models.game.*;
 
 import java.util.List;
 
-public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
+public class Message {
     private MessageType messageType;
     //serverName || clientName
     private String sender;
@@ -38,9 +35,9 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
-    private NewGameFields newGameFields;
     //SENDER:DUAL
     private ChatMessage chatMessage;
+    private NewGameFields newGameFields;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -136,11 +133,11 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
-    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
-                                          String textMessage, int messageId){
-        Message message=new Message(sender,receiver,messageId);
-        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
-        message.messageType=MessageType.CHAT;
+    public static Message makeChatMessage(String sender, String receiver, String messageSender, String messageReceiver,
+                                          String textMessage, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.chatMessage = new ChatMessage(messageSender, messageReceiver, textMessage);
+        message.messageType = MessageType.CHAT;
         return message;
     }
 
@@ -151,17 +148,36 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return message;
     }
 
-    public static Message makeGameFinishMessage(String sender, String receiver, boolean youWon , int reward, int messageId) {
+    public static Message makeGameFinishMessage(String sender, String receiver, boolean youWon, int reward, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.gameFinishMessage = new GameFinishMessage(youWon , reward);
+        message.gameFinishMessage = new GameFinishMessage(youWon, reward);
         message.messageType = MessageType.Game_FINISH;
         return message;
     }
 
     public static Message makeAddCustomCardMessage(String serverName, String key, Card customCard, int i) {
-        Message message = new Message(serverName,key,i);
+        Message message = new Message(serverName, key, i);
         message.customCard = customCard;
         message.messageType = MessageType.ADD_CARD;
+        return message;
+    }
+
+    public static Message makeInvitationMessage(String sender, String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.INVITATION;
+        message.newGameFields = new NewGameFields(gameType, numberOfFlags, 0, null, inviterUsername);
+        return message;
+    }
+
+    public static Message makeAcceptRequestMessage(String sender, String receiver) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.ACCEPT_REQUEST;
+        return message;
+    }
+
+    public static Message makeDeclineRequestMessage(String sender, String receiver) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.DECLINE_REQUEST;
         return message;
     }
 
@@ -201,7 +217,8 @@ public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
         return newGameFields;
     }
 
-    public Card getCustomCard() {return customCard;
+    public Card getCustomCard() {
+        return customCard;
     }
 
     public ExportedDeck getExportedDeck() {
