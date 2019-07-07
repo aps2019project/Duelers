@@ -24,6 +24,7 @@ public class GameCenter extends Thread {//synchronize
         return ourInstance;
     }
 
+
     private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
     private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
@@ -386,19 +387,21 @@ public class GameCenter extends Thread {//synchronize
         removeGame(game);
     }
 
-    public void forceFinishGame(String sender) throws LogicException {
-        Game game = getGame(sender);
+    public void forceFinishGame(String sender) {
+        try {
+            Game game = getGame(sender);
 
-        if (game == null) {
-            Server.getInstance().serverPrint("Error forceGameFinish!");
-            return;
+            if (game == null) {
+                Server.getInstance().serverPrint("Error forceGameFinish!");
+                return;
+            }
+            DataCenter.getInstance().loginCheck(sender);
+            String username = DataCenter.getInstance().getClients().get(sender).getUsername();
+
+            game.forceFinish(username);
+            finish(game);
+        }catch (LogicException ignored){
         }
-        DataCenter.getInstance().loginCheck(sender);
-        String username = DataCenter.getInstance().getClients().get(sender).getUsername();
-
-        game.forceFinish(username);
-        finish(game);
-
 
     }
 }
