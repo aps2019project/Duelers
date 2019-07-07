@@ -76,7 +76,18 @@ public class GameCenter extends Thread {
     }
 
     public void removeAllGameRequests(Account account){
-
+        for(GlobalRequest globalRequest:globalRequests){
+            if(globalRequest.getRequester()==account){
+                globalRequests.remove(globalRequest);
+                break;
+            }
+        }
+        for(UserInvitation userInvitation:userInvitations){
+            if(userInvitation.getInviter()==account){
+                userInvitations.remove(userInvitation);
+                break;
+            }
+        }
     }
 
     public void getAcceptRequest(Message message) throws LogicException {
