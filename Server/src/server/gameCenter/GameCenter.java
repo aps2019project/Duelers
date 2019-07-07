@@ -56,10 +56,9 @@ public class GameCenter extends Thread {//synchronize
             throw new ClientException("You have online game!");
         if (!account1.hasValidMainDeck())
             throw new ClientException("You don't have valid main deck");
-        if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null ||
-                message.getNewGameFields().getOpponentUsername() == null)
+        if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null)
             throw new ClientException("Invalid Request");
-        if (message.getNewGameFields().getOpponentUsername().equals("GLOBAL")) {
+        if (message.getNewGameFields().getOpponentUsername() == null) {
             addGlobalRequest(account1, message.getNewGameFields().getGameType(), message.getNewGameFields().getNumberOfFlags());
         } else {
             Account account2 = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
@@ -83,8 +82,12 @@ public class GameCenter extends Thread {//synchronize
     }
 
     private void addUserInvitation(Account inviter, Account invited, GameType gameType, int numberOfFlags) {
+        removeAllGameRequests(inviter);
         synchronized (userInvitations) {
-
+            userInvitations.addLast(new UserInvitation(inviter, invited, gameType, numberOfFlags));
+            Server.getInstance().addToSendingMessages(Message.makeInvitationMessage(
+                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
+                    gameType, numberOfFlags));
         }
     }
 
@@ -107,19 +110,50 @@ public class GameCenter extends Thread {//synchronize
         }
     }
 
+    private UserInvitation getUserInvitation(Account inviter) {
+        for (UserInvitation userInvitation : userInvitations) {
+            if (userInvitation.getInviter() == inviter)
+                return userInvitation;
+        }
+        return null;
+    }
+
     public void getAcceptRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
-        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        Account invited = DataCenter.getInstance().getClients().get(message.getSender());
         synchronized (userInvitations) {
+            if (message.getNewGameFields() == null || message.getNewGameFields().getOpponentUsername() == null)
+                throw new ClientException("invalid accept message!");
+            Account inviter = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
+            if (inviter == null)
+                throw new ClientException("invalid opponent username!");
+            UserInvitation invitation = getUserInvitation(inviter);
+            if (invitation == null)
+                throw new ClientException("The Invitation was not found!");
+            userInvitations.remove(invitation);
+            Server.getInstance().addToSendingMessages(Message.makeAcceptRequestMessage(
+                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+            newMultiplayerGame(inviter, invited, invitation.getGameType(), invitation.getNumberOfFlags());
 
         }
     }
+
 
     public void getDeclineRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
         synchronized (userInvitations) {
-
+            if (message.getNewGameFields() == null || message.getNewGameFields().getOpponentUsername() == null)
+                throw new ClientException("invalid accept message!");
+            Account inviter = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
+            if (inviter == null)
+                throw new ClientException("invalid opponent username!");
+            UserInvitation invitation = getUserInvitation(inviter);
+            if (invitation == null)
+                throw new ClientException("The Invitation was not found!");
+            userInvitations.remove(invitation);
+            Server.getInstance().addToSendingMessages(Message.makeDeclineRequestMessage(
+                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
         }
     }
 
