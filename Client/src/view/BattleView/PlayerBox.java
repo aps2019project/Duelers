@@ -362,7 +362,7 @@ public class PlayerBox implements PropertyChangeListener {
         private final StackPane stackPane;
         private final double x;
         private final double y;
-        private long initialTime;
+        private long initialTime = -1;
 
         MessageShow(ImageView playerImage) {
             x = playerImage.getX() + (playerImage.getFitWidth() - CHAT_BUBBLE_SIZE) / 2;
@@ -373,13 +373,13 @@ public class PlayerBox implements PropertyChangeListener {
 
         void show(String text) {
             this.text.setText(text);
-            initialTime = 0;
+            initialTime = -1;
             start();
         }
 
         @Override
         public void handle(long now) {
-            if (initialTime == 0) {
+            if (initialTime == -1) {
                 initialTime = now;
                 group.getChildren().add(stackPane);
             }
