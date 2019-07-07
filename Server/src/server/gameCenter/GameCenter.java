@@ -55,7 +55,7 @@ public class GameCenter extends Thread {//synchronize
         if (onlineGames.get(account1) != null)
             throw new ClientException("You have online game!");
         if (!account1.hasValidMainDeck())
-            throw new ClientException("You don't have valid main deck")
+            throw new ClientException("You don't have valid main deck");
         if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null ||
                 message.getNewGameFields().getOpponentUsername() == null)
             throw new ClientException("Invalid Request");
