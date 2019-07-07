@@ -151,7 +151,7 @@ public class Client {
                 ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
                 break;
             case LEADERBOARD_COPY:
-                leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
+                MainMenuController.getInstance().setLeaderBoard(message.getLeaderBoardCopyMessage().getLeaderBoard());
                 break;
             case STORIES_COPY:
                 StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());

@@ -9,6 +9,7 @@ import server.exceptions.LogicException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Account {
     private String username;
@@ -172,7 +173,7 @@ public class Account {
     }
 
     public int getWins() {
-        return wins;
+        return matchHistories.stream().filter(MatchHistory::isAmIWinner).collect(Collectors.toList()).size();
     }
 
     List<Deck> getDecks() {
