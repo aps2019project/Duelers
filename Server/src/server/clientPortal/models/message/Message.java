@@ -5,10 +5,7 @@ import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.ExportedDeck;
-import server.gameCenter.models.game.CellEffect;
-import server.gameCenter.models.game.Game;
-import server.gameCenter.models.game.Story;
-import server.gameCenter.models.game.Troop;
+import server.gameCenter.models.game.*;
 
 import java.util.List;
 
@@ -165,10 +162,10 @@ public class Message {
         return message;
     }
 
-    public static Message makeInvitationMessage(String sender, String receiver, NewGameFields newGameFields) {
+    public static Message makeInvitationMessage(String sender, String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
         Message message = new Message(sender, receiver, 0);
         message.messageType = MessageType.INVITATION;
-        message.newGameFields = newGameFields;
+        message.newGameFields = new NewGameFields(gameType, numberOfFlags, 0, null, inviterUsername);
         return message;
     }
 

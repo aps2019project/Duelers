@@ -56,10 +56,9 @@ public class GameCenter extends Thread {//synchronize
             throw new ClientException("You have online game!");
         if (!account1.hasValidMainDeck())
             throw new ClientException("You don't have valid main deck");
-        if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null ||
-                message.getNewGameFields().getOpponentUsername() == null)
+        if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null)
             throw new ClientException("Invalid Request");
-        if (message.getNewGameFields().getOpponentUsername().equals("GLOBAL")) {
+        if (message.getNewGameFields().getOpponentUsername() == null) {
             addGlobalRequest(account1, message.getNewGameFields().getGameType(), message.getNewGameFields().getNumberOfFlags());
         } else {
             Account account2 = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
@@ -83,8 +82,12 @@ public class GameCenter extends Thread {//synchronize
     }
 
     private void addUserInvitation(Account inviter, Account invited, GameType gameType, int numberOfFlags) {
+        removeAllGameRequests(inviter);
         synchronized (userInvitations) {
-
+            userInvitations.addLast(new UserInvitation(inviter, invited, gameType, numberOfFlags));
+            Server.getInstance().addToSendingMessages(Message.makeInvitationMessage(
+                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
+                    gameType, numberOfFlags));
         }
     }
 
