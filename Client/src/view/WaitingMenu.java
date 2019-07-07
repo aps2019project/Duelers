@@ -1,6 +1,7 @@
 package view;
 
 import controller.GraphicalUserInterface;
+import controller.WaitingController;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -106,8 +107,8 @@ public class WaitingMenu extends Show {
     }
 
     private void cancel() {
+        WaitingController.getInstance().cancel();
         close();
-        // TODO send to server
     }
 
     public void close() {
