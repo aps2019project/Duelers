@@ -1,8 +1,10 @@
 package controller;
 
 import com.google.gson.Gson;
+import models.gui.ImageLoader;
 import view.PlayList;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -11,18 +13,22 @@ public class ResourcesCenter {
     private final static ResourcesCenter ourInstance = new ResourcesCenter();
     private HashMap<String, byte[]> imageHashMap = new HashMap<>();
     private HashMap<String, PlayList> playListHashMap = new HashMap<>();
-    private HashMap<String, byte[]> stringMediaHashMap = new HashMap<String, byte[]>();
+    private HashMap<String, byte[]> stringMediaHashMap = new HashMap<>();
 
 
 
     private static final String PATH = "resources";
 
     private ResourcesCenter() {
+        readData();
     }
 
-    private static void readData() throws IOException {
+    private static void readData()  {
         File file = new File(PATH);
-        readFile(file);
+        try {
+            readFile(file);
+        } catch (IOException ignored) {
+        }
     }
 
     private static void readFile(File file) throws IOException {
@@ -36,7 +42,8 @@ public class ResourcesCenter {
             }
         } else {
             if (file.getName().contains(".plist.json")) {
-                readPlayList(file);
+                PlayList playlist = new Gson().fromJson(new FileReader(file), PlayList.class);
+                ourInstance.playListHashMap.put(file.getPath(), playlist);
             }
             if (file.getName().contains(".png")) {
                 byte[] x = Files.readAllBytes(file.toPath());
@@ -49,18 +56,12 @@ public class ResourcesCenter {
         }
     }
 
-    private static void readPlayList(File file) throws IOException {
-        PlayList playlist = new Gson().fromJson(new FileReader(file), PlayList.class);
-        ourInstance.playListHashMap.put(file.getPath(), playlist);
-    }
-
     public static void main(String[] args) {
         try {
-            System.out.println(Runtime.getRuntime().totalMemory()/1000000);
+            System.out.println(Runtime.getRuntime().totalMemory() / 1000000);
             readData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (OutOfMemoryError e) {
+        }
+        catch (OutOfMemoryError e) {
             System.out.println("ho");
         }
         System.out.println(Runtime.getRuntime().totalMemory()/1000000);

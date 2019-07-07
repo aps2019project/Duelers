@@ -28,4 +28,8 @@ public class MainMenuController {
                 )
         );
     }
+
+    public void addChatMessage(ChatMessage chatMessage) {
+
+    }
 }

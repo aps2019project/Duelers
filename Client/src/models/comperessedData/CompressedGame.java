@@ -81,8 +81,10 @@ public class CompressedGame {
     public void troopUpdate(CompressedTroop troop) {
         CompressedPlayer player;
         player = getPlayer(troop.getPlayerNumber());
-        player.troopUpdate(troop);
-        gameMap.updateTroop(troop);
+        if (player.searchGraveyard(troop.getCard().getCardId()) == null) {
+            player.troopUpdate(troop);
+            gameMap.updateTroop(troop);
+        }
     }
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
