@@ -11,10 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.GameResultMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.Show;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -229,7 +226,9 @@ public class Client {
                 //no fields
                 break;
             case DECLINE_REQUEST:
-                //no fields
+                if (currentShow instanceof WaitingMenu) {
+                    ((WaitingMenu) currentShow).close();
+                }
                 break;
             case CANCEL_REQUEST:
                 //no fields
