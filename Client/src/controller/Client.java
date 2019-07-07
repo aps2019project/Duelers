@@ -222,6 +222,9 @@ public class Client {
             case CHAT:
 
                 break;
+            case INVITATION:
+                //message.getNewGameFields();
+                break;
         }
     }
 

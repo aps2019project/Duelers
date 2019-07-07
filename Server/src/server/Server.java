@@ -157,8 +157,20 @@ public class Server {
                 case ADD_CARD:
                     DataCenter.getInstance().addCard(message);
                     break;
-                case NEW_MULTIPLAYER_GAME:
-                    GameCenter.getInstance().newMultiplayerGame(message);
+                case MULTIPLAYER_GAME_REQUEST:
+                    GameCenter.getInstance().getMultiPlayerGameRequest(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    break;
+                case CANCEL_REQUEST:
+                    GameCenter.getInstance().getCancelRequest(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    break;
+                case ACCEPT_REQUEST:
+                    GameCenter.getInstance().getAcceptRequest(message);
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    break;
+                case DECLINE_REQUEST:
+                    GameCenter.getInstance().getDeclineRequest(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case NEW_STORY_GAME:

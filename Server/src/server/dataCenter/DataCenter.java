@@ -148,6 +148,7 @@ public class DataCenter extends Thread {
     public void forceLogout(String clientName) throws LogicException {
         if (clients.get(clientName) != null) {
             GameCenter.getInstance().forceFinishGame(clientName);
+            GameCenter.getInstance().removeAllGameRequests(clients.get(clientName));
             accounts.replace(clients.get(clientName), null);
         }
         clients.remove(clientName);
@@ -157,6 +158,7 @@ public class DataCenter extends Thread {
     public void logout(Message message) throws LogicException {
         loginCheck(message);
         GameCenter.getInstance().forceFinishGame(message.getSender());
+        GameCenter.getInstance().removeAllGameRequests(clients.get(message.getSender()));
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");

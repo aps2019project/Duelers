@@ -15,7 +15,7 @@ public enum MessageType {
     Game_FINISH,
     DONE,
     ANIMATION,
-
+    INVITATION,
     //SENDER:CLIENT
     GET_DATA,
     MOVE_TROOP,
@@ -34,7 +34,10 @@ public enum MessageType {
     LOG_IN,
     LOG_OUT,
     REGISTER,
-    NEW_MULTIPLAYER_GAME,
+    MULTIPLAYER_GAME_REQUEST,
+    CANCEL_REQUEST,
+    ACCEPT_REQUEST,
+    DECLINE_REQUEST,
     NEW_DECK_GAME,
     NEW_STORY_GAME,
     SELECT_USER,
