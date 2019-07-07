@@ -226,7 +226,11 @@ public class Client {
     }
 
     private void showOrSaveMessage(Message message) {
+        if (message.getReceiver().equals(Constants.GLOBAL)){
 
+        }else {
+
+        }
     }
 
     private void showError(Message message) {
