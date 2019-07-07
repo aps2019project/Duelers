@@ -10,7 +10,8 @@ import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
-import server.gameCenter.models.Invitation;
+import server.gameCenter.models.GlobalRequest;
+import server.gameCenter.models.UserInvitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
 
@@ -25,8 +26,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private LinkedList<Account> waitingList = new LinkedList<>();
-    private LinkedList<Invitation> invitationList = new LinkedList<>();
+    private LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
+    private LinkedList<UserInvitation> userInvitations = new LinkedList<>();
 
     private GameCenter() {
     }
@@ -35,7 +36,6 @@ public class GameCenter extends Thread {
     @Override
     public void run() {
         Server.getInstance().serverPrint("Starting GameCenter...");
-
     }
 
     private Game getGame(String clientName) throws ClientException {
@@ -48,6 +48,26 @@ public class GameCenter extends Thread {
             throw new ClientException("you don't have online game!");
         }
         return game;
+    }
+
+    public void getMultiPlayerGameRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message.getSender());
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+    }
+
+    public void getAcceptRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message.getSender());
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+    }
+
+    public void getDeclineRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message.getSender());
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+    }
+
+    public void getCancelRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message.getSender());
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
     }
 
     private void checkOpponentAccountValidation(Message message) throws LogicException {
