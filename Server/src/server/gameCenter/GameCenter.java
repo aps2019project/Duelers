@@ -29,6 +29,7 @@ public class GameCenter extends Thread {
     private GameCenter() {
     }
 
+
     @Override
     public void run() {
         Server.getInstance().serverPrint("Starting GameCenter...");
