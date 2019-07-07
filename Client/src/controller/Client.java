@@ -11,6 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
+import view.BattleView.BattleScene;
 import view.GameResultMenu;
 import view.LoginMenu;
 import view.MainMenu;
@@ -226,10 +227,12 @@ public class Client {
     }
 
     private void showOrSaveMessage(Message message) {
-        if (message.getChatMessage().getReceiverUsername().equals(Constants.GLOBAL)){
+        if (message.getChatMessage().getReceiverUsername().equals(Constants.GLOBAL)) {
             MainMenuController.getInstance().addChatMessage(message.getChatMessage());
-        }else {
-            //TODO:ahmad
+        } else {
+            if (currentShow instanceof BattleScene) {
+                ((BattleScene) currentShow).showOpponentMessage(message.getChatMessage().getText());
+            }
         }
     }
 

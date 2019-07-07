@@ -26,17 +26,21 @@ public class BattleScene extends Show {
     private final HandBox handBox;
     private final PlayerBox playerBox;
     private final int myPlayerNumber;
+    private final CompressedPlayer myPlayer;
+    private final CompressedPlayer oppPlayer;
 
     public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber, String mapName) throws Exception {
         this.controller = controller;
         this.game = game;
         this.myPlayerNumber = myPlayerNumber;
         addBackGround(mapName);
-        CompressedPlayer myPlayer;
-        if (myPlayerNumber == 1)
+        if (myPlayerNumber == 1){
             myPlayer = game.getPlayerOne();
-        else
+            oppPlayer = game.getPlayerTwo();
+        } else {
             myPlayer = game.getPlayerTwo();
+            oppPlayer = game.getPlayerOne();
+        }
         handBox = new HandBox(this, myPlayer, Constants.HAND_X, Constants.HAND_Y);
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
@@ -67,7 +71,7 @@ public class BattleScene extends Show {
         }).start();
     }
 
-    public void defend(String defender, String attacker) {
+    void defend(String defender, String attacker) {
         mapBox.showDefend(defender, attacker);
     }
 
@@ -82,23 +86,7 @@ public class BattleScene extends Show {
     }
 
     @Override
-    public void showError(String message, EventHandler<? super MouseEvent> event) {
-
-    }
-
-    @Override
-    public void showError(String message) {
-
-    }
-
-    @Override
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
-
-    }
-
-    @Override
-    public void showError(String message, String buttonText) {
-
     }
 
     MapBox getMapBox() {
@@ -127,5 +115,13 @@ public class BattleScene extends Show {
 
     public CompressedGame getGame() {
         return game;
+    }
+
+    public void showOpponentMessage(String text) {
+        playerBox.showMessage(oppPlayer, text);
+    }
+
+    public void showMyMessage(String text) {
+        playerBox.showMessage(myPlayer, text);
     }
 }
