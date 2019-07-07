@@ -52,7 +52,31 @@ public class GameCenter extends Thread {
 
     public void getMultiPlayerGameRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
-        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        Account account1 = DataCenter.getInstance().getClients().get(message.getSender());
+        if (onlineGames.get(account1) != null)
+            throw new ClientException("You have online game!");
+        if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null ||
+                message.getNewGameFields().getOpponentUsername() == null)
+            throw new ClientException("Invalid Request");
+        if (message.getNewGameFields().getOpponentUsername().equals("GLOBAL")) {
+            addGlobalRequest(account1, message.getNewGameFields().getGameType(), message.getNewGameFields().getNumberOfFlags());
+        } else {
+            Account account2 = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
+            checkOpponentAccountValidation(account2);
+            addUserInvitation(account1, account2, message.getNewGameFields().getGameType(), message.getNewGameFields().getNumberOfFlags());
+        }
+    }
+
+    private void addGlobalRequest(Account account, GameType gameType, int numberOfFlags) {
+
+    }
+
+    private void addUserInvitation(Account inviter, Account invited, GameType gameType, int numberOfFlags) {
+
+    }
+
+    public void removeAllGameRequests(Account account){
+
     }
 
     public void getAcceptRequest(Message message) throws LogicException {
@@ -68,18 +92,15 @@ public class GameCenter extends Thread {
     public void getCancelRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        removeAllGameRequests(account);
     }
 
-    private void checkOpponentAccountValidation(Message message) throws LogicException {
-        if (message.getNewGameFields().getOpponentUsername() == null) {
-            throw new ClientException("invalid opponentAccount!");
-        }
-        Account opponentAccount = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
+    private void checkOpponentAccountValidation(Account opponentAccount) throws LogicException {
         if (opponentAccount == null) {
             throw new ClientException("invalid opponent username!");
         }
         if (DataCenter.getInstance().getAccounts().get(opponentAccount) == null) {
-            throw new ClientException("opponentAccount has not logged in!");
+            throw new ClientException("opponentAccount is not online!");
         }
         if (onlineGames.get(opponentAccount) != null) {
             throw new ClientException("opponentAccount has online game!");
@@ -90,6 +111,7 @@ public class GameCenter extends Thread {
     public void newDeckGame(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message);
         Account myAccount = DataCenter.getInstance().getClients().get(message.getSender());
+        removeAllGameRequests(myAccount);
         if (!myAccount.hasValidMainDeck()) {
             throw new ClientException("you don't have valid main deck!");
         }
@@ -124,6 +146,7 @@ public class GameCenter extends Thread {
     public void newStoryGame(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message);
         Account myAccount = DataCenter.getInstance().getClients().get(message.getSender());
+        removeAllGameRequests(myAccount);
         if (!myAccount.hasValidMainDeck()) {
             throw new ClientException("you don't have valid main deck!");
         }
@@ -158,6 +181,8 @@ public class GameCenter extends Thread {
         if (account2 == null || !account2.hasValidMainDeck() || onlineGames.get(account2) != null) {
             throw new ServerException("account1 error multiplayer");
         }
+        removeAllGameRequests(account1);
+        removeAllGameRequests(account2);
         Game game = null;
         GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), newGameFields.getNumberOfFlags(), DataCenter.getInstance().getOriginalFlag());
         if (newGameFields.getGameType() == null) {
