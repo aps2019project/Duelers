@@ -62,7 +62,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeImportDeckMessage(String sender, String receiver, ExportedDeck exportedDeck, int messageId){
+    public static Message makeImportDeckMessage(String sender, String receiver, ExportedDeck exportedDeck, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.exportedDeck = exportedDeck;
         message.messageType = MessageType.IMPORT_DECK;
@@ -182,8 +182,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeForceFinishGameMessage(String sender, String receiver,int messageId){
-        Message message = new Message(sender,receiver,messageId);
+    public static Message makeForceFinishGameMessage(String sender, String receiver, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
         message.messageType = MessageType.FORCE_FINISH;
         return message;
     }
@@ -208,7 +208,13 @@ public class Message {
     }
 
     public static Message makeMultiPlayerGameReQuestMessage(String sender, String receiver, GameType gameType, int numberOfFlags, int messageId) {
-        return makeMultiPlayerGameReQuestMessage(sender,receiver,gameType,numberOfFlags,"GLOBAL",messageId);//may bug
+        return makeMultiPlayerGameReQuestMessage(sender, receiver, gameType, numberOfFlags, "GLOBAL", messageId);//may bug
+    }
+
+    public static Message makeCancelRequestMessage(String sender, String receiver) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.CANCEL_REQUEST;
+        return message;
     }
 
     public static Message makeNewCustomGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String customDeckName, int messageId) {
@@ -237,18 +243,18 @@ public class Message {
         return message;
     }
 
-    public static Message makeCustomCardMessage(String sender, String receiver , Card customCard , int messageId){
-        Message message = new Message(sender, receiver,messageId);
+    public static Message makeCustomCardMessage(String sender, String receiver, Card customCard, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
         message.customCard = customCard;
         message.messageType = MessageType.ADD_CARD;
         return message;
     }
 
-    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
-                                          String textMessage, int messageId){
-        Message message=new Message(sender,receiver,messageId);
-        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
-        message.messageType=MessageType.CHAT;
+    public static Message makeChatMessage(String sender, String receiver, String messageSender, String messageReceiver,
+                                          String textMessage, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.chatMessage = new ChatMessage(messageSender, messageReceiver, textMessage);
+        message.messageType = MessageType.CHAT;
         return message;
     }
 

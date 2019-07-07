@@ -161,6 +161,15 @@ public class Server {
                     GameCenter.getInstance().newMultiplayerGame(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
+                case CANCEL_REQUEST:
+
+                    break;
+                case ACCEPT_REQUEST:
+
+                    break;
+                case DECLINE_REQUEST:
+
+                    break;
                 case NEW_STORY_GAME:
                     GameCenter.getInstance().newStoryGame(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));//TODO:can be removed
