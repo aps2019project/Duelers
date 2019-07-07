@@ -54,7 +54,7 @@ public class WaitingMenu extends Show {
             DefaultLabel waitLabel = new DefaultLabel("WAITING...", FONT, Color.WHITE);
             addShadowAnimation(waitLabel);
 
-            ImageButton cancelButton = new ImageButton("CANCEL", event -> previousShow.show());
+            ImageButton cancelButton = new ImageButton("CANCEL", event -> cancel());
 
             container.getChildren().addAll(new Space(SPACE_HEIGHT), waitLabel, cancelButton);
 
@@ -105,6 +105,15 @@ public class WaitingMenu extends Show {
         animation.start();
     }
 
+    private void cancel() {
+        close();
+        // TODO send to server
+    }
+
+    public void close() {
+        previousShow.show();
+    }
+
     @Override
     public void show() {
         super.show();
@@ -113,6 +122,6 @@ public class WaitingMenu extends Show {
 
     @Override
     public void showError(String message) {
-        super.showError(message, "OK", event -> previousShow.show());
+        super.showError(message, "OK", event -> close());
     }
 }
