@@ -8,7 +8,7 @@ public class GlobalRequest {
     private final GameType gameType;
     private final int numberOfFlags;
 
-    public GlobalRequest(Account requester, Account invited, GameType gameType, int numberOfFlags) {
+    public GlobalRequest(Account requester, GameType gameType, int numberOfFlags) {
         this.requester = requester;
         this.gameType = gameType;
         this.numberOfFlags = numberOfFlags;

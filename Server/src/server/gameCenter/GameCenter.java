@@ -2,7 +2,6 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
-import server.clientPortal.models.message.NewGameFields;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.MatchHistory;
@@ -55,6 +54,8 @@ public class GameCenter extends Thread {//synchronize
         Account account1 = DataCenter.getInstance().getClients().get(message.getSender());
         if (onlineGames.get(account1) != null)
             throw new ClientException("You have online game!");
+        if (!account1.hasValidMainDeck())
+            throw new ClientException("You don't have valid main deck")
         if (message.getNewGameFields() == null || message.getNewGameFields().getGameType() == null ||
                 message.getNewGameFields().getOpponentUsername() == null)
             throw new ClientException("Invalid Request");
@@ -68,31 +69,37 @@ public class GameCenter extends Thread {//synchronize
     }
 
     private void addGlobalRequest(Account account, GameType gameType, int numberOfFlags) {
-        synchronized (globalRequests){
-            for(GlobalRequest globalRequest:globalRequests){
-
+        removeAllGameRequests(account);
+        synchronized (globalRequests) {
+            for (GlobalRequest globalRequest : globalRequests) {
+                if (globalRequest.getNumberOfFlags() == numberOfFlags && globalRequest.getGameType() == gameType) {
+                    newMultiplayerGame(globalRequest.getRequester(), account, gameType, numberOfFlags);
+                    globalRequests.remove(globalRequest);
+                    return;
+                }
             }
+            globalRequests.addLast(new GlobalRequest(account, gameType, numberOfFlags));
         }
     }
 
     private void addUserInvitation(Account inviter, Account invited, GameType gameType, int numberOfFlags) {
-        synchronized (userInvitations){
+        synchronized (userInvitations) {
 
         }
     }
 
-    public void removeAllGameRequests(Account account){
-        synchronized (globalRequests){
-            for(GlobalRequest globalRequest:globalRequests){
-                if(globalRequest.getRequester()==account){
+    public void removeAllGameRequests(Account account) {
+        synchronized (globalRequests) {
+            for (GlobalRequest globalRequest : globalRequests) {
+                if (globalRequest.getRequester() == account) {
                     globalRequests.remove(globalRequest);
                     break;
                 }
             }
         }
-        synchronized (userInvitations){
-            for(UserInvitation userInvitation:userInvitations){
-                if(userInvitation.getInviter()==account){
+        synchronized (userInvitations) {
+            for (UserInvitation userInvitation : userInvitations) {
+                if (userInvitation.getInviter() == account) {
                     userInvitations.remove(userInvitation);
                     break;
                 }
@@ -103,7 +110,7 @@ public class GameCenter extends Thread {//synchronize
     public void getAcceptRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
-        synchronized (userInvitations){
+        synchronized (userInvitations) {
 
         }
     }
@@ -111,7 +118,7 @@ public class GameCenter extends Thread {//synchronize
     public void getDeclineRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
-        synchronized (userInvitations){
+        synchronized (userInvitations) {
 
         }
     }
@@ -128,6 +135,9 @@ public class GameCenter extends Thread {//synchronize
         }
         if (DataCenter.getInstance().getAccounts().get(opponentAccount) == null) {
             throw new ClientException("opponentAccount is not online!");
+        }
+        if (!opponentAccount.hasValidMainDeck()) {
+            throw new ClientException("opponent doesn't have valid main deck");
         }
         if (onlineGames.get(opponentAccount) != null) {
             throw new ClientException("opponentAccount has online game!");
@@ -201,21 +211,13 @@ public class GameCenter extends Thread {//synchronize
         game.startGame();
     }
 
-    private void newMultiplayerGame(Account account1, Account account2, NewGameFields newGameFields) throws LogicException {
-        if (account1 == null || !account1.hasValidMainDeck() || onlineGames.get(account1) != null) {
-            throw new ServerException("account1 error multiplayer!");
-        }
-        if (account2 == null || !account2.hasValidMainDeck() || onlineGames.get(account2) != null) {
-            throw new ServerException("account1 error multiplayer");
-        }
+    private void newMultiplayerGame(Account account1, Account account2, GameType gameType, int numberOfFlags) {
+
         removeAllGameRequests(account1);
         removeAllGameRequests(account2);
         Game game = null;
-        GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), newGameFields.getNumberOfFlags(), DataCenter.getInstance().getOriginalFlag());
-        if (newGameFields.getGameType() == null) {
-            throw new ServerException("invalid gameType!");
-        }
-        switch (newGameFields.getGameType()) {
+        GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), numberOfFlags, DataCenter.getInstance().getOriginalFlag());
+        switch (gameType) {
             case KILL_HERO:
                 game = new KillHeroBattle(account1, account2, gameMap);
                 break;
@@ -223,7 +225,7 @@ public class GameCenter extends Thread {//synchronize
                 game = new SingleFlagBattle(account1, account2, gameMap);
                 break;
             case SOME_FLAG:
-                game = new MultiFlagBattle(account1, account2, gameMap, newGameFields.getNumberOfFlags());
+                game = new MultiFlagBattle(account1, account2, gameMap, numberOfFlags);
                 break;
         }
         game.setReward(Game.getDefaultReward());
@@ -233,7 +235,12 @@ public class GameCenter extends Thread {//synchronize
                 (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account1.getUsername()), game, 0));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account2.getUsername()), game, 0));
-        game.startGame();
+        try {
+            game.startGame();
+        } catch (ServerException e) {
+            Server.getInstance().serverPrint("game start error in multiPlayer");
+        }
+
     }
 
     private void removeGame(Game game) {
