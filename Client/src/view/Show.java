@@ -12,10 +12,7 @@ public abstract class Show {
 
     public void show() {
         GraphicalUserInterface.getInstance().changeScene(root);
-        try {
-            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.enter_page);
-        }catch (Exception ignored){
-        }
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.enter_page);
         Client.getInstance().setShow(this);
     }
 
@@ -24,11 +21,13 @@ public abstract class Show {
     }
 
     public void showError(String message, String buttonText) {
-        showError(message, buttonText, event -> {});
+        showError(message, buttonText, event -> {
+        });
     }
 
     public void showError(String message) {
-        showError(message, "OK", event -> {});
+        showError(message, "OK", event -> {
+        });
     }
 
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
