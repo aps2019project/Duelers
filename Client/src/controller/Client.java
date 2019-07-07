@@ -12,10 +12,7 @@ import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
 import view.BattleView.BattleScene;
-import view.GameResultMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.Show;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
