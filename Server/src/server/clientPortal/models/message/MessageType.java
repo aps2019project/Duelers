@@ -48,5 +48,5 @@ public enum MessageType {
 
 
     ADD_CARD,
-     FORCE_FINISH
+    FORCE_FINISH
 }

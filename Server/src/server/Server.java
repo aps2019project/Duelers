@@ -158,8 +158,8 @@ public class Server {
                     DataCenter.getInstance().addCard(message);
                     break;
                 case MULTIPLAYER_GAME_REQUEST:
-                    GameCenter.getInstance().newMultiplayerGame(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    //GameCenter.getInstance().newMultiplayerGame(message);
+                    //addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
                 case CANCEL_REQUEST:
 

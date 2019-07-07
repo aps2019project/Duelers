@@ -2,12 +2,14 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
+import server.clientPortal.models.message.NewGameFields;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
+import server.exceptions.ServerException;
 import server.gameCenter.models.Invitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
@@ -23,8 +25,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private LinkedList<Account> waitingList=new LinkedList<>();
-    private LinkedList<Invitation> invitationList=new LinkedList<>();
+    private LinkedList<Account> waitingList = new LinkedList<>();
+    private LinkedList<Invitation> invitationList = new LinkedList<>();
 
     private GameCenter() {
     }
@@ -129,48 +131,36 @@ public class GameCenter extends Thread {
         game.startGame();
     }
 
-    public void newMultiplayerGame(Message message) throws LogicException {
-        DataCenter.getInstance().loginCheck(message);
-        checkOpponentAccountValidation(message);
-        Account myAccount = DataCenter.getInstance().getClients().get(message.getSender());
-        Account opponentAccount = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
-        if (!myAccount.hasValidMainDeck()) {
-            throw new ClientException("you don't have valid main deck!");
+    private void newMultiplayerGame(Account account1, Account account2, NewGameFields newGameFields) throws LogicException {
+        if (account1 == null || !account1.hasValidMainDeck() || onlineGames.get(account1) != null) {
+            throw new ServerException("account1 error multiplayer!");
         }
-        if (opponentAccount == null || !opponentAccount.hasValidMainDeck()) {
-            throw new ClientException("opponent's main deck is not valid");
+        if (account2 == null || !account2.hasValidMainDeck() || onlineGames.get(account2) != null) {
+            throw new ServerException("account1 error multiplayer");
         }
-        if (onlineGames.get(myAccount) != null) {
-            throw new ClientException("you have online game!");
-        }
-        if (onlineGames.get(opponentAccount) != null) {
-            throw new ClientException("opponent has online game!");
-        }
-        /*accounts.replace(opponentAccount, onlineClients.get(1).getClientName());
-        clients.replace(onlineClients.get(1).getClientName(), opponentAccount);*/
         Game game = null;
-        GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), message.getNewGameFields().getNumberOfFlags(), DataCenter.getInstance().getOriginalFlag());
-        if (message.getNewGameFields().getGameType() == null) {
-            throw new ClientException("invalid gameType!");
+        GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), newGameFields.getNumberOfFlags(), DataCenter.getInstance().getOriginalFlag());
+        if (newGameFields.getGameType() == null) {
+            throw new ServerException("invalid gameType!");
         }
-        switch (message.getNewGameFields().getGameType()) {
+        switch (newGameFields.getGameType()) {
             case KILL_HERO:
-                game = new KillHeroBattle(myAccount, opponentAccount, gameMap);
+                game = new KillHeroBattle(account1, account2, gameMap);
                 break;
             case A_FLAG:
-                game = new SingleFlagBattle(myAccount, opponentAccount, gameMap);
+                game = new SingleFlagBattle(account1, account2, gameMap);
                 break;
             case SOME_FLAG:
-                game = new MultiFlagBattle(myAccount, opponentAccount, gameMap, message.getNewGameFields().getNumberOfFlags());
+                game = new MultiFlagBattle(account1, account2, gameMap, newGameFields.getNumberOfFlags());
                 break;
         }
         game.setReward(Game.getDefaultReward());
-        onlineGames.put(myAccount, game);
-        onlineGames.put(opponentAccount, game);
+        onlineGames.put(account1, game);
+        onlineGames.put(account2, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, message.getSender(), game, 0));
+                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account1.getUsername()), game, 0));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(opponentAccount), game, 0));
+                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account2.getUsername()), game, 0));
         game.startGame();
     }
 
