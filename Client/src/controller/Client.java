@@ -11,6 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
+import view.BattleView.BattleScene;
 import view.*;
 
 import java.io.BufferedReader;
@@ -217,7 +218,7 @@ public class Client {
             case DONE:
                 break;
             case CHAT:
-
+                showOrSaveMessage(message);
                 break;
             case INVITATION:
                 Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
@@ -230,6 +231,16 @@ public class Client {
                     ((WaitingMenu) currentShow).close();
                 }
                 break;
+        }
+    }
+
+    private void showOrSaveMessage(Message message) {
+        if (message.getChatMessage().getReceiverUsername()==null) {
+            MainMenuController.getInstance().addChatMessage(message.getChatMessage());
+        } else {
+            if (currentShow instanceof BattleScene) {
+                ((BattleScene) currentShow).showOpponentMessage(message.getChatMessage().getText());
+            }
         }
     }
 

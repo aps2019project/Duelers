@@ -39,6 +39,10 @@ public class MainMenuController {
         );
     }
 
+    public void addChatMessage(ChatMessage chatMessage) {
+
+    }
+
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {
         this.leaderBoard = leaderBoard;
         this.notifyAll();

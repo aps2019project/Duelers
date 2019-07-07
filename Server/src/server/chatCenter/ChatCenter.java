@@ -19,24 +19,25 @@ public class ChatCenter {
     private ChatCenter() {
     }
 
-    public void getMessage(Message message) throws ClientException {
-        if (message.getChatMessage().getReceiverUsername().equals("GLOBAL")) {
+    public void getMessage(Message message){
+        if (message.getChatMessage().getReceiverUsername()==null) {
             for(Account account:DataCenter.getInstance().getAccounts().keySet()){//TODO:can has much more performance
                 if(DataCenter.getInstance().isOnline(account.getUsername())){
-                    sendMessage(message.getChatMessage().getSenderUsername(),"GLOBAL",
+                    sendMessage(DataCenter.getInstance().getClientName(account.getUsername()),
+                            message.getChatMessage().getSenderUsername(),null,
                             message.getChatMessage().getText());
                 }
             }
         } else {
             if(DataCenter.getInstance().isOnline(message.getChatMessage().getReceiverUsername())){
-                sendMessage(message.getChatMessage().getSenderUsername(),message.getChatMessage().getReceiverUsername(),
+                sendMessage(DataCenter.getInstance().getClientName(message.getChatMessage().getReceiverUsername()),
+                        message.getChatMessage().getSenderUsername(),message.getChatMessage().getReceiverUsername(),
                         message.getChatMessage().getText());
             }
         }
     }
 
-    private void sendMessage(String senderUsername, String receiverUsername, String text){
-        String receiverClientName = DataCenter.getInstance().getClientName(receiverUsername);
+    private void sendMessage(String receiverClientName,String senderUsername, String receiverUsername, String text){
         if (receiverClientName == null) {
             Server.getInstance().serverPrint("Chat Receiver Error!");
         }
