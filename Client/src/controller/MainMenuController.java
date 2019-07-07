@@ -1,6 +1,7 @@
 package controller;
 
 import models.Constants;
+import models.message.ChatMessage;
 import models.message.Message;
 
 public class MainMenuController {
@@ -19,5 +20,9 @@ public class MainMenuController {
                         Client.getInstance().getClientName(), Constants.SERVER_NAME, 0
                 )
         );
+    }
+
+    public void addChatMessage(ChatMessage chatMessage) {
+
     }
 }

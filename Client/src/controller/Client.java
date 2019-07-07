@@ -226,10 +226,10 @@ public class Client {
     }
 
     private void showOrSaveMessage(Message message) {
-        if (message.getReceiver().equals(Constants.GLOBAL)){
-
+        if (message.getChatMessage().getReceiverUsername().equals(Constants.GLOBAL)){
+            MainMenuController.getInstance().addChatMessage(message.getChatMessage());
         }else {
-
+            //TODO:ahmad
         }
     }
 
