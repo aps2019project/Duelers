@@ -5,9 +5,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-class DefaultText extends Text {
+public class DefaultText extends Text {
 
-    DefaultText(String text, double wrapWidth, Font font, Paint color) {
+    public DefaultText(String text, double wrapWidth, Font font, Paint color) {
         super(text);
         setTextAlignment(TextAlignment.CENTER);
         setWrappingWidth(wrapWidth);

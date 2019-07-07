@@ -1,35 +1,54 @@
 package view.BattleView;
 
+import controller.GameController;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import models.card.CardType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
+import models.gui.DefaultText;
+import models.gui.ImageLoader;
+import models.gui.NormalField;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 
+import static java.lang.Math.pow;
+import static models.gui.UIConstants.DEFAULT_FONT;
+import static view.BattleView.Constants.SCALE;
+
 public class PlayerBox implements PropertyChangeListener {
+    private static final Image comboNotSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_empty@2x.png");
+    private static final Image comboSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_full@2x.png");
+    private static final Image spellSelectedImage = ImageLoader.load("resources/ui/quests_glow@2x.png");
+    private static final Image spellNotSelectedImage = ImageLoader.load("resources/ui/quests@2x.png");
+    private static final Image manaImage = ImageLoader.load("resources/ui/icon_mana@2x.png");
+    private static final Image inActiveManaImage = ImageLoader.load("resources/ui/icon_mana_inactive@2x.png");
+    private static final Image player1Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f5@2x.png");
+    private static final Image player2Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f6-third@2x.png");
+    private static final Image chatImage = ImageLoader.load("resources/ui/chat_bubble.png");
+    private static final double CHAT_BUBBLE_SIZE = 150 * SCALE;
+    private final NormalField chatField = new NormalField("Type message and send");
     private final BattleScene battleScene;
     private final CompressedPlayer player1, player2;
     private final Group group;
     private final Group mpGroup;
+    private MessageShow player1MessageShow;
+    private MessageShow player2MessageShow;
     private ImageView player1Image;
     private ImageView player2Image;
     private ImageView comboButton;
     private ImageView spellButton;
-    private Image comboNotSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png"));
-    private Image comboSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png"));
-    private Image spellSelectedImage = new Image(new FileInputStream("resources/ui/quests_glow@2x.png"));
-    private Image spellNotSelectedImage = new Image(new FileInputStream("resources/ui/quests@2x.png"));
-    private Image manaImage = new Image(new FileInputStream("resources/ui/icon_mana@2x.png"));
-    private Image inActiveManaImage = new Image(new FileInputStream("resources/ui/icon_mana_inactive@2x.png"));
 
     public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
@@ -42,16 +61,48 @@ public class PlayerBox implements PropertyChangeListener {
         updateMP(7);
         addComboButton();
         addSpellButton();
+        addChatField();
+        makeMessageShows();
         game.addPropertyChangeListener(this);
     }
 
-    private void addPhotos() throws Exception {
-        player1Image = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f5@2x.png")));
-        player2Image = new ImageView(new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f6-third@2x.png")));
-        player1Image.setFitWidth(player1Image.getImage().getWidth() * Constants.SCALE * 0.3);
-        player1Image.setFitHeight(player1Image.getImage().getHeight() * Constants.SCALE * 0.3);
-        player2Image.setFitWidth(player2Image.getImage().getWidth() * Constants.SCALE * 0.3);
-        player2Image.setFitHeight(player2Image.getImage().getHeight() * Constants.SCALE * 0.3);
+    private void addChatField() {
+        double x, y;
+        chatField.setMinWidth(CHAT_BUBBLE_SIZE);
+        chatField.setMaxWidth(CHAT_BUBBLE_SIZE);
+        if (battleScene.getMyPlayerNumber() == 2) {
+            x = player1Image.getX() + (player1Image.getFitWidth() - chatField.getMinWidth()) / 2;
+            y = player1Image.getY() + player1Image.getFitHeight();
+        } else {
+            x = player2Image.getX() + (player2Image.getFitWidth() - chatField.getMinWidth()) / 2;
+            y = player2Image.getY() + player2Image.getFitHeight();
+        }
+        chatField.relocate(x, y);
+        chatField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                GameController.getInstance().sendChat(chatField.getText());
+                battleScene.showMyMessage(chatField.getText());
+                chatField.clear();
+            }
+        });
+
+        group.getChildren().add(chatField);
+    }
+
+    private void makeMessageShows() {
+        player1MessageShow = new MessageShow(player1Image);
+        player2MessageShow = new MessageShow(player2Image);
+    }
+
+    private void addPhotos() {
+        player1Image = ImageLoader.makeImageView(player1Profile,
+                player1Profile.getWidth() * SCALE * 0.3,
+                player1Profile.getHeight() * SCALE * 0.3
+        );
+        player2Image = ImageLoader.makeImageView(player2Profile,
+                player2Profile.getWidth() * SCALE * 0.3,
+                player2Profile.getHeight() * SCALE * 0.3
+        );
         player1Image.setX(Constants.SCREEN_WIDTH * 0.01);
         player1Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
@@ -71,13 +122,13 @@ public class PlayerBox implements PropertyChangeListener {
 
     private void addSpellButton() throws Exception {
         spellButton = new ImageView(new Image(new FileInputStream("resources/ui/quests@2x.png")));
-        spellButton.setFitWidth(spellButton.getImage().getWidth() * Constants.SCALE * 0.75);
-        spellButton.setFitHeight(spellButton.getImage().getHeight() * Constants.SCALE * 0.75);
-        spellButton.setY(Constants.SCALE * (325));
+        spellButton.setFitWidth(spellButton.getImage().getWidth() * SCALE * 0.75);
+        spellButton.setFitHeight(spellButton.getImage().getHeight() * SCALE * 0.75);
+        spellButton.setY(SCALE * (325));
         if (battleScene.getMyPlayerNumber() == 1)
-            spellButton.setX(Constants.SCALE * (180));
+            spellButton.setX(SCALE * (180));
         else
-            spellButton.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (180) - spellButton.getFitWidth());
+            spellButton.setX(Constants.SCREEN_WIDTH - SCALE * (180) - spellButton.getFitWidth());
         group.getChildren().add(spellButton);
         spellButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -148,13 +199,13 @@ public class PlayerBox implements PropertyChangeListener {
 
     private void addComboButton() throws Exception {
         comboButton = new ImageView(comboNotSelectedImage);
-        comboButton.setFitWidth(comboButton.getImage().getWidth() * Constants.SCALE * 0.3);
-        comboButton.setFitHeight(comboButton.getImage().getHeight() * Constants.SCALE * 0.3);
-        comboButton.setY(Constants.SCALE * (260));
+        comboButton.setFitWidth(comboButton.getImage().getWidth() * SCALE * 0.3);
+        comboButton.setFitHeight(comboButton.getImage().getHeight() * SCALE * 0.3);
+        comboButton.setY(SCALE * (260));
         if (battleScene.getMyPlayerNumber() == 1)
-            comboButton.setX(Constants.SCALE * (230));
+            comboButton.setX(SCALE * (230));
         else
-            comboButton.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (230) - comboButton.getFitWidth());
+            comboButton.setX(Constants.SCREEN_WIDTH - SCALE * (230) - comboButton.getFitWidth());
         group.getChildren().add(comboButton);
         comboButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -222,10 +273,10 @@ public class PlayerBox implements PropertyChangeListener {
         for (int i = 1; i <= player1.getCurrentMP(); i++) {
             try {
                 ImageView imageView = new ImageView(manaImage);
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
-                imageView.setX(Constants.SCALE * (250 + i * 40));
-                imageView.setY(Constants.SCALE * (150 - i * 2));
+                imageView.setFitWidth(imageView.getImage().getWidth() * SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * SCALE * 0.35);
+                imageView.setX(SCALE * (250 + i * 40));
+                imageView.setY(SCALE * (150 - i * 2));
                 mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -234,10 +285,10 @@ public class PlayerBox implements PropertyChangeListener {
         for (int i = player1.getCurrentMP() + 1; i <= maxMP; i++) {
             try {
                 ImageView imageView = new ImageView(inActiveManaImage);
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
-                imageView.setX(Constants.SCALE * (250 + i * 40));
-                imageView.setY(Constants.SCALE * (150 - i * 2));
+                imageView.setFitWidth(imageView.getImage().getWidth() * SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * SCALE * 0.35);
+                imageView.setX(SCALE * (250 + i * 40));
+                imageView.setY(SCALE * (150 - i * 2));
                 mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -246,10 +297,10 @@ public class PlayerBox implements PropertyChangeListener {
         for (int i = 1; i <= player2.getCurrentMP(); i++) {
             try {
                 ImageView imageView = new ImageView(manaImage);
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
-                imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
-                imageView.setY(Constants.SCALE * (150 - i * 2));
+                imageView.setFitWidth(imageView.getImage().getWidth() * SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * SCALE * 0.35);
+                imageView.setX(Constants.SCREEN_WIDTH - SCALE * (250 + i * 40) - imageView.getFitWidth());
+                imageView.setY(SCALE * (150 - i * 2));
                 mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -258,10 +309,10 @@ public class PlayerBox implements PropertyChangeListener {
         for (int i = player2.getCurrentMP() + 1; i <= maxMP; i++) {
             try {
                 ImageView imageView = new ImageView(inActiveManaImage);
-                imageView.setFitWidth(imageView.getImage().getWidth() * Constants.SCALE * 0.35);
-                imageView.setFitHeight(imageView.getImage().getHeight() * Constants.SCALE * 0.35);
-                imageView.setX(Constants.SCREEN_WIDTH - Constants.SCALE * (250 + i * 40) - imageView.getFitWidth());
-                imageView.setY(Constants.SCALE * (150 - i * 2));
+                imageView.setFitWidth(imageView.getImage().getWidth() * SCALE * 0.35);
+                imageView.setFitHeight(imageView.getImage().getHeight() * SCALE * 0.35);
+                imageView.setX(Constants.SCREEN_WIDTH - SCALE * (250 + i * 40) - imageView.getFitWidth());
+                imageView.setY(SCALE * (150 - i * 2));
                 mpGroup.getChildren().add(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -276,36 +327,66 @@ public class PlayerBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("mp1")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    updateMP((int) evt.getNewValue());
-                }
-            });
+            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
         }
         if (evt.getPropertyName().equals("mp2")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    updateMP((int) evt.getNewValue());
+            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
+        }
+        if (evt.getPropertyName().equals("turn")) {
+            Platform.runLater(() -> {
+                battleScene.getHandBox().resetSelection();
+                battleScene.getMapBox().resetSelection();
+                if ((int) evt.getNewValue() % 2 == 1) {
+                    player1Image.setOpacity(1);
+                    player2Image.setOpacity(0.7);
+                } else {
+                    player1Image.setOpacity(0.7);
+                    player2Image.setOpacity(1);
                 }
             });
         }
-        if (evt.getPropertyName().equals("turn")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    battleScene.getHandBox().resetSelection();
-                    battleScene.getMapBox().resetSelection();
-                    if ((int) evt.getNewValue() % 2 == 1) {
-                        player1Image.setOpacity(1);
-                        player2Image.setOpacity(0.7);
-                    } else {
-                        player1Image.setOpacity(0.7);
-                        player2Image.setOpacity(1);
-                    }
-                }
-            });
+    }
+
+    void showMessage(CompressedPlayer player, String text) {
+        if (player.getPlayerNumber() == 1) {
+            player1MessageShow.show(text);
+        } else {
+            player2MessageShow.show(text);
+        }
+    }
+
+    class MessageShow extends AnimationTimer {
+        private final long showTime = (long) (4 * pow(10, 9));
+        private final DefaultText text = new DefaultText("", CHAT_BUBBLE_SIZE * 0.9, DEFAULT_FONT, Color.BLACK);
+        private final ImageView chatView = ImageLoader.makeImageView(chatImage, CHAT_BUBBLE_SIZE, CHAT_BUBBLE_SIZE);
+        private final StackPane stackPane;
+        private final double x;
+        private final double y;
+        private long initialTime;
+
+        MessageShow(ImageView playerImage) {
+            x = playerImage.getX() + (playerImage.getFitWidth() - CHAT_BUBBLE_SIZE) / 2;
+            y = playerImage.getY() + playerImage.getFitHeight();
+            stackPane = new StackPane(chatView, text);
+            stackPane.relocate(x, y);
+        }
+
+        void show(String text) {
+            this.text.setText(text);
+            initialTime = 0;
+            start();
+        }
+
+        @Override
+        public void handle(long now) {
+            if (initialTime == 0) {
+                initialTime = now;
+                group.getChildren().add(stackPane);
+            }
+            if (now - initialTime > showTime) {
+                group.getChildren().remove(stackPane);
+                stop();
+            }
         }
     }
 }
