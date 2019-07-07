@@ -110,13 +110,22 @@ public class GameCenter extends Thread {//synchronize
         }
     }
 
+    private UserInvitation getUserInvitation(Account inviter) {
+        for (UserInvitation userInvitation : userInvitations) {
+            if (userInvitation.getInviter() == inviter)
+                return userInvitation;
+        }
+        return null;
+    }
+
     public void getAcceptRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
-        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        Account invited = DataCenter.getInstance().getClients().get(message.getSender());
         synchronized (userInvitations) {
 
         }
     }
+
 
     public void getDeclineRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
