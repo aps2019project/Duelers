@@ -5,7 +5,6 @@ import models.Constants;
 import models.exceptions.InputException;
 import models.game.GameType;
 import models.message.Message;
-import view.MultiPlayerMenu;
 
 public class MultiPlayerMenuController {
     private static MultiPlayerMenuController ourInstance = new MultiPlayerMenuController();
@@ -28,7 +27,7 @@ public class MultiPlayerMenuController {
                     )
             );
         } catch (InputException e) {
-            Platform.runLater(() -> MultiPlayerMenu.getInstance().showError(e.getMessage()));
+            Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }
     }
 }
