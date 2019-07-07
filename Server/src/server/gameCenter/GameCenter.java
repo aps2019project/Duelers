@@ -122,6 +122,18 @@ public class GameCenter extends Thread {//synchronize
         DataCenter.getInstance().loginCheck(message.getSender());
         Account invited = DataCenter.getInstance().getClients().get(message.getSender());
         synchronized (userInvitations) {
+            if (message.getNewGameFields() == null || message.getNewGameFields().getOpponentUsername() == null)
+                throw new ClientException("invalid accept message!");
+            Account inviter = DataCenter.getInstance().getAccount(message.getNewGameFields().getOpponentUsername());
+            if (inviter == null)
+                throw new ClientException("invalid opponent username!");
+            UserInvitation invitation = getUserInvitation(inviter);
+            if (invitation == null)
+                throw new ClientException("The Invitation was not found!");
+            userInvitations.remove(invitation);
+            Server.getInstance().addToSendingMessages(Message.makeAcceptRequestMessage(
+                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+            newMultiplayerGame(inviter, invited, invitation.getGameType(), invitation.getNumberOfFlags());
 
         }
     }
