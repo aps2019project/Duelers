@@ -197,14 +197,18 @@ public class Message {
         return message;
     }
 
-    public static Message makeNewMultiPlayerGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentUsername, int messageId) {
+    public static Message makeMultiPlayerGameReQuestMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String opponentUsername, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUsername);
         message.newGameFields.setNumberOfFlags(numberOfFlags);
         message.newGameFields.setGameType(gameType);
-        message.messageType = MessageType.NEW_MULTIPLAYER_GAME;
+        message.messageType = MessageType.MULTIPLAYER_GAME_REQUEST;
         return message;
+    }
+
+    public static Message makeMultiPlayerGameReQuestMessage(String sender, String receiver, GameType gameType, int numberOfFlags, int messageId) {
+        return makeMultiPlayerGameReQuestMessage(sender,receiver,gameType,numberOfFlags,"GLOBAL",messageId);//may bug
     }
 
     public static Message makeNewCustomGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String customDeckName, int messageId) {

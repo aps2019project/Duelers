@@ -33,7 +33,7 @@ public enum MessageType {
     LOG_IN,
     LOG_OUT,
     REGISTER,
-    NEW_MULTIPLAYER_GAME,
+    MULTIPLAYER_GAME_REQUEST,
     NEW_DECK_GAME,
     NEW_STORY_GAME,
     SELECT_USER,

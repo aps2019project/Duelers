@@ -12,7 +12,7 @@ import server.gameCenter.models.game.Troop;
 
 import java.util.List;
 
-public class Message {//TODO:ServerToClientMessage && ClientToServerMessage
+public class Message {
     private MessageType messageType;
     //serverName || clientName
     private String sender;
