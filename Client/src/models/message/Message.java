@@ -205,7 +205,7 @@ public class Message {
         message.newGameFields.setGameType(gameType);
         message.messageType = MessageType.MULTIPLAYER_GAME_REQUEST;
         return message;
-    }//Normal
+    }
 
     public static Message makeCancelRequestMessage(String sender, String receiver) {
         Message message = new Message(sender, receiver, 0);

@@ -223,7 +223,7 @@ public class Client {
                 Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
                 break;
             case ACCEPT_REQUEST:
-                //no fields
+                //think...
                 break;
             case DECLINE_REQUEST:
                 if (currentShow instanceof WaitingMenu) {
