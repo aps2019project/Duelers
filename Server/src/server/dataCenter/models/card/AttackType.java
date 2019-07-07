@@ -1,4 +1,4 @@
-package server.detaCenter.models.card;
+package server.dataCenter.models.card;
 
 public enum AttackType {
     MELEE,

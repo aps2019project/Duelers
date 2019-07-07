@@ -34,6 +34,8 @@ public class Message {
     private OtherFields otherFields;
     private AccountFields accountFields;
     private NewGameFields newGameFields;
+    //SENDER:DUAL
+    private ChatMessage chatMessage;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -180,6 +182,12 @@ public class Message {
         return message;
     }
 
+    public static Message makeForceFinishGameMessage(String sender, String receiver,int messageId){
+        Message message = new Message(sender,receiver,messageId);
+        message.messageType = MessageType.FORCE_FINISH;
+        return message;
+    }
+
     public static Message makeUseSpecialPowerMessage(String sender, String receiver, String cardId, Position position, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.otherFields = new OtherFields();
@@ -229,6 +237,14 @@ public class Message {
         Message message = new Message(sender, receiver,messageId);
         message.customCard = customCard;
         message.messageType = MessageType.ADD_CARD;
+        return message;
+    }
+
+    public static Message makeChatMessage(String sender, String receiver,String messageSender, String messageReceiver,
+                                          String textMessage, int messageId){
+        Message message=new Message(sender,receiver,messageId);
+        message.chatMessage=new ChatMessage(messageSender,messageReceiver,textMessage);
+        message.messageType=MessageType.CHAT;
         return message;
     }
 
@@ -314,5 +330,9 @@ public class Message {
 
     public Card getCustomCard() {
         return customCard;
+    }
+
+    public ChatMessage getChatMessage() {
+        return chatMessage;
     }
 }

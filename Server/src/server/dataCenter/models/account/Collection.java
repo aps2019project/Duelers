@@ -1,10 +1,10 @@
-package server.detaCenter.models.account;
+package server.dataCenter.models.account;
 
 import server.Server;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.CardType;
-import server.detaCenter.models.card.Deck;
-import server.detaCenter.models.card.ExportedDeck;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.card.Deck;
+import server.dataCenter.models.card.ExportedDeck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 

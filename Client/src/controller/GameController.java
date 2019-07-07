@@ -165,6 +165,10 @@ public class GameController implements GameActions {
         Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, 0));
     }
 
+    public void forceFinish() {
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage(Client.getInstance().getClientName(),Constants.SERVER_NAME,0));
+    }
+
     @Override
     public void insert(CompressedCard card, int row, int column) {
         if (validatePositionForInsert(card, row, column))

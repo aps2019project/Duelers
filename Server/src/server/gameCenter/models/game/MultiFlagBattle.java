@@ -1,7 +1,7 @@
 package server.gameCenter.models.game;
 
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.card.Deck;
 import server.gameCenter.models.map.GameMap;
 
 public class MultiFlagBattle extends Game {

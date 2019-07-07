@@ -13,11 +13,11 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import models.gui.DefaultLabel;
 import models.gui.ImageLoader;
+import view.PlayList;
+import view.PlayList.FramePosition;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static view.BattleView.CardAnimation.cachedImages;
 
@@ -67,16 +67,16 @@ public class TroopAnimation extends Transition {
         this.isMyTroop = isMyTroop;
 
         //read settings
-        Playlist playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), Playlist.class);
+        PlayList playlist = new Gson().fromJson(new FileReader("resources/troopAnimations/" + fileName + ".plist.json"), PlayList.class);
         attackFramePositions = playlist.getAttackFrames();
         breathingFramePositions = playlist.getBreathingFrames();
         deathFramePositions = playlist.getDeathFrames();
         hitFramePositions = playlist.getHitFrames();
         idleFramePositions = playlist.getIdleFrames();
         runFramePositions = playlist.getRunFrames();
-        frameWidth = playlist.frameWidth;
-        frameHeight = playlist.frameHeight;
-        setCycleDuration(Duration.millis(playlist.frameDuration));
+        frameWidth = playlist.getFrameWidth();
+        frameHeight = playlist.getFrameHeight();
+        setCycleDuration(Duration.millis(playlist.getFrameDuration()));
 
         this.cellsX = cellsX;
         this.cellsY = cellsY;
@@ -92,8 +92,8 @@ public class TroopAnimation extends Transition {
             imageView.setScaleX(-1);
         imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
-        imageView.setX(-playlist.extraX * Constants.SCALE);
-        imageView.setY(-playlist.extraY * Constants.SCALE);
+        imageView.setX(-playlist.getExtraX() * Constants.SCALE);
+        imageView.setY(-playlist.getExtraY() * Constants.SCALE);
         imageView.setViewport(new Rectangle2D(0, 0, 1, 1));
 
         troopGroup = new Group();
@@ -144,8 +144,8 @@ public class TroopAnimation extends Transition {
         if (!frameShowFlag && v < 0.5)
             frameShowFlag = true;
         if (frameShowFlag && v > 0.5) {
-            imageView.setViewport(new Rectangle2D(currentFramePositions[nextIndex].x,
-                    currentFramePositions[nextIndex].y, frameWidth, frameHeight));
+            imageView.setViewport(new Rectangle2D(currentFramePositions[nextIndex].getX(),
+                    currentFramePositions[nextIndex].getY(), frameWidth, frameHeight));
             generateNextState();
             frameShowFlag = false;
         }
@@ -303,49 +303,6 @@ public class TroopAnimation extends Transition {
 
     enum ACTION {
         ATTACK, BREATHING, DEATH, HIT, IDLE, RUN, STOPPED
-    }
-
-    class Playlist {
-        int frameWidth;
-        int frameHeight;
-        int frameDuration;
-        double extraX;
-        double extraY;
-        private HashMap<String, ArrayList<FramePosition>> lists = new HashMap<>();
-
-        FramePosition[] getHitFrames() {
-            return lists.get("hit").toArray(new FramePosition[1]);
-        }
-
-        FramePosition[] getDeathFrames() {
-            return lists.get("death").toArray(new FramePosition[1]);
-        }
-
-        FramePosition[] getBreathingFrames() {
-            return lists.get("breathing").toArray(new FramePosition[1]);
-        }
-
-        FramePosition[] getIdleFrames() {
-            return lists.get("idle").toArray(new FramePosition[1]);
-        }
-
-        FramePosition[] getAttackFrames() {
-            return lists.get("attack").toArray(new FramePosition[1]);
-        }
-
-        FramePosition[] getRunFrames() {
-            return lists.get("run").toArray(new FramePosition[1]);
-        }
-    }
-
-    class FramePosition {
-        final double x;
-        final double y;
-
-        FramePosition(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
     }
 }
 

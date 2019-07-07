@@ -1,7 +1,7 @@
 package server.clientPortal.models.message;
 
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.TempAccount;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.TempAccount;
 
 public class AccountCopyMessage {
     private TempAccount account;

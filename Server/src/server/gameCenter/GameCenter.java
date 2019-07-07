@@ -2,16 +2,18 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
-import server.detaCenter.DataCenter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.MatchHistory;
-import server.detaCenter.models.card.Deck;
+import server.dataCenter.DataCenter;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.MatchHistory;
+import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
+import server.gameCenter.models.Invitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class GameCenter extends Thread {
     private static GameCenter ourInstance = new GameCenter();
@@ -21,6 +23,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
+    private LinkedList<Account> waitingList = new LinkedList<>();
+    private LinkedList<Invitation> invitationList = new LinkedList<>();
 
     private GameCenter() {
     }
@@ -251,40 +255,50 @@ public class GameCenter extends Thread {
 
     private void checkGameFinish(Game game) {
         if (game.finishCheck()) {
-            MatchHistory playerOneHistory = game.getPlayerOne().getMatchHistory();
-            MatchHistory playerTwoHistory = game.getPlayerTwo().getMatchHistory();
-            if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-                Account account = DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName());
-                if (account == null)
-                    Server.getInstance().serverPrint("Error");
-                else {
-                    account.addMatchHistory(playerOneHistory, game.getReward());
-                    DataCenter.getInstance().saveAccount(account);
-                }
-            }
-            if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-                Account account = DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName());
-                if (account == null)
-                    Server.getInstance().serverPrint("Error");
-                else {
-                    account.addMatchHistory(playerTwoHistory, game.getReward());
-                    DataCenter.getInstance().saveAccount(account);
-                }
-            }
-            Server.getInstance().sendGameFinishMessages(game);
-            removeGame(game);
+            finish(game);
         }
     }
 
-    public void forceFinishGame(Account account) {
-        //TODO:Hadi
-        Game game = onlineGames.get(account);
-        if (game == null) {
-            Server.getInstance().serverPrint("Error forceGameFinish!");
-            return;
+    private void finish(Game game) {
+        MatchHistory playerOneHistory = game.getPlayerOne().getMatchHistory();
+        MatchHistory playerTwoHistory = game.getPlayerTwo().getMatchHistory();
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            Account account = DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName());
+            if (account == null)
+                Server.getInstance().serverPrint("Error");
+            else {
+                account.addMatchHistory(playerOneHistory, game.getReward());
+                DataCenter.getInstance().saveAccount(account);
+            }
         }
-        onlineGames.remove(DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName()));
-        onlineGames.remove(DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName()));
-        //TODO:game.forceFinish(account);
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            Account account = DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName());
+            if (account == null)
+                Server.getInstance().serverPrint("Error");
+            else {
+                account.addMatchHistory(playerTwoHistory, game.getReward());
+                DataCenter.getInstance().saveAccount(account);
+            }
+        }
+        Server.getInstance().sendGameFinishMessages(game);
+        removeGame(game);
+    }
+
+    public void forceFinishGame(String sender) {
+        try {
+            Game game = getGame(sender);
+
+            if (game == null) {
+                Server.getInstance().serverPrint("Error forceGameFinish!");
+                return;
+            }
+            DataCenter.getInstance().loginCheck(sender);
+            String username = DataCenter.getInstance().getClients().get(sender).getUsername();
+
+            game.forceFinish(username);
+            finish(game);
+        }catch (LogicException ignored){
+        }
+
     }
 }

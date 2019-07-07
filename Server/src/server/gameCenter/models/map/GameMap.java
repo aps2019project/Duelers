@@ -1,7 +1,7 @@
 package server.gameCenter.models.map;
 
-import server.detaCenter.models.card.Card;
 import server.clientPortal.models.comperessedData.CompressedGameMap;
+import server.dataCenter.models.card.Card;
 import server.gameCenter.models.game.Player;
 import server.gameCenter.models.game.Troop;
 

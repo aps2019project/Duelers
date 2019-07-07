@@ -1,16 +1,20 @@
 package server;
 
+import server.chatCenter.ChatCenter;
 import server.clientPortal.ClientPortal;
-import server.detaCenter.DataCenter;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.card.Card;
+import server.clientPortal.models.message.CardPosition;
+import server.clientPortal.models.message.Message;
+import server.dataCenter.DataCenter;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.card.Card;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
 import server.gameCenter.GameCenter;
-import server.gameCenter.models.game.*;
-import server.clientPortal.models.message.CardPosition;
-import server.clientPortal.models.message.Message;
+import server.gameCenter.models.game.CellEffect;
+import server.gameCenter.models.game.Game;
+import server.gameCenter.models.game.Story;
+import server.gameCenter.models.game.Troop;
 
 import java.util.*;
 
@@ -49,7 +53,7 @@ public class Server {
                 }
                 if (message != null) {
                     ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    System.out.println(message.getReceiver() + ":\n" + message.toJson());
+                    System.out.println(message.getReceiver() + ":\n" + message.toJson());//TODO:remove
                 } else {
                     try {
                         synchronized (sendingMessages) {
@@ -95,7 +99,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {//TODO:add fast finish game message
+    private void receiveMessage(Message message) {//TODO:add fast forceFinish game message
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
@@ -159,7 +163,7 @@ public class Server {
                     break;
                 case NEW_STORY_GAME:
                     GameCenter.getInstance().newStoryGame(message);
-                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
+                    addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));//TODO:can be removed
                     break;
                 case NEW_DECK_GAME:
                     GameCenter.getInstance().newDeckGame(message);
@@ -189,8 +193,14 @@ public class Server {
                     GameCenter.getInstance().moveTroop(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
                     break;
+                case FORCE_FINISH:
+                    GameCenter.getInstance().forceFinishGame(message.getSender());
+                    break;
                 case SELECT_USER:
                     selectUserForMultiPlayer(message);
+                    break;
+                case CHAT:
+                    ChatCenter.getInstance().getMessage(message);
                     break;
                 case SUDO:
                     sudo(message);
@@ -211,11 +221,9 @@ public class Server {
         }
     }
 
-
     private void sendException(String exceptionString, String receiver, int messageId) {
         addToSendingMessages(Message.makeExceptionMessage(serverName, receiver, exceptionString, messageId));
     }
-
 
     private void sendStories(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message);
@@ -256,7 +264,6 @@ public class Server {
         addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
     }
 
-
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) {
         String clientName;
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
@@ -278,7 +285,6 @@ public class Server {
             }
         }
     }
-
 
     public void sendTroopUpdateMessage(Game game, Troop troop) {
         String clientName;
@@ -323,7 +329,6 @@ public class Server {
             }
         }
     }
-
 
     public void sendGameUpdateMessage(Game game) {
         String clientName;
@@ -376,11 +381,6 @@ public class Server {
                         serverName, clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName()), 0));
             }
         }
-    }
-
-
-    public String getServerName() {
-        return serverName;
     }
 
     public void serverPrint(String string) {

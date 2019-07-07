@@ -1,7 +1,7 @@
 package server.clientPortal.models.comperessedData;
 
-import server.detaCenter.models.card.spell.AvailabilityType;
-import server.detaCenter.models.card.spell.Target;
+import server.dataCenter.models.card.spell.AvailabilityType;
+import server.dataCenter.models.card.spell.Target;
 
 public class CompressedSpell {
     private String spellId;

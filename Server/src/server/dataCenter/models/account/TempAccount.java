@@ -1,7 +1,7 @@
-package server.detaCenter.models.account;
+package server.dataCenter.models.account;
 
-import server.detaCenter.models.card.Deck;
-import server.detaCenter.models.card.TempDeck;
+import server.dataCenter.models.card.Deck;
+import server.dataCenter.models.card.TempDeck;
 
 import java.util.ArrayList;
 import java.util.Collections;

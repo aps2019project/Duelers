@@ -1,7 +1,7 @@
 package server.clientPortal.models.message;
 
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.AccountInfo;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountInfo;
 
 class LeaderBoardCopyMessage {
     private AccountInfo[] leaderBoard;

@@ -203,7 +203,7 @@ public class Client {
                 GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
                 new Thread(() -> {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ignored) {
                     }
                     Platform.runLater(() -> new GameResultMenu().show());
@@ -218,6 +218,9 @@ public class Client {
                     ShopController.getInstance().addCard(message.getCustomCard());
                 break;
             case DONE:
+                break;
+            case CHAT:
+
                 break;
         }
     }

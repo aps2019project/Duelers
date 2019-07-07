@@ -1,19 +1,19 @@
-package server.detaCenter;
+package server.dataCenter;
 
 import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
 import server.clientPortal.models.message.Message;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.Collection;
-import server.detaCenter.models.account.TempAccount;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.CardType;
-import server.detaCenter.models.card.Deck;
-import server.detaCenter.models.card.ExportedDeck;
-import server.detaCenter.models.sorter.LeaderBoardSorter;
-import server.detaCenter.models.sorter.StoriesSorter;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.Collection;
+import server.dataCenter.models.account.TempAccount;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.card.Deck;
+import server.dataCenter.models.card.ExportedDeck;
+import server.dataCenter.models.sorter.LeaderBoardSorter;
+import server.dataCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.gameCenter.GameCenter;
@@ -76,6 +76,13 @@ public class DataCenter extends Thread {
         return null;
     }
 
+    public boolean isOnline(String username) {
+        Account account = getAccount(username);
+        if (account == null)
+            return false;
+        return accounts.get(account) != null;
+    }
+
     public String getClientName(String username) {
         Account account = getAccount(username);
         if (account == null)
@@ -123,33 +130,37 @@ public class DataCenter extends Thread {
     }
 
     public void loginCheck(Message message) throws LogicException {
-        if (message.getSender() == null) {
+        loginCheck(message.getSender());
+    }
+
+    public void loginCheck(String sender) throws LogicException {
+        if (sender == null) {
             throw new ClientException("invalid message!");
         }
-        if (!clients.containsKey(message.getSender())) {
+        if (!clients.containsKey(sender)) {
             throw new LogicException("Client Wasn't Added!");
         }
-        if (clients.get(message.getSender()) == null) {
+        if (clients.get(sender) == null) {
             throw new ClientException("Client Was Not LoggedIn");
         }
     }
 
-    public void forceLogout(String clientName) {
+    public void forceLogout(String clientName) throws LogicException {
         if (clients.get(clientName) != null) {
-            GameCenter.getInstance().forceFinishGame(clients.get(clientName));
+            GameCenter.getInstance().forceFinishGame(clientName);
             accounts.replace(clients.get(clientName), null);
         }
         clients.remove(clientName);
-        //TODO(do with logout)
+        //TODO(do with logout)+remove invitations
     }
 
     public void logout(Message message) throws LogicException {
         loginCheck(message);
-        GameCenter.getInstance().forceFinishGame(clients.get(message.getSender()));
+        GameCenter.getInstance().forceFinishGame(message.getSender());
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
-        //TODO:Check online games
+        //TODO:Check online games+remove invitations
         Server.getInstance().addToSendingMessages(Message.makeDoneMessage(Server.getInstance().serverName, message.getSender(), message.getMessageId()));
     }
 

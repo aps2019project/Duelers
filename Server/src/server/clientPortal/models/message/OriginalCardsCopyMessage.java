@@ -1,6 +1,6 @@
 package server.clientPortal.models.message;
 
-import server.detaCenter.models.account.Collection;
+import server.dataCenter.models.account.Collection;
 
 class OriginalCardsCopyMessage {
     private Collection originalCards;

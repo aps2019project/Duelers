@@ -1,15 +1,16 @@
 package server.gameCenter.models.game;
 
 import server.Server;
-import server.detaCenter.models.account.Account;
-import server.detaCenter.models.account.MatchHistory;
-import server.detaCenter.models.card.AttackType;
-import server.detaCenter.models.card.Card;
-import server.detaCenter.models.card.CardType;
-import server.detaCenter.models.card.Deck;
-import server.detaCenter.models.card.spell.Spell;
-import server.detaCenter.models.card.spell.SpellAction;
 import server.clientPortal.models.comperessedData.CompressedGame;
+import server.clientPortal.models.message.CardPosition;
+import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.MatchHistory;
+import server.dataCenter.models.card.AttackType;
+import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.card.Deck;
+import server.dataCenter.models.card.spell.Spell;
+import server.dataCenter.models.card.spell.SpellAction;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
@@ -20,7 +21,6 @@ import server.gameCenter.models.game.availableActions.Move;
 import server.gameCenter.models.map.Cell;
 import server.gameCenter.models.map.GameMap;
 import server.gameCenter.models.map.Position;
-import server.clientPortal.models.message.CardPosition;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -868,7 +868,7 @@ public abstract class Game {
         return lastRow;
     }
 
-    void setMatchHistories(boolean resultOne, boolean resultTwo) {
+    public void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(
                 new MatchHistory(playerTwo, resultOne)
         );
@@ -893,5 +893,9 @@ public abstract class Game {
                         .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
                 );
         return Collections.unmodifiableList(result);
+    }
+
+    public void forceFinish(String username) {
+        setMatchHistories(!playerOne.getUserName().equals(username),!playerTwo.getUserName().equals(username));
     }
 }

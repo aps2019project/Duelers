@@ -1,7 +1,7 @@
 package server.gameCenter.models.map;
 
-import server.detaCenter.models.card.Card;
 import server.clientPortal.models.comperessedData.CompressedCell;
+import server.dataCenter.models.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
