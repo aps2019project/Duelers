@@ -227,7 +227,7 @@ public class Client {
     }
 
     private void showOrSaveMessage(Message message) {
-        if (message.getChatMessage().getReceiverUsername().equals(Constants.GLOBAL)) {
+        if (message.getChatMessage().getReceiverUsername()==null) {
             MainMenuController.getInstance().addChatMessage(message.getChatMessage());
         } else {
             if (currentShow instanceof BattleScene) {
