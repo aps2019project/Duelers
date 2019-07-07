@@ -169,6 +169,24 @@ public class Message {
         return message;
     }
 
+    public static Message makeCancelRequestMessage(String sender, String receiver) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.CANCEL_REQUEST;
+        return message;
+    }
+
+    public static Message makeAcceptRequestMessage(String sender, String receiver, String opponentUsername) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.ACCEPT_REQUEST;
+        return message;
+    }
+
+    public static Message makeDeclineRequestMessage(String sender, String receiver, String opponentUsername) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.DECLINE_REQUEST;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }

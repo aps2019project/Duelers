@@ -225,6 +225,15 @@ public class Client {
             case INVITATION:
                 //message.getNewGameFields();
                 break;
+            case ACCEPT_REQUEST:
+                //no fields
+                break;
+            case DECLINE_REQUEST:
+                //no fields
+                break;
+            case CANCEL_REQUEST:
+                //no fields
+                break;
         }
     }
 

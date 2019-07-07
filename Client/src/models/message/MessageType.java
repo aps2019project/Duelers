@@ -35,9 +35,6 @@ public enum MessageType {
     LOG_OUT,
     REGISTER,
     MULTIPLAYER_GAME_REQUEST,
-    CANCEL_REQUEST,
-    ACCEPT_REQUEST,
-    DECLINE_REQUEST,
     NEW_DECK_GAME,
     NEW_STORY_GAME,
     SELECT_USER,
@@ -45,6 +42,9 @@ public enum MessageType {
 
     //SENDER:DUAL
     CHAT,
+    ACCEPT_REQUEST,
+    DECLINE_REQUEST,
+    CANCEL_REQUEST,
 
     ADD_CARD,
     IMPORT_DECK,
