@@ -223,7 +223,7 @@ public class Client {
 
                 break;
             case INVITATION:
-                //message.getNewGameFields();
+                currentShow.showInvite(message.getNewGameFields());
                 break;
         }
     }

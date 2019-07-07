@@ -6,6 +6,7 @@ import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.message.NewGameFields;
 
 public abstract class Show {
     final public AnchorPane root = new AnchorPane();
@@ -21,17 +22,20 @@ public abstract class Show {
     }
 
     public void showError(String message, String buttonText) {
-        showError(message, buttonText, event -> {
-        });
+        showError(message, buttonText, event -> {});
     }
 
     public void showError(String message) {
-        showError(message, "OK", event -> {
-        });
+        showError(message, "OK", event -> {});
     }
 
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
         ErrorView errorView = new ErrorView(root);
         errorView.show(message, buttonText, event);
+    }
+
+    public void showInvite(NewGameFields newGameFields) {
+        InviteView inviteView = new InviteView(root);
+        inviteView.show(newGameFields.getGameType(), newGameFields.getOpponentUsername());
     }
 }
