@@ -24,7 +24,7 @@ public class GameCenter extends Thread {//synchronize
         return ourInstance;
     }
 
-    private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
+    private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
     private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
 
@@ -134,10 +134,8 @@ public class GameCenter extends Thread {//synchronize
             Server.getInstance().addToSendingMessages(Message.makeAcceptRequestMessage(
                     Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
             newMultiplayerGame(inviter, invited, invitation.getGameType(), invitation.getNumberOfFlags());
-
         }
     }
-
 
     public void getDeclineRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());

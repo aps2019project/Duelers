@@ -207,10 +207,6 @@ public class Message {
         return message;
     }//Normal
 
-    public static Message makeMultiPlayerGameReQuestMessage(String sender, String receiver, GameType gameType, int numberOfFlags, int messageId) {
-        return makeMultiPlayerGameReQuestMessage(sender, receiver, gameType, numberOfFlags, "GLOBAL", messageId);//may bug
-    }//Global
-
     public static Message makeCancelRequestMessage(String sender, String receiver) {
         Message message = new Message(sender, receiver, 0);
         message.messageType = MessageType.CANCEL_REQUEST;

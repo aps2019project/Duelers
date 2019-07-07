@@ -230,9 +230,6 @@ public class Client {
                     ((WaitingMenu) currentShow).close();
                 }
                 break;
-            case CANCEL_REQUEST:
-                //no fields
-                break;
         }
     }
 
