@@ -70,7 +70,7 @@ public class PlayerBox implements PropertyChangeListener {
         double x, y;
         chatField.setMinWidth(CHAT_BUBBLE_SIZE);
         chatField.setMaxWidth(CHAT_BUBBLE_SIZE);
-        if (battleScene.getMyPlayerNumber() == 1) {
+        if (battleScene.getMyPlayerNumber() == 2) {
             x = player1Image.getX() + (player1Image.getFitWidth() - chatField.getMinWidth()) / 2;
             y = player1Image.getY() + player1Image.getFitHeight();
         } else {
