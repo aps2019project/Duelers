@@ -225,6 +225,14 @@ public class Message {
         return message;
     }
 
+    public static Message makeDeclineRequestMessage(String sender, String receiver, String opponentUsername) {
+        Message message = new Message(sender, receiver, 0);
+        message.messageType = MessageType.DECLINE_REQUEST;
+        message.newGameFields=new NewGameFields();
+        message.newGameFields.setOpponentUsername(opponentUsername);
+        return message;
+    }
+
     public static Message makeNewCustomGameMessage(String sender, String receiver, GameType gameType, int numberOfFlags, String customDeckName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
         message.newGameFields = new NewGameFields();
