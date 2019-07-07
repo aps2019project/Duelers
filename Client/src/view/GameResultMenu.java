@@ -41,24 +41,20 @@ public class GameResultMenu extends Show {
     private static final Font MIDDLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 70 * SCALE);
 
     static {
-        try {
-            results.put(true, new ResultData(
-                    "scene_diamonds_background_victory@2x",
-                    "scene_diamonds_middleground_victory@2x",
-                    "scene_diamonds_foreground_friendly@2x",
-                    "general_winner", ProfileGrid.goldIcon, "VICTORY",
-                    Color.rgb(115, 210, 255)
-            ));
-            results.put(false, new ResultData(
-                    "scene_diamonds_background_defeat@2x",
-                    "scene_diamonds_middleground_defeat@2x",
-                    "scene_diamonds_foreground_enemy@2x",
-                    "general_loser", ProfileGrid.generalIcon, "FAILURE",
-                    Color.rgb(255, 100, 115)
-            ));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        results.put(true, new ResultData(
+                "scene_diamonds_background_victory@2x",
+                "scene_diamonds_middleground_victory@2x",
+                "scene_diamonds_foreground_friendly@2x",
+                "general_winner", ProfileGrid.goldIcon, "VICTORY",
+                Color.rgb(115, 210, 255)
+        ));
+        results.put(false, new ResultData(
+                "scene_diamonds_background_defeat@2x",
+                "scene_diamonds_middleground_defeat@2x",
+                "scene_diamonds_foreground_enemy@2x",
+                "general_loser", ProfileGrid.generalIcon, "FAILURE",
+                Color.rgb(255, 100, 115)
+        ));
     }
 
     public GameResultMenu() {
@@ -134,11 +130,11 @@ public class GameResultMenu extends Show {
         public final Color color;
         private String middleText;
 
-        private ResultData(String backName, String middleName, String foreName, String heroName, Image middleIcon, String message, Color color) throws FileNotFoundException {
-            background = new Image(new FileInputStream(getUrl(backName)));
-            middleground = new Image(new FileInputStream(getUrl(middleName)));
-            foreground = new Image(new FileInputStream(getUrl(foreName)));
-            hero = new Image(new FileInputStream(getUrl(heroName)));
+        private ResultData(String backName, String middleName, String foreName, String heroName, Image middleIcon, String message, Color color) {
+            background = ImageLoader.load(getUrl(backName));
+            middleground = ImageLoader.load(getUrl(middleName));
+            foreground = ImageLoader.load(getUrl(foreName));
+            hero = ImageLoader.load(getUrl(heroName));
             this.middleIcon = middleIcon;
             this.message = message;
             this.color = color;
