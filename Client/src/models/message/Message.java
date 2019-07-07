@@ -33,9 +33,9 @@ public class Message {
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
-    private NewGameFields newGameFields;
     //SENDER:DUAL
     private ChatMessage chatMessage;
+    private NewGameFields newGameFields;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -360,5 +360,9 @@ public class Message {
 
     public ChatMessage getChatMessage() {
         return chatMessage;
+    }
+
+    public NewGameFields getNewGameFields() {
+        return newGameFields;
     }
 }
