@@ -18,7 +18,7 @@ import server.gameCenter.models.map.GameMap;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class GameCenter extends Thread {
+public class GameCenter extends Thread {//synchronize
     private static GameCenter ourInstance = new GameCenter();
 
     public static GameCenter getInstance() {
@@ -26,8 +26,8 @@ public class GameCenter extends Thread {
     }
 
     private HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
-    private LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+    private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
+    private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
 
     private GameCenter() {
     }
@@ -68,24 +68,34 @@ public class GameCenter extends Thread {
     }
 
     private void addGlobalRequest(Account account, GameType gameType, int numberOfFlags) {
+        synchronized (globalRequests){
+            for(GlobalRequest globalRequest:globalRequests){
 
+            }
+        }
     }
 
     private void addUserInvitation(Account inviter, Account invited, GameType gameType, int numberOfFlags) {
+        synchronized (userInvitations){
 
+        }
     }
 
     public void removeAllGameRequests(Account account){
-        for(GlobalRequest globalRequest:globalRequests){
-            if(globalRequest.getRequester()==account){
-                globalRequests.remove(globalRequest);
-                break;
+        synchronized (globalRequests){
+            for(GlobalRequest globalRequest:globalRequests){
+                if(globalRequest.getRequester()==account){
+                    globalRequests.remove(globalRequest);
+                    break;
+                }
             }
         }
-        for(UserInvitation userInvitation:userInvitations){
-            if(userInvitation.getInviter()==account){
-                userInvitations.remove(userInvitation);
-                break;
+        synchronized (userInvitations){
+            for(UserInvitation userInvitation:userInvitations){
+                if(userInvitation.getInviter()==account){
+                    userInvitations.remove(userInvitation);
+                    break;
+                }
             }
         }
     }
@@ -93,11 +103,17 @@ public class GameCenter extends Thread {
     public void getAcceptRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        synchronized (userInvitations){
+
+        }
     }
 
     public void getDeclineRequest(Message message) throws LogicException {
         DataCenter.getInstance().loginCheck(message.getSender());
         Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        synchronized (userInvitations){
+
+        }
     }
 
     public void getCancelRequest(Message message) throws LogicException {
