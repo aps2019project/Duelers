@@ -223,6 +223,17 @@ public class Client {
             case CHAT:
                 showOrSaveMessage(message);
                 break;
+            case INVITATION:
+                Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
+                break;
+            case ACCEPT_REQUEST:
+                //think...
+                break;
+            case DECLINE_REQUEST:
+                if (currentShow instanceof WaitingMenu) {
+                    ((WaitingMenu) currentShow).close();
+                }
+                break;
         }
     }
 

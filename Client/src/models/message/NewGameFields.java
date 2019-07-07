@@ -3,7 +3,7 @@ package models.message;
 
 import models.game.GameType;
 
-class NewGameFields {
+public class NewGameFields {
     private GameType gameType;
     private int numberOfFlags;
     private int stage;
@@ -28,5 +28,13 @@ class NewGameFields {
 
     void setOpponentUsername(String opponentUsername) {
         this.opponentUsername = opponentUsername;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public String getOpponentUsername() {
+        return opponentUsername;
     }
 }
