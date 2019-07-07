@@ -124,4 +124,12 @@ public class BattleScene extends Show {
     public void showMyMessage(String text) {
         playerBox.showMessage(myPlayer, text);
     }
+
+    public String getMyUserName() {
+        return myPlayer.getUserName();
+    }
+
+    public String getOppUserName() {
+        return oppPlayer.getUserName();
+    }
 }

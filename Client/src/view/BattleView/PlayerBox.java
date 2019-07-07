@@ -1,11 +1,13 @@
 package view.BattleView;
 
+import controller.GameController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -15,6 +17,7 @@ import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
 import models.gui.DefaultText;
 import models.gui.ImageLoader;
+import models.gui.NormalField;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -35,6 +38,7 @@ public class PlayerBox implements PropertyChangeListener {
     private static final Image player2Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f6-third@2x.png");
     private static final Image chatImage = ImageLoader.load("resources/ui/chat_bubble.png");
     private static final double CHAT_BUBBLE_SIZE = 150 * SCALE;
+    private final NormalField chatField = new NormalField("Type message and send");
     private final BattleScene battleScene;
     private final CompressedPlayer player1, player2;
     private final Group group;
@@ -57,8 +61,32 @@ public class PlayerBox implements PropertyChangeListener {
         updateMP(7);
         addComboButton();
         addSpellButton();
+        addChatField();
         makeMessageShows();
         game.addPropertyChangeListener(this);
+    }
+
+    private void addChatField() {
+        double x, y;
+        chatField.setMinWidth(CHAT_BUBBLE_SIZE);
+        chatField.setMaxWidth(CHAT_BUBBLE_SIZE);
+        if (battleScene.getMyPlayerNumber() == 1) {
+            x = player1Image.getX() + (player1Image.getFitWidth() - chatField.getMinWidth()) / 2;
+            y = player1Image.getY() + player1Image.getFitHeight();
+        } else {
+            x = player2Image.getX() + (player2Image.getFitWidth() - chatField.getMinWidth()) / 2;
+            y = player2Image.getY() + player2Image.getFitHeight();
+        }
+        chatField.relocate(x, y);
+        chatField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                GameController.getInstance().sendChat(chatField.getText());
+                battleScene.showMyMessage(chatField.getText());
+                chatField.clear();
+            }
+        });
+
+        group.getChildren().add(chatField);
     }
 
     private void makeMessageShows() {
@@ -345,6 +373,7 @@ public class PlayerBox implements PropertyChangeListener {
 
         void show(String text) {
             this.text.setText(text);
+            initialTime = 0;
             start();
         }
 
@@ -357,7 +386,6 @@ public class PlayerBox implements PropertyChangeListener {
             if (now - initialTime > showTime) {
                 group.getChildren().remove(stackPane);
                 stop();
-                initialTime = 0;
             }
         }
     }
