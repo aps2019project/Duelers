@@ -6,6 +6,7 @@ import server.clientPortal.models.message.CardPosition;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.card.Card;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
@@ -129,6 +130,9 @@ public class Server {
                             break;
                         case STORIES:
                             sendStories(message);
+                            break;
+                        case CUSTOM_CARDS:
+                            sendCustomCards(message);
                             break;
                     }
                     break;
@@ -258,6 +262,13 @@ public class Server {
         DataCenter.getInstance().loginCheck(message);
         addToSendingMessages(Message.makeOriginalCardsCopyMessage(
                 serverName, message.getSender(), DataCenter.getInstance().getOriginalCards(), message.getMessageId()));
+
+    }
+
+    private void sendCustomCards(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        addToSendingMessages(Message.makeCustomCardsCopyMessage(
+                serverName, message.getSender(), DataCenter.getInstance().getNewCustomCards()));
 
     }
 
@@ -410,16 +421,44 @@ public class Server {
         System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
     }
 
-    public void sendShopUpdateMessage(){
-
-    }
-
-    public void sendCustomCardsUpdateMessage(){
-
+    public void sendChangeCardNumberMessage(Card card){
+        for(Account account:DataCenter.getInstance().getAccounts().keySet()){
+            if(account.getAccountType()== AccountType.ADMIN && DataCenter.getInstance().isOnline(account.getUsername())){
+                addToSendingMessages(Message.makeChangeCardNumberMessage(serverName,DataCenter.getInstance().getAccounts().get(account),
+                        card,card.getRemainingNumber()));
+            }
+        }
     }
 
     public void sendLeaderBoardUpdateMessage(Account account){
 
+    }
+
+    public void sendAddToOriginalsMessage(Card card){
+        for(Account account:DataCenter.getInstance().getAccounts().keySet()){
+            if(account.getAccountType()== AccountType.ADMIN && DataCenter.getInstance().isOnline(account.getUsername())){
+                addToSendingMessages(Message.makeAddOriginalCardMessage(serverName,DataCenter.getInstance().getAccounts().get(account),
+                        card));
+            }
+        }
+    }
+
+    public void sendAddToCustomCardsMessage(Card card){
+        for(Account account:DataCenter.getInstance().getAccounts().keySet()){
+            if(account.getAccountType()== AccountType.ADMIN && DataCenter.getInstance().isOnline(account.getUsername())){
+                addToSendingMessages(Message.makeAddCustomCardMessage(serverName,DataCenter.getInstance().getAccounts().get(account),
+                        card));
+            }
+        }
+    }
+
+    public void sendRemoveCustomCardsMessage(Card card){
+        for(Account account:DataCenter.getInstance().getAccounts().keySet()){
+            if(account.getAccountType()== AccountType.ADMIN && DataCenter.getInstance().isOnline(account.getUsername())){
+                addToSendingMessages(Message.makeRemoveCustomCardMessage(serverName,DataCenter.getInstance().getAccounts().get(account),
+                        card.getName()));
+            }
+        }
     }
 
     public void sendAccountUpdateMessage(Account account){

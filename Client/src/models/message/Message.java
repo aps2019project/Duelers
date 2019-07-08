@@ -17,7 +17,7 @@ public class Message {
 
     //SENDER:SERVER
     private GameCopyMessage gameCopyMessage;
-    private OriginalCardsCopyMessage originalCardsCopyMessage;
+    private CardsCopyMessage cardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
@@ -29,13 +29,13 @@ public class Message {
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
     //SENDER:CLIENT
-    private String customCardName;
+    private String cardName;
     private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
     //SENDER:DUAL
-    private Card customCard;
+    private Card card;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
@@ -261,7 +261,7 @@ public class Message {
 
     public static Message makeCustomCardMessage(String sender, String receiver, Card customCard, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.customCard = customCard;
+        message.card = customCard;
         message.messageType = MessageType.ADD_CARD;
         return message;
     }
@@ -298,7 +298,7 @@ public class Message {
 
     public static Message makeValidateCustomCardMessage(String sender, String receiver, String customCardName, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.customCardName = customCardName;
+        message.cardName = customCardName;
         message.messageType = MessageType.VALIDATE_CARD;
         return message;
     }
@@ -331,8 +331,8 @@ public class Message {
         return gameCopyMessage;
     }
 
-    public OriginalCardsCopyMessage getOriginalCardsCopyMessage() {
-        return originalCardsCopyMessage;
+    public CardsCopyMessage getCardsCopyMessage() {
+        return cardsCopyMessage;
     }
 
     public AccountCopyMessage getAccountCopyMessage() {
@@ -375,8 +375,8 @@ public class Message {
         return gameFinishMessage;
     }
 
-    public Card getCustomCard() {
-        return customCard;
+    public Card getCard() {
+        return card;
     }
 
     public ChatMessage getChatMessage() {
@@ -393,5 +393,9 @@ public class Message {
 
     public ChangeAccountType getChangeAccountType() {
         return changeAccountType;
+    }
+
+    public String getCardName() {
+        return cardName;
     }
 }

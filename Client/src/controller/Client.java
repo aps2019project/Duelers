@@ -149,7 +149,7 @@ public class Client {
                 GameController.getInstance().calculateAvailableActions();
                 break;
             case ORIGINAL_CARDS_COPY:
-                ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
+                ShopController.getInstance().setOriginalCards(message.getCardsCopyMessage().getCards());
                 break;
             case LEADERBOARD_COPY:
                 MainMenuController.getInstance().setLeaderBoard(message.getLeaderBoardCopyMessage().getLeaderBoard());
@@ -211,11 +211,6 @@ public class Client {
             case ANIMATION:
                 GameController.getInstance().showAnimation(message.getGameAnimations());
                 break;
-            case ADD_CARD:
-                if (ShopController.isLoaded()) {
-                    ShopController.getInstance().addCard(message.getCustomCard());
-                }
-                break;
             case DONE:
                 break;
             case CHAT:
@@ -238,8 +233,20 @@ public class Client {
                         message.getChangeCardNumber().getNumber()
                 );
                 break;
-            case CHANGE_ACCOUNT_TYPE:
-                MainMenuController.getInstance().changeAccountType(message.getChangeAccountType());
+            case ADD_TO_ORIGINALS:
+                if (ShopController.isLoaded()) {
+                    ShopController.getInstance().addCard(message.getCard());
+                }
+                break;
+            case ADD_TO_CUSTOM_CARDS:
+                //message.getCard();
+                break;
+            case REMOVE_FROM_CUSTOM_CARDS:
+                //message.getCardName();
+                break;
+            case CUSTOM_CARDS_COPY:
+                //message.getCardsCopyMessage().getCards();
+                break;
         }
     }
 

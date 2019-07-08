@@ -2,7 +2,6 @@ package server.clientPortal.models.message;
 
 import server.clientPortal.models.JsonConverter;
 import server.dataCenter.models.account.Account;
-import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.ExportedDeck;
@@ -19,7 +18,7 @@ public class Message {
 
     //SENDER:SERVER
     private GameCopyMessage gameCopyMessage;
-    private OriginalCardsCopyMessage originalCardsCopyMessage;
+    private CardsCopyMessage cardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
@@ -31,13 +30,13 @@ public class Message {
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
     //SENDER:CLIENT
-    private String customCardName;
+    private String cardName;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     //SENDER:DUAL
-    private Card customCard;
+    private Card card;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
@@ -69,7 +68,7 @@ public class Message {
 
     public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection originalCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.originalCardsCopyMessage = new OriginalCardsCopyMessage(originalCards);
+        message.cardsCopyMessage = new CardsCopyMessage(originalCards);
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
         return message;
     }
@@ -159,13 +158,6 @@ public class Message {
         return message;
     }
 
-    public static Message makeAddCustomCardMessage(String serverName, String key, Card customCard, int i) {
-        Message message = new Message(serverName, key, i);
-        message.customCard = customCard;
-        message.messageType = MessageType.ADD_CARD;
-        return message;
-    }
-
     public static Message makeInvitationMessage(String sender, String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
         Message message = new Message(sender, receiver, 0);
         message.messageType = MessageType.INVITATION;
@@ -192,10 +184,31 @@ public class Message {
         return message;
     }
 
-    public static Message makeChangeAccountTypeMessage(String sender, String receiver, String username, AccountType newValue) {
+    public static Message makeAddOriginalCardMessage(String serverName, String key, Card card) {
+        Message message = new Message(serverName, key, 0);
+        message.card = card;
+        message.messageType = MessageType.ADD_TO_ORIGINALS;
+        return message;
+    }
+
+    public static Message makeAddCustomCardMessage(String serverName, String key, Card card) {
+        Message message = new Message(serverName, key, 0);
+        message.card = card;
+        message.messageType = MessageType.ADD_TO_CUSTOM_CARDS;
+        return message;
+    }
+
+    public static Message makeRemoveCustomCardMessage(String serverName, String key, String cardName) {
+        Message message = new Message(serverName, key, 0);
+        message.cardName = cardName;
+        message.messageType = MessageType.REMOVE_FROM_CUSTOM_CARDS;
+        return message;
+    }
+
+    public static Message makeCustomCardsCopyMessage(String sender, String receiver, Collection customCards) {
         Message message = new Message(sender, receiver, 0);
-        message.changeAccountType = new ChangeAccountType(username, newValue);
-        message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
+        message.cardsCopyMessage = new CardsCopyMessage(customCards);
+        message.messageType = MessageType.CUSTOM_CARDS_COPY;
         return message;
     }
 
@@ -235,8 +248,8 @@ public class Message {
         return newGameFields;
     }
 
-    public Card getCustomCard() {
-        return customCard;
+    public Card getCard() {
+        return card;
     }
 
     public ExportedDeck getExportedDeck() {
@@ -255,7 +268,7 @@ public class Message {
         return changeAccountType;
     }
 
-    public String getCustomCardName() {
-        return customCardName;
+    public String getCardName() {
+        return cardName;
     }
 }

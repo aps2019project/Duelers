@@ -276,6 +276,10 @@ public class DataCenter extends Thread {
         return Collections.unmodifiableList(collectibleItems);
     }
 
+    public Collection getNewCustomCards() {
+        return newCustomCards;
+    }
+
     public Card getOriginalFlag() {
         return originalFlag;
     }
@@ -290,11 +294,11 @@ public class DataCenter extends Thread {
     }
 
     public void addCustomCard(Message message) throws LogicException{
-        if(!isValidCardName(message.getCustomCard().getCardId()))
+        if(!isValidCardName(message.getCard().getCardId()))
             throw new ClientException("invalid name!");
-        newCustomCards.addCard(message.getCustomCard());
-        saveCustomCard(message.getCustomCard());
-        Server.getInstance().sendCustomCardsUpdateMessage();
+        newCustomCards.addCard(message.getCard());
+        saveCustomCard(message.getCard());
+        Server.getInstance().sendAddToCustomCardsMessage(message.getCard());
     }
 
     public void importDeck(Message message) throws LogicException {
@@ -319,7 +323,7 @@ public class DataCenter extends Thread {
             throw new ClientException("Invalid Card Name!");
         card.setRemainingNumber(card.getRemainingNumber()+message.getChangeCardNumber().getNumber());
         updateCard(card);
-        Server.getInstance().sendShopUpdateMessage();
+        Server.getInstance().sendChangeCardNumberMessage(card);
     }
 
     public void changeAccountType(Message message) throws LogicException{
@@ -341,15 +345,15 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card=getCard(message.getCustomCardName(),newCustomCards);
+        Card card=getCard(message.getCardName(),newCustomCards);
         if(card==null)
             throw new ClientException("invalid card name");
         removeCustomCard(card);
         saveOriginalCard(card);
         newCustomCards.removeCard(card);
         originalCards.addCard(card);
-        Server.getInstance().sendShopUpdateMessage();
-        Server.getInstance().sendCustomCardsUpdateMessage();
+        Server.getInstance().sendRemoveCustomCardsMessage(card);
+        Server.getInstance().sendAddToOriginalsMessage(card);
     }
 
     private void readAccounts() {
