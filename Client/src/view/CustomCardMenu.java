@@ -285,8 +285,9 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     }
 
     private void addSpell() {
-        DialogText dialogText = new DialogText("spell properties : ");
         DialogBox dialogBox = new DialogBox();
+
+        DialogText dialogText = new DialogText("spell properties : ");
         NormalField spellId = new NormalField("spell ID");
 
         DialogText spellActionLabel = new DialogText("spell action : ");
@@ -339,6 +340,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                 coolDown, mannaPoint
         );
         dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
+
         dialogBox.makeButton("add", event -> {
             SpellAction spellAction = new SpellAction(
                     enemyHitChange.getValue(), apChange.getValue(), hpChange.getValue(),
@@ -367,7 +369,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                     coolDown.getValue(), mannaPoint.getValue())
             );
         });
-        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        DialogContainer dialogContainer =  new DialogContainer(root, dialogBox);
         dialogContainer.show();
         dialogBox.makeClosable(dialogContainer);
     }

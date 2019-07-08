@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import javafx.scene.image.Image;
 import models.gui.ImageLoader;
 import view.PlayList;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 
 public class ResourcesCenter {
     private final static ResourcesCenter ourInstance = new ResourcesCenter();
-    private HashMap<String, byte[]> imageHashMap = new HashMap<>();
+    private HashMap<String, Image> imageHashMap = new HashMap<>();
     private HashMap<String, PlayList> playListHashMap = new HashMap<>();
     private HashMap<String, byte[]> stringMediaHashMap = new HashMap<>();
 
@@ -19,8 +20,7 @@ public class ResourcesCenter {
 
     private static final String PATH = "resources";
 
-    private ResourcesCenter() {
-        readData();
+    private ResourcesCenter(){
     }
 
     private static void readData()  {
@@ -46,7 +46,7 @@ public class ResourcesCenter {
                 ourInstance.playListHashMap.put(file.getPath(), playlist);
             }
             if (file.getName().contains(".png")) {
-                byte[] x = Files.readAllBytes(file.toPath());
+                Image x = ImageLoader.load(file.getPath());
                 ourInstance.imageHashMap.put(file.getPath(), x);
             }
             if (file.getName().contains(".m4a")) {

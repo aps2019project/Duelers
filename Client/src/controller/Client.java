@@ -274,7 +274,7 @@ public class Client {
         }
     }
 
-    synchronized Show getCurrentShow() {
+    public synchronized Show getCurrentShow() {
         if (currentShow == null) {
             try {
                 wait();
@@ -304,4 +304,6 @@ public class Client {
             }
         }).start();
     }
+
+
 }
