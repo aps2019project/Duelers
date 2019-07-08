@@ -33,7 +33,7 @@ import static models.card.CardType.*;
 import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
-    private static Media backgroundMusic = new Media( // TODO: Change music
+    private static Media backgroundMusic = new Media(
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
@@ -106,7 +106,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         }
     }
 
-    public CustomCardMenu() {
+    CustomCardMenu() {
         preProcess();
         try {
             root.setBackground(UIConstants.DEFAULT_ROOT_BACKGROUND);

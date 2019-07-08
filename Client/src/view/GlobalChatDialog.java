@@ -3,11 +3,14 @@ package view;
 import controller.Client;
 import controller.MainMenuController;
 import controller.SoundEffectPlayer;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.gui.*;
 import models.message.ChatMessage;
+
+import static models.gui.UIConstants.SCALE;
 
 
 public class GlobalChatDialog {
@@ -17,14 +20,22 @@ public class GlobalChatDialog {
     private DialogBox dialogBox = new DialogBox();
     private NormalField normalField = new NormalField("Message");
 
-    private GlobalChatDialog(){
+    private GlobalChatDialog() {
         ScrollPane scrollPane = new ScrollPane(chatMessages);
         OrangeButton sendButton = new OrangeButton("send",
-                event -> MainMenuController.getInstance().sendChatMessage(normalField.getText()),
+                event -> {
+                    MainMenuController.getInstance().sendChatMessage(normalField.getText());
+                    normalField.setText("");
+                },
                 SoundEffectPlayer.SoundName.select);
-        dialogBox.getChildren().add(scrollPane,new HBox(normalField, sendButton));
+        dialogBox.getChildren().addAll(scrollPane, new HBox(normalField, sendButton));
+        sendButton.setAlignment(Pos.CENTER_LEFT);
+        scrollPane.setMinHeight(700);
+        dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
     }
+
     public void show() {
+        normalField.setText("");
         DialogContainer dialogContainer = new DialogContainer(Client.getInstance().getCurrentShow().root, dialogBox);
 
         dialogContainer.show();
@@ -35,7 +46,7 @@ public class GlobalChatDialog {
         return ourInstance;
     }
 
-    public void addMessage(ChatMessage chatMessage){
-        chatMessages.getChildren().add(new DialogText(chatMessage.getSenderUsername()+"\n"+chatMessage.getText()));
+    public void addMessage(ChatMessage chatMessage) {
+        chatMessages.getChildren().add(new DialogText(chatMessage.getSenderUsername() + ": " + chatMessage.getText()));
     }
 }

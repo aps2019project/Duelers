@@ -11,10 +11,8 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.GameResultMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.Show;
+import view.*;
+import view.BattleView.BattleScene;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -222,14 +220,27 @@ public class Client {
             case CHAT:
                 showOrSaveMessage(message);
                 break;
+            case INVITATION:
+                Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
+                break;
+            case ACCEPT_REQUEST:
+                //think...
+                break;
+            case DECLINE_REQUEST:
+                if (currentShow instanceof WaitingMenu) {
+                    ((WaitingMenu) currentShow).close();
+                }
+                break;
         }
     }
 
     private void showOrSaveMessage(Message message) {
-        if (message.getChatMessage().getReceiverUsername().equals(Constants.GLOBAL)){
+        if (message.getChatMessage().getReceiverUsername()==null) {
             MainMenuController.getInstance().addChatMessage(message.getChatMessage());
-        }else {
-            //TODO:ahmad
+        } else {
+            if (currentShow instanceof BattleScene) {
+                ((BattleScene) currentShow).showOpponentMessage(message.getChatMessage().getText());
+            }
         }
     }
 

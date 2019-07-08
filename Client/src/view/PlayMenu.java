@@ -26,8 +26,10 @@ public class PlayMenu extends Show {
     private static final PlayButtonItem[] items = {
             new PlayButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
                     "Story game and custom game, play with AI", event -> SinglePlayerMenu.getInstance().show()),
-            new PlayButtonItem("resources/menu/playButtons/multiplayer.jpg", "MULTIPLAYER",
-                    "Play with your friends and earn money", event -> MultiPlayerMenu.getInstance().show())
+            new PlayButtonItem("resources/menu/playButtons/friend_game.jpg", "PLAY WITH FRIENDS",
+                    "Play with your friends and earn money", event -> FriendGameMenu.getInstance().show()),
+            new PlayButtonItem("resources/menu/playButtons/global_game.jpg", "GLOBAL GAME",
+                    "Search for an opponent an play", event -> GlobalGameMenu.getInstance().show())
     };
     private static PlayMenu menu;
 

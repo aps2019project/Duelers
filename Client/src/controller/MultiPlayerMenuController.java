@@ -5,7 +5,6 @@ import models.Constants;
 import models.exceptions.InputException;
 import models.game.GameType;
 import models.message.Message;
-import view.MultiPlayerMenu;
 
 public class MultiPlayerMenuController {
     private static MultiPlayerMenuController ourInstance = new MultiPlayerMenuController();
@@ -19,16 +18,16 @@ public class MultiPlayerMenuController {
 
     public void startGame(GameType gameType, int numberOfFlags, String opponent) {
         try {
-            if (opponent == null || opponent.length() < 2)
+            if (opponent != null && opponent.length() < 2)
                 throw new InputException("invalid opponent");
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeNewMultiPlayerGameMessage(
+                    Message.makeMultiPlayerGameReQuestMessage(
                             Client.getInstance().getClientName(), Constants.SERVER_NAME, gameType,
                             numberOfFlags, opponent, 0
                     )
             );
         } catch (InputException e) {
-            Platform.runLater(() -> MultiPlayerMenu.getInstance().showError(e.getMessage()));
+            Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }
     }
 }

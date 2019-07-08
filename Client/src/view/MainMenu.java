@@ -24,6 +24,9 @@ public class MainMenu extends Show {
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
             new MenuItem(5, "SETTING", "Change game properties", event -> {
             }),
+            new MenuItem(6, "GLOBAL CHAT", "chat with other players", event -> {
+                GlobalChatDialog.getInstance().show();
+            }),
     };
 
     public MainMenu() {
