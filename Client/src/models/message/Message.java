@@ -369,4 +369,8 @@ public class Message {
     public NewGameFields getNewGameFields() {
         return newGameFields;
     }
+
+    public ChangeCardNumber getChangeCardNumber() {
+        return changeCardNumber;
+    }
 }

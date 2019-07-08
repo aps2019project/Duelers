@@ -232,6 +232,11 @@ public class Client {
                     ((WaitingMenu) currentShow).close();
                 }
                 break;
+            case CHANGE_CARD_NUMBER:
+                ShopAdminController.getInstance().setValue(
+                        message.getChangeCardNumber().getCardName(),
+                        message.getChangeCardNumber().getNumber()
+                );
         }
     }
 

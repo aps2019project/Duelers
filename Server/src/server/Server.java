@@ -217,6 +217,8 @@ public class Server {
                 case SUDO:
                     sudo(message);
                     break;
+                case CHANGE_CARD_NUMBER:
+                    DataCenter.getInstance().changeCardNumber(message.getChangeCardNumber());
                 default:
                     throw new LogicException("Invalid Message Type!");
             }

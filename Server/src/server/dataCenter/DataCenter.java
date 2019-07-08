@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
+import server.clientPortal.models.message.ChangeCardNumber;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.Collection;
@@ -377,5 +378,9 @@ public class DataCenter extends Thread {
         Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
                 Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
         saveAccount(account);
+    }
+
+    public void changeCardNumber(ChangeCardNumber changeCardNumber) {
+        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
     }
 }

@@ -38,7 +38,7 @@ public class ShopAdminController {
         support.firePropertyChange("add_card", null, card);
     }
 
-    public void setValue(String cardName, int newValue) {
+    void setValue(String cardName, int newValue) {
         Card card = ShopController.getInstance().getOriginalCards().getCard(cardName);
         if (card == null) return;
         card.setRemainingNumber(newValue);
