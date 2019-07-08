@@ -47,11 +47,15 @@ public class GlobalChatDialog {
 
     public void show() {
         if (!isOpen) {
+            BackgroundMaker.makeMenuBackgroundFrozen();
             normalField.setText("");
             DialogContainer dialogContainer = new DialogContainer(Client.getInstance().getCurrentShow().root, dialogBox);
 
             dialogContainer.show();
-            dialogBox.makeClosable(dialogContainer, event -> isOpen = false);
+            dialogBox.makeClosable(dialogContainer, event -> {
+                isOpen = false;
+                BackgroundMaker.makeMenuBackgroundUnfrozen();
+            });
         }
     }
 
