@@ -1,17 +1,22 @@
 package models.gui;
 
+import controller.Client;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 import models.account.AccountInfo;
+import models.account.AccountType;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static models.account.AccountType.ADMIN;
 
 public class LeaderboardScroll extends TableView {
     public LeaderboardScroll(List<LeaderBoardView> leaderboard) {
@@ -34,6 +39,12 @@ public class LeaderboardScroll extends TableView {
         online.setCellFactory(cell -> new CircleTableCell());
 
         getColumns().addAll(index, username, wins, online);
+
+        if (Client.getInstance().getAccount().getAccountType() == ADMIN) {
+            TableColumn<LeaderBoardView, Spinner<AccountType>> accountType = new TableColumn<>("Account Type");
+            accountType.setCellValueFactory(new PropertyValueFactory<>("typeSpinner"));
+            getColumns().add(accountType);
+        }
     }
 
     public void setItems(AccountInfo[] leaderboard) {

@@ -220,6 +220,9 @@ public class Server {
                 case CHANGE_CARD_NUMBER:
                     DataCenter.getInstance().changeCardNumber(message);
                     break;
+                case CHANGE_ACCOUNT_TYPE:
+                    DataCenter.getInstance().changeAccountType(message.getChangeAccountType());
+                    break;
                 default:
                     throw new LogicException("Invalid Message Type!");
             }

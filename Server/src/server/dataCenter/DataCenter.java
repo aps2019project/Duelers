@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
+import server.clientPortal.models.message.ChangeAccountType;
+import server.clientPortal.models.message.ChangeCardNumber;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
@@ -308,6 +310,10 @@ public class DataCenter extends Thread {
             throw new ClientException("You don't have admin access!");
 
         //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
+    }
+
+    public void changeAccountType(ChangeAccountType changeAccountType) {
+        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeAccountTypeMessage(username, new Value)
     }
 
     private void readAccounts() {
