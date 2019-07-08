@@ -107,7 +107,7 @@ public class MapBox implements PropertyChangeListener {
         }
     }
 
-    public void addCircles() {
+    void addCircles() {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
                 mapGroup.getChildren().add(new Circle(cellsX[j][i], cellsY[j][i], 2));

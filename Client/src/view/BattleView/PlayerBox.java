@@ -4,17 +4,23 @@ import controller.GameController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import models.card.CardType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
+import models.gui.DefaultLabel;
 import models.gui.DefaultText;
 import models.gui.ImageLoader;
 import models.gui.NormalField;
@@ -26,6 +32,7 @@ import java.io.FileInputStream;
 import static java.lang.Math.pow;
 import static models.gui.UIConstants.DEFAULT_FONT;
 import static view.BattleView.Constants.SCALE;
+import static view.BattleView.Constants.SCREEN_WIDTH;
 
 public class PlayerBox implements PropertyChangeListener {
     private static final Image comboNotSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_empty@2x.png");
@@ -47,6 +54,8 @@ public class PlayerBox implements PropertyChangeListener {
     private MessageShow player2MessageShow;
     private ImageView player1Image;
     private ImageView player2Image;
+    private ColorAdjust player1ImageEffect;
+    private ColorAdjust player2ImageEffect;
     private ImageView comboButton;
     private ImageView spellButton;
 
@@ -58,7 +67,7 @@ public class PlayerBox implements PropertyChangeListener {
         addPhotos();
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
-        updateMP(7);
+        updateMP(3);
         addComboButton();
         addSpellButton();
         addChatField();
@@ -107,8 +116,15 @@ public class PlayerBox implements PropertyChangeListener {
         player1Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
         player2Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
-        group.getChildren().addAll(player1Image, player2Image);
-        //TODO:NAMES
+        DefaultLabel player1Name=new DefaultLabel(player1.getUserName(),Constants.NAME_FONT,Color.WHITE,290* SCALE,75*SCALE);
+        player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK,new CornerRadii(3), Insets.EMPTY)));
+        DefaultLabel player2Name=new DefaultLabel(player2.getUserName(),Constants.NAME_FONT,Color.WHITE,SCREEN_WIDTH-400*SCALE,75*SCALE);//TODO
+        player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK,new CornerRadii(3), Insets.EMPTY)));
+        player1ImageEffect=new ColorAdjust();
+        player2ImageEffect=new ColorAdjust();
+        player1Image.setEffect(player1ImageEffect);
+        player2Image.setEffect(player2ImageEffect);
+        group.getChildren().addAll(player1Image, player2Image,player1Name,player2Name);
     }
 
     void refreshComboAndSpell() {
@@ -337,11 +353,11 @@ public class PlayerBox implements PropertyChangeListener {
                 battleScene.getHandBox().resetSelection();
                 battleScene.getMapBox().resetSelection();
                 if ((int) evt.getNewValue() % 2 == 1) {
-                    player1Image.setOpacity(1);
-                    player2Image.setOpacity(0.7);
+                    player1ImageEffect.setBrightness(0);
+                    player2ImageEffect.setBrightness(-0.6);
                 } else {
-                    player1Image.setOpacity(0.7);
-                    player2Image.setOpacity(1);
+                    player1ImageEffect.setBrightness(-0.6);
+                    player2ImageEffect.setBrightness(0);
                 }
             });
         }

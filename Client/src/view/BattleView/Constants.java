@@ -21,6 +21,8 @@ public class Constants {
     static final double CELLS_DEFAULT_OPACITY = 0.4;
     static final double SPACE_BETWEEN_CELLS = 2;
     static final double MOVE_TIME_PER_CELL = 200;
+
+    static final Font NAME_FONT = Font.font("SansSerif", FontWeight.BOLD, 35 * SCALE);
     static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 20 * SCALE);
     static final Font FLAG_FONT = Font.font("SansSerif", FontWeight.LIGHT, 15 * SCALE);
 
