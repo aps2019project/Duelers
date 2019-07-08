@@ -109,6 +109,9 @@ public class GameResultMenu extends Show {
                     background, resultBackground, resultMiddleground,
                     heroView, vignette, resultContainer, resultForeground
             );
+
+
+
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

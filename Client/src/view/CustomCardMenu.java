@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -151,10 +152,21 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             DefaultContainer container = new DefaultContainer(cardMakerGrid);
 
             AnchorPane sceneContents = new AnchorPane(background, container, backButton);
+
+            showGlobalChatDialog(sceneContents);
+
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     private void preProcess() {

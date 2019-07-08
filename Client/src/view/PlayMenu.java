@@ -3,6 +3,7 @@ package view;
 import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -41,8 +42,17 @@ public class PlayMenu extends Show {
         BackButton backButton = new BackButton(backEvent);
 
         AnchorPane sceneContents = new AnchorPane(background, container, backButton);
-
+        showGlobalChatDialog(sceneContents);
         root.getChildren().addAll(sceneContents);
+    }
+
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     @Override

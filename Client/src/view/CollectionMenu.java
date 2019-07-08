@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -120,10 +121,20 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
 
             AnchorPane sceneContents = new AnchorPane(background, collectionPane, backButton);
 
+            showGlobalChatDialog(sceneContents);
+
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     private void importDeck() {

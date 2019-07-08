@@ -20,7 +20,7 @@ public class GlobalChatDialog {
     private VBox chatMessages = new VBox();
     private DialogBox dialogBox = new DialogBox();
     private NormalField normalField = new NormalField("Message");
-
+    private boolean isOpen;
     private GlobalChatDialog() {
         ScrollPane scrollPane = new ScrollPane(chatMessages);
         OrangeButton sendButton = new OrangeButton("send",
@@ -46,11 +46,13 @@ public class GlobalChatDialog {
     }
 
     public void show() {
-        normalField.setText("");
-        DialogContainer dialogContainer = new DialogContainer(Client.getInstance().getCurrentShow().root, dialogBox);
+        if (!isOpen) {
+            normalField.setText("");
+            DialogContainer dialogContainer = new DialogContainer(Client.getInstance().getCurrentShow().root, dialogBox);
 
-        dialogContainer.show();
-        dialogBox.makeClosable(dialogContainer);
+            dialogContainer.show();
+            dialogBox.makeClosable(dialogContainer, event -> isOpen = false);
+        }
     }
 
     public static GlobalChatDialog getInstance() {
