@@ -3,7 +3,6 @@ package controller;
 import models.account.AccountInfo;
 import models.account.AccountType;
 import models.account.Collection;
-import models.message.ChangeAccountType;
 import models.message.ChatMessage;
 import models.message.DataName;
 import models.message.Message;
@@ -62,15 +61,21 @@ public class MainMenuController {
     }
 
     public void requestCustomCardRequests() {
-        //TODO : get data
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeGetDataMessage(Client.getInstance().getClientName(),SERVER_NAME,DataName.CUSTOM_CARDS,0)
+        );
     }
 
     public void acceptCustomCard(String cardName) {
-        //TODO
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeValidateCustomCardMessage(Client.getInstance().getClientName(),SERVER_NAME,cardName,0)
+        );
     }
 
     public void rejectCustomCard(String cardName) {
-        //TODO
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeInValidateCustomCardMessage(Client.getInstance().getClientName(),SERVER_NAME,cardName,0)
+        );
     }
 
     synchronized void setCustomCardRequests(Collection customCardRequests) {
