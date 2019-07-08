@@ -11,6 +11,7 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
+import view.*;
 import view.BattleView.BattleScene;
 import view.*;
 
@@ -285,7 +286,7 @@ public class Client {
         }
     }
 
-    synchronized Show getCurrentShow() {
+    public synchronized Show getCurrentShow() {
         if (currentShow == null) {
             try {
                 wait();
@@ -315,4 +316,6 @@ public class Client {
             }
         }).start();
     }
+
+
 }

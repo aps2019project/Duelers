@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -151,10 +152,21 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             DefaultContainer container = new DefaultContainer(cardMakerGrid);
 
             AnchorPane sceneContents = new AnchorPane(background, container, backButton);
+
+            showGlobalChatDialog(sceneContents);
+
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     private void preProcess() {
@@ -285,8 +297,9 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     }
 
     private void addSpell() {
-        DialogText dialogText = new DialogText("spell properties : ");
         DialogBox dialogBox = new DialogBox();
+
+        DialogText dialogText = new DialogText("spell properties : ");
         NormalField spellId = new NormalField("spell ID");
 
         DialogText spellActionLabel = new DialogText("spell action : ");
@@ -339,6 +352,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                 coolDown, mannaPoint
         );
         dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
+
         dialogBox.makeButton("add", event -> {
             SpellAction spellAction = new SpellAction(
                     enemyHitChange.getValue(), apChange.getValue(), hpChange.getValue(),
@@ -367,7 +381,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                     coolDown.getValue(), mannaPoint.getValue())
             );
         });
-        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        DialogContainer dialogContainer =  new DialogContainer(root, dialogBox);
         dialogContainer.show();
         dialogBox.makeClosable(dialogContainer);
     }

@@ -3,7 +3,11 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
+
+import javafx.scene.input.KeyCode;
+
 import javafx.application.Platform;
+
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
@@ -27,7 +31,14 @@ public class MainMenu extends Show {
             new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
             new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
+            new MenuItem(5, "SETTING", "Change game properties", event -> {
+            }),
+            new MenuItem(6, "GLOBAL CHAT", "chat with other players", event -> {
+                GlobalChatDialog.getInstance().show();
+            }),
+
             new MenuItem(5, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard()),
+
     };
 
     public MainMenu() {
@@ -38,12 +49,22 @@ public class MainMenu extends Show {
             MainMenuBox menuBox = new MainMenuBox(items);
 
             AnchorPane sceneContents = new AnchorPane(background, menuBox);
+            showGlobalChatDialog(sceneContents);
 
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
+    }
+
 
     private void showLeaderboard() {
         BackgroundMaker.makeMenuBackgroundFrozen();
@@ -72,6 +93,7 @@ public class MainMenu extends Show {
         dialogContainer.show();
         dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
     }
+
 
     private void showProfileDialog() {
         BackgroundMaker.makeMenuBackgroundFrozen();
