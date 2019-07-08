@@ -16,7 +16,9 @@ import server.gameCenter.models.game.Game;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.Troop;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Server {
     private static Server server;
@@ -155,7 +157,7 @@ public class Server {
                     DataCenter.getInstance().selectDeck(message);
                     break;
                 case ADD_CARD:
-                    DataCenter.getInstance().addCard(message);
+                    DataCenter.getInstance().addCustomCard(message);
                     break;
                 case MULTIPLAYER_GAME_REQUEST:
                     GameCenter.getInstance().getMultiPlayerGameRequest(message);
@@ -406,10 +408,10 @@ public class Server {
     }
 
     public void sendAddedCartMessage(Card customCard) {
-        for (Map.Entry<String, Formatter> formatter :
+        /*for (Map.Entry<String, Formatter> formatter :
                 ClientPortal.getInstance().getClients()) {
             Message message = Message.makeAddCustomCardMessage(serverName, formatter.getKey(), customCard, 0);
             addToSendingMessages(message);
-        }
+        }*/
     }
 }

@@ -270,7 +270,7 @@ public class DataCenter extends Thread {
         return leaderBoard;
     }
 
-    public void addCard(Message message) throws LogicException{
+    public void addCustomCard(Message message) throws LogicException{
         if(!isValidCardName(message.getCustomCard().getCardId()))
             throw new ClientException("invalid name!");
         newCustomCards.addCard(message.getCustomCard());
