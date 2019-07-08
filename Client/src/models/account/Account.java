@@ -118,6 +118,7 @@ public class Account {
             support.firePropertyChange("main_deck", old, mainDeck);
         }
         matchHistories = account.getMatchHistories();
+        accountType = account.getAccountType();
     }
 
     private boolean mainDecksEqual(TempAccount account) {
