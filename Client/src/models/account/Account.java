@@ -13,6 +13,7 @@ public class Account {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String username;
     private String password;
+    private AccountType accountType;
     private Collection collection;
     private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
@@ -31,6 +32,7 @@ public class Account {
         this.matchHistories = account.getMatchHistories();
         this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
+        this.accountType = account.getAccountType();
     }
 
     @Override
@@ -140,5 +142,9 @@ public class Account {
 
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 }

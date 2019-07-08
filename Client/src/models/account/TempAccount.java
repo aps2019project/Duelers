@@ -9,6 +9,7 @@ import java.util.List;
 public class TempAccount {
     private String username;
     private String password;
+    private AccountType accountType;
     private Collection collection;
     private List<TempDeck> decks = new ArrayList<>();
     private String mainDeckName;
@@ -46,5 +47,9 @@ public class TempAccount {
 
     public int getWins() {
         return wins;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 }
