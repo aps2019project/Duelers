@@ -18,6 +18,7 @@ import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.dataCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
+import server.exceptions.ServerException;
 import server.gameCenter.GameCenter;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.TempStory;
@@ -269,8 +270,10 @@ public class DataCenter extends Thread {
         return leaderBoard;
     }
 
-    public void addCard(Message message) {
-        originalCards.addCard(message.getCustomCard());
+    public void addCard(Message message) throws LogicException{
+        if(!isValidCardName(message.getCustomCard().getCardId()))
+            throw new ClientException("invalid name!");
+        newCustomCards.addCard(message.getCustomCard());
         saveCustomCard(message.getCustomCard());
         Server.getInstance().sendAddedCartMessage(message.getCustomCard());
     }
@@ -359,7 +362,7 @@ public class DataCenter extends Thread {
         }
     }
 
-    private void saveCard(Card card){
+    private void updateCard(Card card) throws ServerException {
         String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(card);
         for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
@@ -378,8 +381,13 @@ public class DataCenter extends Thread {
                 }
             }
         }
+        throw new ServerException("Card not found");
+    }
+
+    private void saveCustomCard(Card customCard) {
+        String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
         try {
-            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + card.getCardId() + ".custom.card.json");
+            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + customCard.getCardId() + ".custom.card.json");
             writer.write(cardJson);
             writer.close();
         } catch (IOException e) {
@@ -399,18 +407,6 @@ public class DataCenter extends Thread {
             }
         }
         return true;
-    }
-
-    private void saveCustomCard(Card customCard) {
-        String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
-        System.out.println(cardJson);
-        try {
-            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + customCard.getCardId() + ".custom.card.json");
-            writer.write(cardJson);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private <T> T loadFile(File file, Class<T> classOfT) {
