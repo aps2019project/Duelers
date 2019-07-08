@@ -4,7 +4,6 @@ import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
-import server.clientPortal.models.message.ChangeAccountType;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
@@ -323,8 +322,17 @@ public class DataCenter extends Thread {
         Server.getInstance().sendShopUpdateMessage(card);
     }
 
-    public void changeAccountType(ChangeAccountType changeAccountType) {
-        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeAccountTypeMessage(username, new Value)
+    public void changeAccountType(Message message) throws LogicException{
+        loginCheck(message);
+        Account account = clients.get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Account account1=getAccount(message.getChangeAccountType().getUsername());
+        if(account1==null)
+            throw new ClientException("invalid username!");
+        account1.setAccountType(message.getChangeAccountType().getNewType());
+        saveAccount(account1);
+        Server.getInstance().sendAccountUpdateMessage(account1);
     }
 
     private void readAccounts() {

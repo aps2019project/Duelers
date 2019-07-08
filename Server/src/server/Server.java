@@ -223,7 +223,7 @@ public class Server {
                     DataCenter.getInstance().changeCardNumber(message);
                     break;
                 case CHANGE_ACCOUNT_TYPE:
-                    DataCenter.getInstance().changeAccountType(message.getChangeAccountType());
+                    DataCenter.getInstance().changeAccountType(message);
                     break;
                 default:
                     throw new LogicException("Invalid Message Type!");
@@ -416,6 +416,10 @@ public class Server {
     }
 
     public void sendShopUpdateMessage(Card card){
+
+    }
+
+    public void sendAccountUpdateMessage(Account account){
 
     }
 }
