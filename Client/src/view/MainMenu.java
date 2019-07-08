@@ -85,6 +85,13 @@ public class MainMenu extends Show {
                 e.printStackTrace();
             }
         }).start();
+
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+            BackgroundMaker.makeMenuBackgroundUnfrozen();
+            inCustomCardRequests = false;
+        });
     }
 
     private void showLeaderboard() {
