@@ -156,9 +156,6 @@ public class Server {
                 case SELECT_DECK:
                     DataCenter.getInstance().selectDeck(message);
                     break;
-                case ADD_CARD:
-                    DataCenter.getInstance().addCustomCard(message);
-                    break;
                 case MULTIPLAYER_GAME_REQUEST:
                     GameCenter.getInstance().getMultiPlayerGameRequest(message);
                     addToSendingMessages(Message.makeDoneMessage(serverName, message.getSender(), message.getMessageId()));
@@ -218,6 +215,9 @@ public class Server {
                     break;
                 case SUDO:
                     sudo(message);
+                    break;
+                case ADD_CARD:
+                    DataCenter.getInstance().addCustomCard(message);
                     break;
                 case CHANGE_CARD_NUMBER:
                     DataCenter.getInstance().changeCardNumber(message);
@@ -410,15 +410,15 @@ public class Server {
         System.out.println("\u001B[32m" + string.trim() + "\u001B[0m");
     }
 
-    public void sendAddedCartMessage(Card customCard) {
-        /*for (Map.Entry<String, Formatter> formatter :
-                ClientPortal.getInstance().getClients()) {
-            Message message = Message.makeAddCustomCardMessage(serverName, formatter.getKey(), customCard, 0);
-            addToSendingMessages(message);
-        }*/
+    public void sendShopUpdateMessage(){
+
     }
 
-    public void sendShopUpdateMessage(Card card){
+    public void sendCustomCardsUpdateMessage(){
+
+    }
+
+    public void sendLeaderBoardUpdateMessage(Account account){
 
     }
 

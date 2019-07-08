@@ -294,7 +294,7 @@ public class DataCenter extends Thread {
             throw new ClientException("invalid name!");
         newCustomCards.addCard(message.getCustomCard());
         saveCustomCard(message.getCustomCard());
-        Server.getInstance().sendAddedCartMessage(message.getCustomCard());
+        Server.getInstance().sendCustomCardsUpdateMessage();
     }
 
     public void importDeck(Message message) throws LogicException {
@@ -319,7 +319,7 @@ public class DataCenter extends Thread {
             throw new ClientException("Invalid Card Name!");
         card.setRemainingNumber(card.getRemainingNumber()+message.getChangeCardNumber().getNumber());
         updateCard(card);
-        Server.getInstance().sendShopUpdateMessage(card);
+        Server.getInstance().sendShopUpdateMessage();
     }
 
     public void changeAccountType(Message message) throws LogicException{
@@ -332,6 +332,7 @@ public class DataCenter extends Thread {
             throw new ClientException("invalid username!");
         account1.setAccountType(message.getChangeAccountType().getNewType());
         saveAccount(account1);
+        Server.getInstance().sendLeaderBoardUpdateMessage(account1);
         Server.getInstance().sendAccountUpdateMessage(account1);
     }
 
@@ -347,7 +348,8 @@ public class DataCenter extends Thread {
         saveOriginalCard(card);
         newCustomCards.removeCard(card);
         originalCards.addCard(card);
-
+        Server.getInstance().sendShopUpdateMessage();
+        Server.getInstance().sendCustomCardsUpdateMessage();
     }
 
     private void readAccounts() {
