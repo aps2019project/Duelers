@@ -15,7 +15,6 @@ public class TempAccount {
     private String mainDeckName;
     private List<MatchHistory> matchHistories;
     private int money;
-    private int wins;
 
     public TempAccount(Account account) {
         this.username = account.getUsername();
@@ -29,7 +28,6 @@ public class TempAccount {
         }
         this.matchHistories = account.getMatchHistories();
         this.money = account.getMoney();
-        this.wins = account.getWins();
     }
 
     public String getUsername() {
@@ -58,9 +56,5 @@ public class TempAccount {
 
     int getMoney() {
         return money;
-    }
-
-    int getWins() {
-        return wins;
     }
 }

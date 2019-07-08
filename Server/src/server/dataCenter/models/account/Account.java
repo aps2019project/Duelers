@@ -19,7 +19,6 @@ public class Account {
     private Deck mainDeck;
     private List<MatchHistory> matchHistories = new ArrayList<>();
     private int money;
-    private int wins;
 
     public Account(String username, String password) {
         this.username = username;
@@ -40,7 +39,6 @@ public class Account {
         if (account.getMainDeckName() != null)
             this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
-        this.wins = account.getWins();
         this.matchHistories = account.getMatchHistories();
     }
 

@@ -28,8 +28,6 @@ public class MainMenu extends Show {
             new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
             new MenuItem(5, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard()),
-            new MenuItem(6, "SETTING", "Change game properties", event -> {
-            }),
     };
 
     public MainMenu() {
