@@ -2,6 +2,7 @@ package server.clientPortal.models.message;
 
 import server.clientPortal.models.JsonConverter;
 import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.ExportedDeck;
@@ -39,6 +40,7 @@ public class Message {
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
+    private ChangeAccountType changeAccountType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -189,6 +191,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeChangeAccountTypeMessage(String sender, String receiver, String username, AccountType newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeAccountType = new ChangeAccountType(username, newValue);
+        message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
@@ -239,5 +248,9 @@ public class Message {
 
     public ChangeCardNumber getChangeCardNumber() {
         return changeCardNumber;
+    }
+
+    public ChangeAccountType getChangeAccountType() {
+        return changeAccountType;
     }
 }

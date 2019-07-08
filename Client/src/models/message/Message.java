@@ -2,6 +2,7 @@ package models.message;
 
 
 import models.JsonConverter;
+import models.account.AccountType;
 import models.card.Card;
 import models.card.ExportedDeck;
 import models.game.GameType;
@@ -37,6 +38,7 @@ public class Message {
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
+    private ChangeAccountType changeAccountType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -286,6 +288,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeChangeAccountTypeMessage(String sender, String receiver, String username, AccountType newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeAccountType = new ChangeAccountType(username, newValue);
+        message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
@@ -372,5 +381,9 @@ public class Message {
 
     public ChangeCardNumber getChangeCardNumber() {
         return changeCardNumber;
+    }
+
+    public ChangeAccountType getChangeAccountType() {
+        return changeAccountType;
     }
 }

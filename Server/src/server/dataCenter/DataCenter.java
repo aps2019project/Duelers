@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
+import server.clientPortal.models.message.ChangeAccountType;
 import server.clientPortal.models.message.ChangeCardNumber;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
@@ -382,5 +383,9 @@ public class DataCenter extends Thread {
 
     public void changeCardNumber(ChangeCardNumber changeCardNumber) {
         //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
+    }
+
+    public void changeAccountType(ChangeAccountType changeAccountType) {
+        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeAccountTypeMessage(username, new Value)
     }
 }

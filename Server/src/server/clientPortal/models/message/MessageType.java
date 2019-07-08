@@ -46,6 +46,7 @@ public enum MessageType {
     ACCEPT_REQUEST,
     DECLINE_REQUEST,
     CHANGE_CARD_NUMBER,
+    CHANGE_ACCOUNT_TYPE,
 
     ADD_CARD,
     FORCE_FINISH
