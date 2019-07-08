@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static models.gui.UIConstants.SCALE;
 
@@ -14,7 +15,7 @@ public class MainMenuBox extends VBox {
     private static final double X = 100 * SCALE;
     private static final double Y = 400 * SCALE;
 
-    public MainMenuBox(MenuItem[] items) throws FileNotFoundException {
+    public MainMenuBox(List<MenuItem> items) throws FileNotFoundException {
         super(UIConstants.DEFAULT_SPACING * 5);
         ImageView brandView = ImageLoader.loadImage(
                 DUELYST_LOGO_URL, UIConstants.DUELYST_LOGO_WIDTH, UIConstants.DUELYST_LOGO_HEIGHT

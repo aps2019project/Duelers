@@ -109,7 +109,7 @@ public class Collection {
         }
     }
 
-    void removeCard(Card card) {
+    public void removeCard(Card card) {
         heroes.remove(card);
         minions.remove(card);
         spells.remove(card);

@@ -11,35 +11,49 @@ import javafx.application.Platform;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
+import models.account.Collection;
 import models.gui.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+
+import static models.account.AccountType.ADMIN;
 
 public class MainMenu extends Show {
     private static MainMenu menu;
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
     );
-
-    private static final MenuItem[] items = {
-            new MenuItem(0, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
-            new MenuItem(1, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
-            new MenuItem(2, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
-            new MenuItem(3, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
-            new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
-            new MenuItem(5, "SETTING", "Change game properties", event -> {
-            }),
-            new MenuItem(6, "GLOBAL CHAT", "chat with other players", event -> {
-                GlobalChatDialog.getInstance().show();
-            }),
-
-            new MenuItem(5, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard()),
-
+  
+    private int itemIndex = 0;
+    private final MenuItem[] itemsArray = {
+            new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
+            new MenuItem(itemIndex++, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
+            new MenuItem(itemIndex++, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
+            new MenuItem(itemIndex++, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
+            new MenuItem(itemIndex++, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
+            new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
+            new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
+  
+    private final List<MenuItem> items = new ArrayList<>();
+    private boolean inLeaderBoard = false;
+    private boolean inCustomCardRequests = false;
+
+    {
+        items.addAll(Arrays.asList(itemsArray));
+        if (Client.getInstance().getAccount().getAccountType() == ADMIN) {
+            System.out.println(Client.getInstance().getAccount().getUsername());
+            items.addAll(Arrays.asList(
+                    new MenuItem(itemIndex++, "SHOP ADMIN", "Change shop properties", event -> ShopAdminMenu.getInstance().show()),
+                    new MenuItem(itemIndex++, "CUSTOM CARD REQUESTS", "check custom card requests", event -> menu.showCustomCardRequests())
+            ));
+        }
+    }
 
     public MainMenu() {
         menu = this;
@@ -57,6 +71,37 @@ public class MainMenu extends Show {
         }
     }
 
+    private void showCustomCardRequests() {
+        BackgroundMaker.makeMenuBackgroundFrozen();
+        DialogBox dialogBox = new DialogBox();
+        CustomCardRequestsList requestsList = new CustomCardRequestsList();
+        dialogBox.getChildren().add(requestsList);
+
+        inCustomCardRequests = true;
+        new Thread(() -> {
+            try {
+                while (inCustomCardRequests) {
+                    MainMenuController.getInstance().requestCustomCardRequests();
+                    synchronized (MainMenuController.getInstance()) {
+                        MainMenuController.getInstance().wait();
+                    }
+                    Collection collection = MainMenuController.getInstance().getCustomCardRequests();
+                    Platform.runLater(() -> requestsList.setCards(collection));
+                    Thread.sleep(4000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+            BackgroundMaker.makeMenuBackgroundUnfrozen();
+            inCustomCardRequests = false;
+        });
+    }
+
     private void showGlobalChatDialog(AnchorPane sceneContents) {
         sceneContents.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.T)) {
@@ -68,22 +113,22 @@ public class MainMenu extends Show {
 
     private void showLeaderboard() {
         BackgroundMaker.makeMenuBackgroundFrozen();
-        MainMenuController.getInstance().requestLeaderboard();
         DialogBox dialogBox = new DialogBox();
+        LeaderboardScroll leaderboardScroll = new LeaderboardScroll(Collections.emptyList());
+        dialogBox.getChildren().add(leaderboardScroll);
 
+        inLeaderBoard = true;
         new Thread(() -> {
             try {
-                synchronized (MainMenuController.getInstance()) {
-                    MainMenuController.getInstance().wait();
+                while (inLeaderBoard) {
+                    MainMenuController.getInstance().requestLeaderboard();
+                    synchronized (MainMenuController.getInstance()) {
+                        MainMenuController.getInstance().wait();
+                    }
+                    AccountInfo[] leaderboard = MainMenuController.getInstance().getLeaderBoard();
+                    Platform.runLater(() -> leaderboardScroll.setItems(leaderboard));
+                    Thread.sleep(4000);
                 }
-                AccountInfo[] leaderboard = MainMenuController.getInstance().getLeaderBoard();
-                Platform.runLater(() -> {
-                    dialogBox.getChildren().add(
-                            new LeaderboardScroll(
-                                    Arrays.stream(leaderboard).map(LeaderBoardView::new).collect(Collectors.toList())
-                            )
-                    );
-                });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -91,7 +136,10 @@ public class MainMenu extends Show {
 
         DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
         dialogContainer.show();
-        dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
+        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+            BackgroundMaker.makeMenuBackgroundUnfrozen();
+            inLeaderBoard = false;
+        });
     }
 
 

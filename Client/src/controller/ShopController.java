@@ -65,9 +65,11 @@ public class ShopController {
     }
 
     synchronized void setOriginalCards(Collection originalCards) {
+        Collection old = this.originalCards;
         this.originalCards = originalCards;
         this.showingCards = originalCards;
         this.notify();
+        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -82,6 +84,12 @@ public class ShopController {
         originalCards.addCard(customCard);
         support.firePropertyChange("search_result", showingCards, originalCards);
         showingCards.addCard(customCard);
+        System.out.println(originalCards.getHeroes().size());
         this.notify();
+        ShopAdminController.getInstance().addCard(customCard);
+    }
+
+    public Collection getOriginalCards() {
+        return originalCards;
     }
 }

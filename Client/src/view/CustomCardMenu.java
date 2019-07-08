@@ -290,9 +290,11 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             case MELEE:
                 cardMakerGrid.getChildren().removeAll(rangeLabel, rangeSpinner);
                 break;
-            case RANGED: case HYBRID:
-                    cardMakerGrid.add(rangeLabel, 0, 10);
-                    cardMakerGrid.add(rangeSpinner, 1, 10);
+            case RANGED:
+            case HYBRID:
+                cardMakerGrid.getChildren().removeAll(rangeLabel, rangeSpinner);
+                cardMakerGrid.add(rangeLabel, 0, 10);
+                cardMakerGrid.add(rangeSpinner, 1, 10);
                 break;
         }
     }

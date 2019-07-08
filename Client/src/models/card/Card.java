@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Card implements ICard {
+    private transient PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String name;
     private String description;
     private String cardId;
@@ -23,6 +24,7 @@ public class Card implements ICard {
     private AttackType attackType;
     private int range;
     private boolean hasCombo;
+    private int remainingNumber;
 
     public Card(String name, String cardId, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
@@ -113,5 +115,19 @@ public class Card implements ICard {
 
     public boolean isSameAs(String cardName) {
         return name.equalsIgnoreCase(cardName);
+    }
+
+    public void setRemainingNumber(int remainingNumber) {
+        int old = this.remainingNumber;
+        this.remainingNumber = remainingNumber;
+        support.firePropertyChange("new_value", old, remainingNumber);
+    }
+
+    public int getRemainingNumber() {
+        return remainingNumber;
+    }
+
+    public void addListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 }

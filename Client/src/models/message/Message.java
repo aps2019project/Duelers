@@ -2,6 +2,7 @@ package models.message;
 
 
 import models.JsonConverter;
+import models.account.AccountType;
 import models.card.Card;
 import models.card.ExportedDeck;
 import models.game.GameType;
@@ -16,7 +17,7 @@ public class Message {
 
     //SENDER:SERVER
     private GameCopyMessage gameCopyMessage;
-    private OriginalCardsCopyMessage originalCardsCopyMessage;
+    private CardsCopyMessage cardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
@@ -28,14 +29,17 @@ public class Message {
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
     //SENDER:CLIENT
-    private Card customCard;
+    private String cardName;
     private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
     //SENDER:DUAL
+    private Card card;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
+    private ChangeCardNumber changeCardNumber;
+    private ChangeAccountType changeAccountType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -257,7 +261,7 @@ public class Message {
 
     public static Message makeCustomCardMessage(String sender, String receiver, Card customCard, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.customCard = customCard;
+        message.card = customCard;
         message.messageType = MessageType.ADD_CARD;
         return message;
     }
@@ -275,6 +279,34 @@ public class Message {
         message.otherFields = new OtherFields();
         message.otherFields.setSudoCommand(sudoCommand);
         message.messageType = MessageType.SUDO;
+        return message;
+    }
+
+    public static Message makeChangeCardNumberMessage(String sender, String receiver, Card card, int newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeCardNumber = new ChangeCardNumber(card.getName(), newValue);
+        message.messageType = MessageType.CHANGE_CARD_NUMBER;
+        return message;
+    }
+
+    public static Message makeChangeAccountTypeMessage(String sender, String receiver, String username, AccountType newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeAccountType = new ChangeAccountType(username, newValue);
+        message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
+        return message;
+    }
+
+    public static Message makeValidateCustomCardMessage(String sender, String receiver, String customCardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardName = customCardName;
+        message.messageType = MessageType.VALIDATE_CARD;
+        return message;
+    }
+
+    public static Message makeInValidateCustomCardMessage(String sender, String receiver, String customCardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardName = customCardName;
+        message.messageType = MessageType.INVALIDATE_CARD;
         return message;
     }
 
@@ -306,8 +338,8 @@ public class Message {
         return gameCopyMessage;
     }
 
-    public OriginalCardsCopyMessage getOriginalCardsCopyMessage() {
-        return originalCardsCopyMessage;
+    public CardsCopyMessage getCardsCopyMessage() {
+        return cardsCopyMessage;
     }
 
     public AccountCopyMessage getAccountCopyMessage() {
@@ -350,8 +382,8 @@ public class Message {
         return gameFinishMessage;
     }
 
-    public Card getCustomCard() {
-        return customCard;
+    public Card getCard() {
+        return card;
     }
 
     public ChatMessage getChatMessage() {
@@ -360,5 +392,17 @@ public class Message {
 
     public NewGameFields getNewGameFields() {
         return newGameFields;
+    }
+
+    public ChangeCardNumber getChangeCardNumber() {
+        return changeCardNumber;
+    }
+
+    public ChangeAccountType getChangeAccountType() {
+        return changeAccountType;
+    }
+
+    public String getCardName() {
+        return cardName;
     }
 }

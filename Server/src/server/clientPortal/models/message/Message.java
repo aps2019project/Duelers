@@ -18,7 +18,7 @@ public class Message {
 
     //SENDER:SERVER
     private GameCopyMessage gameCopyMessage;
-    private OriginalCardsCopyMessage originalCardsCopyMessage;
+    private CardsCopyMessage cardsCopyMessage;
     private AccountCopyMessage accountCopyMessage;
     private LeaderBoardCopyMessage leaderBoardCopyMessage;
     private StoriesCopyMessage storiesCopyMessage;
@@ -29,15 +29,18 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
-    private Card customCard;
     //SENDER:CLIENT
+    private String cardName;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     //SENDER:DUAL
+    private Card card;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
+    private ChangeCardNumber changeCardNumber;
+    private ChangeAccountType changeAccountType;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -65,7 +68,7 @@ public class Message {
 
     public static Message makeOriginalCardsCopyMessage(String sender, String receiver, Collection originalCards, int messageId) {
         Message message = new Message(sender, receiver, messageId);
-        message.originalCardsCopyMessage = new OriginalCardsCopyMessage(originalCards);
+        message.cardsCopyMessage = new CardsCopyMessage(originalCards);
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
         return message;
     }
@@ -155,13 +158,6 @@ public class Message {
         return message;
     }
 
-    public static Message makeAddCustomCardMessage(String serverName, String key, Card customCard, int i) {
-        Message message = new Message(serverName, key, i);
-        message.customCard = customCard;
-        message.messageType = MessageType.ADD_CARD;
-        return message;
-    }
-
     public static Message makeInvitationMessage(String sender, String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
         Message message = new Message(sender, receiver, 0);
         message.messageType = MessageType.INVITATION;
@@ -178,6 +174,41 @@ public class Message {
     public static Message makeDeclineRequestMessage(String sender, String receiver) {
         Message message = new Message(sender, receiver, 0);
         message.messageType = MessageType.DECLINE_REQUEST;
+        return message;
+    }
+
+    public static Message makeChangeCardNumberMessage(String sender, String receiver, Card card, int newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeCardNumber = new ChangeCardNumber(card.getName(), newValue);
+        message.messageType = MessageType.CHANGE_CARD_NUMBER;
+        return message;
+    }
+
+    public static Message makeAddOriginalCardMessage(String serverName, String key, Card card) {
+        Message message = new Message(serverName, key, 0);
+        message.card = card;
+        message.messageType = MessageType.ADD_TO_ORIGINALS;
+        return message;
+    }
+
+    public static Message makeAddCustomCardMessage(String serverName, String key, Card card) {
+        Message message = new Message(serverName, key, 0);
+        message.card = card;
+        message.messageType = MessageType.ADD_TO_CUSTOM_CARDS;
+        return message;
+    }
+
+    public static Message makeRemoveCustomCardMessage(String serverName, String key, String cardName) {
+        Message message = new Message(serverName, key, 0);
+        message.cardName = cardName;
+        message.messageType = MessageType.REMOVE_FROM_CUSTOM_CARDS;
+        return message;
+    }
+
+    public static Message makeCustomCardsCopyMessage(String sender, String receiver, Collection customCards) {
+        Message message = new Message(sender, receiver, 0);
+        message.cardsCopyMessage = new CardsCopyMessage(customCards);
+        message.messageType = MessageType.CUSTOM_CARDS_COPY;
         return message;
     }
 
@@ -217,8 +248,8 @@ public class Message {
         return newGameFields;
     }
 
-    public Card getCustomCard() {
-        return customCard;
+    public Card getCard() {
+        return card;
     }
 
     public ExportedDeck getExportedDeck() {
@@ -227,5 +258,17 @@ public class Message {
 
     public ChatMessage getChatMessage() {
         return chatMessage;
+    }
+
+    public ChangeCardNumber getChangeCardNumber() {
+        return changeCardNumber;
+    }
+
+    public ChangeAccountType getChangeAccountType() {
+        return changeAccountType;
+    }
+
+    public String getCardName() {
+        return cardName;
     }
 }
