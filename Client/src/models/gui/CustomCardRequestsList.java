@@ -43,6 +43,7 @@ public class CustomCardRequestsList extends TableView {
     }
 
     public void setCards(Collection collection) {
+        getItems().clear();
         getItems().addAll(collection.getHeroes().stream().map(CardRequestView::new).collect(Collectors.toList()));
         getItems().addAll(collection.getMinions().stream().map(CardRequestView::new).collect(Collectors.toList()));
         getItems().addAll(collection.getSpells().stream().map(CardRequestView::new).collect(Collectors.toList()));

@@ -245,7 +245,7 @@ public class Client {
                 //message.getCardName();
                 break;
             case CUSTOM_CARDS_COPY:
-                //message.getCardsCopyMessage().getCards();
+                MainMenuController.getInstance().setCustomCardRequests(message.getCardsCopyMessage().getCards());
                 break;
         }
     }
