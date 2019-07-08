@@ -356,6 +356,19 @@ public class DataCenter extends Thread {
         Server.getInstance().sendAddToOriginalsMessage(card);
     }
 
+    public void inValidateCustomCard(Message message) throws LogicException{
+        loginCheck(message);
+        Account account = clients.get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Card card=getCard(message.getCardName(),newCustomCards);
+        if(card==null)
+            throw new ClientException("invalid card name");
+        removeCustomCard(card);
+        newCustomCards.removeCard(card);
+        Server.getInstance().sendRemoveCustomCardsMessage(card);
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {

@@ -47,6 +47,7 @@ public enum MessageType {
     IMPORT_DECK,
     FORCE_FINISH,
     VALIDATE_CARD,
+    INVALIDATE_CARD,
     CHANGE_ACCOUNT_TYPE,
     ADD_CARD,
     //SENDER:DUAL

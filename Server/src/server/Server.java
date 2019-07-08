@@ -232,6 +232,9 @@ public class Server {
                 case VALIDATE_CARD:
                     DataCenter.getInstance().validateCustomCard(message);
                     break;
+                case INVALIDATE_CARD:
+                    DataCenter.getInstance().inValidateCustomCard(message);
+                    break;
                 default:
                     throw new LogicException("Invalid Message Type!");
             }

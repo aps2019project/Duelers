@@ -303,6 +303,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeInValidateCustomCardMessage(String sender, String receiver, String customCardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.cardName = customCardName;
+        message.messageType = MessageType.INVALIDATE_CARD;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
