@@ -76,9 +76,7 @@ public class MainMenu extends Show {
                         MainMenuController.getInstance().wait();
                     }
                     AccountInfo[] leaderboard = MainMenuController.getInstance().getLeaderBoard();
-                    Platform.runLater(() -> {
-                        leaderboardScroll.setItems(leaderboard);
-                    });
+                    Platform.runLater(() -> leaderboardScroll.setItems(leaderboard));
                     Thread.sleep(4000);
                 }
             } catch (InterruptedException e) {
