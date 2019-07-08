@@ -150,7 +150,6 @@ public class Client {
                 break;
             case ORIGINAL_CARDS_COPY:
                 ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
-                ShopAdminController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
                 break;
             case LEADERBOARD_COPY:
                 MainMenuController.getInstance().setLeaderBoard(message.getLeaderBoardCopyMessage().getLeaderBoard());
@@ -215,9 +214,6 @@ public class Client {
             case ADD_CARD:
                 if (ShopController.isLoaded()) {
                     ShopController.getInstance().addCard(message.getCustomCard());
-                }
-                if (ShopAdminController.isLoaded()) {
-                    ShopAdminController.getInstance().addCard(message.getCustomCard());
                 }
                 break;
             case DONE:

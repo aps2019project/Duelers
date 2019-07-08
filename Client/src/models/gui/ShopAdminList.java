@@ -2,6 +2,8 @@ package models.gui;
 
 
 import controller.ShopAdminController;
+import controller.ShopController;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -27,10 +29,8 @@ public class ShopAdminList extends TableView implements PropertyChangeListener {
         setMaxSize(WIDTH, HEIGHT);
 
         ShopAdminController.getInstance().addListener(this);
-        if (ShopAdminController.getInstance().getOriginalCards() != null) {
-            setOriginalCards(ShopAdminController.getInstance().getOriginalCards());
-        } else {
-            ShopAdminController.getInstance().requestOriginalCards();
+        if (ShopController.getInstance().getOriginalCards() != null) {
+            setOriginalCards(ShopController.getInstance().getOriginalCards());
         }
 
         TableColumn<CardAdminView, Integer> index = new TableColumn<>("Index");
@@ -38,19 +38,23 @@ public class ShopAdminList extends TableView implements PropertyChangeListener {
         index.setCellValueFactory(
                 param -> new ReadOnlyObjectWrapper<>(getItems().indexOf(param.getValue()) + 1)
         );
+        index.setMaxWidth(100 * SCALE);
 
         TableColumn<CardAdminView, String> cardName = new TableColumn<>("Name");
         cardName.setCellValueFactory(new PropertyValueFactory<>("cardName"));
+        cardName.setMinWidth(300 * SCALE);
 
-        TableColumn<CardAdminView, String> cardType = new TableColumn<>("Type");
+        TableColumn<CardAdminView, String> cardType = new TableColumn<>("Card type");
         cardType.setCellValueFactory(new PropertyValueFactory<>("cardType"));
+        cardType.setMinWidth(300 * SCALE);
 
         TableColumn<CardAdminView, Integer> remainingNumber = new TableColumn<>("Remaining number");
         remainingNumber.setCellValueFactory(param -> param.getValue().remainingNumberProperty());
-        remainingNumber.setCellFactory(cell -> new TableCell<>());
+        remainingNumber.setMinWidth(300 * SCALE);
 
         TableColumn<CardAdminView, NumberField> textField = new TableColumn<>("Change remaining");
         textField.setCellValueFactory(new PropertyValueFactory<>("numberField"));
+        textField.setMinWidth(400 * SCALE);
 
         getColumns().addAll(index, cardName, cardType, remainingNumber, textField);
     }
@@ -70,10 +74,10 @@ public class ShopAdminList extends TableView implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case "original_cards":
-                setOriginalCards((Collection) evt.getNewValue());
+                Platform.runLater(() -> setOriginalCards((Collection) evt.getNewValue()));
                 break;
             case "add_card":
-                addCard((Card) evt.getNewValue());
+                Platform.runLater(() -> addCard((Card) evt.getNewValue()));
                 break;
         }
     }

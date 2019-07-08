@@ -1,7 +1,7 @@
 package models.gui;
 
 import controller.ShopAdminController;
-import javafx.beans.property.IntegerProperty;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import models.card.Card;
@@ -18,7 +18,7 @@ public class CardAdminView implements PropertyChangeListener {
     private ObjectProperty<Integer> remainingNumber;
     private NumberField numberField;
 
-    public CardAdminView(Card card) {
+    CardAdminView(Card card) {
         cardName = card.getName();
         cardType = card.getType();
         remainingNumber = new SimpleObjectProperty<>(card.getRemainingNumber());
@@ -41,14 +41,14 @@ public class CardAdminView implements PropertyChangeListener {
         return cardType;
     }
 
-    public ObjectProperty<Integer> remainingNumberProperty() {
+    ObjectProperty<Integer> remainingNumberProperty() {
         return remainingNumber;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("new_value")) {
-            remainingNumber.setValue((Integer) evt.getNewValue());
+            Platform.runLater(() -> remainingNumber.setValue((Integer) evt.getNewValue()));
         }
     }
 
