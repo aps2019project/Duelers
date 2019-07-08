@@ -11,10 +11,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import models.Constants;
 import models.card.AttackType;
 import models.card.CardType;
 import models.card.EditableCard;
@@ -157,6 +159,14 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         }
     }
 
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
+    }
+
     private void preProcess() {
         card.addListener(this);
         card.addListener(cardPane);
@@ -285,6 +295,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     }
 
     private void addSpell() {
+        DialogBox dialogBox = new DialogBox();
+
         DialogText dialogText = new DialogText("spell properties : ");
         DialogBox dialogBox = new DialogBox();
         NormalField spellId = new NormalField("spell ID");
@@ -339,6 +351,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                 coolDown, mannaPoint
         );
         dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
+
         dialogBox.makeButton("add", event -> {
             SpellAction spellAction = new SpellAction(
                     enemyHitChange.getValue(), apChange.getValue(), hpChange.getValue(),
@@ -367,7 +380,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                     coolDown.getValue(), mannaPoint.getValue())
             );
         });
-        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        DialogContainer dialogContainer =  new DialogContainer(root, dialogBox);
         dialogContainer.show();
         dialogBox.makeClosable(dialogContainer);
     }

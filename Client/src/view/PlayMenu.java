@@ -3,10 +3,12 @@ package view;
 import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import models.Constants;
 import models.gui.*;
 
 import java.io.File;
@@ -26,8 +28,10 @@ public class PlayMenu extends Show {
     private static final PlayButtonItem[] items = {
             new PlayButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
                     "Story game and custom game, play with AI", event -> SinglePlayerMenu.getInstance().show()),
-            new PlayButtonItem("resources/menu/playButtons/multiplayer.jpg", "MULTIPLAYER",
-                    "Play with your friends and earn money", event -> MultiPlayerMenu.getInstance().show())
+            new PlayButtonItem("resources/menu/playButtons/friend_game.jpg", "PLAY WITH FRIENDS",
+                    "Play with your friends and earn money", event -> FriendGameMenu.getInstance().show()),
+            new PlayButtonItem("resources/menu/playButtons/global_game.jpg", "GLOBAL GAME",
+                    "Search for an opponent an play", event -> GlobalGameMenu.getInstance().show())
     };
     private static PlayMenu menu;
 
@@ -39,8 +43,17 @@ public class PlayMenu extends Show {
         BackButton backButton = new BackButton(backEvent);
 
         AnchorPane sceneContents = new AnchorPane(background, container, backButton);
-
+        showGlobalChatDialog(sceneContents);
         root.getChildren().addAll(sceneContents);
+    }
+
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     @Override

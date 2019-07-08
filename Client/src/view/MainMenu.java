@@ -3,8 +3,10 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
+import models.Constants;
 import models.gui.*;
 
 import java.io.File;
@@ -24,6 +26,9 @@ public class MainMenu extends Show {
             new MenuItem(4, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
             new MenuItem(5, "SETTING", "Change game properties", event -> {
             }),
+            new MenuItem(6, "GLOBAL CHAT", "chat with other players", event -> {
+                GlobalChatDialog.getInstance().show();
+            }),
     };
 
     public MainMenu() {
@@ -34,13 +39,20 @@ public class MainMenu extends Show {
             MainMenuBox menuBox = new MainMenuBox(items);
 
             AnchorPane sceneContents = new AnchorPane(background, menuBox);
+            showGlobalChatDialog(sceneContents);
 
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
+    }
     private void showProfileDialog() {
         BackgroundMaker.makeMenuBackgroundFrozen();
         GridPane profileGrid = new ProfileGrid(Client.getInstance().getAccount());
