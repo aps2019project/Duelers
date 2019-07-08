@@ -10,12 +10,12 @@ import java.util.List;
 public class TempAccount {
     private String username;
     private String password;
+    private AccountType accountType;
     private Collection collection;
     private List<TempDeck> decks = new ArrayList<>();
     private String mainDeckName;
     private List<MatchHistory> matchHistories;
     private int money;
-    private int wins;
 
     public TempAccount(Account account) {
         this.username = account.getUsername();
@@ -29,7 +29,7 @@ public class TempAccount {
         }
         this.matchHistories = account.getMatchHistories();
         this.money = account.getMoney();
-        this.wins = account.getWins();
+        this.accountType = account.getAccountType();
     }
 
     public String getUsername() {
@@ -60,7 +60,7 @@ public class TempAccount {
         return money;
     }
 
-    int getWins() {
-        return wins;
+    public AccountType getAccountType() {
+        return accountType;
     }
 }

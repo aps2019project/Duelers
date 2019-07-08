@@ -1,12 +1,15 @@
 {
   "name": "Rustam",
+  "description": "a hybrid HERO with 7 AP, 55 HP",
   "cardId": "Rustam",
   "spriteName": "boss_chaosknight",
-  "description": "a hybrid HERO with 7 AP, 55 HP",
   "type": "HERO",
   "defaultAp": 7,
   "defaultHp": 55,
+  "mannaPoint": 0,
   "price": 8000,
   "attackType": "HYBRID",
-  "range": 4
+  "range": 4,
+  "hasCombo": false,
+  "remainingNumber": 20
 }

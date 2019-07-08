@@ -11,21 +11,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static server.dataCenter.models.account.AccountType.NORMAL;
+
 public class Account {
     private String username;
     private String password;
+    private AccountType accountType;
     private Collection collection;
     private List<Deck> decks = new ArrayList<>();
     private Deck mainDeck;
     private List<MatchHistory> matchHistories = new ArrayList<>();
     private int money;
-    private int wins;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
         this.money = 15000;
         this.collection = new Collection();
+        this.accountType = NORMAL;
     }
 
     public Account(TempAccount account) {
@@ -40,8 +43,8 @@ public class Account {
         if (account.getMainDeckName() != null)
             this.mainDeck = getDeck(account.getMainDeckName());
         this.money = account.getMoney();
-        this.wins = account.getWins();
         this.matchHistories = account.getMatchHistories();
+        this.accountType = account.getAccountType();
     }
 
     private boolean hasDeck(String deckName) {
@@ -178,5 +181,13 @@ public class Account {
 
     List<Deck> getDecks() {
         return Collections.unmodifiableList(decks);
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 }
