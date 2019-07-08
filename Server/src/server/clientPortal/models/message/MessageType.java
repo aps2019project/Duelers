@@ -42,6 +42,7 @@ public enum MessageType {
     SUDO,
     IMPORT_DECK,
     FORCE_FINISH,
+    VALIDATE_CARD,
     //SENDER:DUAL
     CHAT,
     ACCEPT_REQUEST,

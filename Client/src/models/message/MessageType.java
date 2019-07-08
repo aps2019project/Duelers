@@ -40,6 +40,7 @@ public enum MessageType {
     NEW_STORY_GAME,
     SELECT_USER,
     SUDO,
+    VALIDATE_CARD,
 
     //SENDER:DUAL
     CHAT,

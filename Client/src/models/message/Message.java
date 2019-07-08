@@ -29,12 +29,13 @@ public class Message {
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
     //SENDER:CLIENT
-    private Card customCard;
+    private String customCardName;
     private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
     //SENDER:DUAL
+    private Card customCard;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
@@ -292,6 +293,13 @@ public class Message {
         Message message = new Message(sender, receiver, 0);
         message.changeAccountType = new ChangeAccountType(username, newValue);
         message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
+        return message;
+    }
+
+    public static Message makeValidateCustomCardMessage(String sender, String receiver, String customCardName, int messageId) {
+        Message message = new Message(sender, receiver, messageId);
+        message.customCardName = customCardName;
+        message.messageType = MessageType.VALIDATE_CARD;
         return message;
     }
 

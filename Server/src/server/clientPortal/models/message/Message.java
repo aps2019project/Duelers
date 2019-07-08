@@ -30,13 +30,14 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
-    private Card customCard;
     //SENDER:CLIENT
+    private String customCardName;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
     //SENDER:DUAL
+    private Card customCard;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
