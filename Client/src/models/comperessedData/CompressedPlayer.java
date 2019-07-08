@@ -74,12 +74,14 @@ public class CompressedPlayer {
 
     void addCardToCollectedItems(CompressedCard card) {
         collectedItems.add(card);
-        //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
+        support.firePropertyChange("items", null, null);
     }
 
     void addCardToGraveYard(CompressedCard card) {
         graveyard.add(card);
-        //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
     }
 
     void troopUpdate(CompressedTroop troop) {
@@ -92,19 +94,6 @@ public class CompressedPlayer {
                     hero = troop;
             }
 
-    }
-
-    public boolean existTroop(String cardId) {
-        for (CompressedTroop troop :
-                troops) {
-            if (troop.getCard().getCardId().equals(cardId))
-                return true;
-        }
-        return false;
-    }
-
-    public void addTroop(CompressedTroop troop) {
-        troops.add(troop);
     }
 
     void removeCardFromHand(String cardId) {
@@ -125,7 +114,10 @@ public class CompressedPlayer {
 
     void removeCardFromCollectedItems(String cardId) {
         collectedItems.removeIf(compressedCard -> compressedCard.getCardId().equalsIgnoreCase(cardId));
-        //TODO:support.firePropertyChange("troop", getTroop(troop.getCard().getCardId()), troop);
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
+        support.firePropertyChange("items", null, null);
     }
 
     void removeTroop(String cardId) {
@@ -134,33 +126,6 @@ public class CompressedPlayer {
         troops.removeIf(compressedTroop -> compressedTroop.getCard().getCardId().equalsIgnoreCase(cardId));
         if (hero != null && hero.getCard().getCardId().equalsIgnoreCase(cardId))
             hero = null;
-    }
-
-    public CompressedCard searchHand(String cardId) {
-        for (CompressedCard card : hand) {
-            if (card.getCardId().equalsIgnoreCase(cardId)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public CompressedTroop searchTroop(String cardId) {
-        for (CompressedTroop troop : troops) {
-            if (troop.getCard().getCardId().equalsIgnoreCase(cardId)) {
-                return troop;
-            }
-        }
-        return null;
-    }
-
-    public CompressedCard searchCollectedItems(String cardId) {
-        for (CompressedCard card : collectedItems) {
-            if (card.getCardId().equalsIgnoreCase(cardId)) {
-                return card;
-            }
-        }
-        return null;
     }
 
     public List<CompressedTroop> getTroops() {

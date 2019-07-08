@@ -41,9 +41,9 @@ public class BattleSceneTester extends Application implements GameActions {
             }
         }
         final CompressedPlayer player1 = new CompressedPlayer("Ali", 2, new ArrayList<>(), null,
-                null, null, 1, 0, null, null);
+                null, new ArrayList<>(), 1, 0, null, null);
         final CompressedPlayer player2 = new CompressedPlayer("Ali1", 1, new ArrayList<>(), null,
-                null, null, 2, 0, null, null);
+                null, new ArrayList<>(), 2, 0, null, null);
         final CompressedPlayer myPlayer;
         if (playerNumber == 1)
             myPlayer = player1;

@@ -51,6 +51,7 @@ public class DialogBox extends VBox {
         makeClosable(dialogContainer, closeEvent -> {});
     }
 
+
     public void makeClosable(DialogContainer dialogContainer, EventHandler<InputEvent> closeEvent) {
         AtomicBoolean shouldBeClosed = new AtomicBoolean(true);
         dialogContainer.makeClosable(shouldBeClosed, closeEvent);

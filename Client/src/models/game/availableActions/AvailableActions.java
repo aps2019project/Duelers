@@ -190,7 +190,8 @@ public class AvailableActions {
     }
 
     public boolean canInsertCard(CompressedCard card) {
-        return handInserts.stream().map(Insert::getCard).collect(Collectors.toList()).contains(card);
+        if (handInserts.stream().map(Insert::getCard).collect(Collectors.toList()).contains(card)) return true;
+        return collectibleInserts.stream().map(Insert::getCard).collect(Collectors.toList()).contains(card);
     }
 
     public boolean canMove(CompressedTroop troop, int row, int column) {

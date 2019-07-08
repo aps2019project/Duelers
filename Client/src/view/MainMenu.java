@@ -3,7 +3,11 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
+
+import javafx.scene.input.KeyCode;
+
 import javafx.application.Platform;
+
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
@@ -24,6 +28,7 @@ public class MainMenu extends Show {
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
     );
+  
     private int itemIndex = 0;
     private final MenuItem[] itemsArray = {
             new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
@@ -31,8 +36,10 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "SHOP", "Buy or sell every card you want", event -> new ShopMenu().show()),
             new MenuItem(itemIndex++, "COLLECTION", "View your cards or build a deck", event -> new CollectionMenu().show()),
             new MenuItem(itemIndex++, "CUSTOM CARD", "Design your card with your own taste", event -> new CustomCardMenu().show()),
+            new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
+  
     private final List<MenuItem> items = new ArrayList<>();
     private boolean inLeaderBoard = false;
     private boolean inCustomCardRequests = false;
@@ -56,6 +63,7 @@ public class MainMenu extends Show {
             MainMenuBox menuBox = new MainMenuBox(items);
 
             AnchorPane sceneContents = new AnchorPane(background, menuBox);
+            showGlobalChatDialog(sceneContents);
 
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
@@ -94,6 +102,15 @@ public class MainMenu extends Show {
         });
     }
 
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
+    }
+
+
     private void showLeaderboard() {
         BackgroundMaker.makeMenuBackgroundFrozen();
         DialogBox dialogBox = new DialogBox();
@@ -124,6 +141,7 @@ public class MainMenu extends Show {
             inLeaderBoard = false;
         });
     }
+
 
     private void showProfileDialog() {
         BackgroundMaker.makeMenuBackgroundFrozen();

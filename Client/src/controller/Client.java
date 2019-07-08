@@ -11,17 +11,16 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.BattleView.BattleScene;
 import view.*;
+import view.BattleView.BattleScene;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 
 public class Client {
+    private static final String CONFIG_PATH = "config";
     private static Client client;
     private final LinkedList<Message> sendingMessages = new LinkedList<>();
     private String clientName;
@@ -84,12 +83,28 @@ public class Client {
     }
 
     private Socket getSocketReady() throws IOException {
-        Socket socket = new Socket(Constants.SERVER_IP, Constants.PORT);
+        Socket socket = makeSocket();
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         System.out.println("network connected.");
 
         return socket;
+    }
+
+    private Socket makeSocket() throws IOException {
+        File file = new File(CONFIG_PATH);
+        if (file.exists()) {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            try {
+                String ip = reader.readLine();
+                int port = Integer.parseInt(reader.readLine());
+                return new Socket(ip, port);
+            } catch (NumberFormatException e) {
+                System.out.println("wrong format for port in config");
+                System.exit(0);
+            }
+        }
+        return new Socket(Constants.SERVER_IP, Constants.PORT);
     }
 
     void addToSendingMessagesAndSend(Message message) {
@@ -301,7 +316,7 @@ public class Client {
         }
     }
 
-    synchronized Show getCurrentShow() {
+    public synchronized Show getCurrentShow() {
         if (currentShow == null) {
             try {
                 wait();
@@ -331,4 +346,6 @@ public class Client {
             }
         }).start();
     }
+
+
 }

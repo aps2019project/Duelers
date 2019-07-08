@@ -4,12 +4,17 @@ import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.message.NewGameFields;
 
 public abstract class Show {
     final public AnchorPane root = new AnchorPane();
+
+
+    public Show(){
+    }
 
     public void show() {
         GraphicalUserInterface.getInstance().changeScene(root);
