@@ -36,6 +36,7 @@ public class Message {
     //SENDER:DUAL
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
+    private ChangeCardNumber changeCardNumber;
 
 
     private Message(String sender, String receiver, int messageId) {
@@ -275,6 +276,13 @@ public class Message {
         message.otherFields = new OtherFields();
         message.otherFields.setSudoCommand(sudoCommand);
         message.messageType = MessageType.SUDO;
+        return message;
+    }
+
+    public static Message makeChangeCardNumberMessage(String sender, String receiver, Card card, int newValue) {
+        Message message = new Message(sender, receiver, 0);
+        message.changeCardNumber = new ChangeCardNumber(card.getName(), newValue);
+        message.messageType = MessageType.CHANGE_CARD_NUMBER;
         return message;
     }
 

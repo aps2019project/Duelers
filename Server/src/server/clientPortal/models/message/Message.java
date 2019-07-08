@@ -38,6 +38,7 @@ public class Message {
     //SENDER:DUAL
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
+    private ChangeCardNumber changeCardNumber;
 
 
     private Message(String sender, String receiver, int messageId) {

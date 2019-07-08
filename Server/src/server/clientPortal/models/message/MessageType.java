@@ -45,6 +45,7 @@ public enum MessageType {
     CHAT,
     ACCEPT_REQUEST,
     DECLINE_REQUEST,
+    CHANGE_CARD_NUMBER,
 
     ADD_CARD,
     FORCE_FINISH

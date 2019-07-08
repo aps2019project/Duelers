@@ -2,9 +2,12 @@ package controller;
 
 import models.account.Collection;
 import models.card.Card;
+import models.message.Message;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import static models.Constants.SERVER_NAME;
 
 public class ShopAdminController {
     private static ShopAdminController controller;
@@ -22,7 +25,9 @@ public class ShopAdminController {
     }
 
     public void changeValueRequest(Card card, int newValue) {
-        System.out.println(card.getName() + " " + newValue);
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeChangeCardNumberMessage(Client.getInstance().getClientName(), SERVER_NAME, card, newValue)
+        );
     }
 
     void setOriginalCards(Collection old, Collection newValue) {

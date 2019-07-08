@@ -84,6 +84,7 @@ public class ShopController {
         originalCards.addCard(customCard);
         support.firePropertyChange("search_result", showingCards, originalCards);
         showingCards.addCard(customCard);
+        System.out.println(originalCards.getHeroes().size());
         this.notify();
         ShopAdminController.getInstance().addCard(customCard);
     }
