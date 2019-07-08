@@ -2,8 +2,8 @@ package models.gui;
 
 import javafx.scene.layout.Region;
 
-class Space extends Region {
-    Space(double height) {
+public class Space extends Region {
+    public Space(double height) {
         setMinHeight(height);
     }
 }

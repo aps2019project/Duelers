@@ -43,7 +43,7 @@ public class PlayMenu extends Show {
         BackButton backButton = new BackButton(backEvent);
 
         AnchorPane sceneContents = new AnchorPane(background, container, backButton);
-        showGlobalChatDialog(sceneContents);
+
         root.getChildren().addAll(sceneContents);
     }
 

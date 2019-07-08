@@ -808,9 +808,6 @@ public abstract class Game {
 
     private void addTroopsAndCellsToTargetData(Spell spell, TargetData targetData, Player player, ArrayList<Cell> targetCells) {
         for (Cell cell : targetCells) {
-            if (spell.getTarget().getCardType().isCell()) {
-                targetData.getCells().add(cell);
-            }
             if (player != null) {
                 Troop troop = player.getTroop(cell);
                 if (troop != null) {

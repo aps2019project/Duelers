@@ -35,7 +35,7 @@ import static models.card.CardType.*;
 import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
-    private static Media backgroundMusic = new Media( // TODO: Change music
+    private static Media backgroundMusic = new Media(
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
@@ -153,6 +153,9 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             DefaultContainer container = new DefaultContainer(cardMakerGrid);
 
             AnchorPane sceneContents = new AnchorPane(background, container, backButton);
+
+            showGlobalChatDialog(sceneContents);
+
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -161,7 +164,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
     private void showGlobalChatDialog(AnchorPane sceneContents) {
         sceneContents.setOnKeyPressed(event -> {
-            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+            if (event.getCode().equals(KeyCode.T)) {
                 GlobalChatDialog.getInstance().show();
             }
         });
@@ -295,8 +298,6 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     }
 
     private void addSpell() {
-        DialogBox dialogBox = new DialogBox();
-
         DialogText dialogText = new DialogText("spell properties : ");
         DialogBox dialogBox = new DialogBox();
         NormalField spellId = new NormalField("spell ID");

@@ -3,14 +3,21 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
+
 import javafx.scene.input.KeyCode;
+
+import javafx.application.Platform;
+
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
-import models.Constants;
+import models.account.AccountInfo;
 import models.gui.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class MainMenu extends Show {
     private static MainMenu menu;
@@ -29,6 +36,9 @@ public class MainMenu extends Show {
             new MenuItem(6, "GLOBAL CHAT", "chat with other players", event -> {
                 GlobalChatDialog.getInstance().show();
             }),
+
+            new MenuItem(5, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard()),
+
     };
 
     public MainMenu() {
@@ -46,13 +56,45 @@ public class MainMenu extends Show {
             e.printStackTrace();
         }
     }
+
     private void showGlobalChatDialog(AnchorPane sceneContents) {
         sceneContents.setOnKeyPressed(event -> {
-            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+            if (event.getCode().equals(KeyCode.T)) {
                 GlobalChatDialog.getInstance().show();
             }
         });
     }
+
+
+    private void showLeaderboard() {
+        BackgroundMaker.makeMenuBackgroundFrozen();
+        MainMenuController.getInstance().requestLeaderboard();
+        DialogBox dialogBox = new DialogBox();
+
+        new Thread(() -> {
+            try {
+                synchronized (MainMenuController.getInstance()) {
+                    MainMenuController.getInstance().wait();
+                }
+                AccountInfo[] leaderboard = MainMenuController.getInstance().getLeaderBoard();
+                Platform.runLater(() -> {
+                    dialogBox.getChildren().add(
+                            new LeaderboardScroll(
+                                    Arrays.stream(leaderboard).map(LeaderBoardView::new).collect(Collectors.toList())
+                            )
+                    );
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer, closeEvent -> BackgroundMaker.makeMenuBackgroundUnfrozen());
+    }
+
+
     private void showProfileDialog() {
         BackgroundMaker.makeMenuBackgroundFrozen();
         GridPane profileGrid = new ProfileGrid(Client.getInstance().getAccount());

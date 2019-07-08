@@ -11,10 +11,9 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.GameResultMenu;
-import view.LoginMenu;
-import view.MainMenu;
-import view.Show;
+import view.*;
+import view.BattleView.BattleScene;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -154,7 +153,7 @@ public class Client {
                 ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
                 break;
             case LEADERBOARD_COPY:
-                leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
+                MainMenuController.getInstance().setLeaderBoard(message.getLeaderBoardCopyMessage().getLeaderBoard());
                 break;
             case STORIES_COPY:
                 StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());
@@ -220,8 +219,29 @@ public class Client {
             case DONE:
                 break;
             case CHAT:
-
+                showOrSaveMessage(message);
                 break;
+            case INVITATION:
+                Platform.runLater(() -> currentShow.showInvite(message.getNewGameFields()));
+                break;
+            case ACCEPT_REQUEST:
+                //think...
+                break;
+            case DECLINE_REQUEST:
+                if (currentShow instanceof WaitingMenu) {
+                    ((WaitingMenu) currentShow).close();
+                }
+                break;
+        }
+    }
+
+    private void showOrSaveMessage(Message message) {
+        if (message.getChatMessage().getReceiverUsername()==null) {
+            MainMenuController.getInstance().addChatMessage(message.getChatMessage());
+        } else {
+            if (currentShow instanceof BattleScene) {
+                ((BattleScene) currentShow).showOpponentMessage(message.getChatMessage().getText());
+            }
         }
     }
 
@@ -266,7 +286,7 @@ public class Client {
         }
     }
 
-    synchronized Show getCurrentShow() {
+    public synchronized Show getCurrentShow() {
         if (currentShow == null) {
             try {
                 wait();
@@ -296,4 +316,6 @@ public class Client {
             }
         }).start();
     }
+
+
 }

@@ -21,6 +21,7 @@ public class Card {
     private AttackType attackType;
     private int range;
     private boolean hasCombo;
+    private int remainingNumber = 20;
 
     public Card(Card referenceCard, String username, int number) {
         this(referenceCard);
@@ -106,6 +107,22 @@ public class Card {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getRemainingNumber() {
+        return remainingNumber;
+    }
+
+    public void setRemainingNumber(int number) {
+        remainingNumber = number;
+    }
+
+    public void increaseRemainingNumber() {
+        remainingNumber++;
+    }
+
+    public void decreaseRemainingNumber() {
+        remainingNumber--;
     }
 
     public boolean hasCombo() {
