@@ -395,6 +395,47 @@ public class DataCenter extends Thread {
         }
     }
 
+    private void removeCustomCard(Card card) throws ServerException{
+        File[] files = new File(CUSTOM_CARD_PATH).listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if(file.getName().startsWith(card.getCardId()+".")){
+                    file.delete();
+                    return;
+                }
+            }
+        }
+        throw new ServerException("Card not found");
+    }
+
+    private void saveOriginalCard(Card card){
+        String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(card);
+        String path;
+        try {
+            switch (card.getType()){
+                case HERO:
+                    path=CARDS_PATHS[0] + "/" + card.getCardId() + ".hero.card.json";
+                    break;
+                case MINION:
+                    path=CARDS_PATHS[1] + "/" + card.getCardId() + ".minion.card.json";
+                    break;
+                case SPELL:
+                    path=CARDS_PATHS[2] + "/" + card.getCardId() + ".spell.card.json";
+                    break;
+                case USABLE_ITEM:
+                    path=CARDS_PATHS[4] + "/" + card.getCardId() + ".usable.item.card.json";
+                    break;
+                default:
+                    throw new ServerException("Error");
+            }
+            FileWriter writer = new FileWriter(path);
+            writer.write(cardJson);
+            writer.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private boolean isValidCardName(String name){
         for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
