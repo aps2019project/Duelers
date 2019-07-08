@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
+import models.account.Collection;
 import models.gui.*;
 
 import java.io.File;
@@ -34,6 +35,7 @@ public class MainMenu extends Show {
     };
     private final List<MenuItem> items = new ArrayList<>();
     private boolean inLeaderBoard = false;
+    private boolean inCustomCardRequests = false;
 
     {
         items.addAll(Arrays.asList(itemsArray));
@@ -41,7 +43,7 @@ public class MainMenu extends Show {
             System.out.println(Client.getInstance().getAccount().getUsername());
             items.addAll(Arrays.asList(
                     new MenuItem(itemIndex++, "SHOP ADMIN", "Change shop properties", event -> ShopAdminMenu.getInstance().show()),
-                    new MenuItem(itemIndex++, "CUSTOM CARD REQUESTS", "Accept or decline custom card requests", event -> {})
+                    new MenuItem(itemIndex++, "CUSTOM CARD REQUESTS", "check custom card requests", event -> menu.showCustomCardRequests())
             ));
         }
     }
@@ -59,6 +61,37 @@ public class MainMenu extends Show {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showCustomCardRequests() {
+        BackgroundMaker.makeMenuBackgroundFrozen();
+        DialogBox dialogBox = new DialogBox();
+        CustomCardRequestsList requestsList = new CustomCardRequestsList();
+        dialogBox.getChildren().add(requestsList);
+
+        inCustomCardRequests = true;
+        new Thread(() -> {
+            try {
+                while (inCustomCardRequests) {
+                    MainMenuController.getInstance().requestCustomCardRequests();
+                    synchronized (MainMenuController.getInstance()) {
+                        MainMenuController.getInstance().wait();
+                    }
+                    Collection collection = MainMenuController.getInstance().getCustomCardRequests();
+                    Platform.runLater(() -> requestsList.setCards(collection));
+                    Thread.sleep(4000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
+        dialogContainer.show();
+        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+            BackgroundMaker.makeMenuBackgroundUnfrozen();
+            inCustomCardRequests = false;
+        });
     }
 
     private void showLeaderboard() {
