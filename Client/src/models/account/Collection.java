@@ -38,6 +38,14 @@ public class Collection {
         return result;
     }
 
+    public Card getCard(String cardName) {
+        List<Card> result = find(cardName);
+        if (result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
+    }
+
     private void searchInList(List<Card> list, List<Card> results, String cardName) {
         for (Card card : list) {
             if (card.nameContains(cardName)) {
@@ -100,8 +108,8 @@ public class Collection {
         return findCardInList(cardId, spells);
     }
 
-    private Card findCardInList(String cardId, List<Card> minions) {
-        for (Card card : minions) {
+    private Card findCardInList(String cardId, List<Card> list) {
+        for (Card card : list) {
             if (card.getCardId().equalsIgnoreCase(cardId)) return card;
         }
         return null;

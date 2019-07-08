@@ -51,7 +51,11 @@ public class Card {
 
     public CompressedCard toCompressedCard() {
         return new CompressedCard(
-                name, description, cardId, spriteName, type, spells, defaultAp, defaultHp, mannaPoint, attackType, range, hasCombo);
+                name, description, cardId,
+                spriteName, type, spells,
+                defaultAp, defaultHp, mannaPoint,
+                attackType, range, hasCombo, remainingNumber
+        );
     }
 
     @Override

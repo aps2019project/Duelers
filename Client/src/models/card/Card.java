@@ -23,6 +23,7 @@ public class Card implements ICard {
     private AttackType attackType;
     private int range;
     private boolean hasCombo;
+    private int remainingNumber;
 
     public Card(String name, String cardId, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
@@ -113,5 +114,9 @@ public class Card implements ICard {
 
     public boolean isSameAs(String cardName) {
         return name.equalsIgnoreCase(cardName);
+    }
+
+    public void setRemainingNumber(int remainingNumber) {
+        this.remainingNumber = remainingNumber;
     }
 }

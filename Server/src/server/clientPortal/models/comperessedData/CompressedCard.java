@@ -19,10 +19,11 @@ public class CompressedCard {
     private AttackType attackType;
     private int range;
     private boolean hasCombo;
+    private int remainingNumber;
 
     public CompressedCard(String name, String description, String cardId, String spriteName, CardType type,
                           List<Spell> spells, int defaultAp, int defaultHp, int mannaPoint,
-                          AttackType attackType, int range, boolean hasCombo) {
+                          AttackType attackType, int range, boolean hasCombo, int remainingNumber) {
         this.name = name;
         this.description = description;
         this.cardId = cardId;
@@ -42,5 +43,6 @@ public class CompressedCard {
                 }
             }
         }
+        this.remainingNumber = remainingNumber;
     }
 }
