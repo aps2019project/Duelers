@@ -41,12 +41,12 @@ public enum MessageType {
     SELECT_USER,
     SUDO,
     IMPORT_DECK,
+    FORCE_FINISH,
     //SENDER:DUAL
     CHAT,
     ACCEPT_REQUEST,
     DECLINE_REQUEST,
     CHANGE_CARD_NUMBER,
 
-    ADD_CARD,
-    FORCE_FINISH
+    ADD_CARD
 }

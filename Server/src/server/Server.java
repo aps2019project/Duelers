@@ -22,7 +22,7 @@ public class Server {
     private static Server server;
     public final String serverName;
 
-    private final Queue<Message> sendingMessages = new LinkedList<>();//TODO:queue
+    private final Queue<Message> sendingMessages = new LinkedList<>();
     private final Queue<Message> receivingMessages = new LinkedList<>();
 
     private Server(String serverName) {
@@ -218,7 +218,7 @@ public class Server {
                     sudo(message);
                     break;
                 case CHANGE_CARD_NUMBER:
-                    DataCenter.getInstance().changeCardNumber(message.getChangeCardNumber());
+                    DataCenter.getInstance().changeCardNumber(message);
                     break;
                 default:
                     throw new LogicException("Invalid Message Type!");

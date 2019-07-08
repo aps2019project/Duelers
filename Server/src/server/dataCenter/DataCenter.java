@@ -4,9 +4,9 @@ import com.google.gson.GsonBuilder;
 import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
-import server.clientPortal.models.message.ChangeCardNumber;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.account.TempAccount;
 import server.dataCenter.models.card.Card;
@@ -230,6 +230,86 @@ public class DataCenter extends Thread {
         saveAccount(account);
     }
 
+    public List<Story> getStories() {
+        return Collections.unmodifiableList(stories);
+    }
+
+    public Map<Account, String> getAccounts() {
+        return Collections.unmodifiableMap(accounts);
+    }
+
+    public Map<String, Account> getClients() {
+        return Collections.unmodifiableMap(clients);
+    }
+
+    public void putClient(String name, Account account) {
+        clients.put(name, account);
+    }
+
+    public Collection getOriginalCards() {
+        return originalCards;
+    }
+
+    public List<Card> getCollectibleItems() {
+        return Collections.unmodifiableList(collectibleItems);
+    }
+
+    public Card getOriginalFlag() {
+        return originalFlag;
+    }
+
+    public Account[] getLeaderBoard() throws ClientException {
+        if (accounts.size() == 0) {
+            throw new ClientException("leader board is empty");
+        }
+        /*Account[] leaderBoard = new Account[accounts.size()];
+        int counter = 0;
+        for (Account account : accounts.keySet()) {
+            leaderBoard[counter] = account;
+            counter++;
+        }*/
+        Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
+        Arrays.sort(leaderBoard, new LeaderBoardSorter());
+        return leaderBoard;
+    }
+
+    public void addCard(Message message) {
+        try {
+            validateCustomCard(message.getCustomCard());
+            originalCards.addCard(message.getCustomCard());
+            saveCustomCard(message.getCustomCard());
+            Server.getInstance().sendAddedCartMessage(message.getCustomCard());
+
+        } catch (ClientException e) {
+            Server.getInstance().addToSendingMessages(Message.makeExceptionMessage(Server.getInstance().serverName, message.getSender(), e.getMessage(), 0));
+        }
+    }
+
+    private void validateCustomCard(Card customCard) throws ClientException {
+        //TODO
+    }
+
+    public void importDeck(Message message) throws LogicException {
+        loginCheck(message);
+        Account account = clients.get(message.getSender());
+        ExportedDeck exportedDeck = message.getExportedDeck();
+        Collection collection = account.getCollection();
+        Deck deck = collection.extractDeck(exportedDeck);
+        account.addDeck(deck);
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
+                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        saveAccount(account);
+    }
+
+    public void changeCardNumber(Message message) throws LogicException{
+        loginCheck(message);
+        Account account=clients.get(message.getSender());
+        if(account.getAccountType()!= AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+
+        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
+    }
+
     private void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
@@ -287,6 +367,18 @@ public class DataCenter extends Thread {
         }
     }
 
+    private void saveCustomCard(Card customCard) {
+        String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
+        System.out.println(cardJson);
+        try {
+            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + customCard.getCardId() + ".custom.card.json");
+            writer.write(cardJson);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private <T> T loadFile(File file, Class<T> classOfT) {
         try {
             return JsonConverter.fromJson(new BufferedReader(new FileReader(file)), classOfT);
@@ -294,93 +386,5 @@ public class DataCenter extends Thread {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public List<Story> getStories() {
-        return Collections.unmodifiableList(stories);
-    }
-
-    public Map<Account, String> getAccounts() {
-        return Collections.unmodifiableMap(accounts);
-    }
-
-    public Map<String, Account> getClients() {
-        return Collections.unmodifiableMap(clients);
-    }
-
-    public void putClient(String name, Account account) {
-        clients.put(name, account);
-    }
-
-    public Collection getOriginalCards() {
-        return originalCards;
-    }
-
-    public List<Card> getCollectibleItems() {
-        return Collections.unmodifiableList(collectibleItems);
-    }
-
-    public Card getOriginalFlag() {
-        return originalFlag;
-    }
-
-    public Account[] getLeaderBoard() throws ClientException {
-        if (accounts.size() == 0) {
-            throw new ClientException("leader board is empty");
-        }
-        /*Account[] leaderBoard = new Account[accounts.size()];
-        int counter = 0;
-        for (Account account : accounts.keySet()) {
-            leaderBoard[counter] = account;
-            counter++;
-        }*/
-        Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
-        Arrays.sort(leaderBoard, new LeaderBoardSorter());
-        return leaderBoard;
-    }
-
-    public void addCard(Message message) {
-        try {
-            validateCustomCard(message.getCustomCard());
-            originalCards.addCard(message.getCustomCard());
-            saveCustomCard(message.getCustomCard());
-            Server.getInstance().sendAddedCartMessage(message.getCustomCard());
-
-        } catch (ClientException e) {
-            Server.getInstance().addToSendingMessages(Message.makeExceptionMessage(Server.getInstance().serverName, message.getSender(), e.getMessage(), 0));
-        }
-    }
-
-    private void saveCustomCard(Card customCard) {
-        String json = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
-        System.out.println(json);
-
-        try {
-            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + customCard.getCardId() + ".custom.card.json");
-            writer.write(json);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void validateCustomCard(Card customCard) throws ClientException {
-        //TODO
-    }
-
-    public void importDeck(Message message) throws LogicException {
-        loginCheck(message);
-        Account account = clients.get(message.getSender());
-        ExportedDeck exportedDeck = message.getExportedDeck();
-        Collection collection = account.getCollection();
-        Deck deck = collection.extractDeck(exportedDeck);
-        account.addDeck(deck);
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
-        saveAccount(account);
-    }
-
-    public void changeCardNumber(ChangeCardNumber changeCardNumber) {
-        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
     }
 }
