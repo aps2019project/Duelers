@@ -10,7 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Card implements ICard {
-    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private transient PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String name;
     private String description;
     private String cardId;
