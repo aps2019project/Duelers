@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static models.gui.UIConstants.SCALE;
 
@@ -25,17 +26,14 @@ class MainMenuGrid extends GridPane {
     private Image menuItemImage;
     private Image hoverRing;
 
-    MainMenuGrid(MenuItem[] items) throws FileNotFoundException {
+    MainMenuGrid(List<MenuItem> items) throws FileNotFoundException {
         setVgap(UIConstants.DEFAULT_SPACING * 3);
         setHgap(UIConstants.DEFAULT_SPACING * 3);
 
         menuItemImage = new Image(new FileInputStream("resources/ui/menu_item.png"));
         hoverRing = new Image(new FileInputStream("resources/ui/glow_ring.png"));
 
-        for (MenuItem item : items) {
-            Node[] row = makeRow(item);
-            addRow(item.index, row);
-        }
+        items.forEach(item -> addRow(item.index, makeRow(item)));
     }
 
     private Node[] makeRow(MenuItem item) {

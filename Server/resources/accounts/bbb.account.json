@@ -1,6 +1,7 @@
 {
   "username": "bbb",
   "password": "qwerty",
+  "accountType":"NORMAL",
   "collection": {
     "heroes": [
       {

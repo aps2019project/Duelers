@@ -7,8 +7,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
+import models.account.AccountInfo;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LeaderboardScroll extends TableView {
     public LeaderboardScroll(List<LeaderBoardView> leaderboard) {
@@ -31,6 +34,14 @@ public class LeaderboardScroll extends TableView {
         online.setCellFactory(cell -> new CircleTableCell());
 
         getColumns().addAll(index, username, wins, online);
+    }
+
+    public void setItems(AccountInfo[] leaderboard) {
+        setItems(
+                FXCollections.observableArrayList(
+                        Arrays.stream(leaderboard).map(LeaderBoardView::new).collect(Collectors.toList())
+                )
+        );
     }
 
     private class CircleTableCell extends TableCell<LeaderBoardView, Circle> {
