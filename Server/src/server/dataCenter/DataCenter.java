@@ -66,20 +66,20 @@ public class DataCenter extends Thread {
         readStories();
     }
 
-    private Card getCard(String cardName){
-        for(Card card:originalCards.getHeroes()){
+    private Card getCard(String cardName,Collection collection){
+        for(Card card:collection.getHeroes()){
             if(card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:originalCards.getMinions()){
+        for(Card card:collection.getMinions()){
             if(card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:originalCards.getSpells()){
+        for(Card card:collection.getSpells()){
             if(card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:originalCards.getItems()){
+        for(Card card:collection.getItems()){
             if(card.getName().equals(cardName))
                 return card;
         }
@@ -314,7 +314,7 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card=getCard(message.getChangeCardNumber().getCardName());
+        Card card=getCard(message.getChangeCardNumber().getCardName(),originalCards);
         if(card==null)
             throw new ClientException("Invalid Card Name!");
         card.setRemainingNumber(card.getRemainingNumber()+message.getChangeCardNumber().getNumber());
@@ -333,6 +333,21 @@ public class DataCenter extends Thread {
         account1.setAccountType(message.getChangeAccountType().getNewType());
         saveAccount(account1);
         Server.getInstance().sendAccountUpdateMessage(account1);
+    }
+
+    public void validateCustomCard(Message message) throws LogicException{
+        loginCheck(message);
+        Account account = clients.get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Card card=getCard(message.getCustomCardName(),newCustomCards);
+        if(card==null)
+            throw new ClientException("invalid card name");
+        removeCustomCard(card);
+        saveOriginalCard(card);
+        newCustomCards.removeCard(card);
+        originalCards.addCard(card);
+
     }
 
     private void readAccounts() {

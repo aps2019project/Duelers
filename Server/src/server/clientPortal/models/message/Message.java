@@ -254,4 +254,8 @@ public class Message {
     public ChangeAccountType getChangeAccountType() {
         return changeAccountType;
     }
+
+    public String getCustomCardName() {
+        return customCardName;
+    }
 }
