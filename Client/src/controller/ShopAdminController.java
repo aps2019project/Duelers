@@ -27,8 +27,18 @@ public class ShopAdminController {
         return controller;
     }
 
-    public void changeValueRequest(String cardName, int newValue) {
+    static boolean isLoaded() {
+        return controller != null;
+    }
 
+    public void requestOriginalCards() {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeGetDataMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, DataName.ORIGINAL_CARDS, 0)
+        );
+    }
+
+    public void changeValueRequest(Card card, int newValue) {
+        System.out.println(card.getName() + " " + newValue);
     }
 
     public void setOriginalCards(Collection originalCards) {
@@ -46,10 +56,13 @@ public class ShopAdminController {
         Card card = originalCards.getCard(cardName);
         if (card == null) return;
         card.setRemainingNumber(newValue);
-        support.firePropertyChange("set_value", null, card);
     }
 
     public void addListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
+    }
+
+    public Collection getOriginalCards() {
+        return originalCards;
     }
 }

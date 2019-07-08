@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Card implements ICard {
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String name;
     private String description;
     private String cardId;
@@ -117,6 +118,16 @@ public class Card implements ICard {
     }
 
     public void setRemainingNumber(int remainingNumber) {
+        int old = this.remainingNumber;
         this.remainingNumber = remainingNumber;
+        support.firePropertyChange("new_value", old, remainingNumber);
+    }
+
+    public int getRemainingNumber() {
+        return remainingNumber;
+    }
+
+    public void addListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 }
