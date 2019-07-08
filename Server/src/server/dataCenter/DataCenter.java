@@ -387,6 +387,20 @@ public class DataCenter extends Thread {
         }
     }
 
+    private boolean isValidCardName(String name){
+        for (String path : CARDS_PATHS) {
+            File[] files = new File(path).listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if(file.getName().startsWith(name+".")){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     private void saveCustomCard(Card customCard) {
         String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(customCard);
         System.out.println(cardJson);
