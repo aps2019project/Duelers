@@ -423,6 +423,9 @@ public class Server {
     }
 
     public void sendAccountUpdateMessage(Account account){
-
+        String clientName=DataCenter.getInstance().getAccounts().get(account);
+        if(clientName==null)
+            return;
+        addToSendingMessages(Message.makeAccountCopyMessage(serverName,clientName,account,0));
     }
 }
