@@ -5,6 +5,7 @@ import controller.MainMenuController;
 import controller.SoundEffectPlayer;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.gui.*;
@@ -24,14 +25,24 @@ public class GlobalChatDialog {
         ScrollPane scrollPane = new ScrollPane(chatMessages);
         OrangeButton sendButton = new OrangeButton("send",
                 event -> {
-                    MainMenuController.getInstance().sendChatMessage(normalField.getText());
-                    normalField.setText("");
+                    sendMessage();
                 },
                 SoundEffectPlayer.SoundName.select);
         dialogBox.getChildren().addAll(scrollPane, new HBox(normalField, sendButton));
+        normalField.setMinSize(500,50);
+        normalField.setOnKeyPressed(event ->{
+            if (event.getCode().equals(KeyCode.ENTER)){
+                sendMessage();
+            }
+        });
         sendButton.setAlignment(Pos.CENTER_LEFT);
-        scrollPane.setMinHeight(700);
+        scrollPane.setMinHeight(800);
         dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
+    }
+
+    private void sendMessage() {
+        MainMenuController.getInstance().sendChatMessage(normalField.getText());
+        normalField.setText("");
     }
 
     public void show() {
