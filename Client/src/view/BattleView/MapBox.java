@@ -4,9 +4,6 @@ import controller.GameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,7 +15,6 @@ import models.comperessedData.CompressedGameMap;
 import models.comperessedData.CompressedTroop;
 import models.game.map.Position;
 import models.gui.CardPane;
-import models.gui.CombinedColor;
 import models.gui.DefaultLabel;
 
 import java.beans.PropertyChangeEvent;
@@ -27,7 +23,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static view.BattleView.Constants.*;
+import static view.BattleView.Constants.NEGATIVE_BUFF_EFFECT;
+import static view.BattleView.Constants.POSITIVE_BUFF_EFFECT;
 
 public class MapBox implements PropertyChangeListener {
     private final BattleScene battleScene;
@@ -125,6 +122,25 @@ public class MapBox implements PropertyChangeListener {
                     CardAnimation cardAnimation = new CardAnimation(mapGroup, gameMap.getCells()[j][i].getItem(),
                             cellsY[j][i], cellsX[j][i]);
                     collectibleItems.put(gameMap.getCells()[j][i].getItem().getCardId(), cardAnimation);
+                    final int J=j,I=i;
+                    cardAnimation.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            clickCell(J,I);
+                        }
+                    });
+                    cardAnimation.getImageView().setOnMouseExited(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            exitCell(J,I);
+                        }
+                    });
+                    cardAnimation.getImageView().setOnMouseEntered(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            hoverCell(J,I);
+                        }
+                    });
                     //TODO:Ahmad:Design
                 }
             }
