@@ -1,9 +1,16 @@
 package controller;
 
+
+import javafx.application.Platform;
+import models.Constants;
+
 import models.account.AccountInfo;
+
 import models.message.ChatMessage;
 import models.message.DataName;
 import models.message.Message;
+import view.GlobalChatDialog;
+import view.MainMenu;
 
 import java.util.ArrayList;
 
@@ -40,7 +47,14 @@ public class MainMenuController {
     }
 
     public void addChatMessage(ChatMessage chatMessage) {
+        Platform.runLater(() -> GlobalChatDialog.getInstance().addMessage(chatMessage));
+    }
 
+    public void sendChatMessage(String text) {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeChatMessage(Client.getInstance().getClientName(),Constants.SERVER_NAME,Client.getInstance().getAccount().getUsername(),
+                        null,text,0)
+        );
     }
 
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {

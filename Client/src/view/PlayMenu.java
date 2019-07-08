@@ -3,10 +3,12 @@ package view;
 import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import models.Constants;
 import models.gui.*;
 
 import java.io.File;
@@ -43,6 +45,15 @@ public class PlayMenu extends Show {
         AnchorPane sceneContents = new AnchorPane(background, container, backButton);
 
         root.getChildren().addAll(sceneContents);
+    }
+
+
+    private void showGlobalChatDialog(AnchorPane sceneContents) {
+        sceneContents.setOnKeyPressed(event -> {
+            if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
+                GlobalChatDialog.getInstance().show();
+            }
+        });
     }
 
     @Override
