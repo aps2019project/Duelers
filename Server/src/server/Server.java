@@ -414,4 +414,8 @@ public class Server {
             addToSendingMessages(message);
         }*/
     }
+
+    public void sendShopUpdateMessage(Card card){
+
+    }
 }

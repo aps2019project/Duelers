@@ -67,6 +67,26 @@ public class DataCenter extends Thread {
         readStories();
     }
 
+    private Card getCard(String cardName){
+        for(Card card:originalCards.getHeroes()){
+            if(card.getName().equals(cardName))
+                return card;
+        }
+        for(Card card:originalCards.getMinions()){
+            if(card.getName().equals(cardName))
+                return card;
+        }
+        for(Card card:originalCards.getSpells()){
+            if(card.getName().equals(cardName))
+                return card;
+        }
+        for(Card card:originalCards.getItems()){
+            if(card.getName().equals(cardName))
+                return card;
+        }
+        return null;
+    }
+
     public Account getAccount(String username) {
         if (username == null) {
             Server.getInstance().serverPrint("Null Username In getAccount.");
@@ -295,8 +315,12 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-
-        //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
+        Card card=getCard(message.getChangeCardNumber().getCardName());
+        if(card==null)
+            throw new ClientException("Invalid Card Name!");
+        card.setRemainingNumber(card.getRemainingNumber()+message.getChangeCardNumber().getNumber());
+        updateCard(card);
+        Server.getInstance().sendShopUpdateMessage(card);
     }
 
     public void changeAccountType(ChangeAccountType changeAccountType) {
