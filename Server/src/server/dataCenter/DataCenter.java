@@ -5,7 +5,6 @@ import server.Server;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.JsonConverter;
 import server.clientPortal.models.message.ChangeAccountType;
-import server.clientPortal.models.message.ChangeCardNumber;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
@@ -44,6 +43,7 @@ public class DataCenter extends Thread {
     private Map<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private Map<String, Account> clients = new HashMap<>();//clientName -> Account
     private Collection originalCards = new Collection();
+    private Collection newCustomCards = new Collection();
     private List<Card> collectibleItems = new ArrayList<>();
     private Card originalFlag;
     private List<Story> stories = new ArrayList<>();
@@ -155,7 +155,7 @@ public class DataCenter extends Thread {
             accounts.replace(clients.get(clientName), null);
         }
         clients.remove(clientName);
-        //TODO(do with logout)+remove invitations
+        //TODO(do with logout)
     }
 
     public void logout(Message message) throws LogicException {
@@ -165,7 +165,7 @@ public class DataCenter extends Thread {
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
-        //TODO:Check online games+remove invitations
+        //TODO:Check online games
         Server.getInstance().addToSendingMessages(Message.makeDoneMessage(Server.getInstance().serverName, message.getSender(), message.getMessageId()));
     }
 
@@ -264,31 +264,15 @@ public class DataCenter extends Thread {
         if (accounts.size() == 0) {
             throw new ClientException("leader board is empty");
         }
-        /*Account[] leaderBoard = new Account[accounts.size()];
-        int counter = 0;
-        for (Account account : accounts.keySet()) {
-            leaderBoard[counter] = account;
-            counter++;
-        }*/
         Account[] leaderBoard = accounts.keySet().toArray(Account[]::new);
         Arrays.sort(leaderBoard, new LeaderBoardSorter());
         return leaderBoard;
     }
 
     public void addCard(Message message) {
-        try {
-            validateCustomCard(message.getCustomCard());
-            originalCards.addCard(message.getCustomCard());
-            saveCustomCard(message.getCustomCard());
-            Server.getInstance().sendAddedCartMessage(message.getCustomCard());
-
-        } catch (ClientException e) {
-            Server.getInstance().addToSendingMessages(Message.makeExceptionMessage(Server.getInstance().serverName, message.getSender(), e.getMessage(), 0));
-        }
-    }
-
-    private void validateCustomCard(Card customCard) throws ClientException {
-        //TODO
+        originalCards.addCard(message.getCustomCard());
+        saveCustomCard(message.getCustomCard());
+        Server.getInstance().sendAddedCartMessage(message.getCustomCard());
     }
 
     public void importDeck(Message message) throws LogicException {
@@ -303,10 +287,10 @@ public class DataCenter extends Thread {
         saveAccount(account);
     }
 
-    public void changeCardNumber(Message message) throws LogicException{
+    public void changeCardNumber(Message message) throws LogicException {
         loginCheck(message);
-        Account account=clients.get(message.getSender());
-        if(account.getAccountType()!= AccountType.ADMIN)
+        Account account = clients.get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
 
         //TODO: @MAHDI . check ADMIN and change the number. => Message.makeChangeCardNumberMessage(card, new Value)
@@ -336,7 +320,9 @@ public class DataCenter extends Thread {
                 for (File file : files) {
                     Card card = loadFile(file, Card.class);
                     if (card == null) continue;
-                    if (card.getType() == CardType.COLLECTIBLE_ITEM) {
+                    if (path.equals(CUSTOM_CARD_PATH)) {
+                        newCustomCards.addCard(card);
+                    } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
                         collectibleItems.add(card);
                     } else {
                         originalCards.addCard(card);
@@ -367,6 +353,34 @@ public class DataCenter extends Thread {
         try {
             FileWriter writer = new FileWriter(ACCOUNTS_PATH + "/" + account.getUsername() + ".account.json");
             writer.write(accountJson);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveCard(Card card){
+        String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(card);
+        for (String path : CARDS_PATHS) {
+            File[] files = new File(path).listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if(file.getName().startsWith(card.getCardId()+".")){
+                        try {
+                            FileWriter writer = new FileWriter(file.getPath());
+                            writer.write(cardJson);
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+        try {
+            FileWriter writer = new FileWriter(CUSTOM_CARD_PATH + "/" + card.getCardId() + ".custom.card.json");
+            writer.write(cardJson);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
