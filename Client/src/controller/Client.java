@@ -13,6 +13,7 @@ import models.message.GameUpdateMessage;
 import models.message.Message;
 import view.*;
 import view.BattleView.BattleScene;
+import view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -152,7 +153,7 @@ public class Client {
                 ShopController.getInstance().setOriginalCards(message.getOriginalCardsCopyMessage().getOriginalCards());
                 break;
             case LEADERBOARD_COPY:
-                leaderBoard = message.getLeaderBoardCopyMessage().getLeaderBoard();
+                MainMenuController.getInstance().setLeaderBoard(message.getLeaderBoardCopyMessage().getLeaderBoard());
                 break;
             case STORIES_COPY:
                 StoryMenuController.getInstance().setStories(message.getStoriesCopyMessage().getStories());

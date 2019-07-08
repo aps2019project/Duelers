@@ -1,13 +1,15 @@
 {
   "name": "Arjang The Demon",
+  "description": "a melee MINION with 6 AP, 6 HP, can attack combo",
   "cardId": "ArjangTheDemon",
   "spriteName": "boss_legion",
-  "description": "a melee MINION with 6 AP, 6 HP, can attack combo",
   "type": "MINION",
   "defaultAp": 6,
   "defaultHp": 6,
   "mannaPoint": 3,
   "price": 600,
   "attackType": "MELEE",
-  "hasCombo": true
+  "range": 0,
+  "hasCombo": true,
+  "remainingNumber": 20
 }

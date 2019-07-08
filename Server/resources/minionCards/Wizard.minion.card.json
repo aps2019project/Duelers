@@ -1,65 +1,131 @@
 {
   "name": "Wizard",
+  "description": "a ranged MINION with 4 AP, 5 HP, costs 550, have some PASSIVE AP POWER and HP WEAKNESS BUFFs",
   "cardId": "Wizard",
   "spriteName": "boss_taskmaster",
-  "description": "a ranged MINION with 4 AP, 5 HP, costs 550, have some PASSIVE AP POWER and HP WEAKNESS BUFFs",
   "type": "MINION",
   "spells": [
     {
       "spellId": "w_power",
       "action": {
+        "enemyHitChanges": 0,
         "apChange": 2,
-        "duration": -1
-      },
-      "availabilityType": {
-        "onPut": true
+        "hpChange": 0,
+        "mpChange": 0,
+        "poison": false,
+        "makeStun": false,
+        "makeDisarm": false,
+        "noDisarm": false,
+        "noPoison": false,
+        "noStun": false,
+        "noBadEffect": false,
+        "noAttackFromWeakerOnes": false,
+        "disableHolyBuff": false,
+        "addSpell": false,
+        "killsTarget": false,
+        "isForGladiator": false,
+        "durable": false,
+        "removeBuffs": 0,
+        "duration": -1,
+        "delay": 0
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
+        "isForAroundOwnHero": false,
+        "isRandom": false,
+        "isForDeckCards": false,
         "dimensions": {
           "row": 3,
           "column": 3
         },
         "owner": {
-          "own": true
+          "own": true,
+          "enemy": false
         },
         "cardType": {
-          "minion": true
+          "cell": false,
+          "hero": false,
+          "minion": true,
+          "player": false
         },
         "attackType": {
           "melee": true,
           "ranged": true,
           "hybrid": true
         }
-      }
+      },
+      "availabilityType": {
+        "onPut": true,
+        "onAttack": false,
+        "onDeath": false,
+        "specialPower": false,
+        "onStart": false,
+        "onDefend": false
+      },
+      "coolDown": 0,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0
     },
     {
       "spellId": "w_weakness",
       "action": {
+        "enemyHitChanges": 0,
+        "apChange": 0,
         "hpChange": -1,
-        "duration": -1
-      },
-      "availabilityType": {
-        "onPut": true
+        "mpChange": 0,
+        "poison": false,
+        "makeStun": false,
+        "makeDisarm": false,
+        "noDisarm": false,
+        "noPoison": false,
+        "noStun": false,
+        "noBadEffect": false,
+        "noAttackFromWeakerOnes": false,
+        "disableHolyBuff": false,
+        "addSpell": false,
+        "killsTarget": false,
+        "isForGladiator": false,
+        "durable": false,
+        "removeBuffs": 0,
+        "duration": -1,
+        "delay": 0
       },
       "target": {
         "isRelatedToCardOwnerPosition": true,
+        "isForAroundOwnHero": false,
+        "isRandom": false,
+        "isForDeckCards": false,
         "dimensions": {
           "row": 3,
           "column": 3
         },
         "owner": {
-          "own": true
+          "own": true,
+          "enemy": false
         },
         "cardType": {
-          "minion": true
+          "cell": false,
+          "hero": false,
+          "minion": true,
+          "player": false
         },
         "attackType": {
           "melee": true,
           "ranged": true,
           "hybrid": true
         }
-      }
+      },
+      "availabilityType": {
+        "onPut": true,
+        "onAttack": false,
+        "onDeath": false,
+        "specialPower": false,
+        "onStart": false,
+        "onDefend": false
+      },
+      "coolDown": 0,
+      "mannaPoint": 0,
+      "lastTurnUsed": 0
     }
   ],
   "defaultAp": 4,
@@ -67,5 +133,7 @@
   "mannaPoint": 4,
   "price": 550,
   "attackType": "RANGED",
-  "range": 3
+  "range": 3,
+  "hasCombo": false,
+  "remainingNumber": 20
 }
