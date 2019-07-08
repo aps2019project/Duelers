@@ -4,13 +4,17 @@ import server.Server;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.DataCenter;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
 public class ClientPortal extends Thread {
+    private static final String CONFIG_PATH = "config";
     private static ClientPortal ourInstance = new ClientPortal();
-    private static final int PORT = 8888;
+    private static final int DEFAULT_PORT = 8888;
     private HashMap<String, Formatter> clients = new HashMap<>();
 
     public static ClientPortal getInstance() {
@@ -24,7 +28,7 @@ public class ClientPortal extends Thread {
     public void run() {
         Server.getInstance().serverPrint("Starting ClientPortal...");
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
+            ServerSocket serverSocket = makeServerSocket();
             while (true) {
                 Socket socket = serverSocket.accept();
                 ClientListener clientListener = new ClientListener(socket);
@@ -36,6 +40,22 @@ public class ClientPortal extends Thread {
             Server.getInstance().serverPrint("Error Making ServerSocket!");
             System.exit(-1);
         }
+    }
+
+    private ServerSocket makeServerSocket() throws IOException {
+        File file = new File(CONFIG_PATH);
+        if (file.exists()) {
+            FileReader reader = new FileReader(file);
+            StringBuilder portString = new StringBuilder();
+            int b;
+            while (-1 != (b = reader.read())) {
+                portString.append((char) b);
+            }
+            if (portString.toString().matches("^\\d+$")) {
+                return new ServerSocket(Integer.parseInt(portString.toString()));
+            }
+        }
+        return new ServerSocket(DEFAULT_PORT);
     }
 
     synchronized public boolean hasThisClient(String clientName) {
