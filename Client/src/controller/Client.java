@@ -237,6 +237,9 @@ public class Client {
                         message.getChangeCardNumber().getCardName(),
                         message.getChangeCardNumber().getNumber()
                 );
+                break;
+            case CHANGE_ACCOUNT_TYPE:
+                MainMenuController.getInstance().changeAccountType(message.getChangeAccountType());
         }
     }
 
