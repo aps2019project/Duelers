@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static models.account.AccountType.ADMIN;
+import static models.gui.UIConstants.SCALE;
 
 public class LeaderboardScroll extends TableView {
     public LeaderboardScroll(List<LeaderBoardView> leaderboard) {
@@ -27,22 +28,27 @@ public class LeaderboardScroll extends TableView {
         index.setCellValueFactory(
                 param -> new ReadOnlyObjectWrapper<>(getItems().indexOf(param.getValue()) + 1)
         );
+        index.setMaxWidth(100 * SCALE);
 
         TableColumn<LeaderBoardView, String> username = new TableColumn<>("Username");
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
+        username.setMinWidth(300 * SCALE);
 
         TableColumn<LeaderBoardView, String> wins = new TableColumn<>("Wins");
         wins.setCellValueFactory(new PropertyValueFactory<>("wins"));
+        wins.setMaxWidth(100 * SCALE);
 
         TableColumn<LeaderBoardView, Circle> online = new TableColumn<>("Online");
         online.setCellValueFactory(param -> param.getValue().onlineViewProperty());
         online.setCellFactory(cell -> new CircleTableCell());
+        online.setMaxWidth(100 * SCALE);
 
         getColumns().addAll(index, username, wins, online);
 
         if (Client.getInstance().getAccount().getAccountType() == ADMIN) {
             TableColumn<LeaderBoardView, Spinner<AccountType>> accountType = new TableColumn<>("Account Type");
             accountType.setCellValueFactory(new PropertyValueFactory<>("typeSpinner"));
+            accountType.setMinWidth(300 * SCALE);
             getColumns().add(accountType);
         }
     }

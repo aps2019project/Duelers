@@ -2,6 +2,7 @@ package controller;
 
 import models.account.AccountInfo;
 import models.account.AccountType;
+import models.message.ChangeAccountType;
 import models.message.ChatMessage;
 import models.message.DataName;
 import models.message.Message;
@@ -53,9 +54,18 @@ public class MainMenuController {
         return leaderBoard;
     }
 
-    public void changeAccountType(String username, AccountType newValue) {
+    public void changeAccountTypeRequest(String username, AccountType newValue) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeChangeAccountTypeMessage(Client.getInstance().getClientName(), SERVER_NAME, username, newValue)
         );
+    }
+
+    public void changeAccountType(ChangeAccountType changeAccountType) {
+        for (AccountInfo accountInfo : leaderBoard) {
+            if (accountInfo.getUsername().equals(changeAccountType.getUsername())) {
+                accountInfo.setType(changeAccountType.getNewType());
+                return;
+            }
+        }
     }
 }

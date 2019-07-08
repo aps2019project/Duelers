@@ -1,6 +1,10 @@
 package models.account;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class AccountInfo {
+    private transient PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String username;
     private boolean online;
     private int wins;
@@ -20,5 +24,15 @@ public class AccountInfo {
 
     public AccountType getType() {
         return type;
+    }
+
+    public void setType(AccountType newType) {
+        AccountType old = type;
+        this.type = newType;
+        support.firePropertyChange("accountType", old, newType);
+    }
+
+    public void addListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 }
