@@ -165,6 +165,44 @@ public class MapBox implements PropertyChangeListener {
                     flagLabels[j][i].setVisible(true);
                     flagImages[j][i].setVisible(true);
                 }
+                final int J=j,I=i;
+                flagImages[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        clickCell(J,I);
+                    }
+                });
+                flagImages[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        exitCell(J,I);
+                    }
+                });
+                flagImages[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        hoverCell(J,I);
+                    }
+                });
+
+                flagLabels[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        clickCell(J,I);
+                    }
+                });
+                flagLabels[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        exitCell(J,I);
+                    }
+                });
+                flagLabels[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        hoverCell(J,I);
+                    }
+                });
                 mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
             }
         }
