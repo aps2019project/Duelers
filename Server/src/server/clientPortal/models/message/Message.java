@@ -52,21 +52,21 @@ public class Message {
         return JsonConverter.fromJson(messageJson, Message.class);
     }
 
-    public static Message makeDoneMessage( String receiver) {
+    public static Message makeDoneMessage(String receiver) {
         Message message = new Message(receiver);
         message.messageType = MessageType.DONE;
         return message;
     }
 
     public static Message makeGameCopyMessage(String receiver, Game game) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.gameCopyMessage = new GameCopyMessage(game);
         message.messageType = MessageType.GAME_COPY;
         return message;
     }
 
     public static Message makeOriginalCardsCopyMessage(String receiver, Collection originalCards) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.cardsCopyMessage = new CardsCopyMessage(originalCards);
         message.messageType = MessageType.ORIGINAL_CARDS_COPY;
         return message;
@@ -86,15 +86,15 @@ public class Message {
         return message;
     }
 
-    public static Message makeStoriesCopyMessage( String receiver, Story[] stories) {
-        Message message = new Message( receiver);
+    public static Message makeStoriesCopyMessage(String receiver, Story[] stories) {
+        Message message = new Message(receiver);
         message.storiesCopyMessage = new StoriesCopyMessage(stories);
         message.messageType = MessageType.STORIES_COPY;
         return message;
     }
 
-    public static Message makeChangeCardPositionMessage( String receiver, Card card, CardPosition cardPosition) {
-        Message message = new Message( receiver);
+    public static Message makeChangeCardPositionMessage(String receiver, Card card, CardPosition cardPosition) {
+        Message message = new Message(receiver);
         message.cardPositionMessage = new CardPositionMessage(card, cardPosition);
         message.messageType = MessageType.CARD_POSITION;
         return message;
@@ -111,8 +111,8 @@ public class Message {
     }
 
 
-    public static Message makeTroopUpdateMessage( String receiver, Troop troop) {
-        Message message = new Message( receiver);
+    public static Message makeTroopUpdateMessage(String receiver, Troop troop) {
+        Message message = new Message(receiver);
         message.troopUpdateMessage = new TroopUpdateMessage(troop);
         message.messageType = MessageType.TROOP_UPDATE;
         return message;
@@ -121,23 +121,23 @@ public class Message {
     public static Message makeGameUpdateMessage(String receiver, int turnNumber, int player1CurrentMP,
                                                 int player1NumberOfCollectedFlags, int player2CurrentMP,
                                                 int player2NumberOfCollectedFlags, List<CellEffect> cellEffects) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.gameUpdateMessage = new GameUpdateMessage(turnNumber, player1CurrentMP, player1NumberOfCollectedFlags,
                 player2CurrentMP, player2NumberOfCollectedFlags, cellEffects);
         message.messageType = MessageType.GAME_UPDATE;
         return message;
     }
 
-    public static Message makeExceptionMessage( String receiver, String exceptionString) {
+    public static Message makeExceptionMessage(String receiver, String exceptionString) {
         Message message = new Message(receiver);
         message.exceptionMessage = new ExceptionMessage(exceptionString);
         message.messageType = MessageType.SEND_EXCEPTION;
         return message;
     }
 
-    public static Message makeChatMessage( String receiver, String messageSender, String messageReceiver,
+    public static Message makeChatMessage(String receiver, String messageSender, String messageReceiver,
                                           String textMessage) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.chatMessage = new ChatMessage(messageSender, messageReceiver, textMessage);
         message.messageType = MessageType.CHAT;
         return message;
@@ -157,27 +157,27 @@ public class Message {
         return message;
     }
 
-    public static Message makeInvitationMessage( String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
-        Message message = new Message( receiver);
+    public static Message makeInvitationMessage(String receiver, String inviterUsername, GameType gameType, int numberOfFlags) {
+        Message message = new Message(receiver);
         message.messageType = MessageType.INVITATION;
         message.newGameFields = new NewGameFields(gameType, numberOfFlags, 0, null, inviterUsername);
         return message;
     }
 
     public static Message makeAcceptRequestMessage(String receiver) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.messageType = MessageType.ACCEPT_REQUEST;
         return message;
     }
 
-    public static Message makeDeclineRequestMessage( String receiver) {
+    public static Message makeDeclineRequestMessage(String receiver) {
         Message message = new Message(receiver);
         message.messageType = MessageType.DECLINE_REQUEST;
         return message;
     }
 
-    public static Message makeChangeCardNumberMessage( String receiver, Card card, int newValue) {
-        Message message = new Message( receiver);
+    public static Message makeChangeCardNumberMessage(String receiver, Card card, int newValue) {
+        Message message = new Message(receiver);
         message.changeCardNumber = new ChangeCardNumber(card.getName(), newValue);
         message.messageType = MessageType.CHANGE_CARD_NUMBER;
         return message;
@@ -190,21 +190,21 @@ public class Message {
         return message;
     }
 
-    public static Message makeAddCustomCardMessage( String receiver, Card card) {
+    public static Message makeAddCustomCardMessage(String receiver, Card card) {
         Message message = new Message(receiver);
         message.card = card;
         message.messageType = MessageType.ADD_TO_CUSTOM_CARDS;
         return message;
     }
 
-    public static Message makeRemoveCustomCardMessage( String receiver, String cardName) {
+    public static Message makeRemoveCustomCardMessage(String receiver, String cardName) {
         Message message = new Message(receiver);
         message.cardName = cardName;
         message.messageType = MessageType.REMOVE_FROM_CUSTOM_CARDS;
         return message;
     }
 
-    public static Message makeCustomCardsCopyMessage( String receiver, Collection customCards) {
+    public static Message makeCustomCardsCopyMessage(String receiver, Collection customCards) {
         Message message = new Message(receiver);
         message.cardsCopyMessage = new CardsCopyMessage(customCards);
         message.messageType = MessageType.CUSTOM_CARDS_COPY;

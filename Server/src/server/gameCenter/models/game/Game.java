@@ -184,8 +184,8 @@ public abstract class Game {
                 Thread.sleep(500);
                 actions.calculateAvailableInsets(this);
             }
-        }catch (InterruptedException ignored){
-        }finally {
+        } catch (InterruptedException ignored) {
+        } finally {
             changeTurn("AI");
         }
 
@@ -890,12 +890,12 @@ public abstract class Game {
         List<CellEffect> result = new ArrayList<>();
 
         buffs.forEach(buff -> buff.getTarget().getCells()
-                        .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
-                );
+                .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
+        );
         return Collections.unmodifiableList(result);
     }
 
     public void forceFinish(String username) {
-        setMatchHistories(!playerOne.getUserName().equals(username),!playerTwo.getUserName().equals(username));
+        setMatchHistories(!playerOne.getUserName().equals(username), !playerTwo.getUserName().equals(username));
     }
 }

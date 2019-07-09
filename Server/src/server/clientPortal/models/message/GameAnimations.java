@@ -10,14 +10,15 @@ public class GameAnimations {
     private ArrayList<CardAnimation> counterAttacks = new ArrayList<>();
     private ArrayList<SpellAnimation> spellAnimations = new ArrayList<>();
 
-    void addAttacks(String cardID , String defenderCardID){
-        attacks.add(new CardAnimation(cardID , defenderCardID));
-    }
-    void addCounterAttacks(String cardID , String defenderCardID){
-        counterAttacks.add(new CardAnimation(cardID , defenderCardID));
+    void addAttacks(String cardID, String defenderCardID) {
+        attacks.add(new CardAnimation(cardID, defenderCardID));
     }
 
-    public void addSpellAnime(String spellID , Position position){
-        spellAnimations.add(new SpellAnimation(spellID , position));
+    void addCounterAttacks(String cardID, String defenderCardID) {
+        counterAttacks.add(new CardAnimation(cardID, defenderCardID));
+    }
+
+    public void addSpellAnime(String spellID, Position position) {
+        spellAnimations.add(new SpellAnimation(spellID, position));
     }
 }

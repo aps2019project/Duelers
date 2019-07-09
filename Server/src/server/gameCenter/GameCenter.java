@@ -19,19 +19,15 @@ import java.util.LinkedList;
 
 public class GameCenter extends Thread {//synchronize
     private static GameCenter ourInstance = new GameCenter();
+    private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
+    private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
+    private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+    private GameCenter() {
+    }
 
     public static GameCenter getInstance() {
         return ourInstance;
     }
-
-
-    private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
-    private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
-
-    private GameCenter() {
-    }
-
 
     @Override
     public void run() {
@@ -152,7 +148,7 @@ public class GameCenter extends Thread {//synchronize
                 throw new ClientException("The Invitation was not found!");
             userInvitations.remove(invitation);
             Server.getInstance().addToSendingMessages(Message.makeDeclineRequestMessage(
-                   DataCenter.getInstance().getAccounts().get(inviter)));
+                    DataCenter.getInstance().getAccounts().get(inviter)));
         }
     }
 
@@ -209,7 +205,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(Game.getDefaultReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                ( message.getSender(), game));
+                (message.getSender(), game));
         game.startGame();
     }
 
@@ -240,7 +236,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(story.getReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                ( message.getSender(), game));
+                (message.getSender(), game));
         game.startGame();
     }
 
@@ -265,7 +261,7 @@ public class GameCenter extends Thread {//synchronize
         onlineGames.put(account1, game);
         onlineGames.put(account2, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                ( DataCenter.getInstance().getClientName(account1.getUsername()), game));
+                (DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (DataCenter.getInstance().getClientName(account2.getUsername()), game));
         try {
@@ -400,7 +396,7 @@ public class GameCenter extends Thread {//synchronize
 
             game.forceFinish(username);
             finish(game);
-        }catch (LogicException ignored){
+        } catch (LogicException ignored) {
         }
 
     }
