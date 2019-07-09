@@ -87,7 +87,7 @@ public class GameCenter extends Thread {//synchronize
         synchronized (userInvitations) {
             userInvitations.addLast(new UserInvitation(inviter, invited, gameType, numberOfFlags));
             Server.getInstance().addToSendingMessages(Message.makeInvitationMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
+                    DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
                     gameType, numberOfFlags));
         }
     }
@@ -133,7 +133,7 @@ public class GameCenter extends Thread {//synchronize
                 throw new ClientException("The Invitation was not found!");
             userInvitations.remove(invitation);
             Server.getInstance().addToSendingMessages(Message.makeAcceptRequestMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+                    DataCenter.getInstance().getAccounts().get(inviter)));
             newMultiplayerGame(inviter, invited, invitation.getGameType(), invitation.getNumberOfFlags());
         }
     }
@@ -152,7 +152,7 @@ public class GameCenter extends Thread {//synchronize
                 throw new ClientException("The Invitation was not found!");
             userInvitations.remove(invitation);
             Server.getInstance().addToSendingMessages(Message.makeDeclineRequestMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+                   DataCenter.getInstance().getAccounts().get(inviter)));
         }
     }
 
@@ -209,7 +209,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(Game.getDefaultReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, message.getSender(), game, 0));
+                ( message.getSender(), game));
         game.startGame();
     }
 
@@ -240,7 +240,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(story.getReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, message.getSender(), game, 0));
+                ( message.getSender(), game));
         game.startGame();
     }
 
@@ -265,9 +265,9 @@ public class GameCenter extends Thread {//synchronize
         onlineGames.put(account1, game);
         onlineGames.put(account2, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account1.getUsername()), game, 0));
+                ( DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account2.getUsername()), game, 0));
+                (DataCenter.getInstance().getClientName(account2.getUsername()), game));
         try {
             game.startGame();
         } catch (ServerException e) {

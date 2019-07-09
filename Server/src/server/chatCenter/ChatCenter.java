@@ -4,7 +4,6 @@ import server.Server;
 import server.clientPortal.models.message.Message;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
-import server.exceptions.ClientException;
 
 import java.util.ArrayList;
 
@@ -41,8 +40,7 @@ public class ChatCenter {
         if (receiverClientName == null) {
             Server.getInstance().serverPrint("Chat Receiver Error!");
         }
-        Message message = Message.makeChatMessage(Server.getInstance().serverName, receiverClientName,
-                senderUsername, receiverUsername, text, 0);
+        Message message = Message.makeChatMessage(receiverClientName, senderUsername, receiverUsername, text);
         Server.getInstance().addToSendingMessages(message);
     }
 }
