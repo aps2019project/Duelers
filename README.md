@@ -1,5 +1,6 @@
 # DUELYST Game
-Advanced Programming Course(Java),SUT
+Advanced Programming Course(Java)
+
 Team members:
 1. Ahmad Salimi - 97106013
 2. MohammadMahdi Jarrahi 97105844
