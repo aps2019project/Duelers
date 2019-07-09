@@ -22,13 +22,13 @@ public class ShopController {
         if (ourInstance == null) {
             ourInstance = new ShopController();
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeGetDataMessage( Constants.SERVER_NAME, DataName.ORIGINAL_CARDS));
+                    Message.makeGetDataMessage(Constants.SERVER_NAME, DataName.ORIGINAL_CARDS));
         }
         return ourInstance;
     }
 
-    static boolean isLoaded(){
-        return ourInstance!= null;
+    static boolean isLoaded() {
+        return ourInstance != null;
     }
 
     public void buy(String cardName) {
@@ -44,7 +44,7 @@ public class ShopController {
             return;
         }
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeSellCardMessage( Constants.SERVER_NAME, card.getCardId()));
+                Message.makeSellCardMessage(Constants.SERVER_NAME, card.getCardId()));
     }
 
     public Collection getShowingCards() {

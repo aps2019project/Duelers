@@ -11,7 +11,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 import static controller.SoundEffectPlayer.SoundName;
-import static controller.SoundEffectPlayer.SoundName.*;
+import static controller.SoundEffectPlayer.SoundName.hover;
 import static models.gui.UIConstants.SCALE;
 
 public class OrangeButton extends Button {

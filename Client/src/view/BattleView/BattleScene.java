@@ -34,7 +34,7 @@ public class BattleScene extends Show {
         this.game = game;
         this.myPlayerNumber = myPlayerNumber;
         addBackGround(mapName);
-        if (myPlayerNumber == 1){
+        if (myPlayerNumber == 1) {
             myPlayer = game.getPlayerOne();
             oppPlayer = game.getPlayerTwo();
         } else {
@@ -65,7 +65,7 @@ public class BattleScene extends Show {
         new Thread(() -> {
             try {
                 Thread.sleep(200);
-                defend(defender,cardId);
+                defend(defender, cardId);
             } catch (InterruptedException ignored) {
             }
         }).start();

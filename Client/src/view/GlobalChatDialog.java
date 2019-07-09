@@ -21,6 +21,7 @@ public class GlobalChatDialog {
     private DialogBox dialogBox = new DialogBox();
     private NormalField normalField = new NormalField("Message");
     private boolean isOpen;
+
     private GlobalChatDialog() {
         ScrollPane scrollPane = new ScrollPane(chatMessages);
         OrangeButton sendButton = new OrangeButton("send",
@@ -29,9 +30,9 @@ public class GlobalChatDialog {
                 },
                 SoundEffectPlayer.SoundName.select);
         dialogBox.getChildren().addAll(scrollPane, new HBox(normalField, sendButton));
-        normalField.setMinSize(500,50);
-        normalField.setOnKeyPressed(event ->{
-            if (event.getCode().equals(KeyCode.ENTER)){
+        normalField.setMinSize(500, 50);
+        normalField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
                 sendMessage();
             }
         });

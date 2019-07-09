@@ -2,8 +2,6 @@ package view;
 
 import controller.Client;
 import controller.CustomGameMenuController;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import models.card.Deck;
 import models.game.GameType;
 import models.gui.*;

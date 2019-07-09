@@ -65,11 +65,11 @@ public abstract class GameModeChooseMenu extends PlayMenu {
         void makeButton(GameType type, int numberOfFlags) {
             box.makeButton("START", buttonEvent -> {
                 if (usernameField != null && "".equals(usernameField.getText())) return;
-                    MultiPlayerMenuController.getInstance().startGame(
-                            type,
-                            flagNumSpinner == null ? numberOfFlags : flagNumSpinner.getValue(),
-                            usernameField == null ? null : usernameField.getText()
-                    );
+                MultiPlayerMenuController.getInstance().startGame(
+                        type,
+                        flagNumSpinner == null ? numberOfFlags : flagNumSpinner.getValue(),
+                        usernameField == null ? null : usernameField.getText()
+                );
                 container.close();
                 new WaitingMenu(menu).show();
             });

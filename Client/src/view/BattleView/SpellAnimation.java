@@ -22,7 +22,7 @@ public class SpellAnimation extends Transition {
     private final int frameWidth, frameHeight;
 
     private boolean frameShowFlag = false;
-    private int nextIndex=0;
+    private int nextIndex = 0;
     private Group mapGroup;
 
     SpellAnimation(Group mapGroup, String fileName, double x, double y) throws Exception {

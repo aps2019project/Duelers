@@ -13,7 +13,7 @@ public class StoryMenuController {
         if (ourInstance == null) {
             ourInstance = new StoryMenuController();
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeGetDataMessage( Constants.SERVER_NAME, DataName.STORIES));
+                    Message.makeGetDataMessage(Constants.SERVER_NAME, DataName.STORIES));
         }
         return ourInstance;
     }

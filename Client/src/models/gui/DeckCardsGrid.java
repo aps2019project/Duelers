@@ -11,9 +11,9 @@ import models.card.Deck;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import static controller.SoundEffectPlayer.SoundName.select;
 import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
-import static controller.SoundEffectPlayer.SoundName.*;
 
 public class DeckCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;
@@ -48,7 +48,7 @@ public class DeckCardsGrid extends GridPane {
             deckCardBox.getChildren().addAll(cardPane, buttonsBox);
 
             add(
-                    deckCardBox , i % COLUMN_NUMBER, i / COLUMN_NUMBER
+                    deckCardBox, i % COLUMN_NUMBER, i / COLUMN_NUMBER
             );
         }
     }

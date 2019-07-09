@@ -13,10 +13,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
-import models.Constants;
 import models.card.AttackType;
 import models.card.CardType;
 import models.card.EditableCard;
@@ -31,7 +33,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 import static controller.SoundEffectPlayer.SoundName.click;
-import static models.card.CardType.*;
+import static models.card.CardType.HERO;
 import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
@@ -383,7 +385,7 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
                     coolDown.getValue(), mannaPoint.getValue())
             );
         });
-        DialogContainer dialogContainer =  new DialogContainer(root, dialogBox);
+        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
         dialogContainer.show();
         dialogBox.makeClosable(dialogContainer);
     }

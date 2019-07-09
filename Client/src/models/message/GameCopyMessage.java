@@ -1,5 +1,6 @@
 package models.message;
-import models.comperessedData.*;
+
+import models.comperessedData.CompressedGame;
 
 public class GameCopyMessage {
     private CompressedGame compressedGame;

@@ -42,7 +42,7 @@ public class CollectionMenuController implements PropertyChangeListener {
             return;
         }
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeAddCardToDeckMessage( Constants.SERVER_NAME, deck.getName(), cardID));
+                Message.makeAddCardToDeckMessage(Constants.SERVER_NAME, deck.getName(), cardID));
     }
 
     public void removeCardFromDeck(Deck deck, String cardName) {

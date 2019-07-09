@@ -10,11 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static controller.SoundEffectPlayer.SoundName;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import static controller.SoundEffectPlayer.SoundName;
 import static models.gui.UIConstants.SCALE;
 
 public class ImageButton extends StackPane {

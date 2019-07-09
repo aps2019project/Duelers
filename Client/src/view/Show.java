@@ -4,7 +4,6 @@ import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.message.NewGameFields;
@@ -13,7 +12,7 @@ public abstract class Show {
     final public AnchorPane root = new AnchorPane();
 
 
-    public Show(){
+    public Show() {
     }
 
     public void show() {
@@ -27,11 +26,13 @@ public abstract class Show {
     }
 
     public void showError(String message, String buttonText) {
-        showError(message, buttonText, event -> {});
+        showError(message, buttonText, event -> {
+        });
     }
 
     public void showError(String message) {
-        showError(message, "OK", event -> {});
+        showError(message, "OK", event -> {
+        });
     }
 
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {

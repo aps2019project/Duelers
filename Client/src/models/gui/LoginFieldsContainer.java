@@ -6,8 +6,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import static controller.SoundEffectPlayer.SoundName.select;
 import static models.gui.UIConstants.SCALE;
-import static controller.SoundEffectPlayer.SoundName.*;
 
 class LoginFieldsContainer extends VBox {
     private static final Background LOGIN_BOX_BACKGROUND = new Background(

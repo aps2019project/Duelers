@@ -3,7 +3,6 @@ package models.card;
 
 import models.ICard;
 import models.card.spell.Spell;
-import models.exceptions.InputException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -26,7 +25,7 @@ public class Card implements ICard {
     private boolean hasCombo;
     private int remainingNumber;
 
-    public Card(String name, String cardId, String description,  String spriteName, CardType type,ArrayList<Spell> spells,  int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
+    public Card(String name, String cardId, String description, String spriteName, CardType type, ArrayList<Spell> spells, int defaultAp, int defaultHp, int mannaPoint, int price, AttackType attackType, int range, boolean hasCombo) {
         this.name = name;
         this.cardId = cardId;
         this.description = description;

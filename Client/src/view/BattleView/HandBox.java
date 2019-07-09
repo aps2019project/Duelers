@@ -28,9 +28,9 @@ public class HandBox implements PropertyChangeListener {
     private final Group group;
     private final Pane[] cards = new Pane[5];
     private final Pane next = new Pane();
-    private final Pane[] items=new Pane[3];
+    private final Pane[] items = new Pane[3];
     private int selectedCard = -1;
-    private int selectedItem=-1;
+    private int selectedItem = -1;
     private CardPane cardPane = null;
     private Image backGround = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
     private Image highlightedBackGround = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
@@ -163,7 +163,7 @@ public class HandBox implements PropertyChangeListener {
                     cards[i].setOnMouseEntered(mouseEvent -> {
                         if (cardPane != null) {
                             group.getChildren().remove(cardPane);
-                            cardPane=null;
+                            cardPane = null;
                         }
                         cardAnimation.inActive();
                         try {
@@ -206,7 +206,7 @@ public class HandBox implements PropertyChangeListener {
         }
     }
 
-    private void updateItems(){
+    private void updateItems() {
         try {
             for (int i = 0; i < 3; i++) {
                 final int I = i;
@@ -220,7 +220,7 @@ public class HandBox implements PropertyChangeListener {
                 final CardAnimation cardAnimation;
                 if (player.getCollectedItems().size() > i) {
                     cardAnimation = new CardAnimation(items[i], player.getCollectedItems().get(i),
-                            imageView.getFitHeight() / 2+Constants.SCREEN_WIDTH * 0.01, imageView.getFitWidth() / 2);
+                            imageView.getFitHeight() / 2 + Constants.SCREEN_WIDTH * 0.01, imageView.getFitWidth() / 2);
                 } else {
                     cardAnimation = null;
                 }
@@ -235,7 +235,7 @@ public class HandBox implements PropertyChangeListener {
                     items[i].setOnMouseEntered(mouseEvent -> {
                         if (cardPane != null) {
                             group.getChildren().remove(cardPane);
-                            cardPane=null;
+                            cardPane = null;
                         }
                         cardAnimation.inActive();
                         try {
@@ -376,7 +376,7 @@ public class HandBox implements PropertyChangeListener {
             battleScene.getMapBox().updateMapColors();
         } else {
             selectedCard = i;
-            selectedItem=-1;
+            selectedItem = -1;
             updateItems();
             battleScene.getMapBox().resetSelection();
         }
@@ -389,7 +389,7 @@ public class HandBox implements PropertyChangeListener {
             battleScene.getMapBox().updateMapColors();
         } else {
             selectedItem = i;
-            selectedCard=-1;
+            selectedCard = -1;
             updateCards();
             battleScene.getMapBox().resetSelection();
         }
@@ -403,14 +403,14 @@ public class HandBox implements PropertyChangeListener {
     CompressedCard getSelectedCard() {
         if (selectedCard >= 0)
             return player.getHand().get(selectedCard);
-        if(selectedItem>=0)
+        if (selectedItem >= 0)
             return player.getCollectedItems().get(selectedItem);
         return null;
     }
 
     void resetSelection() {
         selectedCard = -1;
-        selectedItem=-1;
+        selectedItem = -1;
         updateCards();
         updateItems();
     }

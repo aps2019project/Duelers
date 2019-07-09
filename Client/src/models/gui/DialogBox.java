@@ -16,8 +16,8 @@ import javafx.scene.paint.Color;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static controller.SoundEffectPlayer.SoundName.click;
 import static models.gui.UIConstants.SCALE;
-import static controller.SoundEffectPlayer.SoundName.*;
 
 public class DialogBox extends VBox {
     private static final CornerRadii DEFAULT_CORNER_RADIUS = new CornerRadii(UIConstants.DEFAULT_SPACING * 3);
@@ -48,7 +48,8 @@ public class DialogBox extends VBox {
     }
 
     public void makeClosable(DialogContainer dialogContainer) {
-        makeClosable(dialogContainer, closeEvent -> {});
+        makeClosable(dialogContainer, closeEvent -> {
+        });
     }
 
 

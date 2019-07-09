@@ -31,11 +31,11 @@ public class MainMenuController {
 
     public void logout() {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeLogOutMessage( SERVER_NAME));
+                Message.makeLogOutMessage(SERVER_NAME));
     }
 
     public void requestLeaderboard() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeGetDataMessage( SERVER_NAME, DataName.LEADERBOARD));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeGetDataMessage(SERVER_NAME, DataName.LEADERBOARD));
     }
 
     public void addChatMessage(ChatMessage chatMessage) {
@@ -44,7 +44,7 @@ public class MainMenuController {
 
     public void sendChatMessage(String text) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChatMessage(Constants.SERVER_NAME,Client.getInstance().getAccount().getUsername(), null,text));
+                Message.makeChatMessage(Constants.SERVER_NAME, Client.getInstance().getAccount().getUsername(), null, text));
     }
 
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {
@@ -62,17 +62,17 @@ public class MainMenuController {
 
     public void requestCustomCardRequests() {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeGetDataMessage(SERVER_NAME,DataName.CUSTOM_CARDS)
+                Message.makeGetDataMessage(SERVER_NAME, DataName.CUSTOM_CARDS)
         );
     }
 
     public void acceptCustomCard(String cardName) {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeValidateCustomCardMessage(SERVER_NAME,cardName));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeValidateCustomCardMessage(SERVER_NAME, cardName));
     }
 
     public void rejectCustomCard(String cardName) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeInValidateCustomCardMessage(SERVER_NAME,cardName));
+                Message.makeInValidateCustomCardMessage(SERVER_NAME, cardName));
     }
 
     synchronized void setCustomCardRequests(Collection customCardRequests) {

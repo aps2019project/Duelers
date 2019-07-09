@@ -19,7 +19,7 @@ public class LoginMenuController {
         try {
             validateUsernameAndPassword(userName, password);
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeRegisterMessage( Constants.SERVER_NAME, userName, password));
+                    Message.makeRegisterMessage(Constants.SERVER_NAME, userName, password));
         } catch (InputException e) {
             Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }

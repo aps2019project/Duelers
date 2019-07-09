@@ -58,7 +58,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeRegisterMessage( String receiver, String userName, String passWord) {
+    public static Message makeRegisterMessage(String receiver, String userName, String passWord) {
         Message message = new Message(receiver);
         message.accountFields = new AccountFields(userName, passWord);
         message.messageType = MessageType.REGISTER;
@@ -73,20 +73,20 @@ public class Message {
     }
 
     public static Message makeLogInMessage(String receiver, String userName, String passWord) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.accountFields = new AccountFields(userName, passWord);
         message.messageType = MessageType.LOG_IN;
         return message;
     }
 
     public static Message makeLogOutMessage(String receiver) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.messageType = MessageType.LOG_OUT;
         return message;
     }
 
-    public static Message makeCreateDeckMessage( String receiver, String deckName) {
-        Message message = new Message( receiver);
+    public static Message makeCreateDeckMessage(String receiver, String deckName) {
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setDeckName(deckName);
         message.messageType = MessageType.CREATE_DECK;
@@ -101,16 +101,16 @@ public class Message {
         return message;
     }
 
-    public static Message makeSelectDeckMessage( String receiver, String deckName) {
-        Message message = new Message( receiver);
+    public static Message makeSelectDeckMessage(String receiver, String deckName) {
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setDeckName(deckName);
         message.messageType = MessageType.SELECT_DECK;
         return message;
     }
 
-    public static Message makeAddCardToDeckMessage( String receiver, String deckName, String cardId) {
-        Message message = new Message( receiver);
+    public static Message makeAddCardToDeckMessage(String receiver, String deckName, String cardId) {
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setDeckName(deckName);
         message.otherFields.setMyCardId(cardId);
@@ -119,7 +119,7 @@ public class Message {
     }
 
     public static Message makeRemoveCardFromDeckMessage(String receiver, String deckName, String cardId) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setDeckName(deckName);
         message.otherFields.setMyCardId(cardId);
@@ -127,8 +127,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeBuyCardMessage( String receiver, String cardName) {
-        Message message = new Message( receiver);
+    public static Message makeBuyCardMessage(String receiver, String cardName) {
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setCardName(cardName);
         message.messageType = MessageType.BUY_CARD;
@@ -136,7 +136,7 @@ public class Message {
     }
 
     public static Message makeSellCardMessage(String receiver, String cardId) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setMyCardId(cardId);
         message.messageType = MessageType.SELL_CARD;
@@ -144,7 +144,7 @@ public class Message {
     }
 
     public static Message makeEndTurnMessage(String receiver) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.messageType = MessageType.END_TURN;
         return message;
     }
@@ -176,8 +176,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeComboAttackMessage( String receiver, String opponentCardId, String[] myCardIds) {
-        Message message = new Message( receiver);
+    public static Message makeComboAttackMessage(String receiver, String opponentCardId, String[] myCardIds) {
+        Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setOpponentCardId(opponentCardId);
         message.otherFields.setMyCardIds(myCardIds);
@@ -185,13 +185,13 @@ public class Message {
         return message;
     }
 
-    public static Message makeForceFinishGameMessage( String receiver) {
+    public static Message makeForceFinishGameMessage(String receiver) {
         Message message = new Message(receiver);
         message.messageType = MessageType.FORCE_FINISH;
         return message;
     }
 
-    public static Message makeUseSpecialPowerMessage( String receiver, String cardId, Position position) {
+    public static Message makeUseSpecialPowerMessage(String receiver, String cardId, Position position) {
         Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setMyCardId(cardId);
@@ -201,7 +201,7 @@ public class Message {
     }
 
     public static Message makeMultiPlayerGameReQuestMessage(String receiver, GameType gameType, int numberOfFlags, String opponentUsername) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUsername);
         message.newGameFields.setNumberOfFlags(numberOfFlags);
@@ -210,30 +210,30 @@ public class Message {
         return message;
     }
 
-    public static Message makeCancelRequestMessage( String receiver) {
-        Message message = new Message( receiver);
+    public static Message makeCancelRequestMessage(String receiver) {
+        Message message = new Message(receiver);
         message.messageType = MessageType.CANCEL_REQUEST;
         return message;
     }
 
-    public static Message makeAcceptRequestMessage( String receiver, String opponentUsername) {
-        Message message = new Message( receiver);
+    public static Message makeAcceptRequestMessage(String receiver, String opponentUsername) {
+        Message message = new Message(receiver);
         message.messageType = MessageType.ACCEPT_REQUEST;
-        message.newGameFields=new NewGameFields();
+        message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUsername);
         return message;
     }
 
-    public static Message makeDeclineRequestMessage( String receiver, String opponentUsername) {
+    public static Message makeDeclineRequestMessage(String receiver, String opponentUsername) {
         Message message = new Message(receiver);
         message.messageType = MessageType.DECLINE_REQUEST;
-        message.newGameFields=new NewGameFields();
+        message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUsername);
         return message;
     }
 
-    public static Message makeNewCustomGameMessage( String receiver, GameType gameType, int numberOfFlags, String customDeckName) {
-        Message message = new Message( receiver);
+    public static Message makeNewCustomGameMessage(String receiver, GameType gameType, int numberOfFlags, String customDeckName) {
+        Message message = new Message(receiver);
         message.newGameFields = new NewGameFields();
         message.newGameFields.setCustomDeckName(customDeckName);
         message.newGameFields.setNumberOfFlags(numberOfFlags);
@@ -250,29 +250,29 @@ public class Message {
         return message;
     }
 
-    public static Message makeSelectUserMessage( String receiver, String opponentUserName) {
-        Message message = new Message( receiver);
+    public static Message makeSelectUserMessage(String receiver, String opponentUserName) {
+        Message message = new Message(receiver);
         message.newGameFields = new NewGameFields();
         message.newGameFields.setOpponentUsername(opponentUserName);
         message.messageType = MessageType.SELECT_USER;
         return message;
     }
 
-    public static Message makeCustomCardMessage( String receiver, Card customCard) {
-        Message message = new Message( receiver);
+    public static Message makeCustomCardMessage(String receiver, Card customCard) {
+        Message message = new Message(receiver);
         message.card = customCard;
         message.messageType = MessageType.ADD_CARD;
         return message;
     }
 
-    public static Message makeChatMessage( String receiver, String messageSender, String messageReceiver, String textMessage) {
-        Message message = new Message( receiver);
+    public static Message makeChatMessage(String receiver, String messageSender, String messageReceiver, String textMessage) {
+        Message message = new Message(receiver);
         message.chatMessage = new ChatMessage(messageSender, messageReceiver, textMessage);
         message.messageType = MessageType.CHAT;
         return message;
     }
 
-    public static Message makeSudoMessage( String receiver, String sudoCommand) {
+    public static Message makeSudoMessage(String receiver, String sudoCommand) {
         Message message = new Message(receiver);
         message.otherFields = new OtherFields();
         message.otherFields.setSudoCommand(sudoCommand);
@@ -280,7 +280,7 @@ public class Message {
         return message;
     }
 
-    public static Message makeChangeCardNumberMessage( String receiver, Card card, int newValue) {
+    public static Message makeChangeCardNumberMessage(String receiver, Card card, int newValue) {
         Message message = new Message(receiver);
         message.changeCardNumber = new ChangeCardNumber(card.getName(), newValue);
         message.messageType = MessageType.CHANGE_CARD_NUMBER;
@@ -288,7 +288,7 @@ public class Message {
     }
 
     public static Message makeChangeAccountTypeMessage(String receiver, String username, AccountType newValue) {
-        Message message = new Message( receiver);
+        Message message = new Message(receiver);
         message.changeAccountType = new ChangeAccountType(username, newValue);
         message.messageType = MessageType.CHANGE_ACCOUNT_TYPE;
         return message;
@@ -301,8 +301,8 @@ public class Message {
         return message;
     }
 
-    public static Message makeInValidateCustomCardMessage( String receiver, String customCardName) {
-        Message message = new Message( receiver);
+    public static Message makeInValidateCustomCardMessage(String receiver, String customCardName) {
+        Message message = new Message(receiver);
         message.cardName = customCardName;
         message.messageType = MessageType.INVALIDATE_CARD;
         return message;

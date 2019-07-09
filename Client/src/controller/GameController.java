@@ -103,11 +103,11 @@ public class GameController implements GameActions {
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop defenderTroop) {
-        String[] cardIDs= new String[comboTroops.size()];
+        String[] cardIDs = new String[comboTroops.size()];
         int i = 0;
         try {
-            for (CompressedTroop attackerTroop:
-                 comboTroops) {
+            for (CompressedTroop attackerTroop :
+                    comboTroops) {
                 if (!attackerTroop.canAttack())
                     throw new InputException("you can not attack");
                 if (attackerTroop.getCard().getAttackType() == AttackType.MELEE) {
@@ -128,7 +128,7 @@ public class GameController implements GameActions {
                 i++;
             }
 
-            Client.getInstance().addToSendingMessagesAndSend(Message.makeComboAttackMessage( SERVER_NAME,defenderTroop.getCard().getCardId(),cardIDs));
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeComboAttackMessage(SERVER_NAME, defenderTroop.getCard().getCardId(), cardIDs));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -150,7 +150,7 @@ public class GameController implements GameActions {
                 throw new InputException("too far to go");
             }
 
-            Message message = Message.makeMoveTroopMessage( SERVER_NAME, selectedTroop.getCard().getCardId(), target);
+            Message message = Message.makeMoveTroopMessage(SERVER_NAME, selectedTroop.getCard().getCardId(), target);
             Client.getInstance().addToSendingMessagesAndSend(message);
         } catch (InputException e) {
             System.out.println(e.getMessage());
@@ -159,18 +159,18 @@ public class GameController implements GameActions {
 
     @Override
     public void endTurn() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage( SERVER_NAME));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage(SERVER_NAME));
     }
 
     public void forceFinish() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage( SERVER_NAME));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage(SERVER_NAME));
     }
 
     @Override
     public void insert(CompressedCard card, int row, int column) {
         if (validatePositionForInsert(card, row, column))
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeInsertMessage(SERVER_NAME, card.getCardId(), new Position(row, column) ));
+                    Message.makeInsertMessage(SERVER_NAME, card.getCardId(), new Position(row, column)));
     }
 
     private boolean validatePositionForInsert(CompressedCard card, int row, int column) {
@@ -208,7 +208,7 @@ public class GameController implements GameActions {
 
     public void sendChat(String text) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChatMessage( SERVER_NAME,
+                Message.makeChatMessage(SERVER_NAME,
                         battleScene.getMyUserName(), battleScene.getOppUserName(), text));
     }
 }

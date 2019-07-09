@@ -87,12 +87,12 @@ public class CompressedPlayer {
     void troopUpdate(CompressedTroop troop) {
         if (troops == null)
             troops = new ArrayList<>();
-            removeTroop(troop.getCard().getCardId());
-            if (troop.getCurrentHp()>0) {
-                troops.add(troop);
-                if (troop.getCard().getType() == CardType.HERO)
-                    hero = troop;
-            }
+        removeTroop(troop.getCard().getCardId());
+        if (troop.getCurrentHp() > 0) {
+            troops.add(troop);
+            if (troop.getCard().getType() == CardType.HERO)
+                hero = troop;
+        }
 
     }
 

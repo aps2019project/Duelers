@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import models.gui.*;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,7 +108,6 @@ public class GameResultMenu extends Show {
                     background, resultBackground, resultMiddleground,
                     heroView, vignette, resultContainer, resultForeground
             );
-
 
 
             root.getChildren().addAll(sceneContents);

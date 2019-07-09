@@ -5,8 +5,9 @@ import javafx.scene.image.Image;
 import models.gui.ImageLoader;
 import view.PlayList;
 
-import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 
@@ -17,13 +18,12 @@ public class ResourcesCenter {
     private HashMap<String, byte[]> stringMediaHashMap = new HashMap<>();
 
 
-
     private static final String PATH = "resources";
 
-    private ResourcesCenter(){
+    private ResourcesCenter() {
     }
 
-    private static void readData()  {
+    private static void readData() {
         File file = new File(PATH);
         try {
             readFile(file);
@@ -60,11 +60,10 @@ public class ResourcesCenter {
         try {
             System.out.println(Runtime.getRuntime().totalMemory() / 1000000);
             readData();
-        }
-        catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError e) {
             System.out.println("ho");
         }
-        System.out.println(Runtime.getRuntime().totalMemory()/1000000);
+        System.out.println(Runtime.getRuntime().totalMemory() / 1000000);
 
         System.out.println("x");
     }
