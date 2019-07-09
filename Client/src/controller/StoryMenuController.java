@@ -13,7 +13,7 @@ public class StoryMenuController {
         if (ourInstance == null) {
             ourInstance = new StoryMenuController();
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeGetDataMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, DataName.STORIES, 0));
+                    Message.makeGetDataMessage( Constants.SERVER_NAME, DataName.STORIES));
         }
         return ourInstance;
     }
@@ -23,10 +23,7 @@ public class StoryMenuController {
 
     public void startGame(int stage) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeNewStoryGameMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, stage, 0
-                )
-        );
+                Message.makeNewStoryGameMessage(Constants.SERVER_NAME, stage));
     }
 
     synchronized void setStories(DeckInfo[] stories) {

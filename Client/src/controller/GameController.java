@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.application.Platform;
-import models.Constants;
 import models.card.AttackType;
 import models.card.CardType;
 import models.comperessedData.CompressedCard;
@@ -93,9 +92,7 @@ public class GameController implements GameActions {
                 }
             }
 
-            Message message = Message.makeAttackMessage(
-                    Client.getInstance().getClientName(), SERVER_NAME, attackerTroop.getCard().getCardId(), defenderTroop.getCard().getCardId(), 0
-            );
+            Message message = Message.makeAttackMessage(SERVER_NAME, attackerTroop.getCard().getCardId(), defenderTroop.getCard().getCardId());
             Client.getInstance().addToSendingMessagesAndSend(message);
 
         } catch (Exception e) {
@@ -131,8 +128,7 @@ public class GameController implements GameActions {
                 i++;
             }
 
-            Client.getInstance().addToSendingMessagesAndSend(Message.makeComboAttackMessage(
-                    Client.getInstance().getClientName(), SERVER_NAME,defenderTroop.getCard().getCardId(),cardIDs,0));
+            Client.getInstance().addToSendingMessagesAndSend(Message.makeComboAttackMessage( SERVER_NAME,defenderTroop.getCard().getCardId(),cardIDs));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -154,8 +150,7 @@ public class GameController implements GameActions {
                 throw new InputException("too far to go");
             }
 
-            Message message = Message.makeMoveTroopMessage(
-                    Client.getInstance().getClientName(), SERVER_NAME, selectedTroop.getCard().getCardId(), target, 0);
+            Message message = Message.makeMoveTroopMessage( SERVER_NAME, selectedTroop.getCard().getCardId(), target);
             Client.getInstance().addToSendingMessagesAndSend(message);
         } catch (InputException e) {
             System.out.println(e.getMessage());
@@ -164,21 +159,18 @@ public class GameController implements GameActions {
 
     @Override
     public void endTurn() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage(Client.getInstance().getClientName(), SERVER_NAME, 0));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeEndTurnMessage( SERVER_NAME));
     }
 
     public void forceFinish() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage(Client.getInstance().getClientName(), SERVER_NAME,0));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeForceFinishGameMessage( SERVER_NAME));
     }
 
     @Override
     public void insert(CompressedCard card, int row, int column) {
         if (validatePositionForInsert(card, row, column))
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeInsertMessage(
-                            Client.getInstance().getClientName(), SERVER_NAME, card.getCardId(), new Position(row, column), 0
-                    )
-            );
+                    Message.makeInsertMessage(SERVER_NAME, card.getCardId(), new Position(row, column) ));
     }
 
     private boolean validatePositionForInsert(CompressedCard card, int row, int column) {
@@ -189,9 +181,8 @@ public class GameController implements GameActions {
     public void useSpecialPower(int row, int column) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeUseSpecialPowerMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME, currentGame.getCurrentTurnPlayer().getHero().getCard().getCardId(), new Position(row, column), 0
-                )
-        );
+                        SERVER_NAME, currentGame.getCurrentTurnPlayer().getHero().getCard().getCardId(), new Position(row, column)
+                ));
     }
 
     public void showAnimation(GameAnimations gameAnimations) {
@@ -217,10 +208,7 @@ public class GameController implements GameActions {
 
     public void sendChat(String text) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChatMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME,
-                        battleScene.getMyUserName(), battleScene.getOppUserName(), text, 0
-                )
-        );
+                Message.makeChatMessage( SERVER_NAME,
+                        battleScene.getMyUserName(), battleScene.getOppUserName(), text));
     }
 }

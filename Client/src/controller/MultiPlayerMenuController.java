@@ -21,11 +21,8 @@ public class MultiPlayerMenuController {
             if (opponent != null && opponent.length() < 2)
                 throw new InputException("invalid opponent");
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeMultiPlayerGameReQuestMessage(
-                            Client.getInstance().getClientName(), Constants.SERVER_NAME, gameType,
-                            numberOfFlags, opponent, 0
-                    )
-            );
+                    Message.makeMultiPlayerGameReQuestMessage(Constants.SERVER_NAME, gameType,
+                            numberOfFlags, opponent));
         } catch (InputException e) {
             Platform.runLater(() -> Client.getInstance().getCurrentShow().showError(e.getMessage()));
         }

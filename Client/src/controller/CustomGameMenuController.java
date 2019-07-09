@@ -20,10 +20,7 @@ public class CustomGameMenuController {
 
     public void startGame(String deckName, GameType gameType, int numberOfFlags) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeNewCustomGameMessage(
-                        Client.getInstance().getClientName(), Constants.SERVER_NAME, gameType,
-                        numberOfFlags, deckName, 0
-                )
-        );
+                Message.makeNewCustomGameMessage( Constants.SERVER_NAME, gameType,
+                        numberOfFlags, deckName));
     }
 }
