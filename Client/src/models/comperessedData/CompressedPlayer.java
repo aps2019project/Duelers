@@ -93,7 +93,6 @@ public class CompressedPlayer {
             if (troop.getCard().getType() == CardType.HERO)
                 hero = troop;
         }
-
     }
 
     void removeCardFromHand(String cardId) {

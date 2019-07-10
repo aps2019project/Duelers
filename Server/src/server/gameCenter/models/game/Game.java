@@ -130,7 +130,6 @@ public abstract class Game {
     }
 
     public void changeTurn(String username) throws LogicException {
-
         if (canCommand(username)) {
             addNextCardToHand();
 
