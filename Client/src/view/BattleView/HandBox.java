@@ -241,7 +241,7 @@ public class HandBox implements PropertyChangeListener {
                         try {
                             imageView.setImage(highlightedBackGround);
                             if (player.getHand().size() > I) {
-                                cardPane = new CardPane(player.getHand().get(I), false, false, null);
+                                cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
                                 cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
                                 cardPane.setLayoutX(243 * Constants.SCALE + items[I].getLayoutX());
                                 group.getChildren().add(cardPane);
