@@ -1,5 +1,6 @@
-# project-7
-project-7 created by GitHub Classroom
+# DUELYST Game
+Advanced Programming Course(Java)
+
 Team members:
 1. Ahmad Salimi - 97106013
 2. MohammadMahdi Jarrahi 97105844

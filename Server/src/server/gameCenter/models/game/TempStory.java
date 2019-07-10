@@ -7,6 +7,7 @@ public class TempStory {
     private GameType gameType;
     private int reward;
     private int numberOfFlags;
+
     public TempStory(Story story) {
         this.deck = new TempDeck(story.getDeck());
         this.gameType = story.getGameType();

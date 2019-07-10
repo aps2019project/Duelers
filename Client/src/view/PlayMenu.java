@@ -3,7 +3,6 @@ package view;
 import controller.GraphicalUserInterface;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;

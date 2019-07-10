@@ -26,8 +26,7 @@ public class ShopAdminController {
 
     public void changeValueRequest(Card card, int newValue) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChangeCardNumberMessage(Client.getInstance().getClientName(), SERVER_NAME, card, newValue)
-        );
+                Message.makeChangeCardNumberMessage(SERVER_NAME, card, newValue));
     }
 
     void setOriginalCards(Collection old, Collection newValue) {

@@ -19,7 +19,7 @@ public class CustomCardController {
         try {
             card.checkValidation();
             Client.getInstance().addToSendingMessagesAndSend(
-                    Message.makeCustomCardMessage(Client.getInstance().getClientName(), Constants.SERVER_NAME, card.toImmutableCard(), 0)
+                    Message.makeCustomCardMessage(Constants.SERVER_NAME, card.toImmutableCard())
             );
         } catch (InputException e) {
             Client.getInstance().getCurrentShow().showError(e.getMessage());

@@ -122,23 +122,23 @@ public class MapBox implements PropertyChangeListener {
                     CardAnimation cardAnimation = new CardAnimation(mapGroup, gameMap.getCells()[j][i].getItem(),
                             cellsY[j][i], cellsX[j][i]);
                     collectibleItems.put(gameMap.getCells()[j][i].getItem().getCardId(), cardAnimation);
-                    final int J=j,I=i;
+                    final int J = j, I = i;
                     cardAnimation.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            clickCell(J,I);
+                            clickCell(J, I);
                         }
                     });
                     cardAnimation.getImageView().setOnMouseExited(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            exitCell(J,I);
+                            exitCell(J, I);
                         }
                     });
                     cardAnimation.getImageView().setOnMouseEntered(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            hoverCell(J,I);
+                            hoverCell(J, I);
                         }
                     });
                     //TODO:Ahmad:Design
@@ -165,42 +165,42 @@ public class MapBox implements PropertyChangeListener {
                     flagLabels[j][i].setVisible(true);
                     flagImages[j][i].setVisible(true);
                 }
-                final int J=j,I=i;
+                final int J = j, I = i;
                 flagImages[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        clickCell(J,I);
+                        clickCell(J, I);
                     }
                 });
                 flagImages[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        exitCell(J,I);
+                        exitCell(J, I);
                     }
                 });
                 flagImages[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J,I);
+                        hoverCell(J, I);
                     }
                 });
 
                 flagLabels[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        clickCell(J,I);
+                        clickCell(J, I);
                     }
                 });
                 flagLabels[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        exitCell(J,I);
+                        exitCell(J, I);
                     }
                 });
                 flagLabels[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J,I);
+                        hoverCell(J, I);
                     }
                 });
                 mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);

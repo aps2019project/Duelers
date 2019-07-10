@@ -1,5 +1,6 @@
 package server.dataCenter.models.account;
 
+import server.dataCenter.DataCenter;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.TempDeck;
@@ -89,29 +90,35 @@ public class Account {
         decks.remove(getDeck(deckName));
     }
 
-    public void buyCard(String cardName, int price, Collection originalCards) throws LogicException {
-        if (!originalCards.hasCard(cardName)) {
+    public void buyCard(String cardName, Collection originalCards) throws LogicException {
+        Card card = DataCenter.getCard(cardName, originalCards);
+        if (card == null) {
             throw new ClientException("invalid card name");
         }
-        if (price > money) {
+        if (card.getPrice() > money) {
             throw new ClientException("account's money isn't enough.");
         }
+        if (card.getRemainingNumber() <= 0) {
+            throw new ClientException("Shop doesn't have any of this card.");
+        }
         collection.addCard(cardName, originalCards, username);
-        money -= price;
+        money -= card.getPrice();
+        DataCenter.getInstance().changeCardNumber(cardName, -1);
     }
 
     public void sellCard(String cardId) throws LogicException {
-        if (!collection.hasCard(cardId)) {
+        Card card = collection.getCard(cardId);
+        if (card==null) {
             throw new ClientException("invalid card id");
         }
-        money += collection.getCard(cardId).getPrice();
-        Card card = collection.getCard(cardId);
+        money += card.getPrice();
         collection.removeCard(card);
         for (Deck deck : decks) {
             if (deck.hasCard(cardId)) {
                 deck.removeCard(card);
             }
         }
+        DataCenter.getInstance().changeCardNumber(card.getName(),+1);
     }
 
     public void addCardToDeck(String cardId, String deckName) throws LogicException {

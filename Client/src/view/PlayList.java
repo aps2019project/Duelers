@@ -3,7 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public  class PlayList {
+public class PlayList {
     int frameWidth;
     int frameHeight;
     int frameDuration;

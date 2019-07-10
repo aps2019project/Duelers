@@ -1,6 +1,9 @@
 package models.gui;
 
-import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 public class RadialVignette extends Rectangle {

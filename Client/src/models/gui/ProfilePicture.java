@@ -7,9 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import static models.gui.UIConstants.SCALE;
 
 class ProfilePicture extends Rectangle {

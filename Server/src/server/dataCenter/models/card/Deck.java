@@ -37,7 +37,7 @@ public class Deck {
 
     public Deck(TempDeck tempDeck, Collection collection) {
         this.deckName = tempDeck.getDeckName();
-        if(collection==null)
+        if (collection == null)
             return;
         this.hero = collection.getCard(tempDeck.getHeroId());
         this.item = collection.getCard(tempDeck.getItemId());
@@ -70,18 +70,17 @@ public class Deck {
     }
 
 
-
-    public void addCard(Card card) throws LogicException{
-        if(card==null)
+    public void addCard(Card card) throws LogicException {
+        if (card == null)
             throw new ClientException("this card isn't in your collection!");
         switch (card.getType()) {
             case HERO:
-                if(hero!=null)
+                if (hero != null)
                     throw new ClientException("you can't have more than 1 hero!");
                 hero = card;
                 break;
             case USABLE_ITEM:
-                if(item!=null)
+                if (item != null)
                     throw new ClientException("you can't have more than 1 item!");
                 item = card;
                 break;
@@ -107,16 +106,16 @@ public class Deck {
     }
 
     public boolean isValid() {
-        if (hero == null || item==null) return false;
+        if (hero == null || item == null) return false;
         return others.size() == 20;
     }
 
     public void copyCards() {//TODO:reCode
-        if(hero!=null){
+        if (hero != null) {
             this.hero = new Card(hero);
             this.hero.setCardId(makeId(hero, 1));
         }
-        if(item!=null){
+        if (item != null) {
             this.item = new Card(item);
             this.item.setCardId(makeId(item, 1));
         }
