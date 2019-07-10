@@ -66,7 +66,7 @@ public class DataCenter extends Thread {
         readStories();
     }
 
-    private Card getCard(String cardName, Collection collection) {
+    public static Card getCard(String cardName, Collection collection) {
         for (Card card : collection.getHeroes()) {
             if (card.getName().equals(cardName))
                 return card;
@@ -231,7 +231,7 @@ public class DataCenter extends Thread {
     public void buyCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        account.buyCard(message.getOtherFields().getCardName(), originalCards.getCard(message.getOtherFields().getCardName()).getPrice(), originalCards);
+        account.buyCard(message.getOtherFields().getCardName(), originalCards);
         Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
@@ -304,17 +304,21 @@ public class DataCenter extends Thread {
         saveAccount(account);
     }
 
+    public void changeCardNumber(String cardName,int changeValue) throws LogicException{
+        Card card=getCard(cardName,originalCards);
+        if(card==null)
+            throw new ClientException("Invalid Card");
+        card.setRemainingNumber(card.getRemainingNumber() + changeValue);
+        updateCard(card);
+        Server.getInstance().sendChangeCardNumberMessage(card);
+    }
+
     public void changeCardNumber(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card = getCard(message.getChangeCardNumber().getCardName(), originalCards);
-        if (card == null)
-            throw new ClientException("Invalid Card Name!");
-        card.setRemainingNumber(card.getRemainingNumber() + message.getChangeCardNumber().getNumber());
-        updateCard(card);
-        Server.getInstance().sendChangeCardNumberMessage(card);
+        changeCardNumber(message.getChangeCardNumber().getCardName(),message.getChangeCardNumber().getNumber());
     }
 
     public void changeAccountType(Message message) throws LogicException {
