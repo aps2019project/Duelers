@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 import models.gui.*;
@@ -19,8 +21,6 @@ import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
-
-import static models.gui.UIConstants.SCALE;
 
 public class HandBox implements PropertyChangeListener {
     private final BattleScene battleScene;
@@ -34,6 +34,8 @@ public class HandBox implements PropertyChangeListener {
     private CardPane cardPane = null;
     private Image backGround = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
     private Image highlightedBackGround = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
+    private Image endTurnImage=new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png"));
+    private Image endTurnImageGlow=new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"));
 
 
     HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
@@ -280,15 +282,38 @@ public class HandBox implements PropertyChangeListener {
 
     private void addEndTurnButton() {
         try {
-            ImageButton imageButton = new ImageButton(
-                    "END TURN", event -> battleScene.getController().endTurn(),
-                    new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png")),
-                    new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"))
-            );
-            imageButton.setLayoutX(1400 * Constants.SCALE);
-            imageButton.setLayoutY(5 * Constants.SCALE);
-
-            group.getChildren().add(imageButton);
+            StackPane stack=new StackPane();
+            ImageView imageView=new ImageView();
+            imageView.setImage(endTurnImage);
+            imageView.setFitWidth(endTurnImage.getWidth()*Constants.SCALE*0.5);
+            imageView.setFitHeight(endTurnImage.getHeight()*Constants.SCALE*0.5);
+            DefaultLabel label=new DefaultLabel("End Turn",Constants.END_TURN_FONT, Color.WHITE);
+            stack.setLayoutX(1400 * Constants.SCALE);
+            stack.setLayoutY(5 * Constants.SCALE);
+            stack.getChildren().addAll(imageView,label);
+            stack.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    imageView.setImage(endTurnImage);
+                }
+            });
+            stack.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if(battleScene.isMyTurn()){
+                        imageView.setImage(endTurnImageGlow);
+                    }
+                }
+            });
+            stack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if(battleScene.isMyTurn()){
+                        battleScene.getController().endTurn();
+                    }
+                }
+            });
+            this.group.getChildren().add(stack);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -344,7 +369,7 @@ public class HandBox implements PropertyChangeListener {
         }
         scrollPane.setContent(cardsPane);
         scrollPane.setId("background_transparent");
-        scrollPane.setMinSize(1600 * SCALE, 1000 * SCALE);
+        scrollPane.setMinSize(1600 * UIConstants.SCALE, 1000 * UIConstants.SCALE);
         DialogBox dialogBox = new DialogBox(scrollPane);
         DialogContainer dialogContainer = new DialogContainer(battleScene.root, dialogBox);
         dialogContainer.show();

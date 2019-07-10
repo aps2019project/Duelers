@@ -301,7 +301,7 @@ public abstract class Game {
             Server.getInstance().sendTroopUpdateMessage(this, troop);
             gameMap.getCell(position).clearItems();
         }
-        if (card.getType() == CardType.SPELL) {
+        if (card.getType() == CardType.SPELL || card.getType()==CardType.COLLECTIBLE_ITEM) {
             player.addToGraveYard(card);
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
