@@ -2,29 +2,33 @@ package models.gui;
 
 import controller.CollectionMenuController;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class CollectionSearchBox extends HBox {
+
+    private final SearchField searchField;
 
     public CollectionSearchBox() {
         super(UIConstants.DEFAULT_SPACING * 2);
         setAlignment(Pos.CENTER);
 
-        TextField searchField = new SearchField();
+        searchField = new SearchField();
+
+        AtomicReference<String> oldValue = new AtomicReference<>("");
         searchField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                CollectionMenuController.getInstance().search(searchField.getText());
-                searchField.clear();
-            }
-        });
-        Button searchButton = new SearchButton(event -> {
+            if (searchField.getText().equals(oldValue.get())) return;
+
+            oldValue.set(searchField.getText());
             CollectionMenuController.getInstance().search(searchField.getText());
-            searchField.clear();
         });
 
-        getChildren().addAll(searchField, searchButton);
+        getChildren().addAll(searchField);
+    }
+
+    public void clear() {
+        searchField.clear();
+        CollectionMenuController.getInstance().search("");
     }
 }

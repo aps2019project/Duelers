@@ -30,11 +30,13 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     private static ShopMenu menu;
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
         ShopController.getInstance().removePropertyChangeListener(menu);
+        menu.searchBox.clear();
         new MainMenu().show();
     };
     private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
     private static final double SCROLL_WIDTH = 2350 * SCALE;
     private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
+    private ShopSearchBox searchBox;
     private VBox cardsBox;
     private Collection showingCards;
 
@@ -48,7 +50,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(BACK_EVENT);
 
-            ShopSearchBox searchBox = new ShopSearchBox();
+            searchBox = new ShopSearchBox();
             ScrollPane cardsScroll = makeCardsScroll();
 
             VBox shopPane = makeShopPane(searchBox, cardsScroll);
