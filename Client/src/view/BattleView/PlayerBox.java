@@ -54,6 +54,8 @@ public class PlayerBox implements PropertyChangeListener {
     private ColorAdjust player2ImageEffect;
     private ImageView comboButton;
     private ImageView spellButton;
+    private DefaultLabel player1Name;
+    private DefaultLabel player2Name;
 
     PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
@@ -119,10 +121,12 @@ public class PlayerBox implements PropertyChangeListener {
         player1Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
         player2Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
-        DefaultLabel player1Name = new DefaultLabel(player1.getUserName(), Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
+        player1Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
         player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
-        DefaultLabel player2Name = new DefaultLabel(player2.getUserName(), Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 400 * SCALE, 75 * SCALE);//TODO
+        player2Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 600 * SCALE, 75 * SCALE);
         player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        player1Name.setText(player1.getUserName() + " Flags:" + player1.getNumberOfCollectedFlags());
+        player2Name.setText(player2.getUserName() + " Flags:" + player2.getNumberOfCollectedFlags());
         player1ImageEffect = new ColorAdjust();
         player2ImageEffect = new ColorAdjust();
         player1Image.setEffect(player1ImageEffect);
@@ -370,6 +374,12 @@ public class PlayerBox implements PropertyChangeListener {
                     player1ImageEffect.setBrightness(-0.6);
                     player2ImageEffect.setBrightness(0);
                 }
+            });
+        }
+        if (evt.getPropertyName().equals("flag")) {
+            Platform.runLater(() -> {
+                player1Name.setText(player1.getUserName() + " Flags:" + player1.getNumberOfCollectedFlags());
+                player2Name.setText(player2.getUserName() + " Flags:" + player2.getNumberOfCollectedFlags());
             });
         }
     }

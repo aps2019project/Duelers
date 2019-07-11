@@ -22,7 +22,7 @@ public class Constants {
     static final double SPACE_BETWEEN_CELLS = 2;
     static final double MOVE_TIME_PER_CELL = 200;
 
-    static final Font NAME_FONT = Font.font("SansSerif", FontWeight.BOLD, 35 * SCALE);
+    static final Font NAME_FONT = Font.font("SansSerif", FontWeight.BOLD, 30 * SCALE);
     static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 20 * SCALE);
     static final Font FLAG_FONT = Font.font("SansSerif", FontWeight.LIGHT, 15 * SCALE);
     static final Font END_TURN_FONT = Font.font("SansSerif", FontWeight.BOLD, 20 * SCALE);
