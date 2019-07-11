@@ -121,31 +121,6 @@ public class GameResultMenu extends Show {
         super.show();
     }
 
-    private static class ResultData {
-        private final Image background;
-        private final Image middleground;
-        private final Image foreground;
-        private final Image hero;
-        private final Image middleIcon;
-        private final String message;
-        public final Color color;
-        private String middleText;
-
-        private ResultData(String backName, String middleName, String foreName, String heroName, Image middleIcon, String message, Color color) {
-            background = ImageLoader.load(getUrl(backName));
-            middleground = ImageLoader.load(getUrl(middleName));
-            foreground = ImageLoader.load(getUrl(foreName));
-            hero = ImageLoader.load(getUrl(heroName));
-            this.middleIcon = middleIcon;
-            this.message = message;
-            this.color = color;
-        }
-
-        private String getUrl(String name) {
-            return directory + name + format;
-        }
-    }
-
     @Override
     public void showError(String message, EventHandler<? super MouseEvent> event) {
 
@@ -161,5 +136,30 @@ public class GameResultMenu extends Show {
 
     @Override
     public void showError(String message, String buttonText, EventHandler<? super MouseEvent> event) {
+    }
+
+    private static class ResultData {
+        public final Color color;
+        private final Image background;
+        private final Image middleground;
+        private final Image foreground;
+        private final Image hero;
+        private final Image middleIcon;
+        private final String message;
+        private String middleText;
+
+        private ResultData(String backName, String middleName, String foreName, String heroName, Image middleIcon, String message, Color color) {
+            background = ImageLoader.load(getUrl(backName));
+            middleground = ImageLoader.load(getUrl(middleName));
+            foreground = ImageLoader.load(getUrl(foreName));
+            hero = ImageLoader.load(getUrl(heroName));
+            this.middleIcon = middleIcon;
+            this.message = message;
+            this.color = color;
+        }
+
+        private String getUrl(String name) {
+            return directory + name + format;
+        }
     }
 }

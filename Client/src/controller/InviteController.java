@@ -7,16 +7,15 @@ import static models.Constants.SERVER_NAME;
 public class InviteController {
     private static InviteController controller;
 
+    private InviteController() {
+    }
+
     public static InviteController getInstance() {
         if (controller == null) {
             controller = new InviteController();
         }
         return controller;
     }
-
-    private InviteController() {
-    }
-
 
     public void accept(String username) {
         Client.getInstance().addToSendingMessagesAndSend(

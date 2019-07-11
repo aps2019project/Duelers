@@ -22,17 +22,6 @@ public class CompressedPlayer {
 
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        if (support == null) {
-            support = new PropertyChangeSupport(this);
-        }
-        support.addPropertyChangeListener(pcl);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
-    }
-
     //just for testing BattleView
     public CompressedPlayer(String userName, int currentMP, ArrayList<CompressedCard> hand,
                             ArrayList<CompressedCard> graveyard, CompressedCard nextCard,
@@ -48,6 +37,17 @@ public class CompressedPlayer {
         this.numberOfCollectedFlags = numberOfCollectedFlags;
         this.troops = troops;
         this.hero = hero;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 
     public void addNextCardToHand() {

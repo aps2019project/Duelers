@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class BattleSceneTester extends Application implements GameActions {
     private final int playerNumber = 1;
     private final int oppPlayerNumber = 2;
-    private BattleScene battleScene;
-
     CellEffect[] cellEffects = {
             new CellEffect(1, 2, true),
             new CellEffect(1, 3, true),
@@ -23,6 +21,11 @@ public class BattleSceneTester extends Application implements GameActions {
             new CellEffect(1, 5, false),
 
     };
+    private BattleScene battleScene;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -119,10 +122,6 @@ public class BattleSceneTester extends Application implements GameActions {
 //            battleScene.spell("fx_f1_aurynnexus", new Position(1, 1));
         }).start();
         return game;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override

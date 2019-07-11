@@ -43,19 +43,17 @@ public class TroopAnimation extends Transition {
     private int currentI, currentJ;
 
     private ACTION action;
-    private boolean shouldMove = false;
+    private boolean shouldRun = false;
     private int nextI, nextJ;
-    private boolean shouldKill = false;
+    private boolean shouldDie = false;
     private boolean shouldAttack = false;
     private int attackColumn = 0;
     private boolean shouldHit = false;
     private int hitColumn;
     private boolean isSelected = false;
 
-
     private DefaultLabel apLabel;
     private DefaultLabel hpLabel;
-
 
     private Group mapGroup;
     private Group troopGroup;
@@ -86,10 +84,6 @@ public class TroopAnimation extends Transition {
 
         Image image = cachedImages.computeIfAbsent(fileName, key -> ImageLoader.load("resources/troopAnimations/" + fileName + ".png"));
         imageView = new ImageView(image);
-        if (isPlayer1Troop)
-            imageView.setScaleX(1);
-        else
-            imageView.setScaleX(-1);
         imageView.setFitWidth(frameWidth * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setFitHeight(frameHeight * Constants.TROOP_SCALE * Constants.SCALE);
         imageView.setX(-playlist.getExtraX() * Constants.SCALE);
@@ -182,13 +176,13 @@ public class TroopAnimation extends Transition {
     }
 
     private void generateNextAction() {
-        if (shouldMove) {
-            shouldMove = false;
+        if (shouldRun) {
+            shouldRun = false;
+            setAction(ACTION.RUN);
             if (nextI > currentI)
                 imageView.setScaleX(1);
             if (nextI < currentI)
                 imageView.setScaleX(-1);
-            setAction(ACTION.RUN);
             KeyValue xValue = new KeyValue(troopGroup.layoutXProperty(), cellsX[nextJ][nextI]);
             KeyValue yValue = new KeyValue(troopGroup.layoutYProperty(), cellsY[nextJ][nextI]);
             KeyFrame keyFrame = new KeyFrame(Duration.millis((Math.abs(currentI - nextI)
@@ -201,24 +195,24 @@ public class TroopAnimation extends Transition {
         }
         if (shouldHit) {
             shouldHit = false;
+            setAction(ACTION.HIT);
             if (hitColumn > currentI)
                 imageView.setScaleX(1);
             if (hitColumn < currentI)
                 imageView.setScaleX(-1);
-            setAction(ACTION.HIT);
             return;
         }
         if (shouldAttack) {
             shouldAttack = false;
+            setAction(ACTION.ATTACK);
             if (attackColumn > currentI)
                 imageView.setScaleX(1);
             if (attackColumn < currentI)
                 imageView.setScaleX(-1);
-            setAction(ACTION.ATTACK);
             return;
         }
-        if (shouldKill) {
-            shouldKill = false;
+        if (shouldDie) {
+            shouldDie = false;
             setAction(ACTION.DEATH);
             return;
         }
@@ -234,12 +228,12 @@ public class TroopAnimation extends Transition {
         this.action = action;
         nextIndex = 0;
         this.stop();
+        if (isPlayer1Troop)
+            imageView.setScaleX(1);
+        else
+            imageView.setScaleX(-1);
         switch (action) {
             case BREATHING:
-                if (isPlayer1Troop)
-                    imageView.setScaleX(1);
-                else
-                    imageView.setScaleX(-1);
                 currentFramePositions = breathingFramePositions;
                 break;
             case DEATH:
@@ -262,7 +256,7 @@ public class TroopAnimation extends Transition {
     }
 
     void kill() {
-        shouldKill = true;
+        shouldDie = true;
     }
 
     public void attack(int i) {
@@ -278,7 +272,7 @@ public class TroopAnimation extends Transition {
     void moveTo(int j, int i) {
         nextI = i;
         nextJ = j;
-        shouldMove = true;
+        shouldRun = true;
     }
 
     void select() {
@@ -302,7 +296,7 @@ public class TroopAnimation extends Transition {
     }
 
     enum ACTION {
-        ATTACK, BREATHING, DEATH, HIT, IDLE, RUN, STOPPED
+        ATTACK, BREATHING, DEATH, HIT, IDLE, RUN
     }
 }
 

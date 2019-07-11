@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class BattleScene extends Show {
     private static Media backgroundMusic = new Media(
-            new File("resources/music/battle.m4a").toURI().toString()
+            new File("resources/music/music_battlemap_vetruv.m4a").toURI().toString()
     );
     private static final Map<SpellType, String> spellSpriteNames = new HashMap();
     private final GameActions controller;
@@ -59,7 +59,7 @@ public class BattleScene extends Show {
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
 
-        root.getChildren().addAll(mapBox.getMapGroup(), playerBox.getGroup(), handBox.getGroup());
+        root.getChildren().addAll(mapBox.getMapGroup(), playerBox.getGroup(), handBox.getHandGroup());
     }
 
     private void addBackGround(String address) {

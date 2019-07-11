@@ -15,6 +15,10 @@ public class Calibrate extends Application implements GameActions {
     private final int playerNumber = 1;
     private BattleScene battleScene;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setResizable(false);
@@ -68,10 +72,6 @@ public class Calibrate extends Application implements GameActions {
 
         }).start();
         return game;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override

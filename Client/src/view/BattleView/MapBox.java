@@ -1,12 +1,14 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -41,7 +43,7 @@ public class MapBox implements PropertyChangeListener {
     private CardPane cardPane = null;
     private SelectionType selectionType;
     private DefaultLabel[][] flagLabels = new DefaultLabel[5][9];
-    private ImageView[][] flagImages = new ImageView[5][9];
+    private StackPane[][] flagPanes = new StackPane[5][9];
     private HashMap<String, CardAnimation> collectibleItems = new HashMap<>();
     private Image flag = new Image(new FileInputStream("resources/ui/flag.png"));
 
@@ -141,7 +143,6 @@ public class MapBox implements PropertyChangeListener {
                             hoverCell(J, I);
                         }
                     });
-                    //TODO:Ahmad:Design
                 }
             }
         }
@@ -150,60 +151,40 @@ public class MapBox implements PropertyChangeListener {
     private void addFlagLabels() {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
-                //TODO:Ahmad design this:)
-                flagImages[j][i] = new ImageView(flag);
-                flagImages[j][i].setFitHeight(Constants.FLAG_HEIGHT);
-                flagImages[j][i].setFitWidth(Constants.FLAG_WIDTH);
-                flagImages[j][i].setX(cellsX[j][i]);
-                flagImages[j][i].setY(cellsY[j][i]);
+                flagPanes[j][i] = new StackPane();
+                flagPanes[j][i].setLayoutX(cellsX[j][i]);
+                flagPanes[j][i].setLayoutY(cellsY[j][i]);
+                ImageView imageView = new ImageView(flag);
+                imageView.setFitHeight(Constants.FLAG_HEIGHT);
+                imageView.setFitWidth(Constants.FLAG_WIDTH);
                 flagLabels[j][i] = new DefaultLabel(Integer.toString(gameMap.getCell(j, i).getNumberOfFlags()),
-                        Constants.FLAG_FONT, Color.BLACK, cellsX[j][i], cellsY[j][i]);
+                        Constants.FLAG_FONT, Color.BLACK);
+                flagPanes[j][i].getChildren().addAll(imageView, flagLabels[j][i]);
                 if (gameMap.getCell(j, i).getNumberOfFlags() == 0) {
-                    flagLabels[j][i].setVisible(false);
-                    flagImages[j][i].setVisible(false);
+                    flagPanes[j][i].setVisible(false);
                 } else {
-                    flagLabels[j][i].setVisible(true);
-                    flagImages[j][i].setVisible(true);
+                    flagPanes[j][i].setVisible(true);
                 }
                 final int J = j, I = i;
-                flagImages[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         clickCell(J, I);
                     }
                 });
-                flagImages[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         exitCell(J, I);
                     }
                 });
-                flagImages[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         hoverCell(J, I);
                     }
                 });
-
-                flagLabels[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        clickCell(J, I);
-                    }
-                });
-                flagLabels[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        exitCell(J, I);
-                    }
-                });
-                flagLabels[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J, I);
-                    }
-                });
-                mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
+                mapGroup.getChildren().addAll(flagPanes[j][i]);
             }
         }
     }
@@ -214,21 +195,6 @@ public class MapBox implements PropertyChangeListener {
             animation = troopAnimationHashMap.get(oldTroop);
             if (animation != null) {
                 animation.updateApHp(oldTroop.getCurrentAp(), 0);
-                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
-                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
-                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
                 animation.kill();
                 troopAnimationHashMap.remove(oldTroop);
             }
@@ -268,6 +234,7 @@ public class MapBox implements PropertyChangeListener {
                 System.out.println("Error making animation " + newTroop.getCard().getCardId());
             }
         }
+        battleScene.getHandBox().resetSelection();
         resetSelection();
     }
 
@@ -292,11 +259,9 @@ public class MapBox implements PropertyChangeListener {
                     Integer newValue = (Integer) evt.getNewValue();
                     flagLabels[position.getRow()][position.getColumn()].setText(Integer.toString(newValue));
                     if (gameMap.getCell(position.getRow(), position.getColumn()).getNumberOfFlags() == 0) {
-                        flagLabels[position.getRow()][position.getColumn()].setVisible(false);
-                        flagImages[position.getRow()][position.getColumn()].setVisible(false);
+                        flagPanes[position.getRow()][position.getColumn()].setVisible(false);
                     } else {
-                        flagLabels[position.getRow()][position.getColumn()].setVisible(true);
-                        flagImages[position.getRow()][position.getColumn()].setVisible(true);
+                        flagPanes[position.getRow()][position.getColumn()].setVisible(true);
                     }
                 }
             });
@@ -353,24 +318,28 @@ public class MapBox implements PropertyChangeListener {
     }
 
     private void hoverCell(int row, int column) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
         CompressedTroop troop = getTroop(row, column);
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.select();//TODO:Think about animation starts
+            animation.select();
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
             }
             try {
                 cardPane = new CardPane(troop.getCard(), false, false, null);
-                cardPane.setLayoutY(-150 * Constants.SCALE + cellsY[row][column]);
-                cardPane.setLayoutX(80 * Constants.SCALE + cellsX[row][column]);
+                cardPane.setLayoutY(Constants.MAP_HEIGHT / 3);
+                if (troop.getPlayerNumber() == 1)
+                    cardPane.setLayoutX(-cardPane.getWidth() - 250 * Constants.SCALE);
+                else
+                    cardPane.setLayoutX(Constants.MAP_DOWNER_WIDTH + cardPane.getWidth());
                 mapGroup.getChildren().add(cardPane);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        cells[row][column].setOpacity(Constants.CELLS_DEFAULT_OPACITY * 1.5);//TODO
+        cells[row][column].setOpacity(Constants.CELLS_DEFAULT_OPACITY * 1.5);
     }
 
     private void clickCell(int row, int column) {
@@ -379,11 +348,10 @@ public class MapBox implements PropertyChangeListener {
         }
         CompressedTroop currentTroop = getTroop(row, column);
         if (selectionType == SelectionType.INSERTION) {
-            if (GameController.getInstance().getAvailableActions().canInsertCard(
-                    battleScene.getHandBox().getSelectedCard())) {
+            if (GameController.getInstance().getAvailableActions().canInsertCard(battleScene.getHandBox().getSelectedCard())) {
                 battleScene.getController().insert(battleScene.getHandBox().getSelectedCard(), row, column);
                 System.out.println("Insert " + battleScene.getHandBox().getSelectedCard().getCardId());
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
@@ -407,7 +375,7 @@ public class MapBox implements PropertyChangeListener {
             if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
                 battleScene.getController().useSpecialPower(row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + " SpecialPower");
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
@@ -427,7 +395,7 @@ public class MapBox implements PropertyChangeListener {
                     selectedTroop, row, column)) {
                 comboTroops.add(selectedTroop);
                 battleScene.getController().comboAttack(comboTroops, currentTroop);
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
                 System.out.println("combo attack");
             }
@@ -438,13 +406,13 @@ public class MapBox implements PropertyChangeListener {
                     selectedTroop, row, column)) {
                 battleScene.getController().attack(selectedTroop, currentTroop);
                 System.out.println(selectedTroop + " attacked to " + currentTroop);
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             } else if (GameController.getInstance().getAvailableActions().canMove(
                     selectedTroop, row, column)) {
                 battleScene.getController().move(selectedTroop, row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + "moved");
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
@@ -457,6 +425,7 @@ public class MapBox implements PropertyChangeListener {
             for (int column = 0; column < 9; column++) {
                 if (!battleScene.isMyTurn()) {
                     cells[row][column].setFill(Constants.defaultColor);
+                    continue;
                 }
                 CompressedTroop currentTroop = getTroop(row, column);
                 if (selectionType == SelectionType.INSERTION) {
@@ -498,19 +467,16 @@ public class MapBox implements PropertyChangeListener {
                             cells[row][column].setFill(Constants.SELECTED_COLOR);
                         else
                             cells[row][column].setFill(Constants.CAN_SELECT_COLOR);
-                    } else if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop, row, column))
+                    } else if (GameController.getInstance().getAvailableActions().canAttack(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.ATTACK_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
                 }
                 if (selectionType == SelectionType.NORMAL) {
-                    if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop, row, column))
+                    if (GameController.getInstance().getAvailableActions().canAttack(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.ATTACK_COLOR);
-                    else if (GameController.getInstance().getAvailableActions().canMove(
-                            selectedTroop, row, column))
+                    else if (GameController.getInstance().getAvailableActions().canMove(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.MOVE_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);

@@ -34,6 +34,11 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final Background DECKS_BACKGROUND = new Background(
             new BackgroundFill(Color.rgb(39, 35, 40), CornerRadii.EMPTY, Insets.EMPTY)
     );
+    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
+    private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
+    private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
+    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
+    private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 5 * SCALE, 0, 40 * SCALE);
     private static CollectionMenu menu;
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
         Client.getInstance().getAccount().removePropertyChangeListener(menu);
@@ -44,11 +49,6 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static Media backgroundMusic = new Media(
             new File("resources/music/collection_menu.m4a").toURI().toString()
     );
-    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
-    private static final double COLLECTION_WIDTH = SCENE_WIDTH * 0.8;
-    private static final double DECKS_WIDTH = SCENE_WIDTH * 0.2;
-    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
-    private static final Insets DECKS_PADDING = new Insets(20 * SCALE, 5 * SCALE, 0, 40 * SCALE);
     private VBox collectionBox;
     private ImageButton showCollectionButton;
     private CollectionSearchBox searchBox;
@@ -127,6 +127,10 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         }
     }
 
+    public static CollectionMenu getInstance() {
+        return menu;
+    }
+
     private void showGlobalChatDialog(AnchorPane sceneContents) {
         sceneContents.setOnKeyPressed(event -> {
             if (event.getCode().equals(Constants.KEY_FOR_CHAT)) {
@@ -186,10 +190,6 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
         );
         cardsBox.setMinSize(COLLECTION_WIDTH * 0.95, SCROLL_HEIGHT * 0.95);
         cardsBox.setAlignment(Pos.TOP_CENTER);
-    }
-
-    public static CollectionMenu getInstance() {
-        return menu;
     }
 
     private void showNewDeckDialog() {

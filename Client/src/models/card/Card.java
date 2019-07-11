@@ -116,14 +116,14 @@ public class Card implements ICard {
         return name.equalsIgnoreCase(cardName);
     }
 
+    public int getRemainingNumber() {
+        return remainingNumber;
+    }
+
     public void setRemainingNumber(int remainingNumber) {
         int old = this.remainingNumber;
         this.remainingNumber = remainingNumber;
         support.firePropertyChange("new_value", old, remainingNumber);
-    }
-
-    public int getRemainingNumber() {
-        return remainingNumber;
     }
 
     public void addListener(PropertyChangeListener pcl) {

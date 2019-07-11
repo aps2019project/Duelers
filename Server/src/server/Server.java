@@ -102,7 +102,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {//TODO:add fast forceFinish game message
+    private void receiveMessage(Message message) {
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
@@ -248,6 +248,8 @@ public class Server {
         } catch (LogicException e) {
             serverPrint(e.getMessage());
             sendException(e.getMessage(), message.getSender());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

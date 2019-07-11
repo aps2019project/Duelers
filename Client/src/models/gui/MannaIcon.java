@@ -15,7 +15,6 @@ class MannaIcon extends StackPane {
     private static final Font FONT = Font.font("SansSerif", FontWeight.EXTRA_BOLD, 40 * SCALE);
     private static final double WIDTH = 135 * SCALE;
     private static final double HEIGHT = 148 * SCALE;
-    private final DefaultLabel label = new DefaultLabel("", FONT, Color.BLACK);
     private static Image mannaIcon;
 
     static {
@@ -25,6 +24,8 @@ class MannaIcon extends StackPane {
             e.printStackTrace();
         }
     }
+
+    private final DefaultLabel label = new DefaultLabel("", FONT, Color.BLACK);
 
     MannaIcon(int mannaPoint) {
         label.setText(String.valueOf(mannaPoint));

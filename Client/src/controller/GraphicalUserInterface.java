@@ -16,14 +16,14 @@ public class GraphicalUserInterface {
     private MediaPlayer backgroundMusicPlayer;
     private Media currentMedia;
 
+    private GraphicalUserInterface() {
+    }
+
     public static GraphicalUserInterface getInstance() {
         if (GUI == null) {
             GUI = new GraphicalUserInterface();
         }
         return GUI;
-    }
-
-    private GraphicalUserInterface() {
     }
 
     public void start(Stage stage) {
@@ -48,7 +48,7 @@ public class GraphicalUserInterface {
                 backgroundMusicPlayer.stop();
             }
             backgroundMusicPlayer = new MediaPlayer(media);
-            backgroundMusicPlayer.setVolume(0.2);
+            backgroundMusicPlayer.setVolume(0.05);
             backgroundMusicPlayer.setCycleCount(-1);
             backgroundMusicPlayer.setAutoPlay(true);
         } catch (Exception e) {

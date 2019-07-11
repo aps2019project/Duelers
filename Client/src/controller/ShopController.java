@@ -67,14 +67,6 @@ public class ShopController {
         ShopAdminController.getInstance().addCard(customCard);
     }
 
-    synchronized void setOriginalCards(Collection originalCards) {
-        Collection old = this.originalCards;
-        this.originalCards = originalCards;
-        this.showingCards = originalCards.searchCollection("");
-        this.notify();
-        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
-    }
-
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
@@ -85,5 +77,13 @@ public class ShopController {
 
     public Collection getOriginalCards() {
         return originalCards;
+    }
+
+    synchronized void setOriginalCards(Collection originalCards) {
+        Collection old = this.originalCards;
+        this.originalCards = originalCards;
+        this.showingCards = originalCards.searchCollection("");
+        this.notify();
+        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
 }
