@@ -58,7 +58,7 @@ public abstract class Game {
         return gameMap;
     }
 
-    public void startGame() throws ServerException {
+    public void startGame() {
         applyOnStartSpells(playerOne.getDeck());
         putMinion(1, playerOne.createHero(), gameMap.getCell(2, 0));
 
@@ -76,7 +76,7 @@ public abstract class Game {
         return new CompressedGame(playerOne, playerTwo, gameMap, turnNumber, gameType);
     }
 
-    private void applyOnStartSpells(Deck deck) throws ServerException {
+    private void applyOnStartSpells(Deck deck) {
         for (Card card : deck.getOthers()) {
             iterateOnOnStartSpells(card);
         }
@@ -88,7 +88,7 @@ public abstract class Game {
         }
     }
 
-    private void iterateOnOnStartSpells(Card card) throws ServerException {
+    private void iterateOnOnStartSpells(Card card) {
         for (Spell spell : card.getSpells()) {
             if (spell.getAvailabilityType().isOnStart())
                 applySpell(spell, detectTarget(
@@ -131,6 +131,19 @@ public abstract class Game {
 
     public void changeTurn(String username) throws LogicException {
         if (canCommand(username)) {
+            final int currentTurn = turnNumber;
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                    if (turnNumber == currentTurn) {
+                        changeTurn(getOtherTurnPlayer().getUserName());
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (LogicException ignored) {
+                }
+            }).start();
+
             addNextCardToHand();
 
             revertNotDurableBuffs();
@@ -202,7 +215,7 @@ public abstract class Game {
         }
     }
 
-    private void applyAllBuffs() throws ServerException {
+    private void applyAllBuffs() {
         tempBuffs.clear();
         for (Buff buff : buffs) {
             applyBuff(buff);
@@ -212,7 +225,7 @@ public abstract class Game {
         checkKills();
     }
 
-    private void checkKills() throws ServerException {
+    private void checkKills() {
         for (Troop troop : gameMap.getTroops()) {
             if (troop.getCurrentHp() <= 0) {
                 killTroop(troop);
@@ -314,7 +327,7 @@ public abstract class Game {
         Server.getInstance().sendTroopUpdateMessage(this, troop);
     }
 
-    private void applyOnPutSpells(Card card, Cell cell) throws ServerException {
+    private void applyOnPutSpells(Card card, Cell cell) {
         for (Spell spell : card.getSpells()) {
             if (spell.getAvailabilityType().isOnPut()) {
                 applySpell(spell, detectTarget(spell, cell, cell, getCurrentTurnPlayer().getHero().getCell()));
@@ -403,7 +416,7 @@ public abstract class Game {
         }
     }
 
-    private void applyOnAttackSpells(Troop attackerTroop, Troop defenderTroop) throws ServerException {
+    private void applyOnAttackSpells(Troop attackerTroop, Troop defenderTroop) {
         for (Spell spell : attackerTroop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnAttack())
                 applySpell(
@@ -413,7 +426,7 @@ public abstract class Game {
         }
     }
 
-    private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) throws ServerException {
+    private void applyOnDefendSpells(Troop defenderTroop, Troop attackerTroop) {
         for (Spell spell : defenderTroop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(
@@ -437,7 +450,7 @@ public abstract class Game {
         }
     }
 
-    private void damage(Troop attackerTroop, Troop defenderTroop) throws ServerException {
+    private void damage(Troop attackerTroop, Troop defenderTroop) {
         int attackPower = calculateAp(attackerTroop, defenderTroop);
 
         defenderTroop.changeCurrentHp(-attackPower);
@@ -548,7 +561,7 @@ public abstract class Game {
         }
     }
 
-    private void damageFromAllAttackers(Troop defenderTroop, Troop[] attackerTroops) throws ServerException {
+    private void damageFromAllAttackers(Troop defenderTroop, Troop[] attackerTroops) {
         for (Troop attackerTroop : attackerTroops) {
             if (defenderTroop.canGiveBadEffect() &&
                     (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
@@ -566,7 +579,7 @@ public abstract class Game {
 
     public abstract boolean finishCheck();
 
-    private void applySpell(Spell spell, TargetData target) throws ServerException {
+    private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);
         Buff buff = new Buff(spell.getAction(), target);
         Server.getInstance().sendSpellMessage(this, target, spell.getAvailabilityType());
@@ -574,7 +587,7 @@ public abstract class Game {
         applyBuff(buff);
     }
 
-    private void applyBuff(Buff buff) throws ServerException {
+    private void applyBuff(Buff buff)  {
         TargetData target = buff.getTarget();
         if (haveDelay(buff)) return;
 
@@ -619,7 +632,7 @@ public abstract class Game {
         }
     }
 
-    private void applyBuffOnCellTroops(Buff buff, List<Cell> cells) throws ServerException {
+    private void applyBuffOnCellTroops(Buff buff, List<Cell> cells) {
         ArrayList<Troop> inCellTroops = getInCellTargetTroops(cells);
         Buff troopBuff = new Buff(
                 buff.getAction().makeCopyAction(1, 0), new TargetData(inCellTroops)
@@ -628,7 +641,7 @@ public abstract class Game {
         applyBuffOnTroops(troopBuff, inCellTroops);
     }
 
-    private void applyBuffOnTroops(Buff buff, List<Troop> targetTroops) throws ServerException {
+    private void applyBuffOnTroops(Buff buff, List<Troop> targetTroops)  {
         SpellAction action = buff.getAction();
         for (Troop troop : targetTroops) {
             if (!(buff.isPositive() || troop.canGiveBadEffect())) continue;
@@ -695,7 +708,7 @@ public abstract class Game {
         }
     }
 
-    void killTroop(Troop troop) throws ServerException {
+    void killTroop(Troop troop) {
         applyOnDeathSpells(troop);
         if (troop.getPlayerNumber() == 1) {
             playerOne.killTroop(this, troop);
@@ -707,7 +720,7 @@ public abstract class Game {
         Server.getInstance().sendChangeCardPositionMessage(this, troop.getCard(), CardPosition.GRAVE_YARD);
     }
 
-    private void applyOnDeathSpells(Troop troop) throws ServerException {
+    private void applyOnDeathSpells(Troop troop) {
         for (Spell spell : troop.getCard().getSpells()) {
             if (spell.getAvailabilityType().isOnDefend())
                 applySpell(

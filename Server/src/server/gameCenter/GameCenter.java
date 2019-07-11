@@ -22,6 +22,7 @@ public class GameCenter extends Thread {//synchronize
     private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
     private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+
     private GameCenter() {
     }
 
@@ -264,12 +265,7 @@ public class GameCenter extends Thread {//synchronize
                 (DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (DataCenter.getInstance().getClientName(account2.getUsername()), game));
-        try {
-            game.startGame();
-        } catch (ServerException e) {
-            Server.getInstance().serverPrint("game start error in multiPlayer");
-        }
-
+        game.startGame();
     }
 
     private void removeGame(Game game) {
