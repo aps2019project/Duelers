@@ -422,6 +422,7 @@ public class MapBox implements PropertyChangeListener {
             for (int column = 0; column < 9; column++) {
                 if (!battleScene.isMyTurn()) {
                     cells[row][column].setFill(Constants.defaultColor);
+                    continue;
                 }
                 CompressedTroop currentTroop = getTroop(row, column);
                 if (selectionType == SelectionType.INSERTION) {
@@ -463,19 +464,16 @@ public class MapBox implements PropertyChangeListener {
                             cells[row][column].setFill(Constants.SELECTED_COLOR);
                         else
                             cells[row][column].setFill(Constants.CAN_SELECT_COLOR);
-                    } else if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop, row, column))
+                    } else if (GameController.getInstance().getAvailableActions().canAttack(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.ATTACK_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
                     continue;
                 }
                 if (selectionType == SelectionType.NORMAL) {
-                    if (GameController.getInstance().getAvailableActions().canAttack(
-                            selectedTroop, row, column))
+                    if (GameController.getInstance().getAvailableActions().canAttack(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.ATTACK_COLOR);
-                    else if (GameController.getInstance().getAvailableActions().canMove(
-                            selectedTroop, row, column))
+                    else if (GameController.getInstance().getAvailableActions().canMove(selectedTroop, row, column))
                         cells[row][column].setFill(Constants.MOVE_COLOR);
                     else
                         cells[row][column].setFill(Constants.defaultColor);
