@@ -67,7 +67,7 @@ public class Rest implements DataBase {
         return getList(name, path);
     }
 
-    private List getList(String name, String path) {
+    private ArrayList getList(String name, String path) {
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
@@ -76,7 +76,7 @@ public class Rest implements DataBase {
                     .fields(parameters)
                     .asString();
             if (response.getStatus() == 200)
-                return JsonConverter.fromJson(response.getBody(), List.class);
+                return JsonConverter.fromJson(response.getBody(), ArrayList.class);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -89,12 +89,12 @@ public class Rest implements DataBase {
         return getList(name, path);
     }
 
-    private String getFromDataBase(String name,String key){
+    private String getFromDataBase(String name, String key) {
         final String path = "get";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
-        parameters.put("key",key);
+        parameters.put("key", key);
         try {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
@@ -106,12 +106,12 @@ public class Rest implements DataBase {
         return null;
     }
 
-    private int delete(String name,String key){
+    private int delete(String name, String key) {
         final String path = "del_from_DB";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
-        parameters.put("key",key);
+        parameters.put("key", key);
         try {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
@@ -126,17 +126,28 @@ public class Rest implements DataBase {
 
     @Override
     public Card getCard(String cardName) {
-        return null;
+        String json = getFromDataBase(maps[0], cardName);
+        return JsonConverter.fromJson(json, Card.class);
     }
 
     @Override
     public Collection getOriginalCards() {
-        return null;
+        List jsons =  getAllValues(maps[0]);
+        Collection collection = new Collection();
+        for (Object o :jsons) {
+            collection.addCard(JsonConverter.fromJson((String) o, Card.class));
+        }
+        return collection;
     }
 
     @Override
     public List<Story> getStories() {
-        return null;
+        List list = getAllKeys(maps[3]);
+        ArrayList<Story> stories= new ArrayList<>();
+        for (Object o
+                :list) {
+            stories.add(JsonConverter.fromJson((String)o,Story.class));
+        }
     }
 
     @Override
