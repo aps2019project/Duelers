@@ -17,10 +17,7 @@ import static models.Constants.SERVER_NAME;
 
 public class MainMenuController {
     private static MainMenuController ourInstance;
-    private ArrayList<ChatMessage> chatMessages = new ArrayList<>();
     private AccountInfo[] leaderBoard;
-    private Collection customCardRequests;
-
 
     public static MainMenuController getInstance() {
         if (ourInstance == null) {
@@ -73,14 +70,5 @@ public class MainMenuController {
     public void rejectCustomCard(String cardName) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeInValidateCustomCardMessage(SERVER_NAME, cardName));
-    }
-
-    synchronized void setCustomCardRequests(Collection customCardRequests) {
-        this.customCardRequests = customCardRequests;
-        this.notifyAll();
-    }
-
-    public Collection getCustomCardRequests() {
-        return customCardRequests;
     }
 }
