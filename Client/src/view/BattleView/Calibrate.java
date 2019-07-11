@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
+import models.card.spell.AvailabilityType;
 import models.comperessedData.*;
 import models.game.CellEffect;
 import models.game.GameActions;
@@ -51,7 +52,10 @@ public class Calibrate extends Application implements GameActions {
 
         new Thread(() -> {
             String troop1 = "boss_andromeda";
-            String spell1 = "fx_buff";
+            AvailabilityType availabilityType = new AvailabilityType(
+                    true, false, false, false,
+                    false, false, false
+            );
 
             CompressedCard card = new CompressedCard(troop1, null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
@@ -68,7 +72,7 @@ public class Calibrate extends Application implements GameActions {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            battleScene.spell(spell1, new Position(2, 2));
+            battleScene.spell(availabilityType, new Position(2, 2));
 
         }).start();
         return game;

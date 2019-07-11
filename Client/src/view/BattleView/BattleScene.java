@@ -35,12 +35,12 @@ public class BattleScene extends Show {
 
     static {
         spellSpriteNames.put(SpellType.ATTACK, "fx_f4_shadownova");
-        spellSpriteNames.put(SpellType.PUT, "");
-        spellSpriteNames.put(SpellType.DEATH, "");
-        spellSpriteNames.put(SpellType.DEFEND, "");
-        spellSpriteNames.put(SpellType.CONTINUOUS, "");
-        spellSpriteNames.put(SpellType.SPECIAL_POWER, "");
-        spellSpriteNames.put(SpellType.DEFAULT, "");
+        spellSpriteNames.put(SpellType.PUT, "fx_f2_phoenixfire");
+        spellSpriteNames.put(SpellType.DEATH, "fx_f4_deathfire_crescendo");
+        spellSpriteNames.put(SpellType.DEFEND, "fx_f2_bbs_spellsword");
+        spellSpriteNames.put(SpellType.CONTINUOUS, "fx_f3_sandportal");
+        spellSpriteNames.put(SpellType.SPECIAL_POWER, "fx_f1_lasting_judgment");
+        spellSpriteNames.put(SpellType.DEFAULT, "fx_f2_eightgates_teallotus");
     }
 
     public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber, String mapName) throws Exception {

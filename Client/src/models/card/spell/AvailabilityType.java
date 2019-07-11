@@ -9,13 +9,14 @@ public class AvailabilityType {
     private boolean onStart;
     private boolean onDefend;
 
-    public AvailabilityType(boolean onPut, boolean onAttack, boolean onDeath, boolean continuous, boolean specialPower, boolean onStart) {
+    public AvailabilityType(boolean onPut, boolean onAttack, boolean onDeath, boolean continuous, boolean specialPower, boolean onStart, boolean onDefend) {
         this.onPut = onPut;
         this.onAttack = onAttack;
         this.onDeath = onDeath;
         this.specialPower = specialPower;
         this.onStart = onStart;
         this.continuous = continuous;
+        this.onDefend = onDefend;
     }
 
     public boolean isOnPut() {
