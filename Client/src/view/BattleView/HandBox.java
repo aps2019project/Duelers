@@ -311,7 +311,7 @@ public class HandBox implements PropertyChangeListener {
     private void addFinishButton() {
         try {
             ImageButton imageButton = new ImageButton(
-                    "Finish", event -> battleScene.getController().forceFinish(),
+                    "FINISH", event -> battleScene.getController().forceFinish(),
                     new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                     new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
             );
