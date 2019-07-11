@@ -4,10 +4,7 @@ import server.dataCenter.models.card.Card;
 import server.gameCenter.models.map.Cell;
 import server.gameCenter.models.map.Position;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TargetData {
@@ -42,6 +39,6 @@ public class TargetData {
     public Set<Position> getPositions() {
         Set<Position> positions = cells.stream().map(Position::new).collect(Collectors.toSet());
         positions.addAll(troops.stream().map(Troop::getCell).map(Position::new).collect(Collectors.toSet()));
-        return positions;
+        return Collections.unmodifiableSet(positions);
     }
 }
