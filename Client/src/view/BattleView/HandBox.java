@@ -36,7 +36,7 @@ public class HandBox implements PropertyChangeListener {
     private Image cardBack = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
     private Image cardBackGlow = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
     private Image nextBack = new Image(new FileInputStream("resources/ui/replace_background@2x.png"));
-    private Image nextRingSmoke = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
+    private Image nextRingSmoke = new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png"));
     private Image nextRingShine = new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png"));
     private Image endTurnImage = new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png"));
     private Image endTurnImageGlow = new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"));

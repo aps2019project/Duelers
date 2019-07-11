@@ -65,6 +65,13 @@ public class PlayerBox implements PropertyChangeListener {
         this.player2 = game.getPlayerTwo();
         group = new Group();
         addPhotos();
+        if (game.getTurnNumber() % 2 == 1) {
+            player1ImageEffect.setBrightness(0);
+            player2ImageEffect.setBrightness(-0.6);
+        } else {
+            player1ImageEffect.setBrightness(-0.6);
+            player2ImageEffect.setBrightness(0);
+        }
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
         updateMP(3);

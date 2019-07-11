@@ -102,7 +102,7 @@ public class Server {
         }
     }
 
-    private void receiveMessage(Message message) {//TODO:add fast forceFinish game message
+    private void receiveMessage(Message message) {
         try {
             if (message == null) {
                 throw new ServerException("NULL Message");
