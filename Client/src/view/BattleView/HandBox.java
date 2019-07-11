@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -151,11 +152,12 @@ public class HandBox implements PropertyChangeListener {
                         cardPane = null;
                     }
                     if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
                         cardAnimation.inActive();
                         imageView.setImage(cardBackGlow);
                     }
                     try {
-                        cardPane = new CardPane(player.getHand().get(I), false, false, null);
+                        cardPane = new CardPane(card, false, false, null);
                         cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
                         cardPane.setLayoutX(150 * Constants.SCALE + cards[I].getLayoutX());
                         handGroup.getChildren().add(cardPane);
@@ -222,18 +224,17 @@ public class HandBox implements PropertyChangeListener {
                             cardPane = null;
                         }
                         if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
                             cardAnimation.inActive();
                             imageView.setImage(cardBackGlow);
                         } else {
                             imageView.setImage(cardBack);
                         }
                         try {
-                            if (player.getCollectedItems().size() > I) {
-                                cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
-                                cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
-                                cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
-                                handGroup.getChildren().add(cardPane);
-                            }
+                            cardPane = new CardPane(card, false, false, null);
+                            cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
+                            cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
+                            handGroup.getChildren().add(cardPane);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -378,6 +379,7 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnCard(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedCard == i) {
             selectedCard = -1;
             battleScene.getMapBox().updateMapColors();
@@ -391,6 +393,7 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnItem(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedItem == i) {
             selectedItem = -1;
             battleScene.getMapBox().updateMapColors();

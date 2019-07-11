@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import models.card.CardType;
 import models.card.spell.AvailabilityType;
 import models.comperessedData.*;
-import models.game.CellEffect;
 import models.game.GameActions;
 import models.game.map.Position;
 
@@ -28,6 +27,8 @@ public class Calibrate extends Application implements GameActions {
         Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+        battleScene.spell(new AvailabilityType(true, false, false, false, false
+                , false, false), new Position(2, 2));//TODO
     }
 
     private CompressedGame calibrateGame() {
@@ -37,10 +38,10 @@ public class Calibrate extends Application implements GameActions {
                 cells[j][i] = new CompressedCell(j, i, null, 0);
             }
         }
-        final CompressedPlayer player1 = new CompressedPlayer("Ali", 2, new ArrayList<>(), null,
-                null, null, 1, 0, null, null);
-        final CompressedPlayer player2 = new CompressedPlayer("Ali1", 1, new ArrayList<>(), null,
-                null, null, 2, 0, null, null);
+        final CompressedPlayer player1 = new CompressedPlayer("Ali", 2, new ArrayList<>(), new ArrayList<>(),
+                null, new ArrayList<>(), 1, 0, new ArrayList<>(), null);
+        final CompressedPlayer player2 = new CompressedPlayer("Ali1", 1, new ArrayList<>(), new ArrayList<>(),
+                null, new ArrayList<>(), 2, 0, new ArrayList<>(), null);
         final CompressedPlayer myPlayer;
         if (playerNumber == 1)
             myPlayer = player1;
@@ -51,13 +52,7 @@ public class Calibrate extends Application implements GameActions {
         final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(() -> {
-            String troop1 = "boss_andromeda";
-            AvailabilityType availabilityType = new AvailabilityType(
-                    true, false, false, false,
-                    false, false, false
-            );
-
-            CompressedCard card = new CompressedCard(troop1, null, "a1", CardType.MINION,
+            CompressedCard card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
             CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(0, 0),
                     true, true, false, false, 1, 1);
@@ -67,44 +62,28 @@ public class Calibrate extends Application implements GameActions {
             player1.removeCardFromNext();
             player1.addCardToNext(card);
 
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            battleScene.spell(availabilityType, new Position(2, 2));
-
         }).start();
         return game;
     }
 
     @Override
     public void attack(CompressedTroop selectedTroop, CompressedTroop troop) {
-        battleScene.attack(selectedTroop.getCard().getCardId(), troop.getCard().getCardId());
-        battleScene.defend(troop.getCard().getCardId(), selectedTroop.getCard().getCardId());
-        battleScene.attack(troop.getCard().getCardId(), selectedTroop.getCard().getCardId());
+
     }
 
     @Override
     public void comboAttack(ArrayList<CompressedTroop> comboTroops, CompressedTroop troop) {
-        for (CompressedTroop comboAttacker : comboTroops) {
-            battleScene.attack(comboAttacker.getCard().getCardId(), troop.getCard().getCardId());
-        }
-        battleScene.defend(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getCard().getCardId());
-        battleScene.attack(troop.getCard().getCardId(), comboTroops.get(comboTroops.size() - 1).getCard().getCardId());
+
     }
 
     @Override
     public void move(CompressedTroop selectedTroop, int j, int i) {
-        battleScene.getMapBox().getGameMap().updateTroop(new CompressedTroop(selectedTroop, j, i));
+
     }
 
     @Override
     public void endTurn() {
-        battleScene.getGame().gameUpdate(battleScene.getGame().getTurnNumber() + 1, 3,
-                0, 3, 0, new CellEffect[]{});
-        System.out.println("end turn");
-        System.out.println("new turn:" + battleScene.getGame().getTurnNumber());
+
     }
 
     @Override

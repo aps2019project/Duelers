@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -374,6 +375,7 @@ public class PlayerBox implements PropertyChangeListener {
                     player1ImageEffect.setBrightness(-0.6);
                     player2ImageEffect.setBrightness(0);
                 }
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.your_turn);
             });
         }
         if (evt.getPropertyName().equals("flag")) {
