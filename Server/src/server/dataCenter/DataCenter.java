@@ -301,9 +301,9 @@ public class DataCenter extends Thread {
         saveAccount(account);
     }
 
-    public void changeCardNumber(String cardName,int changeValue) throws LogicException{
-        Card card=getCard(cardName,getOriginalCards());
-        if(card==null)
+    public void changeCardNumber(String cardName, int changeValue) throws LogicException {
+        Card card = getCard(cardName, getOriginalCards());
+        if (card == null)
             throw new ClientException("Invalid Card");
         card.setRemainingNumber(card.getRemainingNumber() + changeValue);
         updateCard(card);
@@ -315,7 +315,7 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        changeCardNumber(message.getChangeCardNumber().getCardName(),message.getChangeCardNumber().getNumber());
+        changeCardNumber(message.getChangeCardNumber().getCardName(), message.getChangeCardNumber().getNumber());
     }
 
     public void changeAccountType(Message message) throws LogicException {
@@ -332,7 +332,7 @@ public class DataCenter extends Thread {
         Server.getInstance().sendAccountUpdateMessage(account1);
     }
 
-    public void validateCustomCard(Message message) throws LogicException {
+    public void acceptCustomCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
@@ -348,7 +348,7 @@ public class DataCenter extends Thread {
         Server.getInstance().sendAddToOriginalsMessage(card);
     }
 
-    public void inValidateCustomCard(Message message) throws LogicException {
+    public void rejectCustomCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
@@ -391,7 +391,7 @@ public class DataCenter extends Thread {
                 }
             }
         }
-        dataBase.setOriginalFlag (loadFile(new File(FLAG_PATH), Card.class));
+        dataBase.setOriginalFlag(loadFile(new File(FLAG_PATH), Card.class));
         Server.getInstance().serverPrint("Original Cards Loaded");
     }
 

@@ -297,14 +297,14 @@ public class Message {
     public static Message makeValidateCustomCardMessage(String receiver, String customCardName) {
         Message message = new Message(receiver);
         message.cardName = customCardName;
-        message.messageType = MessageType.VALIDATE_CARD;
+        message.messageType = MessageType.ACCEPT_CARD;
         return message;
     }
 
     public static Message makeInValidateCustomCardMessage(String receiver, String customCardName) {
         Message message = new Message(receiver);
         message.cardName = customCardName;
-        message.messageType = MessageType.INVALIDATE_CARD;
+        message.messageType = MessageType.REJECT_CARD;
         return message;
     }
 
