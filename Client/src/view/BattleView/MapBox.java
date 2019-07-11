@@ -318,7 +318,6 @@ public class MapBox implements PropertyChangeListener {
     }
 
     private void hoverCell(int row, int column) {
-        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
         CompressedTroop troop = getTroop(row, column);
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
