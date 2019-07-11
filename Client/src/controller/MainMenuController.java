@@ -5,13 +5,10 @@ import javafx.application.Platform;
 import models.Constants;
 import models.account.AccountInfo;
 import models.account.AccountType;
-import models.account.Collection;
 import models.message.ChatMessage;
 import models.message.DataName;
 import models.message.Message;
 import view.GlobalChatDialog;
-
-import java.util.ArrayList;
 
 import static models.Constants.SERVER_NAME;
 
@@ -44,13 +41,13 @@ public class MainMenuController {
                 Message.makeChatMessage(Constants.SERVER_NAME, Client.getInstance().getAccount().getUsername(), null, text));
     }
 
+    public AccountInfo[] getLeaderBoard() {
+        return leaderBoard;
+    }
+
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {
         this.leaderBoard = leaderBoard;
         this.notifyAll();
-    }
-
-    public AccountInfo[] getLeaderBoard() {
-        return leaderBoard;
     }
 
     public void changeAccountTypeRequest(String username, AccountType newValue) {
