@@ -152,7 +152,7 @@ public class HandBox implements PropertyChangeListener {
                         cardPane = null;
                     }
                     if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
-                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
                         cardAnimation.inActive();
                         imageView.setImage(cardBackGlow);
                     }
@@ -224,7 +224,7 @@ public class HandBox implements PropertyChangeListener {
                             cardPane = null;
                         }
                         if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
-                            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
+                            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
                             cardAnimation.inActive();
                             imageView.setImage(cardBackGlow);
                         } else {
@@ -381,6 +381,7 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnCard(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedCard == i) {
             selectedCard = -1;
             battleScene.getMapBox().updateMapColors();
@@ -394,6 +395,7 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnItem(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedItem == i) {
             selectedItem = -1;
             battleScene.getMapBox().updateMapColors();

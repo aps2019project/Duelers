@@ -47,6 +47,10 @@ public class SoundEffectPlayer {
         exit_page("sfx_ui_modalwindow_swoosh_exit"),
         your_turn("sfx_ui_yourturn"),
         click("sfx_unit_onclick"),
+        in_game_hove("sfx_ui_in_game_hover"),
+        attack("sfx_neutral_chaoselemental_attack_impact"),
+        hit("sfx_neutral_chaoselemental_hit"),
+        death("sfx_neutral_gambitgirl_death"),
         ;
 
         private final String path;

@@ -318,7 +318,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     private void hoverCell(int row, int column) {
-        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
         CompressedTroop troop = getTroop(row, column);
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
@@ -360,6 +360,7 @@ public class MapBox implements PropertyChangeListener {
             if (currentTroop != null && currentTroop.getPlayerNumber() == battleScene.getMyPlayerNumber()) {
                 selectedTroop = currentTroop;
                 updateMapColors();
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
                 System.out.println("Select " + currentTroop.getCard().getCardId());
             }
             return;
@@ -367,7 +368,8 @@ public class MapBox implements PropertyChangeListener {
         if (selectedTroop != null && selectedTroop.getPosition().getRow() == row &&
                 selectedTroop.getPosition().getColumn() == column) {
             System.out.println("DiSelect");
-            battleScene.getHandBox().resetSelection();//TODO:remove
+            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
+            battleScene.getHandBox().resetSelection();
             resetSelection();
             return;
         }
@@ -386,9 +388,11 @@ public class MapBox implements PropertyChangeListener {
                 if (comboTroops.contains(currentTroop)) {
                     comboTroops.remove(currentTroop);
                     System.out.println("remove " + currentTroop.getCard().getCardId() + " from combos");
+                    SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
                 } else {
                     comboTroops.add(currentTroop);
                     System.out.println("add " + currentTroop.getCard().getCardId() + " to combos");
+                    SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
                 }
                 updateMapColors();
             } else if (GameController.getInstance().getAvailableActions().canAttack(
