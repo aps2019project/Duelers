@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
+import models.card.spell.AvailabilityType;
 import models.comperessedData.*;
 import models.game.GameActions;
 import models.game.map.Position;
@@ -26,7 +27,8 @@ public class Calibrate extends Application implements GameActions {
         Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        battleScene.spell("f3_fx_circleofdessication", new Position(2, 2));//TODO
+        battleScene.spell(new AvailabilityType(true, false, false, false, false
+                , false, false), new Position(2, 2));//TODO
     }
 
     private CompressedGame calibrateGame() {
