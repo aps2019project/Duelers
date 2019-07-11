@@ -3,12 +3,12 @@ package view.BattleView;
 import controller.GameController;
 import controller.SoundEffectPlayer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class HandBox implements PropertyChangeListener {
+    private static final Effect DISABLE_BUTTON_EFFECT = new ColorAdjust(0, -1, 0, 0);
     private final BattleScene battleScene;
     private final CompressedPlayer player;
     private final Group handGroup;
@@ -41,6 +42,8 @@ public class HandBox implements PropertyChangeListener {
     private Image nextRingShine = new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png"));
     private Image endTurnImage = new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png"));
     private Image endTurnImageGlow = new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"));
+    private DefaultLabel endTurnLabel;
+    private StackPane endTurnButton;
 
 
     HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
@@ -76,6 +79,7 @@ public class HandBox implements PropertyChangeListener {
         addFinishButton();
 
         player.addPropertyChangeListener(this);
+        battleScene.getGame().addPropertyChangeListener(this);
     }
 
     private void updateNext() {
@@ -102,21 +106,15 @@ public class HandBox implements PropertyChangeListener {
         imageView2.setImage(nextRingSmoke);
 
         if (cardAnimation != null) {
-            next.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (battleScene.isMyTurn()) {
-                        cardAnimation.inActive();
-                        imageView2.setImage(nextRingShine);
-                    }
+            next.setOnMouseEntered(mouseEvent -> {
+                if (battleScene.isMyTurn()) {
+                    cardAnimation.inActive();
+                    imageView2.setImage(nextRingShine);
                 }
             });
-            next.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    cardAnimation.pause();
-                    imageView2.setImage(nextRingSmoke);
-                }
+            next.setOnMouseExited(mouseEvent -> {
+                cardAnimation.pause();
+                imageView2.setImage(nextRingSmoke);
             });
         }
     }
@@ -179,12 +177,9 @@ public class HandBox implements PropertyChangeListener {
                     }
                 });
 
-                cards[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
-                            clickOnCard(I);
-                        }
+                cards[i].setOnMouseClicked(mouseEvent -> {
+                    if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                        clickOnCard(I);
                     }
                 });
             }
@@ -253,12 +248,9 @@ public class HandBox implements PropertyChangeListener {
                         }
                     });
 
-                    items[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
-                                clickOnItem(I);
-                            }
+                    items[i].setOnMouseClicked(mouseEvent -> {
+                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                            clickOnItem(I);
                         }
                     });
                 }
@@ -271,38 +263,31 @@ public class HandBox implements PropertyChangeListener {
 
     private void addEndTurnButton() {
         try {
-            StackPane stack = new StackPane();
+            endTurnButton = new StackPane();
             ImageView imageView = new ImageView();
             imageView.setImage(endTurnImage);
             imageView.setFitWidth(endTurnImage.getWidth() * Constants.SCALE * 0.5);
             imageView.setFitHeight(endTurnImage.getHeight() * Constants.SCALE * 0.5);
-            DefaultLabel label = new DefaultLabel("End Turn", Constants.END_TURN_FONT, Color.WHITE);
-            stack.setLayoutX(1400 * Constants.SCALE);
-            stack.setLayoutY(5 * Constants.SCALE);
-            stack.getChildren().addAll(imageView, label);
-            stack.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    imageView.setImage(endTurnImage);
+            endTurnLabel = new DefaultLabel("END TURN", Constants.END_TURN_FONT, Color.WHITE);
+            if ((battleScene.getGame().getTurnNumber()) % 2 == battleScene.getMyPlayerNumber()) {
+                endTurnLabel.setText("ENEMY TURN");
+                endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);
+            }
+            endTurnButton.setLayoutX(1400 * Constants.SCALE);
+            endTurnButton.setLayoutY(5 * Constants.SCALE);
+            endTurnButton.getChildren().addAll(imageView, endTurnLabel);
+            endTurnButton.setOnMouseExited(mouseEvent -> imageView.setImage(endTurnImage));
+            endTurnButton.setOnMouseEntered(mouseEvent -> {
+                if (battleScene.isMyTurn()) {
+                    imageView.setImage(endTurnImageGlow);
                 }
             });
-            stack.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (battleScene.isMyTurn()) {
-                        imageView.setImage(endTurnImageGlow);
-                    }
+            endTurnButton.setOnMouseClicked(mouseEvent -> {
+                if (battleScene.isMyTurn()) {
+                    battleScene.getController().endTurn();
                 }
             });
-            stack.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (battleScene.isMyTurn()) {
-                        battleScene.getController().endTurn();
-                    }
-                }
-            });
-            this.handGroup.getChildren().add(stack);
+            this.handGroup.getChildren().add(endTurnButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -367,14 +352,25 @@ public class HandBox implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("next")) {
-            Platform.runLater(this::resetSelection);
-        }
-        if (evt.getPropertyName().equals("hand")) {
-            Platform.runLater(this::resetSelection);
-        }
-        if (evt.getPropertyName().equals("items")) {
-            Platform.runLater(this::resetSelection);
+        switch (evt.getPropertyName()) {
+            case "next":
+            case "hand":
+            case "items":
+                Platform.runLater(this::resetSelection);
+                break;
+            case "turn":
+                if (((int) evt.getNewValue() + 1) % 2 == battleScene.getMyPlayerNumber()) {
+                    Platform.runLater(() -> {
+                        endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);
+                        endTurnLabel.setText("ENEMY TURN");
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        endTurnButton.setEffect(null);
+                        endTurnLabel.setText("END TURN");
+                    });
+                }
+                break;
         }
     }
 

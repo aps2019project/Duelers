@@ -24,9 +24,11 @@ public class SingleFlagBattle extends Game {
         if (currentCombo >= DEFAULT_COMBO) {
             if (getPlayerOne().getNumberOfCollectedFlags() > 0) {
                 setMatchHistories(true, false);
+                finish();
                 return true;
             } else if (getPlayerTwo().getNumberOfCollectedFlags() > 0) {
                 setMatchHistories(false, true);
+                finish();
                 return true;
             }
         }

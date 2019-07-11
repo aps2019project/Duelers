@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.card.CardType;
@@ -27,8 +28,19 @@ public class Calibrate extends Application implements GameActions {
         Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        battleScene.spell(new AvailabilityType(true, false, false, false, false
-                , false, false), new Position(2, 2));//TODO
+        new Thread(() -> {
+            while (true) {
+                Platform.runLater(() -> {
+                    battleScene.spell(new AvailabilityType(false, false, false, false, false
+                            , false, true), new Position(0, 0));//TODO
+                });
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private CompressedGame calibrateGame() {

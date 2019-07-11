@@ -21,10 +21,12 @@ public class MultiFlagBattle extends Game {
     public boolean finishCheck() {
         if (getPlayerOne().getNumberOfCollectedFlags() >= numberOfFlags / 2) {
             setMatchHistories(true, false);
+            finish();
             return true;
         }
         if (getPlayerTwo().getNumberOfCollectedFlags() >= numberOfFlags / 2) {
             setMatchHistories(false, true);
+            finish();
             return true;
         }
         return false;
