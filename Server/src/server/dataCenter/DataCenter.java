@@ -405,7 +405,7 @@ public class DataCenter extends Thread {
                 dataBase.addStory(new Story(story, dataBase.getOriginalCards()));
             }
         }
-//        stories.sort(new StoriesSorter());
+//        stories.sort(new StoriesSorter()); TODO: che konim ba database?
         Server.getInstance().serverPrint("Stories Loaded");
     }
 

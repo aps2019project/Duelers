@@ -33,32 +33,32 @@ public class OldDataBase implements DataBase {
 
     @Override
     public void addNewCustomCards(Card card) {
-        
+        newCustomCards.addCard(card);
     }
 
     @Override
     public void removeCustomCards(Card card) {
-
+        newCustomCards.removeCard(card);
     }
 
     @Override
     public void addOriginalCard(Card card) {
-
+        originalCards.addCard(card);
     }
 
     @Override
     public void addNewCollectible(Card card) {
-
+        collectibleItems.add(card);
     }
 
     @Override
-    public void setOriginalFlag(Card loadFile) {
-
+    public void setOriginalFlag(Card originalFlag) {
+        this.originalFlag = originalFlag;
     }
 
     @Override
     public void addStory(Story story) {
-
+        stories.add(story);
     }
 
     public List<Story> getStories() {
@@ -68,6 +68,5 @@ public class OldDataBase implements DataBase {
     @Override
     public Card getCard(String cardName) {
         return null;
-        //TODO
     }
 }
