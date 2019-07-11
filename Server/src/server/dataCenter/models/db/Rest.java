@@ -8,15 +8,19 @@ import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.gameCenter.models.game.Story;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Rest implements DataBase {
-    private String[] maps = {"originalCards", "customCards", "collectibleItems", "stories", "originalFlag"};
+    private static String[] maps = {"originalCards", "customCards", "collectibleItems", "stories", "originalFlag"};
     final String baseAddress = "http://127.0.0.1:8080/";
 
     public static void main(String[] args) {
         Rest rest = new Rest();
+        ArrayList<String> arrayList =new ArrayList<>();
+        System.out.println(rest.getAllValues(maps[0]));
+
     }
 
     Rest() {
@@ -25,7 +29,25 @@ public class Rest implements DataBase {
         }
     }
 
-    private void createMap(String name) {
+    private int put(String name, String key, String value) {
+        final String path = "put";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("key", key);
+        parameters.put("value", value);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            return response.getStatus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private int createMap(String name) {
         final String path = "init_DB";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
@@ -34,14 +56,14 @@ public class Rest implements DataBase {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
                     .asString();
-            if (response.getStatus()==200)
-                System.out.println("init db: "+name);
+            return response.getStatus();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
-    private List getAllKeys(String name){
+    private List getAllKeys(String name) {
         final String path = "get_all_keys";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
@@ -50,8 +72,8 @@ public class Rest implements DataBase {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
                     .asString();
-            if (response.getStatus()==200)
-                return JsonConverter.fromJson(response.getBody(),List.class);
+            if (response.getStatus() == 200)
+                return JsonConverter.fromJson(response.getBody(), List.class);
         } catch (Exception e) {
 
             e.printStackTrace();
