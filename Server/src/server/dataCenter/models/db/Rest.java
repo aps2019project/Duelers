@@ -90,7 +90,7 @@ public class Rest implements DataBase {
     }
 
     private String getFromDataBase(String name,String key){
-        final String path = "init_DB";
+        final String path = "get";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
@@ -103,7 +103,25 @@ public class Rest implements DataBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;    }
+        return null;
+    }
+
+    private int delete(String name,String key){
+        final String path = "del_from_DB";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("key",key);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            return response.getStatus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 
     @Override
