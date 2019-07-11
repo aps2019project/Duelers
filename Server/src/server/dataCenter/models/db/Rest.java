@@ -81,6 +81,23 @@ public class Rest implements DataBase {
         return null;
     }
 
+    private List getAllValues(String name) {
+        final String path = "get_all_values";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            if (response.getStatus() == 200)
+                return JsonConverter.fromJson(response.getBody(), List.class);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public Card getCard(String cardName) {
         return null;
