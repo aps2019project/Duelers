@@ -91,7 +91,10 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private final DefaultSpinner<String> spriteSpinner = new DefaultSpinner<>(FXCollections.observableArrayList(sprites.get(cardTypeSpinner.getValue())));
     private final NumberField priceField = new NumberField("price");
     private final OrangeButton addSpellButton = new OrangeButton("ADD NEW SPELL", event -> addSpell(), click);
-    private final OrangeButton makeCardButton = new OrangeButton("MAKE CARD", event -> CustomCardController.getInstance().createCard(card), click);
+    private final OrangeButton makeCardButton = new OrangeButton("MAKE CARD", event -> {
+        CustomCardController.getInstance().createCard(card);
+        new MainMenu().show();
+    }, click);
 
     {
         card.setSpriteName(spriteSpinner.getValue());
