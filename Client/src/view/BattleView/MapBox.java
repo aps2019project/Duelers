@@ -194,21 +194,6 @@ public class MapBox implements PropertyChangeListener {
             animation = troopAnimationHashMap.get(oldTroop);
             if (animation != null) {
                 animation.updateApHp(oldTroop.getCurrentAp(), 0);
-                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
-                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
-                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                    }
-                });
                 animation.kill();
                 troopAnimationHashMap.remove(oldTroop);
             }
@@ -334,15 +319,18 @@ public class MapBox implements PropertyChangeListener {
         CompressedTroop troop = getTroop(row, column);
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);
-            animation.select();//TODO:Think about animation starts
+            animation.select();
             if (cardPane != null) {
                 mapGroup.getChildren().remove(cardPane);
                 cardPane = null;
             }
             try {
                 cardPane = new CardPane(troop.getCard(), false, false, null);
-                cardPane.setLayoutY(-150 * Constants.SCALE + cellsY[row][column]);
-                cardPane.setLayoutX(80 * Constants.SCALE + cellsX[row][column]);
+                cardPane.setLayoutY(Constants.MAP_HEIGHT / 3);
+                if (troop.getPlayerNumber() == 1)
+                    cardPane.setLayoutX(-cardPane.getWidth() - 250 * Constants.SCALE);
+                else
+                    cardPane.setLayoutX(Constants.MAP_DOWNER_WIDTH + cardPane.getWidth());
                 mapGroup.getChildren().add(cardPane);
             } catch (Exception e) {
                 e.printStackTrace();
