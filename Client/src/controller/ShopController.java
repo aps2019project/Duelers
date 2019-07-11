@@ -75,8 +75,8 @@ public class ShopController {
 
     synchronized void addCard(Card customCard) {
         originalCards.addCard(customCard);
-        support.firePropertyChange("search_result", showingCards, originalCards);
         showingCards.addCard(customCard);
+        support.firePropertyChange("search_result", showingCards, originalCards);
         System.out.println(originalCards.getHeroes().size());
         this.notify();
         ShopAdminController.getInstance().addCard(customCard);
