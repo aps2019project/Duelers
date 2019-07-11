@@ -323,13 +323,13 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Account account1 = getAccount(message.getChangeAccountType().getUsername());
-        if (account1 == null)
+        Account changingAccount = getAccount(message.getChangeAccountType().getUsername());
+        if (changingAccount == null)
             throw new ClientException("invalid username!");
-        account1.setAccountType(message.getChangeAccountType().getNewType());
-        saveAccount(account1);
-        Server.getInstance().sendLeaderBoardUpdateMessage(account1);
-        Server.getInstance().sendAccountUpdateMessage(account1);
+        changingAccount.setAccountType(message.getChangeAccountType().getNewType());
+        saveAccount(changingAccount);
+        Server.getInstance().sendLeaderBoardUpdateMessage(changingAccount);
+        Server.getInstance().sendAccountUpdateMessage(changingAccount);
     }
 
     public void acceptCustomCard(Message message) throws LogicException {

@@ -15,10 +15,10 @@ class LoginFieldsContainer extends VBox {
                     Color.rgb(100, 100, 100, 0.6), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
-    private final NormalField usernameField;
-    private final NormalPasswordField passwordField;
     private static final double BOX_SIZE = 800 * SCALE;
     private static final Insets PADDING = new Insets(60 * SCALE, 20 * SCALE, 20 * SCALE, 20 * SCALE);
+    private final NormalField usernameField;
+    private final NormalPasswordField passwordField;
 
     LoginFieldsContainer() {
         super(UIConstants.DEFAULT_SPACING * 2);

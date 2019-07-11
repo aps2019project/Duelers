@@ -187,10 +187,11 @@ public class GameController implements GameActions {
 
     public void showAnimation(GameAnimations gameAnimations) {
         new Thread(() -> {
-            for (SpellAnimation cardAnimation :
-                    gameAnimations.getSpellAnimations()) {
-                battleScene.spell(cardAnimation.getSpellID(), cardAnimation.getPosition());
-            }
+            gameAnimations.getSpellAnimations().forEach(
+                    spellAnimation -> spellAnimation.getPositions().forEach(
+                            position -> battleScene.spell(spellAnimation.getAvailabilityType(), position)
+                    )
+            );
             for (CardAnimation cardAnimation :
                     gameAnimations.getAttacks()) {
                 battleScene.attack(cardAnimation.getAttacker(), cardAnimation.getDefender());

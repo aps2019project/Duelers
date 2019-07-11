@@ -46,7 +46,7 @@ public class SingleFlagBattle extends Game {
     }
 
     @Override
-    void killTroop(Troop troop) throws ServerException {
+    void killTroop(Troop troop) {
         if (troop.getFlags().size() > 0) {
             currentCombo = -1;
         }

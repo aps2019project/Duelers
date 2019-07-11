@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
+import models.card.spell.AvailabilityType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.game.GameActions;
@@ -15,11 +16,14 @@ import view.Show;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BattleScene extends Show {
     private static Media backgroundMusic = new Media(
-            new File("resources/music/battle.m4a").toURI().toString()
+            new File("resources/music/music_battlemap_vetruv.m4a").toURI().toString()
     );
+    private static final Map<SpellType, String> spellSpriteNames = new HashMap();
     private final GameActions controller;
     private final CompressedGame game;
     private final MapBox mapBox;
@@ -28,6 +32,16 @@ public class BattleScene extends Show {
     private final int myPlayerNumber;
     private final CompressedPlayer myPlayer;
     private final CompressedPlayer oppPlayer;
+
+    static {
+        spellSpriteNames.put(SpellType.ATTACK, "fx_f4_shadownova");
+        spellSpriteNames.put(SpellType.PUT, "fx_f2_phoenixfire");
+        spellSpriteNames.put(SpellType.DEATH, "fx_f4_deathfire_crescendo");
+        spellSpriteNames.put(SpellType.DEFEND, "fx_f2_bbs_spellsword");
+        spellSpriteNames.put(SpellType.CONTINUOUS, "fx_f3_sandportal");
+        spellSpriteNames.put(SpellType.SPECIAL_POWER, "fx_f1_lasting_judgment");
+        spellSpriteNames.put(SpellType.DEFAULT, "fx_f2_eightgates_teallotus");
+    }
 
     public BattleScene(GameActions controller, CompressedGame game, int myPlayerNumber, String mapName) throws Exception {
         this.controller = controller;
@@ -45,7 +59,7 @@ public class BattleScene extends Show {
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
 
-        root.getChildren().addAll(mapBox.getMapGroup(), playerBox.getGroup(), handBox.getGroup());
+        root.getChildren().addAll(mapBox.getMapGroup(), playerBox.getGroup(), handBox.getHandGroup());
     }
 
     private void addBackGround(String address) {
@@ -75,8 +89,18 @@ public class BattleScene extends Show {
         mapBox.showDefend(defender, attacker);
     }
 
-    public void spell(String spriteName, Position position) {
-        mapBox.showSpell(spriteName, position.getRow(), position.getColumn());
+    public void spell(AvailabilityType availabilityType, Position position) {
+        mapBox.showSpell(getSpellSpriteName(availabilityType), position.getRow(), position.getColumn());
+    }
+
+    private String getSpellSpriteName(AvailabilityType availabilityType) {
+        if (availabilityType.isOnAttack()) return spellSpriteNames.get(SpellType.ATTACK);
+        if (availabilityType.isOnDeath()) return spellSpriteNames.get(SpellType.DEATH);
+        if (availabilityType.isOnDefend()) return spellSpriteNames.get(SpellType.DEFEND);
+        if (availabilityType.isSpecialPower()) return spellSpriteNames.get(SpellType.SPECIAL_POWER);
+        if (availabilityType.isContinuous()) return spellSpriteNames.get(SpellType.CONTINUOUS);
+        if (availabilityType.isOnPut()) return spellSpriteNames.get(SpellType.PUT);
+        return spellSpriteNames.get(SpellType.DEFAULT);
     }
 
     @Override
@@ -131,5 +155,9 @@ public class BattleScene extends Show {
 
     public String getOppUserName() {
         return oppPlayer.getUserName();
+    }
+
+    private enum SpellType {
+        ATTACK, PUT, DEATH, CONTINUOUS, SPECIAL_POWER, DEFEND, DEFAULT
     }
 }

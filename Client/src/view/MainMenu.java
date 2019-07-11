@@ -1,6 +1,7 @@
 package view;
 
 import controller.Client;
+import controller.CustomCardRequestsController;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
 import javafx.application.Platform;
@@ -10,7 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
-import models.account.Collection;
 import models.gui.*;
 
 import java.io.File;
@@ -27,8 +27,9 @@ public class MainMenu extends Show {
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
     );
-
+    private final List<MenuItem> items = new ArrayList<>();
     private int itemIndex = 0;
+    private boolean inLeaderBoard = false;
     private final MenuItem[] itemsArray = {
             new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
             new MenuItem(itemIndex++, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
@@ -38,10 +39,6 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
-
-    private final List<MenuItem> items = new ArrayList<>();
-    private boolean inLeaderBoard = false;
-    private boolean inCustomCardRequests = false;
 
     {
         items.addAll(Arrays.asList(itemsArray));
@@ -75,30 +72,15 @@ public class MainMenu extends Show {
         DialogBox dialogBox = new DialogBox();
         CustomCardRequestsList requestsList = new CustomCardRequestsList();
         dialogBox.getChildren().add(requestsList);
-
-        inCustomCardRequests = true;
-        new Thread(() -> {
-            try {
-                while (inCustomCardRequests) {
-                    MainMenuController.getInstance().requestCustomCardRequests();
-                    synchronized (MainMenuController.getInstance()) {
-                        MainMenuController.getInstance().wait();
-                    }
-                    Collection collection = MainMenuController.getInstance().getCustomCardRequests();
-                    Platform.runLater(() -> requestsList.setCards(collection));
-                    Thread.sleep(4000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
-        dialogContainer.show();
-        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+        DialogContainer customCardRequestsDialog = new DialogContainer(root, dialogBox);
+        dialogBox.makeClosable(customCardRequestsDialog, closeEvent -> {
+            CustomCardRequestsController.getInstance().removeListener(requestsList);
             BackgroundMaker.makeMenuBackgroundUnfrozen();
-            inCustomCardRequests = false;
         });
+
+        MainMenuController.getInstance().requestCustomCardRequests();
+
+        customCardRequestsDialog.show();
     }
 
     private void showGlobalChatDialog(AnchorPane sceneContents) {

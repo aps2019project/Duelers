@@ -16,6 +16,15 @@ public class CompressedGame {
 
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
+    //just for testing BattleView
+    public CompressedGame(CompressedPlayer playerOne, CompressedPlayer playerTwo, CompressedGameMap gameMap, int turnNumber, GameType gameType) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        this.gameMap = gameMap;
+        this.turnNumber = turnNumber;
+        this.gameType = gameType;
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         if (support == null) {
             support = new PropertyChangeSupport(this);
@@ -25,15 +34,6 @@ public class CompressedGame {
 
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
-    }
-
-    //just for testing BattleView
-    public CompressedGame(CompressedPlayer playerOne, CompressedPlayer playerTwo, CompressedGameMap gameMap, int turnNumber, GameType gameType) {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
-        this.gameMap = gameMap;
-        this.turnNumber = turnNumber;
-        this.gameType = gameType;
     }
 
     public void moveCardToHand() {
@@ -114,6 +114,7 @@ public class CompressedGame {
         }
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);
         playerTwo.setNumberOfCollectedFlags(player2NumberOfCollectedFlags);
+        support.firePropertyChange("flag", player2CurrentMP, maxMP);
         gameMap.updateCellEffects(cellEffects);
     }
 

@@ -250,13 +250,13 @@ public class Client {
                 }
                 break;
             case ADD_TO_CUSTOM_CARDS:
-                //message.getCard();
+                CustomCardRequestsController.getInstance().addCard(message.getCard());
                 break;
             case REMOVE_FROM_CUSTOM_CARDS:
-                //message.getCardName();
+                CustomCardRequestsController.getInstance().removeCard(message.getCardName());
                 break;
             case CUSTOM_CARDS_COPY:
-                MainMenuController.getInstance().setCustomCardRequests(message.getCardsCopyMessage().getCards());
+                CustomCardRequestsController.getInstance().setCustomCardRequests(message.getCardsCopyMessage().getCards());
                 break;
         }
     }

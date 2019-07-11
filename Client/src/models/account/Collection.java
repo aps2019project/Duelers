@@ -215,4 +215,23 @@ public class Collection {
         }
         return null;
     }
+
+    public Card removeCard(String cardName) {
+        Card card;
+        if (null != (card = removeFromList(heroes, cardName))) return card;
+        if (null != (card = removeFromList(items, cardName))) return card;
+        if (null != (card = removeFromList(spells, cardName))) return card;
+        if (null != (card = removeFromList(minions, cardName))) return card;
+        return null;
+    }
+
+    private Card removeFromList(List<Card> list, String cardName) {
+        List<Card> result = new ArrayList<>();
+        findInList(list, result, cardName);
+        if (result.size() > 0) {
+            list.remove(result.get(0));
+            return result.get(0);
+        }
+        return null;
+    }
 }

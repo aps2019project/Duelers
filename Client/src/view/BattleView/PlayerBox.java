@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -20,31 +21,27 @@ import models.card.CardType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
-import models.gui.DefaultLabel;
-import models.gui.DefaultText;
-import models.gui.ImageLoader;
-import models.gui.NormalField;
+import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 
 import static java.lang.Math.pow;
-import static models.gui.UIConstants.DEFAULT_FONT;
 import static view.BattleView.Constants.SCALE;
 import static view.BattleView.Constants.SCREEN_WIDTH;
 
 public class PlayerBox implements PropertyChangeListener {
-    private static final Image comboNotSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_empty@2x.png");
-    private static final Image comboSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_full@2x.png");
-    private static final Image spellSelectedImage = ImageLoader.load("resources/ui/quests_glow@2x.png");
-    private static final Image spellNotSelectedImage = ImageLoader.load("resources/ui/quests@2x.png");
-    private static final Image manaImage = ImageLoader.load("resources/ui/icon_mana@2x.png");
-    private static final Image inActiveManaImage = ImageLoader.load("resources/ui/icon_mana_inactive@2x.png");
-    private static final Image player1Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f5@2x.png");
-    private static final Image player2Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f6-third@2x.png");
-    private static final Image chatImage = ImageLoader.load("resources/ui/chat_bubble.png");
-    private static final double CHAT_BUBBLE_SIZE = 150 * SCALE;
+    private final Image comboNotSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png"));
+    private final Image comboSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png"));
+    private final Image spellSelectedImage = new Image(new FileInputStream("resources/ui/quests_glow@2x.png"));
+    private final Image spellNotSelectedImage = new Image(new FileInputStream("resources/ui/quests@2x.png"));
+    private final Image manaImage = new Image(new FileInputStream("resources/ui/icon_mana@2x.png"));
+    private final Image inActiveManaImage = new Image(new FileInputStream("resources/ui/icon_mana_inactive@2x.png"));
+    private final Image player1Profile = new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f5@2x.png"));
+    private final Image player2Profile = new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f6-third@2x.png"));
+    private final Image chatImage = new Image(new FileInputStream("resources/ui/chat_bubble.png"));
+    private final double CHAT_BUBBLE_SIZE = 150 * SCALE;
     private final NormalField chatField = new NormalField("Type message and send");
     private final BattleScene battleScene;
     private final CompressedPlayer player1, player2;
@@ -58,13 +55,22 @@ public class PlayerBox implements PropertyChangeListener {
     private ColorAdjust player2ImageEffect;
     private ImageView comboButton;
     private ImageView spellButton;
+    private DefaultLabel player1Name;
+    private DefaultLabel player2Name;
 
-    public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
+    PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
         this.player1 = game.getPlayerOne();
         this.player2 = game.getPlayerTwo();
         group = new Group();
         addPhotos();
+        if (game.getTurnNumber() % 2 == 1) {
+            player1ImageEffect.setBrightness(0);
+            player2ImageEffect.setBrightness(-0.6);
+        } else {
+            player1ImageEffect.setBrightness(-0.6);
+            player2ImageEffect.setBrightness(0);
+        }
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
         updateMP(3);
@@ -116,10 +122,12 @@ public class PlayerBox implements PropertyChangeListener {
         player1Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
         player2Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
-        DefaultLabel player1Name = new DefaultLabel(player1.getUserName(), Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
+        player1Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
         player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
-        DefaultLabel player2Name = new DefaultLabel(player2.getUserName(), Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 400 * SCALE, 75 * SCALE);//TODO
+        player2Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 600 * SCALE, 75 * SCALE);
         player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        player1Name.setText(player1.getUserName() + " Flags:" + player1.getNumberOfCollectedFlags());
+        player2Name.setText(player2.getUserName() + " Flags:" + player2.getNumberOfCollectedFlags());
         player1ImageEffect = new ColorAdjust();
         player2ImageEffect = new ColorAdjust();
         player1Image.setEffect(player1ImageEffect);
@@ -343,10 +351,18 @@ public class PlayerBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("mp1")) {
-            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
+            Platform.runLater(() -> {
+                updateMP((int) evt.getNewValue());
+                battleScene.getHandBox().resetSelection();
+                battleScene.getMapBox().resetSelection();
+            });
         }
         if (evt.getPropertyName().equals("mp2")) {
-            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
+            Platform.runLater(() -> {
+                updateMP((int) evt.getNewValue());
+                battleScene.getHandBox().resetSelection();
+                battleScene.getMapBox().resetSelection();
+            });
         }
         if (evt.getPropertyName().equals("turn")) {
             Platform.runLater(() -> {
@@ -359,6 +375,13 @@ public class PlayerBox implements PropertyChangeListener {
                     player1ImageEffect.setBrightness(-0.6);
                     player2ImageEffect.setBrightness(0);
                 }
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.your_turn);
+            });
+        }
+        if (evt.getPropertyName().equals("flag")) {
+            Platform.runLater(() -> {
+                player1Name.setText(player1.getUserName() + " Flags:" + player1.getNumberOfCollectedFlags());
+                player2Name.setText(player2.getUserName() + " Flags:" + player2.getNumberOfCollectedFlags());
             });
         }
     }
@@ -373,7 +396,7 @@ public class PlayerBox implements PropertyChangeListener {
 
     class MessageShow extends AnimationTimer {
         private final long showTime = (long) (4 * pow(10, 9));
-        private final DefaultText text = new DefaultText("", CHAT_BUBBLE_SIZE * 0.9, DEFAULT_FONT, Color.BLACK);
+        private final DefaultText text = new DefaultText("", CHAT_BUBBLE_SIZE * 0.9, UIConstants.DEFAULT_FONT, Color.BLACK);
         private final ImageView chatView = ImageLoader.makeImageView(chatImage, CHAT_BUBBLE_SIZE, CHAT_BUBBLE_SIZE);
         private final StackPane stackPane;
         private final double x;

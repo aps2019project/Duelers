@@ -1,5 +1,7 @@
 package view.BattleView;
 
+import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -25,31 +27,34 @@ import java.util.List;
 public class HandBox implements PropertyChangeListener {
     private final BattleScene battleScene;
     private final CompressedPlayer player;
-    private final Group group;
+    private final Group handGroup;
     private final Pane[] cards = new Pane[5];
     private final Pane next = new Pane();
     private final Pane[] items = new Pane[3];
     private int selectedCard = -1;
     private int selectedItem = -1;
     private CardPane cardPane = null;
-    private Image backGround = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
-    private Image highlightedBackGround = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
-    private Image endTurnImage=new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png"));
-    private Image endTurnImageGlow=new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"));
+    private Image cardBack = new Image(new FileInputStream("resources/ui/card_background@2x.png"));
+    private Image cardBackGlow = new Image(new FileInputStream("resources/ui/card_background_highlight@2x.png"));
+    private Image nextBack = new Image(new FileInputStream("resources/ui/replace_background@2x.png"));
+    private Image nextRingSmoke = new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png"));
+    private Image nextRingShine = new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png"));
+    private Image endTurnImage = new Image(new FileInputStream("resources/ui/button_end_turn_finished@2x.png"));
+    private Image endTurnImageGlow = new Image(new FileInputStream("resources/ui/button_end_turn_finished_glow@2x.png"));
 
 
     HandBox(BattleScene battleScene, CompressedPlayer player, double x, double y) throws Exception {
         this.battleScene = battleScene;
         this.player = player;
-        group = new Group();
-        group.setLayoutX(x);
-        group.setLayoutY(y);
+        handGroup = new Group();
+        handGroup.setLayoutX(x);
+        handGroup.setLayoutY(y);
 
         HBox hBox = new HBox();
         hBox.setLayoutX(200 * Constants.SCALE);
         hBox.setLayoutY(25 * Constants.SCALE);
-        hBox.setSpacing(-15);
-        group.getChildren().add(hBox);
+        hBox.setSpacing(-15 * Constants.SCALE);
+        handGroup.getChildren().add(hBox);
         for (int i = 0; i < 5; i++) {
             cards[i] = new Pane();
             hBox.getChildren().add(cards[i]);
@@ -63,7 +68,7 @@ public class HandBox implements PropertyChangeListener {
 
         next.setLayoutX(0 * Constants.SCALE);
         next.setLayoutY(0);
-        group.getChildren().add(next);
+        handGroup.getChildren().add(next);
         updateNext();
 
         addEndTurnButton();
@@ -74,137 +79,115 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void updateNext() {
-        try {
-            next.getChildren().clear();
-            final ImageView imageView1 = new ImageView();
-            next.getChildren().add(imageView1);
-            imageView1.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
-            imageView1.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
-            try {
-                imageView1.setImage(new Image(new FileInputStream("resources/ui/replace_background@2x.png")));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        next.getChildren().clear();
+        final ImageView imageView1 = new ImageView();
+        next.getChildren().add(imageView1);
+        imageView1.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
+        imageView1.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
+        imageView1.setImage(nextBack);
 
-            final ImageView imageView2 = new ImageView();
-            next.getChildren().add(imageView2);
-            imageView2.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
-            imageView2.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
+        final ImageView imageView2 = new ImageView();
+        next.getChildren().add(imageView2);
+        imageView2.setFitWidth(Constants.SCREEN_WIDTH * 0.11);
+        imageView2.setFitHeight(Constants.SCREEN_WIDTH * 0.11);
 
-            final CardAnimation cardAnimation;
-            if (player.getNextCard() != null) {
-                cardAnimation = new CardAnimation(next, player.getNextCard(),
-                        imageView1.getLayoutY() + imageView1.getFitHeight() / 2, imageView1.getLayoutX() + imageView1.getFitWidth() / 2);
-            } else {
-                cardAnimation = null;
-            }
+        final CardAnimation cardAnimation;
+        if (player.getNextCard() != null) {
+            cardAnimation = new CardAnimation(next, player.getNextCard(),
+                    imageView1.getLayoutY() + imageView1.getFitHeight() / 2, imageView1.getLayoutX() + imageView1.getFitWidth() / 2);
+        } else {
+            cardAnimation = null;
+        }
 
-            try {
-                imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        imageView2.setImage(nextRingSmoke);
 
-            if (cardAnimation != null) {
-                next.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        try {
-                            cardAnimation.inActive();
-                            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_shine@2x.png")));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
+        if (cardAnimation != null) {
+            next.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (battleScene.isMyTurn()) {
+                        cardAnimation.inActive();
+                        imageView2.setImage(nextRingShine);
                     }
-                });
-                next.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        try {
-                            cardAnimation.stop();
-                            imageView2.setImage(new Image(new FileInputStream("resources/ui/replace_outer_ring_smoke@2x.png")));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Error showing next");
-            e.printStackTrace();
+                }
+            });
+            next.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cardAnimation.pause();
+                    imageView2.setImage(nextRingSmoke);
+                }
+            });
         }
     }
 
     private void updateCards() {
-        try {
-            for (int i = 0; i < 5; i++) {
-                final int I = i;
-                cards[i].getChildren().clear();
-                final ImageView imageView = new ImageView();
-                cards[i].getChildren().add(imageView);
-                imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
-                imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
+        for (int i = 0; i < 5; i++) {
+            final int I = i;
+            cards[i].getChildren().clear();
+            final ImageView imageView = new ImageView();
+            cards[i].getChildren().add(imageView);
+            imageView.setFitWidth(Constants.SCREEN_WIDTH * 0.085);
+            imageView.setFitHeight(Constants.SCREEN_WIDTH * 0.085);
 
-                final CardAnimation cardAnimation;
-                if (player.getHand().size() > i) {
-                    cardAnimation = new CardAnimation(cards[i], player.getHand().get(i),
-                            imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
-                } else {
-                    cardAnimation = null;
-                }
+            final CardAnimation cardAnimation;
+            if (player.getHand().size() > i) {
+                cardAnimation = new CardAnimation(cards[i], player.getHand().get(i),
+                        imageView.getFitHeight() / 2, imageView.getFitWidth() / 2);
+            } else {
+                cardAnimation = null;
+            }
 
-                if (selectedCard == i) {
-                    imageView.setImage(highlightedBackGround);
-                    cardAnimation.inActive();
-                } else
-                    imageView.setImage(backGround);
+            if (selectedCard == i && cardAnimation != null) {
+                imageView.setImage(cardBackGlow);
+                cardAnimation.inActive();
+            } else
+                imageView.setImage(cardBack);
 
-                if (cardAnimation != null && battleScene.isMyTurn()) {
-                    cards[i].setOnMouseEntered(mouseEvent -> {
-                        if (cardPane != null) {
-                            group.getChildren().remove(cardPane);
-                            cardPane = null;
-                        }
+            if (cardAnimation != null) {
+                final CompressedCard card = player.getHand().get(I);
+                cards[i].setOnMouseEntered(mouseEvent -> {
+                    if (cardPane != null) {
+                        handGroup.getChildren().remove(cardPane);
+                        cardPane = null;
+                    }
+                    if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
                         cardAnimation.inActive();
-                        try {
-                            imageView.setImage(highlightedBackGround);
-                            if (player.getHand().size() > I) {
-                                cardPane = new CardPane(player.getHand().get(I), false, false, null);
-                                cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
-                                cardPane.setLayoutX(243 * Constants.SCALE + cards[I].getLayoutX());
-                                group.getChildren().add(cardPane);
-                            }
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    });
+                        imageView.setImage(cardBackGlow);
+                    }
+                    try {
+                        cardPane = new CardPane(card, false, false, null);
+                        cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
+                        cardPane.setLayoutX(150 * Constants.SCALE + cards[I].getLayoutX());
+                        handGroup.getChildren().add(cardPane);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
 
-                    cards[i].setOnMouseExited(mouseEvent -> {
-                        if (cardPane != null) {
-                            group.getChildren().remove(cardPane);
-                            cardPane = null;
-                        }
-                        if (selectedCard == I) {
-                            imageView.setImage(highlightedBackGround);
-                        } else {
-                            imageView.setImage(backGround);
-                            cardAnimation.pause();
-                        }
-                    });
+                cards[i].setOnMouseExited(mouseEvent -> {
+                    if (cardPane != null) {
+                        handGroup.getChildren().remove(cardPane);
+                        cardPane = null;
+                    }
+                    if (selectedCard == I) {
+                        imageView.setImage(cardBackGlow);
+                    } else {
+                        imageView.setImage(cardBack);
+                        cardAnimation.pause();
+                    }
+                });
 
-                    cards[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
+                cards[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
                             clickOnCard(I);
                         }
-                    });
-                }
+                    }
+                });
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error making hand");
         }
     }
 
@@ -227,27 +210,31 @@ public class HandBox implements PropertyChangeListener {
                     cardAnimation = null;
                 }
 
-                if (selectedItem == i) {
-                    imageView.setImage(highlightedBackGround);
+                if (selectedItem == i && cardAnimation != null) {
+                    imageView.setImage(cardBackGlow);
                     cardAnimation.inActive();
                 } else
-                    imageView.setImage(backGround);
+                    imageView.setImage(cardBack);
 
-                if (cardAnimation != null && battleScene.isMyTurn()) {
+                if (cardAnimation != null) {
+                    final CompressedCard card = player.getCollectedItems().get(I);
                     items[i].setOnMouseEntered(mouseEvent -> {
                         if (cardPane != null) {
-                            group.getChildren().remove(cardPane);
+                            handGroup.getChildren().remove(cardPane);
                             cardPane = null;
                         }
-                        cardAnimation.inActive();
+                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.in_game_hove);
+                            cardAnimation.inActive();
+                            imageView.setImage(cardBackGlow);
+                        } else {
+                            imageView.setImage(cardBack);
+                        }
                         try {
-                            imageView.setImage(highlightedBackGround);
-                            if (player.getHand().size() > I) {
-                                cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
-                                cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
-                                cardPane.setLayoutX(243 * Constants.SCALE + items[I].getLayoutX());
-                                group.getChildren().add(cardPane);
-                            }
+                            cardPane = new CardPane(card, false, false, null);
+                            cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
+                            cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
+                            handGroup.getChildren().add(cardPane);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -255,13 +242,13 @@ public class HandBox implements PropertyChangeListener {
 
                     items[i].setOnMouseExited(mouseEvent -> {
                         if (cardPane != null) {
-                            group.getChildren().remove(cardPane);
+                            handGroup.getChildren().remove(cardPane);
                             cardPane = null;
                         }
                         if (selectedItem == I) {
-                            imageView.setImage(highlightedBackGround);
+                            imageView.setImage(cardBackGlow);
                         } else {
-                            imageView.setImage(backGround);
+                            imageView.setImage(cardBack);
                             cardAnimation.pause();
                         }
                     });
@@ -269,28 +256,30 @@ public class HandBox implements PropertyChangeListener {
                     items[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            clickOnItem(I);
+                            if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                                clickOnItem(I);
+                            }
                         }
                     });
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error making hand");
+            System.out.println("Error making hand items");
         }
     }
 
     private void addEndTurnButton() {
         try {
-            StackPane stack=new StackPane();
-            ImageView imageView=new ImageView();
+            StackPane stack = new StackPane();
+            ImageView imageView = new ImageView();
             imageView.setImage(endTurnImage);
-            imageView.setFitWidth(endTurnImage.getWidth()*Constants.SCALE*0.5);
-            imageView.setFitHeight(endTurnImage.getHeight()*Constants.SCALE*0.5);
-            DefaultLabel label=new DefaultLabel("End Turn",Constants.END_TURN_FONT, Color.WHITE);
+            imageView.setFitWidth(endTurnImage.getWidth() * Constants.SCALE * 0.5);
+            imageView.setFitHeight(endTurnImage.getHeight() * Constants.SCALE * 0.5);
+            DefaultLabel label = new DefaultLabel("End Turn", Constants.END_TURN_FONT, Color.WHITE);
             stack.setLayoutX(1400 * Constants.SCALE);
             stack.setLayoutY(5 * Constants.SCALE);
-            stack.getChildren().addAll(imageView,label);
+            stack.getChildren().addAll(imageView, label);
             stack.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -300,7 +289,7 @@ public class HandBox implements PropertyChangeListener {
             stack.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if(battleScene.isMyTurn()){
+                    if (battleScene.isMyTurn()) {
                         imageView.setImage(endTurnImageGlow);
                     }
                 }
@@ -308,12 +297,12 @@ public class HandBox implements PropertyChangeListener {
             stack.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if(battleScene.isMyTurn()){
+                    if (battleScene.isMyTurn()) {
                         battleScene.getController().endTurn();
                     }
                 }
             });
-            this.group.getChildren().add(stack);
+            this.handGroup.getChildren().add(stack);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -322,14 +311,14 @@ public class HandBox implements PropertyChangeListener {
     private void addFinishButton() {
         try {
             ImageButton imageButton = new ImageButton(
-                    "Finish", event -> battleScene.getController().forceFinish(),
+                    "FINISH", event -> battleScene.getController().forceFinish(),
                     new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                     new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
             );
             imageButton.setLayoutX(1360 * Constants.SCALE);
             imageButton.setLayoutY(110 * Constants.SCALE);
 
-            group.getChildren().add(imageButton);
+            handGroup.getChildren().add(imageButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -345,7 +334,7 @@ public class HandBox implements PropertyChangeListener {
             imageButton.setLayoutX(1530 * Constants.SCALE);
             imageButton.setLayoutY(110 * Constants.SCALE);
 
-            group.getChildren().add(imageButton);
+            handGroup.getChildren().add(imageButton);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -379,23 +368,18 @@ public class HandBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("next")) {
-            Platform.runLater(this::updateNext);
+            Platform.runLater(this::resetSelection);
         }
         if (evt.getPropertyName().equals("hand")) {
-            Platform.runLater(() -> {
-                selectedCard = -1;
-                updateCards();
-            });
+            Platform.runLater(this::resetSelection);
         }
         if (evt.getPropertyName().equals("items")) {
-            Platform.runLater(() -> {
-                selectedItem = -1;
-                updateItems();
-            });
+            Platform.runLater(this::resetSelection);
         }
     }
 
     private void clickOnCard(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedCard == i) {
             selectedCard = -1;
             battleScene.getMapBox().updateMapColors();
@@ -409,6 +393,7 @@ public class HandBox implements PropertyChangeListener {
     }
 
     private void clickOnItem(int i) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.select);
         if (selectedItem == i) {
             selectedItem = -1;
             battleScene.getMapBox().updateMapColors();
@@ -421,8 +406,8 @@ public class HandBox implements PropertyChangeListener {
         updateItems();
     }
 
-    Group getGroup() {
-        return group;
+    Group getHandGroup() {
+        return handGroup;
     }
 
     CompressedCard getSelectedCard() {
@@ -438,5 +423,6 @@ public class HandBox implements PropertyChangeListener {
         selectedItem = -1;
         updateCards();
         updateItems();
+        updateNext();
     }
 }

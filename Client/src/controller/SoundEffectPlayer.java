@@ -9,15 +9,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoundEffectPlayer {
-    private static SoundEffectPlayer SEP = new SoundEffectPlayer();
     private static final Map<SoundName, Media> mediaFiles = new HashMap<>();
     private static final String directory = "resources/sfx/";
     private static final String format = ".m4a";
+    private static SoundEffectPlayer SEP = new SoundEffectPlayer();
 
     static {
         Arrays.stream(SoundName.values()).forEach(soundName ->
                 mediaFiles.put(soundName, new Media(new File(soundName.path).toURI().toString()))
         );
+    }
+
+    private SoundEffectPlayer() {
+    }
+
+    public static SoundEffectPlayer getInstance() {
+        return SEP;
+    }
+
+    public void playSound(SoundName soundName) {
+        try {
+            Media media = mediaFiles.get(soundName);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(1);
+            mediaPlayer.play();
+        } catch (Exception ignored) {
+        }
     }
 
     public enum SoundName {
@@ -30,27 +47,16 @@ public class SoundEffectPlayer {
         exit_page("sfx_ui_modalwindow_swoosh_exit"),
         your_turn("sfx_ui_yourturn"),
         click("sfx_unit_onclick"),
+        in_game_hove("sfx_ui_in_game_hover"),
+        attack("sfx_neutral_chaoselemental_attack_impact"),
+        hit("sfx_neutral_chaoselemental_hit"),
+        death("sfx_neutral_gambitgirl_death"),
         ;
 
         private final String path;
 
         SoundName(String name) {
             this.path = directory + name + format;
-        }
-    }
-
-    public static SoundEffectPlayer getInstance() {
-        return SEP;
-    }
-
-    private SoundEffectPlayer() {
-    }
-
-    public void playSound(SoundName soundName) {
-        try {
-            Media media = mediaFiles.get(soundName);
-            new MediaPlayer(media).play();
-        } catch (Exception ignored) {
         }
     }
 }

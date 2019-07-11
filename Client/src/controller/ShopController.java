@@ -58,20 +58,13 @@ public class ShopController {
         showingCards = result;
     }
 
-    synchronized void addCard(Card customCard) {
+    void addCard(Card customCard) {
+        System.out.println(originalCards.getHeroes().size());
         originalCards.addCard(customCard);
         if (Client.getInstance().getCurrentShow() instanceof ShopMenu) {
             ((ShopMenu) Client.getInstance().getCurrentShow()).search();
         }
         ShopAdminController.getInstance().addCard(customCard);
-    }
-
-    synchronized void setOriginalCards(Collection originalCards) {
-        Collection old = this.originalCards;
-        this.originalCards = originalCards;
-        this.showingCards = originalCards;
-        this.notify();
-        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -84,5 +77,13 @@ public class ShopController {
 
     public Collection getOriginalCards() {
         return originalCards;
+    }
+
+    synchronized void setOriginalCards(Collection originalCards) {
+        Collection old = this.originalCards;
+        this.originalCards = originalCards;
+        this.showingCards = originalCards.searchCollection("");
+        this.notify();
+        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
 }
