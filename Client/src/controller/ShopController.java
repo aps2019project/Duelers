@@ -58,7 +58,8 @@ public class ShopController {
         showingCards = result;
     }
 
-    synchronized void addCard(Card customCard) {
+    void addCard(Card customCard) {
+        System.out.println(originalCards.getHeroes().size());
         originalCards.addCard(customCard);
         if (Client.getInstance().getCurrentShow() instanceof ShopMenu) {
             ((ShopMenu) Client.getInstance().getCurrentShow()).search();
@@ -69,7 +70,7 @@ public class ShopController {
     synchronized void setOriginalCards(Collection originalCards) {
         Collection old = this.originalCards;
         this.originalCards = originalCards;
-        this.showingCards = originalCards;
+        this.showingCards = originalCards.searchCollection("");
         this.notify();
         ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
