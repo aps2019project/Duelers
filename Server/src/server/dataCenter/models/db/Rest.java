@@ -18,7 +18,6 @@ public class Rest implements DataBase {
 
     public static void main(String[] args) {
         Rest rest = new Rest();
-        ArrayList<String> arrayList =new ArrayList<>();
         System.out.println(rest.getAllValues(maps[0]));
 
     }
@@ -65,6 +64,10 @@ public class Rest implements DataBase {
 
     private List getAllKeys(String name) {
         final String path = "get_all_keys";
+        return getList(name, path);
+    }
+
+    private List getList(String name, String path) {
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
@@ -83,21 +86,26 @@ public class Rest implements DataBase {
 
     private List getAllValues(String name) {
         final String path = "get_all_values";
+        return getList(name, path);
+    }
+
+    private String getFromDataBase(String name,String key){
+        final String path = "init_DB";
         HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
+        parameters.put("key",key);
         try {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
                     .asString();
-            if (response.getStatus() == 200)
-                return JsonConverter.fromJson(response.getBody(), List.class);
+            return response.getBody();
         } catch (Exception e) {
-
             e.printStackTrace();
         }
-        return null;
-    }
+        return 0;    }
+
+
     @Override
     public Card getCard(String cardName) {
         return null;
