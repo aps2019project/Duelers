@@ -20,31 +20,27 @@ import models.card.CardType;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
-import models.gui.DefaultLabel;
-import models.gui.DefaultText;
-import models.gui.ImageLoader;
-import models.gui.NormalField;
+import models.gui.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 
 import static java.lang.Math.pow;
-import static models.gui.UIConstants.DEFAULT_FONT;
 import static view.BattleView.Constants.SCALE;
 import static view.BattleView.Constants.SCREEN_WIDTH;
 
 public class PlayerBox implements PropertyChangeListener {
-    private static final Image comboNotSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_empty@2x.png");
-    private static final Image comboSelectedImage = ImageLoader.load("resources/ui/ranked_chevron_full@2x.png");
-    private static final Image spellSelectedImage = ImageLoader.load("resources/ui/quests_glow@2x.png");
-    private static final Image spellNotSelectedImage = ImageLoader.load("resources/ui/quests@2x.png");
-    private static final Image manaImage = ImageLoader.load("resources/ui/icon_mana@2x.png");
-    private static final Image inActiveManaImage = ImageLoader.load("resources/ui/icon_mana_inactive@2x.png");
-    private static final Image player1Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f5@2x.png");
-    private static final Image player2Profile = ImageLoader.load("resources/photo/general_portrait_image_hex_f6-third@2x.png");
-    private static final Image chatImage = ImageLoader.load("resources/ui/chat_bubble.png");
-    private static final double CHAT_BUBBLE_SIZE = 150 * SCALE;
+    private final Image comboNotSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_empty@2x.png"));
+    private final Image comboSelectedImage = new Image(new FileInputStream("resources/ui/ranked_chevron_full@2x.png"));
+    private final Image spellSelectedImage = new Image(new FileInputStream("resources/ui/quests_glow@2x.png"));
+    private final Image spellNotSelectedImage = new Image(new FileInputStream("resources/ui/quests@2x.png"));
+    private final Image manaImage = new Image(new FileInputStream("resources/ui/icon_mana@2x.png"));
+    private final Image inActiveManaImage = new Image(new FileInputStream("resources/ui/icon_mana_inactive@2x.png"));
+    private final Image player1Profile = new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f5@2x.png"));
+    private final Image player2Profile = new Image(new FileInputStream("resources/photo/general_portrait_image_hex_f6-third@2x.png"));
+    private final Image chatImage = new Image(new FileInputStream("resources/ui/chat_bubble.png"));
+    private final double CHAT_BUBBLE_SIZE = 150 * SCALE;
     private final NormalField chatField = new NormalField("Type message and send");
     private final BattleScene battleScene;
     private final CompressedPlayer player1, player2;
@@ -59,7 +55,7 @@ public class PlayerBox implements PropertyChangeListener {
     private ImageView comboButton;
     private ImageView spellButton;
 
-    public PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
+    PlayerBox(BattleScene battleScene, CompressedGame game) throws Exception {
         this.battleScene = battleScene;
         this.player1 = game.getPlayerOne();
         this.player2 = game.getPlayerTwo();
@@ -380,7 +376,7 @@ public class PlayerBox implements PropertyChangeListener {
 
     class MessageShow extends AnimationTimer {
         private final long showTime = (long) (4 * pow(10, 9));
-        private final DefaultText text = new DefaultText("", CHAT_BUBBLE_SIZE * 0.9, DEFAULT_FONT, Color.BLACK);
+        private final DefaultText text = new DefaultText("", CHAT_BUBBLE_SIZE * 0.9, UIConstants.DEFAULT_FONT, Color.BLACK);
         private final ImageView chatView = ImageLoader.makeImageView(chatImage, CHAT_BUBBLE_SIZE, CHAT_BUBBLE_SIZE);
         private final StackPane stackPane;
         private final double x;
