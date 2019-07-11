@@ -144,12 +144,13 @@ public class HandBox implements PropertyChangeListener {
                 imageView.setImage(cardBack);
 
             if (cardAnimation != null) {
+                final CompressedCard card = player.getHand().get(I);
                 cards[i].setOnMouseEntered(mouseEvent -> {
                     if (cardPane != null) {
                         handGroup.getChildren().remove(cardPane);
                         cardPane = null;
                     }
-                    if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(player.getHand().get(I))) {
+                    if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
                         cardAnimation.inActive();
                         imageView.setImage(cardBackGlow);
                     }
@@ -179,7 +180,7 @@ public class HandBox implements PropertyChangeListener {
                 cards[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(player.getHand().get(I))) {
+                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
                             clickOnCard(I);
                         }
                     }
@@ -214,19 +215,20 @@ public class HandBox implements PropertyChangeListener {
                     imageView.setImage(cardBack);
 
                 if (cardAnimation != null) {
+                    final CompressedCard card = player.getCollectedItems().get(I);
                     items[i].setOnMouseEntered(mouseEvent -> {
                         if (cardPane != null) {
                             handGroup.getChildren().remove(cardPane);
                             cardPane = null;
                         }
-                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(player.getHand().get(I))) {
+                        if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
                             cardAnimation.inActive();
                             imageView.setImage(cardBackGlow);
                         } else {
                             imageView.setImage(cardBack);
                         }
                         try {
-                            if (player.getHand().size() > I) {
+                            if (player.getCollectedItems().size() > I) {
                                 cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
                                 cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
                                 cardPane.setLayoutX(100 * Constants.SCALE + items[I].getLayoutX());
@@ -253,7 +255,7 @@ public class HandBox implements PropertyChangeListener {
                     items[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(player.getHand().get(I))) {
+                            if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
                                 clickOnItem(I);
                             }
                         }
@@ -262,7 +264,7 @@ public class HandBox implements PropertyChangeListener {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error making hand");
+            System.out.println("Error making hand items");
         }
     }
 
