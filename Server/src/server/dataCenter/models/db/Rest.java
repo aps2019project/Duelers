@@ -13,12 +13,26 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Rest implements DataBase {
-    private static String[] maps = {"originalCards", "customCards", "collectibleItems", "stories", "originalFlag"};
+    //    private static String[] maps = {"originalCards", "customCards", "collectibleItems", "stories", "originalFlag"};
+    private static enum maps {
+        ORINGINAL_CARDS("originalCards"),
+        CUSTOM_CARDS("customCards"),
+        COLLECTIBLE_ITEMS("collectibleItems"),
+        STORIES("stories"),
+        ORIGINAL_FLAG("originalFlag");
+
+        maps(String s) {
+            path = s;
+        }
+
+        String path;
+    }
+
     final String baseAddress = "http://127.0.0.1:8080/";
 
     public static void main(String[] args) {
         Rest rest = new Rest();
-        System.out.println(rest.getAllValues(maps[0]));
+        System.out.println(rest.getAllValues(maps.ORINGINAL_CARDS.path));
 
     }
 
@@ -126,15 +140,15 @@ public class Rest implements DataBase {
 
     @Override
     public Card getCard(String cardName) {
-        String json = getFromDataBase(maps[0], cardName);
+        String json = getFromDataBase(maps.ORINGINAL_CARDS.path, cardName);
         return JsonConverter.fromJson(json, Card.class);
     }
 
     @Override
     public Collection getOriginalCards() {
-        List jsons =  getAllValues(maps[0]);
+        List jsons = getAllValues(maps.ORINGINAL_CARDS.path);
         Collection collection = new Collection();
-        for (Object o :jsons) {
+        for (Object o : jsons) {
             collection.addCard(JsonConverter.fromJson((String) o, Card.class));
         }
         return collection;
@@ -142,37 +156,47 @@ public class Rest implements DataBase {
 
     @Override
     public List<Story> getStories() {
-        List list = getAllKeys(maps[3]);
-        ArrayList<Story> stories= new ArrayList<>();
-        for (Object o
-                :list) {
-            stories.add(JsonConverter.fromJson((String)o,Story.class));
-        }
+        return getStories(getAllKeys(maps.COLLECTIBLE_ITEMS.path), Story.class);
     }
+
+    private <T> ArrayList<T> getStories(List list, Class<T> classOfT) {
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (Object o
+                : list) {
+            arrayList.add(JsonConverter.fromJson((String) o, classOfT));
+        }
+        return arrayList;
+    }
+
 
     @Override
     public List<Card> getCollectibleItems() {
-        return null;
+        return getStories(getAllKeys(maps.CUSTOM_CARDS.path), Card.class);
     }
 
     @Override
     public Collection getNewCustomCards() {
-        return null;
+        List jsons = getAllValues(maps[1]);
+        Collection collection = new Collection();
+        for (Object o : jsons) {
+            collection.addCard(JsonConverter.fromJson((String) o, Card.class));
+        }
+        return collection;
     }
 
     @Override
     public Card getOriginalFlag() {
-        return null;
+        return JsonConverter.fromJson(getFromDataBase(maps.ORIGINAL_FLAG.path, maps[4]), Card.class);
     }
 
     @Override
     public void addNewCustomCards(Card card) {
-
+        put(maps.CUSTOM_CARDS.path,card.getName(),JsonConverter.toJson(card));
     }
 
     @Override
     public void removeCustomCards(Card card) {
-
+        delete(maps.CUSTOM_CARDS.path,card.getName());
     }
 
     @Override
