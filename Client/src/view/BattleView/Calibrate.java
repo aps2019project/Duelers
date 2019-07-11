@@ -26,6 +26,7 @@ public class Calibrate extends Application implements GameActions {
         Scene scene = new Scene(battleScene.root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+        battleScene.spell("f3_fx_circleofdessication", new Position(2, 2));//TODO
     }
 
     private CompressedGame calibrateGame() {
@@ -49,10 +50,7 @@ public class Calibrate extends Application implements GameActions {
         final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(() -> {
-            String troop1 = "boss_andromeda";
-            String spell1 = "f3_fx_circleofdessication";
-
-            CompressedCard card = new CompressedCard(troop1, null, "a1", CardType.MINION,
+            CompressedCard card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
             CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(0, 0),
                     true, true, false, false, 1, 1);
@@ -61,8 +59,6 @@ public class Calibrate extends Application implements GameActions {
             player1.addNextCardToHand();
             player1.removeCardFromNext();
             player1.addCardToNext(card);
-            System.out.println(battleScene==null);
-            battleScene.spell(spell1, new Position(2, 2));
 
         }).start();
         return game;
