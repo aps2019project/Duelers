@@ -29,13 +29,13 @@ public class WaitingMenu extends Show {
     );
     private static final String backgroundUrl = "resources/menu/background/wait_background.jpg";
     private static final double SPACE_HEIGHT = SCENE_HEIGHT / 2;
-    private static Media backgroundMusic = new Media(
-            new File("resources/music/waiting.m4a").toURI().toString()
-    );
     private static final Image generalImage = ImageLoader.load("resources/wait/general.png");
     private static final double HERO_WIDTH = 3800 * SCALE;
     private static final double HERO_HEIGHT = 2875 * SCALE;
     private static final Font FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 100 * SCALE);
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/waiting.m4a").toURI().toString()
+    );
     private final Show previousShow;
 
     WaitingMenu(Show show) {

@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -41,7 +42,7 @@ public class MapBox implements PropertyChangeListener {
     private CardPane cardPane = null;
     private SelectionType selectionType;
     private DefaultLabel[][] flagLabels = new DefaultLabel[5][9];
-    private ImageView[][] flagImages = new ImageView[5][9];
+    private StackPane[][] flagPanes = new StackPane[5][9];
     private HashMap<String, CardAnimation> collectibleItems = new HashMap<>();
     private Image flag = new Image(new FileInputStream("resources/ui/flag.png"));
 
@@ -141,7 +142,6 @@ public class MapBox implements PropertyChangeListener {
                             hoverCell(J, I);
                         }
                     });
-                    //TODO:Ahmad:Design
                 }
             }
         }
@@ -150,60 +150,40 @@ public class MapBox implements PropertyChangeListener {
     private void addFlagLabels() {
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
-                //TODO:Ahmad design this:)
-                flagImages[j][i] = new ImageView(flag);
-                flagImages[j][i].setFitHeight(Constants.FLAG_HEIGHT);
-                flagImages[j][i].setFitWidth(Constants.FLAG_WIDTH);
-                flagImages[j][i].setX(cellsX[j][i]);
-                flagImages[j][i].setY(cellsY[j][i]);
+                flagPanes[j][i] = new StackPane();
+                flagPanes[j][i].setLayoutX(cellsX[j][i]);
+                flagPanes[j][i].setLayoutY(cellsY[j][i]);
+                ImageView imageView = new ImageView(flag);
+                imageView.setFitHeight(Constants.FLAG_HEIGHT);
+                imageView.setFitWidth(Constants.FLAG_WIDTH);
                 flagLabels[j][i] = new DefaultLabel(Integer.toString(gameMap.getCell(j, i).getNumberOfFlags()),
-                        Constants.FLAG_FONT, Color.BLACK, cellsX[j][i], cellsY[j][i]);
+                        Constants.FLAG_FONT, Color.BLACK);
+                flagPanes[j][i].getChildren().addAll(imageView, flagLabels[j][i]);
                 if (gameMap.getCell(j, i).getNumberOfFlags() == 0) {
-                    flagLabels[j][i].setVisible(false);
-                    flagImages[j][i].setVisible(false);
+                    flagPanes[j][i].setVisible(false);
                 } else {
-                    flagLabels[j][i].setVisible(true);
-                    flagImages[j][i].setVisible(true);
+                    flagPanes[j][i].setVisible(true);
                 }
                 final int J = j, I = i;
-                flagImages[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         clickCell(J, I);
                     }
                 });
-                flagImages[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         exitCell(J, I);
                     }
                 });
-                flagImages[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
+                flagPanes[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         hoverCell(J, I);
                     }
                 });
-
-                flagLabels[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        clickCell(J, I);
-                    }
-                });
-                flagLabels[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        exitCell(J, I);
-                    }
-                });
-                flagLabels[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J, I);
-                    }
-                });
-                mapGroup.getChildren().addAll(flagImages[j][i], flagLabels[j][i]);
+                mapGroup.getChildren().addAll(flagPanes[j][i]);
             }
         }
     }
@@ -292,11 +272,9 @@ public class MapBox implements PropertyChangeListener {
                     Integer newValue = (Integer) evt.getNewValue();
                     flagLabels[position.getRow()][position.getColumn()].setText(Integer.toString(newValue));
                     if (gameMap.getCell(position.getRow(), position.getColumn()).getNumberOfFlags() == 0) {
-                        flagLabels[position.getRow()][position.getColumn()].setVisible(false);
-                        flagImages[position.getRow()][position.getColumn()].setVisible(false);
+                        flagPanes[position.getRow()][position.getColumn()].setVisible(false);
                     } else {
-                        flagLabels[position.getRow()][position.getColumn()].setVisible(true);
-                        flagImages[position.getRow()][position.getColumn()].setVisible(true);
+                        flagPanes[position.getRow()][position.getColumn()].setVisible(true);
                     }
                 }
             });

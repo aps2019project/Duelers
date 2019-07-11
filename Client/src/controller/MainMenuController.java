@@ -47,13 +47,13 @@ public class MainMenuController {
                 Message.makeChatMessage(Constants.SERVER_NAME, Client.getInstance().getAccount().getUsername(), null, text));
     }
 
+    public AccountInfo[] getLeaderBoard() {
+        return leaderBoard;
+    }
+
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {
         this.leaderBoard = leaderBoard;
         this.notifyAll();
-    }
-
-    public AccountInfo[] getLeaderBoard() {
-        return leaderBoard;
     }
 
     public void changeAccountTypeRequest(String username, AccountType newValue) {
@@ -75,12 +75,12 @@ public class MainMenuController {
                 Message.makeInValidateCustomCardMessage(SERVER_NAME, cardName));
     }
 
+    public Collection getCustomCardRequests() {
+        return customCardRequests;
+    }
+
     synchronized void setCustomCardRequests(Collection customCardRequests) {
         this.customCardRequests = customCardRequests;
         this.notifyAll();
-    }
-
-    public Collection getCustomCardRequests() {
-        return customCardRequests;
     }
 }

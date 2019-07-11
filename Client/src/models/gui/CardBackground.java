@@ -13,12 +13,12 @@ import java.util.HashMap;
 import static models.gui.UIConstants.SCALE;
 
 class CardBackground extends StackPane {
-    private static final HashMap<CardType, Image> background = new HashMap<>();
-    private static Image glow;
     static final double CARD_WIDTH = 452 * SCALE;
     static final double GLOW_WIDTH = 506 * SCALE;
     static final double CARD_HEIGHT = 592 * SCALE;
     static final double GLOW_HEIGHT = 639 * SCALE;
+    private static final HashMap<CardType, Image> background = new HashMap<>();
+    private static Image glow;
 
     static {
         try {

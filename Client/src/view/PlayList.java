@@ -35,24 +35,6 @@ public class PlayList {
         return lists.get("run").toArray(new FramePosition[1]);
     }
 
-    public class FramePosition {
-        final double x;
-        final double y;
-
-        FramePosition(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public double getX() {
-            return x;
-        }
-
-        public double getY() {
-            return y;
-        }
-    }
-
     public int getFrameWidth() {
         return frameWidth;
     }
@@ -75,6 +57,24 @@ public class PlayList {
 
     public HashMap<String, ArrayList<FramePosition>> getLists() {
         return lists;
+    }
+
+    public class FramePosition {
+        final double x;
+        final double y;
+
+        FramePosition(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public double getX() {
+            return x;
+        }
+
+        public double getY() {
+            return y;
+        }
     }
 }
 

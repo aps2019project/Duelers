@@ -19,11 +19,11 @@ public class PlayMenu extends Show {
                     Color.rgb(40, 43, 53), CornerRadii.EMPTY, Insets.EMPTY
             )
     );
+    private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
+    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static Media backgroundMusic = new Media(
             new File("resources/music/play_menu.m4a").toURI().toString()
     );
-    private static final String BACKGROUND_URL = "resources/menu/background/play_background.jpg";
-    private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static final PlayButtonItem[] items = {
             new PlayButtonItem("resources/menu/playButtons/single_player.jpg", "SINGLE PLAYER",
                     "Story game and custom game, play with AI", event -> SinglePlayerMenu.getInstance().show()),
@@ -46,6 +46,16 @@ public class PlayMenu extends Show {
         root.getChildren().addAll(sceneContents);
     }
 
+    public static PlayMenu getInstance() {
+        if (menu == null) {
+            try {
+                menu = new PlayMenu(items, BACKGROUND_URL, BACK_EVENT);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return menu;
+    }
 
     private void showGlobalChatDialog(AnchorPane sceneContents) {
         sceneContents.setOnKeyPressed(event -> {
@@ -59,16 +69,5 @@ public class PlayMenu extends Show {
     public void show() {
         super.show();
         GraphicalUserInterface.getInstance().setBackgroundMusic(backgroundMusic);
-    }
-
-    public static PlayMenu getInstance() {
-        if (menu == null) {
-            try {
-                menu = new PlayMenu(items, BACKGROUND_URL, BACK_EVENT);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return menu;
     }
 }

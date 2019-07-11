@@ -10,10 +10,6 @@ public class NewGameFields {
     private String customDeckName;
     private String opponentUsername;
 
-    void setGameType(GameType gameType) {
-        this.gameType = gameType;
-    }
-
     void setNumberOfFlags(int numberOfFlags) {
         this.numberOfFlags = numberOfFlags;
     }
@@ -26,15 +22,19 @@ public class NewGameFields {
         this.customDeckName = customDeckName;
     }
 
-    void setOpponentUsername(String opponentUsername) {
-        this.opponentUsername = opponentUsername;
-    }
-
     public GameType getGameType() {
         return gameType;
     }
 
+    void setGameType(GameType gameType) {
+        this.gameType = gameType;
+    }
+
     public String getOpponentUsername() {
         return opponentUsername;
+    }
+
+    void setOpponentUsername(String opponentUsername) {
+        this.opponentUsername = opponentUsername;
     }
 }

@@ -9,15 +9,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoundEffectPlayer {
-    private static SoundEffectPlayer SEP = new SoundEffectPlayer();
     private static final Map<SoundName, Media> mediaFiles = new HashMap<>();
     private static final String directory = "resources/sfx/";
     private static final String format = ".m4a";
+    private static SoundEffectPlayer SEP = new SoundEffectPlayer();
 
     static {
         Arrays.stream(SoundName.values()).forEach(soundName ->
                 mediaFiles.put(soundName, new Media(new File(soundName.path).toURI().toString()))
         );
+    }
+
+    private SoundEffectPlayer() {
+    }
+
+    public static SoundEffectPlayer getInstance() {
+        return SEP;
+    }
+
+    public void playSound(SoundName soundName) {
+        try {
+            Media media = mediaFiles.get(soundName);
+            new MediaPlayer(media).play();
+        } catch (Exception ignored) {
+        }
     }
 
     public enum SoundName {
@@ -36,21 +51,6 @@ public class SoundEffectPlayer {
 
         SoundName(String name) {
             this.path = directory + name + format;
-        }
-    }
-
-    public static SoundEffectPlayer getInstance() {
-        return SEP;
-    }
-
-    private SoundEffectPlayer() {
-    }
-
-    public void playSound(SoundName soundName) {
-        try {
-            Media media = mediaFiles.get(soundName);
-            new MediaPlayer(media).play();
-        } catch (Exception ignored) {
         }
     }
 }

@@ -157,7 +157,7 @@ public class HandBox implements PropertyChangeListener {
                     try {
                         cardPane = new CardPane(player.getHand().get(I), false, false, null);
                         cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
-                        cardPane.setLayoutX(200 * Constants.SCALE + cards[I].getLayoutX());
+                        cardPane.setLayoutX(150 * Constants.SCALE + cards[I].getLayoutX());
                         handGroup.getChildren().add(cardPane);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -231,7 +231,7 @@ public class HandBox implements PropertyChangeListener {
                             if (player.getCollectedItems().size() > I) {
                                 cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
                                 cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
-                                cardPane.setLayoutX(100 * Constants.SCALE + items[I].getLayoutX());
+                                cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
                                 handGroup.getChildren().add(cardPane);
                             }
                         } catch (FileNotFoundException e) {

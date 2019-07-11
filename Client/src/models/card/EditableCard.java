@@ -24,31 +24,6 @@ public class EditableCard implements ICard {
     private int range;
     private boolean hasCombo;
 
-    public void setName(String name) {
-        String old = this.name;
-        this.name = name;
-        this.cardId = name.replaceAll(" ", "");
-        support.firePropertyChange("name", old, name);
-    }
-
-    public void setDescription(String description) {
-        String old = this.description;
-        this.description = description;
-        support.firePropertyChange("description", old, description);
-    }
-
-    public void setSpriteName(String spriteName) {
-        String old = this.spriteName;
-        this.spriteName = spriteName;
-        support.firePropertyChange("spriteName", old, spriteName);
-    }
-
-    public void setType(CardType type) {
-        CardType old = this.type;
-        this.type = type;
-        support.firePropertyChange("type", old, type);
-    }
-
     public void addSpell(Spell spell) {
         spells.add(spell);
         support.firePropertyChange("spells", null, spells);
@@ -57,30 +32,6 @@ public class EditableCard implements ICard {
     public void removeSpell(Spell spell) {
         spells.remove(spell);
         support.firePropertyChange("spells", null, spells);
-    }
-
-    public void setDefaultAp(int defaultAp) {
-        int old = this.defaultAp;
-        this.defaultAp = defaultAp;
-        support.firePropertyChange("defaultAp", old, defaultAp);
-    }
-
-    public void setDefaultHp(int defaultHp) {
-        int old = this.defaultHp;
-        this.defaultHp = defaultHp;
-        support.firePropertyChange("defaultHp", old, defaultHp);
-    }
-
-    public void setMannaPoint(int mannaPoint) {
-        int old = this.mannaPoint;
-        this.mannaPoint = mannaPoint;
-        support.firePropertyChange("mannaPoint", old, mannaPoint);
-    }
-
-    public void setPrice(String price) {
-        int old = this.price;
-        this.price = (price.length() == 0 || price.equals("-")) ? 0 : Integer.parseInt(price);
-        support.firePropertyChange("price", old, this.price);
     }
 
     public void setAttackType(AttackType attackType) {
@@ -102,9 +53,22 @@ public class EditableCard implements ICard {
         return type;
     }
 
+    public void setType(CardType type) {
+        CardType old = this.type;
+        this.type = type;
+        support.firePropertyChange("type", old, type);
+    }
+
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        String old = this.name;
+        this.name = name;
+        this.cardId = name.replaceAll(" ", "");
+        support.firePropertyChange("name", old, name);
     }
 
     @Override
@@ -112,9 +76,21 @@ public class EditableCard implements ICard {
         return spriteName;
     }
 
+    public void setSpriteName(String spriteName) {
+        String old = this.spriteName;
+        this.spriteName = spriteName;
+        support.firePropertyChange("spriteName", old, spriteName);
+    }
+
     @Override
     public int getDefaultAp() {
         return defaultAp;
+    }
+
+    public void setDefaultAp(int defaultAp) {
+        int old = this.defaultAp;
+        this.defaultAp = defaultAp;
+        support.firePropertyChange("defaultAp", old, defaultAp);
     }
 
     @Override
@@ -122,9 +98,21 @@ public class EditableCard implements ICard {
         return defaultHp;
     }
 
+    public void setDefaultHp(int defaultHp) {
+        int old = this.defaultHp;
+        this.defaultHp = defaultHp;
+        support.firePropertyChange("defaultHp", old, defaultHp);
+    }
+
     @Override
     public int getPrice() {
         return price;
+    }
+
+    public void setPrice(String price) {
+        int old = this.price;
+        this.price = (price.length() == 0 || price.equals("-")) ? 0 : Integer.parseInt(price);
+        support.firePropertyChange("price", old, this.price);
     }
 
     @Override
@@ -132,9 +120,21 @@ public class EditableCard implements ICard {
         return description;
     }
 
+    public void setDescription(String description) {
+        String old = this.description;
+        this.description = description;
+        support.firePropertyChange("description", old, description);
+    }
+
     @Override
     public int getMannaPoint() {
         return mannaPoint;
+    }
+
+    public void setMannaPoint(int mannaPoint) {
+        int old = this.mannaPoint;
+        this.mannaPoint = mannaPoint;
+        support.firePropertyChange("mannaPoint", old, mannaPoint);
     }
 
     public void checkValidation() throws InputException {

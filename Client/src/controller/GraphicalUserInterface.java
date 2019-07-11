@@ -16,14 +16,14 @@ public class GraphicalUserInterface {
     private MediaPlayer backgroundMusicPlayer;
     private Media currentMedia;
 
+    private GraphicalUserInterface() {
+    }
+
     public static GraphicalUserInterface getInstance() {
         if (GUI == null) {
             GUI = new GraphicalUserInterface();
         }
         return GUI;
-    }
-
-    private GraphicalUserInterface() {
     }
 
     public void start(Stage stage) {

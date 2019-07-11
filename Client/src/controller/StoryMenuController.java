@@ -9,6 +9,9 @@ public class StoryMenuController {
     private static StoryMenuController ourInstance;
     private DeckInfo[] stories = null;
 
+    private StoryMenuController() {
+    }
+
     public static StoryMenuController getInstance() {
         if (ourInstance == null) {
             ourInstance = new StoryMenuController();
@@ -18,20 +21,17 @@ public class StoryMenuController {
         return ourInstance;
     }
 
-    private StoryMenuController() {
-    }
-
     public void startGame(int stage) {
         Client.getInstance().addToSendingMessagesAndSend(
                 Message.makeNewStoryGameMessage(Constants.SERVER_NAME, stage));
     }
 
+    public DeckInfo[] getStories() {
+        return stories;
+    }
+
     synchronized void setStories(DeckInfo[] stories) {
         this.stories = stories;
         this.notify();
-    }
-
-    public DeckInfo[] getStories() {
-        return stories;
     }
 }

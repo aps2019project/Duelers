@@ -27,8 +27,9 @@ public class MainMenu extends Show {
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
     );
-
+    private final List<MenuItem> items = new ArrayList<>();
     private int itemIndex = 0;
+    private boolean inLeaderBoard = false;
     private final MenuItem[] itemsArray = {
             new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
             new MenuItem(itemIndex++, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
@@ -38,9 +39,6 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
-
-    private final List<MenuItem> items = new ArrayList<>();
-    private boolean inLeaderBoard = false;
     private boolean inCustomCardRequests = false;
 
     {

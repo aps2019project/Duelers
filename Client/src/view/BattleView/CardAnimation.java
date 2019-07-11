@@ -21,10 +21,9 @@ public class CardAnimation extends Transition {
     static final Map<String, Image> cachedImages = new HashMap<>();
     static final Map<String, Playlist> cachedPlaylists = new HashMap<>();
     private final Group group;
+    private final ImageView imageView;
     private FramePosition[] activeFramePositions;
     private FramePosition[] inActiveFramePositions;
-
-    private final ImageView imageView;
     private int frameWidth, frameHeight;
     private double extraX, extraY;
 

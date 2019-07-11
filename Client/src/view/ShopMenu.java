@@ -26,6 +26,9 @@ import java.io.FileNotFoundException;
 import static models.gui.UIConstants.*;
 
 public class ShopMenu extends Show implements PropertyChangeListener {
+    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
+    private static final double SCROLL_WIDTH = 2350 * SCALE;
+    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private static Media backgroundMusic = new Media(
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
@@ -34,9 +37,6 @@ public class ShopMenu extends Show implements PropertyChangeListener {
         ShopController.getInstance().removePropertyChangeListener(menu);
         new MainMenu().show();
     };
-    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
-    private static final double SCROLL_WIDTH = 2350 * SCALE;
-    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private VBox cardsBox;
     private Collection showingCards;
 

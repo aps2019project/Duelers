@@ -41,6 +41,10 @@ public class GlobalChatDialog {
         dialogBox.getChildren().stream().filter(node -> node instanceof ScrollPane).forEach(node -> ((ScrollPane) node).setMinHeight(300 * SCALE));
     }
 
+    public static GlobalChatDialog getInstance() {
+        return ourInstance;
+    }
+
     private void sendMessage() {
         MainMenuController.getInstance().sendChatMessage(normalField.getText());
         normalField.setText("");
@@ -58,10 +62,6 @@ public class GlobalChatDialog {
                 BackgroundMaker.makeMenuBackgroundUnfrozen();
             });
         }
-    }
-
-    public static GlobalChatDialog getInstance() {
-        return ourInstance;
     }
 
     public void addMessage(ChatMessage chatMessage) {

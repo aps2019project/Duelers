@@ -13,12 +13,10 @@ import java.util.HashMap;
 
 public class ResourcesCenter {
     private final static ResourcesCenter ourInstance = new ResourcesCenter();
+    private static final String PATH = "resources";
     private HashMap<String, Image> imageHashMap = new HashMap<>();
     private HashMap<String, PlayList> playListHashMap = new HashMap<>();
     private HashMap<String, byte[]> stringMediaHashMap = new HashMap<>();
-
-
-    private static final String PATH = "resources";
 
     private ResourcesCenter() {
     }
