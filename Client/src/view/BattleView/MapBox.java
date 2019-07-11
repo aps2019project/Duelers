@@ -233,6 +233,7 @@ public class MapBox implements PropertyChangeListener {
                 System.out.println("Error making animation " + newTroop.getCard().getCardId());
             }
         }
+        battleScene.getHandBox().resetSelection();
         resetSelection();
     }
 

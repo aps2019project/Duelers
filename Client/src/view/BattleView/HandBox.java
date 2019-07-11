@@ -367,19 +367,13 @@ public class HandBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("next")) {
-            Platform.runLater(this::updateNext);
+            Platform.runLater(this::resetSelection);
         }
         if (evt.getPropertyName().equals("hand")) {
-            Platform.runLater(() -> {
-                selectedCard = -1;
-                updateCards();
-            });
+            Platform.runLater(this::resetSelection);
         }
         if (evt.getPropertyName().equals("items")) {
-            Platform.runLater(() -> {
-                selectedItem = -1;
-                updateItems();
-            });
+            Platform.runLater(this::resetSelection);
         }
     }
 

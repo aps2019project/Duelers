@@ -346,10 +346,18 @@ public class PlayerBox implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("mp1")) {
-            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
+            Platform.runLater(() -> {
+                updateMP((int) evt.getNewValue());
+                battleScene.getHandBox().resetSelection();
+                battleScene.getMapBox().resetSelection();
+            });
         }
         if (evt.getPropertyName().equals("mp2")) {
-            Platform.runLater(() -> updateMP((int) evt.getNewValue()));
+            Platform.runLater(() -> {
+                updateMP((int) evt.getNewValue());
+                battleScene.getHandBox().resetSelection();
+                battleScene.getMapBox().resetSelection();
+            });
         }
         if (evt.getPropertyName().equals("turn")) {
             Platform.runLater(() -> {

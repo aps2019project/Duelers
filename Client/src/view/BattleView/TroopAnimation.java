@@ -43,9 +43,9 @@ public class TroopAnimation extends Transition {
     private int currentI, currentJ;
 
     private ACTION action;
-    private boolean shouldMove = false;
+    private boolean shouldRun = false;
     private int nextI, nextJ;
-    private boolean shouldKill = false;
+    private boolean shouldDie = false;
     private boolean shouldAttack = false;
     private int attackColumn = 0;
     private boolean shouldHit = false;
@@ -176,8 +176,8 @@ public class TroopAnimation extends Transition {
     }
 
     private void generateNextAction() {
-        if (shouldMove) {
-            shouldMove = false;
+        if (shouldRun) {
+            shouldRun = false;
             setAction(ACTION.RUN);
             if (nextI > currentI)
                 imageView.setScaleX(1);
@@ -211,8 +211,8 @@ public class TroopAnimation extends Transition {
                 imageView.setScaleX(-1);
             return;
         }
-        if (shouldKill) {
-            shouldKill = false;
+        if (shouldDie) {
+            shouldDie = false;
             setAction(ACTION.DEATH);
             return;
         }
@@ -256,7 +256,7 @@ public class TroopAnimation extends Transition {
     }
 
     void kill() {
-        shouldKill = true;
+        shouldDie = true;
     }
 
     public void attack(int i) {
@@ -272,7 +272,7 @@ public class TroopAnimation extends Transition {
     void moveTo(int j, int i) {
         nextI = i;
         nextJ = j;
-        shouldMove = true;
+        shouldRun = true;
     }
 
     void select() {
