@@ -135,7 +135,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("search_result")) {
-            showingCards = (Collection) evt.getNewValue();
+            showingCards = ShopController.getInstance().getShowingCards();
             try {
                 cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
                 cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
