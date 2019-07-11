@@ -34,7 +34,7 @@ public class Collection {
     }
 
     private ArrayList<Card> getCardsWithName(String cardName, List<Card> cards) {
-        ArrayList<Card>cards1 = new ArrayList<>();
+        ArrayList<Card> cards1 = new ArrayList<>();
         if (cardName == null || cards == null)
             return cards1;
         for (Card card : cards) {
@@ -122,16 +122,16 @@ public class Collection {
         if (hero.isEmpty())
             throw new ClientException("you have not the hero");
         deck.addCard(hero.get(0));
-        ArrayList<Card> item = getCardsWithName(exportedDeck.getItemName(),items);
+        ArrayList<Card> item = getCardsWithName(exportedDeck.getItemName(), items);
         if (item.isEmpty())
             throw new ClientException("you have not the item");
         deck.addCard(item.get(0));
-        for (Map.Entry<String,Integer> entry:
-             exportedDeck.getOtherCards().entrySet()) {
-            ArrayList<Card> cards = getCardsWithName(entry.getKey(),minions);
-            cards.addAll(getCardsWithName(entry.getKey(),spells));
-            if (cards.size()<entry.getValue())
-                throw new ClientException("you have not enough cards (buy "+entry.getKey()+" from shop");
+        for (Map.Entry<String, Integer> entry :
+                exportedDeck.getOtherCards().entrySet()) {
+            ArrayList<Card> cards = getCardsWithName(entry.getKey(), minions);
+            cards.addAll(getCardsWithName(entry.getKey(), spells));
+            if (cards.size() < entry.getValue())
+                throw new ClientException("you have not enough cards (buy " + entry.getKey() + " from shop");
             for (int i = 0; i < entry.getValue(); i++) {
                 deck.addCard(cards.get(i));
             }

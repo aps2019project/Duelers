@@ -2,9 +2,7 @@ package models.comperessedData;
 
 import models.game.map.Position;
 
-import java.util.Observable;
-
-public class CompressedCell{
+public class CompressedCell {
     private int row;
     private int column;
     private CompressedCard item;//non flag item

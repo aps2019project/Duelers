@@ -3,12 +3,11 @@ package view;
 import controller.Client;
 import controller.GraphicalUserInterface;
 import controller.MainMenuController;
-
-import javafx.scene.input.KeyCode;
-
 import javafx.application.Platform;
-
-import javafx.scene.layout.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
 import models.account.Collection;
@@ -28,7 +27,7 @@ public class MainMenu extends Show {
     private static Media backgroundMusic = new Media(
             new File("resources/music/main_menu.m4a").toURI().toString()
     );
-  
+
     private int itemIndex = 0;
     private final MenuItem[] itemsArray = {
             new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
@@ -39,7 +38,7 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
-  
+
     private final List<MenuItem> items = new ArrayList<>();
     private boolean inLeaderBoard = false;
     private boolean inCustomCardRequests = false;

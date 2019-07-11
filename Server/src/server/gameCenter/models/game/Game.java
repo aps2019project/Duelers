@@ -130,7 +130,6 @@ public abstract class Game {
     }
 
     public void changeTurn(String username) throws LogicException {
-
         if (canCommand(username)) {
             addNextCardToHand();
 
@@ -184,8 +183,8 @@ public abstract class Game {
                 Thread.sleep(500);
                 actions.calculateAvailableInsets(this);
             }
-        }catch (InterruptedException ignored){
-        }finally {
+        } catch (InterruptedException ignored) {
+        } finally {
             changeTurn("AI");
         }
 
@@ -302,7 +301,7 @@ public abstract class Game {
             Server.getInstance().sendTroopUpdateMessage(this, troop);
             gameMap.getCell(position).clearItems();
         }
-        if (card.getType() == CardType.SPELL) {
+        if (card.getType() == CardType.SPELL || card.getType()==CardType.COLLECTIBLE_ITEM) {
             player.addToGraveYard(card);
             Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
         }
@@ -890,12 +889,12 @@ public abstract class Game {
         List<CellEffect> result = new ArrayList<>();
 
         buffs.forEach(buff -> buff.getTarget().getCells()
-                        .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
-                );
+                .forEach(cell -> result.add(new CellEffect(new Position(cell), buff.isPositive())))
+        );
         return Collections.unmodifiableList(result);
     }
 
     public void forceFinish(String username) {
-        setMatchHistories(!playerOne.getUserName().equals(username),!playerTwo.getUserName().equals(username));
+        setMatchHistories(!playerOne.getUserName().equals(username), !playerTwo.getUserName().equals(username));
     }
 }

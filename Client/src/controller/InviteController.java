@@ -20,17 +20,11 @@ public class InviteController {
 
     public void accept(String username) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeAcceptRequestMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME, username
-                )
+                Message.makeAcceptRequestMessage(SERVER_NAME, username)
         );
     }
 
     public void decline(String username) {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeDeclineRequestMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME, username
-                )
-        );
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeDeclineRequestMessage(SERVER_NAME, username));
     }
 }

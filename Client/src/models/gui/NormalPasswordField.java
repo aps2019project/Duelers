@@ -12,6 +12,7 @@ class NormalPasswordField extends PasswordField {
     private static final Border DEFAULT_BORDER = new Border(
             new BorderStroke(Color.gray(0.4), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)
     );
+
     NormalPasswordField() {
         setFont(UIConstants.DEFAULT_FONT);
         setBackground(TEXT_FIELD_BACKGROUND);

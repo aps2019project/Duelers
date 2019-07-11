@@ -10,9 +10,9 @@ import models.card.Card;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import static controller.SoundEffectPlayer.SoundName.select;
 import static models.gui.UIConstants.DEFAULT_SPACING;
 import static models.gui.UIConstants.SCALE;
-import static controller.SoundEffectPlayer.SoundName.*;
 
 public class ShopCardsGrid extends GridPane {
     private static final double BUTTONS_WIDTH = 506 * SCALE;

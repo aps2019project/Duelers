@@ -19,19 +19,15 @@ import java.util.LinkedList;
 
 public class GameCenter extends Thread {//synchronize
     private static GameCenter ourInstance = new GameCenter();
+    private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
+    private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
+    private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+    private GameCenter() {
+    }
 
     public static GameCenter getInstance() {
         return ourInstance;
     }
-
-
-    private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
-    private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
-    private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
-
-    private GameCenter() {
-    }
-
 
     @Override
     public void run() {
@@ -87,7 +83,7 @@ public class GameCenter extends Thread {//synchronize
         synchronized (userInvitations) {
             userInvitations.addLast(new UserInvitation(inviter, invited, gameType, numberOfFlags));
             Server.getInstance().addToSendingMessages(Message.makeInvitationMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
+                    DataCenter.getInstance().getAccounts().get(invited), inviter.getUsername(),
                     gameType, numberOfFlags));
         }
     }
@@ -133,7 +129,7 @@ public class GameCenter extends Thread {//synchronize
                 throw new ClientException("The Invitation was not found!");
             userInvitations.remove(invitation);
             Server.getInstance().addToSendingMessages(Message.makeAcceptRequestMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+                    DataCenter.getInstance().getAccounts().get(inviter)));
             newMultiplayerGame(inviter, invited, invitation.getGameType(), invitation.getNumberOfFlags());
         }
     }
@@ -152,7 +148,7 @@ public class GameCenter extends Thread {//synchronize
                 throw new ClientException("The Invitation was not found!");
             userInvitations.remove(invitation);
             Server.getInstance().addToSendingMessages(Message.makeDeclineRequestMessage(
-                    Server.getInstance().serverName, DataCenter.getInstance().getAccounts().get(inviter)));
+                    DataCenter.getInstance().getAccounts().get(inviter)));
         }
     }
 
@@ -209,7 +205,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(Game.getDefaultReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, message.getSender(), game, 0));
+                (message.getSender(), game));
         game.startGame();
     }
 
@@ -240,7 +236,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(story.getReward());
         onlineGames.put(myAccount, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, message.getSender(), game, 0));
+                (message.getSender(), game));
         game.startGame();
     }
 
@@ -265,9 +261,9 @@ public class GameCenter extends Thread {//synchronize
         onlineGames.put(account1, game);
         onlineGames.put(account2, game);
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account1.getUsername()), game, 0));
+                (DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
-                (Server.getInstance().serverName, DataCenter.getInstance().getClientName(account2.getUsername()), game, 0));
+                (DataCenter.getInstance().getClientName(account2.getUsername()), game));
         try {
             game.startGame();
         } catch (ServerException e) {
@@ -400,7 +396,7 @@ public class GameCenter extends Thread {//synchronize
 
             game.forceFinish(username);
             finish(game);
-        }catch (LogicException ignored){
+        } catch (LogicException ignored) {
         }
 
     }

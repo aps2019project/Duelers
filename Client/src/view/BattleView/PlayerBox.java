@@ -116,15 +116,15 @@ public class PlayerBox implements PropertyChangeListener {
         player1Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
         player2Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
-        DefaultLabel player1Name=new DefaultLabel(player1.getUserName(),Constants.NAME_FONT,Color.WHITE,290* SCALE,75*SCALE);
-        player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK,new CornerRadii(3), Insets.EMPTY)));
-        DefaultLabel player2Name=new DefaultLabel(player2.getUserName(),Constants.NAME_FONT,Color.WHITE,SCREEN_WIDTH-400*SCALE,75*SCALE);//TODO
-        player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK,new CornerRadii(3), Insets.EMPTY)));
-        player1ImageEffect=new ColorAdjust();
-        player2ImageEffect=new ColorAdjust();
+        DefaultLabel player1Name = new DefaultLabel(player1.getUserName(), Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
+        player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        DefaultLabel player2Name = new DefaultLabel(player2.getUserName(), Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 400 * SCALE, 75 * SCALE);//TODO
+        player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        player1ImageEffect = new ColorAdjust();
+        player2ImageEffect = new ColorAdjust();
         player1Image.setEffect(player1ImageEffect);
         player2Image.setEffect(player2ImageEffect);
-        group.getChildren().addAll(player1Image, player2Image,player1Name,player2Name);
+        group.getChildren().addAll(player1Image, player2Image, player1Name, player2Name);
     }
 
     void refreshComboAndSpell() {

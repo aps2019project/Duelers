@@ -85,7 +85,7 @@ public class Collection {
     }
 
     private boolean hasCard(String cardId, List<Card> cards) {
-        if (cardId == null || cards==null)
+        if (cardId == null || cards == null)
             return false;
         for (Card card : cards) {
             if (card.getCardId().equalsIgnoreCase(cardId))

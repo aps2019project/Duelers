@@ -8,6 +8,7 @@ import javafx.util.Duration;
 
 class RotateAnimation {
     private final RotateTransition rotate;
+
     RotateAnimation(ImageView ringView) {
         rotate = new RotateTransition(Duration.seconds(1.5), ringView);
         rotate.setByAngle(360);

@@ -6,8 +6,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.FileNotFoundException;
 
-import static models.gui.UIConstants.SCALE;
-
 public class PlayButtonItem {
     final String title;
     final String description;

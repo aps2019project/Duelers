@@ -11,7 +11,7 @@ import models.game.map.Position;
 
 import java.util.ArrayList;
 
-public class Calibrate  extends Application implements GameActions {
+public class Calibrate extends Application implements GameActions {
     private final int playerNumber = 1;
     private BattleScene battleScene;
 
@@ -25,7 +25,7 @@ public class Calibrate  extends Application implements GameActions {
         primaryStage.show();
     }
 
-    private CompressedGame calibrateGame(){
+    private CompressedGame calibrateGame() {
         final CompressedCell[][] cells = new CompressedCell[5][9];
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 9; i++) {
@@ -46,8 +46,8 @@ public class Calibrate  extends Application implements GameActions {
         final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(() -> {
-            String troop1="boss_andromeda";
-            String spell1="fx_buff";
+            String troop1 = "boss_andromeda";
+            String spell1 = "fx_buff";
 
             CompressedCard card = new CompressedCard(troop1, null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
@@ -64,7 +64,7 @@ public class Calibrate  extends Application implements GameActions {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            battleScene.spell(spell1,new Position(2,2));
+            battleScene.spell(spell1, new Position(2, 2));
 
         }).start();
         return game;

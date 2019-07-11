@@ -11,8 +11,8 @@ import models.game.map.Position;
 import models.message.CardPosition;
 import models.message.GameUpdateMessage;
 import models.message.Message;
-import view.*;
 import view.BattleView.BattleScene;
+import view.*;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -33,8 +33,6 @@ public class Client {
     private Position[] positions;
     private boolean validation = true;
     private String errorMessage;
-    private int lastSentMessageId = 0;
-    private int lastReceivedMessageId = 0;
     private Socket socket;
     private Gson gson = new Gson();
     private Thread sendMessageThread;
@@ -150,8 +148,6 @@ public class Client {
     }
 
     private void handleMessage(Message message) {
-        if (message.getMessageId() > lastReceivedMessageId)
-            lastReceivedMessageId = message.getMessageId();
         switch (message.getMessageType()) {
             case SEND_EXCEPTION:
                 showError(message);
@@ -266,7 +262,7 @@ public class Client {
     }
 
     private void showOrSaveMessage(Message message) {
-        if (message.getChatMessage().getReceiverUsername()==null) {
+        if (message.getChatMessage().getReceiverUsername() == null) {
             MainMenuController.getInstance().addChatMessage(message.getChatMessage());
         } else {
             if (currentShow instanceof BattleScene) {
@@ -296,7 +292,7 @@ public class Client {
     private void disconnected() {
     }
 
-    String getClientName() {
+    public String getClientName() {
         return clientName;
     }
 

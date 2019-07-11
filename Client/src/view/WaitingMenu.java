@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import static models.gui.UIConstants.*;
-import static models.gui.UIConstants.SCALE;
 
 public class WaitingMenu extends Show {
     private static final Background ROOT_BACKGROUND = new Background(
@@ -76,6 +75,7 @@ public class WaitingMenu extends Show {
             private final int blue = 255;
             private int currentOpacity = 50;
             private boolean ascending = false;
+
             @Override
             public void handle(long now) {
                 if (ascending) {

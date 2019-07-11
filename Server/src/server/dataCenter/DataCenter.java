@@ -63,7 +63,7 @@ public class DataCenter extends Thread {
         readStories();
     }
 
-    private Card getCard(String cardName, Collection collection) {
+    public static Card getCard(String cardName, Collection collection) {
         for (Card card : collection.getHeroes()) {
             if (card.getName().equals(cardName))
                 return card;
@@ -143,8 +143,7 @@ public class DataCenter extends Thread {
         } else {
             accounts.replace(account, message.getSender());
             clients.replace(message.getSender(), account);
-            Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                    Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+            Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
             Server.getInstance().serverPrint(message.getSender() + " Is Logged In");
         }
     }
@@ -183,15 +182,14 @@ public class DataCenter extends Thread {
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
         //TODO:Check online games
-        Server.getInstance().addToSendingMessages(Message.makeDoneMessage(Server.getInstance().serverName, message.getSender(), message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
     }
 
     public void createDeck(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.addDeck(message.getOtherFields().getDeckName());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -199,8 +197,7 @@ public class DataCenter extends Thread {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.deleteDeck(message.getOtherFields().getDeckName());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -208,8 +205,7 @@ public class DataCenter extends Thread {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.addCardToDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -217,8 +213,7 @@ public class DataCenter extends Thread {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.removeCardFromDeck(message.getOtherFields().getMyCardId(), message.getOtherFields().getDeckName());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -226,17 +221,15 @@ public class DataCenter extends Thread {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.selectDeck(message.getOtherFields().getDeckName());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
     public void buyCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        account.buyCard(message.getOtherFields().getCardName(), dataBase.getCard(message.getOtherFields().getCardName()).getPrice(), dataBase.getOriginalCards());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        account.buyCard(message.getOtherFields().getCardName(), dataBase.getOriginalCards());
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -244,8 +237,7 @@ public class DataCenter extends Thread {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         account.sellCard(message.getOtherFields().getMyCardId());
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
     }
 
@@ -305,9 +297,17 @@ public class DataCenter extends Thread {
         Collection collection = account.getCollection();
         Deck deck = collection.extractDeck(exportedDeck);
         account.addDeck(deck);
-        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
-                Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
+        Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(message.getSender(), account));
         saveAccount(account);
+    }
+
+    public void changeCardNumber(String cardName,int changeValue) throws LogicException{
+        Card card=getCard(cardName,originalCards);
+        if(card==null)
+            throw new ClientException("Invalid Card");
+        card.setRemainingNumber(card.getRemainingNumber() + changeValue);
+        updateCard(card);
+        Server.getInstance().sendChangeCardNumberMessage(card);
     }
 
     public void changeCardNumber(Message message) throws LogicException {
@@ -315,12 +315,7 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card = getCard(message.getChangeCardNumber().getCardName(), dataBase.getOriginalCards());
-        if (card == null)
-            throw new ClientException("Invalid Card Name!");
-        card.setRemainingNumber(card.getRemainingNumber() + message.getChangeCardNumber().getNumber());
-        updateCard(card);
-        Server.getInstance().sendChangeCardNumberMessage(card);
+        changeCardNumber(message.getChangeCardNumber().getCardName(),message.getChangeCardNumber().getNumber());
     }
 
     public void changeAccountType(Message message) throws LogicException {

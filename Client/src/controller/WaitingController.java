@@ -19,8 +19,6 @@ public class WaitingController {
 
 
     public void cancel() {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeCancelRequestMessage(Client.getInstance().getClientName(), SERVER_NAME)
-        );
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeCancelRequestMessage(SERVER_NAME));
     }
 }

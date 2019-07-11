@@ -8,11 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import static controller.SoundEffectPlayer.SoundName;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import static controller.SoundEffectPlayer.SoundName;
 import static models.gui.UIConstants.SCALE;
 
 public class BackButton extends ImageView {

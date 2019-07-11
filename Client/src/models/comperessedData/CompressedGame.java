@@ -89,24 +89,27 @@ public class CompressedGame {
 
     public void gameUpdate(int turnNumber, int player1CurrentMP, int player1NumberOfCollectedFlags,
                            int player2CurrentMP, int player2NumberOfCollectedFlags, CellEffect[] cellEffects) {
+        int maxMP = 9;
+        if (turnNumber < 14)
+            maxMP = turnNumber / 2 + 2;
         if (support == null) {
             support = new PropertyChangeSupport(this);
         }
         if (this.turnNumber != turnNumber) {
             support.firePropertyChange("turn", this.turnNumber, turnNumber);
             this.turnNumber = turnNumber;
-            support.firePropertyChange("mp1", player1CurrentMP, turnNumber / 2 + 3);
+            support.firePropertyChange("mp1", player1CurrentMP, maxMP);
             playerOne.setCurrentMP(player1CurrentMP, turnNumber);
-            support.firePropertyChange("mp2", player2CurrentMP, turnNumber / 2 + 3);
+            support.firePropertyChange("mp2", player2CurrentMP, maxMP);
             playerTwo.setCurrentMP(player2CurrentMP, turnNumber);
         }
         if (playerOne.getCurrentMP() != player1CurrentMP) {
-            support.firePropertyChange("mp1", player1CurrentMP, turnNumber / 2 + 3);
+            support.firePropertyChange("mp1", player1CurrentMP, maxMP);
             playerOne.setCurrentMP(player1CurrentMP, turnNumber);
         }
 
         if (playerTwo.getCurrentMP() != player2CurrentMP) {
-            support.firePropertyChange("mp2", player2CurrentMP, turnNumber / 2 + 3);
+            support.firePropertyChange("mp2", player2CurrentMP, maxMP);
             playerTwo.setCurrentMP(player2CurrentMP, turnNumber);
         }
         playerOne.setNumberOfCollectedFlags(player1NumberOfCollectedFlags);

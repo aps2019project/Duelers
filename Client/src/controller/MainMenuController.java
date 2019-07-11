@@ -10,7 +10,6 @@ import models.message.ChatMessage;
 import models.message.DataName;
 import models.message.Message;
 import view.GlobalChatDialog;
-import view.MainMenu;
 
 import java.util.ArrayList;
 
@@ -32,18 +31,11 @@ public class MainMenuController {
 
     public void logout() {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeLogOutMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME, 0
-                )
-        );
+                Message.makeLogOutMessage(SERVER_NAME));
     }
 
     public void requestLeaderboard() {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeGetDataMessage(
-                        Client.getInstance().getClientName(), SERVER_NAME, DataName.LEADERBOARD, 0
-                )
-        );
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeGetDataMessage(SERVER_NAME, DataName.LEADERBOARD));
     }
 
     public void addChatMessage(ChatMessage chatMessage) {
@@ -52,9 +44,7 @@ public class MainMenuController {
 
     public void sendChatMessage(String text) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChatMessage(Client.getInstance().getClientName(),Constants.SERVER_NAME,Client.getInstance().getAccount().getUsername(),
-                        null,text,0)
-        );
+                Message.makeChatMessage(Constants.SERVER_NAME, Client.getInstance().getAccount().getUsername(), null, text));
     }
 
     synchronized void setLeaderBoard(AccountInfo[] leaderBoard) {
@@ -67,27 +57,22 @@ public class MainMenuController {
     }
 
     public void changeAccountTypeRequest(String username, AccountType newValue) {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeChangeAccountTypeMessage(Client.getInstance().getClientName(), SERVER_NAME, username, newValue)
-        );
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeChangeAccountTypeMessage(SERVER_NAME, username, newValue));
     }
 
     public void requestCustomCardRequests() {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeGetDataMessage(Client.getInstance().getClientName(),SERVER_NAME,DataName.CUSTOM_CARDS,0)
+                Message.makeGetDataMessage(SERVER_NAME, DataName.CUSTOM_CARDS)
         );
     }
 
     public void acceptCustomCard(String cardName) {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeValidateCustomCardMessage(Client.getInstance().getClientName(),SERVER_NAME,cardName,0)
-        );
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeValidateCustomCardMessage(SERVER_NAME, cardName));
     }
 
     public void rejectCustomCard(String cardName) {
         Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeInValidateCustomCardMessage(Client.getInstance().getClientName(),SERVER_NAME,cardName,0)
-        );
+                Message.makeInValidateCustomCardMessage(SERVER_NAME, cardName));
     }
 
     synchronized void setCustomCardRequests(Collection customCardRequests) {
