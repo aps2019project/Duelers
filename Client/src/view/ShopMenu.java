@@ -2,6 +2,7 @@ package view;
 
 import controller.GraphicalUserInterface;
 import controller.ShopController;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -136,14 +137,16 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("search_result")) {
             showingCards = (Collection) evt.getNewValue();
-            try {
-                cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
-                cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
-                cardsBox.getChildren().set(5, new ShopCardsGrid(showingCards.getSpells()));
-                cardsBox.getChildren().set(7, new ShopCardsGrid(showingCards.getItems()));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
+                    cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
+                    cardsBox.getChildren().set(5, new ShopCardsGrid(showingCards.getSpells()));
+                    cardsBox.getChildren().set(7, new ShopCardsGrid(showingCards.getItems()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
