@@ -1,11 +1,13 @@
 package server.clientPortal.models.message;
 
 
+import server.dataCenter.models.card.spell.AvailabilityType;
 import server.gameCenter.models.map.Position;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public class GameAnimations {
+class GameAnimations {
     private ArrayList<CardAnimation> attacks = new ArrayList<>();
     private ArrayList<CardAnimation> counterAttacks = new ArrayList<>();
     private ArrayList<SpellAnimation> spellAnimations = new ArrayList<>();
@@ -18,7 +20,7 @@ public class GameAnimations {
         counterAttacks.add(new CardAnimation(cardID, defenderCardID));
     }
 
-    public void addSpellAnime(String spellID, Position position) {
-        spellAnimations.add(new SpellAnimation(spellID, position));
+    void addSpellAnimation(Set<Position> positions, AvailabilityType availabilityType) {
+        spellAnimations.add(new SpellAnimation(positions, availabilityType));
     }
 }

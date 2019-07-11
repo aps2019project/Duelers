@@ -6,9 +6,12 @@ import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.ExportedDeck;
+import server.dataCenter.models.card.spell.AvailabilityType;
 import server.gameCenter.models.game.*;
+import server.gameCenter.models.map.Position;
 
 import java.util.List;
+import java.util.Set;
 
 public class Message {
     private MessageType messageType;
@@ -110,6 +113,13 @@ public class Message {
         return message;
     }
 
+
+    public static Message makeSpellMessage(String receiver, Set<Position> positions, AvailabilityType availabilityType) {
+        Message message = new Message(receiver);
+        message.gameAnimations = new GameAnimations();
+        message.gameAnimations.addSpellAnimation(positions, availabilityType);
+        return message;
+    }
 
     public static Message makeTroopUpdateMessage(String receiver, Troop troop) {
         Message message = new Message(receiver);

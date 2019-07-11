@@ -8,18 +8,18 @@ import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.card.Card;
+import server.dataCenter.models.card.spell.AvailabilityType;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
 import server.gameCenter.GameCenter;
-import server.gameCenter.models.game.CellEffect;
-import server.gameCenter.models.game.Game;
-import server.gameCenter.models.game.Story;
-import server.gameCenter.models.game.Troop;
+import server.gameCenter.models.game.*;
+import server.gameCenter.models.map.Position;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class Server {
     private static Server server;
@@ -354,6 +354,27 @@ public class Server {
                 serverPrint("player two has logged out during game!");
             } else {
                 addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
+            }
+        }
+    }
+
+    public void sendSpellMessage(Game game, TargetData target, AvailabilityType availabilityType) {
+        String clientName;
+        Set<Position> positions = target.getPositions();
+        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
+            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+            if (clientName == null) {
+                serverPrint("player one has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
+            }
+        }
+        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
+            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
+            if (clientName == null) {
+                serverPrint("player two has logged out during game!");
+            } else {
+                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
             }
         }
     }
