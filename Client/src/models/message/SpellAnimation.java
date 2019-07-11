@@ -1,17 +1,17 @@
 package models.message;
 
-
+import models.card.spell.AvailabilityType;
 import models.game.map.Position;
 
 public class SpellAnimation {
-    String spellID;
-    Position position;
+    private Position[] positions;
+    private AvailabilityType availabilityType;
 
-    public String getSpellID() {
-        return spellID;
+    public Position[] getPositions() {
+        return positions;
     }
 
-    public Position getPosition() {
-        return position;
+    public AvailabilityType getAvailabilityType() {
+        return availabilityType;
     }
 }
