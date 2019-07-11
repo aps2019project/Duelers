@@ -5,6 +5,7 @@ import models.account.Collection;
 import models.card.Card;
 import models.message.DataName;
 import models.message.Message;
+import view.ShopMenu;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -57,6 +58,23 @@ public class ShopController {
         showingCards = result;
     }
 
+    void addCard(Card customCard) {
+        System.out.println(originalCards.getHeroes().size());
+        originalCards.addCard(customCard);
+        if (Client.getInstance().getCurrentShow() instanceof ShopMenu) {
+            ((ShopMenu) Client.getInstance().getCurrentShow()).search();
+        }
+        ShopAdminController.getInstance().addCard(customCard);
+    }
+
+    synchronized void setOriginalCards(Collection originalCards) {
+        Collection old = this.originalCards;
+        this.originalCards = originalCards;
+        this.showingCards = originalCards.searchCollection("");
+        this.notify();
+        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
@@ -65,24 +83,7 @@ public class ShopController {
         support.removePropertyChangeListener(pcl);
     }
 
-    synchronized void addCard(Card customCard) {
-        originalCards.addCard(customCard);
-        support.firePropertyChange("search_result", showingCards, originalCards);
-        showingCards.addCard(customCard);
-        System.out.println(originalCards.getHeroes().size());
-        this.notify();
-        ShopAdminController.getInstance().addCard(customCard);
-    }
-
     public Collection getOriginalCards() {
         return originalCards;
-    }
-
-    synchronized void setOriginalCards(Collection originalCards) {
-        Collection old = this.originalCards;
-        this.originalCards = originalCards;
-        this.showingCards = originalCards;
-        this.notify();
-        ShopAdminController.getInstance().setOriginalCards(old, originalCards);
     }
 }

@@ -46,8 +46,8 @@ public enum MessageType {
     SUDO,
     IMPORT_DECK,
     FORCE_FINISH,
-    VALIDATE_CARD,
-    INVALIDATE_CARD,
+    ACCEPT_CARD,
+    REJECT_CARD,
     CHANGE_ACCOUNT_TYPE,
     ADD_CARD,
     //SENDER:DUAL

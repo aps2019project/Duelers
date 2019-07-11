@@ -229,11 +229,11 @@ public class Server {
                 case CHANGE_ACCOUNT_TYPE:
                     DataCenter.getInstance().changeAccountType(message);
                     break;
-                case VALIDATE_CARD:
-                    DataCenter.getInstance().validateCustomCard(message);
+                case ACCEPT_CARD:
+                    DataCenter.getInstance().acceptCustomCard(message);
                     break;
-                case INVALIDATE_CARD:
-                    DataCenter.getInstance().inValidateCustomCard(message);
+                case REJECT_CARD:
+                    DataCenter.getInstance().rejectCustomCard(message);
                     break;
                 default:
                     throw new LogicException("Invalid Message Type!");
@@ -432,9 +432,10 @@ public class Server {
 
     public void sendAddToOriginalsMessage(Card card) {
         for (Account account : DataCenter.getInstance().getAccounts().keySet()) {
-            if (account.getAccountType() == AccountType.ADMIN && DataCenter.getInstance().isOnline(account.getUsername())) {
-                addToSendingMessages(Message.makeAddOriginalCardMessage(DataCenter.getInstance().getAccounts().get(account),
-                        card));
+            if (DataCenter.getInstance().isOnline(account.getUsername())) {
+                addToSendingMessages(
+                        Message.makeAddOriginalCardMessage(DataCenter.getInstance().getAccounts().get(account), card)
+                );
             }
         }
     }

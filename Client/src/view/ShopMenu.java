@@ -2,6 +2,7 @@ package view;
 
 import controller.GraphicalUserInterface;
 import controller.ShopController;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,17 +27,19 @@ import java.io.FileNotFoundException;
 import static models.gui.UIConstants.*;
 
 public class ShopMenu extends Show implements PropertyChangeListener {
-    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
-    private static final double SCROLL_WIDTH = 2350 * SCALE;
-    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
     private static Media backgroundMusic = new Media(
             new File("resources/music/shop_menu.m4a").toURI().toString()
     );
     private static ShopMenu menu;
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
         ShopController.getInstance().removePropertyChangeListener(menu);
+        menu.searchBox.clear();
         new MainMenu().show();
     };
+    private static final Font TITLE_FONT = Font.font("DejaVu Sans Light", FontWeight.EXTRA_LIGHT, 45 * SCALE);
+    private static final double SCROLL_WIDTH = 2350 * SCALE;
+    private static final double SCROLL_HEIGHT = SCENE_HEIGHT - DEFAULT_SPACING * 13;
+    private ShopSearchBox searchBox;
     private VBox cardsBox;
     private Collection showingCards;
 
@@ -50,7 +53,7 @@ public class ShopMenu extends Show implements PropertyChangeListener {
             BorderPane background = BackgroundMaker.getMenuBackground();
             BackButton backButton = new BackButton(BACK_EVENT);
 
-            ShopSearchBox searchBox = new ShopSearchBox();
+            searchBox = new ShopSearchBox();
             ScrollPane cardsScroll = makeCardsScroll();
 
             VBox shopPane = makeShopPane(searchBox, cardsScroll);
@@ -134,14 +137,20 @@ public class ShopMenu extends Show implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("search_result")) {
             showingCards = (Collection) evt.getNewValue();
-            try {
-                cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
-                cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
-                cardsBox.getChildren().set(5, new ShopCardsGrid(showingCards.getSpells()));
-                cardsBox.getChildren().set(7, new ShopCardsGrid(showingCards.getItems()));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    cardsBox.getChildren().set(1, new ShopCardsGrid(showingCards.getHeroes()));
+                    cardsBox.getChildren().set(3, new ShopCardsGrid(showingCards.getMinions()));
+                    cardsBox.getChildren().set(5, new ShopCardsGrid(showingCards.getSpells()));
+                    cardsBox.getChildren().set(7, new ShopCardsGrid(showingCards.getItems()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         }
+    }
+
+    public void search() {
+        searchBox.search();
     }
 }

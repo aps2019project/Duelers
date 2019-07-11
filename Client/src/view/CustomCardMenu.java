@@ -37,14 +37,14 @@ import static models.card.CardType.HERO;
 import static models.gui.UIConstants.*;
 
 public class CustomCardMenu extends Show implements PropertyChangeListener {
+    private static Media backgroundMusic = new Media(
+            new File("resources/music/shop_menu.m4a").toURI().toString()
+    );
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> new MainMenu().show();
     private static final List<CardType> cardTypes = Arrays.asList(HERO, CardType.MINION, CardType.SPELL, CardType.USABLE_ITEM);
     private static final String ICON_PATH = "resources/icons";
     private static final String TROOPS_PATH = "resources/troopAnimations";
     private static final Map<CardType, ObservableList<String>> sprites = new HashMap<>();
-    private static Media backgroundMusic = new Media(
-            new File("resources/music/shop_menu.m4a").toURI().toString()
-    );
 
     static {
         ObservableList<String> iconSprites = FXCollections.observableArrayList();
@@ -57,6 +57,20 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
         sprites.put(CardType.SPELL, iconSprites);
     }
 
+    private static void loadFiles(String path, ObservableList<String> target) {
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            Arrays.stream(files)
+                    .filter(file -> file.getName().contains(".png"))
+                    .map(file -> file.getName().replace(".png", ""))
+                    .forEach(target::add);
+        }
+    }
+
+    private VBox spellsBox;
+    private GridPane cardMakerGrid;
+    private EditableCardPane cardPane;
     private final EditableCard card = new EditableCard();
     private final DefaultLabel typeLabel = new DefaultLabel("TYPE", DEFAULT_FONT, Color.WHITE);
     private final DefaultLabel defaultApLabel = new DefaultLabel("AP", DEFAULT_FONT, Color.WHITE);
@@ -77,10 +91,10 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
     private final DefaultSpinner<String> spriteSpinner = new DefaultSpinner<>(FXCollections.observableArrayList(sprites.get(cardTypeSpinner.getValue())));
     private final NumberField priceField = new NumberField("price");
     private final OrangeButton addSpellButton = new OrangeButton("ADD NEW SPELL", event -> addSpell(), click);
-    private final OrangeButton makeCardButton = new OrangeButton("MAKE CARD", event -> CustomCardController.getInstance().createCard(card), click);
-    private VBox spellsBox;
-    private GridPane cardMakerGrid;
-    private EditableCardPane cardPane;
+    private final OrangeButton makeCardButton = new OrangeButton("MAKE CARD", event -> {
+        CustomCardController.getInstance().createCard(card);
+        new MainMenu().show();
+    }, click);
 
     {
         card.setSpriteName(spriteSpinner.getValue());
@@ -150,17 +164,6 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
             root.getChildren().addAll(sceneContents);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void loadFiles(String path, ObservableList<String> target) {
-        File directory = new File(path);
-        File[] files = directory.listFiles();
-        if (files != null) {
-            Arrays.stream(files)
-                    .filter(file -> file.getName().contains(".png"))
-                    .map(file -> file.getName().replace(".png", ""))
-                    .forEach(target::add);
         }
     }
 

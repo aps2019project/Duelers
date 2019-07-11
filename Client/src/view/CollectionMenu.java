@@ -43,6 +43,7 @@ public class CollectionMenu extends Show implements PropertyChangeListener {
     private static final EventHandler<? super MouseEvent> BACK_EVENT = event -> {
         Client.getInstance().getAccount().removePropertyChangeListener(menu);
         CollectionMenuController.getInstance().removePropertyChangeListener(menu);
+        menu.searchBox.clear();
         new MainMenu().show();
     };
     private static Media backgroundMusic = new Media(
