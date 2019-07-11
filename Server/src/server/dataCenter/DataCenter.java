@@ -302,7 +302,7 @@ public class DataCenter extends Thread {
     }
 
     public void changeCardNumber(String cardName,int changeValue) throws LogicException{
-        Card card=getCard(cardName,originalCards);
+        Card card=getCard(cardName,getOriginalCards());
         if(card==null)
             throw new ClientException("Invalid Card");
         card.setRemainingNumber(card.getRemainingNumber() + changeValue);
