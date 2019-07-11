@@ -30,6 +30,7 @@ import java.util.Random;
 
 public abstract class Game {
     private static final int DEFAULT_REWARD = 1000;
+    private static final long TURN_TIME_LIMIT = 60000;
     private Player playerOne;
     private Player playerTwo;
     private GameType gameType;
@@ -166,7 +167,7 @@ public abstract class Game {
         final int currentTurn = turnNumber;
         new Thread(() -> {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(TURN_TIME_LIMIT);
                 if(isFinished) return;
                 if (turnNumber == currentTurn) {
                     changeTurn(getCurrentTurnPlayer().getUserName());
