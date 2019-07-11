@@ -118,6 +118,7 @@ public class Message {
         Message message = new Message(receiver);
         message.gameAnimations = new GameAnimations();
         message.gameAnimations.addSpellAnimation(positions, availabilityType);
+        message.messageType = MessageType.ANIMATION;
         return message;
     }
 
