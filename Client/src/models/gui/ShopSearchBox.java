@@ -38,7 +38,7 @@ public class ShopSearchBox extends HBox implements PropertyChangeListener {
             if (searchField.getText().equals(oldValue.get())) return;
 
             oldValue.set(searchField.getText());
-            ShopController.getInstance().searchInShop(searchField.getText());
+            search();
         });
 
         getChildren().addAll(goldIcon, money, searchField);
@@ -53,6 +53,10 @@ public class ShopSearchBox extends HBox implements PropertyChangeListener {
 
     public void clear() {
         searchField.clear();
-        ShopController.getInstance().searchInShop("");
+        search();
+    }
+
+    public void search() {
+        ShopController.getInstance().searchInShop(searchField.getText());
     }
 }

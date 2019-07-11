@@ -5,6 +5,7 @@ import models.account.Collection;
 import models.card.Card;
 import models.message.DataName;
 import models.message.Message;
+import view.ShopMenu;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -59,9 +60,9 @@ public class ShopController {
 
     synchronized void addCard(Card customCard) {
         originalCards.addCard(customCard);
-        showingCards.addCard(customCard);
-        support.firePropertyChange("search_result", null, showingCards);
-        this.notify();
+        if (Client.getInstance().getCurrentShow() instanceof ShopMenu) {
+            ((ShopMenu) Client.getInstance().getCurrentShow()).search();
+        }
         ShopAdminController.getInstance().addCard(customCard);
     }
 
