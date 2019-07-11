@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameResultController;
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static controller.SoundEffectPlayer.SoundName.victory_reward;
 import static models.gui.UIConstants.*;
 
 public class GameResultMenu extends Show {
@@ -119,6 +121,9 @@ public class GameResultMenu extends Show {
     @Override
     public void show() {
         super.show();
+        if (GameResultController.getInstance().amInWinner()) {
+            SoundEffectPlayer.getInstance().playSound(victory_reward);
+        }
     }
 
     @Override
