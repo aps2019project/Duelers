@@ -14,6 +14,7 @@ import server.dataCenter.models.card.spell.SpellAction;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
 import server.exceptions.ServerException;
+import server.gameCenter.GameCenter;
 import server.gameCenter.models.game.availableActions.Attack;
 import server.gameCenter.models.game.availableActions.AvailableActions;
 import server.gameCenter.models.game.availableActions.Insert;
@@ -36,7 +37,6 @@ public abstract class Game {
     private ArrayList<Buff> tempBuffs = new ArrayList<>();
     private GameMap gameMap;
     private int turnNumber = 1;
-    private int lastTurnChangingTime;
     private int reward;
     private boolean isFinished;
 
@@ -134,27 +134,31 @@ public abstract class Game {
     }
 
     public void changeTurn(String username) throws LogicException {
-        if (canCommand(username)) {
-            addNextCardToHand();
+        try {
+            if (canCommand(username)) {
+                addNextCardToHand();
 
-            revertNotDurableBuffs();
-            removeFinishedBuffs();
-            turnNumber++;
-            setAllTroopsCanAttackAndCanMove();
-            applyAllBuffs();
-            if (turnNumber < 14)
-                getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
-            else
-                getCurrentTurnPlayer().setCurrentMP(9);
-            Server.getInstance().sendGameUpdateMessage(this);
+                revertNotDurableBuffs();
+                removeFinishedBuffs();
+                turnNumber++;
+                setAllTroopsCanAttackAndCanMove();
+                applyAllBuffs();
+                if (turnNumber < 14)
+                    getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
+                else
+                    getCurrentTurnPlayer().setCurrentMP(9);
+                Server.getInstance().sendGameUpdateMessage(this);
 
-            startTurnTimeLimit();
+                startTurnTimeLimit();
 
-            if (getCurrentTurnPlayer().getUserName().equals("AI")) {
-                playCurrentTurn();
+                if (getCurrentTurnPlayer().getUserName().equals("AI")) {
+                    playCurrentTurn();
+                }
+            } else {
+                throw new ClientException("it isn't your turn!");
             }
-        } else {
-            throw new ClientException("it isn't your turn!");
+        } finally {
+            GameCenter.getInstance().checkGameFinish(this);
         }
     }
 
@@ -163,6 +167,7 @@ public abstract class Game {
         new Thread(() -> {
             try {
                 Thread.sleep(10000);
+                if(isFinished) return;
                 if (turnNumber == currentTurn) {
                     changeTurn(getCurrentTurnPlayer().getUserName());
                 }
@@ -290,44 +295,48 @@ public abstract class Game {
     }
 
     public void insert(String username, String cardId, Position position) throws LogicException {
-        if (!canCommand(username)) {
-            throw new ClientException("it's not your turn");
-        }
-
-        if (!gameMap.isInMap(position)) {
-            throw new ClientException("target cell is not in map");
-        }
-
-        Player player = getCurrentTurnPlayer();
-        Card card = player.insert(cardId);
-
-        if (card.getType() == CardType.MINION) {
-            if (gameMap.getTroop(position) != null) {
-                throw new ClientException("another troop is here.");
+        try {
+            if (!canCommand(username)) {
+                throw new ClientException("it's not your turn");
             }
-            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
-            Troop troop = new Troop(card, getCurrentTurnPlayer().getPlayerNumber());
-            player.addTroop(troop);
-            putMinion(
-                    player.getPlayerNumber(),
-                    troop,
-                    gameMap.getCell(position)
-            );
-            for (Card item : gameMap.getCell(position).getItems()) {
-                if (item.getType() == CardType.FLAG) {
-                    catchFlag(troop, item);
-                } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
-                    catchItem(item);
+
+            if (!gameMap.isInMap(position)) {
+                throw new ClientException("target cell is not in map");
+            }
+
+            Player player = getCurrentTurnPlayer();
+            Card card = player.insert(cardId);
+
+            if (card.getType() == CardType.MINION) {
+                if (gameMap.getTroop(position) != null) {
+                    throw new ClientException("another troop is here.");
                 }
+                Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.MAP);
+                Troop troop = new Troop(card, getCurrentTurnPlayer().getPlayerNumber());
+                player.addTroop(troop);
+                putMinion(
+                        player.getPlayerNumber(),
+                        troop,
+                        gameMap.getCell(position)
+                );
+                for (Card item : gameMap.getCell(position).getItems()) {
+                    if (item.getType() == CardType.FLAG) {
+                        catchFlag(troop, item);
+                    } else if (item.getType() == CardType.COLLECTIBLE_ITEM) {
+                        catchItem(item);
+                    }
+                }
+                Server.getInstance().sendTroopUpdateMessage(this, troop);
+                gameMap.getCell(position).clearItems();
             }
-            Server.getInstance().sendTroopUpdateMessage(this, troop);
-            gameMap.getCell(position).clearItems();
+            if (card.getType() == CardType.SPELL || card.getType()==CardType.COLLECTIBLE_ITEM) {
+                player.addToGraveYard(card);
+                Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
+            }
+            applyOnPutSpells(card, gameMap.getCell(position));
+        } finally {
+            GameCenter.getInstance().checkGameFinish(this);
         }
-        if (card.getType() == CardType.SPELL || card.getType()==CardType.COLLECTIBLE_ITEM) {
-            player.addToGraveYard(card);
-            Server.getInstance().sendChangeCardPositionMessage(this, card, CardPosition.GRAVE_YARD);
-        }
-        applyOnPutSpells(card, gameMap.getCell(position));
     }
 
     private void putMinion(int playerNumber, Troop troop, Cell cell) {
@@ -392,36 +401,40 @@ public abstract class Game {
     }
 
     public void attack(String username, String attackerCardId, String defenderCardId) throws LogicException {
-        if (!canCommand(username)) {
-            throw new ClientException("its not your turn");
-        }
-
-        Troop attackerTroop = getAndValidateTroop(attackerCardId, getCurrentTurnPlayer());
-        Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
-
-        if (!attackerTroop.canAttack()) {
-            throw new ClientException("attacker can not attack");
-        }
-
-        checkRangeForAttack(attackerTroop, defenderTroop);
-
-        if (defenderTroop.canGiveBadEffect() &&
-                (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
-        ) {
-            damage(attackerTroop, defenderTroop);
-
-            attackerTroop.setCanAttack(false);
-            attackerTroop.setCanMove(false);
-            Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
-            applyOnAttackSpells(attackerTroop, defenderTroop);
-            applyOnDefendSpells(defenderTroop, attackerTroop);
-            try {
-                counterAttack(defenderTroop, attackerTroop);
-            } catch (LogicException e) {
-                Server.getInstance().sendAttackMessage(this, attackerTroop, defenderTroop, false);
-                throw e;
+        try {
+            if (!canCommand(username)) {
+                throw new ClientException("its not your turn");
             }
-            Server.getInstance().sendAttackMessage(this, attackerTroop, defenderTroop, true);
+
+            Troop attackerTroop = getAndValidateTroop(attackerCardId, getCurrentTurnPlayer());
+            Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
+
+            if (!attackerTroop.canAttack()) {
+                throw new ClientException("attacker can not attack");
+            }
+
+            checkRangeForAttack(attackerTroop, defenderTroop);
+
+            if (defenderTroop.canGiveBadEffect() &&
+                    (defenderTroop.canBeAttackedFromWeakerOnes() || attackerTroop.getCurrentAp() > defenderTroop.getCurrentAp())
+            ) {
+                damage(attackerTroop, defenderTroop);
+
+                attackerTroop.setCanAttack(false);
+                attackerTroop.setCanMove(false);
+                Server.getInstance().sendTroopUpdateMessage(this, attackerTroop);
+                applyOnAttackSpells(attackerTroop, defenderTroop);
+                applyOnDefendSpells(defenderTroop, attackerTroop);
+                try {
+                    counterAttack(defenderTroop, attackerTroop);
+                } catch (LogicException e) {
+                    Server.getInstance().sendAttackMessage(this, attackerTroop, defenderTroop, false);
+                    throw e;
+                }
+                Server.getInstance().sendAttackMessage(this, attackerTroop, defenderTroop, true);
+            }
+        } finally {
+            GameCenter.getInstance().checkGameFinish(this);
         }
     }
 
@@ -480,18 +493,22 @@ public abstract class Game {
     }
 
     public void useSpecialPower(String username, String cardId, Position target) throws LogicException {
-        if (!canCommand(username)) {
-            throw new ClientException("its not your turn");
+        try {
+            if (!canCommand(username)) {
+                throw new ClientException("its not your turn");
+            }
+
+            Troop hero = getAndValidateHero(cardId);
+            Spell specialPower = getAndValidateSpecialPower(hero);
+            getCurrentTurnPlayer().changeCurrentMP(-specialPower.getMannaPoint());
+
+            applySpell(
+                    specialPower,
+                    detectTarget(specialPower, hero.getCell(), gameMap.getCell(target), hero.getCell())
+            );
+        } finally {
+            GameCenter.getInstance().checkGameFinish(this);
         }
-
-        Troop hero = getAndValidateHero(cardId);
-        Spell specialPower = getAndValidateSpecialPower(hero);
-        getCurrentTurnPlayer().changeCurrentMP(-specialPower.getMannaPoint());
-
-        applySpell(
-                specialPower,
-                detectTarget(specialPower, hero.getCell(), gameMap.getCell(target), hero.getCell())
-        );
     }
 
     private Troop getAndValidateHero(String cardId) throws ClientException {
@@ -519,17 +536,21 @@ public abstract class Game {
     }
 
     public void comboAttack(String username, String[] attackerCardIds, String defenderCardId) throws LogicException {
-        if (!canCommand(username)) {
-            throw new ClientException("its not your turn");
+        try {
+            if (!canCommand(username)) {
+                throw new ClientException("its not your turn");
+            }
+
+            Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
+            Troop[] attackerTroops = getAndValidateAttackerTroops(attackerCardIds, defenderTroop);
+
+            damageFromAllAttackers(defenderTroop, attackerTroops);
+
+            applyOnDefendSpells(defenderTroop, attackerTroops[0]);
+            counterAttack(defenderTroop, attackerTroops[0]);
+        } finally {
+            GameCenter.getInstance().checkGameFinish(this);
         }
-
-        Troop defenderTroop = getAndValidateTroop(defenderCardId, getOtherTurnPlayer());
-        Troop[] attackerTroops = getAndValidateAttackerTroops(attackerCardIds, defenderTroop);
-
-        damageFromAllAttackers(defenderTroop, attackerTroops);
-
-        applyOnDefendSpells(defenderTroop, attackerTroops[0]);
-        counterAttack(defenderTroop, attackerTroops[0]);
     }
 
     private Troop getAndValidateTroop(String defenderCardId, Player otherTurnPlayer) throws ClientException {
@@ -588,7 +609,7 @@ public abstract class Game {
 
     public abstract boolean finishCheck();
 
-    public void finish() {
+    void finish() {
         isFinished = true;
     }
 
@@ -894,7 +915,7 @@ public abstract class Game {
         return lastRow;
     }
 
-    public void setMatchHistories(boolean resultOne, boolean resultTwo) {
+    void setMatchHistories(boolean resultOne, boolean resultTwo) {
         playerOne.setMatchHistory(
                 new MatchHistory(playerTwo, resultOne)
         );
@@ -923,5 +944,6 @@ public abstract class Game {
 
     public void forceFinish(String username) {
         setMatchHistories(!playerOne.getUserName().equals(username), !playerTwo.getUserName().equals(username));
+        finish();
     }
 }

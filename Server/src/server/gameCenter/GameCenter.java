@@ -287,68 +287,53 @@ public class GameCenter extends Thread {//synchronize
 
     public void insertCard(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.insert(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-            Server.getInstance().sendGameUpdateMessage(game);
-        } finally {
-            checkGameFinish(game);
-        }
+        game.insert(
+                DataCenter.getInstance().getClients().get(message.getSender()).getUsername(),
+                message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition()
+        );
+        Server.getInstance().sendGameUpdateMessage(game);
     }
 
     public void attack(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.attack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId());
-        } finally {
-            checkGameFinish(game);
-        }
+        game.attack(
+                DataCenter.getInstance().getClients().get(message.getSender()).getUsername(),
+                message.getOtherFields().getMyCardId(), message.getOtherFields().getOpponentCardId()
+        );
     }
 
     public void combo(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.comboAttack(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId());
-
-        } finally {
-            checkGameFinish(game);
-
-        }
+        game.comboAttack(
+                DataCenter.getInstance().getClients().get(message.getSender()).getUsername(),
+                message.getOtherFields().getMyCardIds(), message.getOtherFields().getOpponentCardId()
+        );
     }
 
     public void useSpecialPower(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.useSpecialPower(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-            Server.getInstance().sendGameUpdateMessage(game);
-        } finally {
-            checkGameFinish(game);
-
-        }
+        game.useSpecialPower(
+                DataCenter.getInstance().getClients().get(message.getSender()).getUsername(),
+                message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition()
+        );
+        Server.getInstance().sendGameUpdateMessage(game);
     }
 
     public void moveTroop(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.moveTroop(DataCenter.getInstance().getClients().get(message.getSender()).getUsername(), message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition());
-
-        } finally {
-            checkGameFinish(game);
-
-        }
+        game.moveTroop(
+                DataCenter.getInstance().getClients().get(message.getSender()).getUsername(),
+                message.getOtherFields().getMyCardId(), message.getOtherFields().getPosition()
+        );
     }
 
     public void endTurn(Message message) throws LogicException {
         Game game = getGame(message.getSender());
-        try {
-            game.changeTurn(DataCenter.getInstance().getClients().get(message.getSender()).getUsername());
-
-        } finally {
-            checkGameFinish(game);
-
-        }
+        game.changeTurn(DataCenter.getInstance().getClients().get(message.getSender()).getUsername());
     }
 
-    private void checkGameFinish(Game game) {
+    public void checkGameFinish(Game game) {
+        System.out.println("start check");
         if (game.finishCheck()) {
             finish(game);
         }
