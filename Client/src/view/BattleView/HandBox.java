@@ -157,7 +157,7 @@ public class HandBox implements PropertyChangeListener {
                         imageView.setImage(cardBackGlow);
                     }
                     try {
-                        cardPane = new CardPane(player.getHand().get(I), false, false, null);
+                        cardPane = new CardPane(card, false, false, null);
                         cardPane.setLayoutY(-300 * Constants.SCALE + cards[I].getLayoutY());
                         cardPane.setLayoutX(150 * Constants.SCALE + cards[I].getLayoutX());
                         handGroup.getChildren().add(cardPane);
@@ -231,12 +231,10 @@ public class HandBox implements PropertyChangeListener {
                             imageView.setImage(cardBack);
                         }
                         try {
-                            if (player.getCollectedItems().size() > I) {
-                                cardPane = new CardPane(player.getCollectedItems().get(I), false, false, null);
-                                cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
-                                cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
-                                handGroup.getChildren().add(cardPane);
-                            }
+                            cardPane = new CardPane(card, false, false, null);
+                            cardPane.setLayoutY(-300 * Constants.SCALE + items[I].getLayoutY());
+                            cardPane.setLayoutX(75 * Constants.SCALE + items[I].getLayoutX());
+                            handGroup.getChildren().add(cardPane);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
