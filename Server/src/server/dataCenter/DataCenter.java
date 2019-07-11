@@ -13,6 +13,7 @@ import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.CardType;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.ExportedDeck;
+import server.dataCenter.models.db.OldDataBase;
 import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.dataCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
@@ -42,11 +43,7 @@ public class DataCenter extends Thread {
 
     private Map<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private Map<String, Account> clients = new HashMap<>();//clientName -> Account
-    private Collection originalCards = new Collection();
-    private Collection newCustomCards = new Collection();
-    private List<Card> collectibleItems = new ArrayList<>();
-    private Card originalFlag;
-    private List<Story> stories = new ArrayList<>();
+    private DataBase dataBase = new OldDataBase();
 
     public static DataCenter getInstance() {
         return ourInstance;
@@ -66,21 +63,21 @@ public class DataCenter extends Thread {
         readStories();
     }
 
-    private Card getCard(String cardName,Collection collection){
-        for(Card card:collection.getHeroes()){
-            if(card.getName().equals(cardName))
+    private Card getCard(String cardName, Collection collection) {
+        for (Card card : collection.getHeroes()) {
+            if (card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:collection.getMinions()){
-            if(card.getName().equals(cardName))
+        for (Card card : collection.getMinions()) {
+            if (card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:collection.getSpells()){
-            if(card.getName().equals(cardName))
+        for (Card card : collection.getSpells()) {
+            if (card.getName().equals(cardName))
                 return card;
         }
-        for(Card card:collection.getItems()){
-            if(card.getName().equals(cardName))
+        for (Card card : collection.getItems()) {
+            if (card.getName().equals(cardName))
                 return card;
         }
         return null;
@@ -237,7 +234,7 @@ public class DataCenter extends Thread {
     public void buyCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
-        account.buyCard(message.getOtherFields().getCardName(), originalCards.getCard(message.getOtherFields().getCardName()).getPrice(), originalCards);
+        account.buyCard(message.getOtherFields().getCardName(), dataBase.getCard(message.getOtherFields().getCardName()).getPrice(), dataBase.getOriginalCards());
         Server.getInstance().addToSendingMessages(Message.makeAccountCopyMessage(
                 Server.getInstance().serverName, message.getSender(), account, message.getMessageId()));
         saveAccount(account);
@@ -252,10 +249,6 @@ public class DataCenter extends Thread {
         saveAccount(account);
     }
 
-    public List<Story> getStories() {
-        return Collections.unmodifiableList(stories);
-    }
-
     public Map<Account, String> getAccounts() {
         return Collections.unmodifiableMap(accounts);
     }
@@ -268,20 +261,24 @@ public class DataCenter extends Thread {
         clients.put(name, account);
     }
 
+    public List<Story> getStories() {
+        return Collections.unmodifiableList(dataBase.getStories());
+    }
+
     public Collection getOriginalCards() {
-        return originalCards;
+        return dataBase.getOriginalCards();
     }
 
     public List<Card> getCollectibleItems() {
-        return Collections.unmodifiableList(collectibleItems);
+        return Collections.unmodifiableList(dataBase.getCollectibleItems());
     }
 
     public Collection getNewCustomCards() {
-        return newCustomCards;
+        return dataBase.getNewCustomCards();
     }
 
     public Card getOriginalFlag() {
-        return originalFlag;
+        return dataBase.getOriginalFlag();
     }
 
     public Account[] getLeaderBoard() throws ClientException {
@@ -293,10 +290,10 @@ public class DataCenter extends Thread {
         return leaderBoard;
     }
 
-    public void addCustomCard(Message message) throws LogicException{
-        if(!isValidCardName(message.getCard().getCardId()))
+    public void addCustomCard(Message message) throws LogicException {
+        if (!isValidCardName(message.getCard().getCardId()))
             throw new ClientException("invalid name!");
-        newCustomCards.addCard(message.getCard());
+        dataBase.addNewCustomCards(message.getCard());
         saveCustomCard(message.getCard());
         Server.getInstance().sendAddToCustomCardsMessage(message.getCard());
     }
@@ -318,21 +315,21 @@ public class DataCenter extends Thread {
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card=getCard(message.getChangeCardNumber().getCardName(),originalCards);
-        if(card==null)
+        Card card = getCard(message.getChangeCardNumber().getCardName(), dataBase.getOriginalCards());
+        if (card == null)
             throw new ClientException("Invalid Card Name!");
-        card.setRemainingNumber(card.getRemainingNumber()+message.getChangeCardNumber().getNumber());
+        card.setRemainingNumber(card.getRemainingNumber() + message.getChangeCardNumber().getNumber());
         updateCard(card);
         Server.getInstance().sendChangeCardNumberMessage(card);
     }
 
-    public void changeAccountType(Message message) throws LogicException{
+    public void changeAccountType(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Account account1=getAccount(message.getChangeAccountType().getUsername());
-        if(account1==null)
+        Account account1 = getAccount(message.getChangeAccountType().getUsername());
+        if (account1 == null)
             throw new ClientException("invalid username!");
         account1.setAccountType(message.getChangeAccountType().getNewType());
         saveAccount(account1);
@@ -340,32 +337,32 @@ public class DataCenter extends Thread {
         Server.getInstance().sendAccountUpdateMessage(account1);
     }
 
-    public void validateCustomCard(Message message) throws LogicException{
+    public void validateCustomCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card=getCard(message.getCardName(),newCustomCards);
-        if(card==null)
+        Card card = getCard(message.getCardName(), dataBase.getNewCustomCards());
+        if (card == null)
             throw new ClientException("invalid card name");
         removeCustomCard(card);
         saveOriginalCard(card);
-        newCustomCards.removeCard(card);
-        originalCards.addCard(card);
+        dataBase.removeCustomCards(card);
+        dataBase.addOriginalCard(card);
         Server.getInstance().sendRemoveCustomCardsMessage(card);
         Server.getInstance().sendAddToOriginalsMessage(card);
     }
 
-    public void inValidateCustomCard(Message message) throws LogicException{
+    public void inValidateCustomCard(Message message) throws LogicException {
         loginCheck(message);
         Account account = clients.get(message.getSender());
         if (account.getAccountType() != AccountType.ADMIN)
             throw new ClientException("You don't have admin access!");
-        Card card=getCard(message.getCardName(),newCustomCards);
-        if(card==null)
+        Card card = getCard(message.getCardName(), dataBase.getNewCustomCards());
+        if (card == null)
             throw new ClientException("invalid card name");
         removeCustomCard(card);
-        newCustomCards.removeCard(card);
+        dataBase.removeCustomCards(card);
         Server.getInstance().sendRemoveCustomCardsMessage(card);
     }
 
@@ -390,16 +387,16 @@ public class DataCenter extends Thread {
                     Card card = loadFile(file, Card.class);
                     if (card == null) continue;
                     if (path.equals(CUSTOM_CARD_PATH)) {
-                        newCustomCards.addCard(card);
+                        dataBase.addNewCustomCards(card);
                     } else if (card.getType() == CardType.COLLECTIBLE_ITEM) {
-                        collectibleItems.add(card);
+                        dataBase.addNewCollectible(card);
                     } else {
-                        originalCards.addCard(card);
+                        dataBase.addOriginalCard(card);
                     }
                 }
             }
         }
-        originalFlag = loadFile(new File(FLAG_PATH), Card.class);
+        dataBase.setOriginalFlag (loadFile(new File(FLAG_PATH), Card.class));
         Server.getInstance().serverPrint("Original Cards Loaded");
     }
 
@@ -410,10 +407,10 @@ public class DataCenter extends Thread {
                 TempStory story = loadFile(file, TempStory.class);
                 if (story == null) continue;
 
-                stories.add(new Story(story, originalCards));
+                dataBase.addStory(new Story(story, dataBase.getOriginalCards()));
             }
         }
-        stories.sort(new StoriesSorter());
+//        stories.sort(new StoriesSorter());
         Server.getInstance().serverPrint("Stories Loaded");
     }
 
@@ -434,7 +431,7 @@ public class DataCenter extends Thread {
             File[] files = new File(path).listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if(file.getName().startsWith(card.getCardId()+".")){
+                    if (file.getName().startsWith(card.getCardId() + ".")) {
                         try {
                             FileWriter writer = new FileWriter(file.getPath());
                             writer.write(cardJson);
@@ -461,11 +458,11 @@ public class DataCenter extends Thread {
         }
     }
 
-    private void removeCustomCard(Card card) throws ServerException{
+    private void removeCustomCard(Card card) throws ServerException {
         File[] files = new File(CUSTOM_CARD_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
-                if(file.getName().startsWith(card.getCardId()+".")){
+                if (file.getName().startsWith(card.getCardId() + ".")) {
                     file.delete();
                     return;
                 }
@@ -474,22 +471,22 @@ public class DataCenter extends Thread {
         throw new ServerException("Card not found");
     }
 
-    private void saveOriginalCard(Card card){
+    private void saveOriginalCard(Card card) {
         String cardJson = new GsonBuilder().setPrettyPrinting().create().toJson(card);
         String path;
         try {
-            switch (card.getType()){
+            switch (card.getType()) {
                 case HERO:
-                    path=CARDS_PATHS[0] + "/" + card.getCardId() + ".hero.card.json";
+                    path = CARDS_PATHS[0] + "/" + card.getCardId() + ".hero.card.json";
                     break;
                 case MINION:
-                    path=CARDS_PATHS[1] + "/" + card.getCardId() + ".minion.card.json";
+                    path = CARDS_PATHS[1] + "/" + card.getCardId() + ".minion.card.json";
                     break;
                 case SPELL:
-                    path=CARDS_PATHS[2] + "/" + card.getCardId() + ".spell.card.json";
+                    path = CARDS_PATHS[2] + "/" + card.getCardId() + ".spell.card.json";
                     break;
                 case USABLE_ITEM:
-                    path=CARDS_PATHS[4] + "/" + card.getCardId() + ".usable.item.card.json";
+                    path = CARDS_PATHS[4] + "/" + card.getCardId() + ".usable.item.card.json";
                     break;
                 default:
                     throw new ServerException("Error");
@@ -497,17 +494,17 @@ public class DataCenter extends Thread {
             FileWriter writer = new FileWriter(path);
             writer.write(cardJson);
             writer.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private boolean isValidCardName(String name){
+    private boolean isValidCardName(String name) {
         for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if(file.getName().startsWith(name+".")){
+                    if (file.getName().startsWith(name + ".")) {
                         return false;
                     }
                 }
