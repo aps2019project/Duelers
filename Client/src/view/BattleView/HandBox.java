@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -151,6 +152,7 @@ public class HandBox implements PropertyChangeListener {
                         cardPane = null;
                     }
                     if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
                         cardAnimation.inActive();
                         imageView.setImage(cardBackGlow);
                     }
@@ -222,6 +224,7 @@ public class HandBox implements PropertyChangeListener {
                             cardPane = null;
                         }
                         if (battleScene.isMyTurn() && GameController.getInstance().getAvailableActions().canInsertCard(card)) {
+                            SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
                             cardAnimation.inActive();
                             imageView.setImage(cardBackGlow);
                         } else {
