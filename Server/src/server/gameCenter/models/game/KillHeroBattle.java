@@ -18,16 +18,19 @@ public class KillHeroBattle extends Game {
     public boolean finishCheck() {
         if ((getPlayerOne().getHero() == null || getPlayerOne().getHero().getCurrentHp() <= 0) && (getPlayerTwo().getHero() == null || getPlayerTwo().getHero().getCurrentHp() <= 0)) {
             setMatchHistories(true, true);
+            finish();
             return true;
 
         }
         if (getPlayerOne().getHero() == null || getPlayerOne().getHero().getCurrentHp() <= 0) {
             setMatchHistories(false, true);
+            finish();
             return true;
 
         }
         if (getPlayerTwo().getHero() == null || getPlayerTwo().getHero().getCurrentHp() <= 0) {
             setMatchHistories(true, false);
+            finish();
             return true;
         }
         return false;

@@ -38,6 +38,7 @@ public abstract class Game {
     private int turnNumber = 1;
     private int lastTurnChangingTime;
     private int reward;
+    private boolean isFinished;
 
     protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
@@ -69,6 +70,9 @@ public abstract class Game {
         this.turnNumber = 1;
 
         playerOne.setCurrentMP(2);
+
+        startTurnTimeLimit();
+
         Server.getInstance().sendGameUpdateMessage(this);
     }
 
@@ -131,19 +135,6 @@ public abstract class Game {
 
     public void changeTurn(String username) throws LogicException {
         if (canCommand(username)) {
-            final int currentTurn = turnNumber;
-            new Thread(() -> {
-                try {
-                    Thread.sleep(10000);
-                    if (turnNumber == currentTurn) {
-                        changeTurn(getOtherTurnPlayer().getUserName());
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (LogicException ignored) {
-                }
-            }).start();
-
             addNextCardToHand();
 
             revertNotDurableBuffs();
@@ -156,12 +147,30 @@ public abstract class Game {
             else
                 getCurrentTurnPlayer().setCurrentMP(9);
             Server.getInstance().sendGameUpdateMessage(this);
+
+            startTurnTimeLimit();
+
             if (getCurrentTurnPlayer().getUserName().equals("AI")) {
                 playCurrentTurn();
             }
         } else {
             throw new ClientException("it isn't your turn!");
         }
+    }
+
+    private void startTurnTimeLimit() {
+        final int currentTurn = turnNumber;
+        new Thread(() -> {
+            try {
+                Thread.sleep(10000);
+                if (turnNumber == currentTurn) {
+                    changeTurn(getCurrentTurnPlayer().getUserName());
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (LogicException ignored) {
+            }
+        }).start();
     }
 
     private void addNextCardToHand() {
@@ -578,6 +587,10 @@ public abstract class Game {
     }
 
     public abstract boolean finishCheck();
+
+    public void finish() {
+        isFinished = true;
+    }
 
     private void applySpell(Spell spell, TargetData target) {
         spell.setLastTurnUsed(turnNumber);
