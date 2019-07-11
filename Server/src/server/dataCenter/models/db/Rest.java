@@ -2,36 +2,127 @@ package server.dataCenter.models.db;
 
 import io.joshworks.restclient.http.HttpResponse;
 import io.joshworks.restclient.http.Unirest;
+import server.clientPortal.models.JsonConverter;
 import server.dataCenter.DataBase;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.gameCenter.models.game.Story;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Rest implements DataBase {
-    private String[] maps = {"originalCards","customCards","collectibleItems","stories","originalFlag"};
-    Rest(){
+    private static String[] maps = {"originalCards", "customCards", "collectibleItems", "stories", "originalFlag"};
+    final String baseAddress = "http://127.0.0.1:8080/";
+
+    public static void main(String[] args) {
+        Rest rest = new Rest();
+        System.out.println(rest.getAllValues(maps[0]));
+
+    }
+
+    Rest() {
         for (String s : maps) {
             createMap(s);
         }
     }
 
-    private void createMap(String name) {
-        final String baseAddress = "http://127.0.0.1:8080/";
+    private int put(String name, String key, String value) {
+        final String path = "put";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("key", key);
+        parameters.put("value", value);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            return response.getStatus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private int createMap(String name) {
         final String path = "init_DB";
-        HttpResponse<String> response= null;
+        HttpResponse<String> response = null;
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("name", name);
         try {
             response = Unirest.post(baseAddress + path)
                     .fields(parameters)
                     .asString();
+            return response.getStatus();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
+
+    private List getAllKeys(String name) {
+        final String path = "get_all_keys";
+        return getList(name, path);
+    }
+
+    private List getList(String name, String path) {
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            if (response.getStatus() == 200)
+                return JsonConverter.fromJson(response.getBody(), List.class);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List getAllValues(String name) {
+        final String path = "get_all_values";
+        return getList(name, path);
+    }
+
+    private String getFromDataBase(String name,String key){
+        final String path = "get";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("key",key);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private int delete(String name,String key){
+        final String path = "del_from_DB";
+        HttpResponse<String> response = null;
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("key",key);
+        try {
+            response = Unirest.post(baseAddress + path)
+                    .fields(parameters)
+                    .asString();
+            return response.getStatus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     @Override
     public Card getCard(String cardName) {
