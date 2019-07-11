@@ -5,10 +5,7 @@ import server.dataCenter.models.card.Card;
 import server.gameCenter.models.game.Player;
 import server.gameCenter.models.game.Troop;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
@@ -22,9 +19,12 @@ public class GameMap {
                 cells[i][j] = new Cell(i, j);
             }
         }
-        cells[0][4].addItem(items.get(new Random().nextInt(items.size())));
-        cells[2][5].addItem(items.get(new Random().nextInt(items.size())));
-        cells[4][4].addItem(items.get(new Random().nextInt(items.size())));
+        LinkedList<Card> newItems = new LinkedList<>(items);
+        Collections.shuffle(newItems);
+
+        cells[0][4].addItem(newItems.poll());
+        cells[2][5].addItem(newItems.poll());
+        cells[4][4].addItem(newItems.poll());
 
         for (int i = 0; i < numberOfFlags; i++) {
             int row = new Random().nextInt(ROW_NUMBER);
