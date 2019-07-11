@@ -248,6 +248,8 @@ public class Server {
         } catch (LogicException e) {
             serverPrint(e.getMessage());
             sendException(e.getMessage(), message.getSender());
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
