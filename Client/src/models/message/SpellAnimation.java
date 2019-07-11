@@ -3,11 +3,13 @@ package models.message;
 import models.card.spell.AvailabilityType;
 import models.game.map.Position;
 
+import java.util.Set;
+
 public class SpellAnimation {
-    private Position[] positions;
+    private Set<Position> positions;
     private AvailabilityType availabilityType;
 
-    public Position[] getPositions() {
+    public Set<Position> getPositions() {
         return positions;
     }
 

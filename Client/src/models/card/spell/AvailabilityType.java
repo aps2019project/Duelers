@@ -17,4 +17,28 @@ public class AvailabilityType {
         this.onStart = onStart;
         this.continuous = continuous;
     }
+
+    public boolean isOnPut() {
+        return onPut;
+    }
+
+    public boolean isOnAttack() {
+        return onAttack;
+    }
+
+    public boolean isOnDeath() {
+        return onDeath;
+    }
+
+    public boolean isContinuous() {
+        return continuous;
+    }
+
+    public boolean isSpecialPower() {
+        return specialPower;
+    }
+
+    public boolean isOnDefend() {
+        return onDefend;
+    }
 }

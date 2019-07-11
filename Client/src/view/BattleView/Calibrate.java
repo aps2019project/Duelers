@@ -64,7 +64,7 @@ public class Calibrate extends Application implements GameActions {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            battleScene.spell(spell1, new Position(2, 2));
+//            battleScene.spell(spell1, new Position(2, 2));
 
         }).start();
         return game;

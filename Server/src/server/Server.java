@@ -361,6 +361,8 @@ public class Server {
     public void sendSpellMessage(Game game, TargetData target, AvailabilityType availabilityType) {
         String clientName;
         Set<Position> positions = target.getPositions();
+        if (positions.size() == 0) return;
+
         if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
             clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
             if (clientName == null) {
