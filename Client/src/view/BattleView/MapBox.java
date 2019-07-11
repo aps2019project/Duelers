@@ -336,7 +336,7 @@ public class MapBox implements PropertyChangeListener {
                 e.printStackTrace();
             }
         }
-        cells[row][column].setOpacity(Constants.CELLS_DEFAULT_OPACITY * 1.5);//TODO
+        cells[row][column].setOpacity(Constants.CELLS_DEFAULT_OPACITY * 1.5);
     }
 
     private void clickCell(int row, int column) {
@@ -345,11 +345,10 @@ public class MapBox implements PropertyChangeListener {
         }
         CompressedTroop currentTroop = getTroop(row, column);
         if (selectionType == SelectionType.INSERTION) {
-            if (GameController.getInstance().getAvailableActions().canInsertCard(
-                    battleScene.getHandBox().getSelectedCard())) {
+            if (GameController.getInstance().getAvailableActions().canInsertCard(battleScene.getHandBox().getSelectedCard())) {
                 battleScene.getController().insert(battleScene.getHandBox().getSelectedCard(), row, column);
                 System.out.println("Insert " + battleScene.getHandBox().getSelectedCard().getCardId());
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
@@ -373,7 +372,7 @@ public class MapBox implements PropertyChangeListener {
             if (GameController.getInstance().getAvailableActions().canUseSpecialAction(selectedTroop)) {
                 battleScene.getController().useSpecialPower(row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + " SpecialPower");
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
@@ -393,7 +392,7 @@ public class MapBox implements PropertyChangeListener {
                     selectedTroop, row, column)) {
                 comboTroops.add(selectedTroop);
                 battleScene.getController().comboAttack(comboTroops, currentTroop);
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
                 System.out.println("combo attack");
             }
@@ -404,13 +403,13 @@ public class MapBox implements PropertyChangeListener {
                     selectedTroop, row, column)) {
                 battleScene.getController().attack(selectedTroop, currentTroop);
                 System.out.println(selectedTroop + " attacked to " + currentTroop);
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             } else if (GameController.getInstance().getAvailableActions().canMove(
                     selectedTroop, row, column)) {
                 battleScene.getController().move(selectedTroop, row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + "moved");
-                battleScene.getHandBox().resetSelection();//TODO:remove
+                battleScene.getHandBox().resetSelection();
                 resetSelection();
             }
             return;
