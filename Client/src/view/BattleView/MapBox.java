@@ -402,6 +402,7 @@ public class MapBox implements PropertyChangeListener {
                 battleScene.getHandBox().resetSelection();
                 resetSelection();
                 System.out.println("combo attack");
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.attack);
             }
             return;
         }
@@ -412,12 +413,14 @@ public class MapBox implements PropertyChangeListener {
                 System.out.println(selectedTroop + " attacked to " + currentTroop);
                 battleScene.getHandBox().resetSelection();
                 resetSelection();
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.attack);
             } else if (GameController.getInstance().getAvailableActions().canMove(
                     selectedTroop, row, column)) {
                 battleScene.getController().move(selectedTroop, row, column);
                 System.out.println(selectedTroop.getCard().getCardId() + "moved");
                 battleScene.getHandBox().resetSelection();
                 resetSelection();
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.attack);
             }
             return;
         }
