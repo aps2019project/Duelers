@@ -380,8 +380,8 @@ public class CustomCardMenu extends Show implements PropertyChangeListener {
 
             AvailabilityType availabilityType = new AvailabilityType(
                     onPut.isSelected(), onAttack.isSelected(), onDeath.isSelected(),
-                    continuous.isSelected(), specialPower.isSelected(), onStart.isSelected()
-            );
+                    continuous.isSelected(), specialPower.isSelected(), onStart.isSelected(),
+                    false);
 
             card.addSpell(new Spell(
                     spellId.getText(), spellAction, target, availabilityType,

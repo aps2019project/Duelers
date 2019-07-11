@@ -569,6 +569,7 @@ public abstract class Game {
     private void applySpell(Spell spell, TargetData target) throws ServerException {
         spell.setLastTurnUsed(turnNumber);
         Buff buff = new Buff(spell.getAction(), target);
+        Server.getInstance().sendSpellMessage(this, target, spell.getAvailabilityType());
         buffs.add(buff);
         applyBuff(buff);
     }
