@@ -30,7 +30,9 @@ public class SoundEffectPlayer {
     public void playSound(SoundName soundName) {
         try {
             Media media = mediaFiles.get(soundName);
-            new MediaPlayer(media).play();
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(1);
+            mediaPlayer.play();
         } catch (Exception ignored) {
         }
     }

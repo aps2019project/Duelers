@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 public class BattleScene extends Show {
     private static Media backgroundMusic = new Media(
-            new File("resources/music/battle.m4a").toURI().toString()
+            new File("resources/music/music_battlemap_vetruv.m4a").toURI().toString()
     );
     private final GameActions controller;
     private final CompressedGame game;

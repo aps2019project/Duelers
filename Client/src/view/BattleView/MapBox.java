@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GameController;
+import controller.SoundEffectPlayer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -317,6 +318,7 @@ public class MapBox implements PropertyChangeListener {
     }
 
     private void hoverCell(int row, int column) {
+        SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.hover);
         CompressedTroop troop = getTroop(row, column);
         if (troop != null) {
             TroopAnimation animation = troopAnimationHashMap.get(troop);

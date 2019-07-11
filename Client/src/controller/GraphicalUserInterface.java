@@ -48,7 +48,7 @@ public class GraphicalUserInterface {
                 backgroundMusicPlayer.stop();
             }
             backgroundMusicPlayer = new MediaPlayer(media);
-            backgroundMusicPlayer.setVolume(0.2);
+            backgroundMusicPlayer.setVolume(0.05);
             backgroundMusicPlayer.setCycleCount(-1);
             backgroundMusicPlayer.setAutoPlay(true);
         } catch (Exception e) {
