@@ -11,23 +11,10 @@ import java.util.List;
 
 public class CompressedGameMap {
     private static final int ROW_NUMBER = 5, COLUMN_NUMBER = 9;
-    private CellEffect[] cellEffects;
-
     private final CompressedCell[][] cells;
     private final ArrayList<CompressedTroop> troops;
-
+    private CellEffect[] cellEffects;
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        if (support == null) {
-            support = new PropertyChangeSupport(this);
-        }
-        support.addPropertyChangeListener(pcl);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
-    }
 
     //just for testing BattleView
     public CompressedGameMap(CompressedCell[][] cells, ArrayList<CompressedTroop> troops) {
@@ -41,6 +28,22 @@ public class CompressedGameMap {
 
     public static int getColumnNumber() {
         return COLUMN_NUMBER;
+    }
+
+    public static boolean isInMap(int row, int column) {
+        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
+
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        if (support == null) {
+            support = new PropertyChangeSupport(this);
+        }
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 
     public CompressedCell[][] getCells() {
@@ -79,11 +82,6 @@ public class CompressedGameMap {
         }
 
         return null;
-    }
-
-    public static boolean isInMap(int row, int column) {
-        return row >= 0 && row < ROW_NUMBER && column >= 0 && column < COLUMN_NUMBER;
-
     }
 
     public CompressedTroop getTroop(Position cell) {
