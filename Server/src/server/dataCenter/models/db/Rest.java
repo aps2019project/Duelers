@@ -37,8 +37,8 @@ public class Rest implements DataBase {
     }
 
     Rest() {
-        for (String s : maps) {
-            createMap(s);
+        for (maps s : maps.values()) {
+            createMap(s.path);
         }
     }
 
@@ -176,7 +176,7 @@ public class Rest implements DataBase {
 
     @Override
     public Collection getNewCustomCards() {
-        List jsons = getAllValues(maps[1]);
+        List jsons = getAllValues(maps.CUSTOM_CARDS.path);
         Collection collection = new Collection();
         for (Object o : jsons) {
             collection.addCard(JsonConverter.fromJson((String) o, Card.class));
@@ -186,7 +186,7 @@ public class Rest implements DataBase {
 
     @Override
     public Card getOriginalFlag() {
-        return JsonConverter.fromJson(getFromDataBase(maps.ORIGINAL_FLAG.path, maps[4]), Card.class);
+        return JsonConverter.fromJson(getFromDataBase(maps.ORIGINAL_FLAG.path, maps.ORIGINAL_FLAG.path), Card.class);
     }
 
     @Override
@@ -201,21 +201,23 @@ public class Rest implements DataBase {
 
     @Override
     public void addOriginalCard(Card card) {
-
+        put(maps.ORINGINAL_CARDS.path,card.getName(),JsonConverter.toJson(card));
     }
 
     @Override
     public void addNewCollectible(Card card) {
+        put(maps.COLLECTIBLE_ITEMS.path,card.getName(),JsonConverter.toJson(card));
 
     }
 
     @Override
-    public void setOriginalFlag(Card loadFile) {
-
+    public void setOriginalFlag(Card card) {
+        put(maps.ORIGINAL_FLAG.path,maps.ORIGINAL_FLAG.path,JsonConverter.toJson(card));
     }
 
     @Override
     public void addStory(Story story) {
+        put(maps.STORIES.path,JsonConverter.toJson(story),"");
 
     }
 }
