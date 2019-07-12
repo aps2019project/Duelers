@@ -17,6 +17,7 @@ public class SinglePlayerMenu extends PlayMenu {
     };
     private static SinglePlayerMenu menu;
 
+
     private SinglePlayerMenu() throws FileNotFoundException {
         super(items, BACKGROUND_URL, BACK_EVENT);
     }

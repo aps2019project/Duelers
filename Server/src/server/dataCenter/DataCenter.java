@@ -13,7 +13,6 @@ import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.CardType;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.ExportedDeck;
-import server.dataCenter.models.db.OldDataBase;
 import server.dataCenter.models.db.Rest;
 import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.dataCenter.models.sorter.StoriesSorter;
@@ -410,7 +409,6 @@ public class DataCenter extends Thread {
                 dataBase.addStory(new Story(story, dataBase.getOriginalCards()));
             }
         }
-//        stories.sort(new StoriesSorter()); TODO: che konim ba database?
         Server.getInstance().serverPrint("Stories Loaded");
     }
 
