@@ -325,42 +325,24 @@ public class Server {
     }
 
     public void sendTroopUpdateMessage(Game game, Troop troop) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
-            if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
+        for(Account account:game.getObservers()){
+            String clientName=DataCenter.getInstance().getAccounts().get(account);
+            if(clientName==null){
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
-            }
+            addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
         }
     }
 
     public void sendAttackMessage(Game game, Troop attacker, Troop defender, boolean counterAttack) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
-            if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
+        for(Account account:game.getObservers()){
+            String clientName=DataCenter.getInstance().getAccounts().get(account);
+            if(clientName==null){
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
-            }
+            addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
         }
     }
 
