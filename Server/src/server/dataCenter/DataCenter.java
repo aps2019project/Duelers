@@ -14,6 +14,7 @@ import server.dataCenter.models.card.CardType;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.ExportedDeck;
 import server.dataCenter.models.db.OldDataBase;
+import server.dataCenter.models.db.Rest;
 import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.dataCenter.models.sorter.StoriesSorter;
 import server.exceptions.ClientException;
@@ -43,7 +44,7 @@ public class DataCenter extends Thread {
 
     private Map<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private Map<String, Account> clients = new HashMap<>();//clientName -> Account
-    private DataBase dataBase = new OldDataBase();
+    private DataBase dataBase = new Rest();
 
     public static DataCenter getInstance() {
         return ourInstance;
@@ -55,12 +56,16 @@ public class DataCenter extends Thread {
     @Override
     public void run() {
         Server.getInstance().serverPrint("Starting DataCenter...");
-        Server.getInstance().serverPrint("Reading Cards...");
-        readAllCards();
+        if (dataBase.isEmpty()) {
+            Server.getInstance().serverPrint("Reading Cards...");
+            readAllCards();
+            Server.getInstance().serverPrint("Reading Stories...");
+            readStories();
+        }
         Server.getInstance().serverPrint("Reading Accounts...");
         readAccounts();
-        Server.getInstance().serverPrint("Reading Stories...");
-        readStories();
+
+
     }
 
     public static Card getCard(String cardName, Collection collection) {
@@ -361,7 +366,7 @@ public class DataCenter extends Thread {
         Server.getInstance().sendRemoveCustomCardsMessage(card);
     }
 
-    private void readAccounts() {
+    public void readAccounts() {
         File[] files = new File(ACCOUNTS_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
@@ -374,7 +379,7 @@ public class DataCenter extends Thread {
         Server.getInstance().serverPrint("Accounts Loaded");
     }
 
-    private void readAllCards() {
+    public void readAllCards() {
         for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
             if (files != null) {
@@ -395,7 +400,7 @@ public class DataCenter extends Thread {
         Server.getInstance().serverPrint("Original Cards Loaded");
     }
 
-    private void readStories() {
+    public void readStories() {
         File[] files = new File(STORIES_PATH).listFiles();
         if (files != null) {
             for (File file : files) {
@@ -508,7 +513,7 @@ public class DataCenter extends Thread {
         return true;
     }
 
-    private <T> T loadFile(File file, Class<T> classOfT) {
+    public static <T> T loadFile(File file, Class<T> classOfT) {
         try {
             return JsonConverter.fromJson(new BufferedReader(new FileReader(file)), classOfT);
         } catch (IOException e) {

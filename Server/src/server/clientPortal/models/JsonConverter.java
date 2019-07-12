@@ -1,7 +1,6 @@
 package server.clientPortal.models;
 
 import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 
 public class JsonConverter {
