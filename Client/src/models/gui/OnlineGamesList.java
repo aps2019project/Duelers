@@ -2,6 +2,7 @@ package models.gui;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,7 +38,7 @@ public class OnlineGamesList extends TableView {
         gameType.setCellValueFactory(new PropertyValueFactory<>("gameType"));
         gameType.setMinWidth(300 * SCALE);
 
-        TableColumn<OnlineGameView, GameType> showButton = new TableColumn<>("SHOW");
+        TableColumn<OnlineGameView, Button> showButton = new TableColumn<>("");
         showButton.setCellValueFactory(new PropertyValueFactory<>("showButton"));
         showButton.setMinWidth(300 * SCALE);
 
