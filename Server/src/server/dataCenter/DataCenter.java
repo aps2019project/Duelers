@@ -55,8 +55,8 @@ public class DataCenter extends Thread {
 
     @Override
     public void run() {
+        Server.getInstance().serverPrint("Starting DataCenter...");
         if (dataBase.isEmpty()) {
-            Server.getInstance().serverPrint("Starting DataCenter...");
             Server.getInstance().serverPrint("Reading Cards...");
             readAllCards();
             Server.getInstance().serverPrint("Reading Stories...");
