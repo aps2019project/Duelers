@@ -18,6 +18,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import models.card.CardType;
+import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.comperessedData.CompressedTroop;
@@ -76,6 +77,7 @@ public class PlayerBox implements PropertyChangeListener {
         updateMP(3);
         addComboButton();
         addSpellButton();
+        addUsableItem();
         addChatField();
         makeMessageShows();
         game.addPropertyChangeListener(this);
@@ -135,6 +137,38 @@ public class PlayerBox implements PropertyChangeListener {
         player1Image.setEffect(player1ImageEffect);
         player2Image.setEffect(player2ImageEffect);
         group.getChildren().addAll(player1Image, player2Image, player1Name, player2Name);
+    }
+
+    private void addUsableItem() {
+        CompressedCard card = null;
+        if (battleScene.getMyPlayerNumber() == 1)
+            card = player1.getUsableItem();
+        if (battleScene.getMyPlayerNumber() == 2)
+            card = player2.getUsableItem();
+        if (card == null)
+            return;
+        StackPane stackPane = new StackPane();
+        CardAnimation animation = new CardAnimation(stackPane, card, 0, 0);
+        stackPane.setLayoutY(SCALE * (390));
+        if (battleScene.getMyPlayerNumber() == 1)
+            stackPane.setLayoutX(SCALE * (130));
+        else if (battleScene.getMyPlayerNumber() == 2)
+            stackPane.setLayoutX(Constants.SCREEN_WIDTH - SCALE * (130) - animation.getImageView().getFitWidth());
+        stackPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (battleScene.isMyTurn()) {
+                    animation.inActive();
+                }
+            }
+        });
+        stackPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                animation.pause();
+            }
+        });
+        group.getChildren().add(stackPane);
     }
 
     void refreshComboAndSpell() {
