@@ -4,14 +4,12 @@ import controller.GameController;
 import controller.SoundEffectPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -141,6 +139,8 @@ public class PlayerBox implements PropertyChangeListener {
     }
 
     void refreshComboAndSpell() {
+        if (battleScene.getMyPlayerNumber() == -1)
+            return;
         try {
             comboButton.setImage(comboNotSelectedImage);
             spellButton.setImage(spellNotSelectedImage);
@@ -268,6 +268,7 @@ public class PlayerBox implements PropertyChangeListener {
     }
 
     private void updateMP(int maxMP) {
+        System.out.println(maxMP);
         mpGroup.getChildren().clear();
         for (int i = 1; i <= player1.getCurrentMP(); i++) {
             try {
