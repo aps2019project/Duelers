@@ -8,6 +8,7 @@ import models.comperessedData.*;
 import models.game.CellEffect;
 import models.game.GameActions;
 import models.game.map.Position;
+import models.message.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -164,7 +165,7 @@ public class BattleSceneTester extends Application implements GameActions {
     }
 
     @Override
-    public void exitGameShow() {
+    public void exitGameShow(OnlineGame onlineGame) {
 
     }
 

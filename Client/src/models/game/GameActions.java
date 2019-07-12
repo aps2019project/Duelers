@@ -2,6 +2,7 @@ package models.game;
 
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedTroop;
+import models.message.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -21,5 +22,5 @@ public interface GameActions {
 
     void useSpecialPower(int row, int column);
 
-    void exitGameShow();
+    void exitGameShow(OnlineGame onlineGame);
 }

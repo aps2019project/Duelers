@@ -75,7 +75,7 @@ public class PlayerBox implements PropertyChangeListener {
         group.getChildren().add(mpGroup);
         updateMP(3);
 
-        if (battleScene.getMyPlayerNumber() == -1) {
+        if (battleScene.getMyPlayerNumber() != -1) {
             addComboButton();
             addSpellButton();
             addChatField();

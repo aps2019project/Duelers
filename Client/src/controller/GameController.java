@@ -10,10 +10,7 @@ import models.exceptions.InputException;
 import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
 import models.game.map.Position;
-import models.message.CardAnimation;
-import models.message.GameAnimations;
-import models.message.Message;
-import models.message.SpellAnimation;
+import models.message.*;
 import view.BattleView.BattleScene;
 
 import java.util.ArrayList;
@@ -190,8 +187,8 @@ public class GameController implements GameActions {
     }
 
     @Override
-    public void exitGameShow() {
-        Client.getInstance().addToSendingMessagesAndSend(Message.makeStopShowGameMessage(SERVER_NAME));
+    public void exitGameShow(OnlineGame onlineGame) {
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeStopShowGameMessage(SERVER_NAME, onlineGame));
     }
 
     public void showAnimation(GameAnimations gameAnimations) {
