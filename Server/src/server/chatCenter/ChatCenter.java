@@ -29,9 +29,23 @@ public class ChatCenter {
             }
         } else {
             if (DataCenter.getInstance().isOnline(message.getChatMessage().getReceiverUsername())) {
-                sendMessage(DataCenter.getInstance().getClientName(message.getChatMessage().getReceiverUsername()),
-                        message.getChatMessage().getSenderUsername(), message.getChatMessage().getReceiverUsername(),
-                        message.getChatMessage().getText());
+                if (message.getChatMessage().getReceiverUsername().equalsIgnoreCase("AI")) {
+
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ignored) {
+                        }
+                        sendMessage(DataCenter.getInstance().getClientName(message.getChatMessage().getSenderUsername()),
+                                "AI", message.getChatMessage().getSenderUsername(),
+                                "Shut UP :)");
+                    }).start();
+                } else {
+                    System.out.println("WTF: "+message.getChatMessage().getReceiverUsername());
+                    sendMessage(DataCenter.getInstance().getClientName(message.getChatMessage().getReceiverUsername()),
+                            message.getChatMessage().getSenderUsername(), message.getChatMessage().getReceiverUsername(),
+                            message.getChatMessage().getText());
+                }
             }
         }
     }

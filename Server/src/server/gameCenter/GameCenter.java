@@ -8,7 +8,6 @@ import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
-import server.exceptions.ServerException;
 import server.gameCenter.models.GlobalRequest;
 import server.gameCenter.models.UserInvitation;
 import server.gameCenter.models.game.*;
