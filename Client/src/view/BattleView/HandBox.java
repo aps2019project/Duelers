@@ -54,12 +54,13 @@ public class HandBox implements PropertyChangeListener {
         handGroup.setLayoutX(x);
         handGroup.setLayoutY(y);
 
-        HBox hBox = new HBox();
-        hBox.setLayoutX(200 * Constants.SCALE);
-        hBox.setLayoutY(25 * Constants.SCALE);
-        hBox.setSpacing(-15 * Constants.SCALE);
-        handGroup.getChildren().add(hBox);
+
         if (player != null) {
+            HBox hBox = new HBox();
+            hBox.setLayoutX(200 * Constants.SCALE);
+            hBox.setLayoutY(25 * Constants.SCALE);
+            hBox.setSpacing(-15 * Constants.SCALE);
+            handGroup.getChildren().add(hBox);
             for (int i = 0; i < 5; i++) {
                 cards[i] = new Pane();
                 hBox.getChildren().add(cards[i]);
@@ -79,10 +80,10 @@ public class HandBox implements PropertyChangeListener {
             addEndTurnButton();
             addGraveYardButton();
             player.addPropertyChangeListener(this);
+            battleScene.getGame().addPropertyChangeListener(this);
         }
 
         addFinishButton();
-        battleScene.getGame().addPropertyChangeListener(this);
     }
 
     private void updateNext() {
@@ -428,10 +429,12 @@ public class HandBox implements PropertyChangeListener {
     }
 
     void resetSelection() {
-        selectedCard = -1;
-        selectedItem = -1;
-        updateCards();
-        updateItems();
-        updateNext();
+        if (player != null) {
+            selectedCard = -1;
+            selectedItem = -1;
+            updateCards();
+            updateItems();
+            updateNext();
+        }
     }
 }
