@@ -317,8 +317,9 @@ public class Message {
         return message;
     }
 
-    public static Message makeStopShowGameMessage(String receiver) {
+    public static Message makeStopShowGameMessage(String receiver, OnlineGame onlineGame) {
         Message message = new Message(receiver);
+        message.onlineGame = onlineGame;
         message.messageType = MessageType.STOP_SHOW_GAME;
         return message;
     }
