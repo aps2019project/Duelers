@@ -5,6 +5,7 @@ import server.clientPortal.models.message.Message;
 import server.clientPortal.models.message.OnlineGame;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
@@ -47,6 +48,20 @@ public class GameCenter extends Thread {//synchronize
             throw new ClientException("you don't have online game!");
         }
         return game;
+    }
+
+    private Game getGame(OnlineGame onlineGame) {
+        if (onlineGame.getPlayer1() != null) {
+            Account account = DataCenter.getInstance().getAccount(onlineGame.getPlayer1());
+            if (account != null)
+                return onlineGames.get(account);
+        }
+        if (onlineGame.getPlayer2() != null) {
+            Account account = DataCenter.getInstance().getAccount(onlineGame.getPlayer2());
+            if (account != null)
+                return onlineGames.get(account);
+        }
+        return null;
     }
 
     public void getMultiPlayerGameRequest(Message message) throws LogicException {
@@ -405,5 +420,29 @@ public class GameCenter extends Thread {//synchronize
         } catch (LogicException ignored) {
         }
 
+    }
+
+    public void addOnlineShowRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Game game = getGame(message.getOnlineGame());
+        if (game == null)
+            throw new ClientException("Invalid Game");
+        Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage(message.getSender(), game));
+        game.addObserver(account);
+    }
+
+    public void removeOnlineShowGame(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Game game = getGame(message.getOnlineGame());
+        if (game == null)
+            throw new ClientException("Invalid Game");
+        Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage(message.getSender(), game));
+        game.removeObserver(account);
     }
 }

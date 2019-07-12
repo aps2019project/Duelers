@@ -286,4 +286,8 @@ public class Message {
     public String getCardName() {
         return cardName;
     }
+
+    public OnlineGame getOnlineGame() {
+        return onlineGame;
+    }
 }
