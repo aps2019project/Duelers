@@ -13,6 +13,7 @@ import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.CardType;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.ExportedDeck;
+import server.dataCenter.models.db.OldDataBase;
 import server.dataCenter.models.db.Rest;
 import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.dataCenter.models.sorter.StoriesSorter;
@@ -43,7 +44,7 @@ public class DataCenter extends Thread {
 
     private Map<Account, String> accounts = new HashMap<>();//Account -> ClientName
     private Map<String, Account> clients = new HashMap<>();//clientName -> Account
-    private DataBase dataBase = new Rest();
+    private DataBase dataBase = new OldDataBase();
 
     public static DataCenter getInstance() {
         return ourInstance;
