@@ -317,6 +317,12 @@ public class Message {
         return message;
     }
 
+    public static Message makeStopShowGameMessage(String receiver) {
+        Message message = new Message(receiver);
+        message.messageType = MessageType.STOP_SHOW_GAME;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }

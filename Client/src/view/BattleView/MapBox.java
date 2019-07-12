@@ -84,24 +84,9 @@ public class MapBox implements PropertyChangeListener {
                 cells[j][i].setFill(Color.DARKBLUE);
                 cells[j][i].setOpacity(Constants.CELLS_DEFAULT_OPACITY);
                 final int I = i, J = j;
-                cells[j][i].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J, I);
-                    }
-                });
-                cells[j][i].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        exitCell(J, I);
-                    }
-                });
-                cells[j][i].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        clickCell(J, I);
-                    }
-                });
+                cells[j][i].setOnMouseEntered(mouseEvent -> hoverCell(J, I));
+                cells[j][i].setOnMouseExited(mouseEvent -> exitCell(J, I));
+                cells[j][i].setOnMouseClicked(mouseEvent -> clickCell(J, I));
                 mapGroup.getChildren().add(cells[j][i]);
                 cellsX[j][i] = (x1 + x2 + x3 + x4) / 4;
                 cellsY[j][i] = (upperY + downerY) / 2;
@@ -125,24 +110,9 @@ public class MapBox implements PropertyChangeListener {
                             cellsY[j][i], cellsX[j][i]);
                     collectibleItems.put(gameMap.getCells()[j][i].getItem().getCardId(), cardAnimation);
                     final int J = j, I = i;
-                    cardAnimation.getImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            clickCell(J, I);
-                        }
-                    });
-                    cardAnimation.getImageView().setOnMouseExited(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            exitCell(J, I);
-                        }
-                    });
-                    cardAnimation.getImageView().setOnMouseEntered(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            hoverCell(J, I);
-                        }
-                    });
+                    cardAnimation.getImageView().setOnMouseClicked(mouseEvent -> clickCell(J, I));
+                    cardAnimation.getImageView().setOnMouseExited(mouseEvent -> exitCell(J, I));
+                    cardAnimation.getImageView().setOnMouseEntered(mouseEvent -> hoverCell(J, I));
                 }
             }
         }
@@ -166,24 +136,9 @@ public class MapBox implements PropertyChangeListener {
                     flagPanes[j][i].setVisible(true);
                 }
                 final int J = j, I = i;
-                flagPanes[J][I].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        clickCell(J, I);
-                    }
-                });
-                flagPanes[J][I].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        exitCell(J, I);
-                    }
-                });
-                flagPanes[J][I].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        hoverCell(J, I);
-                    }
-                });
+                flagPanes[J][I].setOnMouseClicked(mouseEvent -> clickCell(J, I));
+                flagPanes[J][I].setOnMouseExited(mouseEvent -> exitCell(J, I));
+                flagPanes[J][I].setOnMouseEntered(mouseEvent -> hoverCell(J, I));
                 mapGroup.getChildren().addAll(flagPanes[j][i]);
             }
         }
@@ -211,24 +166,9 @@ public class MapBox implements PropertyChangeListener {
                         newTroop.getPlayerNumber() == 1,
                         newTroop.getPlayerNumber() == battleScene.getMyPlayerNumber());
                 animation.updateApHp(newTroop.getCurrentAp(), newTroop.getCurrentHp());
-                animation.getTroopGroup().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        clickCell(animation.getRow(), animation.getColumn());
-                    }
-                });
-                animation.getTroopGroup().setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        hoverCell(animation.getRow(), animation.getColumn());
-                    }
-                });
-                animation.getTroopGroup().setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        exitCell(animation.getRow(), animation.getColumn());
-                    }
-                });
+                animation.getTroopGroup().setOnMouseClicked(mouseEvent -> clickCell(animation.getRow(), animation.getColumn()));
+                animation.getTroopGroup().setOnMouseEntered(mouseEvent -> hoverCell(animation.getRow(), animation.getColumn()));
+                animation.getTroopGroup().setOnMouseExited(mouseEvent -> exitCell(animation.getRow(), animation.getColumn()));
                 troopAnimationHashMap.put(newTroop, animation);
             } catch (Exception e) {
                 System.out.println("Error making animation " + newTroop.getCard().getCardId());
@@ -244,47 +184,31 @@ public class MapBox implements PropertyChangeListener {
 
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("troop")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    updateTroop((CompressedTroop) evt.getOldValue(), (CompressedTroop) evt.getNewValue());
-                }
-            });
+            Platform.runLater(() -> updateTroop((CompressedTroop) evt.getOldValue(), (CompressedTroop) evt.getNewValue()));
         }
         if (evt.getPropertyName().equals("flag")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Position position = (Position) evt.getOldValue();
-                    Integer newValue = (Integer) evt.getNewValue();
-                    flagLabels[position.getRow()][position.getColumn()].setText(Integer.toString(newValue));
-                    if (gameMap.getCell(position.getRow(), position.getColumn()).getNumberOfFlags() == 0) {
-                        flagPanes[position.getRow()][position.getColumn()].setVisible(false);
-                    } else {
-                        flagPanes[position.getRow()][position.getColumn()].setVisible(true);
-                    }
+            Platform.runLater(() -> {
+                Position position = (Position) evt.getOldValue();
+                Integer newValue = (Integer) evt.getNewValue();
+                flagLabels[position.getRow()][position.getColumn()].setText(Integer.toString(newValue));
+                if (gameMap.getCell(position.getRow(), position.getColumn()).getNumberOfFlags() == 0) {
+                    flagPanes[position.getRow()][position.getColumn()].setVisible(false);
+                } else {
+                    flagPanes[position.getRow()][position.getColumn()].setVisible(true);
                 }
             });
         }
         if (evt.getPropertyName().equals("item")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    CardAnimation cardAnimation = collectibleItems.get(evt.getOldValue());
-                    if (cardAnimation != null) {
-                        cardAnimation.active();
-                        collectibleItems.remove(evt.getOldValue());
-                    }
+            Platform.runLater(() -> {
+                CardAnimation cardAnimation = collectibleItems.get(evt.getOldValue());
+                if (cardAnimation != null) {
+                    cardAnimation.active();
+                    collectibleItems.remove(evt.getOldValue());
                 }
             });
         }
         if (evt.getPropertyName().equals("cellEffect")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    updateCellEffects();
-                }
-            });
+            Platform.runLater(this::updateCellEffects);
         }
     }
 

@@ -66,9 +66,13 @@ public class GameController implements GameActions {
     }
 
     private int getPlayerNumber(CompressedGame currentGame) {
-        int playerNumber = 1;
-        if (currentGame.getPlayerTwo().getUserName().equals(Client.getInstance().getAccount().getUsername()))
+        int playerNumber = -1;
+        if (currentGame.getPlayerOne().getUserName().equals(Client.getInstance().getAccount().getUsername())) {
+            playerNumber = 1;
+        }
+        if (currentGame.getPlayerTwo().getUserName().equals(Client.getInstance().getAccount().getUsername())) {
             playerNumber = 2;
+        }
         return playerNumber;
     }
 
@@ -183,6 +187,11 @@ public class GameController implements GameActions {
                 Message.makeUseSpecialPowerMessage(
                         SERVER_NAME, currentGame.getCurrentTurnPlayer().getHero().getCard().getCardId(), new Position(row, column)
                 ));
+    }
+
+    @Override
+    public void exitGameShow() {
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeStopShowGameMessage(SERVER_NAME));
     }
 
     public void showAnimation(GameAnimations gameAnimations) {

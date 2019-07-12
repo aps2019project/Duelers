@@ -164,6 +164,11 @@ public class BattleSceneTester extends Application implements GameActions {
     }
 
     @Override
+    public void exitGameShow() {
+
+    }
+
+    @Override
     public void forceFinish() {
 
     }
