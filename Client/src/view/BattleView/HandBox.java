@@ -18,6 +18,7 @@ import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 import models.gui.*;
 import models.message.OnlineGame;
+import view.MainMenu;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -302,7 +303,10 @@ public class HandBox implements PropertyChangeListener {
             ImageButton imageButton;
             if (player == null) {
                 imageButton = new ImageButton(
-                        "EXIT", event -> battleScene.getController().exitGameShow(new OnlineGame(battleScene.getGame())),
+                        "EXIT", event -> {
+                            battleScene.getController().exitGameShow(new OnlineGame(battleScene.getGame()));
+                            new MainMenu().show();
+                },
                         new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
                         new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
                 );
