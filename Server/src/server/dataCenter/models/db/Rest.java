@@ -4,14 +4,13 @@ import io.joshworks.restclient.http.HttpResponse;
 import io.joshworks.restclient.http.Unirest;
 import server.clientPortal.models.JsonConverter;
 import server.dataCenter.DataBase;
-import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Collection;
 import server.dataCenter.models.card.Card;
 import server.dataCenter.models.card.CardType;
+import server.dataCenter.models.sorter.StoriesSorter;
 import server.gameCenter.models.game.Story;
 import server.gameCenter.models.game.TempStory;
 
-import javax.swing.table.TableRowSorter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +32,7 @@ public class Rest implements DataBase {
     private static final String FLAG_PATH = "resources/itemCards/flag/Flag.item.card.json";
     private static final String STORIES_PATH = "resources/stories";
 
-    private static enum maps {
+    private enum maps {
         ORINGINAL_CARDS("originalCards"),
         CUSTOM_CARDS("customCards"),
         COLLECTIBLE_ITEMS("collectibleItems"),
@@ -59,7 +58,7 @@ public class Rest implements DataBase {
                 x) {
             Story story = JsonConverter.fromJson((String) o, Story.class);
 //            System.out.println(card.getName());
-            System.out.println((String)o);
+            System.out.println((String) o);
         }
 
         for (Story story :
@@ -80,6 +79,7 @@ public class Rest implements DataBase {
             }
         }
     }
+
     private static void readCards(Rest dataBase) {
         for (String path : CARDS_PATHS) {
             File[] files = new File(path).listFiles();
@@ -223,7 +223,9 @@ public class Rest implements DataBase {
 
     @Override
     public List<Story> getStories() {
-        return getList(getAllKeys(maps.STORIES.path), Story.class);
+        List<Story> stories = getList(getAllKeys(maps.STORIES.path), Story.class);
+        stories.sort(new StoriesSorter());
+        return stories;
     }
 
     private <T> List<T> getList(List list, Class<T> classOfT) {

@@ -274,6 +274,7 @@ public class HandBox implements PropertyChangeListener {
             imageView.setFitWidth(endTurnImage.getWidth() * Constants.SCALE * 0.5);
             imageView.setFitHeight(endTurnImage.getHeight() * Constants.SCALE * 0.5);
             endTurnLabel = new DefaultLabel("END TURN", Constants.END_TURN_FONT, Color.WHITE);
+          
             if ((battleScene.getGame().getTurnNumber() + 1) % 2 == battleScene.getMyPlayerNumber() % 2) {
                 endTurnLabel.setText("ENEMY TURN");
                 endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);

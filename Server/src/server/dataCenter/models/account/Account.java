@@ -108,7 +108,7 @@ public class Account {
 
     public void sellCard(String cardId) throws LogicException {
         Card card = collection.getCard(cardId);
-        if (card==null) {
+        if (card == null) {
             throw new ClientException("invalid card id");
         }
         money += card.getPrice();
@@ -118,7 +118,7 @@ public class Account {
                 deck.removeCard(card);
             }
         }
-        DataCenter.getInstance().changeCardNumber(card.getName(),+1);
+        DataCenter.getInstance().changeCardNumber(card.getName(), +1);
     }
 
     public void addCardToDeck(String cardId, String deckName) throws LogicException {
