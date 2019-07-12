@@ -32,12 +32,14 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private OnlineGame[] onlineGames;
     //SENDER:CLIENT
     private String cardName;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
+    private OnlineGame onlineGame;
     //SENDER:DUAL
     private Card card;
     private ChatMessage chatMessage;
