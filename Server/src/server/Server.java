@@ -239,6 +239,9 @@ public class Server {
                 case REJECT_CARD:
                     DataCenter.getInstance().rejectCustomCard(message);
                     break;
+                case STOP_SHOW_GAME:
+                    //  :)))))))
+                    break;
                 default:
                     throw new LogicException("Invalid Message Type!");
             }
