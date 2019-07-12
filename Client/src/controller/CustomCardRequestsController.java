@@ -2,9 +2,13 @@ package controller;
 
 import models.account.Collection;
 import models.card.Card;
+import models.message.DataName;
+import models.message.Message;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import static models.Constants.SERVER_NAME;
 
 public class CustomCardRequestsController {
     private static CustomCardRequestsController controller;
@@ -49,5 +53,11 @@ public class CustomCardRequestsController {
 
     public void removeListener(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
+    }
+
+    public void requestCustomCardRequests() {
+        Client.getInstance().addToSendingMessagesAndSend(
+                Message.makeGetDataMessage(SERVER_NAME, DataName.CUSTOM_CARDS)
+        );
     }
 }

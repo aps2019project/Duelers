@@ -40,6 +40,7 @@ public class Message {
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
     private ChangeAccountType changeAccountType;
+    private OnlineGame onlineGame;
 
 
     private Message(String receiver) {
@@ -305,6 +306,13 @@ public class Message {
         Message message = new Message(receiver);
         message.cardName = customCardName;
         message.messageType = MessageType.REJECT_CARD;
+        return message;
+    }
+
+    public static Message makeRequestOnlineGameShowMessage(String receiver, OnlineGame onlineGame) {
+        Message message = new Message(receiver);
+        message.onlineGame = onlineGame;
+        message.messageType = MessageType.ONLINE_GAME_SHOW_REQUEST;
         return message;
     }
 
