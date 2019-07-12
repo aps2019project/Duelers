@@ -2,18 +2,19 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
+import server.clientPortal.models.message.OnlineGame;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
-import server.exceptions.ServerException;
 import server.gameCenter.models.GlobalRequest;
 import server.gameCenter.models.UserInvitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -22,6 +23,7 @@ public class GameCenter extends Thread {//synchronize
     private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
     private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+    private final ArrayList<OnlineGame> gameInfos = new ArrayList<>();
 
     private GameCenter() {
     }
@@ -106,6 +108,10 @@ public class GameCenter extends Thread {//synchronize
                 }
             }
         }
+    }
+
+    public OnlineGame[] getOnlineGames() {
+        return gameInfos.toArray(new OnlineGame[]{});
     }
 
     private UserInvitation getUserInvitation(Account inviter) {
@@ -205,6 +211,7 @@ public class GameCenter extends Thread {//synchronize
         }
         game.setReward(Game.getDefaultReward());
         onlineGames.put(myAccount, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (message.getSender(), game));
         game.startGame();
@@ -236,6 +243,7 @@ public class GameCenter extends Thread {//synchronize
         }
         game.setReward(story.getReward());
         onlineGames.put(myAccount, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (message.getSender(), game));
         game.startGame();
@@ -261,6 +269,7 @@ public class GameCenter extends Thread {//synchronize
         game.setReward(Game.getDefaultReward());
         onlineGames.put(account1, game);
         onlineGames.put(account2, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
@@ -279,10 +288,15 @@ public class GameCenter extends Thread {//synchronize
             Account account2 = DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName());
             if (account2 != null) {
                 onlineGames.remove(account2);
-                //DataCenter.getInstance().getAccounts().replace(account2, null);
             }
         }
-        // DataCenter.getInstance().getClients().replace(onlineClients.get(1).getClientName(), null);
+        for (OnlineGame onlineGame : gameInfos) {
+            if (onlineGame.getPlayer1().equals(game.getPlayerOne().getUserName()) ||
+                    onlineGame.getPlayer2().equals(game.getPlayerTwo().getUserName())) {
+                gameInfos.remove(onlineGame);
+                return;
+            }
+        }
     }
 
     public void insertCard(Message message) throws LogicException {

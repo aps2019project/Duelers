@@ -947,4 +947,8 @@ public abstract class Game {
         setMatchHistories(!playerOne.getUserName().equals(username), !playerTwo.getUserName().equals(username));
         finish();
     }
+
+    public GameType getGameType() {
+        return gameType;
+    }
 }

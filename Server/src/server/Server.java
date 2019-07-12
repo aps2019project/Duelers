@@ -4,6 +4,7 @@ import server.chatCenter.ChatCenter;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.message.CardPosition;
 import server.clientPortal.models.message.Message;
+import server.clientPortal.models.message.OnlineGame;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
@@ -134,6 +135,9 @@ public class Server {
                         case CUSTOM_CARDS:
                             sendCustomCards(message);
                             break;
+                        case ONLINE_GAMES_LIST:
+                            sendOnlineGames(message);
+                            break;
                     }
                     break;
                 case BUY_CARD:
@@ -261,6 +265,15 @@ public class Server {
         DataCenter.getInstance().loginCheck(message);
         addToSendingMessages(Message.makeStoriesCopyMessage(message.getSender(),
                 DataCenter.getInstance().getStories().toArray(Story[]::new)));
+    }
+
+    private void sendOnlineGames(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        OnlineGame[] onlines = GameCenter.getInstance().getOnlineGames();
+        addToSendingMessages(Message.makeOnlineGamesCopyMessage(message.getSender(), onlines));
     }
 
     private void sendOriginalCards(Message message) throws LogicException {

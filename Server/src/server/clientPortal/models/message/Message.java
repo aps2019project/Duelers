@@ -224,6 +224,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeOnlineGamesCopyMessage(String receiver, OnlineGame[] onlines) {
+        Message message = new Message(receiver);
+        message.onlineGames = onlines;
+        message.messageType = MessageType.ONLINE_GAMES_COPY;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
