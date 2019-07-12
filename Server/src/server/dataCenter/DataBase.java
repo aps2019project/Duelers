@@ -31,4 +31,6 @@ public interface DataBase {
     void setOriginalFlag(Card loadFile);
 
     void addStory(Story story);
+
+    boolean isEmpty();
 }

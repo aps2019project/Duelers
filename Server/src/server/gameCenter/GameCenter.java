@@ -186,10 +186,10 @@ public class GameCenter extends Thread {//synchronize
             throw new ClientException("you have online game!");
         }
         Deck deck = new Deck(myAccount.getDeck(message.getNewGameFields().getCustomDeckName()));
-        deck.makeCustomGameDeck();
         if (deck == null || !deck.isValid()) {
             throw new ClientException("selected deck is not valid");
         }
+        deck.makeCustomGameDeck();
         Game game = null;
         GameMap gameMap = new GameMap(DataCenter.getInstance().getCollectibleItems(), message.getNewGameFields().getNumberOfFlags(), DataCenter.getInstance().getOriginalFlag());
         switch (message.getNewGameFields().getGameType()) {

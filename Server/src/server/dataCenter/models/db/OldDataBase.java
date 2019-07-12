@@ -61,6 +61,11 @@ public class OldDataBase implements DataBase {
         stories.add(story);
     }
 
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
     public List<Story> getStories() {
         return stories;
     }
