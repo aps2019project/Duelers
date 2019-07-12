@@ -239,8 +239,11 @@ public class Server {
                 case REJECT_CARD:
                     DataCenter.getInstance().rejectCustomCard(message);
                     break;
+                case ONLINE_GAME_SHOW_REQUEST:
+                    GameCenter.getInstance().addOnlineShowRequest(message);
+                    break;
                 case STOP_SHOW_GAME:
-                    //  :)))))))
+                    GameCenter.getInstance().removeOnlineShowGame(message);
                     break;
                 default:
                     throw new LogicException("Invalid Message Type!");
