@@ -58,27 +58,29 @@ public class HandBox implements PropertyChangeListener {
         hBox.setLayoutY(25 * Constants.SCALE);
         hBox.setSpacing(-15 * Constants.SCALE);
         handGroup.getChildren().add(hBox);
-        for (int i = 0; i < 5; i++) {
-            cards[i] = new Pane();
-            hBox.getChildren().add(cards[i]);
-        }
-        for (int i = 0; i < 3; i++) {
-            items[i] = new Pane();
-            hBox.getChildren().add(items[i]);
-        }
-        updateCards();
-        updateItems();
+        if (player != null) {
+            for (int i = 0; i < 5; i++) {
+                cards[i] = new Pane();
+                hBox.getChildren().add(cards[i]);
+            }
+            for (int i = 0; i < 3; i++) {
+                items[i] = new Pane();
+                hBox.getChildren().add(items[i]);
+            }
+            updateCards();
+            updateItems();
 
-        next.setLayoutX(0 * Constants.SCALE);
-        next.setLayoutY(0);
-        handGroup.getChildren().add(next);
-        updateNext();
+            next.setLayoutX(0 * Constants.SCALE);
+            next.setLayoutY(0);
+            handGroup.getChildren().add(next);
+            updateNext();
 
-        addEndTurnButton();
-        addGraveYardButton();
+            addEndTurnButton();
+            addGraveYardButton();
+            player.addPropertyChangeListener(this);
+        }
+
         addFinishButton();
-
-        player.addPropertyChangeListener(this);
         battleScene.getGame().addPropertyChangeListener(this);
     }
 
@@ -295,11 +297,20 @@ public class HandBox implements PropertyChangeListener {
 
     private void addFinishButton() {
         try {
-            ImageButton imageButton = new ImageButton(
-                    "FINISH", event -> battleScene.getController().forceFinish(),
-                    new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
-                    new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
-            );
+            ImageButton imageButton;
+            if (player == null) {
+                imageButton = new ImageButton(
+                        "EXIT", event -> battleScene.getController().exitGameShow(),
+                        new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
+                        new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
+                );
+            } else {
+                imageButton = new ImageButton(
+                        "FINISH", event -> battleScene.getController().forceFinish(),
+                        new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
+                        new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
+                );
+            }
             imageButton.setLayoutX(1360 * Constants.SCALE);
             imageButton.setLayoutY(110 * Constants.SCALE);
 
@@ -352,6 +363,7 @@ public class HandBox implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (player == null) return;
         switch (evt.getPropertyName()) {
             case "next":
             case "hand":

@@ -20,4 +20,6 @@ public interface GameActions {
     void insert(CompressedCard card, int row, int column);
 
     void useSpecialPower(int row, int column);
+
+    void exitGameShow();
 }
