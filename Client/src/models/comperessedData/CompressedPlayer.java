@@ -14,6 +14,7 @@ public class CompressedPlayer {
     private List<CompressedCard> hand;
     private List<CompressedCard> graveyard;
     private CompressedCard nextCard;
+    private CompressedCard usableItem;
     private List<CompressedCard> collectedItems;
     private int playerNumber;
     private int numberOfCollectedFlags;
@@ -205,5 +206,9 @@ public class CompressedPlayer {
         }
 
         return Collections.unmodifiableList(flagCarriers);
+    }
+
+    public CompressedCard getUsableItem() {
+        return usableItem;
     }
 }
