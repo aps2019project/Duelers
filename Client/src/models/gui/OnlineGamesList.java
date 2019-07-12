@@ -37,7 +37,11 @@ public class OnlineGamesList extends TableView {
         gameType.setCellValueFactory(new PropertyValueFactory<>("gameType"));
         gameType.setMinWidth(300 * SCALE);
 
-        getColumns().addAll(index, player1, player2, gameType);
+        TableColumn<OnlineGameView, GameType> showButton = new TableColumn<>("SHOW");
+        showButton.setCellValueFactory(new PropertyValueFactory<>("showButton"));
+        showButton.setMinWidth(300 * SCALE);
+
+        getColumns().addAll(index, player1, player2, gameType, showButton);
     }
 
     public void setItems(OnlineGame[] onlineGames) {
