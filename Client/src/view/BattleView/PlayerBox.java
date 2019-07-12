@@ -79,6 +79,7 @@ public class PlayerBox implements PropertyChangeListener {
             addSpellButton();
             addChatField();
             makeMessageShows();
+            addUsableItem();
         }
 
         game.addPropertyChangeListener(this);
