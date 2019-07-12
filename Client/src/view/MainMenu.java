@@ -38,6 +38,7 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
+    private DialogContainer onlineGamesDialog;
 
     {
         items.addAll(Arrays.asList(itemsArray));
@@ -49,6 +50,10 @@ public class MainMenu extends Show {
                     new MenuItem(itemIndex++, "ONLINE GAMES", "View online games real time", event -> menu.showOnlineGamesList())
             ));
         }
+    }
+
+    public static MainMenu getInstance() {
+        return menu;
     }
 
     public MainMenu() {
@@ -91,13 +96,19 @@ public class MainMenu extends Show {
         });
     }
 
+    public void closeOnlineGamesList() {
+        if (onlineGamesDialog != null) {
+            onlineGamesDialog.close();
+        }
+    }
+
     private void showOnlineGamesList() {
         BackgroundMaker.makeMenuBackgroundFrozen();
         DialogBox dialogBox = new DialogBox();
         OnlineGamesList onlineGamesList = new OnlineGamesList();
         dialogBox.getChildren().add(onlineGamesList);
-        DialogContainer dialogContainer = new DialogContainer(root, dialogBox);
-        dialogBox.makeClosable(dialogContainer, closeEvent -> {
+        onlineGamesDialog = new DialogContainer(root, dialogBox);
+        dialogBox.makeClosable(onlineGamesDialog, closeEvent -> {
             BackgroundMaker.makeMenuBackgroundUnfrozen();
             inOnlineGames = false;
         });
@@ -105,21 +116,18 @@ public class MainMenu extends Show {
         inOnlineGames = true;
         new Thread(() -> {
             try {
-                while (inOnlineGames) {
-                    OnlineGamesListController.getInstance().requestOnlineGamesList();
-                    synchronized (OnlineGamesListController.getInstance()) {
-                        OnlineGamesListController.getInstance().wait();
-                    }
-                    OnlineGame[] onlineGames = OnlineGamesListController.getInstance().getOnlineGames();
-                    Platform.runLater(() -> onlineGamesList.setItems(onlineGames));
-                    Thread.sleep(4000);
+                OnlineGamesListController.getInstance().requestOnlineGamesList();
+                synchronized (OnlineGamesListController.getInstance()) {
+                    OnlineGamesListController.getInstance().wait();
                 }
+                OnlineGame[] onlineGames = OnlineGamesListController.getInstance().getOnlineGames();
+                Platform.runLater(() -> onlineGamesList.setItems(onlineGames));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
 
-        dialogContainer.show();
+        onlineGamesDialog.show();
     }
 
     private void showLeaderboard() {
