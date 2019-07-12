@@ -456,6 +456,7 @@ public class PlayerBox implements PropertyChangeListener {
         public void handle(long now) {
             if (initialTime == -1) {
                 initialTime = now;
+                group.getChildren().remove(stackPane);
                 group.getChildren().add(stackPane);
             }
             if (now - initialTime > showTime) {
