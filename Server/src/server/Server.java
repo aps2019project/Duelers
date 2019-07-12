@@ -347,25 +347,15 @@ public class Server {
     }
 
     public void sendSpellMessage(Game game, TargetData target, AvailabilityType availabilityType) {
-        String clientName;
         Set<Position> positions = target.getPositions();
         if (positions.size() == 0) return;
-
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
-            if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
+        for(Account account:game.getObservers()){
+            String clientName=DataCenter.getInstance().getAccounts().get(account);
+            if(clientName==null){
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
-            }
+            addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
         }
     }
 
