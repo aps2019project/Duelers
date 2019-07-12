@@ -28,19 +28,20 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private OnlineGame[] onlineGames;
     //SENDER:CLIENT
     private String cardName;
     private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
+    private OnlineGame onlineGame;
     //SENDER:DUAL
     private Card card;
     private ChatMessage chatMessage;
     private NewGameFields newGameFields;
     private ChangeCardNumber changeCardNumber;
     private ChangeAccountType changeAccountType;
-    private OnlineGame onlineGame;
 
 
     private Message(String receiver) {
