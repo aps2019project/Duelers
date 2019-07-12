@@ -112,6 +112,10 @@ public class Player {
         this.currentMP = currentMP;
     }
 
+    void increaseMP(int currentMP){
+        this.currentMP+= currentMP;
+    }
+
     void addFlagCarrier(Troop troop) {
         if (!this.flagCarriers.contains(troop))
             this.flagCarriers.add(troop);

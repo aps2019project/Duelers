@@ -278,10 +278,8 @@ public class GameCenter extends Thread {//synchronize
             Account account2 = DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName());
             if (account2 != null) {
                 onlineGames.remove(account2);
-                //DataCenter.getInstance().getAccounts().replace(account2, null);
             }
         }
-        // DataCenter.getInstance().getClients().replace(onlineClients.get(1).getClientName(), null);
     }
 
     public void insertCard(Message message) throws LogicException {

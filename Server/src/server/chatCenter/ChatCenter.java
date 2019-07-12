@@ -28,9 +28,7 @@ public class ChatCenter {
                 }
             }
         } else {
-            if (DataCenter.getInstance().isOnline(message.getChatMessage().getReceiverUsername())) {
                 if (message.getChatMessage().getReceiverUsername().equalsIgnoreCase("AI")) {
-
                     new Thread(() -> {
                         try {
                             Thread.sleep(3000);
@@ -40,14 +38,13 @@ public class ChatCenter {
                                 "AI", message.getChatMessage().getSenderUsername(),
                                 "Shut UP :)");
                     }).start();
-                } else {
-                    System.out.println("WTF: "+message.getChatMessage().getReceiverUsername());
+                } else if(DataCenter.getInstance().isOnline(message.getChatMessage().getReceiverUsername())){
                     sendMessage(DataCenter.getInstance().getClientName(message.getChatMessage().getReceiverUsername()),
                             message.getChatMessage().getSenderUsername(), message.getChatMessage().getReceiverUsername(),
                             message.getChatMessage().getText());
                 }
             }
-        }
+
     }
 
     private void sendMessage(String receiverClientName, String senderUsername, String receiverUsername, String text) {

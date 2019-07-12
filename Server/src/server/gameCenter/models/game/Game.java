@@ -61,6 +61,8 @@ public abstract class Game {
     }
 
     public void startGame() {
+        playerOne.setCurrentMP(2);
+
         applyOnStartSpells(playerOne.getDeck());
         putMinion(1, playerOne.createHero(), gameMap.getCell(2, 0));
 
@@ -69,8 +71,6 @@ public abstract class Game {
         putMinion(2, playerTwo.createHero(), gameMap.getCell(2, 8));
 
         this.turnNumber = 1;
-
-        playerOne.setCurrentMP(2);
 
         startTurnTimeLimit();
 
@@ -137,6 +137,8 @@ public abstract class Game {
     public void changeTurn(String username) throws LogicException {
         try {
             if (canCommand(username)) {
+                getCurrentTurnPlayer().setCurrentMP(0);
+
                 addNextCardToHand();
 
                 revertNotDurableBuffs();
@@ -145,9 +147,9 @@ public abstract class Game {
                 setAllTroopsCanAttackAndCanMove();
                 applyAllBuffs();
                 if (turnNumber < 14)
-                    getCurrentTurnPlayer().setCurrentMP(turnNumber / 2 + 2);
+                    getCurrentTurnPlayer().increaseMP(turnNumber / 2 + 2);
                 else
-                    getCurrentTurnPlayer().setCurrentMP(9);
+                    getCurrentTurnPlayer().increaseMP(9);
                 Server.getInstance().sendGameUpdateMessage(this);
 
                 startTurnTimeLimit();
@@ -804,29 +806,27 @@ public abstract class Game {
     }
 
     private void setTargetData(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell, Player player, TargetData targetData) {
-        try {
-            if (spell.getTarget().getCardType().isPlayer()) {
-                targetData.getPlayers().add(player);
-            }
 
-            if (spell.getTarget().isForDeckCards()) {
-                for (Card card : player.getDeck().getOthers()) {
-                    addCardToTargetData(spell, targetData, card);
-                }
-                for (Card card : player.getHand()) {
-                    addCardToTargetData(spell, targetData, card);
-                }
-                addCardToTargetData(spell, targetData, player.getNextCard());
-                addCardToTargetData(spell, targetData, player.getDeck().getHero());
-            }
-            if (spell.getTarget().getDimensions() != null) {
-                Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
-                ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
-                addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
-            }
-        }catch (NullPointerException e){
-            System.out.println(spell.getSpellId());
+        if (spell.getTarget().getCardType().isPlayer()) {
+            targetData.getPlayers().add(player);
         }
+
+        if (spell.getTarget().isForDeckCards()) {
+            for (Card card : player.getDeck().getOthers()) {
+                addCardToTargetData(spell, targetData, card);
+            }
+            for (Card card : player.getHand()) {
+                addCardToTargetData(spell, targetData, card);
+            }
+            addCardToTargetData(spell, targetData, player.getNextCard());
+            addCardToTargetData(spell, targetData, player.getDeck().getHero());
+        }
+        if (spell.getTarget().getDimensions() != null) {
+            Position centerPosition = getCenterPosition(spell, cardCell, clickCell, heroCell);
+            ArrayList<Cell> targetCells = detectCells(centerPosition, spell.getTarget().getDimensions());
+            addTroopsAndCellsToTargetData(spell, targetData, player, targetCells);
+        }
+
     }
 
     private Position getCenterPosition(Spell spell, Cell cardCell, Cell clickCell, Cell heroCell) {
