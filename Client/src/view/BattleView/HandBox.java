@@ -372,7 +372,7 @@ public class HandBox implements PropertyChangeListener {
                 Platform.runLater(this::resetSelection);
                 break;
             case "turn":
-                if (((int) evt.getNewValue() + 1) % 2 == battleScene.getMyPlayerNumber()) {
+                if (((int) evt.getNewValue() + 1) % 2 == battleScene.getMyPlayerNumber() % 2) {
                     Platform.runLater(() -> {
                         endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);
                         endTurnLabel.setText("ENEMY TURN");
