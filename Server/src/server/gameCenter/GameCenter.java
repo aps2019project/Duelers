@@ -2,8 +2,10 @@ package server.gameCenter;
 
 import server.Server;
 import server.clientPortal.models.message.Message;
+import server.clientPortal.models.message.OnlineGame;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
+import server.dataCenter.models.account.AccountType;
 import server.dataCenter.models.account.MatchHistory;
 import server.dataCenter.models.card.Deck;
 import server.exceptions.ClientException;
@@ -13,6 +15,7 @@ import server.gameCenter.models.UserInvitation;
 import server.gameCenter.models.game.*;
 import server.gameCenter.models.map.GameMap;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -21,6 +24,7 @@ public class GameCenter extends Thread {//synchronize
     private final HashMap<Account, Game> onlineGames = new HashMap<>();//Account -> Game
     private final LinkedList<GlobalRequest> globalRequests = new LinkedList<>();
     private final LinkedList<UserInvitation> userInvitations = new LinkedList<>();
+    private final ArrayList<OnlineGame> gameInfos = new ArrayList<>();
 
     private GameCenter() {
     }
@@ -44,6 +48,20 @@ public class GameCenter extends Thread {//synchronize
             throw new ClientException("you don't have online game!");
         }
         return game;
+    }
+
+    private Game getGame(OnlineGame onlineGame) {
+        if (onlineGame.getPlayer1() != null) {
+            Account account = DataCenter.getInstance().getAccount(onlineGame.getPlayer1());
+            if (account != null)
+                return onlineGames.get(account);
+        }
+        if (onlineGame.getPlayer2() != null) {
+            Account account = DataCenter.getInstance().getAccount(onlineGame.getPlayer2());
+            if (account != null)
+                return onlineGames.get(account);
+        }
+        return null;
     }
 
     public void getMultiPlayerGameRequest(Message message) throws LogicException {
@@ -105,6 +123,10 @@ public class GameCenter extends Thread {//synchronize
                 }
             }
         }
+    }
+
+    public OnlineGame[] getOnlineGames() {
+        return gameInfos.toArray(new OnlineGame[]{});
     }
 
     private UserInvitation getUserInvitation(Account inviter) {
@@ -194,16 +216,20 @@ public class GameCenter extends Thread {//synchronize
         switch (message.getNewGameFields().getGameType()) {
             case KILL_HERO:
                 game = new KillHeroBattle(myAccount, deck, gameMap);
+                game.addObserver(myAccount);
                 break;
             case A_FLAG:
                 game = new SingleFlagBattle(myAccount, deck, gameMap);
+                game.addObserver(myAccount);
                 break;
             case SOME_FLAG:
                 game = new MultiFlagBattle(myAccount, deck, gameMap, message.getNewGameFields().getNumberOfFlags());
+                game.addObserver(myAccount);
                 break;
         }
         game.setReward(Game.getDefaultReward());
         onlineGames.put(myAccount, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (message.getSender(), game));
         game.startGame();
@@ -225,16 +251,20 @@ public class GameCenter extends Thread {//synchronize
         switch (story.getGameType()) {
             case KILL_HERO:
                 game = new KillHeroBattle(myAccount, story.getDeck(), gameMap);
+                game.addObserver(myAccount);
                 break;
             case A_FLAG:
                 game = new SingleFlagBattle(myAccount, story.getDeck(), gameMap);
+                game.addObserver(myAccount);
                 break;
             case SOME_FLAG:
                 game = new MultiFlagBattle(myAccount, story.getDeck(), gameMap, story.getNumberOfFlags());
+                game.addObserver(myAccount);
                 break;
         }
         game.setReward(story.getReward());
         onlineGames.put(myAccount, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (message.getSender(), game));
         game.startGame();
@@ -249,17 +279,24 @@ public class GameCenter extends Thread {//synchronize
         switch (gameType) {
             case KILL_HERO:
                 game = new KillHeroBattle(account1, account2, gameMap);
+                game.addObserver(account1);
+                game.addObserver(account2);
                 break;
             case A_FLAG:
                 game = new SingleFlagBattle(account1, account2, gameMap);
+                game.addObserver(account1);
+                game.addObserver(account2);
                 break;
             case SOME_FLAG:
                 game = new MultiFlagBattle(account1, account2, gameMap, numberOfFlags);
+                game.addObserver(account1);
+                game.addObserver(account2);
                 break;
         }
         game.setReward(Game.getDefaultReward());
         onlineGames.put(account1, game);
         onlineGames.put(account2, game);
+        gameInfos.add(new OnlineGame(game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
                 (DataCenter.getInstance().getClientName(account1.getUsername()), game));
         Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage
@@ -280,6 +317,15 @@ public class GameCenter extends Thread {//synchronize
                 onlineGames.remove(account2);
             }
         }
+
+        for (OnlineGame onlineGame : gameInfos) {
+            if (onlineGame.getPlayer1().equals(game.getPlayerOne().getUserName()) ||
+                    onlineGame.getPlayer2().equals(game.getPlayerTwo().getUserName())) {
+                gameInfos.remove(onlineGame);
+                return;
+            }
+        }
+
     }
 
     public void insertCard(Message message) throws LogicException {
@@ -376,5 +422,28 @@ public class GameCenter extends Thread {//synchronize
         } catch (LogicException ignored) {
         }
 
+    }
+
+    public void addOnlineShowRequest(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Game game = getGame(message.getOnlineGame());
+        if (game == null)
+            throw new ClientException("Invalid Game");
+        Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage(message.getSender(), game));
+        game.addObserver(account);
+    }
+
+    public void removeOnlineShowGame(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        Game game = getGame(message.getOnlineGame());
+        if (game == null)
+            throw new ClientException("Invalid Game");
+        game.removeObserver(account);
     }
 }

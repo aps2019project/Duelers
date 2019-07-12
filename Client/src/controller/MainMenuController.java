@@ -32,7 +32,7 @@ public class MainMenuController {
         Client.getInstance().addToSendingMessagesAndSend(Message.makeGetDataMessage(SERVER_NAME, DataName.LEADERBOARD));
     }
 
-    public void addChatMessage(ChatMessage chatMessage) {
+    void addChatMessage(ChatMessage chatMessage) {
         Platform.runLater(() -> GlobalChatDialog.getInstance().addMessage(chatMessage));
     }
 
@@ -52,12 +52,6 @@ public class MainMenuController {
 
     public void changeAccountTypeRequest(String username, AccountType newValue) {
         Client.getInstance().addToSendingMessagesAndSend(Message.makeChangeAccountTypeMessage(SERVER_NAME, username, newValue));
-    }
-
-    public void requestCustomCardRequests() {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeGetDataMessage(SERVER_NAME, DataName.CUSTOM_CARDS)
-        );
     }
 
     public void acceptCustomCard(String cardName) {

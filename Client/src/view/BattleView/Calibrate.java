@@ -9,6 +9,7 @@ import models.card.spell.AvailabilityType;
 import models.comperessedData.*;
 import models.game.GameActions;
 import models.game.map.Position;
+import models.message.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,11 @@ public class Calibrate extends Application implements GameActions {
     @Override
     public void useSpecialPower(int row, int column) {
         System.out.println("use spell");
+    }
+
+    @Override
+    public void exitGameShow(OnlineGame onlineGame) {
+
     }
 
     @Override

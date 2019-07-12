@@ -40,6 +40,7 @@ public abstract class Game {
     private int turnNumber = 1;
     private int reward;
     private boolean isFinished;
+    private ArrayList<Account> observers = new ArrayList<>();
 
     protected Game(Account account, Deck secondDeck, String userName, GameMap gameMap, GameType gameType) {
         this.gameType = gameType;
@@ -949,5 +950,21 @@ public abstract class Game {
     public void forceFinish(String username) {
         setMatchHistories(!playerOne.getUserName().equals(username), !playerTwo.getUserName().equals(username));
         finish();
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public void addObserver(Account account) {
+        observers.add(account);
+    }
+
+    public void removeObserver(Account account) {
+        observers.remove(account);
+    }
+
+    public ArrayList<Account> getObservers() {
+        return observers;
     }
 }

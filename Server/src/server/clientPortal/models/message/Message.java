@@ -32,12 +32,14 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private OnlineGame[] onlineGames;
     //SENDER:CLIENT
     private String cardName;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private ExportedDeck exportedDeck;
     private AccountFields accountFields;
+    private OnlineGame onlineGame;
     //SENDER:DUAL
     private Card card;
     private ChatMessage chatMessage;
@@ -222,6 +224,13 @@ public class Message {
         return message;
     }
 
+    public static Message makeOnlineGamesCopyMessage(String receiver, OnlineGame[] onlines) {
+        Message message = new Message(receiver);
+        message.onlineGames = onlines;
+        message.messageType = MessageType.ONLINE_GAMES_COPY;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
@@ -276,5 +285,9 @@ public class Message {
 
     public String getCardName() {
         return cardName;
+    }
+
+    public OnlineGame getOnlineGame() {
+        return onlineGame;
     }
 }

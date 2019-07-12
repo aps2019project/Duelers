@@ -4,14 +4,12 @@ import controller.GameController;
 import controller.SoundEffectPlayer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -75,11 +73,14 @@ public class PlayerBox implements PropertyChangeListener {
         mpGroup = new Group();
         group.getChildren().add(mpGroup);
         updateMP(3);
-        addComboButton();
-        addSpellButton();
-        addUsableItem();
-        addChatField();
-        makeMessageShows();
+
+        if (battleScene.getMyPlayerNumber() != -1) {
+            addComboButton();
+            addSpellButton();
+            addChatField();
+            makeMessageShows();
+        }
+
         game.addPropertyChangeListener(this);
     }
 
@@ -172,6 +173,8 @@ public class PlayerBox implements PropertyChangeListener {
     }
 
     void refreshComboAndSpell() {
+        if (battleScene.getMyPlayerNumber() == -1)
+            return;
         try {
             comboButton.setImage(comboNotSelectedImage);
             spellButton.setImage(spellNotSelectedImage);
@@ -190,24 +193,9 @@ public class PlayerBox implements PropertyChangeListener {
         else
             spellButton.setX(Constants.SCREEN_WIDTH - SCALE * (180) - spellButton.getFitWidth());
         group.getChildren().add(spellButton);
-        spellButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                hoverSpellButton();
-            }
-        });
-        spellButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                exitSpellButton();
-            }
-        });
-        spellButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                clickSpellButton();
-            }
-        });
+        spellButton.setOnMouseEntered(mouseEvent -> hoverSpellButton());
+        spellButton.setOnMouseExited(mouseEvent -> exitSpellButton());
+        spellButton.setOnMouseClicked(mouseEvent -> clickSpellButton());
     }
 
     private void exitSpellButton() {
@@ -257,7 +245,7 @@ public class PlayerBox implements PropertyChangeListener {
         }
     }
 
-    private void addComboButton() throws Exception {
+    private void addComboButton() {
         comboButton = new ImageView(comboNotSelectedImage);
         comboButton.setFitWidth(comboButton.getImage().getWidth() * SCALE * 0.3);
         comboButton.setFitHeight(comboButton.getImage().getHeight() * SCALE * 0.3);
@@ -267,24 +255,9 @@ public class PlayerBox implements PropertyChangeListener {
         else
             comboButton.setX(Constants.SCREEN_WIDTH - SCALE * (230) - comboButton.getFitWidth());
         group.getChildren().add(comboButton);
-        comboButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                hoverComboButton();
-            }
-        });
-        comboButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                exitComboButton();
-            }
-        });
-        comboButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                clickComboButton();
-            }
-        });
+        comboButton.setOnMouseEntered(mouseEvent -> hoverComboButton());
+        comboButton.setOnMouseExited(mouseEvent -> exitComboButton());
+        comboButton.setOnMouseClicked(mouseEvent -> clickComboButton());
     }
 
     private void exitComboButton() {
@@ -329,6 +302,7 @@ public class PlayerBox implements PropertyChangeListener {
     }
 
     private void updateMP(int maxMP) {
+        System.out.println(maxMP);
         mpGroup.getChildren().clear();
         for (int i = 1; i <= player1.getCurrentMP(); i++) {
             try {

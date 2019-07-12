@@ -1,9 +1,6 @@
 package view;
 
-import controller.Client;
-import controller.CustomCardRequestsController;
-import controller.GraphicalUserInterface;
-import controller.MainMenuController;
+import controller.*;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -12,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import models.account.AccountInfo;
 import models.gui.*;
+import models.message.OnlineGame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +28,7 @@ public class MainMenu extends Show {
     private final List<MenuItem> items = new ArrayList<>();
     private int itemIndex = 0;
     private boolean inLeaderBoard = false;
+    private boolean inOnlineGames = false;
     private final MenuItem[] itemsArray = {
             new MenuItem(itemIndex++, "PLAY", "Single player, multiplayer", event -> PlayMenu.getInstance().show()),
             new MenuItem(itemIndex++, "PROFILE", "See you profile information", event -> menu.showProfileDialog()),
@@ -39,6 +38,7 @@ public class MainMenu extends Show {
             new MenuItem(itemIndex++, "GLOBAL CHAT", "chat with other players", event -> GlobalChatDialog.getInstance().show()),
             new MenuItem(itemIndex++, "LEADERBOARD", "See other people and their place", event -> menu.showLeaderboard())
     };
+    private DialogContainer onlineGamesDialog;
 
     {
         items.addAll(Arrays.asList(itemsArray));
@@ -46,9 +46,14 @@ public class MainMenu extends Show {
             System.out.println(Client.getInstance().getAccount().getUsername());
             items.addAll(Arrays.asList(
                     new MenuItem(itemIndex++, "SHOP ADMIN", "Change shop properties", event -> ShopAdminMenu.getInstance().show()),
-                    new MenuItem(itemIndex++, "CUSTOM CARD REQUESTS", "check custom card requests", event -> menu.showCustomCardRequests())
+                    new MenuItem(itemIndex++, "CUSTOM CARD REQUESTS", "check custom card requests", event -> menu.showCustomCardRequests()),
+                    new MenuItem(itemIndex++, "ONLINE GAMES", "View online games real time", event -> menu.showOnlineGamesList())
             ));
         }
+    }
+
+    public static MainMenu getInstance() {
+        return menu;
     }
 
     public MainMenu() {
@@ -78,7 +83,7 @@ public class MainMenu extends Show {
             BackgroundMaker.makeMenuBackgroundUnfrozen();
         });
 
-        MainMenuController.getInstance().requestCustomCardRequests();
+        CustomCardRequestsController.getInstance().requestCustomCardRequests();
 
         customCardRequestsDialog.show();
     }
@@ -91,6 +96,39 @@ public class MainMenu extends Show {
         });
     }
 
+    public void closeOnlineGamesList() {
+        if (onlineGamesDialog != null) {
+            onlineGamesDialog.close();
+        }
+    }
+
+    private void showOnlineGamesList() {
+        BackgroundMaker.makeMenuBackgroundFrozen();
+        DialogBox dialogBox = new DialogBox();
+        OnlineGamesList onlineGamesList = new OnlineGamesList();
+        dialogBox.getChildren().add(onlineGamesList);
+        onlineGamesDialog = new DialogContainer(root, dialogBox);
+        dialogBox.makeClosable(onlineGamesDialog, closeEvent -> {
+            BackgroundMaker.makeMenuBackgroundUnfrozen();
+            inOnlineGames = false;
+        });
+
+        inOnlineGames = true;
+        new Thread(() -> {
+            try {
+                OnlineGamesListController.getInstance().requestOnlineGamesList();
+                synchronized (OnlineGamesListController.getInstance()) {
+                    OnlineGamesListController.getInstance().wait();
+                }
+                OnlineGame[] onlineGames = OnlineGamesListController.getInstance().getOnlineGames();
+                Platform.runLater(() -> onlineGamesList.setItems(onlineGames));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        onlineGamesDialog.show();
+    }
 
     private void showLeaderboard() {
         BackgroundMaker.makeMenuBackgroundFrozen();

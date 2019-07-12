@@ -4,6 +4,7 @@ import server.chatCenter.ChatCenter;
 import server.clientPortal.ClientPortal;
 import server.clientPortal.models.message.CardPosition;
 import server.clientPortal.models.message.Message;
+import server.clientPortal.models.message.OnlineGame;
 import server.dataCenter.DataCenter;
 import server.dataCenter.models.account.Account;
 import server.dataCenter.models.account.AccountType;
@@ -56,7 +57,7 @@ public class Server {
                 }
                 if (message != null) {
                     ClientPortal.getInstance().sendMessage(message.getReceiver(), message.toJson());
-                    System.out.println(message.getReceiver() + ":\n" + message.toJson());//TODO:remove
+                    System.out.println("TO:" + message.getReceiver() + ":  " + message.toJson());//TODO:remove
                 } else {
                     try {
                         synchronized (sendingMessages) {
@@ -75,6 +76,7 @@ public class Server {
                     message = receivingMessages.poll();
                 }
                 if (message != null) {
+                    System.out.println("From:" + message.getSender() + "    " + message.toJson());//TODO:remove
                     receiveMessage(message);
                 } else {
                     try {
@@ -133,6 +135,9 @@ public class Server {
                             break;
                         case CUSTOM_CARDS:
                             sendCustomCards(message);
+                            break;
+                        case ONLINE_GAMES_LIST:
+                            sendOnlineGames(message);
                             break;
                     }
                     break;
@@ -235,6 +240,12 @@ public class Server {
                 case REJECT_CARD:
                     DataCenter.getInstance().rejectCustomCard(message);
                     break;
+                case ONLINE_GAME_SHOW_REQUEST:
+                    GameCenter.getInstance().addOnlineShowRequest(message);
+                    break;
+                case STOP_SHOW_GAME:
+                    GameCenter.getInstance().removeOnlineShowGame(message);
+                    break;
                 default:
                     throw new LogicException("Invalid Message Type!");
             }
@@ -261,6 +272,15 @@ public class Server {
         DataCenter.getInstance().loginCheck(message);
         addToSendingMessages(Message.makeStoriesCopyMessage(message.getSender(),
                 DataCenter.getInstance().getStories().toArray(Story[]::new)));
+    }
+
+    private void sendOnlineGames(Message message) throws LogicException {
+        DataCenter.getInstance().loginCheck(message);
+        Account account = DataCenter.getInstance().getClients().get(message.getSender());
+        if (account.getAccountType() != AccountType.ADMIN)
+            throw new ClientException("You don't have admin access!");
+        OnlineGame[] onlines = GameCenter.getInstance().getOnlineGames();
+        addToSendingMessages(Message.makeOnlineGamesCopyMessage(message.getSender(), onlines));
     }
 
     private void sendOriginalCards(Message message) throws LogicException {
@@ -301,137 +321,86 @@ public class Server {
     }
 
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");//ahmad,please don't change this to exception!
-            } else {
-                addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");//ahmad,please don't change this to exception!
-            } else {
-                addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
-            }
+            addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
         }
     }
 
     public void sendTroopUpdateMessage(Game game, Troop troop) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
-            }
+            addToSendingMessages(Message.makeTroopUpdateMessage(clientName, troop));
         }
     }
 
     public void sendAttackMessage(Game game, Troop attacker, Troop defender, boolean counterAttack) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
-            }
+            addToSendingMessages(Message.makeAttackMessage(clientName, attacker, defender, counterAttack));
         }
     }
 
     public void sendSpellMessage(Game game, TargetData target, AvailabilityType availabilityType) {
-        String clientName;
         Set<Position> positions = target.getPositions();
         if (positions.size() == 0) return;
-
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
-            }
+            addToSendingMessages(Message.makeSpellMessage(clientName, positions, availabilityType));
         }
     }
 
     public void sendGameUpdateMessage(Game game) {
-        String clientName;
         List<CellEffect> cellEffects = game.getCellEffects();
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeGameUpdateMessage(
-                        clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
-                        game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                        game.getPlayerTwo().getNumberOfCollectedFlags(), cellEffects));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeGameUpdateMessage(
-                        clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
-                        game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
-                        game.getPlayerTwo().getNumberOfCollectedFlags(), cellEffects));
-            }
+            addToSendingMessages(Message.makeGameUpdateMessage(
+                    clientName, game.getTurnNumber(), game.getPlayerOne().getCurrentMP(),
+                    game.getPlayerOne().getNumberOfCollectedFlags(), game.getPlayerTwo().getCurrentMP(),
+                    game.getPlayerTwo().getNumberOfCollectedFlags(), cellEffects));
         }
     }
 
     public void sendGameFinishMessages(Game game) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
+                serverPrint("*Error");
+                continue;
+            }
+            if (account.getUsername().equals(game.getPlayerOne().getUserName())) {
                 addToSendingMessages(Message.makeGameFinishMessage(
                         clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward()));
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName())));
-            }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
+            } else if (account.getUsername().equals(game.getPlayerTwo().getUserName())) {
                 addToSendingMessages(Message.makeGameFinishMessage(
                         clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), game.getReward()));
                 addToSendingMessages(Message.makeAccountCopyMessage(
                         clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName())));
+            } else {
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        clientName, false, game.getReward()));
             }
         }
     }

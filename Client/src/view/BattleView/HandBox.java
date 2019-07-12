@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import models.comperessedData.CompressedCard;
 import models.comperessedData.CompressedPlayer;
 import models.gui.*;
+import models.message.OnlineGame;
+import view.MainMenu;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -53,33 +55,36 @@ public class HandBox implements PropertyChangeListener {
         handGroup.setLayoutX(x);
         handGroup.setLayoutY(y);
 
-        HBox hBox = new HBox();
-        hBox.setLayoutX(200 * Constants.SCALE);
-        hBox.setLayoutY(25 * Constants.SCALE);
-        hBox.setSpacing(-15 * Constants.SCALE);
-        handGroup.getChildren().add(hBox);
-        for (int i = 0; i < 5; i++) {
-            cards[i] = new Pane();
-            hBox.getChildren().add(cards[i]);
-        }
-        for (int i = 0; i < 3; i++) {
-            items[i] = new Pane();
-            hBox.getChildren().add(items[i]);
-        }
-        updateCards();
-        updateItems();
 
-        next.setLayoutX(0 * Constants.SCALE);
-        next.setLayoutY(0);
-        handGroup.getChildren().add(next);
-        updateNext();
+        if (player != null) {
+            HBox hBox = new HBox();
+            hBox.setLayoutX(200 * Constants.SCALE);
+            hBox.setLayoutY(25 * Constants.SCALE);
+            hBox.setSpacing(-15 * Constants.SCALE);
+            handGroup.getChildren().add(hBox);
+            for (int i = 0; i < 5; i++) {
+                cards[i] = new Pane();
+                hBox.getChildren().add(cards[i]);
+            }
+            for (int i = 0; i < 3; i++) {
+                items[i] = new Pane();
+                hBox.getChildren().add(items[i]);
+            }
+            updateCards();
+            updateItems();
 
-        addEndTurnButton();
-        addGraveYardButton();
+            next.setLayoutX(0 * Constants.SCALE);
+            next.setLayoutY(0);
+            handGroup.getChildren().add(next);
+            updateNext();
+
+            addEndTurnButton();
+            addGraveYardButton();
+            player.addPropertyChangeListener(this);
+            battleScene.getGame().addPropertyChangeListener(this);
+        }
+
         addFinishButton();
-
-        player.addPropertyChangeListener(this);
-        battleScene.getGame().addPropertyChangeListener(this);
     }
 
     private void updateNext() {
@@ -269,7 +274,8 @@ public class HandBox implements PropertyChangeListener {
             imageView.setFitWidth(endTurnImage.getWidth() * Constants.SCALE * 0.5);
             imageView.setFitHeight(endTurnImage.getHeight() * Constants.SCALE * 0.5);
             endTurnLabel = new DefaultLabel("END TURN", Constants.END_TURN_FONT, Color.WHITE);
-            if ((battleScene.getGame().getTurnNumber() + 1) % 2 == battleScene.getMyPlayerNumber()%2) {
+          
+            if ((battleScene.getGame().getTurnNumber() + 1) % 2 == battleScene.getMyPlayerNumber() % 2) {
                 endTurnLabel.setText("ENEMY TURN");
                 endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);
             }
@@ -295,11 +301,23 @@ public class HandBox implements PropertyChangeListener {
 
     private void addFinishButton() {
         try {
-            ImageButton imageButton = new ImageButton(
-                    "FINISH", event -> battleScene.getController().forceFinish(),
-                    new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
-                    new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
-            );
+            ImageButton imageButton;
+            if (player == null) {
+                imageButton = new ImageButton(
+                        "EXIT", event -> {
+                            battleScene.getController().exitGameShow(new OnlineGame(battleScene.getGame()));
+                            new MainMenu().show();
+                },
+                        new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
+                        new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
+                );
+            } else {
+                imageButton = new ImageButton(
+                        "FINISH", event -> battleScene.getController().forceFinish(),
+                        new Image(new FileInputStream("resources/ui/button_primary_left@2x.png")),
+                        new Image(new FileInputStream("resources/ui/button_primary_left_glow@2x.png"))
+                );
+            }
             imageButton.setLayoutX(1360 * Constants.SCALE);
             imageButton.setLayoutY(110 * Constants.SCALE);
 
@@ -352,6 +370,7 @@ public class HandBox implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (player == null) return;
         switch (evt.getPropertyName()) {
             case "next":
             case "hand":
@@ -359,7 +378,7 @@ public class HandBox implements PropertyChangeListener {
                 Platform.runLater(this::resetSelection);
                 break;
             case "turn":
-                if (((int) evt.getNewValue() + 1) % 2 == battleScene.getMyPlayerNumber()) {
+                if (((int) evt.getNewValue() + 1) % 2 == battleScene.getMyPlayerNumber() % 2) {
                     Platform.runLater(() -> {
                         endTurnButton.setEffect(DISABLE_BUTTON_EFFECT);
                         endTurnLabel.setText("ENEMY TURN");
@@ -415,10 +434,12 @@ public class HandBox implements PropertyChangeListener {
     }
 
     void resetSelection() {
-        selectedCard = -1;
-        selectedItem = -1;
-        updateCards();
-        updateItems();
-        updateNext();
+        if (player != null) {
+            selectedCard = -1;
+            selectedItem = -1;
+            updateCards();
+            updateItems();
+            updateNext();
+        }
     }
 }

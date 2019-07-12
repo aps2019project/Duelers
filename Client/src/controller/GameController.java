@@ -10,10 +10,7 @@ import models.exceptions.InputException;
 import models.game.GameActions;
 import models.game.availableActions.AvailableActions;
 import models.game.map.Position;
-import models.message.CardAnimation;
-import models.message.GameAnimations;
-import models.message.Message;
-import models.message.SpellAnimation;
+import models.message.*;
 import view.BattleView.BattleScene;
 
 import java.util.ArrayList;
@@ -66,9 +63,13 @@ public class GameController implements GameActions {
     }
 
     private int getPlayerNumber(CompressedGame currentGame) {
-        int playerNumber = 1;
-        if (currentGame.getPlayerTwo().getUserName().equals(Client.getInstance().getAccount().getUsername()))
+        int playerNumber = -1;
+        if (currentGame.getPlayerOne().getUserName().equals(Client.getInstance().getAccount().getUsername())) {
+            playerNumber = 1;
+        }
+        if (currentGame.getPlayerTwo().getUserName().equals(Client.getInstance().getAccount().getUsername())) {
             playerNumber = 2;
+        }
         return playerNumber;
     }
 
@@ -183,6 +184,11 @@ public class GameController implements GameActions {
                 Message.makeUseSpecialPowerMessage(
                         SERVER_NAME, currentGame.getCurrentTurnPlayer().getHero().getCard().getCardId(), new Position(row, column)
                 ));
+    }
+
+    @Override
+    public void exitGameShow(OnlineGame onlineGame) {
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeStopShowGameMessage(SERVER_NAME, onlineGame));
     }
 
     public void showAnimation(GameAnimations gameAnimations) {

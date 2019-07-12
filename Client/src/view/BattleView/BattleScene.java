@@ -35,8 +35,8 @@ public class BattleScene extends Show {
     private final HandBox handBox;
     private final PlayerBox playerBox;
     private final int myPlayerNumber;
-    private final CompressedPlayer myPlayer;
-    private final CompressedPlayer oppPlayer;
+    private CompressedPlayer myPlayer;
+    private CompressedPlayer oppPlayer;
 
     static {
         spellSpriteNames.put(SpellType.ATTACK, "fx_f4_shadownova");
@@ -56,10 +56,11 @@ public class BattleScene extends Show {
         if (myPlayerNumber == 1) {
             myPlayer = game.getPlayerOne();
             oppPlayer = game.getPlayerTwo();
-        } else {
+        } else if (myPlayerNumber == 2){
             myPlayer = game.getPlayerTwo();
             oppPlayer = game.getPlayerOne();
         }
+
         handBox = new HandBox(this, myPlayer, Constants.HAND_X, Constants.HAND_Y);
         playerBox = new PlayerBox(this, game);
         mapBox = new MapBox(this, game.getGameMap(), Constants.MAP_X, Constants.MAP_Y);
@@ -134,7 +135,7 @@ public class BattleScene extends Show {
         return controller;
     }
 
-    int getMyPlayerNumber() {
+    public int getMyPlayerNumber() {
         return myPlayerNumber;
     }
 
@@ -163,6 +164,9 @@ public class BattleScene extends Show {
     }
 
     public void finish(boolean amIWinner) {
+        if (myPlayerNumber == -1) {
+            return;
+        }
         if (amIWinner) {
             SoundEffectPlayer.getInstance().playSound(victory_match);
             if (myPlayer.getHero() == null) {

@@ -28,12 +28,14 @@ public class Message {
     private OpponentInfoMessage opponentInfoMessage;
     private GameFinishMessage gameFinishMessage;
     private GameAnimations gameAnimations;
+    private OnlineGame[] onlineGames;
     //SENDER:CLIENT
     private String cardName;
     private ExportedDeck exportedDeck;
     private GetDataMessage getDataMessage;
     private OtherFields otherFields;
     private AccountFields accountFields;
+    private OnlineGame onlineGame;
     //SENDER:DUAL
     private Card card;
     private ChatMessage chatMessage;
@@ -308,6 +310,20 @@ public class Message {
         return message;
     }
 
+    public static Message makeRequestOnlineGameShowMessage(String receiver, OnlineGame onlineGame) {
+        Message message = new Message(receiver);
+        message.onlineGame = onlineGame;
+        message.messageType = MessageType.ONLINE_GAME_SHOW_REQUEST;
+        return message;
+    }
+
+    public static Message makeStopShowGameMessage(String receiver, OnlineGame onlineGame) {
+        Message message = new Message(receiver);
+        message.onlineGame = onlineGame;
+        message.messageType = MessageType.STOP_SHOW_GAME;
+        return message;
+    }
+
     public String toJson() {
         return JsonConverter.toJson(this);
     }
@@ -390,5 +406,9 @@ public class Message {
 
     public String getCardName() {
         return cardName;
+    }
+
+    public OnlineGame[] getOnlineGames() {
+        return onlineGames;
     }
 }
