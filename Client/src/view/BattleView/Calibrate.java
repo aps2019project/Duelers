@@ -9,6 +9,7 @@ import models.card.spell.AvailabilityType;
 import models.comperessedData.*;
 import models.game.GameActions;
 import models.game.map.Position;
+import models.message.OnlineGame;
 
 import java.util.ArrayList;
 
@@ -109,7 +110,7 @@ public class Calibrate extends Application implements GameActions {
     }
 
     @Override
-    public void exitGameShow() {
+    public void exitGameShow(OnlineGame onlineGame) {
 
     }
 
