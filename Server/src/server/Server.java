@@ -375,28 +375,16 @@ public class Server {
     }
 
     public void sendGameFinishMessages(Game game) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
+        for (Account account : game.getObservers()) {
+            String clientName = DataCenter.getInstance().getAccounts().get(account);
             if (clientName == null) {
-                serverPrint("player one has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeGameFinishMessage(
-                        clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward()));
-                addToSendingMessages(Message.makeAccountCopyMessage(
-                        clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName())));
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");
-            } else {
-                addToSendingMessages(Message.makeGameFinishMessage(
-                        clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), game.getReward()));
-                addToSendingMessages(Message.makeAccountCopyMessage(
-                        clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName())));
-            }
+            addToSendingMessages(Message.makeGameFinishMessage(
+                    clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward()));
+            addToSendingMessages(Message.makeAccountCopyMessage(
+                    clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName())));
         }
     }
 
