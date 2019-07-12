@@ -36,6 +36,8 @@ public class OnlineGamesList extends TableView {
         TableColumn<OnlineGameView, GameType> gameType = new TableColumn<>("Game type");
         gameType.setCellValueFactory(new PropertyValueFactory<>("gameType"));
         gameType.setMinWidth(300 * SCALE);
+
+        getColumns().addAll(index, player1, player2, gameType);
     }
 
     public void setItems(OnlineGame[] onlineGames) {
