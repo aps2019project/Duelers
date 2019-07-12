@@ -388,10 +388,20 @@ public class Server {
                 serverPrint("*Error");
                 continue;
             }
-            addToSendingMessages(Message.makeGameFinishMessage(
-                    clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward()));
-            addToSendingMessages(Message.makeAccountCopyMessage(
-                    clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName())));
+            if (account.getUsername().equals(game.getPlayerOne().getUserName())) {
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        clientName, game.getPlayerOne().getMatchHistory().isAmIWinner(), game.getReward()));
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        clientName, DataCenter.getInstance().getAccount(game.getPlayerOne().getUserName())));
+            } else if (account.getUsername().equals(game.getPlayerTwo().getUserName())) {
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        clientName, game.getPlayerTwo().getMatchHistory().isAmIWinner(), game.getReward()));
+                addToSendingMessages(Message.makeAccountCopyMessage(
+                        clientName, DataCenter.getInstance().getAccount(game.getPlayerTwo().getUserName())));
+            } else {
+                addToSendingMessages(Message.makeGameFinishMessage(
+                        clientName, false, game.getReward()));
+            }
         }
     }
 
