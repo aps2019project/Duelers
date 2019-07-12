@@ -52,6 +52,7 @@ public enum MessageType {
     CHANGE_ACCOUNT_TYPE,
     ADD_CARD,
     ONLINE_GAME_SHOW_REQUEST,
+    STOP_SHOW_GAME,
     //SENDER:DUAL
     CHAT,
     ACCEPT_REQUEST,

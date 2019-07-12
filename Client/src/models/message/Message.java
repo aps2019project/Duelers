@@ -407,7 +407,7 @@ public class Message {
         return cardName;
     }
 
-    public OnlineGame getOnlineGame() {
-        return onlineGame;
+    public OnlineGame[] getOnlineGames() {
+        return onlineGames;
     }
 }

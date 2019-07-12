@@ -262,7 +262,7 @@ public class Client {
                 CustomCardRequestsController.getInstance().setCustomCardRequests(message.getCardsCopyMessage().getCards());
                 break;
             case ONLINE_GAMES_COPY:
-                //message.getOnlineGame()*********
+                OnlineGamesListController.getInstance().setOnlineGames(message.getOnlineGames());
                 break;
         }
     }
