@@ -314,22 +314,13 @@ public class Server {
     }
 
     public void sendChangeCardPositionMessage(Game game, Card card, CardPosition newCardPosition) {
-        String clientName;
-        if (!game.getPlayerOne().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerOne().getUserName());
-            if (clientName == null) {
-                serverPrint("player one has logged out during game!");//ahmad,please don't change this to exception!
-            } else {
-                addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
+        for(Account account:game.getObservers()){
+            String clientName=DataCenter.getInstance().getAccounts().get(account);
+            if(clientName==null){
+                serverPrint("*Error");
+                continue;
             }
-        }
-        if (!game.getPlayerTwo().getUserName().equalsIgnoreCase("AI")) {
-            clientName = DataCenter.getInstance().getClientName(game.getPlayerTwo().getUserName());
-            if (clientName == null) {
-                serverPrint("player two has logged out during game!");//ahmad,please don't change this to exception!
-            } else {
-                addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
-            }
+            addToSendingMessages(Message.makeChangeCardPositionMessage(clientName, card, newCardPosition));
         }
     }
 
