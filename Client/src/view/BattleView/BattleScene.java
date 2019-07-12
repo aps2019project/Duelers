@@ -1,6 +1,7 @@
 package view.BattleView;
 
 import controller.GraphicalUserInterface;
+import controller.SoundEffectPlayer;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +20,11 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static controller.SoundEffectPlayer.SoundName.loos_match;
+import static controller.SoundEffectPlayer.SoundName.victory_match;
+
 public class BattleScene extends Show {
+    private static final String WINNER_SPRITE_NAME = "fx_winner";
     private static Media backgroundMusic = new Media(
             new File("resources/music/music_battlemap_vetruv.m4a").toURI().toString()
     );
@@ -157,7 +162,41 @@ public class BattleScene extends Show {
         return oppPlayer.getUserName();
     }
 
+    public void finish(boolean amIWinner) {
+        if (amIWinner) {
+            SoundEffectPlayer.getInstance().playSound(victory_match);
+            if (myPlayer.getHero() == null) {
+                mapBox.showSpell(
+                        WINNER_SPRITE_NAME,
+                        myPlayer.getTroops().get(0).getPosition().getRow(),
+                        myPlayer.getTroops().get(0).getPosition().getColumn()
+                );
+            } else {
+                mapBox.showSpell(
+                        WINNER_SPRITE_NAME,
+                        myPlayer.getHero().getPosition().getRow(),
+                        myPlayer.getHero().getPosition().getColumn()
+                );
+            }
+        } else {
+            SoundEffectPlayer.getInstance().playSound(loos_match);
+            if (oppPlayer.getHero() == null) {
+                mapBox.showSpell(
+                        WINNER_SPRITE_NAME,
+                        oppPlayer.getTroops().get(0).getPosition().getRow(),
+                        oppPlayer.getTroops().get(0).getPosition().getColumn()
+                );
+            } else {
+                mapBox.showSpell(
+                        WINNER_SPRITE_NAME,
+                        oppPlayer.getHero().getPosition().getRow(),
+                        oppPlayer.getHero().getPosition().getColumn()
+                );
+            }
+        }
+    }
+
     private enum SpellType {
-        ATTACK, PUT, DEATH, CONTINUOUS, SPECIAL_POWER, DEFEND, DEFAULT
+        ATTACK, PUT, DEATH, CONTINUOUS, SPECIAL_POWER, DEFEND, DEFAULT, WINNER
     }
 }

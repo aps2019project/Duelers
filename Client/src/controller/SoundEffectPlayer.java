@@ -51,6 +51,9 @@ public class SoundEffectPlayer {
         attack("sfx_neutral_chaoselemental_attack_impact"),
         hit("sfx_neutral_chaoselemental_hit"),
         death("sfx_neutral_gambitgirl_death"),
+        victory_match("sfx_victory_match_w_vo"),
+        loos_match("sfx_victory_crest"),
+        victory_reward("sfx_victory_reward_chant")
         ;
 
         private final String path;

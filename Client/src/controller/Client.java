@@ -210,9 +210,12 @@ public class Client {
                 break;
             case Game_FINISH:
                 GameResultController.getInstance().setWinnerInfo(message.getGameFinishMessage().amIWinner(), message.getGameFinishMessage().getReward());
+                if (currentShow instanceof BattleScene) {
+                    ((BattleScene) currentShow).finish(message.getGameFinishMessage().amIWinner());
+                }
                 new Thread(() -> {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException ignored) {
                     }
                     Platform.runLater(() -> new GameResultMenu().show());

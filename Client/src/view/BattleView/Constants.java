@@ -1,5 +1,6 @@
 package view.BattleView;
 
+import javafx.geometry.Insets;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -26,6 +27,7 @@ public class Constants {
     static final Font AP_FONT = Font.font("SansSerif", FontWeight.LIGHT, 20 * SCALE);
     static final Font FLAG_FONT = Font.font("SansSerif", FontWeight.LIGHT, 15 * SCALE);
     static final Font END_TURN_FONT = Font.font("SansSerif", FontWeight.BOLD, 20 * SCALE);
+    static final Insets NAME_PADDING = new Insets(10 * SCALE);
 
     static final Color SPELL_COLOR = Color.rgb(181, 255, 0, 0.8);
     static final Color MOVE_COLOR = Color.rgb(255, 255, 255, 0.7);

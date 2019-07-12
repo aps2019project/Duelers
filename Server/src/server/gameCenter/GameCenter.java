@@ -333,7 +333,6 @@ public class GameCenter extends Thread {//synchronize
     }
 
     public void checkGameFinish(Game game) {
-        System.out.println("start check");
         if (game.finishCheck()) {
             finish(game);
         }

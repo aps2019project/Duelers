@@ -33,7 +33,10 @@
         "isRelatedToCardOwnerPosition": false,
         "isForAroundOwnHero": false,
         "isRandom": false,
-        "isForDeckCards": false
+        "isForDeckCards": false,
+        "cardType": {
+          "player": true
+        }
       },
       "availabilityType": {
         "onPut": true,

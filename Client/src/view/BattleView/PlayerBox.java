@@ -123,9 +123,11 @@ public class PlayerBox implements PropertyChangeListener {
         player2Image.setX(Constants.SCREEN_WIDTH * 0.85);
         player2Image.setY(-Constants.SCREEN_HEIGHT * 0.02);
         player1Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, 290 * SCALE, 75 * SCALE);
-        player1Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        player1Name.setBackground(new Background(new BackgroundFill(Color.rgb(155, 82, 100, 0.7), new CornerRadii(3), Insets.EMPTY)));
+        player1Name.setPadding(Constants.NAME_PADDING);
         player2Name = new DefaultLabel("", Constants.NAME_FONT, Color.WHITE, SCREEN_WIDTH - 600 * SCALE, 75 * SCALE);
-        player2Name.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(3), Insets.EMPTY)));
+        player2Name.setBackground(new Background(new BackgroundFill(Color.rgb(155, 82, 100, 0.7), new CornerRadii(3), Insets.EMPTY)));
+        player2Name.setPadding(Constants.NAME_PADDING);
         player1Name.setText(player1.getUserName() + " Flags:" + player1.getNumberOfCollectedFlags());
         player2Name.setText(player2.getUserName() + " Flags:" + player2.getNumberOfCollectedFlags());
         player1ImageEffect = new ColorAdjust();
