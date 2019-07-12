@@ -4,6 +4,7 @@ import controller.OnlineGamesListController;
 import javafx.scene.control.Button;
 import models.game.GameType;
 import models.message.OnlineGame;
+import view.MainMenu;
 
 public class OnlineGameView {
     private final String player1;
@@ -11,12 +12,15 @@ public class OnlineGameView {
     private final GameType gameType;
     private final Button showButton = new Button("SHOW");
 
-    public OnlineGameView(OnlineGame onlineGame) {
+    OnlineGameView(OnlineGame onlineGame) {
         player1 = onlineGame.getPlayer1();
         player2 = onlineGame.getPlayer2();
         gameType = onlineGame.getGameType();
 
-        showButton.setOnMouseClicked(event -> OnlineGamesListController.getInstance().requestShowGame(onlineGame));
+        showButton.setOnMouseClicked(event -> {
+            OnlineGamesListController.getInstance().requestShowGame(onlineGame);
+            MainMenu.getInstance().closeOnlineGamesList();
+        });
     }
 
     public String getPlayer1() {
