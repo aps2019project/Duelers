@@ -218,9 +218,11 @@ public class Client {
                         Thread.sleep(2000);
                     } catch (InterruptedException ignored) {
                     }
-                    Platform.runLater(() -> new GameResultMenu().show());
+                    if (((BattleScene) currentShow).getMyPlayerNumber() == -1) {
+                        Platform.runLater(() -> new MainMenu().show());
+                    } else
+                        Platform.runLater(() -> new GameResultMenu().show());
                 }).start();
-
                 break;
             case ANIMATION:
                 GameController.getInstance().showAnimation(message.getGameAnimations());

@@ -442,7 +442,6 @@ public class GameCenter extends Thread {//synchronize
         Game game = getGame(message.getOnlineGame());
         if (game == null)
             throw new ClientException("Invalid Game");
-        Server.getInstance().addToSendingMessages(Message.makeGameCopyMessage(message.getSender(), game));
         game.removeObserver(account);
     }
 }

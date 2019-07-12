@@ -12,7 +12,6 @@ import models.comperessedData.CompressedGame;
 import models.comperessedData.CompressedPlayer;
 import models.game.GameActions;
 import models.game.map.Position;
-import view.MainMenu;
 import view.Show;
 
 import java.io.File;
@@ -136,7 +135,7 @@ public class BattleScene extends Show {
         return controller;
     }
 
-    int getMyPlayerNumber() {
+    public int getMyPlayerNumber() {
         return myPlayerNumber;
     }
 
@@ -166,7 +165,6 @@ public class BattleScene extends Show {
 
     public void finish(boolean amIWinner) {
         if (myPlayerNumber == -1) {
-            new MainMenu().show();
             return;
         }
         if (amIWinner) {
