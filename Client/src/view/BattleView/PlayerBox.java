@@ -155,20 +155,12 @@ public class PlayerBox implements PropertyChangeListener {
             stackPane.setLayoutX(SCALE * (130));
         else if (battleScene.getMyPlayerNumber() == 2)
             stackPane.setLayoutX(Constants.SCREEN_WIDTH - SCALE * (130) - animation.getImageView().getFitWidth());
-        stackPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (battleScene.isMyTurn()) {
-                    animation.inActive();
-                }
+        stackPane.setOnMouseEntered(mouseEvent -> {
+            if (battleScene.isMyTurn()) {
+                animation.inActive();
             }
         });
-        stackPane.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                animation.pause();
-            }
-        });
+        stackPane.setOnMouseExited(mouseEvent -> animation.pause());
         group.getChildren().add(stackPane);
     }
 
