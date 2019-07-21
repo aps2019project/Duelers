@@ -184,7 +184,6 @@ public class DataCenter extends Thread {
         accounts.replace(clients.get(message.getSender()), null);
         clients.replace(message.getSender(), null);
         Server.getInstance().serverPrint(message.getSender() + " Is Logged Out.");
-        //TODO:Check online games
         Server.getInstance().addToSendingMessages(Message.makeDoneMessage(message.getSender()));
     }
 
