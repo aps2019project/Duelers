@@ -75,7 +75,7 @@ public class Collection {
         String cardId = (username + "_" + cardName + "_").replaceAll(" ", "");
         while (hasCard(cardId + number))
             number++;
-        Card newCard = new Card(originalCards.getCard(cardName), username, number);
+        Card newCard = new Card(card, username, number);
         if (newCard.getType() == CardType.USABLE_ITEM && items.size() >= 3) {
             throw new ClientException("you can't have more than 3 items");
         }
