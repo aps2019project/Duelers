@@ -58,7 +58,6 @@ public class ShopController {
     }
 
     void addCard(Card customCard) {
-        System.out.println(originalCards.getHeroes().size());
         originalCards.addCard(customCard);
         if (Client.getInstance().getCurrentShow() instanceof ShopMenu) {
             ((ShopMenu) Client.getInstance().getCurrentShow()).search();

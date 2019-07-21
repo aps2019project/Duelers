@@ -295,7 +295,6 @@ public class PlayerBox implements PropertyChangeListener {
     }
 
     private void updateMP(int maxMP) {
-        System.out.println(maxMP);
         mpGroup.getChildren().clear();
         for (int i = 1; i <= player1.getCurrentMP(); i++) {
             try {

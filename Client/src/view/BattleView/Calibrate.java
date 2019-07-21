@@ -65,7 +65,7 @@ public class Calibrate extends Application implements GameActions {
         final CompressedGame game = new CompressedGame(player1, player2, map, 7, null);
 
         new Thread(() -> {
-            CompressedCard card = new CompressedCard("boss_andromeda", null, "a1", CardType.MINION,
+            CompressedCard card = new CompressedCard("boss_harmony", null, "a1", CardType.MINION,
                     null, 0, 0, 0, null, 2, true);
             CompressedTroop troop = new CompressedTroop(card, 5, 6, 5, new Position(0, 0),
                     true, true, false, false, 1, 1);
