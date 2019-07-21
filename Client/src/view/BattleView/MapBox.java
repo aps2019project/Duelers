@@ -343,7 +343,7 @@ public class MapBox implements PropertyChangeListener {
                 System.out.println(selectedTroop.getCard().getCardId() + "moved");
                 battleScene.getHandBox().resetSelection();
                 resetSelection();
-                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.attack);
+                SoundEffectPlayer.getInstance().playSound(SoundEffectPlayer.SoundName.move);
             }
             return;
         }
