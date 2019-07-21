@@ -14,6 +14,7 @@ import server.dataCenter.models.card.CardType;
 import server.dataCenter.models.card.Deck;
 import server.dataCenter.models.card.ExportedDeck;
 import server.dataCenter.models.db.OldDataBase;
+import server.dataCenter.models.db.Rest;
 import server.dataCenter.models.sorter.LeaderBoardSorter;
 import server.exceptions.ClientException;
 import server.exceptions.LogicException;
