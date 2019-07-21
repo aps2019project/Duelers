@@ -38,6 +38,7 @@ public class ShopAdminController {
     }
 
     void setValue(String cardName, int newValue) {
+        if (ShopController.getInstance().getOriginalCards() == null) return;
         Card card = ShopController.getInstance().getOriginalCards().getCard(cardName);
         if (card == null) return;
         card.setRemainingNumber(newValue);

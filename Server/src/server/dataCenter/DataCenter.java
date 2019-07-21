@@ -428,7 +428,7 @@ public class DataCenter extends Thread {
             File[] files = new File(path).listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.getName().startsWith(card.getCardId() + ".")) {
+                    if (file.getName().startsWith(card.getName().replaceAll(" ","") + ".")) {
                         try {
                             FileWriter writer = new FileWriter(file.getPath());
                             writer.write(cardJson);
