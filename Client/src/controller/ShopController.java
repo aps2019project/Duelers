@@ -33,8 +33,7 @@ public class ShopController {
     }
 
     public void buy(String cardName) {
-        Client.getInstance().addToSendingMessagesAndSend(
-                Message.makeBuyCardMessage(Constants.SERVER_NAME, cardName.replaceAll(" ", "")));
+        Client.getInstance().addToSendingMessagesAndSend(Message.makeBuyCardMessage(Constants.SERVER_NAME, cardName));
     }
 
     public void sell(String cardName) {
